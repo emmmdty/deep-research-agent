@@ -22,13 +22,13 @@
     │ Planner │ │Researcher│ │ Writer │
     └────┬────┘ └────┬─────┘ └────┬───┘
          │           │            │
-         │     ┌─────▼─────┐     │
-         └────►│   Critic   │◄───┘
+         │     ┌─────▼─────┐      │
+         └────►│   Critic   │◄────┘
                └─────┬─────┘
                      │ (不满足 → 继续迭代)
-               ┌─────▼─────────┐
-               │ Iterative Loop │
-               └────────────────┘
+            ┌────────▼───────┐
+            │ Iterative Loop │
+            └────────────────┘
 ```
 
 ## 📁 项目结构
@@ -88,25 +88,25 @@ uv run python scripts/run_benchmark.py
 
 支持通过 `.env` 文件配置：
 
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `LLM_PROVIDER` | LLM 提供商 | `minimax` |
-| `LLM_MODEL_NAME` | 模型名称 | `MiniMax-M2.5` |
-| `LLM_API_KEY` | API 密钥 | - |
-| `SEARCH_BACKEND` | 搜索后端 | `tavily` |
-| `TAVILY_API_KEY` | Tavily API 密钥 | - |
-| `MAX_RESEARCH_LOOPS` | 最大迭代次数 | `3` |
+| 变量                 | 说明            | 默认值         |
+| -------------------- | --------------- | -------------- |
+| `LLM_PROVIDER`       | LLM 提供商      | `minimax`      |
+| `LLM_MODEL_NAME`     | 模型名称        | `MiniMax-M2.5` |
+| `LLM_API_KEY`        | API 密钥        | -              |
+| `SEARCH_BACKEND`     | 搜索后端        | `tavily`       |
+| `TAVILY_API_KEY`     | Tavily API 密钥 | -              |
+| `MAX_RESEARCH_LOOPS` | 最大迭代次数    | `3`            |
 
 ## 📊 Benchmark 与评估
 
 ### 基础指标
 
-| 指标 | 说明 | 目标 |
-|------|------|------|
-| `citation_accuracy` | 引用准确率 | > 90% |
-| `source_coverage` | 来源覆盖率 | > 5 个来源 |
-| `report_depth` | 报告深度评分 | > 0.7 |
-| `word_count` | 报告字数 | > 5000 字 |
+| 指标                | 说明         | 目标       |
+| ------------------- | ------------ | ---------- |
+| `citation_accuracy` | 引用准确率   | > 90%      |
+| `source_coverage`   | 来源覆盖率   | > 5 个来源 |
+| `report_depth`      | 报告深度评分 | > 0.7      |
+| `word_count`        | 报告字数     | > 5000 字  |
 
 ### LLM-as-Judge 评分
 

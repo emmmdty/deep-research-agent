@@ -41,6 +41,10 @@ def planner_node(state: dict) -> dict:
     response = llm.invoke(messages)
     raw_text = response.content
 
+    # 清理模型思维链泄露
+    from llm.clean import extract_json_from_output
+    raw_text = extract_json_from_output(raw_text)
+
     # 解析 JSON
     tasks = _extract_tasks(raw_text, research_topic)
     logger.info("📋 Planner 规划完成: 生成 {} 个子任务", len(tasks))

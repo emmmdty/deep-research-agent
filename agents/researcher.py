@@ -120,5 +120,9 @@ def _execute_single_search(
     response = llm.invoke(messages)
     summary = response.content
 
+    # 清理模型思维链泄露
+    from llm.clean import clean_llm_output
+    summary = clean_llm_output(summary)
+
     task_summaries.append(summary)
     logger.info("  ✅ 总结完成: '{}'", task_title)

@@ -43,6 +43,10 @@ def writer_node(state: dict) -> dict:
     response = llm.invoke(messages)
     report = response.content
 
+    # 清理模型思维链泄露（<think>标签等）
+    from llm.clean import clean_llm_output
+    report = clean_llm_output(report)
+
     logger.info("📝 Writer 报告撰写完成: 长度={} 字符", len(report))
 
     return {
