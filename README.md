@@ -35,22 +35,32 @@
 
 ```
 deep-research-agent/
-├── agents/         # Multi-Agent 定义（Supervisor/Planner/Researcher/Critic/Writer）
-├── tools/          # 工具系统（web_search/web_scraper/arxiv_search/github_search/pdf_reader/code_executor）
-├── skills/         # 可复用研究技能（文献综述/技术分析/Benchmark总结）
-├── memory/         # 记忆与上下文管理
-├── workflows/      # LangGraph 工作流定义
-├── evaluation/     # 评估与 Benchmark
-├── prompts/        # 提示词管理
-├── llm/            # LLM Provider 统一封装层
-├── mcp_servers/    # MCP 集成（可选）
-├── configs/        # 配置管理
-├── scripts/        # 运行脚本
-├── tests/          # 测试
-├── docs/           # 文档
-├── examples/       # 示例
-├── main.py         # 入口
-└── pyproject.toml  # 依赖管理
+├── agents/              # Multi-Agent 定义
+│   ├── supervisor.py    # 顶层协调
+│   ├── planner.py       # 任务拆解
+│   ├── researcher.py    # 搜索 + 总结
+│   ├── critic.py        # 质量评审
+│   └── writer.py        # 报告撰写
+├── tools/               # 工具系统（6 个工具）
+├── workflows/           # LangGraph 工作流
+│   ├── graph.py         # 状态图定义 + 条件路由
+│   └── states.py        # TypedDict 状态 schema
+├── evaluation/          # 评估与 Benchmark
+│   ├── metrics.py       # 基础指标（引用/来源/深度）
+│   ├── llm_judge.py     # LLM-as-Judge 5 维度评分
+│   ├── cost_tracker.py  # 成本追踪器
+│   └── benchmarks/      # 标准测试主题集
+├── llm/                 # LLM Provider 封装 + 输出清洗
+├── prompts/             # 提示词模板
+├── configs/             # 配置管理（.env + YAML）
+├── memory/              # 研究笔记/来源/总结 持久化
+├── skills/              # 可复用研究技能模板
+├── scripts/             # Benchmark + 竞品对比脚本
+├── tests/               # 单元测试（pytest）
+├── docs/                # 架构文档 + 开发指南 + API 文档
+├── examples/            # 示例脚本
+├── main.py              # CLI 入口（--topic / --serve）
+└── pyproject.toml       # 依赖管理
 ```
 
 ## 🚀 快速开始
