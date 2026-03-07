@@ -4,6 +4,7 @@
     - citation_accuracy: 引用准确率（报告中引用标记的覆盖度）
     - source_coverage: 来源覆盖率（引用的唯一来源数量）
     - report_depth: 报告深度（字数、结构完整性）
+    - aspect_coverage: 方面覆盖率（报告是否覆盖预期的关键方面）
 """
 
 from __future__ import annotations

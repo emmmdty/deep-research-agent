@@ -97,7 +97,9 @@ uv run python scripts/run_benchmark.py
 | `TAVILY_API_KEY` | Tavily API 密钥 | - |
 | `MAX_RESEARCH_LOOPS` | 最大迭代次数 | `3` |
 
-## 📊 Benchmark
+## 📊 Benchmark 与评估
+
+### 基础指标
 
 | 指标 | 说明 | 目标 |
 |------|------|------|
@@ -105,6 +107,30 @@ uv run python scripts/run_benchmark.py
 | `source_coverage` | 来源覆盖率 | > 5 个来源 |
 | `report_depth` | 报告深度评分 | > 0.7 |
 | `word_count` | 报告字数 | > 5000 字 |
+
+### LLM-as-Judge 评分
+
+使用 LLM 自动评分 5 个维度（各 1-10 分）：**内容深度** / **事实准确度** / **逻辑连贯性** / **引用质量** / **结构完整性**
+
+```bash
+# 完整评测（含 LLM Judge）
+uv run python scripts/run_benchmark.py
+
+# 快速评测（跳过 LLM Judge）
+uv run python scripts/run_benchmark.py --skip-judge --max-topics 3
+```
+
+### 竞品对比
+
+支持与 GPT Researcher 做 head-to-head A/B 盲评：
+
+```bash
+# 实时对比
+uv run python scripts/compare_agents.py --topic "RAG技术的原理和应用"
+
+# 从已有报告对比
+uv run python scripts/compare_agents.py --file-a our.md --file-b gptr.md
+```
 
 ## 🛠 技术栈
 
