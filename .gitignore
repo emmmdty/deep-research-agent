@@ -1,0 +1,30 @@
+# 环境与依赖
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# uv
+uv.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 研究输出（可选保留）
+workspace/
+
+# 临时文件
+*.tmp
+*.log

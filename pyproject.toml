@@ -1,0 +1,24 @@
+[project]
+name = "deep-research-agent"
+version = "0.1.0"
+description = "基于 LangGraph 的多智能体深度研究系统，支持迭代搜索、质量评审、自动报告生成"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "arxiv>=2.4.1",
+    "beautifulsoup4>=4.14.3",
+    "ddgs>=9.11.2",
+    "fastapi>=0.135.1",
+    "httpx>=0.28.1",
+    "langchain>=1.2.10",
+    "langchain-openai>=1.1.10",
+    "langgraph>=1.0.10",
+    "loguru>=0.7.3",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.13.1",
+    "pypdf2>=3.0.1",
+    "python-dotenv>=1.2.2",
+    "rich>=14.3.3",
+    "tavily-python>=0.7.22",
+    "uvicorn[standard]>=0.41.0",
+]
