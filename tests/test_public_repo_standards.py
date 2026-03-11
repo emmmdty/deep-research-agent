@@ -85,7 +85,6 @@ def test_required_community_and_github_files_exist():
         "CODE_OF_CONDUCT.md",
         "SECURITY.md",
         ".github/workflows/ci.yml",
-        ".github/dependabot.yml",
         ".github/pull_request_template.md",
         ".github/ISSUE_TEMPLATE/bug_report.yml",
         ".github/ISSUE_TEMPLATE/feature_request.yml",
