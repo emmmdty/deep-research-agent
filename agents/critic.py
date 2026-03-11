@@ -8,7 +8,7 @@ from loguru import logger
 
 from llm.provider import get_llm
 from prompts.templates import CRITIC_SYSTEM_PROMPT, CRITIC_USER_PROMPT
-from workflows.states import CriticFeedback
+from workflows.states import CriticFeedback, SourceRecord
 
 
 def critic_node(state: dict) -> dict:
@@ -22,7 +22,7 @@ def critic_node(state: dict) -> dict:
     """
     research_topic = state["research_topic"]
     task_summaries = state.get("task_summaries", [])
-    sources_gathered = state.get("sources_gathered", [])
+    sources_gathered: list[SourceRecord] = state.get("sources_gathered", [])
     loop_count = state.get("loop_count", 0)
     max_loops = state.get("max_loops", 3)
 
@@ -32,7 +32,17 @@ def critic_node(state: dict) -> dict:
 
     # 构造上下文
     summaries_text = "\n\n---\n\n".join(task_summaries) if task_summaries else "暂无总结"
-    sources_text = "\n\n".join(sources_gathered[:5]) if sources_gathered else "暂无来源"
+    if sources_gathered:
+        source_lines = []
+        for source in sources_gathered[:5]:
+            source_lines.append(
+                f"[{source.citation_id}] ({source.source_type}) {source.title}\n"
+                f"URL: {source.url}\n"
+                f"摘要: {source.snippet}"
+            )
+        sources_text = "\n\n".join(source_lines)
+    else:
+        sources_text = "暂无来源"
 
     user_prompt = CRITIC_USER_PROMPT.format(
         research_topic=research_topic,

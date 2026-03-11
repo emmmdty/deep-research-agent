@@ -13,6 +13,8 @@ import re
 
 from loguru import logger
 
+from workflows.states import SourceRecord
+
 
 def citation_accuracy(report: str) -> float:
     """计算引用准确率——报告中标注引用的段落占比。
@@ -93,19 +95,40 @@ def report_depth(report: str) -> dict:
     }
 
 
-def evaluate_report(report: str) -> dict:
+def aspect_coverage(report: str, expected_aspects: list[str]) -> float:
+    """计算报告对预期方面的覆盖率。"""
+    if not report or not expected_aspects:
+        return 0.0
+
+    hits = 0
+    lowered = report.lower()
+    for aspect in expected_aspects:
+        keywords = [part.strip().lower() for part in aspect.split("/") if part.strip()]
+        if any(keyword in lowered for keyword in keywords):
+            hits += 1
+    return round(hits / len(expected_aspects), 2)
+
+
+def evaluate_report(
+    report: str,
+    *,
+    source_records: list[SourceRecord] | None = None,
+    expected_aspects: list[str] | None = None,
+) -> dict:
     """综合评估研究报告质量。
 
     Returns:
         包含所有指标的评估结果字典。
     """
     cit_acc = citation_accuracy(report)
-    src_cov = source_coverage(report)
+    src_cov = len(source_records) if source_records else source_coverage(report)
     depth = report_depth(report)
+    asp_cov = aspect_coverage(report, expected_aspects or [])
 
     result = {
         "citation_accuracy": cit_acc,
         "source_coverage": src_cov,
+        "aspect_coverage": asp_cov,
         **depth,
     }
 

@@ -3,9 +3,11 @@
 from tools.web_search import web_search_tool
 from tools.web_scraper import web_scraper_tool
 from tools.arxiv_search import arxiv_search_tool
+from tools.github_search import github_search_tool
 
 __all__ = [
     "web_search_tool",
     "web_scraper_tool",
     "arxiv_search_tool",
+    "github_search_tool",
 ]

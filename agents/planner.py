@@ -8,7 +8,7 @@ from loguru import logger
 
 from llm.provider import get_llm
 from prompts.templates import PLANNER_SYSTEM_PROMPT, PLANNER_USER_PROMPT, get_current_date
-from workflows.states import ResearchState, TaskItem
+from workflows.states import TaskItem
 
 
 def planner_node(state: dict) -> dict:

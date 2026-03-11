@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Optional
+from typing import Any, Optional
 
-from langgraph.graph.message import add_messages
 from pydantic import BaseModel, Field
 
 
@@ -18,6 +17,58 @@ class TaskItem(BaseModel):
     status: str = Field(default="pending", description="执行状态")
     summary: Optional[str] = Field(default=None, description="任务总结")
     sources: Optional[str] = Field(default=None, description="来源引用")
+    strategy: str = Field(default="multi_source", description="执行策略")
+
+
+class SourceRecord(BaseModel):
+    """结构化来源记录。"""
+
+    citation_id: int = Field(description="报告中的引用编号")
+    source_type: str = Field(description="来源类型，例如 web/github/arxiv")
+    query: str = Field(description="触发该来源的搜索查询")
+    title: str = Field(description="来源标题")
+    url: str = Field(default="", description="来源链接")
+    snippet: str = Field(default="", description="来源摘要")
+    task_title: str = Field(default="", description="所属任务标题")
+    published_at: Optional[str] = Field(default=None, description="发布时间")
+    metadata: dict[str, Any] = Field(default_factory=dict, description="扩展元数据")
+
+
+class EvidenceNote(BaseModel):
+    """研究证据笔记。"""
+
+    task_id: Optional[int] = Field(default=None, description="所属任务 ID")
+    task_title: str = Field(default="", description="所属任务标题")
+    query: str = Field(description="搜索查询")
+    summary: str = Field(description="该轮研究总结")
+    source_ids: list[int] = Field(default_factory=list, description="支撑该总结的来源编号")
+
+
+class RunMetrics(BaseModel):
+    """单次研究运行指标。"""
+
+    time_seconds: float = Field(default=0.0, description="总耗时（秒）")
+    llm_calls: int = Field(default=0, description="LLM 调用次数")
+    search_calls: int = Field(default=0, description="搜索调用次数")
+    total_input_tokens: int = Field(default=0, description="输入 token 数")
+    total_output_tokens: int = Field(default=0, description="输出 token 数")
+    estimated_cost_usd: float = Field(default=0.0, description="估算美元成本")
+    status: str = Field(default="initialized", description="运行状态")
+
+    @property
+    def total_tokens(self) -> int:
+        """总 token 数。"""
+        return self.total_input_tokens + self.total_output_tokens
+
+
+class ReportArtifact(BaseModel):
+    """结构化报告产物。"""
+
+    topic: str = Field(description="研究主题")
+    report: str = Field(description="最终 Markdown 报告")
+    citations: list[SourceRecord] = Field(default_factory=list, description="引用来源")
+    evidence_notes: list[EvidenceNote] = Field(default_factory=list, description="证据笔记")
+    metrics: RunMetrics = Field(default_factory=RunMetrics, description="运行指标")
 
 
 class CriticFeedback(BaseModel):
@@ -46,7 +97,9 @@ class ResearchState(BaseModel):
     current_task_index: int = Field(default=0, description="当前执行的任务索引")
     search_results: list[str] = Field(default_factory=list, description="各任务的搜索结果")
     task_summaries: list[str] = Field(default_factory=list, description="各任务的总结")
-    sources_gathered: list[str] = Field(default_factory=list, description="已收集的来源")
+    sources_gathered: list[SourceRecord] = Field(default_factory=list, description="已收集的来源")
+    evidence_notes: list[EvidenceNote] = Field(default_factory=list, description="结构化证据笔记")
+    run_metrics: RunMetrics = Field(default_factory=RunMetrics, description="运行指标")
 
     # 评审阶段
     critic_feedback: Optional[CriticFeedback] = Field(
@@ -57,6 +110,7 @@ class ResearchState(BaseModel):
 
     # 报告阶段
     final_report: Optional[str] = Field(default=None, description="最终研究报告")
+    report_artifact: Optional[ReportArtifact] = Field(default=None, description="结构化报告产物")
 
     # 状态标志
     status: str = Field(default="initialized", description="工作流当前状态")

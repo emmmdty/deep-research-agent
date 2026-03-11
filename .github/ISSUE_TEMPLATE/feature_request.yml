@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest an improvement to the project
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    attributes:
+      label: Problem to solve
+      description: What limitation or workflow problem does this request address?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed solution
+      description: Describe the expected behavior or interface.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Links, examples, or benchmark motivation.

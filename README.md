@@ -1,157 +1,139 @@
-# Deep Research Agent 🔬
+# Deep Research Agent
 
-> 基于 LangGraph 的多智能体深度研究系统，支持迭代搜索、质量评审、自动报告生成。
+[![CI](https://github.com/emmmdty/deep-research-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/emmmdty/deep-research-agent/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-## ✨ 技术亮点
+English | [简体中文](./README.zh-CN.md)
 
-- **Multi-Agent Research System** — Supervisor / Planner / Researcher / Critic / Writer 五角色协作
-- **Iterative Research Loop** — Critic 质量评审驱动迭代研究，自动补充知识空白
-- **MCP Tool Integration** — 可扩展的 MCP 工具集成（预留接口）
-- **Autonomous Web Research** — Tavily / DuckDuckGo / arXiv / GitHub 多源搜索
-- **Long-horizon Agent Planning** — LangGraph 状态图驱动的长程研究规划
+A LangGraph-based deep research agent project focused on multi-source evidence gathering, structured evaluation, and comparator-driven benchmarking.
 
-## 🏗 架构
+## Project Positioning
 
-```
-              ┌─────────────┐
-              │  Supervisor  │
-              └──────┬──────┘
-         ┌───────────┼───────────┐
-         ▼           ▼           ▼
-    ┌─────────┐ ┌──────────┐ ┌────────┐
-    │ Planner │ │Researcher│ │ Writer │
-    └────┬────┘ └────┬─────┘ └────┬───┘
-         │           │            │
-         │     ┌─────▼─────┐      │
-         └────►│   Critic   │◄────┘
-               └─────┬─────┘
-                     │ (不满足 → 继续迭代)
-            ┌────────▼───────┐
-            │ Iterative Loop │
-            └────────────────┘
-```
+This repository is maintained as a public research-engineering / portfolio project.
 
-## 📁 项目结构
+It is designed to show:
 
-```
-deep-research-agent/
-├── agents/              # Multi-Agent 定义
-│   ├── supervisor.py    # 顶层协调
-│   ├── planner.py       # 任务拆解
-│   ├── researcher.py    # 搜索 + 总结
-│   ├── critic.py        # 质量评审
-│   └── writer.py        # 报告撰写
-├── tools/               # 工具系统（6 个工具）
-├── workflows/           # LangGraph 工作流
-│   ├── graph.py         # 状态图定义 + 条件路由
-│   └── states.py        # TypedDict 状态 schema
-├── evaluation/          # 评估与 Benchmark
-│   ├── metrics.py       # 基础指标（引用/来源/深度）
-│   ├── llm_judge.py     # LLM-as-Judge 5 维度评分
-│   ├── cost_tracker.py  # 成本追踪器
-│   └── benchmarks/      # 标准测试主题集
-├── llm/                 # LLM Provider 封装 + 输出清洗
-├── prompts/             # 提示词模板
-├── configs/             # 配置管理（.env + YAML）
-├── memory/              # 研究笔记/来源/总结 持久化
-├── skills/              # 可复用研究技能模板
-├── scripts/             # Benchmark + 竞品对比脚本
-├── tests/               # 单元测试（pytest）
-├── docs/                # 架构文档 + 开发指南 + API 文档
-├── examples/            # 示例脚本
-├── main.py              # CLI 入口（--topic / --serve）
-└── pyproject.toml       # 依赖管理
-```
+- a multi-agent deep research workflow
+- structured evidence and citation handling
+- benchmark and comparator harnesses
+- testable, documented engineering decisions
 
-## 🚀 快速开始
+The supported public surface is CLI-first. There is currently no supported HTTP API.
 
-### 1. 安装依赖
+## Features
+
+- Multi-agent workflow: `Supervisor -> Planner -> Researcher -> Critic -> Writer`
+- Multi-source research with `web`, `github`, and `arxiv`
+- Structured artifacts: `SourceRecord`, `EvidenceNote`, `RunMetrics`, `ReportArtifact`
+- Benchmark runner and full comparator harness
+- Blind pairwise report judging through `LLM-as-Judge`
+
+## Quickstart
+
+### 1. Install dependencies
 
 ```bash
-uv sync
+uv sync --group dev
 ```
 
-### 2. 配置环境变量
+### 2. Configure environment variables
 
 ```bash
 cp .env.example .env
-# 编辑 .env，填入你的 API 密钥
 ```
 
-### 3. 运行研究
+Fill in the required API keys before running research commands.
+
+### 3. Run a research task
 
 ```bash
-# 命令行模式
-uv run python main.py --topic "2024年大语言模型Agent架构的最新进展"
-
-# 指定迭代次数
-uv run python main.py --topic "RAG技术" --max-loops 2
+uv run python main.py --topic "Latest progress in LLM agent architectures"
 ```
 
-### 4. 运行 Benchmark
+### 4. Run benchmark and comparison commands
 
 ```bash
-uv run python scripts/run_benchmark.py
+uv run python scripts/run_benchmark.py --comparators ours,gptr,odr,alibaba
+uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
+uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.md
 ```
 
-## ⚙️ 配置
+## Example Output
 
-支持通过 `.env` 文件配置：
+Representative CLI flow:
 
-| 变量                 | 说明            | 默认值         |
-| -------------------- | --------------- | -------------- |
-| `LLM_PROVIDER`       | LLM 提供商      | `minimax`      |
-| `LLM_MODEL_NAME`     | 模型名称        | `MiniMax-M2.5` |
-| `LLM_API_KEY`        | API 密钥        | -              |
-| `SEARCH_BACKEND`     | 搜索后端        | `tavily`       |
-| `TAVILY_API_KEY`     | Tavily API 密钥 | -              |
-| `MAX_RESEARCH_LOOPS` | 最大迭代次数    | `3`            |
+```text
+$ uv run python main.py --topic "Latest progress in LLM agent architectures"
+🚀 启动深度研究: topic='Latest progress in LLM agent architectures', max_loops=3
+📋 Planner 规划完成: 生成 4 个子任务
+🔍 Researcher 执行完成: 总结数=4, 来源数=12
+🧠 Critic 评分完成: quality_score=8, is_sufficient=True
+📝 Writer 报告生成完成
+🎉 深度研究完成: status=completed
+```
 
-## 📊 Benchmark 与评估
+## Configuration
 
-### 基础指标
+Publicly supported environment variables include:
 
-| 指标                | 说明         | 目标       |
-| ------------------- | ------------ | ---------- |
-| `citation_accuracy` | 引用准确率   | > 90%      |
-| `source_coverage`   | 来源覆盖率   | > 5 个来源 |
-| `report_depth`      | 报告深度评分 | > 0.7      |
-| `word_count`        | 报告字数     | > 5000 字  |
+- `LLM_PROVIDER`
+- `LLM_MODEL_NAME`
+- `LLM_API_KEY`
+- `LLM_BASE_URL`
+- `SEARCH_BACKEND`
+- `TAVILY_API_KEY`
+- `MAX_RESEARCH_LOOPS`
+- `MAX_SEARCH_RESULTS`
+- `RESEARCH_CONCURRENCY`
+- `ENABLED_SOURCES`
+- `ENABLED_COMPARATORS`
+- `JUDGE_MODEL`
+- `GPT_RESEARCHER_PYTHON`
+- `OPEN_DEEP_RESEARCH_COMMAND`
+- `OPEN_DEEP_RESEARCH_REPORT_DIR`
+- `ALIBABA_RUNNER_MODE`
+- `ALIBABA_COMMAND`
+- `ALIBABA_REPORT_DIR`
+- `GEMINI_ENABLED`
+- `GEMINI_ALLOWLIST_REQUIRED`
+- `GEMINI_COMMAND`
+- `GEMINI_REPORT_DIR`
 
-### LLM-as-Judge 评分
+See [`.env.example`](./.env.example) for the complete template.
 
-使用 LLM 自动评分 5 个维度（各 1-10 分）：**内容深度** / **事实准确度** / **逻辑连贯性** / **引用质量** / **结构完整性**
+## Repository Layout
+
+```text
+agents/       multi-agent nodes
+tools/        search and utility tools
+workflows/    state graph and structured state models
+evaluation/   metrics, judge, cost tracking, comparator registry
+scripts/      benchmark, comparison, and offline comparison commands
+tests/        regression and unit tests
+docs/         architecture and development notes
+```
+
+## Development
+
+Local verification:
 
 ```bash
-# 完整评测（含 LLM Judge）
-uv run python scripts/run_benchmark.py
-
-# 快速评测（跳过 LLM Judge）
-uv run python scripts/run_benchmark.py --skip-judge --max-topics 3
+uv run ruff check .
+uv run pytest -q
 ```
 
-### 竞品对比
+Key developer docs:
 
-支持与 GPT Researcher 做 head-to-head A/B 盲评：
+- [Architecture](./docs/architecture.md)
+- [Development Guide](./docs/development.md)
+- [Contributing](./CONTRIBUTING.md)
+- [Security Policy](./SECURITY.md)
 
-```bash
-# 实时对比
-uv run python scripts/compare_agents.py --topic "RAG技术的原理和应用"
+## Limitations
 
-# 从已有报告对比
-uv run python scripts/compare_agents.py --file-a our.md --file-b gptr.md
-```
+- Comparator integrations such as `odr`, `alibaba`, and `gemini` still depend on your configured command templates or imported report directories.
+- The repository intentionally does not expose a supported HTTP server surface in the current version.
 
-## 🛠 技术栈
+## License
 
-- **工作流引擎**: LangGraph
-- **LLM 框架**: LangChain + OpenAI SDK
-- **LLM 提供商**: MiniMax / DeepSeek / OpenAI（兼容格式）
-- **搜索工具**: Tavily / DuckDuckGo / arXiv / GitHub
-- **数据模型**: Pydantic v2
-- **日志**: Loguru
-- **CLI**: Rich
-
-## 📄 License
-
-MIT
+MIT. See [LICENSE](./LICENSE).

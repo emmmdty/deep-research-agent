@@ -1,6 +1,7 @@
 # 环境与依赖
 .env
 .venv/
+venv_gptr/
 __pycache__/
 *.pyc
 *.pyo
@@ -8,9 +9,8 @@ __pycache__/
 dist/
 build/
 *.egg
-
-# uv
-uv.lock
+.ruff_cache/
+.pytest_cache/
 
 # IDE
 .vscode/
@@ -28,3 +28,4 @@ workspace/
 # 临时文件
 *.tmp
 *.log
+scripts/test_gptr*.py

@@ -2,21 +2,16 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from langchain_core.tools import tool
 from loguru import logger
 
+from evaluation.cost_tracker import get_tracker
 
-@tool
-def github_search_tool(query: str, max_results: int = 5) -> str:
-    """在 GitHub 上搜索相关仓库。
 
-    Args:
-        query: 搜索查询语句。
-        max_results: 返回的最大结果数量，默认 5。
-
-    Returns:
-        格式化的仓库列表，含名称、描述、Stars 数和链接。
-    """
+def search_github_repositories(query: str, max_results: int = 5) -> list[dict[str, Any]]:
+    """返回结构化 GitHub 仓库搜索结果。"""
     try:
         import httpx
 
@@ -37,32 +32,58 @@ def github_search_tool(query: str, max_results: int = 5) -> str:
             timeout=15,
         )
         response.raise_for_status()
+        get_tracker().record_search_call()
 
         data = response.json()
         items = data.get("items", [])
-
-        if not items:
-            return "GitHub 搜索未返回结果。"
-
-        formatted = []
+        normalized: list[dict[str, Any]] = []
         for i, repo in enumerate(items, 1):
-            name = repo.get("full_name", "")
-            desc = repo.get("description", "无描述") or "无描述"
-            stars = repo.get("stargazers_count", 0)
-            url = repo.get("html_url", "")
-            language = repo.get("language", "未知")
-            updated = repo.get("updated_at", "")[:10]
-
-            formatted.append(
-                f"[{i}] {name} ⭐ {stars}\n"
-                f"语言: {language} | 更新: {updated}\n"
-                f"描述: {desc[:200]}\n"
-                f"链接: {url}\n"
+            normalized.append(
+                {
+                    "index": i,
+                    "source_type": "github",
+                    "title": repo.get("full_name", ""),
+                    "url": repo.get("html_url", ""),
+                    "snippet": (repo.get("description", "无描述") or "无描述")[:200],
+                    "stars": repo.get("stargazers_count", 0),
+                    "language": repo.get("language", "未知"),
+                    "updated_at": repo.get("updated_at", "")[:10],
+                }
             )
 
         logger.info("GitHub 搜索完成: query='{}', 结果数={}", query, len(items))
-        return "\n".join(formatted)
+        return normalized
 
     except Exception as e:
         logger.error("GitHub 搜索失败: {}", e)
-        return f"GitHub 搜索失败: {e}"
+        return []
+
+
+def format_github_results(results: list[dict[str, Any]]) -> str:
+    """格式化 GitHub 仓库结果。"""
+    if not results:
+        return "GitHub 搜索未返回结果。"
+
+    formatted = []
+    for item in results:
+        formatted.append(
+            f"[{item['index']}] {item['title']} ⭐ {item['stars']}\n"
+            f"语言: {item['language']} | 更新: {item['updated_at']}\n"
+            f"描述: {item['snippet']}\n"
+            f"链接: {item['url']}\n"
+        )
+    return "\n".join(formatted)
+
+
+@tool
+def github_search_tool(query: str, max_results: int = 5) -> str:
+    """在 GitHub 上搜索相关仓库。
+
+    Args:
+        query: 搜索查询语句。
+        max_results: 返回的最大结果数量，默认 5。
+
+    Returns:
+        格式化的仓库列表，含名称、描述、Stars 数和链接。
+    """
+    return format_github_results(search_github_repositories(query, max_results))

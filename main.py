@@ -3,9 +3,6 @@
 使用方式：
     # 命令行运行
     uv run python main.py --topic "2024年大语言模型Agent架构的最新进展"
-
-    # 启动 API 服务
-    uv run python main.py --serve
 """
 
 from __future__ import annotations
@@ -70,27 +67,6 @@ def run_cli(topic: str, max_loops: int = 3) -> None:
     output_file.write_text(report, encoding="utf-8")
     console.print(f"\n📄 报告已保存到: [cyan]{output_file}[/cyan]")
 
-
-def run_server(host: str = "0.0.0.0", port: int = 8000) -> None:
-    """启动 FastAPI 服务器。"""
-    import uvicorn
-
-    console.print(
-        Panel(
-            f"[bold cyan]地址:[/bold cyan] http://{host}:{port}\n"
-            f"[bold cyan]文档:[/bold cyan] http://{host}:{port}/docs",
-            title="🌐 Deep Research Agent API",
-            border_style="blue",
-        )
-    )
-
-    # 延迟导入以避免循环依赖
-    from api import create_app
-
-    app = create_app()
-    uvicorn.run(app, host=host, port=port)
-
-
 def main() -> None:
     """主入口函数。"""
     parser = argparse.ArgumentParser(
@@ -107,35 +83,16 @@ def main() -> None:
         default=3,
         help="最大迭代循环次数（默认 3）",
     )
-    parser.add_argument(
-        "--serve",
-        action="store_true",
-        help="启动 API 服务器模式",
-    )
-    parser.add_argument(
-        "--host",
-        type=str,
-        default="0.0.0.0",
-        help="API 服务绑定地址（默认 0.0.0.0）",
-    )
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=8000,
-        help="API 服务端口（默认 8000）",
-    )
 
     args = parser.parse_args()
 
-    if args.serve:
-        run_server(host=args.host, port=args.port)
-    elif args.topic:
+    if args.topic:
         run_cli(args.topic, max_loops=args.max_loops)
     else:
         parser.print_help()
         console.print("\n[yellow]示例:[/yellow]")
         console.print('  uv run python main.py --topic "2024年大语言模型Agent架构的最新进展"')
-        console.print("  uv run python main.py --serve")
+        console.print("  uv run python scripts/run_benchmark.py --comparators ours,gptr,odr,alibaba")
 
 
 if __name__ == "__main__":

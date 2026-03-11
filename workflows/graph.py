@@ -12,17 +12,18 @@
 
 from __future__ import annotations
 
-import operator
 from typing import Annotated, Any, Optional, TypedDict
 
 from langgraph.graph import END, StateGraph
 from loguru import logger
 
+from evaluation.cost_tracker import get_tracker
 from agents.supervisor import supervisor_node
 from agents.planner import planner_node
 from agents.researcher import researcher_node
 from agents.critic import critic_node
 from agents.writer import writer_node
+from workflows.states import ReportArtifact, RunMetrics
 
 
 def _replace(a, b):
@@ -30,23 +31,21 @@ def _replace(a, b):
     return b
 
 
-def _merge_lists(a: list, b: list) -> list:
-    """状态合并策略：列表追加。"""
-    return a + b
-
-
 class GraphState(TypedDict, total=False):
     """LangGraph 状态 schema——使用 Annotated 指定合并策略。"""
 
     research_topic: Annotated[str, _replace]
     tasks: Annotated[list, _replace]
-    task_summaries: Annotated[list, _merge_lists]
-    sources_gathered: Annotated[list, _merge_lists]
-    search_results: Annotated[list, _merge_lists]
+    task_summaries: Annotated[list, _replace]
+    sources_gathered: Annotated[list, _replace]
+    search_results: Annotated[list, _replace]
+    evidence_notes: Annotated[list, _replace]
     critic_feedback: Annotated[Any, _replace]
     loop_count: Annotated[int, _replace]
     max_loops: Annotated[int, _replace]
     final_report: Annotated[Optional[str], _replace]
+    report_artifact: Annotated[Optional[ReportArtifact], _replace]
+    run_metrics: Annotated[RunMetrics, _replace]
     status: Annotated[str, _replace]
     error: Annotated[Optional[str], _replace]
 
@@ -121,6 +120,10 @@ def run_research(topic: str, max_loops: int = 3) -> dict:
     logger.info("🚀 启动深度研究: topic='{}', max_loops={}", topic, max_loops)
 
     graph = build_research_graph()
+    tracker = get_tracker()
+    owns_tracker = not tracker.is_running
+    if owns_tracker:
+        tracker.start()
 
     initial_state: GraphState = {
         "research_topic": topic,
@@ -128,16 +131,36 @@ def run_research(topic: str, max_loops: int = 3) -> dict:
         "task_summaries": [],
         "sources_gathered": [],
         "search_results": [],
+        "evidence_notes": [],
         "critic_feedback": None,
         "loop_count": 0,
         "max_loops": max_loops,
         "final_report": None,
+        "report_artifact": None,
+        "run_metrics": RunMetrics(),
         "status": "initialized",
         "error": None,
     }
 
     # 执行工作流
-    final_state = graph.invoke(initial_state)
+    final_state: dict = {}
+    try:
+        final_state = graph.invoke(initial_state)
+    finally:
+        metrics = tracker.stop() if owns_tracker else tracker.snapshot()
+
+    run_metrics = RunMetrics(
+        time_seconds=round(metrics.total_time_seconds, 2),
+        llm_calls=metrics.llm_calls,
+        search_calls=metrics.search_calls,
+        total_input_tokens=metrics.total_input_tokens,
+        total_output_tokens=metrics.total_output_tokens,
+        estimated_cost_usd=metrics.estimated_cost_usd,
+        status=str(final_state.get("status", "completed")),
+    )
+    final_state["run_metrics"] = run_metrics
+    if final_state.get("report_artifact") is not None:
+        final_state["report_artifact"].metrics = run_metrics
 
     logger.info("🎉 深度研究完成: status={}", final_state.get("status"))
     return final_state

@@ -47,10 +47,13 @@ cp .env.example .env
 uv run python main.py --topic "你的研究主题"
 
 # 运行 Benchmark
-uv run python scripts/run_benchmark.py --max-topics 3
+uv run python scripts/run_benchmark.py --comparators ours,gptr,odr,alibaba --max-topics 3
 
-# 竞品对比
-uv run python scripts/compare_agents.py --topic "主题"
+# 运行全量 comparator 对比
+uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
+
+# 离线文件对比
+uv run python scripts/compare_agents.py --file-a our.md --file-b competitor.md
 ```
 
 ## 代码规范

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from typing import Optional
 
 from loguru import logger
 
@@ -42,6 +41,51 @@ JUDGE_USER_PROMPT = """\
   "structure": 分数,
   "overall": 综合分数（5个维度的加权平均，depth和accuracy权重各25%，其余各约17%）,
   "comments": "用1-2句话说明评价理由"
+}}
+"""
+
+PAIRWISE_USER_PROMPT = """\
+请对以下两份研究报告做盲评。不要因为报告标签顺序产生偏见。
+
+评分维度：
+1. depth
+2. accuracy
+3. coherence
+4. citation_quality
+5. structure
+
+研究主题：{topic}
+
+报告 X：
+{report_x}
+
+---
+
+报告 Y：
+{report_y}
+
+请以 JSON 输出，只输出 JSON：
+{{
+  "report_x": {{
+    "depth": 分数,
+    "accuracy": 分数,
+    "coherence": 分数,
+    "citation_quality": 分数,
+    "structure": 分数,
+    "overall": 综合分数,
+    "comments": "1 句评价"
+  }},
+  "report_y": {{
+    "depth": 分数,
+    "accuracy": 分数,
+    "coherence": 分数,
+    "citation_quality": 分数,
+    "structure": 分数,
+    "overall": 综合分数,
+    "comments": "1 句评价"
+  }},
+  "winner": "X / Y / tie",
+  "reason": "1-2 句总结胜负原因"
 }}
 """
 
@@ -114,22 +158,72 @@ class LLMJudge:
         Returns:
             包含两份报告评分和对比结果的字典。
         """
-        scores_a = self.score_report(report_a, topic)
-        scores_b = self.score_report(report_b, topic)
+        if not report_a or not report_b:
+            scores_a = self.score_report(report_a, topic)
+            scores_b = self.score_report(report_b, topic)
+            winner = "A" if scores_a.get("overall", 0) > scores_b.get("overall", 0) else "B"
+            if scores_a.get("overall", 0) == scores_b.get("overall", 0):
+                winner = "平局"
+            return {
+                "topic": topic,
+                "report_a": scores_a,
+                "report_b": scores_b,
+                "winner": winner,
+                "score_diff": round(scores_a.get("overall", 0) - scores_b.get("overall", 0), 2),
+            }
 
-        winner = "A" if scores_a.get("overall", 0) > scores_b.get("overall", 0) else "B"
-        if scores_a.get("overall", 0) == scores_b.get("overall", 0):
-            winner = "平局"
+        # 使用中性标签 X / Y，避免把 A/B 标签直接暴露给评审模型。
+        x_is_a = len(report_a) <= len(report_b)
+        report_x = report_a if x_is_a else report_b
+        report_y = report_b if x_is_a else report_a
+        try:
+            from langchain_core.messages import HumanMessage, SystemMessage
 
-        return {
-            "topic": topic,
-            "report_a": scores_a,
-            "report_b": scores_b,
-            "winner": winner,
-            "score_diff": round(
-                scores_a.get("overall", 0) - scores_b.get("overall", 0), 2
-            ),
-        }
+            messages = [
+                SystemMessage(content=JUDGE_SYSTEM_PROMPT),
+                HumanMessage(
+                    content=PAIRWISE_USER_PROMPT.format(
+                        topic=topic or "未指定",
+                        report_x=report_x[:7000],
+                        report_y=report_y[:7000],
+                    )
+                ),
+            ]
+            response = self.llm.invoke(messages)
+            payload = self._parse_pairwise_scores(response.content)
+            scores_x = payload.get("report_x", self._empty_scores("pairwise 评分缺失"))
+            scores_y = payload.get("report_y", self._empty_scores("pairwise 评分缺失"))
+            winner = payload.get("winner", "tie")
+            mapped_winner = {
+                "X": "A" if x_is_a else "B",
+                "Y": "B" if x_is_a else "A",
+                "tie": "平局",
+            }.get(str(winner).strip(), "平局")
+
+            scores_a = scores_x if x_is_a else scores_y
+            scores_b = scores_y if x_is_a else scores_x
+            return {
+                "topic": topic,
+                "report_a": scores_a,
+                "report_b": scores_b,
+                "winner": mapped_winner,
+                "score_diff": round(scores_a.get("overall", 0) - scores_b.get("overall", 0), 2),
+                "reason": payload.get("reason", ""),
+            }
+        except Exception as e:
+            logger.error("LLM Judge 盲评失败，退回单独评分: {}", e)
+            scores_a = self.score_report(report_a, topic)
+            scores_b = self.score_report(report_b, topic)
+            winner = "A" if scores_a.get("overall", 0) > scores_b.get("overall", 0) else "B"
+            if scores_a.get("overall", 0) == scores_b.get("overall", 0):
+                winner = "平局"
+            return {
+                "topic": topic,
+                "report_a": scores_a,
+                "report_b": scores_b,
+                "winner": winner,
+                "score_diff": round(scores_a.get("overall", 0) - scores_b.get("overall", 0), 2),
+            }
 
     def _parse_scores(self, raw_text: str) -> dict:
         """从 LLM 响应中解析评分 JSON。"""
@@ -144,6 +238,25 @@ class LLMJudge:
                 except json.JSONDecodeError:
                     pass
         return self._empty_scores("评分结果解析失败")
+
+    def _parse_pairwise_scores(self, raw_text: str) -> dict:
+        """解析 pairwise 评分结果。"""
+        try:
+            return json.loads(raw_text)
+        except json.JSONDecodeError:
+            start = raw_text.find("{")
+            end = raw_text.rfind("}")
+            if start != -1 and end > start:
+                try:
+                    return json.loads(raw_text[start : end + 1])
+                except json.JSONDecodeError:
+                    pass
+        return {
+            "report_x": self._empty_scores("pairwise 评分结果解析失败"),
+            "report_y": self._empty_scores("pairwise 评分结果解析失败"),
+            "winner": "tie",
+            "reason": "pairwise 评分结果解析失败",
+        }
 
     @staticmethod
     def _empty_scores(reason: str) -> dict:

@@ -3,6 +3,7 @@
 使用方式：
     uv run python examples/basic_research.py
 """
+# ruff: noqa: E402
 
 import sys
 from pathlib import Path
@@ -11,6 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from dotenv import load_dotenv
+
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 from workflows.graph import run_research

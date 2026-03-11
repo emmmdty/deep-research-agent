@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from enum import Enum
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -79,6 +79,62 @@ class Settings(BaseSettings):
         default=5,
         description="每次搜索返回的最大结果数",
     )
+    research_concurrency: int = Field(
+        default=3,
+        description="研究并发度",
+    )
+    enabled_sources: list[str] = Field(
+        default_factory=lambda: ["web", "github", "arxiv"],
+        description="启用的研究来源",
+    )
+    enabled_comparators: list[str] = Field(
+        default_factory=lambda: ["ours", "gptr", "odr", "alibaba"],
+        description="启用的对比器",
+    )
+    judge_model: Optional[str] = Field(
+        default=None,
+        description="LLM Judge 模型名（默认跟随主模型）",
+    )
+    open_deep_research_command: Optional[str] = Field(
+        default=None,
+        description="Open Deep Research 运行命令模板",
+    )
+    open_deep_research_report_dir: Optional[str] = Field(
+        default=None,
+        description="Open Deep Research 报告导入目录",
+    )
+    alibaba_runner_mode: str = Field(
+        default="command",
+        description="Alibaba 对比器运行模式",
+    )
+    alibaba_command: Optional[str] = Field(
+        default=None,
+        description="Alibaba DeepResearch 运行命令模板",
+    )
+    alibaba_report_dir: Optional[str] = Field(
+        default=None,
+        description="Alibaba 报告导入目录",
+    )
+    gemini_enabled: bool = Field(
+        default=False,
+        description="是否启用 Gemini Deep Research 对比器",
+    )
+    gemini_allowlist_required: bool = Field(
+        default=True,
+        description="Gemini Deep Research 是否要求 allowlist",
+    )
+    gemini_command: Optional[str] = Field(
+        default=None,
+        description="Gemini Deep Research 运行命令模板",
+    )
+    gemini_report_dir: Optional[str] = Field(
+        default=None,
+        description="Gemini 报告导入目录",
+    )
+    gpt_researcher_python: Optional[str] = Field(
+        default=None,
+        description="GPT Researcher 隔离 Python 路径",
+    )
 
     # ---------- Memory 配置 ----------
     workspace_dir: str = Field(
@@ -86,9 +142,6 @@ class Settings(BaseSettings):
         description="研究工作区目录",
     )
 
-    # ---------- 服务配置 ----------
-    host: str = Field(default="0.0.0.0", description="API 服务绑定地址")
-    port: int = Field(default=8000, description="API 服务端口")
     log_level: str = Field(default="INFO", description="日志级别")
 
     model_config = {
@@ -96,6 +149,14 @@ class Settings(BaseSettings):
         "env_file_encoding": "utf-8",
         "extra": "ignore",
     }
+
+    @field_validator("enabled_sources", "enabled_comparators", mode="before")
+    @classmethod
+    def _parse_csv_list(cls, value: Any) -> Any:
+        """允许使用逗号分隔字符串配置列表字段。"""
+        if isinstance(value, str):
+            return [item.strip() for item in value.split(",") if item.strip()]
+        return value
 
     def get_llm_config(self) -> dict:
         """返回用于初始化 LLM 客户端的配置字典。"""
@@ -152,3 +213,9 @@ def get_settings() -> Settings:
     if _settings is None:
         _settings = Settings()
     return _settings
+
+
+def reset_settings() -> None:
+    """清空全局配置缓存。"""
+    global _settings
+    _settings = None

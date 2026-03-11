@@ -1,29 +1,56 @@
 [project]
 name = "deep-research-agent"
 version = "0.1.0"
-description = "基于 LangGraph 的多智能体深度研究系统，支持迭代搜索、质量评审、自动报告生成"
+description = "A LangGraph-based deep research agent with multi-source evidence gathering, benchmarking, and comparator harnesses."
 readme = "README.md"
 requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "emmmdty" },
+]
+keywords = ["langgraph", "llm", "research-agent", "benchmark", "python"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 dependencies = [
     "arxiv>=2.4.1",
     "beautifulsoup4>=4.14.3",
     "ddgs>=9.11.2",
-    "fastapi>=0.135.1",
+    "gpt-researcher>=0.12.3",
     "httpx>=0.28.1",
-    "langchain>=1.2.10",
-    "langchain-openai>=1.1.10",
-    "langgraph>=1.0.10",
+    "langchain>=0.2.10,<0.4.0",
+    "langchain-community>=0.2.10,<0.4.0",
+    "langchain-openai>=0.1.10,<0.4.0",
+    "langgraph>=0.1.0",
     "loguru>=0.7.3",
-    "pydantic>=2.12.5",
-    "pydantic-settings>=2.13.1",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.0.0",
     "pypdf2>=3.0.1",
     "python-dotenv>=1.2.2",
     "rich>=14.3.3",
     "tavily-python>=0.7.22",
-    "uvicorn[standard]>=0.41.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/emmmdty/deep-research-agent"
+Repository = "https://github.com/emmmdty/deep-research-agent"
+Issues = "https://github.com/emmmdty/deep-research-agent/issues"
+
+[project.scripts]
+deep-research-agent = "main:main"
 
 [dependency-groups]
 dev = [
     "pytest>=9.0.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.0",
 ]
