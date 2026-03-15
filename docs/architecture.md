@@ -87,15 +87,25 @@ Researcher 不再只拼接单一搜索文本，而是按来源类型收集结构
 | `llm/` | LLM Provider 封装 + 输出清洗 |
 | `configs/` | Pydantic BaseSettings 配置管理 |
 | `evaluation/` | 评估指标、blind judge、成本追踪、comparator 协议 |
-| `memory/` | 辅助持久化模块，当前未接入默认 CLI 主工作流 |
-| `skills/` | 主题模板包装器，当前未形成独立技能系统，也未接入默认 CLI 主工作流 |
-| `mcp_servers/` | MCP 集成占位目录，当前未接入公开支持能力 |
 | `scripts/` | benchmark runner、full comparison、报告导入与离线对比脚本 |
+| `memory/` | 实验性持久化组件，当前未纳入 `main.py -> workflows/graph.py` 主流程 |
+| `skills/` | 研究主题模板/辅助封装，当前不是独立技能系统，也未纳入主流程 |
+| `mcp_servers/` | 预留扩展目录，当前仅占位，没有已接线的 MCP server |
 
-## 辅助与预留目录
+## 非主线 / 实验性目录说明
 
-以下目录当前存在于仓库中，但不属于默认 CLI 主工作流的公开能力面：
+当前主工作流仍以 `main.py -> workflows/graph.py` 为准。以下目录存在于仓库中，但不应被写成已纳入主流程的正式能力：
 
-- `memory/`：辅助持久化模块，保留独立实现与测试，但当前未接入默认 CLI 主工作流。
-- `skills/`：主题模板包装器，便于复用 `run_research()`，当前未形成独立技能系统，也未接入默认 CLI 主工作流。
-- `mcp_servers/`：MCP 集成占位目录，当前未接入公开支持能力。
+- `memory/`：可独立测试的持久化实现，当前未被 `main.py` 或工作流图调用。
+- `skills/`：围绕 `run_research()` 的辅助模板封装，用于复用常见主题，不构成独立平台能力。
+- `mcp_servers/`：仅保留扩展入口说明，当前没有可运行的 MCP server 实现。
+
+## Comparator 状态
+
+| Comparator | 当前状态 | 说明 |
+|---|---|---|
+| `ours` | 内建已实现 | 当前默认基线路径 |
+| `gptr` | 依赖本地隔离环境 | 需要 `GPT_RESEARCHER_PYTHON`，或使用默认 `venv_gptr` 回退路径 |
+| `odr` | 依赖命令模板或报告导入目录 | 通过命令模板或导入结果接入 |
+| `alibaba` | 依赖命令模板或报告导入目录 | 通过命令模板或导入结果接入 |
+| `gemini` | 可选 comparator，默认允许 `skipped` | 不能写成默认已接通能力 |

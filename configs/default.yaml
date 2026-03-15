@@ -43,6 +43,3 @@ research:
 output:
   # 研究报告保存目录
   workspace_dir: workspace
-
-# 当前公开支持面为 CLI-first，不提供受支持 HTTP API，
-# 因此默认配置参考中不再保留 server 配置。

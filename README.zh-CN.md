@@ -86,6 +86,8 @@ $ uv run python main.py --topic "Latest progress in LLM agent architectures"
 - `ENABLED_SOURCES`
 - `ENABLED_COMPARATORS`
 - `JUDGE_MODEL`
+- `WORKSPACE_DIR`
+- `LOG_LEVEL`
 - `GPT_RESEARCHER_PYTHON`
 - `OPEN_DEEP_RESEARCH_COMMAND`
 - `OPEN_DEEP_RESEARCH_REPORT_DIR`
@@ -111,6 +113,22 @@ tests/        回归测试与单元测试
 docs/         架构与开发文档
 ```
 
+补充说明：
+
+- `memory/`：实验性持久化组件，当前未纳入 `main.py -> workflows/graph.py` 主流程。
+- `skills/`：研究主题模板/辅助封装，不是外部技能系统，也未纳入主流程。
+- `mcp_servers/`：预留扩展目录，当前仅占位，没有已接线的 MCP server。
+
+## Comparator 状态矩阵
+
+| Comparator | 当前状态 | 依赖条件 |
+|---|---|---|
+| `ours` | 内建已实现 | 无额外依赖，作为默认基线使用 |
+| `gptr` | 依赖本地隔离环境 | 需要 `GPT_RESEARCHER_PYTHON`，或使用默认 `venv_gptr` 回退路径 |
+| `odr` | 依赖命令模板或报告导入目录 | 需要 `OPEN_DEEP_RESEARCH_COMMAND` 或 `OPEN_DEEP_RESEARCH_REPORT_DIR` |
+| `alibaba` | 依赖命令模板或报告导入目录 | 需要 `ALIBABA_COMMAND` / `ALIBABA_REPORT_DIR` |
+| `gemini` | 可选 comparator，默认允许 `skipped` | 需要显式启用与对应命令模板或报告导入目录 |
+
 ## 开发与验证
 
 ```bash
@@ -122,15 +140,13 @@ uv run pytest -q
 
 - [架构设计](./docs/architecture.md)
 - [开发指南](./docs/development.md)
+- [90 天执行路线](./docs/plans/90-day-execution-roadmap.md)
 - [贡献指南](./CONTRIBUTING.md)
 - [安全策略](./SECURITY.md)
 
 ## 当前限制
 
-- `gptr` comparator 依赖隔离 Python 环境，例如 `GPT_RESEARCHER_PYTHON` 或本地 `venv_gptr`。
-- `odr`、`alibaba` comparator 仍依赖你本地配置的命令模板或报告导入目录。
-- `gemini` 是可选 comparator，默认不启用，允许返回 `skipped`。
-- `memory/`、`skills/`、`mcp_servers/` 当前不属于默认 CLI 主工作流的公开能力面。
+- `odr`、`alibaba`、`gemini` 等 comparator 仍依赖你本地配置的命令模板或报告导入目录。
 - 当前版本不提供受支持的 HTTP 服务接口。
 
 ## 许可证

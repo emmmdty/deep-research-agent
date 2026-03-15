@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 
+from configs.settings import Settings, get_settings
+from llm.provider import get_llm
 from loguru import logger
 
 
@@ -93,15 +95,25 @@ PAIRWISE_USER_PROMPT = """\
 class LLMJudge:
     """使用 LLM 对研究报告进行质量评分。"""
 
-    def __init__(self, llm=None) -> None:
+    def __init__(self, llm=None, settings: Settings | None = None) -> None:
         self._llm = llm
+        self._settings = settings
+
+    def _resolve_judge_settings(self) -> Settings:
+        """解析 Judge 实际使用的配置。"""
+        settings = self._settings or get_settings()
+        if settings.judge_model:
+            logger.info("LLM Judge 使用独立模型: {}", settings.judge_model)
+            return settings.model_copy(
+                update={"llm_model_name": settings.judge_model}
+            )
+        return settings
 
     @property
     def llm(self):
         """懒加载 LLM 实例。"""
         if self._llm is None:
-            from llm.provider import get_llm
-            self._llm = get_llm()
+            self._llm = get_llm(self._resolve_judge_settings())
         return self._llm
 
     def score_report(self, report: str, topic: str = "") -> dict:

@@ -88,6 +88,8 @@ Publicly supported environment variables include:
 - `ENABLED_SOURCES`
 - `ENABLED_COMPARATORS`
 - `JUDGE_MODEL`
+- `WORKSPACE_DIR`
+- `LOG_LEVEL`
 - `GPT_RESEARCHER_PYTHON`
 - `OPEN_DEEP_RESEARCH_COMMAND`
 - `OPEN_DEEP_RESEARCH_REPORT_DIR`
@@ -113,6 +115,22 @@ tests/        regression and unit tests
 docs/         architecture and development notes
 ```
 
+Additional notes:
+
+- `memory/`: experimental persistence utilities; not part of the `main.py -> workflows/graph.py` main path today.
+- `skills/`: lightweight research templates/helpers; not an external skill platform and not wired into the main workflow.
+- `mcp_servers/`: reserved extension directory; currently placeholder-only with no supported MCP server integration.
+
+## Comparator Status Matrix
+
+| Comparator | Current status | Dependency conditions |
+|---|---|---|
+| `ours` | Built-in and implemented | No extra dependency; serves as the baseline path |
+| `gptr` | Environment-dependent | Requires `GPT_RESEARCHER_PYTHON`, or falls back to the default `venv_gptr` path when available |
+| `odr` | Command/import dependent | Requires `OPEN_DEEP_RESEARCH_COMMAND` or `OPEN_DEEP_RESEARCH_REPORT_DIR` |
+| `alibaba` | Command/import dependent | Requires `ALIBABA_COMMAND` or `ALIBABA_REPORT_DIR` |
+| `gemini` | Optional comparator; `skipped` is allowed by default | Requires explicit enablement plus command template or imported reports |
+
 ## Development
 
 Local verification:
@@ -126,15 +144,13 @@ Key developer docs:
 
 - [Architecture](./docs/architecture.md)
 - [Development Guide](./docs/development.md)
+- [90-Day Execution Roadmap](./docs/plans/90-day-execution-roadmap.md)
 - [Contributing](./CONTRIBUTING.md)
 - [Security Policy](./SECURITY.md)
 
 ## Limitations
 
-- The `gptr` comparator depends on an isolated Python environment such as `GPT_RESEARCHER_PYTHON` or a local `venv_gptr`.
-- Comparator integrations such as `odr` and `alibaba` still depend on your configured command templates or imported report directories.
-- `gemini` is an optional comparator, disabled by default, and may return `skipped`.
-- `memory/`, `skills/`, and `mcp_servers/` are not part of the default public CLI workflow surface.
+- Comparator integrations such as `odr`, `alibaba`, and `gemini` still depend on your configured command templates or imported report directories.
 - The repository intentionally does not expose a supported HTTP server surface in the current version.
 
 ## License

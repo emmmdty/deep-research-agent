@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
+from configs.settings import Settings
 from workflows.states import SourceRecord
 
 
@@ -74,3 +75,43 @@ def test_gptr_runner_builds_environment_from_existing_env(monkeypatch):
     assert env["OPENAI_API_KEY"] == "env-openai-key"
     assert env["TAVILY_API_KEY"] == "env-tavily-key"
     assert env["EXTRA"] == "1"
+
+
+def test_llm_judge_uses_explicit_judge_model(monkeypatch):
+    """显式配置 judge_model 时，Judge 应使用独立模型。"""
+    from evaluation import llm_judge
+
+    captured = {}
+    settings = Settings(llm_model_name="main-model", judge_model="judge-model")
+
+    def fake_get_llm(resolved_settings):
+        captured["model"] = resolved_settings.llm_model_name
+        return _FakeLLM("{}")
+
+    monkeypatch.setattr(llm_judge, "get_settings", lambda: settings)
+    monkeypatch.setattr(llm_judge, "get_llm", fake_get_llm)
+
+    judge = llm_judge.LLMJudge()
+    _ = judge.llm
+
+    assert captured["model"] == "judge-model"
+
+
+def test_llm_judge_follows_primary_model_without_override(monkeypatch):
+    """未配置 judge_model 时，Judge 应沿用主模型。"""
+    from evaluation import llm_judge
+
+    captured = {}
+    settings = Settings(llm_model_name="main-model", judge_model=None)
+
+    def fake_get_llm(resolved_settings):
+        captured["model"] = resolved_settings.llm_model_name
+        return _FakeLLM("{}")
+
+    monkeypatch.setattr(llm_judge, "get_settings", lambda: settings)
+    monkeypatch.setattr(llm_judge, "get_llm", fake_get_llm)
+
+    judge = llm_judge.LLMJudge()
+    _ = judge.llm
+
+    assert captured["model"] == "main-model"

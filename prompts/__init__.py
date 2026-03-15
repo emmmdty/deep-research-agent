@@ -10,6 +10,10 @@ from prompts.templates import (
     WRITER_SYSTEM_PROMPT,
     WRITER_USER_PROMPT,
 )
+from prompts.project_audit import (
+    V1_PROJECT_AUDIT_PROMPT,
+    build_v1_project_audit_prompt,
+)
 
 __all__ = [
     "PLANNER_SYSTEM_PROMPT",
@@ -20,4 +24,6 @@ __all__ = [
     "CRITIC_USER_PROMPT",
     "WRITER_SYSTEM_PROMPT",
     "WRITER_USER_PROMPT",
+    "V1_PROJECT_AUDIT_PROMPT",
+    "build_v1_project_audit_prompt",
 ]

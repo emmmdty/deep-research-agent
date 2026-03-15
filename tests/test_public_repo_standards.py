@@ -52,42 +52,17 @@ def test_env_example_matches_supported_public_configuration():
     assert "RESEARCH_CONCURRENCY=" in content
     assert "ENABLED_SOURCES=" in content
     assert "ENABLED_COMPARATORS=" in content
+    assert "WORKSPACE_DIR=" in content
+    assert "LOG_LEVEL=" in content
     assert "OPEN_DEEP_RESEARCH_COMMAND=" in content
 
 
-def test_default_yaml_does_not_reintroduce_server_surface():
-    """默认配置参考不应继续保留已冻结的服务配置。"""
-    content = (PROJECT_ROOT / "configs" / "default.yaml").read_text(encoding="utf-8")
+def test_default_yaml_does_not_advertise_removed_server_surface():
+    """默认 YAML 不应再暗示已支持 HTTP 服务配置。"""
+    content = (PROJECT_ROOT / "configs/default.yaml").read_text(encoding="utf-8")
 
     assert "server:" not in content
-    assert "host:" not in content
-    assert "port:" not in content
-
-
-def test_architecture_doc_marks_auxiliary_modules_as_non_primary():
-    """架构文档应明确哪些目录未纳入默认 CLI 主工作流。"""
-    content = (PROJECT_ROOT / "docs" / "architecture.md").read_text(encoding="utf-8")
-
-    assert "memory/" in content
-    assert "skills/" in content
-    assert "mcp_servers/" in content
-    assert "未接入默认 CLI 主工作流" in content
-    assert "占位目录" in content
-
-
-def test_readmes_clarify_comparator_maturity_and_auxiliary_modules():
-    """公开 README 应说明 comparator 成熟度差异与辅助目录边界。"""
-    contents = [
-        (PROJECT_ROOT / "README.md").read_text(encoding="utf-8").lower(),
-        (PROJECT_ROOT / "README.zh-CN.md").read_text(encoding="utf-8").lower(),
-    ]
-
-    for content in contents:
-        assert "gptr" in content
-        assert "gemini" in content
-        assert "skipped" in content
-        assert "mcp_servers/" in content
-        assert "memory/" in content
+    assert "workspace_dir:" in content
 
 
 def test_pyproject_has_public_metadata_and_no_dead_server_dependencies():
@@ -128,6 +103,44 @@ def test_required_community_and_github_files_exist():
 
     missing = [path for path in required_paths if not (PROJECT_ROOT / path).exists()]
     assert not missing, f"缺少标准 GitHub 文件: {missing}"
+
+
+def test_docs_mark_optional_modules_and_comparator_status_clearly():
+    """公开文档应明确边缘目录状态，并提供 comparator 成熟度说明。"""
+    readme_zh = (PROJECT_ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+    architecture = (PROJECT_ROOT / "docs/architecture.md").read_text(encoding="utf-8")
+
+    assert "Comparator 状态矩阵" in readme_zh
+    assert "`ours`" in readme_zh
+    assert "`gemini`" in readme_zh
+    assert "memory/" in readme_zh
+    assert "skills/" in readme_zh
+    assert "mcp_servers/" in readme_zh
+
+    assert "未纳入 `main.py -> workflows/graph.py` 主流程" in architecture
+    assert "预留扩展目录" in architecture
+    assert "默认允许 `skipped`" in architecture
+
+
+def test_development_guide_contains_execution_and_governance_entrypoints():
+    """开发指南应给出 90 天执行路线与最小项目纪律。"""
+    development = (PROJECT_ROOT / "docs/development.md").read_text(encoding="utf-8")
+    roadmap = (
+        PROJECT_ROOT / "docs/plans/90-day-execution-roadmap.md"
+    ).read_text(encoding="utf-8")
+
+    assert "90 天执行路线" in development
+    assert "文档同步清单" in development
+    assert "Release Note 模板" in development
+    assert "Benchmark 发布最小格式" in development
+
+    assert "第 0-30 天" in roadmap
+    assert "第 31-60 天" in roadmap
+    assert "第 61-90 天" in roadmap
+    assert "plan artifact" in roadmap
+    assert "manifest" in roadmap
+    assert "cited claim alignment" in roadmap
+    assert "JSONL" in roadmap
 
 
 def test_tracked_files_do_not_contain_plaintext_secrets():

@@ -12,8 +12,6 @@
   - `scripts/full_comparison.py`
   - `evaluation/comparators.py`
 - 当前没有受支持的 HTTP API；若未来重新引入服务端接口，必须先补真实实现，再开放文档与依赖。
-- `memory/`、`skills/` 当前为辅助目录，不属于默认 CLI 主工作流的公开能力面。
-- `mcp_servers/` 当前为可选占位目录，不属于已公开支持能力。
 
 ## 代码风格
 
@@ -49,7 +47,6 @@
   - `gptr`
   - `odr`
   - `alibaba`
-- `gptr` 依赖隔离 Python 环境；`odr`、`alibaba` 优先走命令模板或报告导入目录。
 - `gemini` 为可选 comparator，允许返回 `skipped`，但不能伪装成已接通。
 - 外部 comparator 接入优先使用：
   - `.env` / `configs/settings.py` 中的命令模板
