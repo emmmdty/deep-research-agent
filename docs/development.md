@@ -17,6 +17,16 @@ cp .env.example .env
 
 ## 开发流程
 
+### 公开边界说明
+
+- 当前公开支持面为 CLI-first，不提供受支持的 HTTP API。
+- `memory/`、`skills/` 为辅助目录，`mcp_servers/` 为占位目录；三者当前都未接入默认 CLI 主工作流。
+- comparator 当前分层如下：
+  - `ours`：仓库内建工作流。
+  - `gptr`：依赖隔离 Python 环境，例如 `GPT_RESEARCHER_PYTHON` 或本地 `venv_gptr`。
+  - `odr`、`alibaba`：依赖命令模板或报告导入目录。
+  - `gemini`：可选 comparator，默认不启用，允许返回 `skipped`。
+
 ### 新增 Agent
 
 1. 在 `agents/` 下创建新文件（如 `agents/my_agent.py`）

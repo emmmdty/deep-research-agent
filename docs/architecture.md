@@ -87,6 +87,15 @@ Researcher 不再只拼接单一搜索文本，而是按来源类型收集结构
 | `llm/` | LLM Provider 封装 + 输出清洗 |
 | `configs/` | Pydantic BaseSettings 配置管理 |
 | `evaluation/` | 评估指标、blind judge、成本追踪、comparator 协议 |
-| `memory/` | 研究笔记 / 来源 / 总结 持久化 |
-| `skills/` | 可复用研究技能模板 |
+| `memory/` | 辅助持久化模块，当前未接入默认 CLI 主工作流 |
+| `skills/` | 主题模板包装器，当前未形成独立技能系统，也未接入默认 CLI 主工作流 |
+| `mcp_servers/` | MCP 集成占位目录，当前未接入公开支持能力 |
 | `scripts/` | benchmark runner、full comparison、报告导入与离线对比脚本 |
+
+## 辅助与预留目录
+
+以下目录当前存在于仓库中，但不属于默认 CLI 主工作流的公开能力面：
+
+- `memory/`：辅助持久化模块，保留独立实现与测试，但当前未接入默认 CLI 主工作流。
+- `skills/`：主题模板包装器，便于复用 `run_research()`，当前未形成独立技能系统，也未接入默认 CLI 主工作流。
+- `mcp_servers/`：MCP 集成占位目录，当前未接入公开支持能力。

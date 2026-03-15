@@ -55,6 +55,41 @@ def test_env_example_matches_supported_public_configuration():
     assert "OPEN_DEEP_RESEARCH_COMMAND=" in content
 
 
+def test_default_yaml_does_not_reintroduce_server_surface():
+    """默认配置参考不应继续保留已冻结的服务配置。"""
+    content = (PROJECT_ROOT / "configs" / "default.yaml").read_text(encoding="utf-8")
+
+    assert "server:" not in content
+    assert "host:" not in content
+    assert "port:" not in content
+
+
+def test_architecture_doc_marks_auxiliary_modules_as_non_primary():
+    """架构文档应明确哪些目录未纳入默认 CLI 主工作流。"""
+    content = (PROJECT_ROOT / "docs" / "architecture.md").read_text(encoding="utf-8")
+
+    assert "memory/" in content
+    assert "skills/" in content
+    assert "mcp_servers/" in content
+    assert "未接入默认 CLI 主工作流" in content
+    assert "占位目录" in content
+
+
+def test_readmes_clarify_comparator_maturity_and_auxiliary_modules():
+    """公开 README 应说明 comparator 成熟度差异与辅助目录边界。"""
+    contents = [
+        (PROJECT_ROOT / "README.md").read_text(encoding="utf-8").lower(),
+        (PROJECT_ROOT / "README.zh-CN.md").read_text(encoding="utf-8").lower(),
+    ]
+
+    for content in contents:
+        assert "gptr" in content
+        assert "gemini" in content
+        assert "skipped" in content
+        assert "mcp_servers/" in content
+        assert "memory/" in content
+
+
 def test_pyproject_has_public_metadata_and_no_dead_server_dependencies():
     """包元数据应适合公开仓库，且不再保留未使用的服务依赖。"""
     content = (PROJECT_ROOT / "pyproject.toml").read_text(encoding="utf-8")

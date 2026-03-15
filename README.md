@@ -131,7 +131,10 @@ Key developer docs:
 
 ## Limitations
 
-- Comparator integrations such as `odr`, `alibaba`, and `gemini` still depend on your configured command templates or imported report directories.
+- The `gptr` comparator depends on an isolated Python environment such as `GPT_RESEARCHER_PYTHON` or a local `venv_gptr`.
+- Comparator integrations such as `odr` and `alibaba` still depend on your configured command templates or imported report directories.
+- `gemini` is an optional comparator, disabled by default, and may return `skipped`.
+- `memory/`, `skills/`, and `mcp_servers/` are not part of the default public CLI workflow surface.
 - The repository intentionally does not expose a supported HTTP server surface in the current version.
 
 ## License

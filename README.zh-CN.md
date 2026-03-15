@@ -127,7 +127,10 @@ uv run pytest -q
 
 ## 当前限制
 
-- `odr`、`alibaba`、`gemini` 等 comparator 仍依赖你本地配置的命令模板或报告导入目录。
+- `gptr` comparator 依赖隔离 Python 环境，例如 `GPT_RESEARCHER_PYTHON` 或本地 `venv_gptr`。
+- `odr`、`alibaba` comparator 仍依赖你本地配置的命令模板或报告导入目录。
+- `gemini` 是可选 comparator，默认不启用，允许返回 `skipped`。
+- `memory/`、`skills/`、`mcp_servers/` 当前不属于默认 CLI 主工作流的公开能力面。
 - 当前版本不提供受支持的 HTTP 服务接口。
 
 ## 许可证
