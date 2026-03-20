@@ -92,34 +92,38 @@ def _search_tavily(query: str, max_results: int, api_key: str) -> list[dict[str,
 
 def _search_duckduckgo(query: str, max_results: int) -> list[dict[str, Any]]:
     """通过 DuckDuckGo 执行搜索（无需 API key）。"""
-    try:
-        from ddgs import DDGS
+    from ddgs import DDGS
 
-        results = []
-        with DDGS() as ddgs:
-            for item in ddgs.text(query, max_results=max_results):
-                results.append(item)
-        get_tracker().record_search_call()
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            results = []
+            with DDGS() as ddgs:
+                for item in ddgs.text(query, max_results=max_results):
+                    results.append(item)
+            get_tracker().record_search_call()
 
-        if not results:
-            return []
+            if not results:
+                return []
 
-        normalized: list[dict[str, Any]] = []
-        for i, r in enumerate(results, 1):
-            normalized.append(
-                {
-                    "index": i,
-                    "source_type": "web",
-                    "backend": "duckduckgo",
-                    "title": r.get("title", "无标题"),
-                    "url": r.get("href", ""),
-                    "snippet": r.get("body", "")[:500],
-                }
-            )
+            normalized: list[dict[str, Any]] = []
+            for i, r in enumerate(results, 1):
+                normalized.append(
+                    {
+                        "index": i,
+                        "source_type": "web",
+                        "backend": "duckduckgo",
+                        "title": r.get("title", "无标题"),
+                        "url": r.get("href", ""),
+                        "snippet": r.get("body", "")[:500],
+                    }
+                )
 
-        logger.info("DuckDuckGo 搜索完成: query='{}', 结果数={}", query, len(results))
-        return normalized
+            logger.info("DuckDuckGo 搜索完成: query='{}', 结果数={}", query, len(results))
+            return normalized
+        except Exception as exc:
+            last_error = exc
+            logger.warning("DuckDuckGo 搜索第 {} 次失败: {}", attempt, exc)
 
-    except Exception as e:
-        logger.error("DuckDuckGo 搜索失败: {}", e)
-        return []
+    logger.error("DuckDuckGo 搜索失败: {}", last_error)
+    return []

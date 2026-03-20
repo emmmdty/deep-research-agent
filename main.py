@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import inspect
 import sys
 from pathlib import Path
 
@@ -47,6 +48,8 @@ def _load_run_research():
 def build_parser() -> argparse.ArgumentParser:
     """构建 CLI 参数解析器。"""
     settings = get_settings()
+    default_max_loops = getattr(settings, "max_research_loops", 3)
+    default_profile = getattr(settings, "research_profile", "default")
     parser = argparse.ArgumentParser(
         description="Deep Research Agent — 多智能体深度研究系统",
     )
@@ -58,8 +61,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--max-loops",
         type=int,
-        default=settings.max_research_loops,
-        help=f"最大迭代循环次数（默认 {settings.max_research_loops}）",
+        default=default_max_loops,
+        help=f"最大迭代循环次数（默认 {default_max_loops}）",
+    )
+    parser.add_argument(
+        "--profile",
+        type=str,
+        default=default_profile,
+        help=f"研究 profile（默认 {default_profile}）",
     )
     return parser
 
@@ -67,19 +76,22 @@ def build_parser() -> argparse.ArgumentParser:
 def run_cli(
     topic: str,
     max_loops: int | None = None,
+    profile: str | None = None,
     run_research_fn=None,
 ) -> Path:
     """命令行模式：运行深度研究并输出报告。"""
     settings = get_settings()
     resolved_max_loops = (
-        max_loops if max_loops is not None else settings.max_research_loops
+        max_loops if max_loops is not None else getattr(settings, "max_research_loops", 3)
     )
+    resolved_profile = profile or getattr(settings, "research_profile", "default")
     research_runner = run_research_fn or _load_run_research()
 
     console.print(
         Panel(
             f"[bold cyan]研究主题:[/bold cyan] {topic}\n"
-            f"[bold cyan]最大迭代:[/bold cyan] {resolved_max_loops} 次",
+            f"[bold cyan]最大迭代:[/bold cyan] {resolved_max_loops} 次\n"
+            f"[bold cyan]运行 Profile:[/bold cyan] {resolved_profile}",
             title="🔬 Deep Research Agent",
             border_style="blue",
         )
@@ -87,7 +99,18 @@ def run_cli(
     console.print()
 
     # 执行研究
-    result = research_runner(topic, max_loops=resolved_max_loops)
+    signature = inspect.signature(research_runner)
+    if "research_profile" in signature.parameters:
+        result = research_runner(
+            topic,
+            max_loops=resolved_max_loops,
+            research_profile=resolved_profile,
+        )
+    else:
+        result = research_runner(
+            topic,
+            max_loops=resolved_max_loops,
+        )
 
     # 输出报告
     report = result.get("final_report", "报告生成失败")
@@ -97,7 +120,7 @@ def run_cli(
     console.print(Markdown(report))
 
     # 保存报告到文件
-    output_dir = Path(settings.workspace_dir)
+    output_dir = Path(getattr(settings, "workspace_dir", "workspace"))
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / f"report_{topic[:20].replace(' ', '_')}.md"
     output_file.write_text(report, encoding="utf-8")
@@ -111,7 +134,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.topic:
-        run_cli(args.topic, max_loops=args.max_loops)
+        run_cli(args.topic, max_loops=args.max_loops, profile=args.profile)
     else:
         parser.print_help()
         console.print("\n[yellow]示例:[/yellow]")

@@ -21,8 +21,21 @@ cp .env.example .env
 
 1. 在 `agents/` 下创建新文件（如 `agents/my_agent.py`）
 2. 定义 LangGraph node 函数：接收 `state: dict` 返回 `dict`
-3. 在 `workflows/graph.py` 中注册节点和边
+3. 在 `workflows/graph.py` 中注册节点和边；当前 benchmark 主链路默认包含 `Verifier`
 4. 如需要，在 `workflows/graph.py` 的 `GraphState` 中添加新的状态字段
+
+### 新增 Capability / Skill / MCP 适配
+
+1. 在 `capabilities/` 中新增或扩展适配器
+2. `builtin` 能力需要映射到真实 Python 工具
+3. `skill` 兼容以 `SKILL.md` 为根的目录组织
+4. `mcp` 当前优先从 `MCP_CONFIG_PATH` 指向的 YAML 配置加载，支持 `stdio / sse / streamable-http`；如未提供文件，再回退到 `MCP_SERVERS` JSON
+
+### 新增 Verifier / Evidence Memory
+
+1. Verifier 节点负责把 `SourceRecord` / `EvidenceNote` 转成 `EvidenceUnit`、`EvidenceCluster`
+2. 持久化统一走 `memory/evidence_store.py`
+3. 新增记忆或验证字段时，同步更新 `ReportArtifact` 与 benchmark 指标
 
 ### 新增工具
 
@@ -38,16 +51,26 @@ cp .env.example .env
 ### 新增评估指标
 
 1. 在 `evaluation/metrics.py` 中添加指标函数
-2. 在 `evaluation/__init__.py` 中导出
+2. 若指标需要 `Verifier / Evidence Memory / ReportArtifact` 信号，同步更新 `evaluation/comparators.py`
+3. benchmark summary 现在区分 `scorecard`、`legacy_metrics` 与 `benchmark_health`，新增主展示指标时同步更新 `scripts/run_benchmark.py`
+4. 如需比较方法收益，优先把变体接入 `scripts/run_ablation.py`，不要只在 README 中做口头描述
 
 ## 常用命令
 
 ```bash
 # 运行研究
 uv run python main.py --topic "你的研究主题"
+uv run python main.py --topic "你的研究主题" --profile benchmark
 
 # 运行 Benchmark
-uv run python scripts/run_benchmark.py --comparators ours,gptr,odr,alibaba --max-topics 3
+uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
+uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set portfolio12 --summary
+
+# 运行内部 ablation 对照
+uv run python scripts/run_ablation.py --topic-set portfolio12 --profile benchmark
+
+# 运行 local3 自动优化闭环
+uv run python scripts/optimize_local3.py --profile benchmark --max-rounds 3 --skip-judge
 
 # 运行全量 comparator 对比
 uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
@@ -55,6 +78,11 @@ uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
 # 离线文件对比
 uv run python scripts/compare_agents.py --file-a our.md --file-b competitor.md
 ```
+
+说明：
+- `--summary` 会生成 `benchmark_summary.json/.md`
+- 新版 summary 默认输出 `scorecard`、`legacy_metrics`、`benchmark_health` 和 `judge_status`
+- `--skip-judge` 时，`judge_*` 不再写成 `0.0`，而是通过 `judge_status=skipped` 表达“本轮未评分”
 
 ## 代码规范
 

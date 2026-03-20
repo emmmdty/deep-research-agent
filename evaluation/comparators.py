@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 
 from configs.settings import PROJECT_ROOT, Settings, get_settings
 from evaluation.metrics import evaluate_report
-from workflows.states import RunMetrics, SourceRecord
+from workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TopicSpec
 
 
 COMPARATOR_ALIASES = {
@@ -25,6 +25,8 @@ COMPARATOR_ALIASES = {
     "open-deep-research": "odr",
     "tongyi": "alibaba",
 }
+
+INTERNAL_ABLATION_VARIANTS = {"ours_base", "ours_verifier", "ours_gate", "ours_full"}
 
 
 class BenchmarkTopic(BaseModel):
@@ -47,6 +49,7 @@ class ComparatorResult(BaseModel):
     report_text: str = Field(default="", description="最终报告文本")
     report_path: Optional[str] = Field(default=None, description="报告文件路径")
     sources: list[SourceRecord] = Field(default_factory=list, description="结构化来源")
+    report_artifact: Optional[ReportArtifact] = Field(default=None, description="结构化报告产物")
     metrics: dict[str, Any] = Field(default_factory=dict, description="运行与评测指标")
     error: str = Field(default="", description="错误信息")
 
@@ -54,11 +57,57 @@ class ComparatorResult(BaseModel):
 def load_topics(
     max_topics: int = 0,
     topics_path: Path | None = None,
+    topic_set: str = "default",
 ) -> list[BenchmarkTopic]:
     """加载标准 benchmark 主题。"""
     path = topics_path or PROJECT_ROOT / "evaluation" / "benchmarks" / "topics.json"
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     topics = [BenchmarkTopic.model_validate(item) for item in payload["topics"]]
+    if topic_set == "local3":
+        indexed = {topic.id: topic for topic in topics}
+        topics = [
+            indexed["T01"],
+            indexed["T02"],
+            BenchmarkTopic(
+                id="T06C",
+                topic="openclaw安装教程",
+                difficulty="easy",
+                expected_aspects=[
+                    "安装前置条件 / 依赖",
+                    "下载或获取源码",
+                    "编译或安装步骤",
+                    "常见错误与排查",
+                    "运行验证",
+                ],
+                min_sources=4,
+                min_words=2000,
+            ),
+        ]
+    elif topic_set == "portfolio12":
+        base_topics = [
+            topic
+            for topic in topics
+            if topic.id != "T06"
+        ]
+        topics = [
+            *base_topics[:5],
+            BenchmarkTopic(
+                id="T06C",
+                topic="openclaw安装教程",
+                difficulty="easy",
+                expected_aspects=[
+                    "安装前置条件 / 依赖",
+                    "下载或获取源码",
+                    "编译或安装步骤",
+                    "常见错误与排查",
+                    "运行验证",
+                ],
+                min_sources=4,
+                min_words=2000,
+            ),
+            *(topic for topic in base_topics[5:] if topic.id in {"T07", "T08"}),
+            *_portfolio_topics(),
+        ]
     return topics[:max_topics] if max_topics > 0 else topics
 
 
@@ -89,14 +138,33 @@ def run_comparator(
     output_root: Path,
     *,
     max_loops: int = 2,
+    research_profile: str = "default",
     settings: Settings | None = None,
+    ablation_variant: str | None = None,
 ) -> ComparatorResult:
     """运行指定 comparator。"""
     settings = settings or get_settings()
     normalized = normalize_comparator_name(name)
 
     if normalized == "ours":
-        return run_ours_comparator(topic, output_root, max_loops=max_loops)
+        return run_ours_comparator(
+            topic,
+            output_root,
+            max_loops=max_loops,
+            research_profile=research_profile,
+            comparator_name="ours",
+            ablation_variant=ablation_variant,
+        )
+    if normalized in INTERNAL_ABLATION_VARIANTS:
+        resolved_variant = normalized if ablation_variant is None else ablation_variant
+        return run_ours_comparator(
+            topic,
+            output_root,
+            max_loops=max_loops,
+            research_profile=research_profile,
+            comparator_name=normalized,
+            ablation_variant=resolved_variant,
+        )
     if normalized == "gptr":
         return run_gptr_comparator(topic, output_root, settings=settings)
     if normalized == "odr":
@@ -147,43 +215,58 @@ def run_ours_comparator(
     output_root: Path,
     *,
     max_loops: int = 2,
+    research_profile: str = "default",
+    comparator_name: str = "ours",
+    ablation_variant: str | None = None,
 ) -> ComparatorResult:
     """运行当前项目自身的研究工作流。"""
     from workflows.graph import run_research
 
-    output_dir = Path(output_root) / "ours"
+    output_dir = Path(output_root) / comparator_name
     output_dir.mkdir(parents=True, exist_ok=True)
     report_path = output_dir / f"{topic.id}.md"
 
     try:
-        state = run_research(topic.topic, max_loops=max_loops)
+        state = run_research(
+            topic.topic,
+            max_loops=max_loops,
+            topic_spec=TopicSpec.model_validate(topic.model_dump()),
+            research_profile=research_profile,
+            ablation_variant=ablation_variant,
+        )
         report = state.get("final_report") or ""
         artifact = state.get("report_artifact")
         sources = state.get("sources_gathered") or []
         run_metrics = state.get("run_metrics")
+        memory_stats = None
         if artifact is not None and not report:
             report = artifact.report
         if artifact is not None and not sources:
             sources = artifact.citations
+        if artifact is not None:
+            memory_stats = artifact.memory_stats
 
         if report:
             report_path.write_text(report, encoding="utf-8")
 
         metrics = _runtime_metrics_dict(run_metrics)
+        if memory_stats is not None:
+            metrics.update(memory_stats.model_dump())
         return ComparatorResult(
-            name="ours",
+            name=comparator_name,
             status="completed" if report else "failed",
             success=bool(report),
             report_text=report,
             report_path=str(report_path) if report else None,
             sources=_coerce_sources(sources),
+            report_artifact=artifact if isinstance(artifact, ReportArtifact) else None,
             metrics=metrics,
             error="" if report else "未生成报告",
         )
     except Exception as exc:  # pragma: no cover - 通过集成测试覆盖
         logger.exception("运行 ours comparator 失败: {}", exc)
         return ComparatorResult(
-            name="ours",
+            name=comparator_name,
             status="failed",
             success=False,
             error=str(exc),
@@ -333,22 +416,74 @@ def run_import_report_comparator(
     )
 
 
+def _portfolio_topics() -> list[BenchmarkTopic]:
+    """返回用于作品集展示的 12 题扩展 benchmark。"""
+    return [
+        BenchmarkTopic(
+            id="T09",
+            topic="LangGraph、CrewAI、AutoGen 在多智能体编排上的差异",
+            difficulty="medium",
+            expected_aspects=["核心抽象", "状态管理", "工具调用", "适用场景", "工程权衡"],
+            min_sources=5,
+            min_words=2500,
+        ),
+        BenchmarkTopic(
+            id="T10",
+            topic="企业级 AI Agent 系统如何设计记忆与上下文管理",
+            difficulty="medium",
+            expected_aspects=["短期记忆", "长期记忆", "检索策略", "上下文压缩", "可靠性风险"],
+            min_sources=5,
+            min_words=2500,
+        ),
+        BenchmarkTopic(
+            id="T11",
+            topic="使用 MCP 为研究型 Agent 接入外部工具的最佳实践",
+            difficulty="medium",
+            expected_aspects=["MCP 基本概念", "工具发现", "权限与安全", "错误恢复", "实际接入模式"],
+            min_sources=4,
+            min_words=2200,
+        ),
+        BenchmarkTopic(
+            id="T12",
+            topic="AI Agent 研究报告的评测方法与可靠性指标设计",
+            difficulty="medium",
+            expected_aspects=["评测目标", "引用与证据", "自动化 Judge", "可复现性", "局限与风险"],
+            min_sources=5,
+            min_words=2500,
+        ),
+    ]
+
+
 def build_report_metrics(
     *,
     report_text: str,
     topic: BenchmarkTopic,
     runtime_metrics: dict[str, Any] | None = None,
     sources: list[SourceRecord] | None = None,
+    memory_stats: MemoryStats | None = None,
+    report_artifact: ReportArtifact | None = None,
 ) -> dict[str, Any]:
     """合并运行指标与报告质量指标。"""
+    if memory_stats is None and report_artifact is not None:
+        memory_stats = report_artifact.memory_stats
+
     metrics = dict(runtime_metrics or {})
     metrics.update(
         evaluate_report(
             report_text,
             source_records=sources or None,
             expected_aspects=topic.expected_aspects,
+            quality_gate_status=metrics.get("quality_gate_status"),
+            report_artifact=report_artifact,
+            memory_stats=memory_stats,
+            runtime_metrics=runtime_metrics,
         )
     )
+    if "quality_gate_status" in metrics and "quality_gate_passed" not in metrics:
+        metrics["quality_gate_passed"] = metrics["quality_gate_status"] == "passed"
+    if memory_stats is not None:
+        metrics.update(memory_stats.model_dump())
+    metrics.update(_build_scorecard_metrics(metrics))
     metrics["meets_min_words"] = metrics.get("word_count", 0) >= topic.min_words
     metrics["meets_min_sources"] = metrics.get("source_coverage", 0) >= topic.min_sources
     return metrics
@@ -432,6 +567,76 @@ def _runtime_metrics_dict(metrics: RunMetrics | dict[str, Any] | None) -> dict[s
             payload.get("total_output_tokens", 0)
         )
     return payload
+
+
+def _build_scorecard_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
+    """把细粒度评测信号聚合成更适合展示的分数卡。"""
+
+    reliability_components = [
+        metrics.get("high_trust_aspect_score_100"),
+        metrics.get("cross_source_corroboration_score_100"),
+        metrics.get("verification_strength_score_100"),
+        metrics.get("entity_resolution_score_100"),
+        metrics.get("citation_alignment_score_100"),
+        metrics.get("conflict_disclosure_score_100"),
+        metrics.get("evidence_novelty_score_100"),
+        metrics.get("support_specificity_score_100"),
+    ]
+    research_reliability = _mean_score(reliability_components)
+
+    aspect_score = float(metrics.get("aspect_coverage", 0.0) or 0.0) * 100
+    report_quality = _mean_score(
+        [
+            aspect_score,
+            metrics.get("coverage_balance_score_100"),
+            metrics.get("structure_completeness_score_100"),
+        ]
+    )
+
+    quality_gate_margin = _mean_score(
+        [
+            metrics.get("high_trust_aspect_score_100"),
+            metrics.get("verification_strength_score_100"),
+            metrics.get("entity_resolution_score_100"),
+        ]
+    )
+
+    selected_sources = float(metrics.get("selected_sources", 0) or 0)
+    rejected_sources = float(metrics.get("rejected_sources", 0) or 0)
+    selection_precision = (
+        selected_sources / (selected_sources + rejected_sources)
+        if (selected_sources + rejected_sources) > 0
+        else 0.5
+    )
+    search_calls = float(metrics.get("search_calls", 0) or 0)
+    fallback_search_calls = float(metrics.get("fallback_search_calls", 0) or 0)
+    fallback_resilience = 1.0 - min(fallback_search_calls / search_calls, 1.0) if search_calls > 0 else 1.0
+    tool_use_success = float(metrics.get("tool_use_success_rate", 0.0) or 0.0)
+    system_controllability = round(
+        100
+        * (
+            0.35 * tool_use_success
+            + 0.15 * fallback_resilience
+            + 0.15 * selection_precision
+            + 0.15 * ((quality_gate_margin or 0.0) / 100)
+            + 0.20 * ((metrics.get("recovery_resilience_score_100", 0.0) or 0.0) / 100)
+        ),
+        3,
+    )
+
+    return {
+        "quality_gate_margin_100": quality_gate_margin,
+        "research_reliability_score_100": research_reliability,
+        "system_controllability_score_100": system_controllability,
+        "report_quality_score_100": report_quality,
+    }
+
+
+def _mean_score(values: list[Any]) -> float:
+    valid = [float(value) for value in values if value is not None]
+    if not valid:
+        return 0.0
+    return round(sum(valid) / len(valid), 3)
 
 
 def _coerce_sources(raw_sources: list[Any]) -> list[SourceRecord]:

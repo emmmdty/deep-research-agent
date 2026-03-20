@@ -22,10 +22,13 @@ The supported public surface is CLI-first. There is currently no supported HTTP 
 
 ## Features
 
-- Multi-agent workflow: `Supervisor -> Planner -> Researcher -> Critic -> Writer`
+- Hierarchical workflow: `Supervisor -> Planner -> Researcher -> Verifier -> Critic -> Writer`
 - Multi-source research with `web`, `github`, and `arxiv`
-- Structured artifacts: `SourceRecord`, `EvidenceNote`, `RunMetrics`, `ReportArtifact`
+- Capability registry with `builtin / skill / mcp` routing
+- Structured artifacts: `SourceRecord`, `EvidenceNote`, `EvidenceUnit`, `VerificationRecord`, `RunMetrics`, `ReportArtifact`
 - Benchmark runner and full comparator harness
+- Benchmark summary with `scorecard + legacy_metrics + judge_status`, so reliability signals are shown as 0-100 continuous scores instead of only boolean / 0-1 fields
+- `portfolio12` topic set and `run_ablation.py` for reproducible method comparisons
 - Blind pairwise report judging through `LLM-as-Judge`
 
 ## Quickstart
@@ -48,15 +51,24 @@ Fill in the required API keys before running research commands.
 
 ```bash
 uv run python main.py --topic "Latest progress in LLM agent architectures"
+uv run python main.py --topic "OpenClaw installation guide" --profile benchmark
 ```
 
 ### 4. Run benchmark and comparison commands
 
 ```bash
-uv run python scripts/run_benchmark.py --comparators ours,gptr,odr,alibaba
+uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
+uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set portfolio12 --summary
+uv run python scripts/run_ablation.py --topic-set portfolio12 --profile benchmark
+uv run python scripts/optimize_local3.py --profile benchmark --max-rounds 3 --skip-judge
 uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
 uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.md
 ```
+
+`benchmark_summary.json` now exposes two layers:
+- `scorecard`: product-facing 0-100 scores for research reliability, system controllability, report quality, and evaluation reproducibility
+- `legacy_metrics`: compatibility aggregates for older fields such as `aspect_coverage`, `citation_accuracy`, and `depth_score`
+- `benchmark_health`: completion, gate pass rate, judge status, and resilience signals for honest experiment reporting
 
 ## Example Output
 
@@ -84,9 +96,15 @@ Publicly supported environment variables include:
 - `TAVILY_API_KEY`
 - `MAX_RESEARCH_LOOPS`
 - `MAX_SEARCH_RESULTS`
+- `RESEARCH_PROFILE`
 - `RESEARCH_CONCURRENCY`
+- `ENABLED_CAPABILITY_TYPES`
+- `SKILL_PATHS`
+- `MCP_CONFIG_PATH`
+- `MCP_SERVERS`
 - `ENABLED_SOURCES`
 - `ENABLED_COMPARATORS`
+- `MEMORY_BACKEND`
 - `JUDGE_MODEL`
 - `GPT_RESEARCHER_PYTHON`
 - `OPEN_DEEP_RESEARCH_COMMAND`
@@ -104,10 +122,12 @@ See [`.env.example`](./.env.example) for the complete template.
 ## Repository Layout
 
 ```text
-agents/       multi-agent nodes
+agents/       multi-agent nodes, including verifier
+capabilities/ builtin / skill / mcp capability registry and adapters
 tools/        search and utility tools
 workflows/    state graph and structured state models
 evaluation/   metrics, judge, cost tracking, comparator registry
+memory/       sqlite-backed evidence memory
 scripts/      benchmark, comparison, and offline comparison commands
 tests/        regression and unit tests
 docs/         architecture and development notes
@@ -132,6 +152,7 @@ Key developer docs:
 ## Limitations
 
 - Comparator integrations such as `odr`, `alibaba`, and `gemini` still depend on your configured command templates or imported report directories.
+- MCP support is file-first and capability-first: v1 supports `stdio` / `sse` / `streamable-http` server discovery, cache, and routing through the capability layer. External server behavior still depends on each server's published schema and auth requirements.
 - The repository intentionally does not expose a supported HTTP server surface in the current version.
 
 ## License

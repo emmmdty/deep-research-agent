@@ -1,0 +1,19 @@
+servers:
+  - name: browser
+    transport: stdio
+    command: uvx
+    args:
+      - mcp-server-browser
+    timeout_seconds: 10
+    tool_allowlist:
+      - browser.search
+      - browser.open
+    enabled: false
+
+  - name: docs-remote
+    transport: streamable-http
+    url: https://example.com/mcp
+    headers_env:
+      Authorization: MCP_BEARER_TOKEN
+    timeout_seconds: 15
+    enabled: false

@@ -8,7 +8,8 @@ from loguru import logger
 
 from llm.provider import get_llm
 from prompts.templates import PLANNER_SYSTEM_PROMPT, PLANNER_USER_PROMPT, get_current_date
-from workflows.states import TaskItem
+from research_policy import build_benchmark_tasks
+from workflows.states import TaskItem, TopicSpec
 
 
 def planner_node(state: dict) -> dict:
@@ -21,7 +22,20 @@ def planner_node(state: dict) -> dict:
         更新后的状态字典，包含 tasks 列表。
     """
     research_topic = state["research_topic"]
+    research_profile = state.get("research_profile", "default")
+    topic_spec = state.get("topic_spec")
     logger.info("📋 Planner 开始规划: topic='{}'", research_topic)
+
+    if research_profile == "benchmark":
+        resolved_topic_spec = topic_spec
+        if resolved_topic_spec is None:
+            resolved_topic_spec = TopicSpec(topic=research_topic)
+        tasks = build_benchmark_tasks(resolved_topic_spec)
+        logger.info("📋 Planner 使用 benchmark 策略: 生成 {} 个子任务", len(tasks))
+        return {
+            "tasks": tasks,
+            "status": "planned",
+        }
 
     llm = get_llm()
 
