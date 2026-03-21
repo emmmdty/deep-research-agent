@@ -486,6 +486,10 @@ def _build_query(topic: str, aspect: str, task_type: str) -> str:
 def _aspect_boost_terms(aspect: str, task_type: str) -> list[str]:
     normalized = normalize_text(aspect)
     boosts: list[str] = []
+    if "接入模式" in normalized or ("接入" in normalized and "模式" in normalized):
+        boosts.extend(["integration pattern", "tool integration", "transport", "stdio", "sse", "streamable http"])
+    if "错误恢复" in normalized:
+        boosts.extend(["error handling", "retry", "fallback", "reconnect", "recovery"])
     if "监管" in normalized:
         boosts.extend(["regulatory", "regulation", "governance", "policy control"])
     if "智能投顾" in normalized:
@@ -553,6 +557,10 @@ def _aspect_semantic_terms(aspect: str, task_type: str) -> list[str]:
     normalized = normalize_text(aspect)
     terms = list(_aspect_anchor_terms(aspect))
 
+    if "接入模式" in normalized or ("接入" in normalized and "模式" in normalized):
+        terms.extend(["integration pattern", "tool integration", "transport", "stdio", "sse", "streamable http"])
+    if "错误恢复" in normalized:
+        terms.extend(["error handling", "retry", "fallback", "reconnect", "recovery"])
     if "监管" in normalized:
         terms.extend(["regulatory", "regulation", "governance", "policy control"])
     if "智能投顾" in normalized:
@@ -892,6 +900,8 @@ def _recency_score(item: dict[str, Any] | Any) -> float:
 def _topic_alias_terms(topic: str) -> list[str]:
     normalized = normalize_text(topic)
     aliases: list[str] = []
+    if "mcp" in normalized or "model context protocol" in normalized:
+        aliases.extend(["MCP", "Model Context Protocol"])
     if "大语言模型" in normalized or "llm" in normalized or "language model" in normalized:
         aliases.extend(["LLM", "language model"])
     if "agent" in normalized or "智能体" in normalized:
@@ -1056,6 +1066,8 @@ def _classify_case_study_item(item: dict[str, Any] | Any, task) -> dict[str, Any
 
 def _topic_guard_terms(topic: str) -> list[str]:
     normalized = normalize_text(topic)
+    if "mcp" in normalized or "model context protocol" in normalized:
+        return ["mcp", "model context protocol"]
     if "rag" in normalized or "检索增强生成" in normalized or "retrieval augmented generation" in normalized:
         return ["rag", "retrieval augmented generation", "retrieval augmented"]
     if "大语言模型" in normalized or "llm" in normalized or "language model" in normalized:
@@ -1170,6 +1182,24 @@ def _aspect_support_specificity(item: dict[str, Any] | Any, task) -> float:
     semantic_terms = _aspect_semantic_terms(aspect, task_type)
     topic_terms = _topic_guard_terms(getattr(task, "query", ""))
     generic_terms = set(token.lower() for token in _topic_alias_terms(getattr(task, "query", "")))
+    normalized_aspect = normalize_text(aspect)
+
+    if "mcp" in normalize_text(getattr(task, "query", "")) or "model context protocol" in normalize_text(
+        getattr(task, "query", "")
+    ):
+        semantic_terms = _dedupe_terms([*semantic_terms, "mcp", "model context protocol"])
+        if "工具发现" in normalized_aspect:
+            semantic_terms = _dedupe_terms([*semantic_terms, "tool discovery", "capability discovery", "tool registry"])
+        if "权限" in normalized_aspect or "安全" in normalized_aspect:
+            semantic_terms = _dedupe_terms([*semantic_terms, "security", "permission", "authorization", "access control", "oauth"])
+        if "基本概念" in normalized_aspect:
+            semantic_terms = _dedupe_terms([*semantic_terms, "protocol", "client", "server", "resource", "tool"])
+        if "接入模式" in normalized_aspect or ("接入" in normalized_aspect and "模式" in normalized_aspect):
+            semantic_terms = _dedupe_terms(
+                [*semantic_terms, "integration pattern", "tool integration", "transport", "stdio", "sse", "streamable http"]
+            )
+        if "错误恢复" in normalized_aspect:
+            semantic_terms = _dedupe_terms([*semantic_terms, "error handling", "retry", "fallback", "reconnect", "recovery"])
 
     critical_terms = [
         term

@@ -401,6 +401,64 @@ def test_finance_case_study_accepts_official_english_compliance_evidence():
     assert any(item.get("rejection_reason") == "not_case_study_evidence" for item in rejected)
 
 
+def test_mcp_official_docs_are_not_rejected_as_weak_support_for_generic_aspects():
+    """MCP 主题下的通用方面应把 MCP/tool discovery/security 词汇纳入支撑判定。"""
+    from research_policy import build_benchmark_tasks, select_sources_for_task
+
+    topic = TopicSpec(
+        id="T11",
+        topic="使用 MCP 为研究型 Agent 接入外部工具的最佳实践",
+        expected_aspects=["权限与安全"],
+        min_sources=4,
+        min_words=2000,
+    )
+    task = build_benchmark_tasks(topic)[0]
+
+    raw_items = [
+        {
+            "source_type": "web",
+            "title": "Model context protocol (MCP) - OpenAI Agents SDK",
+            "url": "https://openai.github.io/openai-agents-python/mcp/",
+            "snippet": "Official documentation covering MCP tool discovery, server integration, permission boundaries, authorization, and access control patterns.",
+        }
+    ]
+
+    selected, rejected, _ = select_sources_for_task(raw_items, task, per_task_limit=3)
+
+    assert len(selected) == 1
+    assert selected[0]["support_specificity"] >= 0.3
+    assert not rejected
+
+
+def test_mcp_integration_pattern_accepts_transport_specific_docs():
+    """MCP 实际接入模式应识别 stdio/SSE/streamable-http 这类运输层接法。"""
+    from research_policy import build_benchmark_tasks, select_sources_for_task
+
+    topic = TopicSpec(
+        id="T11",
+        topic="使用 MCP 为研究型 Agent 接入外部工具的最佳实践",
+        expected_aspects=["实际接入模式"],
+        min_sources=4,
+        min_words=2000,
+    )
+    task = build_benchmark_tasks(topic)[0]
+
+    raw_items = [
+        {
+            "source_type": "web",
+            "title": "Model context protocol (MCP) - OpenAI Agents SDK",
+            "url": "https://openai.github.io/openai-agents-python/mcp/",
+            "snippet": "Official documentation covering MCP integration patterns, stdio transport, SSE connections, streamable HTTP, and tool integration design.",
+        }
+    ]
+
+    selected, rejected, _ = select_sources_for_task(raw_items, task, per_task_limit=3)
+
+    assert len(selected) == 1
+    assert selected[0]["support_specificity"] >= 0.3
+    assert not rejected
+
+
 def test_select_sources_for_task_keeps_high_trust_mix_for_research_topics():
     """研究类主题应尽量保留高可信 github/arxiv 结果，避免被普通 web 结果挤掉。"""
     from research_policy import build_benchmark_tasks, select_sources_for_task
