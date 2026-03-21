@@ -260,6 +260,26 @@ def test_case_study_query_bundle_prefers_official_domains_and_repo_search():
     assert any("example" in query.lower() or "project" in query.lower() for query in github_queries)
 
 
+def test_finance_case_study_query_bundle_is_topic_aware():
+    """金融类 case-study 应优先使用金融/云厂商官方域名与金融 family terms。"""
+    from research_policy import build_benchmark_tasks, build_source_queries
+
+    topic = TopicSpec(
+        id="T04",
+        topic="AI Agent 在金融领域的应用案例",
+        expected_aspects=["智能投顾和量化交易", "风控和反欺诈", "客户服务自动化"],
+        min_sources=4,
+        min_words=2000,
+    )
+    task = build_benchmark_tasks(topic)[0]
+
+    web_queries = build_source_queries(task, "web")
+
+    assert any("site:aws.amazon.com" in query for query in web_queries)
+    assert any("site:microsoft.com" in query or "site:learn.microsoft.com" in query for query in web_queries)
+    assert any("financial services" in query.lower() or "banking" in query.lower() for query in web_queries)
+
+
 def test_select_sources_for_case_study_rejects_survey_like_evidence():
     """行业案例方面只接受真实落地案例证据，survey/review/benchmark 不应通过。"""
     from research_policy import build_benchmark_tasks, select_sources_for_task

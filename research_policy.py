@@ -264,7 +264,7 @@ def build_source_queries(task, source_name: str) -> list[str]:
         getattr(task, "task_type", infer_task_type(task.query)),
         aspect,
     )
-    if task_type == "product" and is_case_study_aspect(aspect):
+    if task_type == "product":
         return _build_case_study_query_bundle(task, source_name)
     if _is_framework_comparison_aspect(aspect):
         return _build_framework_comparison_query_bundle(task, source_name)
@@ -321,7 +321,7 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
     topic_text = getattr(task, "query", "") or getattr(task, "title", "")
     family_terms = _case_study_topic_family_terms(topic_text)
     family_text = _compact_query(family_terms or ["agent"])
-    official_domains = _case_study_official_domains()
+    official_domains = _case_study_domains_for_topic(topic_text)
     official_orgs = _case_study_official_orgs(official_domains)
     queries: list[str] = []
 
@@ -884,11 +884,41 @@ def _case_study_official_orgs(domains: list[str] | None = None) -> list[str]:
 
 def _case_study_topic_family_terms(topic: str) -> list[str]:
     normalized = normalize_text(topic)
+    if any(marker in normalized for marker in ("金融", "bank", "banking", "finance", "financial", "fraud", "合规", "风控", "投顾", "trading")):
+        return [
+            "financial services",
+            "banking",
+            "fraud detection",
+            "compliance",
+            "customer service",
+            "agent",
+            "llm",
+        ]
     if "rag" in normalized or "检索增强生成" in normalized:
         return ["rag", "retrieval", "knowledge", "search"]
     if "agent" in normalized or "智能体" in normalized or "大语言模型" in normalized:
         return ["agent", "llm", "function calling"]
     return _ascii_query_terms(_topic_alias_terms(topic)) or ["ai", "agent"]
+
+
+def _case_study_domains_for_topic(topic: str) -> list[str]:
+    """按主题重排 case-study 官方域名优先级。"""
+    normalized = normalize_text(topic)
+    domains = list(_case_study_official_domains())
+    if any(marker in normalized for marker in ("金融", "bank", "banking", "finance", "financial", "fraud", "合规", "风控", "投顾", "trading")):
+        preferred = [
+            "aws.amazon.com",
+            "microsoft.com",
+            "learn.microsoft.com",
+            "ibm.com",
+            "salesforce.com",
+            "cloud.google.com",
+            "openai.com",
+            "anthropic.com",
+            "langchain.com",
+        ]
+        return _dedupe_terms([*preferred, *domains])
+    return domains
 
 
 def _source_domain_from_item(item: dict[str, Any] | Any) -> str:
@@ -1363,7 +1393,7 @@ def _build_follow_up_queries(topic_text: str, aspect: str, tasks) -> list[str]:
             f"{aspect_query} {family_text} official case study customer story deployment production use".strip(),
             f"{aspect_query} {family_text} official product blog customer story".strip(),
         ]
-        for domain in _case_study_official_domains()[:3]:
+        for domain in _case_study_domains_for_topic(topic_text)[:4]:
             queries.append(
                 f"{aspect_query} site:{domain} {family_text} case study customer story deployment".strip()
             )
