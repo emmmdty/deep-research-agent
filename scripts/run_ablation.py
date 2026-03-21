@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import copy
 import json
 import statistics
 import sys
@@ -13,13 +14,12 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from dotenv import load_dotenv
 from loguru import logger
 
 from configs.settings import PROJECT_ROOT, get_settings
 from evaluation.comparators import build_report_metrics, load_topics, run_comparator
-
-load_dotenv(PROJECT_ROOT / ".env")
+from evaluation.llm_judge import LLMJudge
+from scripts.runtime_env import load_runtime_env
 
 ABLATION_VARIANTS = ["ours_base", "ours_verifier", "ours_gate", "ours_full"]
 
@@ -29,15 +29,21 @@ def run_ablation(
     output_root: Path,
     topic_set: str = "portfolio12",
     max_topics: int = 0,
+    topic_ids: list[str] | None = None,
     max_loops: int = 2,
     use_judge: bool = False,
     research_profile: str = "benchmark",
+    env_file: str | None = None,
+    precomputed_results: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """运行内部 ablation 变体并写出结果文件。"""
-    del use_judge  # 该脚本当前聚焦结构化指标，不单独接 LLM judge。
-
+    load_runtime_env(env_file)
     settings = get_settings()
+    judge = LLMJudge() if use_judge else None
     topics = load_topics(topic_set=topic_set, max_topics=max_topics)
+    if topic_ids:
+        allowed_topic_ids = {str(topic_id) for topic_id in topic_ids}
+        topics = [topic for topic in topics if topic.id in allowed_topic_ids]
     output_root.mkdir(parents=True, exist_ok=True)
 
     topic_payloads: list[dict[str, Any]] = []
@@ -48,38 +54,75 @@ def run_ablation(
             "comparators": {},
         }
         for variant in ABLATION_VARIANTS:
-            result = run_comparator(
-                name=variant,
-                topic=topic,
-                output_root=output_root,
-                max_loops=max_loops,
-                research_profile=research_profile,
-                settings=settings,
-                ablation_variant=variant,
-            )
-            payload = result.model_dump(exclude={"report_artifact"})
-            metrics = dict(payload.get("metrics", {}) or {})
-            needs_report_metrics = any(
-                metrics.get(key) is None
-                for key in (
-                    "research_reliability_score_100",
-                    "system_controllability_score_100",
-                    "report_quality_score_100",
-                )
-            )
-            if result.success and result.report_text and needs_report_metrics:
-                payload["metrics"] = build_report_metrics(
-                    report_text=result.report_text,
+            payload: dict[str, Any]
+            if variant == "ours_full" and precomputed_results and topic.id in precomputed_results:
+                payload = copy.deepcopy(precomputed_results[topic.id])
+            else:
+                result = run_comparator(
+                    name=variant,
                     topic=topic,
-                    runtime_metrics=result.metrics,
-                    sources=result.sources,
-                    report_artifact=result.report_artifact,
+                    output_root=output_root,
+                    max_loops=max_loops,
+                    research_profile=research_profile,
+                    settings=settings,
+                    ablation_variant=variant,
                 )
+                payload = result.model_dump(exclude={"report_artifact"})
+                metrics = dict(payload.get("metrics", {}) or {})
+                needs_report_metrics = any(
+                    metrics.get(key) is None
+                    for key in (
+                        "research_reliability_score_100",
+                        "system_controllability_score_100",
+                        "report_quality_score_100",
+                    )
+                )
+                if result.success and result.report_text and needs_report_metrics:
+                    payload["metrics"] = build_report_metrics(
+                        report_text=result.report_text,
+                        topic=topic,
+                        runtime_metrics=result.metrics,
+                        sources=result.sources,
+                        report_artifact=result.report_artifact,
+                    )
+
+            metrics = dict(payload.get("metrics", {}) or {})
+            existing_judge = payload.get("judge") or {}
+            if metrics.get("judge_overall") is None and existing_judge:
+                metrics.update(
+                    {
+                        "judge_overall": existing_judge.get("overall"),
+                        "judge_depth": existing_judge.get("depth"),
+                        "judge_accuracy": existing_judge.get("accuracy"),
+                        "judge_coherence": existing_judge.get("coherence"),
+                        "judge_citation": existing_judge.get("citation_quality"),
+                        "judge_structure": existing_judge.get("structure"),
+                    }
+                )
+            if judge is not None and payload.get("success") and payload.get("report_text") and metrics.get("judge_overall") is None:
+                scores = judge.score_report(str(payload["report_text"]), topic.topic)
+                metrics.update(
+                    {
+                        "judge_overall": scores.get("overall"),
+                        "judge_depth": scores.get("depth"),
+                        "judge_accuracy": scores.get("accuracy"),
+                        "judge_coherence": scores.get("coherence"),
+                        "judge_citation": scores.get("citation_quality"),
+                        "judge_structure": scores.get("structure"),
+                    }
+                )
+                payload["judge"] = scores
+            payload["metrics"] = metrics
             topic_result["comparators"][variant] = payload
         topic_payloads.append(topic_result)
 
     summary = _build_ablation_summary(topic_payloads)
     comparison_rows = _build_variant_comparison_rows(topic_payloads)
+    judge_status = "scored" if any(
+        topic["comparators"][variant].get("metrics", {}).get("judge_overall") is not None
+        for topic in topic_payloads
+        for variant in ABLATION_VARIANTS
+    ) else "skipped"
 
     (output_root / "ablation_results.json").write_text(
         json.dumps(
@@ -87,6 +130,7 @@ def run_ablation(
                 "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
                 "topic_set": topic_set,
                 "variants": ABLATION_VARIANTS,
+                "judge_status": judge_status,
                 "topics": topic_payloads,
                 "summary": summary,
             },
@@ -120,13 +164,24 @@ def _build_ablation_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
                     "research_reliability_score_100": metrics.get("research_reliability_score_100"),
                     "system_controllability_score_100": metrics.get("system_controllability_score_100"),
                     "report_quality_score_100": metrics.get("report_quality_score_100"),
+                    "verification_strength_score_100": metrics.get("verification_strength_score_100"),
+                    "judge_overall": metrics.get("judge_overall"),
                     "quality_gate_passed": bool(metrics.get("quality_gate_passed")),
                     "time_seconds": metrics.get("time_seconds"),
                 }
             )
 
-    return {
+    summary = {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "judge_status": (
+            "scored"
+            if any(
+                row.get("judge_overall") is not None
+                for rows in per_variant.values()
+                for row in rows
+            )
+            else "skipped"
+        ),
         "variants": {
             variant: {
                 "completed": sum(1 for row in rows if row["status"] == "completed"),
@@ -137,11 +192,37 @@ def _build_ablation_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
                 "research_reliability_score_100": _stats(rows, "research_reliability_score_100"),
                 "system_controllability_score_100": _stats(rows, "system_controllability_score_100"),
                 "report_quality_score_100": _stats(rows, "report_quality_score_100"),
+                "verification_strength_score_100": _stats(rows, "verification_strength_score_100"),
+                "judge_overall": _stats(rows, "judge_overall"),
                 "mean_time_seconds": _stats(rows, "time_seconds"),
             }
             for variant, rows in per_variant.items()
         },
     }
+    base = summary["variants"]["ours_base"]
+    summary["deltas_vs_base"] = {
+        variant: {
+            "research_reliability_score_100": _delta(
+                payload["research_reliability_score_100"].get("avg"),
+                base["research_reliability_score_100"].get("avg"),
+            ),
+            "judge_overall": _delta(
+                payload["judge_overall"].get("avg"),
+                base["judge_overall"].get("avg"),
+            ),
+            "quality_gate_pass_rate": _delta(
+                payload["quality_gate_pass_rate"],
+                base["quality_gate_pass_rate"],
+            ),
+            "verification_strength_score_100": _delta(
+                payload["verification_strength_score_100"].get("avg"),
+                base["verification_strength_score_100"].get("avg"),
+            ),
+        }
+        for variant, payload in summary["variants"].items()
+        if variant != "ours_base"
+    }
+    return summary
 
 
 def _build_variant_comparison_rows(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -183,6 +264,20 @@ def _summary_to_markdown(summary: dict[str, Any]) -> str:
             f"{_format_metric(payload['report_quality_score_100'].get('avg'))} | "
             f"{_format_metric(payload['mean_time_seconds'].get('avg'))} |"
         )
+    if summary.get("judge_status") == "scored":
+        lines.extend(
+            [
+                "",
+                "## Judge",
+                "",
+                "| Variant | Judge Overall Avg |",
+                "| --- | ---: |",
+            ]
+        )
+        for variant in ABLATION_VARIANTS:
+            lines.append(
+                f"| {variant} | {_format_metric(summary['variants'][variant]['judge_overall'].get('avg'))} |"
+            )
     return "\n".join(lines)
 
 
@@ -221,6 +316,12 @@ def _ratio(numerator: int, denominator: int) -> float:
     return round(numerator / denominator, 3)
 
 
+def _delta(value: float | None, base: float | None) -> float | None:
+    if value is None or base is None:
+        return None
+    return round(value - base, 3)
+
+
 def _format_metric(value: Any) -> str:
     if value is None:
         return "N/A"
@@ -234,8 +335,11 @@ def main() -> None:
     parser.add_argument("--output-dir", type=str, help="输出目录")
     parser.add_argument("--topic-set", type=str, default="portfolio12", help="主题集：portfolio12 或 local3")
     parser.add_argument("--max-topics", type=int, default=0, help="最多运行多少个主题")
+    parser.add_argument("--topic-ids", type=str, help="逗号分隔的主题 ID 列表")
     parser.add_argument("--max-loops", type=int, default=2, help="最大研究循环次数")
     parser.add_argument("--profile", type=str, default="benchmark", help="运行 profile")
+    parser.add_argument("--env-file", type=str, help="显式指定运行时 env 文件")
+    parser.add_argument("--skip-judge", action="store_true", help="跳过 LLM Judge")
     args = parser.parse_args()
 
     run_id = time.strftime("%Y%m%d-%H%M%S")
@@ -244,12 +348,16 @@ def main() -> None:
         if args.output_dir
         else PROJECT_ROOT / "workspace" / "ablations" / run_id
     )
+    topic_ids = [item.strip() for item in args.topic_ids.split(",") if item.strip()] if args.topic_ids else None
     outcome = run_ablation(
         output_root=output_root,
         topic_set=args.topic_set,
         max_topics=args.max_topics,
+        topic_ids=topic_ids,
         max_loops=args.max_loops,
+        use_judge=not args.skip_judge,
         research_profile=args.profile,
+        env_file=args.env_file,
     )
     logger.info(
         "ablation 完成: variants={}, output={}",

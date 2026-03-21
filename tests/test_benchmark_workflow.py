@@ -277,8 +277,8 @@ Use this skill for installation, setup, requirements, and troubleshooting tasks.
     assert result["run_metrics"].skill_activation_count == 1
 
 
-def test_critic_node_marks_failed_quality_gate_but_allows_writer_on_last_loop():
-    """benchmark profile 到达最后一轮时，应保留失败门控状态但放行 Writer。"""
+def test_critic_node_keeps_failed_quality_gate_blocking_on_last_loop():
+    """benchmark profile 到达最后一轮且 gate 失败时，不应再放行 Writer。"""
     from agents.critic import critic_node
 
     tasks = [
@@ -324,8 +324,29 @@ def test_critic_node_marks_failed_quality_gate_but_allows_writer_on_last_loop():
     )
 
     assert result["quality_gate_status"] == "failed"
-    assert result["critic_feedback"].is_sufficient is True
+    assert result["critic_feedback"].is_sufficient is False
     assert result["critic_feedback"].follow_up_queries
+
+
+def test_graph_routes_failed_quality_gate_to_terminal_failure():
+    """严格 gate 失败时，工作流应进入失败终态，而不是继续写报告。"""
+    from workflows.graph import _should_continue
+    from workflows.states import CriticFeedback
+
+    route = _should_continue(
+        {
+            "quality_gate_status": "failed",
+            "critic_feedback": CriticFeedback(
+                quality_score=6,
+                is_sufficient=False,
+                gaps=["行业应用案例"],
+                follow_up_queries=["agent case study official deployment"],
+                feedback="缺少真实案例证据。",
+            ),
+        }
+    )
+
+    assert route == "fail_quality_gate"
 
 
 def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
@@ -374,6 +395,73 @@ def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
     assert citation_accuracy(result["final_report"]) == 1.0
     assert "## 概述" in result["final_report"]
     assert "## 总结" in result["final_report"]
+
+
+def test_researcher_uses_llm_summary_in_benchmark_when_available(monkeypatch):
+    """benchmark profile 下若 LLM 可用，应优先使用 LLM 总结，而不是总是 deterministic 回退。"""
+    from agents import researcher
+
+    class _FakeResponse:
+        content = (
+            "### 核心结论\n\n"
+            "RAG 基本原理（检索 + 生成）可以概括为：模型先检索相关资料，再利用检索结果生成回答。[1]\n\n"
+            "### 证据限制\n\n"
+            "当前仍需更多证据。[1]"
+        )
+
+    class _FakeLLM:
+        def invoke(self, messages):
+            return _FakeResponse()
+
+    task = TaskItem(
+        id=1,
+        title="定义与原理",
+        intent="解释概念",
+        query="RAG 基本原理",
+        expected_aspects=["RAG 基本原理（检索 + 生成）"],
+        task_type="research",
+    )
+    settings = SimpleNamespace(
+        enabled_sources=["web"],
+        max_search_results=5,
+        per_source_max_results=4,
+        per_task_selected_sources=4,
+        workspace_dir="workspace",
+        mcp_config_path=None,
+        mcp_servers=[],
+    )
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+    monkeypatch.setattr(researcher, "get_llm", lambda: _FakeLLM())
+    monkeypatch.setattr(
+        researcher,
+        "search_web",
+        lambda query, max_results=5: [
+            {
+                "source_type": "web",
+                "title": "RAG guide",
+                "url": "https://docs.example.com/rag",
+                "snippet": "RAG combines retrieval and generation for grounded responses.",
+            }
+        ],
+    )
+    monkeypatch.setattr(researcher, "search_github_repositories", lambda query, max_results=5: [])
+    monkeypatch.setattr(researcher, "search_arxiv_papers", lambda query, max_results=5: [])
+
+    result = researcher.researcher_node(
+        {
+            "research_topic": "RAG（检索增强生成）技术的原理和应用",
+            "research_profile": "benchmark",
+            "tasks": [task],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "search_results": [],
+            "evidence_notes": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert result["task_summaries"]
+    assert "模型先检索相关资料" in result["task_summaries"][0]
 
 
 def test_researcher_follow_up_queries_replace_original_task_summary(monkeypatch):
@@ -435,4 +523,74 @@ def test_researcher_follow_up_queries_replace_original_task_summary(monkeypatch)
     )
 
     assert len(result["task_summaries"]) == 1
-    assert "本节覆盖方面：编译或安装步骤" in result["task_summaries"][0]
+    assert "本节直接覆盖方面：编译或安装步骤" in result["task_summaries"][0]
+
+
+def test_researcher_repairs_invalid_benchmark_summary_with_deterministic_fallback(monkeypatch):
+    """benchmark profile 下，LLM 总结若缺方面/缺引用，应触发 deterministic repair。"""
+    from agents import researcher
+
+    task = TaskItem(
+        id=1,
+        title="行业应用案例",
+        intent="重点覆盖方面：行业应用案例",
+        query="AI Agent 行业应用案例 official case study customer story deployment production use",
+        task_type="product",
+        expected_aspects=["行业应用案例"],
+        preferred_sources=["web", "github"],
+    )
+    settings = SimpleNamespace(
+        enabled_sources=["web", "github"],
+        max_search_results=5,
+        per_source_max_results=4,
+        per_task_selected_sources=4,
+    )
+
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+    monkeypatch.setattr(researcher, "get_llm", lambda: _StaticLLM("### 核心结论\n\n这里是泛化背景介绍，没有引用。"))
+    monkeypatch.setattr(
+        researcher,
+        "search_web",
+        lambda query, max_results=5: [
+            {
+                "source_type": "web",
+                "title": "OpenAI customer story",
+                "url": "https://openai.com/customer-stories/agent-deployment",
+                "snippet": "Official customer story about deploying AI agents in production.",
+            }
+        ],
+    )
+    monkeypatch.setattr(
+        researcher,
+        "search_github_repositories",
+        lambda query, max_results=5: [
+            {
+                "source_type": "github",
+                "title": "openai/agents-examples",
+                "url": "https://github.com/openai/agents-examples",
+                "snippet": "Official examples and reference architectures for production agent systems.",
+                "owner": "openai",
+            }
+        ],
+    )
+    monkeypatch.setattr(researcher, "search_arxiv_papers", lambda query, max_results=5: [])
+
+    result = researcher.researcher_node(
+        {
+            "research_topic": "AI Agent 行业应用案例",
+            "research_profile": "benchmark",
+            "tasks": [task],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "search_results": [],
+            "evidence_notes": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    summary = result["task_summaries"][0]
+    assert "### 核心结论" in summary
+    assert "行业应用案例" in summary
+    assert "[1]" in summary or "[2]" in summary
+    assert result["run_metrics"].summary_repair_count == 1
+    assert result["run_metrics"].summary_repair_tasks == ["行业应用案例"]

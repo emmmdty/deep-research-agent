@@ -153,6 +153,107 @@ def weak_evidence_paragraph_count(report: str) -> int:
     )
 
 
+def case_study_strength_score(source_records: list[SourceRecord], expected_aspects: list[str]) -> float | None:
+    """衡量 case-study 证据的平均强度。"""
+    if not any("案例" in aspect or "case" in normalize_text(aspect) for aspect in expected_aspects):
+        return None
+
+    strengths = [
+        float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0)
+        for source in source_records
+        if source.selected and bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+    ]
+    if not strengths:
+        return 0.0
+    return _round_score(statistics.mean(strengths) * 100)
+
+
+def first_party_case_coverage_score(
+    source_records: list[SourceRecord],
+    expected_aspects: list[str],
+    evidence_notes: list[EvidenceNote],
+) -> float | None:
+    """统计 case-study 方面中被官方/一手仓库覆盖的比例。"""
+    case_aspects = [aspect for aspect in expected_aspects if "案例" in aspect or "case" in normalize_text(aspect)]
+    if not case_aspects:
+        return None
+
+    total = len(case_aspects)
+    covered = 0
+    for aspect in case_aspects:
+        related_ids: set[int] = set()
+        for note in evidence_notes:
+            if normalize_text(aspect) in [normalize_text(hit) for hit in note.aspect_hits] or normalize_text(aspect) in normalize_text(note.task_title):
+                related_ids.update(note.selected_source_ids or note.source_ids)
+        related_sources = [source for source in source_records if source.citation_id in related_ids and source.selected]
+        if any(
+            getattr(source, "metadata", {}).get("case_study_type") in {"official_customer_story", "official_product_blog", "official_docs_example", "first_party_repo"}
+            for source in related_sources
+        ):
+            covered += 1
+    return _round_score((covered / total) * 100)
+
+
+def official_case_ratio_score(source_records: list[SourceRecord]) -> float | None:
+    """统计 case-study 证据中官方来源占比。"""
+    case_sources = [
+        source
+        for source in source_records
+        if source.selected and bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+    ]
+    if not case_sources:
+        return None
+    official = sum(
+        1
+        for source in case_sources
+        if str(getattr(source, "metadata", {}).get("case_study_type", "")).startswith("official_")
+    )
+    return _round_score((official / len(case_sources)) * 100)
+
+
+def case_study_quantified_ratio_score(source_records: list[SourceRecord]) -> float | None:
+    """统计带量化结果的案例证据占比。"""
+    case_sources = [
+        source
+        for source in source_records
+        if source.selected and bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+    ]
+    if not case_sources:
+        return None
+    quantified = sum(1 for source in case_sources if bool(getattr(source, "metadata", {}).get("has_quantitative_outcome")))
+    return _round_score((quantified / len(case_sources)) * 100)
+
+
+def case_study_gate_margin_score(
+    source_records: list[SourceRecord],
+    *,
+    quality_gate_status: str | None,
+) -> float | None:
+    """估算 case-study 距离通过门槛的连续值。"""
+    case_sources = [
+        source
+        for source in source_records
+        if source.selected and bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+    ]
+    if not case_sources:
+        return 0.0 if quality_gate_status in {"failed", "needs_more_research"} else None
+
+    strong_sources = [
+        source
+        for source in case_sources
+        if getattr(source, "trust_tier", 3) >= 4
+        and bool(getattr(source, "metadata", {}).get("matches_topic_family"))
+        and float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0) >= 0.65
+    ]
+    density = min(len(strong_sources) / 2, 1.0)
+    avg_strength = statistics.mean(
+        float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0)
+        for source in case_sources
+    )
+    status_bonus = 1.0 if quality_gate_status == "passed" else (0.5 if quality_gate_status == "needs_more_research" else 0.0)
+    return _round_score((0.45 * density + 0.45 * avg_strength + 0.10 * status_bonus) * 100)
+
+
 def evaluate_report(
     report: str,
     *,
@@ -199,6 +300,20 @@ def evaluate_report(
         if getattr(source, "selected", True) is False
         and getattr(source, "rejection_reason", "") in {"off_topic", "missing_required_terms", "contains_avoid_terms"}
     )
+    case_study_evidence_count = sum(
+        1 for source in selected_sources if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+    )
+    high_trust_case_study_count = sum(
+        1
+        for source in selected_sources
+        if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+        and getattr(source, "trust_tier", 3) >= 4
+    )
+    case_study_strength = case_study_strength_score(selected_sources, expected_aspects)
+    first_party_case_coverage = first_party_case_coverage_score(selected_sources, expected_aspects, notes)
+    official_case_ratio = official_case_ratio_score(selected_sources)
+    case_study_quantified_ratio = case_study_quantified_ratio_score(selected_sources)
+    case_study_gate_margin = case_study_gate_margin_score(selected_sources, quality_gate_status=quality_gate_status)
 
     high_trust_aspect = high_trust_aspect_score(expected_aspects, source_records, notes)
     corroboration = cross_source_corroboration_score(expected_aspects, source_records, notes)
@@ -218,6 +333,13 @@ def evaluate_report(
         "selected_source_coverage": selected_source_coverage,
         "high_trust_source_ratio": high_trust_source_ratio,
         "off_topic_reject_count": off_topic_reject_count,
+        "case_study_evidence_count": case_study_evidence_count,
+        "high_trust_case_study_count": high_trust_case_study_count,
+        "case_study_strength_score_100": case_study_strength,
+        "first_party_case_coverage_100": first_party_case_coverage,
+        "official_case_ratio_100": official_case_ratio,
+        "case_study_quantified_ratio_100": case_study_quantified_ratio,
+        "case_study_gate_margin_100": case_study_gate_margin,
         "uncited_paragraph_ratio": uncited_ratio,
         "high_trust_citation_ratio": trust_citation_ratio,
         "unsupported_core_claim_count": unsupported_core_claims,
@@ -239,6 +361,12 @@ def evaluate_report(
     }
     if quality_gate_status is not None:
         result["quality_gate_status"] = quality_gate_status
+    if runtime_metrics is not None:
+        fail_reason = getattr(runtime_metrics, "quality_gate_fail_reason", None)
+        if fail_reason is None and isinstance(runtime_metrics, dict):
+            fail_reason = runtime_metrics.get("quality_gate_fail_reason")
+        if fail_reason:
+            result["quality_gate_fail_reason"] = str(fail_reason)
 
     logger.info(
         "📊 评估结果: citation_accuracy={}, source_coverage={}, selected_source_coverage={}, "

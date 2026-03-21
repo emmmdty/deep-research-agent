@@ -25,6 +25,9 @@
 - `builtin / skill / mcp` 统一 capability registry 与任务路由
 - 结构化状态对象：`SourceRecord`、`EvidenceNote`、`EvidenceUnit`、`VerificationRecord`、`RunMetrics`、`ReportArtifact`
 - 统一 benchmark 与 comparator 入口
+- benchmark profile 采用严格 `quality_gate`：最后一轮仍未达标时直接失败终止，不再输出伪完成报告
+- `case-study / 行业应用案例` 方面会走专用检索与筛选链，只接受 `官方站点 + 一手仓库` 证据；综述、泛博客和背景文章不会通过 gate
+- case-study 检索默认使用多模板 query bundle：官方域名 `site:` 扩展、GitHub 一手仓库搜索、以及失败后的 rescue queries
 - `benchmark_summary.json` 采用 `scorecard + legacy_metrics + judge_status` 双层输出，对外主展示为 `0-100` 连续值可靠性分数
 - `portfolio12` 主题集与 `run_ablation.py` 支持把项目方法点做成可复现的对照实验
 - 基于 `LLM-as-Judge` 的盲评对比
@@ -58,6 +61,7 @@ uv run python main.py --topic "openclaw安装教程" --profile benchmark
 uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
 uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set portfolio12 --summary
 uv run python scripts/run_ablation.py --topic-set portfolio12 --profile benchmark
+uv run python scripts/run_portfolio12_release.py --env-file /绝对路径/.env --topic-set portfolio12 --release-mode hybrid
 uv run python scripts/optimize_local3.py --profile benchmark --max-rounds 3 --skip-judge
 uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
 uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.md
@@ -67,6 +71,15 @@ uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.m
 - `scorecard`：面向展示的 `0-100` 分数卡，包含研究可靠性、系统可控性、报告质量、评测可复现性
 - `legacy_metrics`：保留旧字段聚合结果，兼容历史脚本与结果对比
 - `benchmark_health`：补充展示完成率、质量门控通过率、judge 状态与恢复韧性
+- case-study 相关连续值指标还包括：`case_study_strength_score_100`、`first_party_case_coverage_100`、`official_case_ratio_100`、`case_study_gate_margin_100`
+
+如果需要把 `portfolio12` 的 benchmark、ablation 与 `RESULTS.md` 一次打包成可复用结果集，优先使用 `scripts/run_portfolio12_release.py`。默认 `--release-mode hybrid` 会只对代表题 `T01,T04,T11` 运行 live judge，同时保留全量 `portfolio12` 的可复现实验输出；并通过 `--env-file` 显式加载带有 Judge/搜索密钥的环境文件。
+
+面试与简历相关材料可直接参考：
+
+- `docs/showcase.md`
+- `docs/resume_bullets.md`
+- `docs/interview_qa.md`
 
 ## 示例输出
 
@@ -100,6 +113,7 @@ $ uv run python main.py --topic "Latest progress in LLM agent architectures"
 - `SKILL_PATHS`
 - `MCP_CONFIG_PATH`
 - `MCP_SERVERS`
+- `CASE_STUDY_OFFICIAL_DOMAINS`
 - `ENABLED_SOURCES`
 - `ENABLED_COMPARATORS`
 - `MEMORY_BACKEND`

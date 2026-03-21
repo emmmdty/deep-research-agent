@@ -92,3 +92,46 @@ def test_run_comparator_skips_when_optional_comparator_not_configured(monkeypatc
     assert result.status == "skipped"
     assert result.success is False
     assert "gemini" in result.error.lower()
+
+
+def test_run_ours_comparator_marks_failed_quality_gate_as_failed(monkeypatch, tmp_path: Path):
+    """严格 quality gate 失败时，ours comparator 不应再伪装成 completed。"""
+    from evaluation.comparators import BenchmarkTopic, run_ours_comparator
+    from workflows.states import RunMetrics
+
+    topic = BenchmarkTopic(
+        id="T01",
+        topic="测试主题",
+        expected_aspects=["行业应用案例"],
+        min_sources=1,
+        min_words=10,
+    )
+
+    monkeypatch.setattr(
+        "workflows.graph.run_research",
+        lambda *args, **kwargs: {
+            "status": "failed_quality_gate",
+            "error": "缺少真实案例证据",
+            "final_report": None,
+            "report_artifact": None,
+            "sources_gathered": [],
+            "run_metrics": RunMetrics(
+                status="failed_quality_gate",
+                quality_gate_status="failed",
+                quality_gate_fail_reason="缺少真实案例证据",
+            ),
+        },
+    )
+
+    result = run_ours_comparator(
+        topic,
+        tmp_path / "outputs",
+        max_loops=2,
+        research_profile="benchmark",
+    )
+
+    assert result.status == "failed"
+    assert result.success is False
+    assert result.metrics["quality_gate_status"] == "failed"
+    assert result.metrics["quality_gate_fail_reason"] == "缺少真实案例证据"
+    assert "真实案例" in result.error

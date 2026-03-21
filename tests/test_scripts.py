@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from evaluation.comparators import BenchmarkTopic, ComparatorResult
@@ -99,3 +100,74 @@ def test_generate_comparison_markdown_includes_optional_skipped_result():
     assert "gemini" in report.lower()
     assert "skipped" in report.lower()
     assert "allowlist required" in report
+
+
+def test_run_benchmark_suite_can_load_external_env_file(monkeypatch, tmp_path: Path):
+    """benchmark runner 应支持从外部 env 文件加载运行配置。"""
+    from configs.settings import get_settings, reset_settings
+    from scripts import run_benchmark
+
+    env_file = tmp_path / "benchmark.env"
+    env_file.write_text(
+        "\n".join(
+            [
+                "LLM_PROVIDER=minimax",
+                "LLM_MODEL_NAME=MiniMax-M2.5",
+                "LLM_API_KEY=test-benchmark-key",
+                "LLM_BASE_URL=https://api.minimaxi.com/v1",
+                "SEARCH_BACKEND=duckduckgo",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    reset_settings()
+
+    topic = BenchmarkTopic(
+        id="T01",
+        topic="测试主题",
+        expected_aspects=["性能"],
+        min_sources=1,
+        min_words=10,
+    )
+
+    def fake_run_comparator(name, topic, output_root, max_loops=2, research_profile="benchmark"):
+        return ComparatorResult(
+            name=name,
+            status="completed",
+            success=True,
+            report_text="# 报告\n\n性能分析 [1]",
+            metrics={"time_seconds": 1.0},
+            report_path=str(output_root / name / f"{topic.id}.md"),
+        )
+
+    monkeypatch.setattr(run_benchmark, "run_comparator", fake_run_comparator)
+    monkeypatch.setattr(run_benchmark, "LLMJudge", lambda: _FakeJudge())
+
+    run_benchmark.run_benchmark_suite(
+        topics=[topic],
+        comparator_names=["ours"],
+        output_root=tmp_path / "out",
+        use_judge=True,
+        env_file=str(env_file),
+    )
+
+    settings = get_settings()
+    assert settings.llm_model_name == "MiniMax-M2.5"
+    assert settings.get_llm_config()["api_key"] == "test-benchmark-key"
+
+
+def test_load_runtime_env_removes_socks_proxy_when_socksio_missing(monkeypatch, tmp_path: Path):
+    """加载 env 时，若未安装 socksio，应移除导致 httpx 失败的 SOCKS 代理。"""
+    from scripts.runtime_env import load_runtime_env
+
+    env_file = tmp_path / "runtime.env"
+    env_file.write_text("LLM_PROVIDER=minimax\n", encoding="utf-8")
+
+    monkeypatch.setenv("ALL_PROXY", "socks5://127.0.0.1:7890")
+    monkeypatch.setenv("HTTPS_PROXY", "socks5://127.0.0.1:7890")
+    monkeypatch.setattr("scripts.runtime_env.importlib.util.find_spec", lambda name: None)
+
+    load_runtime_env(str(env_file))
+
+    assert "ALL_PROXY" not in os.environ
+    assert "HTTPS_PROXY" not in os.environ

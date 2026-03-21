@@ -66,7 +66,9 @@ benchmark profile 下，教程类主题优先 `web + github + installation skill
 Critic 通过条件边实现"满足/不满足"路由：
 - 不满足时回到 Researcher 执行补充搜索
 - benchmark profile 下保留 `quality_gate_status`
-- 达到最大迭代次数时允许 Writer 收尾，但不会伪装成高质量通过
+- benchmark profile 下若到达最后一轮仍未通过 `quality_gate`，工作流直接进入 `failed_quality_gate` 终态，不再进入 Writer
+- `case-study / 行业应用案例` 会触发专门的 product-style 检索策略，并要求至少存在一条 `官方站点 / 一手仓库` 的高可信案例证据
+- case-study 任务不是单条泛 query，而是 query bundle：官方域名 `site:` 查询、GitHub 一手仓库查询、产品博客/客户案例查询、失败后的 rescue queries
 
 ### 4. Verifier 与证据记忆
 
@@ -86,6 +88,7 @@ benchmark runner 不再只输出容易落成 `0/1` 的传统字段；当前 summ
 - `scorecard`：主展示层，输出 `research_reliability_score_100`、`system_controllability_score_100`、`report_quality_score_100`、`evaluation_reproducibility_score_100`
 - `legacy_metrics`：兼容层，继续保留 `aspect_coverage`、`citation_accuracy`、`depth_score`、`judge_*` 等字段的聚合结果
 - `benchmark_health`：补充输出 `completion_rate_100`、`quality_gate_pass_rate_100`、`judge_status`、恢复韧性等实验健康度信号
+- 对 case-study 任务，summary 还会补充 `case_study_strength_score_100`、`first_party_case_coverage_100`、`official_case_ratio_100`、`case_study_gate_margin_100`
 
 这样既能保持历史 benchmark 的兼容性，又能把多源研究的可信度、验证强度、引用对齐和系统控制能力用连续值展示出来。
 
@@ -95,6 +98,16 @@ benchmark runner 不再只输出容易落成 `0/1` 的传统字段；当前 summ
 
 - `portfolio12`：12 题主题集，覆盖 research / comparison / tutorial / product 四类任务
 - `scripts/run_ablation.py`：运行 `ours_base / ours_verifier / ours_gate / ours_full` 四个内部变体，用于对照 verifier 与 gate 的增益
+- `scripts/run_portfolio12_release.py`：支持 `hybrid / full-live` 两种模式；默认 `hybrid` 会对 `T01,T04,T11` 做 live judge 校准，并产出全量 `portfolio12` 的 benchmark / ablation / `RESULTS.md` / `release_manifest.json`
+
+为了让 benchmark profile 更稳定，Researcher 在使用 LLM 生成总结后还会执行一次 lightweight validator：
+
+- 若缺少 expected aspects
+- 若没有引用
+- 若高可信 selected sources 没有被正文使用
+- 若 case-study 有官方/一手证据但总结未显式披露来源性质
+
+则回退到 deterministic summary，并把修复次数记录到 `RunMetrics.summary_repair_count`。
 ### 7. LLM 输出清洗
 
 MiniMax 等模型可能在输出中包含 `<think>` 思维链标签。

@@ -252,16 +252,34 @@ def run_ours_comparator(
         metrics = _runtime_metrics_dict(run_metrics)
         if memory_stats is not None:
             metrics.update(memory_stats.model_dump())
+        if sources:
+            metrics.update(
+                evaluate_report(
+                    report,
+                    source_records=_coerce_sources(sources),
+                    expected_aspects=topic.expected_aspects,
+                    quality_gate_status=metrics.get("quality_gate_status"),
+                    report_artifact=artifact if isinstance(artifact, ReportArtifact) else None,
+                    memory_stats=memory_stats,
+                    runtime_metrics=run_metrics,
+                )
+            )
+            metrics.update(_build_scorecard_metrics(metrics))
+        raw_status = str(state.get("status", "completed" if report else "failed"))
+        status = "failed" if raw_status == "failed_quality_gate" else raw_status
+        if not report and status not in {"failed", "skipped"}:
+            status = "failed"
+        error = str(state.get("error") or "").strip()
         return ComparatorResult(
             name=comparator_name,
-            status="completed" if report else "failed",
+            status=status,
             success=bool(report),
             report_text=report,
             report_path=str(report_path) if report else None,
             sources=_coerce_sources(sources),
             report_artifact=artifact if isinstance(artifact, ReportArtifact) else None,
             metrics=metrics,
-            error="" if report else "未生成报告",
+            error="" if report else (error or "未生成报告"),
         )
     except Exception as exc:  # pragma: no cover - 通过集成测试覆盖
         logger.exception("运行 ours comparator 失败: {}", exc)
@@ -572,15 +590,30 @@ def _runtime_metrics_dict(metrics: RunMetrics | dict[str, Any] | None) -> dict[s
 def _build_scorecard_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     """把细粒度评测信号聚合成更适合展示的分数卡。"""
 
+    total_evidence_units = float(metrics.get("total_evidence_units", 0) or 0)
+    quality_gate_status = str(metrics.get("quality_gate_status") or "unchecked")
+    missing_verification_penalty = 25.0 if total_evidence_units <= 0 else 45.0
+    missing_entity_penalty = 35.0 if total_evidence_units <= 0 else 55.0
+    verification_component = metrics.get("verification_strength_score_100")
+    if verification_component is None:
+        verification_component = missing_verification_penalty
+    entity_component = metrics.get("entity_resolution_score_100")
+    if entity_component is None:
+        entity_component = missing_entity_penalty
+    if quality_gate_status in {"skipped", "unchecked"}:
+        verification_component = min(float(verification_component), 40.0)
+        entity_component = min(float(entity_component), 50.0)
+
     reliability_components = [
         metrics.get("high_trust_aspect_score_100"),
         metrics.get("cross_source_corroboration_score_100"),
-        metrics.get("verification_strength_score_100"),
-        metrics.get("entity_resolution_score_100"),
+        verification_component,
+        entity_component,
         metrics.get("citation_alignment_score_100"),
         metrics.get("conflict_disclosure_score_100"),
         metrics.get("evidence_novelty_score_100"),
         metrics.get("support_specificity_score_100"),
+        metrics.get("case_study_strength_score_100"),
     ]
     research_reliability = _mean_score(reliability_components)
 
@@ -596,8 +629,8 @@ def _build_scorecard_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     quality_gate_margin = _mean_score(
         [
             metrics.get("high_trust_aspect_score_100"),
-            metrics.get("verification_strength_score_100"),
-            metrics.get("entity_resolution_score_100"),
+            verification_component,
+            entity_component,
         ]
     )
 

@@ -54,6 +54,8 @@ cp .env.example .env
 2. 若指标需要 `Verifier / Evidence Memory / ReportArtifact` 信号，同步更新 `evaluation/comparators.py`
 3. benchmark summary 现在区分 `scorecard`、`legacy_metrics` 与 `benchmark_health`，新增主展示指标时同步更新 `scripts/run_benchmark.py`
 4. 如需比较方法收益，优先把变体接入 `scripts/run_ablation.py`，不要只在 README 中做口头描述
+5. benchmark profile 下修改 `quality_gate` 时，必须同时校验 `failed_quality_gate` 终态与 comparator 失败语义，避免“gate 失败但仍 completed”
+6. `case-study` 相关改动必须同时覆盖：query bundle、官方域名优先、GitHub 一手仓库识别、连续值指标与 summary 展示
 
 ## 常用命令
 
@@ -69,6 +71,9 @@ uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --
 # 运行内部 ablation 对照
 uv run python scripts/run_ablation.py --topic-set portfolio12 --profile benchmark
 
+# 运行 portfolio12 正式 release（默认 hybrid：代表题 live judge + 全量可复现 benchmark）
+uv run python scripts/run_portfolio12_release.py --env-file /绝对路径/.env --topic-set portfolio12 --release-mode hybrid
+
 # 运行 local3 自动优化闭环
 uv run python scripts/optimize_local3.py --profile benchmark --max-rounds 3 --skip-judge
 
@@ -83,6 +88,11 @@ uv run python scripts/compare_agents.py --file-a our.md --file-b competitor.md
 - `--summary` 会生成 `benchmark_summary.json/.md`
 - 新版 summary 默认输出 `scorecard`、`legacy_metrics`、`benchmark_health` 和 `judge_status`
 - `--skip-judge` 时，`judge_*` 不再写成 `0.0`，而是通过 `judge_status=skipped` 表达“本轮未评分”
+- 若当前 worktree 没有本地 `.env`，通过 `--env-file` 显式加载主仓库或外部环境文件
+- 正式结果集优先通过 `scripts/run_portfolio12_release.py` 产出；默认 `hybrid` 会对 `T01,T04,T11` 跑 live judge，并生成 `RESULTS.md` 与 `release_manifest.json`
+- `case-study / 行业应用案例` 的 benchmark 方面默认只接受 `官方站点 + 一手仓库` 证据；survey / review / benchmark 结果应被拒绝为 `not_case_study_evidence`
+- 相关 summary 应补充 `case_study_strength_score_100`、`first_party_case_coverage_100`、`official_case_ratio_100`、`case_study_gate_margin_100`
+- benchmark profile 下，若 LLM summary 未满足方面/引用/高可信证据约束，会自动回退为 deterministic summary，并记录 `summary_repair_count`
 
 ## 代码规范
 

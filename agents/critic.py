@@ -66,18 +66,27 @@ def critic_node(state: dict) -> dict:
             gate["quality_gate_status"] = "failed"
             gate["missing_aspects"].append("实体一致性不足")
             gate["follow_up_queries"].append(f"{research_topic} official documentation canonical definition")
+            fail_reason = gate.get("quality_gate_fail_reason", "")
+            gate["quality_gate_fail_reason"] = "；".join(
+                item for item in [fail_reason, "实体一致性不足"] if item
+            )
         feedback = CriticFeedback(
-            quality_score=8 if gate["passed"] else 6,
-            is_sufficient=bool(gate["passed"] or loop_count + 1 >= max_loops),
+            quality_score=8 if gate["passed"] else 5,
+            is_sufficient=bool(gate["passed"]),
             gaps=list(gate["missing_aspects"]),
             follow_up_queries=list(gate["follow_up_queries"]),
             feedback=(
                 "研究覆盖满足 benchmark 质量门槛。"
                 if gate["passed"]
-                else f"仍缺少关键方面：{', '.join(gate['missing_aspects']) or '无'}。"
+                else (
+                    f"质量门控未通过：{gate.get('quality_gate_fail_reason') or '仍缺少关键方面'}。"
+                    if gate["quality_gate_status"] == "failed"
+                    else f"仍缺少关键方面：{', '.join(gate['missing_aspects']) or '无'}。"
+                )
             ),
         )
         run_metrics.quality_gate_status = gate["quality_gate_status"]
+        run_metrics.quality_gate_fail_reason = str(gate.get("quality_gate_fail_reason") or "")
         logger.info(
             "🔍 Critic benchmark 评审完成: status={}, sufficient={}, gaps={}",
             gate["quality_gate_status"],
@@ -88,6 +97,7 @@ def critic_node(state: dict) -> dict:
             "critic_feedback": feedback,
             "loop_count": loop_count + 1,
             "quality_gate_status": gate["quality_gate_status"],
+            "quality_gate_fail_reason": str(gate.get("quality_gate_fail_reason") or ""),
             "run_metrics": run_metrics,
             "status": "reviewed",
         }

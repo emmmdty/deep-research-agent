@@ -37,6 +37,19 @@ research:
   # 最大迭代研究循环次数（Critic 不满足时回到 Researcher）
   max_loops: 3
 
+  # case-study 任务优先尝试的官方域名
+  case_study_official_domains:
+    - openai.com
+    - anthropic.com
+    - langchain.com
+    - microsoft.com
+    - learn.microsoft.com
+    - aws.amazon.com
+    - cloud.google.com
+    - salesforce.com
+    - ibm.com
+    - huggingface.co
+
 # ============================================================
 # 输出配置
 # ============================================================

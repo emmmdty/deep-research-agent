@@ -13,7 +13,6 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from dotenv import load_dotenv
 from loguru import logger
 from rich.console import Console
 from rich.panel import Panel
@@ -28,8 +27,7 @@ from evaluation.comparators import (
     run_comparator,
 )
 from evaluation.llm_judge import LLMJudge
-
-load_dotenv(PROJECT_ROOT / ".env")
+from scripts.runtime_env import load_runtime_env
 
 console = Console()
 
@@ -42,8 +40,10 @@ def run_benchmark_suite(
     use_judge: bool = True,
     max_loops: int = 2,
     research_profile: str = "benchmark",
+    env_file: str | None = None,
 ) -> list[dict[str, Any]]:
     """运行多主题 benchmark。"""
+    load_runtime_env(env_file)
     judge = LLMJudge() if use_judge else None
     results: list[dict[str, Any]] = []
 
@@ -202,6 +202,12 @@ def build_benchmark_summary(
                 "citation_alignment_score_100": metrics.get("citation_alignment_score_100"),
                 "conflict_disclosure_score_100": metrics.get("conflict_disclosure_score_100"),
                 "quality_gate_margin_100": metrics.get("quality_gate_margin_100"),
+                "case_study_strength_score_100": metrics.get("case_study_strength_score_100"),
+                "first_party_case_coverage_100": metrics.get("first_party_case_coverage_100"),
+                "official_case_ratio_100": metrics.get("official_case_ratio_100"),
+                "case_study_quantified_ratio_100": metrics.get("case_study_quantified_ratio_100"),
+                "case_study_gate_margin_100": metrics.get("case_study_gate_margin_100"),
+                "summary_repair_count": metrics.get("summary_repair_count", 0) or 0,
                 "coverage_balance_score_100": metrics.get("coverage_balance_score_100"),
                 "structure_completeness_score_100": metrics.get("structure_completeness_score_100"),
                 "evidence_novelty_score_100": metrics.get("evidence_novelty_score_100"),
@@ -292,6 +298,11 @@ def build_benchmark_summary(
                 "citation_alignment_score_100",
                 "conflict_disclosure_score_100",
                 "quality_gate_margin_100",
+                "case_study_strength_score_100",
+                "first_party_case_coverage_100",
+                "official_case_ratio_100",
+                "case_study_quantified_ratio_100",
+                "case_study_gate_margin_100",
                 "coverage_balance_score_100",
                 "structure_completeness_score_100",
                 "research_reliability_score_100",
@@ -345,6 +356,13 @@ def build_benchmark_summary(
                 completed_rows,
                 "recovery_resilience_score_100",
             ),
+            "case_study_strength_score_100": _stats_from_metrics(completed_rows, "case_study_strength_score_100"),
+            "first_party_case_coverage_100": _stats_from_metrics(completed_rows, "first_party_case_coverage_100"),
+            "official_case_ratio_100": _stats_from_metrics(completed_rows, "official_case_ratio_100"),
+            "summary_repair_count_total": sum(int(row.get("summary_repair_count", 0) or 0) for row in rows),
+            "summary_repair_topics": [
+                row["topic_id"] for row in rows if int(row.get("summary_repair_count", 0) or 0) > 0
+            ],
         },
         "rankings": rankings,
     }
@@ -397,6 +415,21 @@ def _summary_to_markdown(summary: dict[str, Any]) -> str:
             )
         else:
             lines.append(f"- {key}: {_format_md_metric(value)}")
+
+    lines.extend(["", "## Case Study Signals", ""])
+    for metric in (
+        "case_study_strength_score_100",
+        "first_party_case_coverage_100",
+        "official_case_ratio_100",
+        "case_study_quantified_ratio_100",
+        "case_study_gate_margin_100",
+    ):
+        value = summary.get("aggregates", {}).get(metric)
+        if not value:
+            continue
+        lines.append(
+            f"- {metric}: avg={_format_md_metric(value.get('avg'))}, min={_format_md_metric(value.get('min'))}, max={_format_md_metric(value.get('max'))}"
+        )
 
     lines.extend(["", "## Rankings", ""])
     for key, value in summary["rankings"].items():
@@ -453,8 +486,10 @@ def main() -> None:
     parser.add_argument("--topic-set", type=str, default="default", help="主题集：default / local3 / portfolio12")
     parser.add_argument("--summary", action="store_true", help="生成聚合 summary 文件")
     parser.add_argument("--profile", type=str, default="benchmark", help="运行 profile：default 或 benchmark")
+    parser.add_argument("--env-file", type=str, help="显式指定运行时 env 文件")
     args = parser.parse_args()
 
+    load_runtime_env(args.env_file)
     settings = get_settings()
     requested = [item.strip() for item in args.comparators.split(",")] if args.comparators else None
     optional = [item.strip() for item in args.include_optional.split(",")] if args.include_optional else None
@@ -477,6 +512,7 @@ def main() -> None:
         use_judge=not args.skip_judge,
         max_loops=args.max_loops,
         research_profile=args.profile,
+        env_file=args.env_file,
     )
     print_results(results)
     json_path, md_path = save_results(results, output_root)

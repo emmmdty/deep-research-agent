@@ -191,6 +191,11 @@ class RunMetrics(BaseModel):
     rejected_sources: int = Field(default=0, description="被过滤来源数")
     fallback_search_calls: int = Field(default=0, description="搜索后端回退次数")
     quality_gate_status: str = Field(default="unchecked", description="质量门控状态")
+    quality_gate_fail_reason: str = Field(default="", description="质量门控失败原因")
+    case_study_query_count: int = Field(default=0, description="case-study 查询次数")
+    case_study_rescue_calls: int = Field(default=0, description="case-study 补救检索次数")
+    summary_repair_count: int = Field(default=0, description="benchmark summary 自动修复次数")
+    summary_repair_tasks: list[str] = Field(default_factory=list, description="触发 summary 修复的任务标题")
     skill_activation_count: int = Field(default=0, description="skill 激活次数")
     mcp_activation_count: int = Field(default=0, description="MCP 能力激活次数")
     tool_use_success_rate: float = Field(default=0.0, description="工具调用成功率")
@@ -267,6 +272,7 @@ class ResearchState(BaseModel):
     report_artifact: Optional[ReportArtifact] = Field(default=None, description="结构化报告产物")
     coverage_status: dict[str, bool] = Field(default_factory=dict, description="方面覆盖状态")
     quality_gate_status: str = Field(default="unchecked", description="质量门控状态")
+    quality_gate_fail_reason: str = Field(default="", description="质量门控失败原因")
 
     # 状态标志
     status: str = Field(default="initialized", description="工作流当前状态")

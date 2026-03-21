@@ -59,6 +59,7 @@ class GraphState(TypedDict, total=False):
     report_artifact: Annotated[Optional[ReportArtifact], _replace]
     run_metrics: Annotated[RunMetrics, _replace]
     quality_gate_status: Annotated[str, _replace]
+    quality_gate_fail_reason: Annotated[str, _replace]
     status: Annotated[str, _replace]
     error: Annotated[Optional[str], _replace]
 
@@ -69,6 +70,7 @@ def _should_continue(state: dict) -> str:
     Returns:
         "continue_research" — 继续迭代研究
         "write_report" — 研究充分，开始撰写报告
+        "fail_quality_gate" — benchmark 质量门控失败，终止工作流
     """
     critic_feedback = state.get("critic_feedback")
 
@@ -79,8 +81,35 @@ def _should_continue(state: dict) -> str:
         logger.info("✅ 研究质量满足要求，进入报告撰写阶段")
         return "write_report"
 
+    if state.get("quality_gate_status") == "failed":
+        logger.warning("⛔ 质量门控失败，终止写作并保留诊断信息")
+        return "fail_quality_gate"
+
     logger.info("🔄 研究质量不足，继续迭代 (score={})", critic_feedback.quality_score)
     return "continue_research"
+
+
+def _fail_quality_gate_node(state: dict) -> dict:
+    """质量门控失败时的终结节点。"""
+    critic_feedback = state.get("critic_feedback")
+    run_metrics = state.get("run_metrics")
+    if not isinstance(run_metrics, RunMetrics):
+        run_metrics = RunMetrics.model_validate(run_metrics or {})
+    fail_reason = state.get("quality_gate_fail_reason") or ""
+    if not fail_reason and critic_feedback is not None:
+        fail_reason = "；".join(getattr(critic_feedback, "gaps", [])[:3])
+    fail_reason = fail_reason or "质量门控未通过"
+    run_metrics.quality_gate_status = "failed"
+    run_metrics.quality_gate_fail_reason = fail_reason
+    return {
+        "final_report": None,
+        "report_artifact": None,
+        "run_metrics": run_metrics,
+        "quality_gate_status": "failed",
+        "quality_gate_fail_reason": fail_reason,
+        "status": "failed_quality_gate",
+        "error": fail_reason,
+    }
 
 
 def build_research_graph():
@@ -99,6 +128,7 @@ def build_research_graph():
     workflow.add_node("verifier", verifier_node)
     workflow.add_node("critic", critic_node)
     workflow.add_node("writer", writer_node)
+    workflow.add_node("fail_quality_gate", _fail_quality_gate_node)
 
     # 定义边
     workflow.set_entry_point("supervisor")
@@ -114,10 +144,12 @@ def build_research_graph():
         {
             "continue_research": "researcher",
             "write_report": "writer",
+            "fail_quality_gate": "fail_quality_gate",
         },
     )
 
     workflow.add_edge("writer", END)
+    workflow.add_edge("fail_quality_gate", END)
 
     return workflow.compile()
 
@@ -171,6 +203,7 @@ def run_research(
         "report_artifact": None,
         "run_metrics": RunMetrics(),
         "quality_gate_status": "unchecked",
+        "quality_gate_fail_reason": "",
         "status": "initialized",
         "error": None,
     }
@@ -198,6 +231,11 @@ def run_research(
         rejected_sources=existing_metrics.rejected_sources,
         fallback_search_calls=existing_metrics.fallback_search_calls,
         quality_gate_status=final_state.get("quality_gate_status", existing_metrics.quality_gate_status),
+        quality_gate_fail_reason=final_state.get("quality_gate_fail_reason", existing_metrics.quality_gate_fail_reason),
+        case_study_query_count=existing_metrics.case_study_query_count,
+        case_study_rescue_calls=existing_metrics.case_study_rescue_calls,
+        summary_repair_count=existing_metrics.summary_repair_count,
+        summary_repair_tasks=list(existing_metrics.summary_repair_tasks),
         skill_activation_count=existing_metrics.skill_activation_count,
         mcp_activation_count=existing_metrics.mcp_activation_count,
         tool_use_success_rate=existing_metrics.tool_use_success_rate,

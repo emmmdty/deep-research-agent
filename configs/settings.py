@@ -100,6 +100,21 @@ class Settings(BaseSettings):
         default=6,
         description="单个任务最多保留的来源数",
     )
+    case_study_official_domains: list[str] = Field(
+        default_factory=lambda: [
+            "openai.com",
+            "anthropic.com",
+            "langchain.com",
+            "microsoft.com",
+            "learn.microsoft.com",
+            "aws.amazon.com",
+            "cloud.google.com",
+            "salesforce.com",
+            "ibm.com",
+            "huggingface.co",
+        ],
+        description="case-study 检索时优先尝试的官方域名",
+    )
     source_policy_mode: str = Field(
         default="default",
         description="来源选择策略模式",
@@ -196,6 +211,7 @@ class Settings(BaseSettings):
         "enabled_comparators",
         "enabled_capability_types",
         "skill_paths",
+        "case_study_official_domains",
         mode="before",
     )
     @classmethod

@@ -189,6 +189,102 @@ def test_build_report_metrics_merges_memory_and_tooling_signals():
     assert 0 < metrics["report_quality_score_100"] <= 100
 
 
+def test_evaluate_report_emits_case_study_reliability_metrics():
+    """case-study 评估应输出连续值强度指标，而不是只保留数量计数。"""
+    from evaluation.metrics import evaluate_report
+    from workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
+
+    report = (
+        "# 报告\n\n"
+        "## 1. 行业应用案例\n\n"
+        "### 核心结论\n\n"
+        "OpenAI 的客户案例显示，Agent 已在网络安全处置中进入生产环境。[1]\n\n"
+        "### 补充观察\n\n"
+        "官方一手仓库提供了相关参考实现。[2]\n\n"
+        "### 证据限制\n\n"
+        "仍需更多独立官方案例交叉验证。[1][2]\n"
+    )
+    sources = [
+        SourceRecord(
+            citation_id=1,
+            source_type="web",
+            query="q",
+            title="OpenAI customer story",
+            url="https://openai.com/index/outtake",
+            trust_tier=4,
+            selected=True,
+            task_title="行业应用案例",
+            metadata={
+                "case_study_evidence": True,
+                "case_study_type": "official_customer_story",
+                "case_study_strength_score": 0.92,
+                "matches_topic_family": True,
+                "has_quantitative_outcome": True,
+            },
+        ),
+        SourceRecord(
+            citation_id=2,
+            source_type="github",
+            query="q",
+            title="openai/openai-agents-examples",
+            url="https://github.com/openai/openai-agents-examples",
+            trust_tier=5,
+            selected=True,
+            task_title="行业应用案例",
+            metadata={
+                "case_study_evidence": True,
+                "case_study_type": "first_party_repo",
+                "case_study_strength_score": 0.74,
+                "matches_topic_family": True,
+                "has_quantitative_outcome": False,
+            },
+        ),
+    ]
+
+    metrics = evaluate_report(
+        report,
+        source_records=sources,
+        expected_aspects=["行业应用案例"],
+        quality_gate_status="passed",
+        report_artifact=ReportArtifact(
+            topic="测试主题",
+            report=report,
+            citations=sources,
+            evidence_notes=[
+                EvidenceNote(
+                    task_id=1,
+                    task_title="行业应用案例",
+                    query="q",
+                    summary="案例总结",
+                    source_ids=[1, 2],
+                    aspect_hits=["行业应用案例"],
+                    claim_count=2,
+                    selected_source_ids=[1, 2],
+                )
+            ],
+            verification_records=[
+                VerificationRecord(task_title="行业应用案例", citation_ids=[1, 2], status="supported", notes="官方+一手仓库")
+            ],
+            memory_stats=MemoryStats(
+                total_evidence_units=2,
+                total_clusters=2,
+                high_trust_evidence_units=2,
+                high_trust_ratio=1.0,
+                conflict_count=0,
+                entity_consistency_score=1.0,
+            ),
+        ),
+    )
+
+    assert metrics["case_study_evidence_count"] == 2
+    assert metrics["high_trust_case_study_count"] == 2
+    assert 0 < metrics["case_study_strength_score_100"] < 100
+    assert 0 < metrics["first_party_case_coverage_100"] <= 100
+    assert 0 < metrics["official_case_ratio_100"] <= 100
+    assert 0 < metrics["case_study_quantified_ratio_100"] < 100
+    assert 0 < metrics["case_study_gate_margin_100"] <= 100
+
+
 def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs():
     """没有冲突或 judge 时，应返回可解释的空值，而不是 0 分。"""
     from evaluation.comparators import BenchmarkTopic, build_report_metrics
@@ -257,6 +353,50 @@ def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs()
     )
 
     assert metrics["conflict_disclosure_score_100"] is None
+
+
+def test_scorecard_penalizes_missing_verifier_and_gate_signals():
+    """缺少 verifier / gate 的变体不应因为缺字段而在主分数上占优。"""
+    from evaluation.comparators import _build_scorecard_metrics
+
+    base_metrics = _build_scorecard_metrics(
+        {
+            "high_trust_aspect_score_100": 85.0,
+            "cross_source_corroboration_score_100": 83.0,
+            "citation_alignment_score_100": 92.0,
+            "support_specificity_score_100": 88.0,
+            "quality_gate_status": "skipped",
+            "quality_gate_passed": False,
+            "tool_use_success_rate": 0.9,
+            "selected_sources": 12,
+            "rejected_sources": 1,
+            "search_calls": 10,
+            "fallback_search_calls": 0,
+            "total_evidence_units": 0,
+        }
+    )
+    full_metrics = _build_scorecard_metrics(
+        {
+            "high_trust_aspect_score_100": 80.0,
+            "cross_source_corroboration_score_100": 79.0,
+            "verification_strength_score_100": 84.0,
+            "entity_resolution_score_100": 76.0,
+            "citation_alignment_score_100": 88.0,
+            "support_specificity_score_100": 82.0,
+            "quality_gate_status": "passed",
+            "quality_gate_passed": True,
+            "tool_use_success_rate": 0.85,
+            "selected_sources": 10,
+            "rejected_sources": 2,
+            "search_calls": 10,
+            "fallback_search_calls": 0,
+            "total_evidence_units": 20,
+            "recovery_resilience_score_100": 82.0,
+        }
+    )
+
+    assert full_metrics["research_reliability_score_100"] > base_metrics["research_reliability_score_100"]
+    assert full_metrics["quality_gate_margin_100"] > base_metrics["quality_gate_margin_100"]
 
 
 def test_recovery_resilience_score_reflects_fallback_and_gate_failures():
