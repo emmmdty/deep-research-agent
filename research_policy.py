@@ -320,6 +320,9 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
     aspect = (task.expected_aspects or [task.title])[0]
     topic_text = getattr(task, "query", "") or getattr(task, "title", "")
     family_terms = _case_study_topic_family_terms(topic_text)
+    aspect_terms = _aspect_boost_terms(aspect, "product")
+    aspect_ascii_terms = _ascii_query_terms(aspect_terms)[:4]
+    aspect_ascii_text = _compact_query(aspect_ascii_terms)
     family_text = _compact_query(family_terms or ["agent"])
     official_domains = _case_study_domains_for_topic(topic_text)
     official_orgs = _case_study_official_orgs(official_domains)
@@ -331,6 +334,7 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
                 [
                     topic_text,
                     aspect,
+                    aspect_ascii_text,
                     family_text,
                     "official",
                     "case study",
@@ -346,6 +350,7 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
                     [
                         topic_text,
                         aspect,
+                        aspect_ascii_text,
                         f"site:{domain}",
                         family_text,
                         "case study",
@@ -356,16 +361,17 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
                 )
             )
         queries.append(
-            _compact_query([topic_text, family_text, "product blog", "customer story", "production"])
+            _compact_query([topic_text, aspect_ascii_text, family_text, "product blog", "customer story", "production"])
         )
     elif source_name == "github":
-        generic_terms = _dedupe_terms([family_text, "example", "project", "production", "deployment"])
+        generic_terms = _dedupe_terms([aspect_ascii_text, family_text, "example", "project", "production", "deployment"])
         queries.append(_compact_query(generic_terms))
         for org in official_orgs[:4]:
             queries.append(
                 _compact_query(
                     [
                         f"org:{org}",
+                        aspect_ascii_text,
                         family_text,
                         "example",
                         "project",
@@ -480,6 +486,22 @@ def _build_query(topic: str, aspect: str, task_type: str) -> str:
 def _aspect_boost_terms(aspect: str, task_type: str) -> list[str]:
     normalized = normalize_text(aspect)
     boosts: list[str] = []
+    if "监管" in normalized:
+        boosts.extend(["regulatory", "regulation", "governance", "policy control"])
+    if "智能投顾" in normalized:
+        boosts.extend(["robo advisor", "wealth management", "investment advisory"])
+    if "量化交易" in normalized:
+        boosts.extend(["quantitative trading", "algorithmic trading"])
+    if "风控" in normalized:
+        boosts.extend(["risk management", "risk control"])
+    if "反欺诈" in normalized:
+        boosts.extend(["fraud detection", "anti fraud"])
+    if "客户服务" in normalized:
+        boosts.extend(["customer service", "contact center", "support agent"])
+    if "合规" in normalized:
+        boosts.extend(["compliance", "regulatory compliance", "aml", "kyc"])
+    if "效果数据" in normalized or "效果" in normalized:
+        boosts.extend(["roi", "cost reduction", "productivity", "efficiency"])
     if "memory" in normalized or "记忆" in normalized:
         boosts.extend(["memory", "long-term memory", "episodic memory"])
     if "tool calling" in normalized or "function calling" in normalized or "工具" in normalized:
@@ -530,6 +552,23 @@ def _aspect_semantic_terms(aspect: str, task_type: str) -> list[str]:
     """为具体方面补充更适合检索和判定的双语语义词。"""
     normalized = normalize_text(aspect)
     terms = list(_aspect_anchor_terms(aspect))
+
+    if "监管" in normalized:
+        terms.extend(["regulatory", "regulation", "governance", "policy control"])
+    if "智能投顾" in normalized:
+        terms.extend(["robo advisor", "wealth management", "investment advisory"])
+    if "量化交易" in normalized:
+        terms.extend(["quantitative trading", "algorithmic trading"])
+    if "风控" in normalized:
+        terms.extend(["risk management", "risk control"])
+    if "反欺诈" in normalized:
+        terms.extend(["fraud detection", "anti fraud"])
+    if "客户服务" in normalized:
+        terms.extend(["customer service", "contact center", "support agent", "virtual assistant"])
+    if "合规" in normalized:
+        terms.extend(["compliance", "regulatory compliance", "aml", "kyc"])
+    if "效果数据" in normalized or "效果" in normalized:
+        terms.extend(["roi", "cost reduction", "productivity", "efficiency", "accuracy"])
 
     if task_type == "tutorial":
         if "依赖" in normalized or "前置条件" in normalized:
@@ -1160,6 +1199,11 @@ def _aspect_support_specificity(item: dict[str, Any] | Any, task) -> float:
     specificity = 0.55 * critical_hit + 0.25 * semantic_score + 0.20 * topic_score
     if task_type == "tutorial" and source_type == "github" and topic_score >= 0.5:
         specificity = max(specificity, 0.3)
+    if task_type == "product":
+        case_meta = _classify_case_study_item(item, task)
+        if case_meta.get("case_study_evidence"):
+            case_strength = float(case_meta.get("case_study_strength_score", 0.0) or 0.0)
+            specificity = max(specificity, 0.34 + 0.46 * case_strength)
     return round(min(1.0, specificity), 3)
 
 
@@ -1220,6 +1264,18 @@ def _minimum_support_specificity(task, item: dict[str, Any] | Any) -> float:
         )
     ):
         threshold += 0.10
+    if task_type == "product":
+        case_study_evidence = False
+        case_strength = 0.0
+        if isinstance(item, dict):
+            case_study_evidence = bool(item.get("case_study_evidence"))
+            case_strength = float(item.get("case_study_strength_score", 0.0) or 0.0)
+        else:
+            metadata = getattr(item, "metadata", {}) or {}
+            case_study_evidence = bool(metadata.get("case_study_evidence"))
+            case_strength = float(metadata.get("case_study_strength_score", 0.0) or 0.0)
+        if case_study_evidence and case_strength >= 0.65:
+            threshold = min(threshold, 0.22 if source_type == "github" else 0.18)
     return round(min(threshold, 0.6), 3)
 
 

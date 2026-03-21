@@ -278,6 +278,7 @@ def test_finance_case_study_query_bundle_is_topic_aware():
     assert any("site:aws.amazon.com" in query for query in web_queries)
     assert any("site:microsoft.com" in query or "site:learn.microsoft.com" in query for query in web_queries)
     assert any("financial services" in query.lower() or "banking" in query.lower() for query in web_queries)
+    assert any("robo advisor" in query.lower() or "quantitative trading" in query.lower() for query in web_queries)
 
 
 def test_select_sources_for_case_study_rejects_survey_like_evidence():
@@ -359,6 +360,45 @@ def test_select_sources_for_case_study_marks_official_and_first_party_strength()
     assert official["case_study_strength_score"] >= 0.8
     assert repo["case_study_type"] == "first_party_repo"
     assert repo["case_study_strength_score"] >= 0.65
+
+
+def test_finance_case_study_accepts_official_english_compliance_evidence():
+    """金融案例应接受英文官方合规案例，不要求逐字命中中文方面短语。"""
+    from research_policy import build_benchmark_tasks, select_sources_for_task
+
+    topic = TopicSpec(
+        id="T04",
+        topic="AI Agent 在金融领域的应用案例",
+        expected_aspects=["监管合规检查"],
+        min_sources=4,
+        min_words=2000,
+    )
+    task = build_benchmark_tasks(topic)[0]
+
+    raw_items = [
+        {
+            "source_type": "web",
+            "title": "AWS customer story: financial services compliance automation",
+            "url": "https://aws.amazon.com/financial-services/customer-stories/compliance-automation/",
+            "snippet": "Official customer story showing production deployment for banking compliance, AML and KYC workflows with measurable efficiency gains.",
+        },
+        {
+            "source_type": "web",
+            "title": "Finance AI overview",
+            "url": "https://blog.example.com/finance-ai-overview",
+            "snippet": "A broad overview of AI trends in finance without customer deployment details.",
+        },
+    ]
+
+    selected, rejected, _ = select_sources_for_task(raw_items, task, per_task_limit=3)
+
+    assert len(selected) == 1
+    official = selected[0]
+    assert official["case_study_type"] == "official_customer_story"
+    assert official["matches_topic_family"] is True
+    assert official["case_study_strength_score"] >= 0.9
+    assert official["support_specificity"] >= 0.7
+    assert any(item.get("rejection_reason") == "not_case_study_evidence" for item in rejected)
 
 
 def test_select_sources_for_task_keeps_high_trust_mix_for_research_topics():
