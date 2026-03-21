@@ -6,7 +6,8 @@ from loguru import logger
 
 from llm.provider import get_llm
 from prompts.templates import WRITER_SYSTEM_PROMPT, WRITER_USER_PROMPT
-from workflows.states import ReportArtifact, SourceRecord, TaskItem
+from research_policy import build_benchmark_report
+from workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
 
 def writer_node(state: dict) -> dict:
@@ -19,37 +20,56 @@ def writer_node(state: dict) -> dict:
         更新后的状态字典，包含 final_report。
     """
     research_topic = state["research_topic"]
+    research_profile = state.get("research_profile", "default")
     tasks: list[TaskItem] = state.get("tasks", [])
     task_summaries: list[str] = state.get("task_summaries", [])
     sources_gathered: list[SourceRecord] = state.get("sources_gathered", [])
     evidence_notes = state.get("evidence_notes", [])
+    evidence_units = state.get("evidence_units", [])
+    evidence_clusters = state.get("evidence_clusters", [])
+    verification_records = state.get("verification_records", [])
+    memory_stats = state.get("memory_stats")
+    if memory_stats is None:
+        memory_stats = MemoryStats()
     run_metrics = state.get("run_metrics")
+    if not isinstance(run_metrics, RunMetrics):
+        run_metrics = RunMetrics.model_validate(run_metrics or {})
 
     logger.info("📝 Writer 开始撰写报告: topic='{}'", research_topic)
 
-    llm = get_llm()
+    if research_profile == "benchmark":
+        report = build_benchmark_report(
+            topic=research_topic,
+            tasks=tasks,
+            task_summaries=task_summaries,
+            sources=sources_gathered,
+            evidence_notes=evidence_notes,
+        )
+    else:
+        llm = get_llm()
 
-    # 构造任务总结文本
-    summaries_text = _format_task_summaries(tasks, task_summaries)
+        # 构造任务总结文本
+        summaries_text = _format_task_summaries(tasks, task_summaries)
 
-    user_prompt = WRITER_USER_PROMPT.format(
-        research_topic=research_topic,
-        task_summaries=summaries_text,
-        source_catalog=_format_source_catalog(sources_gathered),
-    )
+        user_prompt = WRITER_USER_PROMPT.format(
+            research_topic=research_topic,
+            task_summaries=summaries_text,
+            source_catalog=_format_source_catalog(sources_gathered),
+        )
 
-    from langchain_core.messages import HumanMessage, SystemMessage
+        from langchain_core.messages import HumanMessage, SystemMessage
 
-    messages = [
-        SystemMessage(content=WRITER_SYSTEM_PROMPT),
-        HumanMessage(content=user_prompt),
-    ]
-    response = llm.invoke(messages)
-    report = response.content
+        messages = [
+            SystemMessage(content=WRITER_SYSTEM_PROMPT),
+            HumanMessage(content=user_prompt),
+        ]
+        response = llm.invoke(messages)
+        report = response.content
 
-    # 清理模型思维链泄露（<think>标签等）
-    from llm.clean import clean_llm_output
-    report = clean_llm_output(report)
+        # 清理模型思维链泄露（<think>标签等）
+        from llm.clean import clean_llm_output
+
+        report = clean_llm_output(report)
 
     logger.info("📝 Writer 报告撰写完成: 长度={} 字符", len(report))
 
@@ -60,6 +80,10 @@ def writer_node(state: dict) -> dict:
             report=report,
             citations=sources_gathered,
             evidence_notes=evidence_notes,
+            evidence_units=evidence_units,
+            evidence_clusters=evidence_clusters,
+            verification_records=verification_records,
+            memory_stats=memory_stats,
             metrics=run_metrics,
         ),
         "status": "completed",

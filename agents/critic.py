@@ -8,7 +8,8 @@ from loguru import logger
 
 from llm.provider import get_llm
 from prompts.templates import CRITIC_SYSTEM_PROMPT, CRITIC_USER_PROMPT
-from workflows.states import CriticFeedback, SourceRecord
+from research_policy import evaluate_quality_gate
+from workflows.states import CriticFeedback, RunMetrics, SourceRecord, TaskItem
 
 
 def critic_node(state: dict) -> dict:
@@ -21,12 +22,75 @@ def critic_node(state: dict) -> dict:
         更新后的状态字典，包含 critic_feedback。
     """
     research_topic = state["research_topic"]
+    research_profile = state.get("research_profile", "default")
+    ablation_variant = state.get("ablation_variant")
     task_summaries = state.get("task_summaries", [])
     sources_gathered: list[SourceRecord] = state.get("sources_gathered", [])
+    tasks: list[TaskItem] = state.get("tasks", [])
+    memory_stats = state.get("memory_stats")
     loop_count = state.get("loop_count", 0)
     max_loops = state.get("max_loops", 3)
+    run_metrics = state.get("run_metrics")
+    if not isinstance(run_metrics, RunMetrics):
+        run_metrics = RunMetrics.model_validate(run_metrics or {})
 
     logger.info("🔍 Critic 开始评审: loop={}/{}", loop_count + 1, max_loops)
+
+    if research_profile == "benchmark":
+        if ablation_variant in {"ours_base", "ours_verifier"}:
+            feedback = CriticFeedback(
+                quality_score=6,
+                is_sufficient=True,
+                gaps=[],
+                follow_up_queries=[],
+                feedback="该 ablation 变体禁用了 quality gate，直接进入写作阶段。",
+            )
+            run_metrics.quality_gate_status = "skipped"
+            return {
+                "critic_feedback": feedback,
+                "loop_count": loop_count + 1,
+                "quality_gate_status": "skipped",
+                "run_metrics": run_metrics,
+                "status": "reviewed",
+            }
+        gate = evaluate_quality_gate(
+            tasks=tasks,
+            task_summaries=task_summaries,
+            sources=sources_gathered,
+            loop_count=loop_count,
+            max_loops=max_loops,
+            research_topic=research_topic,
+        )
+        if getattr(memory_stats, "entity_consistency_score", 1.0) < 0.8:
+            gate["passed"] = False
+            gate["quality_gate_status"] = "failed"
+            gate["missing_aspects"].append("实体一致性不足")
+            gate["follow_up_queries"].append(f"{research_topic} official documentation canonical definition")
+        feedback = CriticFeedback(
+            quality_score=8 if gate["passed"] else 6,
+            is_sufficient=bool(gate["passed"] or loop_count + 1 >= max_loops),
+            gaps=list(gate["missing_aspects"]),
+            follow_up_queries=list(gate["follow_up_queries"]),
+            feedback=(
+                "研究覆盖满足 benchmark 质量门槛。"
+                if gate["passed"]
+                else f"仍缺少关键方面：{', '.join(gate['missing_aspects']) or '无'}。"
+            ),
+        )
+        run_metrics.quality_gate_status = gate["quality_gate_status"]
+        logger.info(
+            "🔍 Critic benchmark 评审完成: status={}, sufficient={}, gaps={}",
+            gate["quality_gate_status"],
+            feedback.is_sufficient,
+            len(feedback.gaps),
+        )
+        return {
+            "critic_feedback": feedback,
+            "loop_count": loop_count + 1,
+            "quality_gate_status": gate["quality_gate_status"],
+            "run_metrics": run_metrics,
+            "status": "reviewed",
+        }
 
     llm = get_llm()
 
@@ -83,6 +147,7 @@ def critic_node(state: dict) -> dict:
     return {
         "critic_feedback": feedback,
         "loop_count": loop_count + 1,
+        "run_metrics": run_metrics,
         "status": "reviewed",
     }
 

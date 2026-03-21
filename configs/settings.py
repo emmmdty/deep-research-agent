@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from enum import Enum
 from pathlib import Path
 from typing import Any, Optional
@@ -79,9 +80,45 @@ class Settings(BaseSettings):
         default=5,
         description="每次搜索返回的最大结果数",
     )
+    research_profile: str = Field(
+        default="default",
+        description="研究 profile：default 或 benchmark",
+    )
     research_concurrency: int = Field(
         default=3,
         description="研究并发度",
+    )
+    critic_hard_fail_enabled: bool = Field(
+        default=True,
+        description="是否启用质量门控硬规则",
+    )
+    per_source_max_results: int = Field(
+        default=4,
+        description="单个来源的最多候选结果数",
+    )
+    per_task_selected_sources: int = Field(
+        default=6,
+        description="单个任务最多保留的来源数",
+    )
+    source_policy_mode: str = Field(
+        default="default",
+        description="来源选择策略模式",
+    )
+    enabled_capability_types: list[str] = Field(
+        default_factory=lambda: ["builtin", "skill", "mcp"],
+        description="启用的能力类型",
+    )
+    skill_paths: list[str] = Field(
+        default_factory=list,
+        description="skill 根目录列表",
+    )
+    mcp_config_path: Optional[str] = Field(
+        default=None,
+        description="MCP server YAML 配置路径",
+    )
+    mcp_servers: list[dict[str, Any]] = Field(
+        default_factory=list,
+        description="MCP server 配置列表",
     )
     enabled_sources: list[str] = Field(
         default_factory=lambda: ["web", "github", "arxiv"],
@@ -141,6 +178,10 @@ class Settings(BaseSettings):
         default="workspace",
         description="研究工作区目录",
     )
+    memory_backend: str = Field(
+        default="sqlite",
+        description="记忆后端，当前固定为 sqlite",
+    )
 
     log_level: str = Field(default="INFO", description="日志级别")
 
@@ -150,12 +191,26 @@ class Settings(BaseSettings):
         "extra": "ignore",
     }
 
-    @field_validator("enabled_sources", "enabled_comparators", mode="before")
+    @field_validator(
+        "enabled_sources",
+        "enabled_comparators",
+        "enabled_capability_types",
+        "skill_paths",
+        mode="before",
+    )
     @classmethod
     def _parse_csv_list(cls, value: Any) -> Any:
         """允许使用逗号分隔字符串配置列表字段。"""
         if isinstance(value, str):
             return [item.strip() for item in value.split(",") if item.strip()]
+        return value
+
+    @field_validator("mcp_servers", mode="before")
+    @classmethod
+    def _parse_mcp_servers(cls, value: Any) -> Any:
+        """允许使用 JSON 字符串配置 MCP server 列表。"""
+        if isinstance(value, str) and value.strip():
+            return json.loads(value)
         return value
 
     def get_llm_config(self) -> dict:

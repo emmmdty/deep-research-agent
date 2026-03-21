@@ -31,6 +31,7 @@ dependencies = [
     "langchain-openai>=0.1.10,<0.4.0",
     "langgraph>=0.1.0",
     "loguru>=0.7.3",
+    "mcp>=1.18.0",
     "pydantic>=2.7.0",
     "pydantic-settings>=2.0.0",
     "pypdf2>=3.0.1",

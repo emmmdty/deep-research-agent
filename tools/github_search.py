@@ -12,51 +12,54 @@ from evaluation.cost_tracker import get_tracker
 
 def search_github_repositories(query: str, max_results: int = 5) -> list[dict[str, Any]]:
     """返回结构化 GitHub 仓库搜索结果。"""
-    try:
-        import httpx
+    import httpx
 
-        headers = {
-            "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "DeepResearchAgent/1.0",
-        }
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "DeepResearchAgent/1.0",
+    }
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            with httpx.Client(http2=False, timeout=15, follow_redirects=True) as client:
+                response = client.get(
+                    "https://api.github.com/search/repositories",
+                    params={
+                        "q": query,
+                        "sort": "stars",
+                        "order": "desc",
+                        "per_page": max_results,
+                    },
+                    headers=headers,
+                )
+            response.raise_for_status()
+            get_tracker().record_search_call()
 
-        response = httpx.get(
-            "https://api.github.com/search/repositories",
-            params={
-                "q": query,
-                "sort": "stars",
-                "order": "desc",
-                "per_page": max_results,
-            },
-            headers=headers,
-            timeout=15,
-        )
-        response.raise_for_status()
-        get_tracker().record_search_call()
+            data = response.json()
+            items = data.get("items", [])
+            normalized: list[dict[str, Any]] = []
+            for i, repo in enumerate(items, 1):
+                normalized.append(
+                    {
+                        "index": i,
+                        "source_type": "github",
+                        "title": repo.get("full_name", ""),
+                        "url": repo.get("html_url", ""),
+                        "snippet": (repo.get("description", "无描述") or "无描述")[:200],
+                        "stars": repo.get("stargazers_count", 0),
+                        "language": repo.get("language", "未知"),
+                        "updated_at": repo.get("updated_at", "")[:10],
+                    }
+                )
 
-        data = response.json()
-        items = data.get("items", [])
-        normalized: list[dict[str, Any]] = []
-        for i, repo in enumerate(items, 1):
-            normalized.append(
-                {
-                    "index": i,
-                    "source_type": "github",
-                    "title": repo.get("full_name", ""),
-                    "url": repo.get("html_url", ""),
-                    "snippet": (repo.get("description", "无描述") or "无描述")[:200],
-                    "stars": repo.get("stargazers_count", 0),
-                    "language": repo.get("language", "未知"),
-                    "updated_at": repo.get("updated_at", "")[:10],
-                }
-            )
+            logger.info("GitHub 搜索完成: query='{}', 结果数={}", query, len(items))
+            return normalized
+        except Exception as exc:
+            last_error = exc
+            logger.warning("GitHub 搜索第 {} 次失败: {}", attempt, exc)
 
-        logger.info("GitHub 搜索完成: query='{}', 结果数={}", query, len(items))
-        return normalized
-
-    except Exception as e:
-        logger.error("GitHub 搜索失败: {}", e)
-        return []
+    logger.error("GitHub 搜索失败: {}", last_error)
+    return []
 
 
 def format_github_results(results: list[dict[str, Any]]) -> str:

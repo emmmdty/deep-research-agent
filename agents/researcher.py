@@ -2,50 +2,124 @@
 
 from __future__ import annotations
 
+import re
+from typing import Any
+
 from loguru import logger
 
+from capabilities.mcp import invoke_mcp_capability
+from capabilities.registry import build_capability_registry
 from configs.settings import get_settings
 from llm.provider import get_llm
 from prompts.templates import SUMMARIZER_SYSTEM_PROMPT, SUMMARIZER_USER_PROMPT
+from research_policy import (
+    aspect_hits_in_text,
+    build_source_query,
+    extract_aspect_keywords,
+    infer_task_type,
+    select_sources_for_task,
+    should_use_source,
+)
 from tools.arxiv_search import search_arxiv_papers
 from tools.github_search import search_github_repositories
 from tools.web_search import search_web
-from workflows.states import EvidenceNote, SourceRecord, TaskItem
+from workflows.states import (
+    EvidenceNote,
+    RunMetrics,
+    SourceRecord,
+    TaskItem,
+    ToolCapability,
+    ToolInvocationRecord,
+)
 
 
 def researcher_node(state: dict) -> dict:
     """LangGraph 节点：对每个未完成的子任务执行搜索和总结。"""
     settings = get_settings()
-    tasks: list[TaskItem] = state.get("tasks", [])
+    registry = build_capability_registry(settings)
+    tasks: list[TaskItem] = [
+        task if isinstance(task, TaskItem) else TaskItem.model_validate(task)
+        for task in state.get("tasks", [])
+    ]
     research_topic = state["research_topic"]
+    research_profile = state.get("research_profile", "default")
+    ablation_variant = state.get("ablation_variant")
     task_summaries: list[str] = list(state.get("task_summaries", []))
-    sources_gathered: list[SourceRecord] = list(state.get("sources_gathered", []))
+    sources_gathered: list[SourceRecord] = [
+        source if isinstance(source, SourceRecord) else SourceRecord.model_validate(source)
+        for source in state.get("sources_gathered", [])
+    ]
     search_results: list[str] = list(state.get("search_results", []))
-    evidence_notes: list[EvidenceNote] = list(state.get("evidence_notes", []))
+    evidence_notes: list[EvidenceNote] = [
+        note if isinstance(note, EvidenceNote) else EvidenceNote.model_validate(note)
+        for note in state.get("evidence_notes", [])
+    ]
+    available_capabilities: list[ToolCapability] = _filter_capabilities_for_variant(
+        registry.list_all(),
+        ablation_variant=ablation_variant,
+    )
+    capability_plan: dict[str, list[str]] = dict(state.get("capability_plan", {}))
+    tool_invocations: list[ToolInvocationRecord] = [
+        invocation
+        if isinstance(invocation, ToolInvocationRecord)
+        else ToolInvocationRecord.model_validate(invocation)
+        for invocation in state.get("tool_invocations", [])
+    ]
+    coverage_status: dict[str, bool] = dict(state.get("coverage_status", {}))
+    run_metrics = state.get("run_metrics")
+    if not isinstance(run_metrics, RunMetrics):
+        run_metrics = RunMetrics.model_validate(run_metrics or {})
 
     critic_feedback = state.get("critic_feedback")
     follow_up_queries: list[str] = []
+    failure_context: dict[str, Any] = {}
     if critic_feedback and hasattr(critic_feedback, "follow_up_queries"):
         follow_up_queries = critic_feedback.follow_up_queries
+        failure_context = {
+            "quality_gate_status": getattr(run_metrics, "quality_gate_status", ""),
+            "gaps": list(getattr(critic_feedback, "gaps", [])),
+        }
 
-    llm = get_llm()
+    llm = None
+    if research_profile == "benchmark":
+        try:
+            llm = get_llm()
+        except Exception as exc:  # pragma: no cover - 集成场景更常见
+            logger.warning("⚠️ Benchmark profile 无法初始化 LLM，使用确定性总结回退: {}", exc)
+    else:
+        llm = get_llm()
 
     if follow_up_queries:
         logger.info("🔄 Researcher 执行补充搜索: {} 个查询", len(follow_up_queries))
         for query in follow_up_queries:
+            target_task = _match_follow_up_task(query, tasks)
             _execute_single_search(
                 query=query,
-                task_id=None,
-                task_title="补充研究",
-                task_intent="填充知识空白",
+                task=target_task,
+                task_id=target_task.id if target_task else None,
+                task_title=target_task.title if target_task else "补充研究",
+                task_intent=target_task.intent if target_task else "填充知识空白",
                 research_topic=research_topic,
+                research_profile=research_profile,
                 llm=llm,
                 enabled_sources=settings.enabled_sources,
                 max_results=settings.max_search_results,
+                per_source_max_results=settings.per_source_max_results,
+                per_task_selected_sources=settings.per_task_selected_sources,
                 task_summaries=task_summaries,
                 sources_gathered=sources_gathered,
                 search_results=search_results,
                 evidence_notes=evidence_notes,
+                capability_plan=capability_plan,
+                tool_invocations=tool_invocations,
+                coverage_status=coverage_status,
+                run_metrics=run_metrics,
+                registry=registry,
+                failure_context=failure_context,
+                workspace_dir=getattr(settings, "workspace_dir", "workspace"),
+                mcp_config_path=getattr(settings, "mcp_config_path", None),
+                mcp_servers=getattr(settings, "mcp_servers", []),
+                ablation_variant=ablation_variant,
             )
     else:
         logger.info("🔍 Researcher 开始执行 {} 个子任务", len(tasks))
@@ -55,17 +129,31 @@ def researcher_node(state: dict) -> dict:
 
             _execute_single_search(
                 query=task.query,
+                task=task,
                 task_id=task.id,
                 task_title=task.title,
                 task_intent=task.intent,
                 research_topic=research_topic,
+                research_profile=research_profile,
                 llm=llm,
                 enabled_sources=settings.enabled_sources,
                 max_results=settings.max_search_results,
+                per_source_max_results=settings.per_source_max_results,
+                per_task_selected_sources=settings.per_task_selected_sources,
                 task_summaries=task_summaries,
                 sources_gathered=sources_gathered,
                 search_results=search_results,
                 evidence_notes=evidence_notes,
+                capability_plan=capability_plan,
+                tool_invocations=tool_invocations,
+                coverage_status=coverage_status,
+                run_metrics=run_metrics,
+                registry=registry,
+                failure_context=failure_context,
+                workspace_dir=getattr(settings, "workspace_dir", "workspace"),
+                mcp_config_path=getattr(settings, "mcp_config_path", None),
+                mcp_servers=getattr(settings, "mcp_servers", []),
+                ablation_variant=ablation_variant,
             )
             task.status = "completed"
             if task_summaries:
@@ -79,6 +167,9 @@ def researcher_node(state: dict) -> dict:
         len(task_summaries),
         len(sources_gathered),
     )
+    if tool_invocations:
+        successful = sum(1 for invocation in tool_invocations if invocation.success)
+        run_metrics.tool_use_success_rate = round(successful / len(tool_invocations), 3)
 
     return {
         "tasks": tasks,
@@ -86,6 +177,11 @@ def researcher_node(state: dict) -> dict:
         "sources_gathered": sources_gathered,
         "search_results": search_results,
         "evidence_notes": evidence_notes,
+        "available_capabilities": available_capabilities,
+        "capability_plan": capability_plan,
+        "tool_invocations": tool_invocations,
+        "coverage_status": coverage_status,
+        "run_metrics": run_metrics,
         "status": "researched",
     }
 
@@ -93,34 +189,101 @@ def researcher_node(state: dict) -> dict:
 def _execute_single_search(
     *,
     query: str,
+    task: TaskItem | None,
     task_id: int | None,
     task_title: str,
     task_intent: str,
     research_topic: str,
+    research_profile: str,
     llm,
     enabled_sources: list[str],
     max_results: int,
+    per_source_max_results: int,
+    per_task_selected_sources: int,
     task_summaries: list[str],
     sources_gathered: list[SourceRecord],
     search_results: list[str],
     evidence_notes: list[EvidenceNote],
+    capability_plan: dict[str, list[str]],
+    tool_invocations: list[ToolInvocationRecord],
+    coverage_status: dict[str, bool],
+    run_metrics: RunMetrics,
+    registry,
+    failure_context: dict[str, Any],
+    workspace_dir: str,
+    mcp_config_path: str | None,
+    mcp_servers: list[dict[str, Any]],
+    ablation_variant: str | None,
 ) -> None:
     """执行单个搜索 + 总结流程。"""
     logger.info("  🔎 搜索: '{}'", query)
 
+    active_task = task or TaskItem(
+        id=task_id or 0,
+        title=task_title,
+        intent=task_intent,
+        query=query,
+        task_type=infer_task_type(query),
+    )
+    planned_capabilities = _filter_capabilities_for_variant(
+        registry.plan_for_task(
+            active_task,
+            missing_aspects=list(getattr(active_task, "expected_aspects", []) or []),
+            failure_context=failure_context,
+        ),
+        ablation_variant=ablation_variant,
+    )
+    capability_plan[task_title] = [capability.name for capability in planned_capabilities]
+    selected_sources = _resolve_enabled_sources(planned_capabilities, enabled_sources, active_task)
+    skill_capabilities = [cap for cap in planned_capabilities if cap.kind == "skill"]
+    mcp_capabilities = [cap for cap in planned_capabilities if cap.kind == "mcp"]
+    if skill_capabilities:
+        run_metrics.skill_activation_count += 1
+    if mcp_capabilities:
+        run_metrics.mcp_activation_count += 1
+    tool_invocations.extend(
+        ToolInvocationRecord(
+            capability_name=capability.name,
+            kind=capability.kind,
+            task_title=task_title,
+            success=True,
+            detail="planner-selected",
+        )
+        for capability in planned_capabilities
+    )
+
     results = _collect_results(
         query=query,
+        task=active_task,
         task_title=task_title,
-        enabled_sources=enabled_sources,
+        research_profile=research_profile,
+        enabled_sources=selected_sources,
         max_results=max_results,
+        per_source_max_results=per_source_max_results,
+        per_task_selected_sources=per_task_selected_sources,
         start_index=len(sources_gathered) + 1,
+        mcp_capabilities=mcp_capabilities,
+        workspace_dir=workspace_dir,
+        mcp_config_path=mcp_config_path,
+        mcp_servers=mcp_servers,
     )
     sources_gathered.extend(results)
+    selected_results = [record for record in results if record.selected]
+    rejected_results = [record for record in results if not record.selected]
+    run_metrics.selected_sources += len(selected_results)
+    run_metrics.rejected_sources += len(rejected_results)
+    if any(
+        record.metadata.get("backend") == "duckduckgo"
+        for record in results
+        if record.source_type == "web"
+    ):
+        run_metrics.fallback_search_calls += 1
 
-    search_context = _format_context(results)
+    context_records = selected_results if research_profile == "benchmark" else results
+    search_context = _format_context(context_records)
     search_results.append(search_context)
 
-    if not results:
+    if not context_records:
         logger.warning("  ⚠️ 搜索无结果: '{}'", query)
         empty_summary = f"## {task_title}\n\n暂无可用信息。\n"
         task_summaries.append(empty_summary)
@@ -131,50 +294,141 @@ def _execute_single_search(
                 query=query,
                 summary=empty_summary,
                 source_ids=[],
+                aspect_hits=[],
+                claim_count=0,
+                selected_source_ids=[],
             )
         )
         return
 
-    user_prompt = SUMMARIZER_USER_PROMPT.format(
+    user_prompt = _build_summary_prompt(
         research_topic=research_topic,
         task_title=task_title,
         task_intent=task_intent,
         task_query=query,
         context=search_context,
+        task=active_task,
+        research_profile=research_profile,
+        skill_capabilities=skill_capabilities,
     )
 
-    from langchain_core.messages import HumanMessage, SystemMessage
-
-    messages = [
-        SystemMessage(content=SUMMARIZER_SYSTEM_PROMPT),
-        HumanMessage(content=user_prompt),
-    ]
-    response = llm.invoke(messages)
-    summary = response.content
-
-    from llm.clean import clean_llm_output
-
-    summary = clean_llm_output(summary)
-    task_summaries.append(summary)
-    evidence_notes.append(
-        EvidenceNote(
-            task_id=task_id,
+    if llm is None and research_profile == "benchmark":
+        summary = _build_deterministic_summary(
             task_title=task_title,
-            query=query,
-            summary=summary,
-            source_ids=[record.citation_id for record in results],
+            task=active_task,
+            records=context_records,
         )
+    else:
+        from langchain_core.messages import HumanMessage, SystemMessage
+
+        messages = [
+            SystemMessage(content=SUMMARIZER_SYSTEM_PROMPT),
+            HumanMessage(content=user_prompt),
+        ]
+        try:
+            response = llm.invoke(messages)
+            summary = response.content
+        except Exception:
+            if research_profile != "benchmark":
+                raise
+            logger.exception("⚠️ Benchmark profile LLM 总结失败，回退到确定性总结")
+            summary = _build_deterministic_summary(
+                task_title=task_title,
+                task=active_task,
+                records=context_records,
+            )
+            _append_summary(
+                task_id=task_id,
+                query=query,
+                task_title=task_title,
+                summary=summary,
+                active_task=active_task,
+                context_records=context_records,
+                selected_results=selected_results,
+                task_summaries=task_summaries,
+                evidence_notes=evidence_notes,
+                coverage_status=coverage_status,
+            )
+            logger.info("  ✅ 总结完成: '{}'", task_title)
+            return
+
+        from llm.clean import clean_llm_output
+
+        summary = clean_llm_output(summary)
+
+    _append_summary(
+        task_id=task_id,
+        query=query,
+        task_title=task_title,
+        summary=summary,
+        active_task=active_task,
+        context_records=context_records,
+        selected_results=selected_results,
+        task_summaries=task_summaries,
+        evidence_notes=evidence_notes,
+        coverage_status=coverage_status,
     )
     logger.info("  ✅ 总结完成: '{}'", task_title)
+
+
+def _append_summary(
+    *,
+    task_id: int | None,
+    query: str,
+    task_title: str,
+    summary: str,
+    active_task: TaskItem,
+    context_records: list[SourceRecord],
+    selected_results: list[SourceRecord],
+    task_summaries: list[str],
+    evidence_notes: list[EvidenceNote],
+    coverage_status: dict[str, bool],
+) -> None:
+    aspect_hits = aspect_hits_in_text(summary, active_task.expected_aspects if active_task else [])
+    for aspect in active_task.expected_aspects:
+        coverage_status[aspect] = aspect in aspect_hits
+    note = EvidenceNote(
+        task_id=task_id,
+        task_title=task_title,
+        query=query,
+        summary=summary,
+        source_ids=[record.citation_id for record in context_records],
+        aspect_hits=aspect_hits,
+        claim_count=_estimate_claim_count(summary),
+        selected_source_ids=[record.citation_id for record in selected_results],
+    )
+    existing_index = next(
+        (
+            index
+            for index, existing_note in enumerate(evidence_notes)
+            if (task_id is not None and existing_note.task_id == task_id)
+            or existing_note.task_title == task_title
+        ),
+        None,
+    )
+    if existing_index is not None and existing_index < len(task_summaries):
+        task_summaries[existing_index] = summary
+        evidence_notes[existing_index] = note
+    else:
+        task_summaries.append(summary)
+        evidence_notes.append(note)
 
 
 def _collect_results(
     *,
     query: str,
+    task: TaskItem | None,
     task_title: str,
+    research_profile: str,
     enabled_sources: list[str],
     max_results: int,
+    per_source_max_results: int,
+    per_task_selected_sources: int,
     start_index: int,
+    mcp_capabilities: list[ToolCapability],
+    workspace_dir: str,
+    mcp_config_path: str | None,
+    mcp_servers: list[dict[str, Any]],
 ) -> list[SourceRecord]:
     """采集多源搜索结果。"""
     collectors = {
@@ -183,35 +437,321 @@ def _collect_results(
         "arxiv": search_arxiv_papers,
     }
 
-    results: list[SourceRecord] = []
-    citation_id = start_index
+    active_task_type = task.task_type if task else infer_task_type(query)
+    raw_items: list[dict[str, Any]] = []
+    active_sources: list[str] = []
     for source_name in enabled_sources:
+        if research_profile == "benchmark" and not should_use_source(active_task_type, source_name):
+            continue
+        if task and task.preferred_sources and source_name not in task.preferred_sources:
+            continue
+        active_sources.append(source_name)
+
+    for source_name in active_sources:
         collector = collectors.get(source_name)
         if collector is None:
             continue
 
-        raw_items = collector(query, max_results=max_results)
-        for item in raw_items:
-            results.append(
-                SourceRecord(
-                    citation_id=citation_id,
-                    source_type=item.get("source_type", source_name),
-                    query=query,
-                    title=item.get("title", "无标题"),
-                    url=item.get("url", ""),
-                    snippet=item.get("snippet", ""),
-                    task_title=task_title,
-                    published_at=item.get("published_at"),
-                    metadata={
-                        key: value
-                        for key, value in item.items()
-                        if key
-                        not in {"index", "source_type", "title", "url", "snippet", "published_at"}
-                    },
-                )
+        limit = per_source_max_results if research_profile == "benchmark" else max_results
+        source_query = build_source_query(
+            task or TaskItem(id=0, title=task_title, intent=task_title, query=query),
+            source_name,
+        )
+        source_items = collector(source_query, max_results=limit)
+        for item in source_items:
+            enriched = dict(item)
+            enriched.setdefault("source_type", source_name)
+            enriched.setdefault("query", source_query)
+            raw_items.append(enriched)
+
+    for capability in mcp_capabilities:
+        try:
+            source_query = build_source_query(
+                task or TaskItem(id=0, title=task_title, intent=task_title, query=query),
+                "web",
             )
-            citation_id += 1
+            mcp_items = invoke_mcp_capability(
+                capability,
+                query=source_query,
+                max_results=per_source_max_results if research_profile == "benchmark" else max_results,
+                config_path=mcp_config_path,
+                raw_servers=mcp_servers,
+                workspace_dir=workspace_dir,
+            )
+        except Exception as exc:
+            logger.warning("MCP 工具调用失败: capability={}, error={}", capability.name, exc)
+            continue
+
+        for item in mcp_items:
+            enriched = dict(item)
+            enriched.setdefault("source_type", item.get("source_type", "web"))
+            enriched.setdefault("query", source_query)
+            raw_items.append(enriched)
+
+    selected_items: list[dict[str, Any]] = []
+    if research_profile == "benchmark":
+        selected_items, rejected_items, _ = select_sources_for_task(
+            raw_items,
+            task or TaskItem(id=0, title=task_title, intent=task_title, query=query),
+            per_task_limit=per_task_selected_sources,
+        )
+        ordered_items = [*selected_items, *rejected_items]
+    else:
+        ordered_items = raw_items
+
+    results: list[SourceRecord] = []
+    citation_id = start_index
+    selected_item_ids = {id(item) for item in selected_items} if research_profile == "benchmark" else set()
+    for item in ordered_items:
+        source_name = item.get("source_type", "web")
+        results.append(
+            SourceRecord(
+                citation_id=citation_id,
+                source_type=item.get("source_type", source_name),
+                query=item.get("query", query),
+                title=item.get("title", "无标题"),
+                url=item.get("url", ""),
+                snippet=item.get("snippet", ""),
+                task_title=task_title,
+                published_at=item.get("published_at"),
+                trust_tier=_infer_trust_tier(item),
+                relevance_score=item.get("selection_score", 0.0),
+                selection_score=item.get("selection_score", 0.0),
+                selected=id(item) in selected_item_ids if research_profile == "benchmark" else True,
+                rejection_reason=item.get("rejection_reason"),
+                metadata={
+                    key: value
+                    for key, value in item.items()
+                    if key not in _SOURCE_RECORD_RESERVED_KEYS
+                },
+            )
+        )
+        citation_id += 1
     return results
+
+
+_SOURCE_RECORD_RESERVED_KEYS = {
+    "index",
+    "source_type",
+    "title",
+    "url",
+    "snippet",
+    "published_at",
+    "selection_score",
+    "rejection_reason",
+}
+
+
+def _infer_trust_tier(item: dict[str, Any]) -> int:
+    source_type = item.get("source_type", "web")
+    url = item.get("url", "")
+    if source_type == "github":
+        return 5
+    if source_type == "arxiv":
+        return 4
+    if "github.com" in url or "docs." in url or "readthedocs" in url:
+        return 4
+    if "reddit.com" in url or "facebook.com" in url or "x.com" in url:
+        return 1
+    return 3
+
+
+def _build_summary_prompt(
+    *,
+    research_topic: str,
+    task_title: str,
+    task_intent: str,
+    task_query: str,
+    context: str,
+    task: TaskItem | None,
+    research_profile: str,
+    skill_capabilities: list[ToolCapability] | None = None,
+) -> str:
+    prompt = SUMMARIZER_USER_PROMPT.format(
+        research_topic=research_topic,
+        task_title=task_title,
+        task_intent=task_intent,
+        task_query=task_query,
+        context=context,
+    )
+    if research_profile != "benchmark":
+        return prompt
+
+    expected_aspects = "、".join(task.expected_aspects) if task and task.expected_aspects else "当前任务方面"
+    skill_guidance = _format_skill_guidance(skill_capabilities or [])
+    return (
+        f"{prompt}\n\n"
+        "额外约束：\n"
+        f"- 必须显式回答这些方面：{expected_aspects}\n"
+        "- 只允许使用提供的来源，不要引入额外事实\n"
+        "- 每个核心结论后保留 [n] 形式引用\n"
+        "- 若来源存在冲突，必须明确写出“存在冲突”或“证据不足”\n"
+        f"{skill_guidance}"
+    )
+
+
+def _resolve_enabled_sources(
+    planned_capabilities: list[ToolCapability],
+    enabled_sources: list[str],
+    task: TaskItem,
+) -> list[str]:
+    planned_sources = [
+        capability.metadata.get("source_name")
+        for capability in planned_capabilities
+        if capability.kind == "builtin" and capability.metadata.get("source_name")
+    ]
+    if planned_sources:
+        return list(dict.fromkeys(source for source in planned_sources if source in enabled_sources))
+    if task.preferred_sources:
+        return list(task.preferred_sources)
+    return enabled_sources
+
+
+def _format_skill_guidance(skill_capabilities: list[ToolCapability]) -> str:
+    if not skill_capabilities:
+        return ""
+    descriptions = "；".join(capability.description or capability.name for capability in skill_capabilities[:2])
+    return f"- 参考已激活 skill 的策略偏好：{descriptions}\n"
+
+
+def _match_follow_up_task(query: str, tasks: list[TaskItem]) -> TaskItem | None:
+    normalized_query = query.lower()
+    for task in tasks:
+        for aspect in task.expected_aspects:
+            if aspect and aspect.lower() in normalized_query:
+                return task
+            keywords = extract_aspect_keywords(aspect)
+            if keywords and any(keyword.lower() in normalized_query for keyword in keywords):
+                return task
+    for task in tasks:
+        if task.title.lower() in normalized_query:
+            return task
+    return None
+
+
+def _estimate_claim_count(summary: str) -> int:
+    content_lines = [
+        line.strip()
+        for line in summary.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    if not content_lines:
+        return 0
+    bullet_count = sum(1 for line in content_lines if line.startswith(("-", "*")) or re.match(r"^\d+\.", line))
+    return bullet_count or len(content_lines)
+
+
+def _build_deterministic_summary(
+    *,
+    task_title: str,
+    task: TaskItem | None,
+    records: list[SourceRecord],
+) -> str:
+    high_trust_records = [record for record in records if record.trust_tier >= 4]
+    supplementary_records = [record for record in records if record.trust_tier < 4]
+    aspect_text = "、".join(task.expected_aspects) if task and task.expected_aspects else task_title
+
+    sections = ["### 核心结论", ""]
+    if high_trust_records:
+        sections.append(
+            _append_inline_citations(
+                f"本节覆盖方面：{aspect_text}。高可信来源显示，{_summarize_records(high_trust_records)}。",
+                [record.citation_id for record in high_trust_records],
+                max_count=3,
+            )
+        )
+    elif records:
+        sections.append(
+            _append_inline_citations(
+                f"本节覆盖方面：{aspect_text}。现有高可信证据有限；基于当前公开资料，只能做出保守判断：{_summarize_records(records)}，但证据仍有限，需进一步验证。",
+                [record.citation_id for record in records],
+                max_count=3,
+            )
+        )
+    else:
+        sections.append(f"本节覆盖方面：{aspect_text}。当前没有可用于支撑该方面的来源。")
+
+    sections.append("")
+    sections.append("### 补充观察")
+    sections.append("")
+    if supplementary_records:
+        sections.append(
+            _append_inline_citations(
+                f"补充资料还提到，{_summarize_records(supplementary_records)}。",
+                [record.citation_id for record in supplementary_records],
+                max_count=3,
+            )
+        )
+    else:
+        citation_ids = [record.citation_id for record in high_trust_records or records]
+        sections.append(
+            _append_inline_citations(
+                "当前未发现与核心判断明显冲突的低可信补充资料，本节以高可信来源为主。",
+                citation_ids,
+                max_count=2,
+            )
+        )
+
+    sections.append("")
+    sections.append("### 证据限制")
+    sections.append("")
+    if high_trust_records and supplementary_records:
+        sections.append(
+            _append_inline_citations(
+                "当前核心判断主要依赖高可信来源；补充资料可作为背景线索，但仍需更多独立来源交叉验证。",
+                [record.citation_id for record in [*high_trust_records, *supplementary_records]],
+                max_count=3,
+            )
+        )
+    elif high_trust_records:
+        sections.append(
+            _append_inline_citations(
+                "当前核心判断主要依赖少量高可信来源，仍需更多独立来源或官方文档交叉验证。",
+                [record.citation_id for record in high_trust_records],
+                max_count=2,
+            )
+        )
+    elif records:
+        sections.append(
+            _append_inline_citations(
+                "当前仅有中低可信公开资料，结论应视为阶段性判断，仍需官方文档或论文进一步验证。",
+                [record.citation_id for record in records],
+                max_count=3,
+            )
+        )
+    else:
+        sections.append("当前证据不足，尚无法形成可靠判断。")
+
+    return "\n".join(sections).strip()
+
+
+def _summarize_records(records: list[SourceRecord], *, max_items: int = 2) -> str:
+    snippets: list[str] = []
+    for record in records[:max_items]:
+        snippet = re.sub(r"\s+", " ", record.snippet or "").strip(" 。；;")
+        if snippet:
+            snippets.append(f"《{record.title}》提到{snippet[:120]}")
+        else:
+            snippets.append(f"《{record.title}》提供了相关线索")
+    return "；".join(snippets) if snippets else "当前尚无可归纳内容"
+
+
+def _append_inline_citations(text: str, citation_ids: list[int], *, max_count: int) -> str:
+    if not citation_ids:
+        return text
+    suffix = "".join(f"[{citation_id}]" for citation_id in citation_ids[:max_count])
+    return f"{text} {suffix}".rstrip()
+
+
+def _filter_capabilities_for_variant(
+    capabilities: list[ToolCapability],
+    *,
+    ablation_variant: str | None,
+) -> list[ToolCapability]:
+    """按 ablation 变体裁剪可用能力。"""
+    if ablation_variant in {"ours_base", "ours_verifier", "ours_gate"}:
+        return [capability for capability in capabilities if capability.kind == "builtin"]
+    return list(capabilities)
 
 
 def _format_context(records: list[SourceRecord]) -> str:
