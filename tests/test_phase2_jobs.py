@@ -431,6 +431,174 @@ def test_job_service_cancel_and_retry_flow(tmp_path: Path):
     assert retried.attempt_index == 2
 
 
+def test_job_service_cancel_is_idempotent(tmp_path: Path):
+    """重复 cancel 不应重复追加 cancel_requested event。"""
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 cancel idempotency", max_loops=2, research_profile="default", start_worker=False)
+
+    first = service.cancel(job.job_id)
+    second = service.cancel(job.job_id)
+    events = service.list_events(job.job_id)
+
+    assert first.cancel_requested is True
+    assert second.cancel_requested is True
+    assert [event.event_type for event in events].count("job.cancel_requested") == 1
+
+
+def test_job_service_cancel_terminal_job_is_noop(tmp_path: Path):
+    """terminal job 收到 cancel 时不应改写终态。"""
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 terminal cancel", max_loops=2, research_profile="default", start_worker=False)
+    service.store.update_job_status(job.job_id, status="completed", current_stage="completed")
+
+    result = service.cancel(job.job_id)
+    events = service.list_events(job.job_id)
+
+    assert result.status == "completed"
+    assert result.current_stage == "completed"
+    assert result.cancel_requested is False
+    assert not any(event.event_type == "job.cancel_requested" for event in events)
+
+
+def test_job_service_retry_is_idempotent_for_same_source_job(tmp_path: Path):
+    """重复 retry 同一个原 job 时，应返回已有直接 retry job。"""
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 retry idempotency", max_loops=2, research_profile="default", start_worker=False)
+    service.store.update_job_status(job.job_id, status="failed", current_stage="failed", error="测试失败")
+
+    first = service.retry(job.job_id, start_worker=False)
+    second = service.retry(job.job_id, start_worker=False)
+
+    assert first.job_id == second.job_id
+    assert first.retry_of == job.job_id
+    assert second.attempt_index == 2
+
+
+def test_recover_stale_jobs_skips_live_worker(tmp_path: Path, monkeypatch):
+    """心跳新且 pid 存活时，不应触发 stale recovery。"""
+    from services.research_jobs import service as service_module
+    from services.research_jobs.service import ResearchJobService
+
+    spawned: list[str] = []
+    service = ResearchJobService(
+        workspace_dir=str(tmp_path),
+        spawn_worker_fn=spawned.append,
+    )
+    job = service.submit(topic="phase2 live recovery", max_loops=2, research_profile="default", start_worker=False)
+    service.store.acquire_worker_lease(job.job_id, worker_pid=12345, lease_id="lease-live")
+    monkeypatch.setattr(service_module, "_process_exists", lambda pid: True)
+
+    recovered = service.recover_stale_jobs()
+
+    assert recovered == []
+    assert spawned == []
+    loaded = service.get(job.job_id)
+    assert loaded is not None
+    assert loaded.worker_lease_id == "lease-live"
+
+
+def test_recover_stale_jobs_clears_stale_lease_and_spawns_once(tmp_path: Path, monkeypatch):
+    """陈旧 worker 应清理旧 lease 并触发一次恢复 spawn。"""
+    from datetime import datetime, timedelta, timezone
+
+    from services.research_jobs import service as service_module
+    from services.research_jobs.service import ResearchJobService
+
+    spawned: list[str] = []
+    service = ResearchJobService(
+        workspace_dir=str(tmp_path),
+        stale_timeout_seconds=1,
+        spawn_worker_fn=spawned.append,
+    )
+    job = service.submit(topic="phase2 stale recovery", max_loops=2, research_profile="default", start_worker=False)
+    service.store.acquire_worker_lease(job.job_id, worker_pid=12345, lease_id="lease-stale")
+    stale_time = (datetime.now(timezone.utc) - timedelta(seconds=30)).isoformat()
+    service.store.update_job(job.job_id, last_heartbeat_at=stale_time)
+    monkeypatch.setattr(service_module, "_process_exists", lambda pid: False)
+
+    recovered = service.recover_stale_jobs()
+
+    assert spawned == [job.job_id]
+    assert len(recovered) == 1
+    loaded = service.get(job.job_id)
+    assert loaded is not None
+    assert loaded.worker_lease_id is None
+    assert loaded.active_checkpoint_id is not None
+    assert any(event.event_type == "job.recovered" for event in service.list_events(job.job_id))
+
+
+def test_completed_job_projection_keeps_active_checkpoint_explainable(tmp_path: Path):
+    """完成后的 job row 应能对应 active checkpoint 的 terminal next_stage。"""
+    from services.research_jobs.orchestrator import ResearchJobOrchestrator
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 projection", max_loops=1, research_profile="default", start_worker=False)
+    source = SourceRecord(
+        citation_id=1,
+        source_type="web",
+        query="phase2 projection",
+        title="Projection",
+        url="https://example.com/projection",
+        snippet="projection needs an active checkpoint",
+        selected=True,
+        trust_tier=4,
+    )
+    orchestrator = ResearchJobOrchestrator(
+        service=service,
+        planner_fn=lambda state: {
+            "tasks": [TaskItem(id=1, title="投影", intent="验证", query="phase2 projection")],
+            "status": "planned",
+        },
+        collect_step_fn=lambda state: (
+            {
+                "task_summaries": ["projection is explainable.[1]"],
+                "sources_gathered": [source],
+                "status": "researched",
+            },
+            False,
+        ),
+        verifier_fn=lambda state: {
+            "evidence_units": [],
+            "evidence_clusters": [],
+            "verification_records": [],
+            "memory_stats": state.get("memory_stats"),
+            "run_metrics": state.get("run_metrics"),
+            "status": "verified",
+        },
+        claim_auditor_fn=lambda state: {
+            "audit_gate_status": "passed",
+            "critical_claim_count": 0,
+            "blocked_critical_claim_count": 0,
+            "status": "claim_audited",
+        },
+        writer_fn=lambda state: {
+            "final_report": "# 报告\n\nprojection is explainable.[1]",
+            "report_artifact": ReportArtifact(
+                topic=state["research_topic"],
+                report="# 报告\n\nprojection is explainable.[1]",
+                citations=[source],
+                metrics=RunMetrics(status="completed"),
+            ),
+            "status": "completed",
+        },
+    )
+
+    final_job = orchestrator.run(job.job_id)
+    checkpoint = service.store.get_checkpoint(final_job.job_id, final_job.active_checkpoint_id or "")
+
+    assert final_job.status == "completed"
+    assert final_job.current_stage == "completed"
+    assert checkpoint is not None
+    assert checkpoint.next_stage == "completed"
+
+
 def test_phase2_nodes_accept_checkpoint_serialized_payloads(tmp_path: Path, monkeypatch):
     """verifier / critic / writer 应接受 checkpoint 恢复后的 dict payload。"""
     from agents.critic import critic_node
