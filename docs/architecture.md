@@ -174,12 +174,15 @@ phase4 以后，公开 runtime 的可信边界不再停留在 `EvidenceUnit / Ve
 - `claim_auditing` 会从 `EvidenceNote / task_summaries` 抽取 claim
 - claim graph 由以下对象组成：
   - `Claim`
-  - `ClaimSupportEdge`
+  - `ClaimSupportEdge`，其中 edge 保留 `source_id`、`snapshot_id`、`locator`、`grounding_status`
   - `ConflictSet`
   - `CriticalClaimReviewItem`
+- `claim_auditing` 只把 `grounding_status = grounded` 且非 `context_only` 的 edge 作为关键 claim 的支撑或冲突依据
+- 缺少 source、snapshot、locator 或 excerpt 的 evidence fragment 不会让关键 claim 通过；关键 claim 会进入 blocked review queue
 - 关键 claim 未通过审计时，job 不会伪装成 fully-passed；当前语义是：
   - `status = completed`
   - `audit_gate_status = blocked`
+- 当前 relation 判定仍是启发式文本 overlap，不等于完整自动事实核验
 - 相关侧车产物位于：
   - `workspace/research_jobs/<job_id>/audit/claim_graph.json`
   - `workspace/research_jobs/<job_id>/audit/review_queue.json`

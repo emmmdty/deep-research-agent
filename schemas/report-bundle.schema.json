@@ -405,11 +405,33 @@
           "evidence_id": {
             "type": "string"
           },
+          "source_id": {
+            "type": "string"
+          },
+          "snapshot_id": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "object",
+            "additionalProperties": true
+          },
           "relation": {
             "type": "string"
           },
           "confidence": {
             "type": "number"
+          },
+          "grounding_status": {
+            "type": "string",
+            "enum": [
+              "grounded",
+              "missing_evidence",
+              "missing_source",
+              "missing_snapshot",
+              "missing_locator",
+              "missing_excerpt",
+              "unknown"
+            ]
           },
           "notes": {
             "type": "string"

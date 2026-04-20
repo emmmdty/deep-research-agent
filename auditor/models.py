@@ -43,8 +43,12 @@ class ClaimSupportEdgeRecord(BaseModel):
     edge_id: str = Field(description="边 ID")
     claim_id: str = Field(description="claim ID")
     evidence_id: str = Field(description="证据 ID")
+    source_id: str = Field(default="", description="证据来源文档 ID")
+    snapshot_id: str = Field(default="", description="证据快照 ID")
+    locator: dict[str, Any] = Field(default_factory=dict, description="证据片段定位信息")
     relation: str = Field(description="supports / partially_supports / contradicts / context_only")
     confidence: float = Field(default=0.0, description="边置信度")
+    grounding_status: str = Field(default="unknown", description="grounded / missing_* / unknown")
     notes: str = Field(default="", description="判定说明")
 
 
