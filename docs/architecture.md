@@ -19,6 +19,7 @@ phase2 以后，**公开 CLI runtime** 已经切换为 `services/research_jobs/`
 - phase3 以后，collecting 阶段通过 `connectors/ + policies/ + snapshot store` 统一治理 `search / fetch / file-ingest`
 - public connector substrate 在 fetch 前执行 URL 安全检查，显式阻止非 `http(s)`、localhost、loopback/private/link-local 等明显不安全地址；当前尚不包含 DNS 解析或 redirect 复检级 SSRF 防护
 - phase4 以后，`extracting` 后新增 `claim_auditing`，公开 runtime 会输出 claim graph、review queue 和 `completed + blocked` 审计门禁结果
+- phase6 以后，API readiness 只落在 ADR/spec；当前没有受支持的 HTTP/API server surface
 - `workflows/graph.py` 仍保留为 legacy runtime，主要服务 benchmark、comparator 和 hidden `legacy-run`
 
 因此，本文档中的多智能体图描述的是**当前仓库仍然存在的 legacy 工作流事实**，不是公开 CLI 的顶层运行时边界。
