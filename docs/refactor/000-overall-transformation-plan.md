@@ -1,11 +1,11 @@
 # 深度研究系统重构总计划
 
 ## 0. 文档状态
-- 当前状态：active
+- 当前状态：completed
 - 负责人：Codex
 - 起始分支：`main`
 - 起始提交：`c4e6d4d`
-- 最近更新：`2026-04-20T15:43:56Z`
+- 最近更新：`2026-04-20T15:52:39Z`
 - 关联审计文件：`docs/专家审查意见/20260420-gpt-5_4_thinking.txt`
 
 ## 1. 背景与目标
@@ -234,8 +234,8 @@
 | Phase 2 | merged | `../dra-phase-02-orchestration-recovery-contract` | `refactor/phase-02-orchestration-recovery-contract` | 已合并 `18fffb3`；`tests/test_phase2_jobs.py` 21 passed，`tests/test_phase4_auditor.py` 7 passed，`pytest -q` 161 passed，ruff 全量通过 | 已进入 Phase 3 |
 | Phase 3 | merged | `../dra-phase-03-connector-policy-security` | `refactor/phase-03-connector-policy-security` | 已合并 `9ca45ba`；`tests/test_phase3_connectors.py` 16 passed，`tests/test_phase2_jobs.py tests/test_phase4_auditor.py` 28 passed，`pytest -q` 164 passed，ruff 全量通过 | 已进入 Phase 4 |
 | Phase 4 | merged | `../dra-phase-04-claim-evidence-audit` | `refactor/phase-04-claim-evidence-audit` | 已合并 `e0fef2b`；`tests/test_phase4_auditor.py` 8 passed，`tests/test_phase2_jobs.py tests/test_phase3_connectors.py` 37 passed，`pytest -q` 165 passed，ruff 全量通过 | 已进入 Phase 5 |
-| Phase 5 | merged | `../dra-phase-05-observability-release-governance` | `refactor/phase-05-observability-release-governance` | 已合并 `f4b6987`；targeted 回归 15 passed，`pytest -q` 167 passed，ruff 全量通过，benchmark/comparison help 通过 | 更新总计划后进入 Phase 6 |
-| Phase 6 | planned | `../dra-phase-06-api-readiness` | `refactor/phase-06-api-readiness` | 未开始 | 创建 Phase 6 worktree，补齐 API readiness 契约 |
+| Phase 5 | merged | `../dra-phase-05-observability-release-governance` | `refactor/phase-05-observability-release-governance` | 已合并 `f4b6987`；targeted 回归 15 passed，`pytest -q` 167 passed，ruff 全量通过，benchmark/comparison help 通过 | 已进入 Phase 6 |
+| Phase 6 | merged | `../dra-phase-06-api-readiness` | `refactor/phase-06-api-readiness` | 已合并 `40abaa3`；`main.py --help` 通过，Phase2/4 回归 29 passed，Phase6/public surface 12 passed，`pytest -q` 170 passed，ruff 全量通过 | 本轮重构计划完成 |
 
 ## 9. 风险与开放问题
 - 风险 1：当前 main 工作区除已提交的 5 个输入文件外仍有大量本地修改；后续 phase worktree 必须基于 clean `HEAD`，不要误用主工作区脏文件。
@@ -244,5 +244,5 @@
 - 开放问题 2：claim audit 的下一代 grounding 是否使用 LLM 辅助、retrieval scorer 或人工 review UI，Phase 4 先锁定结构化可解释边界。
 
 ## 10. 下一步
-- 立即下一步：提交 Phase 5 后的总计划更新，创建 `../dra-phase-06-api-readiness` worktree 和 `refactor/phase-06-api-readiness` 分支。
-- 进入下一阶段的条件：Phase 5 merge commit 在 `main`；总计划状态看板已更新；Phase 6 worktree 从最新 `main` 创建成功。
+- 立即下一步：本轮 Phase 0-6 已完成；后续 server implementation 应进入下一 release train，并先补 auth/tenant/storage/queue/object storage/rate limit/audit log ADR。
+- 进入下一阶段的条件：当前无法确认；需要新的 release train 计划和明确的 server/API 实现范围。
