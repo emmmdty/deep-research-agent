@@ -5,7 +5,7 @@
 - 负责人：Codex
 - 起始分支：`main`
 - 起始提交：`c4e6d4d`
-- 最近更新：`2026-04-20T13:47:54Z`
+- 最近更新：`2026-04-20T13:58:18Z`
 - 关联审计文件：`docs/专家审查意见/20260420-gpt-5_4_thinking.txt`
 
 ## 1. 背景与目标
@@ -230,9 +230,9 @@
 | Phase | 状态 | worktree | branch | 最近结果 | 下一步 |
 |---|---|---|---|---|---|
 | Phase 0 | completed | main | main | Git 历史已恢复；重构输入文件与总计划已提交 | 已进入 Phase 1 |
-| Phase 1 | merged | `../dra-phase-01-runtime-state-persistence` | `refactor/phase-01-runtime-state-persistence` | 已合并 `8884453`；`tests/test_phase2_jobs.py` 15 passed，`tests/test_phase4_auditor.py` 7 passed，`pytest -q` 155 passed，ruff 全量通过 | 更新总计划后进入 Phase 2 |
-| Phase 2 | planned | `../dra-phase-02-orchestration-recovery-contract` | `refactor/phase-02-orchestration-recovery-contract` | 未开始 | 创建 Phase 2 worktree，收敛 canonical state / recovery / retry / cancel 契约 |
-| Phase 3 | planned | `../dra-phase-03-connector-policy-security` | `refactor/phase-03-connector-policy-security` | 未开始 | 等 Phase 2 合并 |
+| Phase 1 | merged | `../dra-phase-01-runtime-state-persistence` | `refactor/phase-01-runtime-state-persistence` | 已合并 `8884453`；`tests/test_phase2_jobs.py` 15 passed，`tests/test_phase4_auditor.py` 7 passed，`pytest -q` 155 passed，ruff 全量通过 | 已进入 Phase 2 |
+| Phase 2 | merged | `../dra-phase-02-orchestration-recovery-contract` | `refactor/phase-02-orchestration-recovery-contract` | 已合并 `18fffb3`；`tests/test_phase2_jobs.py` 21 passed，`tests/test_phase4_auditor.py` 7 passed，`pytest -q` 161 passed，ruff 全量通过 | 更新总计划后进入 Phase 3 |
+| Phase 3 | planned | `../dra-phase-03-connector-policy-security` | `refactor/phase-03-connector-policy-security` | 未开始 | 创建 Phase 3 worktree，重构 connector policy / fetch security |
 | Phase 4 | planned | `../dra-phase-04-claim-evidence-audit` | `refactor/phase-04-claim-evidence-audit` | 未开始 | 等 Phase 3 合并 |
 | Phase 5 | planned | `../dra-phase-05-observability-release-governance` | `refactor/phase-05-observability-release-governance` | 未开始 | 等 Phase 4 合并 |
 | Phase 6 | planned | `../dra-phase-06-api-readiness` | `refactor/phase-06-api-readiness` | 未开始 | 等 Phase 5 合并 |
@@ -244,5 +244,5 @@
 - 开放问题 2：claim audit 的下一代 grounding 是否使用 LLM 辅助、retrieval scorer 或人工 review UI，Phase 4 先锁定结构化可解释边界。
 
 ## 10. 下一步
-- 立即下一步：提交 Phase 1 后的总计划更新，创建 `../dra-phase-02-orchestration-recovery-contract` worktree 和 `refactor/phase-02-orchestration-recovery-contract` 分支。
-- 进入下一阶段的条件：Phase 1 merge commit 在 `main`；总计划状态看板已更新；Phase 2 worktree 从最新 `main` 创建成功。
+- 立即下一步：提交 Phase 2 后的总计划更新，创建 `../dra-phase-03-connector-policy-security` worktree 和 `refactor/phase-03-connector-policy-security` 分支。
+- 进入下一阶段的条件：Phase 2 merge commit 在 `main`；总计划状态看板已更新；Phase 3 worktree 从最新 `main` 创建成功。
