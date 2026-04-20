@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from ipaddress import ip_address
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 
 TRACKING_QUERY_PREFIXES = ("utm_",)
 TRACKING_QUERY_KEYS = {"gclid", "fbclid"}
+LOCAL_HOSTNAMES = {"localhost", "localhost.localdomain"}
 
 
 def canonicalize_uri(uri: str) -> str:
@@ -48,3 +50,29 @@ def domain_from_uri(uri: str) -> str:
     """提取 URI 域名。"""
     parsed = urlparse(uri)
     return parsed.netloc.lower()
+
+
+def fetch_uri_block_reason(uri: str) -> str:
+    """返回 fetch URI 的安全拦截原因；空字符串表示允许继续。"""
+    parsed = urlparse(uri)
+    scheme = parsed.scheme.lower()
+    if scheme not in {"http", "https"}:
+        return "unsupported_scheme"
+    host = (parsed.hostname or "").lower()
+    if not host:
+        return "missing_host"
+    if host in LOCAL_HOSTNAMES:
+        return "private_or_local_host"
+    try:
+        address = ip_address(host)
+    except ValueError:
+        return ""
+    if (
+        address.is_loopback
+        or address.is_private
+        or address.is_link_local
+        or address.is_unspecified
+        or address.is_reserved
+    ):
+        return "private_or_local_host"
+    return ""

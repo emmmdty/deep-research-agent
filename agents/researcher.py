@@ -672,6 +672,13 @@ def _collect_results(
         source_name = item.get("source_type", "web")
         connector_name = str(item.get("connector_name") or _map_source_name_to_connector(source_name))
         health = _health_record(connector_health, connector_name)
+        if connector_name != "files":
+            fetch_decision = policy.validate_fetch_uri(str(item.get("canonical_uri") or item.get("url") or ""))
+            if not fetch_decision.allowed:
+                health.policy_blocked += 1
+                health.last_error = fetch_decision.reason
+                rejected_count += 1
+                continue
         health.fetch_attempts += 1
         try:
             fetched = _fetch_item(

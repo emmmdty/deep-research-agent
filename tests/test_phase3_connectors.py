@@ -174,6 +174,113 @@ def test_source_policy_enforces_allow_deny_and_budget():
     assert effective.budget.max_total_fetches == 1
 
 
+def test_source_policy_blocks_unsafe_fetch_uris():
+    """fetch policy 应拒绝非 http(s)、localhost 与私网地址。"""
+    from policies.source_policy import SourcePolicy
+
+    policy = SourcePolicy(profile_name="open-web", connectors=["open_web"], connector_order=["open_web"])
+
+    assert policy.validate_fetch_uri("file:///etc/passwd").allowed is False
+    assert policy.validate_fetch_uri("file:///etc/passwd").reason == "unsupported_scheme"
+    assert policy.validate_fetch_uri("http://localhost:8000").allowed is False
+    assert policy.validate_fetch_uri("http://localhost:8000").reason == "private_or_local_host"
+    assert policy.validate_fetch_uri("http://127.0.0.1:8000").allowed is False
+    assert policy.validate_fetch_uri("http://10.0.0.12/internal").allowed is False
+    assert policy.validate_fetch_uri("https://docs.langchain.com/langgraph").allowed is True
+
+
+def test_web_fetch_rejects_unsafe_url_before_scraper():
+    """web fetch adapter 自身应拒绝不安全 URL，避免绕过 researcher policy。"""
+    from connectors import registry
+
+    with pytest.raises(ValueError, match="private_or_local_host"):
+        registry._web_fetch("http://127.0.0.1:8000")
+
+
+def test_researcher_does_not_fetch_policy_blocked_private_url(tmp_path: Path, monkeypatch):
+    """collecting 遇到 fetch policy 拦截的 URL 时，不应调用 connector fetch。"""
+    from agents import researcher
+    from connectors.legacy import LegacyConnectorAdapter
+    from connectors.registry import ConnectorRegistry
+    from workflows.states import TaskItem
+
+    settings = type(
+        "Settings",
+        (),
+        {
+            "enabled_sources": ["web"],
+            "max_search_results": 5,
+            "per_source_max_results": 4,
+            "per_task_selected_sources": 4,
+            "enabled_capability_types": ["builtin"],
+            "skill_paths": [],
+            "mcp_servers": [],
+            "workspace_dir": str(tmp_path / "workspace"),
+            "source_policy_mode": "open-web",
+            "connector_substrate_enabled": True,
+            "snapshot_store_dirname": "snapshots",
+        },
+    )()
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+    class StaticLLM:
+        def invoke(self, messages):
+            return type("Response", (), {"content": "No usable public sources."})()
+
+    monkeypatch.setattr(researcher, "get_llm", lambda: StaticLLM())
+
+    def forbidden_fetch(url):
+        raise AssertionError(f"fetch should not be called for {url}")
+
+    monkeypatch.setattr(
+        researcher,
+        "_build_phase3_connector_registry",
+        lambda _settings: ConnectorRegistry(
+            {
+                "open_web": LegacyConnectorAdapter(
+                    source_name="web",
+                    search_fn=lambda query, max_results=5: [
+                        {
+                            "source_type": "web",
+                            "title": "Internal Admin",
+                            "url": "http://127.0.0.1:8000/admin",
+                            "snippet": "private admin page",
+                        }
+                    ],
+                    fetch_fn=forbidden_fetch,
+                )
+            }
+        ),
+    )
+
+    result = researcher.researcher_node(
+        {
+            "research_topic": "internal admin",
+            "research_profile": "default",
+            "source_profile": "open-web",
+            "tasks": [
+                TaskItem(
+                    id=1,
+                    title="安全",
+                    intent="验证 fetch policy",
+                    query="internal admin",
+                    preferred_sources=["web"],
+                )
+            ],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "source_snapshots": [],
+            "search_results": [],
+            "evidence_notes": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert result["sources_gathered"] == []
+    assert result["source_snapshots"] == []
+    assert result["connector_health"]["open_web"]["policy_blocked"] == 1
+    assert result["connector_health"]["open_web"]["last_error"] == "private_or_local_host"
+
+
 def test_phase3_source_record_and_verifier_preserve_snapshot_ref(tmp_path: Path, monkeypatch):
     """verifier 生成的 evidence unit 应继承 snapshot_ref。"""
     from agents import verifier
