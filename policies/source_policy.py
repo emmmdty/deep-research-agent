@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 
 from artifacts.schemas import validate_instance
 from connectors.models import ConnectorCandidate
-from connectors.utils import domain_from_uri
+from connectors.utils import canonicalize_uri, domain_from_uri, fetch_uri_block_reason
 from policies.models import ConnectorBudget, SourcePolicyOverrides
 
 
@@ -29,6 +29,14 @@ class CandidateFilterResult(BaseModel):
 
     allowed: list[ConnectorCandidate] = Field(default_factory=list)
     blocked: list[BlockedCandidate] = Field(default_factory=list)
+
+
+class FetchPolicyDecision(BaseModel):
+    """fetch 前 URL 安全决策。"""
+
+    allowed: bool = Field(description="是否允许 fetch")
+    reason: str = Field(default="", description="拒绝原因")
+    canonical_uri: str = Field(default="", description="归一化 URI")
 
 
 class SourcePolicy(BaseModel):
@@ -71,6 +79,19 @@ class SourcePolicy(BaseModel):
                 continue
             allowed.append(candidate)
         return CandidateFilterResult(allowed=allowed[: self.budget.max_candidates_per_connector], blocked=blocked)
+
+    def validate_fetch_uri(self, uri: str) -> FetchPolicyDecision:
+        """fetch 前执行 URL 安全与域名策略检查。"""
+        canonical_uri = canonicalize_uri(uri)
+        block_reason = fetch_uri_block_reason(canonical_uri)
+        if block_reason:
+            return FetchPolicyDecision(allowed=False, reason=block_reason, canonical_uri=canonical_uri)
+        domain = domain_from_uri(canonical_uri)
+        if self.deny_domains and domain in self.deny_domains:
+            return FetchPolicyDecision(allowed=False, reason="domain_denied", canonical_uri=canonical_uri)
+        if self.allow_domains and domain not in self.allow_domains:
+            return FetchPolicyDecision(allowed=False, reason="domain_not_allowed", canonical_uri=canonical_uri)
+        return FetchPolicyDecision(allowed=True, canonical_uri=canonical_uri)
 
 
 def load_source_policy(profile_name: str) -> SourcePolicy:

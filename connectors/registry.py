@@ -6,6 +6,7 @@ from collections.abc import Iterable
 
 from connectors.files import LocalFileIngestor
 from connectors.legacy import LegacyConnectorAdapter
+from connectors.utils import canonicalize_uri, fetch_uri_block_reason
 from tools.arxiv_search import search_arxiv_papers
 from tools.github_search import search_github_repositories
 from tools.web_scraper import web_scraper_tool
@@ -34,7 +35,11 @@ class ConnectorRegistry:
 
 
 def _web_fetch(url: str) -> dict[str, str]:
-    text = web_scraper_tool.invoke({"url": url})
+    canonical_url = canonicalize_uri(url)
+    block_reason = fetch_uri_block_reason(canonical_url)
+    if block_reason:
+        raise ValueError(block_reason)
+    text = web_scraper_tool.invoke({"url": canonical_url})
     return {"text": text, "mime_type": "text/html"}
 
 
