@@ -1,0 +1,287 @@
+# 1. 已阅读清单
+
+我先给出我**实际读过**的内容，而不是按 README 想象系统。以下是我完成核查的代码面。([GitHub][1])
+
+* **README.md / 仓库根目录**：用来核对仓库对外宣称的能力、公开 surface、阶段划分、目录结构，以及作者自己是否把它定义成 CLI-first / portfolio / product。这里直接写明了它是“public research-engineering / portfolio project”，公开 surface 是 CLI-first，当前没有支持的 HTTP API。([GitHub][1])
+* **docs/architecture.md**：这份文档很关键，因为它明确区分了**当前公开 runtime**和**legacy 工作流**；文档直接说 `services/research_jobs/` 是 phase2 以后公开 CLI runtime，`workflows/graph.py` 主要服务 benchmark、comparator 和 hidden `legacy-run`。这直接影响我对“主路径/遗留路径”的判定。([GitHub][2])
+* **pyproject.toml**：确认项目成熟度标签、依赖面、Python 版本、脚本入口。它把自己标成 `Development Status :: 3 - Alpha`，入口脚本是 `main:main`，依赖包含 `langgraph`、`mcp`、`httpx`、`gpt-researcher` 等。([GitHub][3])
+* **main.py**：确认真实公开入口。这里的核心命令是 `submit / status / watch / cancel / retry`，并保留 hidden `legacy-run`；CLI 启动时也会触发 `recover_stale_jobs()`。这决定了真实公开 surface 不是“任意 agent graph”，而是 job CLI。([GitHub][1])
+* **services/research_jobs/models.py / store.py / service.py / worker.py / orchestrator.py**：这是当前系统最重要的真实主干。我重点核查了作业模型、SQLite 表结构、checkpoint/event 持久化、worker 租约、心跳、恢复、取消、重试、阶段流转、artifact 发射。我的大部分结论都直接来自这一层。([GitHub][4])
+* **workflows/graph.py / workflows/states.py**：用来判断 legacy graph 还在不在、状态字段有多大、是否和 phase2 runtime 重叠。`graph.py` 仍是 LangGraph `StateGraph`，而 `ResearchState` 很大，承载 evidence、audit、status、policy 等多类字段。([GitHub][5])
+* **connectors/registry.py / legacy.py / files.py / models.py / snapshot_store.py**：确认 phase3 connector substrate 到底是不是“真实 substrate”，还是旧工具包装层。代码显示它本质上是把旧 `web/github/arxiv` 搜索工具包成统一 candidate/fetch 接口，再加一个本地文件 ingestor 和文本 snapshot store。([GitHub][6])
+* **policies/source_policy.py / budget_guardrails.py / models.py**：确认 allow/deny domain、budget 是否形成真实治理边界。实际实现是对 search candidate 进行 allow/deny 过滤，并用一个很薄的 fetch 计数器做 budget guard。([GitHub][7])
+* **auditor/pipeline.py / auditor/models.py / auditor/store.py**：确认 phase4 claim auditing 到底是“真验证”还是“启发式近似”。这里我读到了 claim 提取、token overlap、正负词 marker、blocked review queue、claim graph sidecar 的真实逻辑。([GitHub][8])
+* **configs/settings.py**：确认运行时默认值和 feature flag。这里明确有 `job_heartbeat_interval_seconds=2`、`job_stale_timeout_seconds=15`、`legacy_cli_enabled=True`、`connector_substrate_enabled=True`、`memory_backend="sqlite"`。([GitHub][9])
+* **tests/test_phase2_jobs.py / tests/test_phase4_auditor.py**：用来判断测试到底覆盖了什么。可见测试主要覆盖 schema、happy path、cancel/retry 基础流、phase4 blocked path、bundle 中 claim graph 保留；没有看到多进程竞态、双 worker、崩溃恢复一致性、安全边界这类硬失败测试。([GitHub][10])
+* **目录级核查但未逐文件深读**：`agents/`、`tools/`、`memory/`、`artifacts/`、`capabilities/`、`prompts/`、`examples/`、`scripts/`、`specs/`、`evaluation/` 我都做了目录核查；其中我对 `tools/web_search.py`、`tools/web_scraper.py`、`tools/code_executor.py`、`capabilities/mcp.py`、`capabilities/registry.py` 额外抽读了关键片段，因为它们关系到安全边界和扩展面。([GitHub][11])
+* **对标仓库 DeerFlow**：我读了其 README/根目录、`server.py`、`main.py`、`pyproject.toml`、`src/`、`web/`、`tests/`、`docs/`；重点核查它是否真有 server/API/web/deployment/debug surface，而不只是 README 口号。DeerFlow README 和目录都明确给出了 web UI、backend server、LangGraph server、API docs、Docker Compose、`web/` Next.js 前端、`src/server` 后端模块等公开面。([GitHub][12])
+
+我据此还原出的**当前主执行链路**是：
+
+`main.py submit` → `ResearchJobService.submit()` 创建 job/runtime row + 初始 checkpoint → `subprocess.Popen` 拉起 `services.research_jobs.worker` → worker `attach_worker()` + 心跳线程 → `service.run_job()` → `ResearchJobOrchestrator.run()` 依次跑 `clarifying -> planned -> collecting -> extracting -> claim_auditing -> rendering` → 每阶段保存 checkpoint / event → 完成后写 `report.md`、`report_bundle.json`、`trace.jsonl`，并保留 `snapshots/` 与 `audit/` 侧车。`status/watch/cancel/retry` 都只是这个 job runtime 的外围 CLI。([GitHub][13])
+
+我认为系统的**真实公开 surface**只有两层：
+第一层是 `main.py` 提供的 job-oriented CLI；第二层是 `workspace/research_jobs/<job_id>/` 下的本地文件产物合同。它**不是**一个 server 产品，也**不是**一个受支持的 HTTP/API surface。README 已经明说“currently no supported HTTP API”，代码也支持这一点。([GitHub][1])
+
+我**没有完整读透**或工具提取不够稳定的部分有：`configs/default.yaml`、`evaluation/comparators.py`、`evaluation/metrics.py` 的完整实现、`tests/test_phase3_connectors.py` 和 `tests/test_cli_runtime.py` 的全部正文、以及 `agents/*`/`memory/*`/`artifacts/*`/`scripts/*`/`specs/*` 的逐文件全文。对这些模块，我只会给“有限置信度”的判断；但对**当前公开 runtime、状态机、恢复、审计、connector/policy 边界**的结论，我的置信度是高的，因为核心实现已经读到。([GitHub][14])
+
+# 2. 一句话总评
+
+这是一个**工程意识不差、已经做出 CLI 作业 runtime 和证据/审计侧车雏形，但距离企业产品级深度研究系统仍有明显结构性断层的本地型 research system**。([GitHub][1])
+
+# 3. 当前系统真实定位
+
+它现在本质上是：**一个 CLI-first、本地 SQLite + 本地文件系统 + 本地 subprocess worker 驱动的研究作业系统**，其公开主路径是 `services/research_jobs`，不是 web 平台，也不是多租户 server 产品。README、架构文档、`main.py`、`service.py`、`worker.py`、`orchestrator.py` 对这一点是一致的。([GitHub][1])
+
+它**不是什么**：
+它不是企业可上线的深度研究平台；不是支持多租户/多实例/多并发调度的服务；不是可信审计已经成立的“研究真相引擎”；也不是一个可以直接从 CLI 平滑升到 web 的现成底座。当前仓库自己都把它定义成 portfolio / research-engineering 项目，并明确说没有受支持的 HTTP API。([GitHub][1])
+
+它离“企业产品级深度研究工具”还有多远：**很远，而且不是补个 web UI 就能补上的那种远**。差距不在“有没有前端页面”，而在于 runtime substrate、状态一致性、恢复正确性、安全边界、审计可信度和可观测性这些底层红线还没有过线。([GitHub][15])
+
+我先按你要求给出**Reality Map**：
+
+1. **当前真正能跑通的主链路**：`submit -> SQLite job row + 初始 checkpoint -> subprocess worker -> heartbeat -> orchestrator stage loop -> checkpoints/events -> report/bundle/trace/audit artifacts`。这是闭环；而不是 README 里更宽泛的“多 agent 系统”叙事。([GitHub][15])
+2. **README 宣称 vs 代码真实闭环**：Phase 02 job runtime、Phase 03 connector substrate、Phase 04 claim audit 都有代码闭环；但它们的实现强度远低于文案给人的“企业级治理”观感。尤其 Phase 03 更像统一包装层，Phase 04 更像启发式 gate。([GitHub][1])
+3. **legacy vs 主路径**：`services/research_jobs/*` 是公开主路径；`workflows/graph.py` 和 hidden `legacy-run` 是保留的 legacy runtime。这个判断不是我猜的，是 README、架构文档和 CLI 一起指向的。([GitHub][2])
+4. **作业生命周期真实边界**：有 `created / clarifying / planned / collecting / extracting / claim_auditing / rendering / completed / failed / cancelled / needs_review` 这套状态；有 checkpoint、retry、cancel flag、heartbeat、stale scan；但没有真正强一致的 lease、没有事务化序号、没有严格 resume correctness 保证。([GitHub][4])
+5. **connector / source policy / snapshot / audit / benchmark 的耦合关系**：job row 里会记录 source profile / policy overrides / budget / audit summary；collecting 阶段依赖 connector + policy + snapshot；claim_auditing 在 extracting 后运行；benchmark 和 judge 更多是旁路评测层，而不是一个被 runtime 强制执行的生产控制面。([GitHub][15])
+6. **从 CLI 升到 web 可复用 vs 技术债**：可复用的是 schema/model、artifact bundle、source policy 数据模型、部分 connector 归一层；会变成债的是本地 subprocess worker、SQLite/file-path 驱动的 runtime、双状态源、启发式审计，以及没有 API/auth/tenant/queue 的整体形态。([GitHub][16])
+
+# 4. 主要优点（最多 5 条）
+
+1. **公开主路径比 README 更诚实，至少没有把 legacy graph 伪装成产品 runtime。** README 和 `docs/architecture.md` 都明确说公开 surface 是 job CLI，`workflows/graph.py` 是 legacy；这比很多“目录很多但主路径不清”的仓库更诚实。([GitHub][1])
+
+2. **作业运行的最小闭环是存在的。** `submit` 会创建 runtime row、初始 checkpoint、可选拉起 worker；worker 会心跳；orchestrator 会逐阶段保存 checkpoint/event；最终输出报告和 sidecar artifacts。这不是 README 口号，而是完整代码链。([GitHub][15])
+
+3. **artifact / schema 意识是成立的。** job runtime record、checkpoint、event、claim-review-queue 等都做了 schema validation；artifact 目录也有 `bundle.py` / `schemas.py`。这说明作者至少在尝试把“运行痕迹”结构化，而不是纯 print log。([GitHub][17])
+
+4. **phase3 的 connector 统一接口虽然薄，但不是空壳。** 它确实把 web/github/arxiv/local files 归一成 candidate/fetch 模型，也确实有 snapshot manifest 和 budget/policy 概念。只是这离企业平台还差很远。([GitHub][6])
+
+5. **phase4 审计至少是“真落地”，不是只存在于 README。** claim graph、review queue、blocked gate、completed+blocked 语义、相应测试都在代码里出现了。问题不在“有没有”，而在“这个实现强度够不够”。([GitHub][8])
+
+# 5. 严重问题清单（按严重级别排序）
+
+## P0：上线 / 架构红线级问题
+
+### P0-1：worker 租约和 stale recovery 不是并发安全设计，存在双 worker / split-brain 风险
+
+* **影响面**：同一 job 的执行正确性、event 顺序、checkpoint 一致性、最终报告和 audit sidecar 的真实性。
+* **为什么严重**：`recover_stale_jobs()` 只是扫描 active jobs，看心跳是否过期、PID 是否存在，然后直接重新拉起 worker；而 worker 启动后会无条件 `attach_worker()` 覆盖 `worker_pid` 和 `worker_lease_id`。这里没有 compare-and-swap、没有原子 lease acquire、没有“只有当前 lease 才能推进阶段”的 fence。任何多进程、多实例、误判 stale、或并发恢复，都可能让两个 worker 同时跑一个 job。([GitHub][15])
+* **证据**：`service.recover_stale_jobs()` 通过 heartbeat + `os.kill(pid, 0)` 判定 stale 后直接 `_spawn_worker_fn(job.job_id)`；`worker.py` 启动即 `attach_worker()`；`store.attach_worker()` 只是更新字段，不做租约竞争保护；`heartbeat()` 只在 lease mismatch 时拒绝更新心跳，但并不会阻止错误 worker 已经开始执行。([GitHub][15])
+* **对 web 产品化的具体影响**：一旦你把它挂到 API server、后台 worker 池、或多副本部署上，这不是“偶发 bug”，而是**必出事故**。同一 job 会被双写、双完成、双发 artifact，审计链直接失真。([GitHub][15])
+* **修复方向**：先重写 lease 模型。需要数据库级原子租约获取、租约版本号/epoch、状态推进时的 lease fencing、明确的 scheduler/queue ownership；没有这些，不要谈 web 产品。
+
+### P0-2：event/checkpoint 序号分配和写入不是事务性的，审计轨迹可以被覆盖或乱序
+
+* **影响面**：trace replay、审计可信度、恢复点选择、UI 事件流、后续问题排查。
+* **为什么严重**：`next_event_sequence()` 和 `next_checkpoint_sequence()` 都是 `SELECT MAX(sequence)+1`；随后再单独 `INSERT OR REPLACE`。这在并发下天然有竞争窗口。更糟的是 `service._append_event()` 还调用了两次 `next_event_sequence()`，一次生成 `event_id`，一次生成 `sequence`，哪怕单机下也暴露出序号分配没有被设计成原子操作。([GitHub][17])
+* **证据**：`store.next_event_sequence()` / `store.next_checkpoint_sequence()` 的实现；`append_event()` / `save_checkpoint()` 都是 `INSERT OR REPLACE`；`service._append_event()` 双次取号。`INSERT OR REPLACE` 对企业审计日志尤其糟糕，因为它默认允许覆盖。([GitHub][17])
+* **对 web 产品化的具体影响**：一旦有双 worker、并发 retry、并行 watcher 或 API 层重放，event 序列就可能被覆盖或乱序。到那时你连“这个 job 真实发生了什么”都说不清，更别说 enterprise audit。([GitHub][17])
+* **修复方向**：必须改成事务内分配 monotonic version / sequence，冲突时 fail-fast 而不是 replace；event log 要 append-only，不允许 replace；checkpoint 也要有版本保护和写前条件。
+
+### P0-3：没有单一可信状态源，`JobRuntimeRecord` 和 `ResearchState` 存在实质性语义重叠
+
+* **影响面**：status、一致性恢复、API/UI 展示、审计摘要、source policy 显示、resume correctness。
+* **为什么严重**：job row 里有 `status/current_stage/source_profile/policy_overrides/connector_health/audit_gate_status/...`；`ResearchState` 里也有 `status/source_profile/policy_overrides/source_snapshots/connector_health/audit_*` 等大量运行字段；但 orchestrator 的 `_sync_job_runtime_fields()` 只同步很少一部分字段回 job row。也就是说，这个系统长期运行时实际上有**两个状态宇宙**。([GitHub][4])
+* **证据**：`JobRuntimeRecord` 和 `ResearchState` 的字段定义；`_load_state()` 从 checkpoint 读 state；`_merge_state()` 只是浅层 `dict.update()`；`_sync_job_runtime_fields()` 只回写 connector_health 和几项 audit summary，不回写绝大多数 state。([GitHub][4])
+* **对 web 产品化的具体影响**：web API 一定会问“当前 job 状态从哪里读才算准”。你现在没有答案。读 job row 和读 active checkpoint 都可能不同。前端、worker、审计、benchmark 会各自读不同源，最后出现“看起来 completed，但 checkpoint 里还是另一套状态”的灾难。([GitHub][4])
+* **修复方向**：先选 canonical source。要么 event-sourced + projection，要么 checkpoint state 为唯一真相、runtime row 只是索引，要么反过来；但不能继续双写双源。
+
+### P0-4：当前 runtime substrate 是“本地 CLI + 本地 subprocess + 本地 SQLite + 本地路径”，不是可平台化底座
+
+* **影响面**：多用户、多实例、多作业、容器化部署、横向扩展、租户隔离、运维模型。
+* **为什么严重**：当前公开 surface 没有 HTTP API；worker 通过 `subprocess.Popen` 在本地机器拉起；持久化依赖 workspace 目录下的 `jobs.db` 和一堆 JSON/TXT 文件；`memory_backend` 也固定是 `sqlite`。这不是“差一个前端”，而是**整个平台基座还没有服务化**。([GitHub][1])
+* **证据**：README 明说无 HTTP API；`_spawn_worker()` 直接本地起子进程；`ResearchJobStore` 使用 `sqlite3.connect(self.db_path)`；workspace 下写 checkpoint/report/bundle/audit/snapshot。([GitHub][1])
+* **对 web 产品化的具体影响**：web 化不是“给这个 CLI 套个 FastAPI”那么简单。你需要把调度、存储、artifact、认证、用户配额、取消语义、对象存储、后台执行全拆开重做。([GitHub][1])
+* **修复方向**：把 runtime 抽成 server-owned job system：API 层、queue/scheduler、worker pool、Postgres、object storage、lease/heartbeat service、artifact service。
+
+## P1：企业化关键阻塞问题
+
+### P1-1：`allow/deny domain` 只是候选过滤，不是安全边界
+
+* **影响面**：SSRF、恶意页面抓取、prompt injection、防污染检索、域名绕过。
+* **为什么严重**：`SourcePolicy.filter_candidates()` 只是对 search candidates 的 `canonical_uri` 做 exact-match allow/deny；`_web_fetch()` 则把 URL 直接交给 `web_scraper_tool`，后者用 `httpx.get(url, follow_redirects=True)` 抓网页。这个组合更像“筛一下候选列表”，不是企业级 outbound policy。它没有私网/IP 段拦截、没有 DNS 解析校验、没有 redirect 重验、没有按 tenant 的网络出口治理。([GitHub][7])
+* **证据**：`source_policy.py` 里 domain 过滤逻辑；`connectors/registry.py` 的 `_web_fetch()`；`web_scraper_tool()` 直接 GET 任意 URL 并跟随重定向。([GitHub][7])
+* **对 web 产品化的具体影响**：一旦你允许真实企业用户提交 query、文件、MCP server 或 connector source，这个网络边界会被打爆。
+* **修复方向**：中心化 fetch proxy、URL canonicalization + redirect 复检、私网/IP/DNS deny、robots/size/content-type/timeout 限制、按 tenant 的 allowlist 策略和审计。
+
+### P1-2：claim auditing 本质是启发式 token overlap，不足以支撑“企业级可信研究”
+
+* **影响面**：claim gate、冲突检测、blocked/review 队列、用户对“已审计”的信任。
+* **为什么严重**：审计器从 summary 中抽 claim，最多取两句；支持/矛盾判定靠 token overlap、正负 marker、少量词汇替换；没有 span-level grounding、没有 citation span 对齐、没有实体归一、没有多证据权重、没有来源可信度模型。这个模块可以叫“heuristic consistency checker”，不能叫企业级 claim audit。([GitHub][8])
+* **证据**：`_extract_claim_texts()` 只取部分句子；`_classify_claim_relation()` 依赖 overlap 与 `_NEGATIVE_MARKERS/_POSITIVE_MARKERS`；`_build_audit_decision()` 只看关键 claim 是否 unsupported/contradicted/unverifiable。([GitHub][8])
+* **对 web 产品化的具体影响**：如果以后前端把 `audit_gate_status=passed/blocked` 展示给企业用户，这会造成**高风险误导**：UI 上像“已验证”，实际上只是词重叠启发式。([GitHub][8])
+* **修复方向**：做真正的证据-claim 对齐：span grounding、citation span、retrieval provenance、实体一致性、冲突 adjudication、校准后的 confidence、人工复核入口。
+
+### P1-3：legacy / new runtime 混杂，阶段命名和边界已经出现漂移
+
+* **影响面**：维护成本、状态机可靠性、团队心智模型、后续 API 契约。
+* **为什么严重**：README 和架构文档都说 `workflows/graph.py` 是 legacy，`services/research_jobs` 是当前公开 runtime；但仓库里仍保留 hidden `legacy-run`，`workflows/graph.py` 继续存在，`orchestrator._run_stage()` 还保留了一个 `auditing` 分支，而当前公开 phase4 路径又是 `claim_auditing`。`ACTIVE_JOB_STATUSES` 里同时存在 `auditing` 和 `claim_auditing`。这就是典型的相位切换后遗症。([GitHub][2])
+* **证据**：架构文档的“legacy/runtime 边界”描述；CLI hidden `legacy-run`；模型里的状态集合；orchestrator 里的阶段分支。([GitHub][2])
+* **对 web 产品化的具体影响**：如果现在就开 API，你会把历史包袱固化进契约，之后每次重构都要兼容错误的状态名和旧路径。
+* **修复方向**：冻结并隔离 legacy；清理状态词汇表；在 runtime package 内做单一路径 FSM；公开契约只暴露一套状态。
+
+### P1-4：测试覆盖偏“schema + happy path”，对企业级失败路径几乎没有说服力
+
+* **影响面**：上线信心、回归保护、恢复正确性、安全边界。
+* **为什么严重**：`test_phase2_jobs.py` 的重点是 schema load、store 持久化、orchestrator happy path、cancel/retry 基础流；`test_phase4_auditor.py` 的重点是 blocked review queue、phase4 bundle 保真、指标 helper。它们并没有证明：双 worker 竞争、stale recovery 误判、崩溃中断后 resume、event/checkpoint 冲突、恶意 URL/MCP/代码执行、私网拦截、tenant 隔离。([GitHub][10])
+* **证据**：可见测试正文和 tests 目录结构。
+* **对 web 产品化的具体影响**：你会带着“测试都过了”的错觉，把最危险的 failure mode 直接带进线上。
+* **修复方向**：加多进程竞态测试、kill -9 恢复测试、重复重试幂等测试、私网/redirect/oversized payload 安全测试、真实 DB contention 测试、worker fencing 测试。
+
+## P2：重要但可后续治理的问题
+
+### P2-1：connector substrate 现在更像“统一包装层”，不是可平台化的数据接入层
+
+* **影响面**：新 connector 扩展、私有知识接入、权限治理、对象存储和索引层接入。
+* **为什么严重**：`LegacyConnectorAdapter` 只是把已有 search/fetch 工具包成统一结构；web/github/arxiv 都是薄包装；本地文件只支持 `.pdf/.md/.txt`；snapshot store 只是把文本写成 `<snapshot_id>.txt` 和 manifest JSON。这个层有抽象，但离平台化 ingestion 还差索引、权限、异步抓取、内容标准化、去重、版本管理。([GitHub][18])
+* **证据**：`build_connector_registry()`、`LocalFileIngestor`、`SnapshotStore.persist()`。
+* **对 web 产品化的具体影响**：一旦接企业私有知识库、云盘、消息系统、对象存储，这层会大改。
+* **修复方向**：把 connector 拆成 search/fetch/normalize/snapshot/index/auth 五层，并改为内容寻址、可去重、可回放。
+
+### P2-2：benchmark / LLM-as-Judge 目前更像研究评测工具，不是生产质量证明
+
+* **影响面**：对外“我们质量很好”的可信度、内部优化方向。
+* **为什么严重**：`LLMJudge` 直接把整份报告截断后喂给模型，让模型回 JSON；pairwise 也是类似套路，解析失败就回退。这里没有 judge agreement、没有校准、没有鲁棒解析、没有证据级别评分，也看不到把 runtime failure modes 纳入统一评测闭环。它适合做研究期辅助，不足以给企业可用性背书。([GitHub][19])
+* **证据**：`LLMJudge.score_report()` / `compare_reports()` 的提示词+JSON parse 逻辑；README 对 judge/scorecard 的宣称。
+* **对 web 产品化的具体影响**：会出现“benchmark 看起来不错，但真实长时任务不稳定”的口径脱节。
+* **修复方向**：把 runtime reliability、resume correctness、audit correctness、安全回归也纳入评测；Judge 只做辅助，不做主证明。
+
+### P2-3：状态合并策略过于粗糙，`_merge_state()` 的浅层 `dict.update()` 很脆
+
+* **影响面**：复杂 state 演进、嵌套结构一致性、未来并发 patch 合并。
+* **为什么严重**：`ResearchState` 很大，但 `_merge_state()` 只是 `merged = dict(state); merged.update(patch)` 后再整体校验。对复杂嵌套字段、列表增量、partial patch 来说，这就是脆弱点。现在之所以没炸，更多是因为运行路径还比较单。([GitHub][20])
+* **证据**：`ResearchState` 字段规模；orchestrator 的 `_merge_state()`。
+* **对 web 产品化的具体影响**：后面一旦引入 API patch、前端协作编辑、人审修改、后台异步 enrich，这个合并策略会直接失效。
+* **修复方向**：显式 reducer / command model / immutable event patch，不要继续用大 dict 浅合并。
+
+## P3：一般优化项
+
+### P3-1：SQLite 使用方式停留在单机脚本级，不像服务级存储
+
+* **影响面**：性能、运维、锁竞争、未来迁移成本。
+* **为什么严重**：`sqlite3.connect(self.db_path)` 没有看到 WAL、busy timeout、连接池、索引治理、查询范围收敛；`list_active_jobs()` 甚至是 `SELECT * FROM jobs` 后在 Python 里筛 active status。([GitHub][17])
+* **对 web 产品化的具体影响**：随着 job 数增长，这些“现在看着没问题”的选择都会变成抖动源。
+* **修复方向**：尽早迁到 Postgres，并基于明确的 job/status/index/query 模型重写。
+
+### P3-2：文档/脚本/阶段名很多，容易制造“完成度高于事实”的错觉
+
+* **影响面**：团队认知、外部预期、评审误判。
+* **为什么严重**：README、scripts、specs、phase 文档、portfolio/release 命令很丰富，但核心 runtime 其实仍是一个本地 CLI 作业系统。这里不是“写文档不对”，而是**表层广度明显大于底层成熟度**。([GitHub][1])
+* **对 web 产品化的具体影响**：会导致过早承诺产品化节奏。
+* **修复方向**：把 runtime maturity、experimental features、legacy features 分层标记，避免误导。
+
+# 6. 与 DeerFlow 的差距清单
+
+**能力项：server / API surface**
+当前仓库现状：README 明确说“currently no supported HTTP API”，公开入口只有 job CLI；worker 也是本地 subprocess。([GitHub][1])
+DeerFlow 对应能力：有独立 `server.py`，可传 `--host/--port` 启动 API server；README 还给出了 LangGraph API / API Docs 地址，`docs/` 下也有 `API.md` 和 `openapi.json`。([GitHub][21])
+差距判断：**结构性差距，不是功能差距。**
+风险：你现在没有可复用的 server surface，web 化要先补后端平台，而 DeerFlow 至少已经把后端 surface 作为一等公民暴露出来。
+
+**能力项：web UI readiness**
+当前仓库现状：没有受支持的 web surface；目录里也没有与 web 前端对应的公开工程面。([GitHub][1])
+DeerFlow 对应能力：README 明确写有 web UI，支持 `bootstrap` 启 backend + frontend；`web/` 目录是独立 Next.js 工程，`package.json` 中有 `dev/build/start/test` 脚本。([GitHub][12])
+差距判断：**不是“缺页面”，而是缺整套前后端分层。**
+风险：当前仓库即便先画 UI，也会被 runtime/local storage/worker model 反噬。
+
+**能力项：job / runtime maturity**
+当前仓库现状：runtime 是 `SQLite + local filesystem + subprocess worker + heartbeat + stale scan`；恢复逻辑靠 PID/heartbeat 推断。([GitHub][15])
+DeerFlow 对应能力：README 至少公开了 LangGraph server/Studio、LangSmith tracing、以及 Postgres/MongoDB checkpoint saver 的方向和使用方式。([GitHub][12])
+差距判断：**DeerFlow 更接近服务型 runtime；当前仓库仍是脚本型 runtime。**
+风险：当前仓库一旦上多并发，多实例会先在调度和恢复层崩。
+
+**能力项：tool / connector substrate**
+当前仓库现状：phase3 connector 主要是 `web/github/arxiv/files` 的统一包装，web fetch 用本地 scraper，私有知识入口只有本地文件 ingest。([GitHub][6])
+DeerFlow 对应能力：README 明确支持多搜索引擎，`src/` 下有 `crawler/`、`rag/`、`tools/`、`server/` 等模块，`docs/` 还有 `mcp_integrations.md`。([GitHub][12])
+差距判断：**当前仓库更像“把几个工具接起来”；DeerFlow 至少已经把工具层做成平台结构。**
+风险：当前仓库后续接企业知识库、权限、索引时会大面积返工。
+
+**能力项：private knowledge integration**
+当前仓库现状：本地文件 ingest 支持 `.pdf/.md/.txt`，`memory_backend` 固定 sqlite；没有看到独立的私有知识服务面。([GitHub][22])
+DeerFlow 对应能力：`src/rag` 是显式模块，且整体已有 server/web 架构承载知识交互面。([GitHub][23])
+差距判断：**当前仓库只有私有文件“导入能力”，没有企业知识“产品能力”。**
+风险：上 web 后最先爆炸的就是知识接入与权限模型。
+
+**能力项：observability / developer ergonomics**
+当前仓库现状：主要靠 SQLite event、checkpoint JSON、bundle/trace sidecar 和 loguru；我没有看到 server 级 tracing/metrics/export surface。([GitHub][17])
+DeerFlow 对应能力：README 明确支持 LangGraph Studio 调试和 LangSmith tracing，本地 dev 还有 API docs 与 Studio URL。([GitHub][12])
+差距判断：**DeerFlow 更像“可调试系统”，当前仓库更像“可本地排查脚本”。**
+风险：当前仓库一旦线上出长任务问题，定位成本会极高。
+
+**能力项：deployment / DX**
+当前仓库现状：使用 `uv run python main.py ...` 和一组 benchmark scripts；没有 server 部署模型。([GitHub][1])
+DeerFlow 对应能力：README 提供 console UI、web UI、Docker Compose、server host binding、frontend/backend 联启说明；目录里也有 `Dockerfile`、`web/`、`docs/`。([GitHub][12])
+差距判断：**DX 差距明显。**
+风险：当前仓库要进入团队协作或预发环境，需要先补整套运行与部署手册。
+
+**能力项：production hardening**
+当前仓库现状：没有 API/auth/tenant isolation 基座，安全边界主要停留在 candidate 过滤和本地脚本层。([GitHub][1])
+DeerFlow 对应能力：它也**没有资格自称 fully production-ready**，README 明确提醒生产部署要自行补认证，并审查 MCPServer 与 Python Repl 的安全。([GitHub][12])
+差距判断：**两边都没到企业级，但 DeerFlow 明显更接近服务产品形态。**
+风险：当前仓库离上线红线更远。
+
+# 7. 企业产品化 Gap Analysis
+
+* **多用户与多作业：不达标。** 当前 runtime 绑定本地 workspace、SQLite 文件和本地 worker 进程，没有 tenant model、没有 queue ownership、没有多实例调度控制。([GitHub][15])
+* **长时运行与恢复：表面达标实则不达标。** 它有 heartbeat、cancel、retry、stale recovery 这些名词和代码，但 lease 不是原子获取，恢复靠 PID/heartbeat 推断，event/checkpoint 不是事务化，不能算“企业级 resume correctness”。([GitHub][15])
+* **可观测性：不达标。** 我看到的是文件侧车和事件表，不是标准化 metrics/tracing/alerting 体系。([GitHub][17])
+* **安全性：不达标。** `allow/deny domain` 只是 search candidate 过滤；`web_scraper_tool` 直接抓 URL；`code_executor_tool` 直接起 Python 子进程；MCP 支持 `stdio/sse/streamable-http`，但看不到企业级隔离。([GitHub][7])
+* **审计可信度：表面达标实则不达标。** claim graph/review queue/blocked gate 的结构是有的，但判定逻辑只是启发式文本重合与极简 polarity marker。([GitHub][8])
+* **可扩展性：表面达标实则不达标。** 有 connector/policy/capability/memory 等模块名，但主路径仍然很薄，很多抽象本质上是对旧工具的包装。([GitHub][18])
+* **配置治理：表面达标实则不达标。** `Settings` 里 feature flag 很多，但这些 flag 混合了 legacy、benchmark、connector、comparator、memory 等不同层级，没有形成产品级配置域模型。([GitHub][9])
+* **测试与发布工程：不达标。** 有 pytest 和分 phase 回归，但我读到的核心测试仍然偏 schema/happy path，无法给并发、恢复、安全做背书。([GitHub][3])
+* **Web/API 化准备度：不达标。** 不是“差个接口层”，而是 runtime、存储、worker ownership、artifact 存储、认证授权、租户隔离都还没服务化。([GitHub][1])
+
+# 8. 你最不信任的 5 个点
+
+1. **worker 租约 / stale recovery 语义。** 这是我最先推倒重来的地方，因为它直接决定会不会双 worker 跑同一个 job。([GitHub][15])
+2. **event/checkpoint 序号与 append-only 真实性。** 它现在不够原子，也不够不可篡改，不能支撑企业审计。([GitHub][17])
+3. **claim auditing 的“可信度包装”。** 结构很像回事，但底层逻辑只是启发式。我不会让产品团队把这个状态直接展示成“已验证”。([GitHub][8])
+4. **source policy / outbound fetch / code execution / MCP 的安全边界。** 当前边界太松，而且是分散式的。企业环境下这会成为事故入口。([GitHub][7])
+5. **双状态源 + legacy/new runtime 混杂。** 这是后续所有 API/UI 状态错乱、恢复错乱、团队认知错乱的根。([GitHub][2])
+
+# 9. 结论与判定
+
+* **是否可以称为“企业产品级深度研究工具”**：**还不可以。**([GitHub][1])
+
+* **最核心的 3 个阻塞项**：
+
+  1. **runtime substrate 错位**：它还是本地 CLI/subprocess/SQLite/file-path 系统，不是服务型平台。([GitHub][1])
+  2. **并发与恢复正确性不过关**：lease、heartbeat、stale recovery、event/checkpoint sequencing 都不具备企业级强度。([GitHub][15])
+  3. **审计与安全边界名不副实**：claim audit 是启发式，source policy 不是硬安全边界。([GitHub][8])
+
+* **如果要演进成 web 产品，我建议的重构顺序**：
+
+  1. **先重做 job runtime 内核**：统一 canonical state / event log / lease/fencing / scheduler/queue。
+  2. **再替换存储面**：Postgres 管 runtime 与 event，object storage 管 checkpoint/report/snapshot/audit artifacts。
+  3. **再补 server/API/auth/tenant isolation**：这一步完成前不要做正式 web 产品承诺。
+  4. **然后重做 connector 安全边界**：集中 fetch proxy、私网拦截、prompt injection 策略、MCP/tool sandbox。
+  5. **然后升级审计链**：从启发式 claim audit 升级到 span-grounded、citation-grounded 的验证与人工复核流。
+  6. **最后再做 web UI**：让前端消费稳定 API 和稳定 job model，而不是反过来逼后端适配现有脚本结构。([GitHub][15])
+
+你的这两个仓库里，**DeerFlow 明显更接近“可产品化的服务/前后端项目”**，但它自己也还没有到“企业可直接上线”的程度，README 甚至明确提醒生产环境要自行补认证并审查 MCPServer/Python Repl 安全。相比之下，这个目标仓库目前仍主要停留在“研究工程雏形 + 本地 runtime 原型”阶段。这个结论不是不给面子，而是按企业 Gate Review 的标准，代码现实就是这样。([GitHub][12])
+
+[1]: https://github.com/emmmdty/deep-research-agent/tree/main "https://github.com/emmmdty/deep-research-agent/tree/main"
+[2]: https://github.com/emmmdty/deep-research-agent/blob/main/docs/architecture.md "https://github.com/emmmdty/deep-research-agent/blob/main/docs/architecture.md"
+[3]: https://github.com/emmmdty/deep-research-agent/blob/main/pyproject.toml "https://github.com/emmmdty/deep-research-agent/blob/main/pyproject.toml"
+[4]: https://github.com/emmmdty/deep-research-agent/blob/main/services/research_jobs/models.py "deep-research-agent/services/research_jobs/models.py at main · emmmdty/deep-research-agent · GitHub"
+[5]: https://github.com/emmmdty/deep-research-agent/blob/main/workflows/graph.py "deep-research-agent/workflows/graph.py at main · emmmdty/deep-research-agent · GitHub"
+[6]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/connectors/registry.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/connectors/registry.py"
+[7]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/policies/source_policy.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/policies/source_policy.py"
+[8]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/auditor/pipeline.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/auditor/pipeline.py"
+[9]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/configs/settings.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/configs/settings.py"
+[10]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/tests/test_phase2_jobs.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/tests/test_phase2_jobs.py"
+[11]: https://github.com/emmmdty/deep-research-agent/tree/main/memory "https://github.com/emmmdty/deep-research-agent/tree/main/memory"
+[12]: https://github.com/bytedance/deer-flow/tree/main-1.x "https://github.com/bytedance/deer-flow/tree/main-1.x"
+[13]: https://github.com/emmmdty/deep-research-agent/blob/main/main.py "deep-research-agent/main.py at main · emmmdty/deep-research-agent · GitHub"
+[14]: https://github.com/emmmdty/deep-research-agent/tree/main/evaluation "deep-research-agent/evaluation at main · emmmdty/deep-research-agent · GitHub"
+[15]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/services/research_jobs/service.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/services/research_jobs/service.py"
+[16]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/auditor/models.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/auditor/models.py"
+[17]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/services/research_jobs/store.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/services/research_jobs/store.py"
+[18]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/connectors/legacy.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/connectors/legacy.py"
+[19]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/evaluation/llm_judge.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/evaluation/llm_judge.py"
+[20]: https://github.com/emmmdty/deep-research-agent/blob/main/workflows/states.py "deep-research-agent/workflows/states.py at main · emmmdty/deep-research-agent · GitHub"
+[21]: https://raw.githubusercontent.com/bytedance/deer-flow/main-1.x/server.py "https://raw.githubusercontent.com/bytedance/deer-flow/main-1.x/server.py"
+[22]: https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/connectors/files.py "https://raw.githubusercontent.com/emmmdty/deep-research-agent/main/connectors/files.py"
+[23]: https://github.com/bytedance/deer-flow/tree/main-1.x/src "https://github.com/bytedance/deer-flow/tree/main-1.x/src"
