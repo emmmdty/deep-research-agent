@@ -172,7 +172,7 @@ class ResearchJobService:
             next_stage=current_stage,
             state_payload=ResearchState.model_validate(state_payload).model_dump(mode="json"),
         )
-        self.store.save_checkpoint(checkpoint)
+        checkpoint = self.store.save_checkpoint(checkpoint)
         job = self.store.update_job(job_id, active_checkpoint_id=checkpoint.checkpoint_id)
 
         if start_worker:
@@ -236,16 +236,19 @@ class ResearchJobService:
                 self._append_event(updated, "job", "job.needs_review", "缺少可恢复 checkpoint")
                 recovered.append(updated)
                 continue
+            if job.worker_lease_id:
+                self.store.clear_worker(job.job_id, lease_id=job.worker_lease_id)
+                job = self._require_job(job.job_id)
             self._append_event(job, "job", "job.recovered", "检测到 stale job，重新拉起 worker")
             self._spawn_worker_fn(job.job_id)
             recovered.append(self._require_job(job.job_id))
         return recovered
 
-    def run_job(self, job_id: str):
+    def run_job(self, job_id: str, *, worker_lease_id: str | None = None):
         """在当前进程执行 job。"""
         from services.research_jobs.orchestrator import ResearchJobOrchestrator
 
-        orchestrator = ResearchJobOrchestrator(service=self)
+        orchestrator = ResearchJobOrchestrator(service=self, worker_lease_id=worker_lease_id)
         return orchestrator.run(job_id)
 
     def _spawn_worker(self, job_id: str) -> subprocess.Popen:
@@ -280,9 +283,9 @@ class ResearchJobService:
         payload: dict | None = None,
     ) -> JobProgressEvent:
         event = JobProgressEvent(
-            event_id=f"{job.job_id}-event-{self.store.next_event_sequence(job.job_id):04d}",
+            event_id=f"{job.job_id}-event-pending",
             job_id=job.job_id,
-            sequence=self.store.next_event_sequence(job.job_id),
+            sequence=0,
             stage=stage,
             event_type=event_type,
             message=message,

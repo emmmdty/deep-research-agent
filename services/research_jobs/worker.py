@@ -32,7 +32,7 @@ def main() -> None:
         stale_timeout_seconds=args.stale_timeout_seconds,
     )
     lease_id = f"lease-{uuid4().hex[:8]}"
-    service.store.attach_worker(args.job_id, worker_pid=os.getpid(), lease_id=lease_id)
+    service.store.acquire_worker_lease(args.job_id, worker_pid=os.getpid(), lease_id=lease_id)
 
     stop_event = threading.Event()
 
@@ -46,11 +46,11 @@ def main() -> None:
     heartbeat_thread = threading.Thread(target=_heartbeat_loop, daemon=True)
     heartbeat_thread.start()
     try:
-        service.run_job(args.job_id)
+        service.run_job(args.job_id, worker_lease_id=lease_id)
     finally:
         stop_event.set()
         heartbeat_thread.join(timeout=1)
-        service.store.clear_worker(args.job_id)
+        service.store.clear_worker(args.job_id, lease_id=lease_id)
 
 
 if __name__ == "__main__":

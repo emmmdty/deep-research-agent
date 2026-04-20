@@ -36,6 +36,7 @@ class ResearchJobOrchestrator:
         critic_fn: Callable[[dict[str, Any]], dict[str, Any]] = critic_node,
         claim_auditor_fn: Callable[[dict[str, Any]], dict[str, Any]] = claim_auditor_node,
         writer_fn: Callable[[dict[str, Any]], dict[str, Any]] = writer_node,
+        worker_lease_id: str | None = None,
     ) -> None:
         self.service = service
         self.store = service.store
@@ -45,12 +46,14 @@ class ResearchJobOrchestrator:
         self.critic_fn = critic_fn
         self.claim_auditor_fn = claim_auditor_fn
         self.writer_fn = writer_fn
+        self.worker_lease_id = worker_lease_id
 
     def run(self, job_id: str) -> JobRuntimeRecord:
         """执行或恢复指定 job。"""
-        job = self._require_job(job_id)
+        job = self._assert_worker_lease(job_id)
 
         while job.status not in TERMINAL_JOB_STATUSES:
+            job = self._assert_worker_lease(job_id)
             if job.cancel_requested:
                 job = self._mark_cancelled(job, stage=job.current_stage)
                 break
@@ -170,6 +173,11 @@ class ResearchJobOrchestrator:
             raise KeyError(f"未知 job: {job_id}")
         return job
 
+    def _assert_worker_lease(self, job_id: str) -> JobRuntimeRecord:
+        if self.worker_lease_id is None:
+            return self._require_job(job_id)
+        return self.store.assert_worker_lease(job_id, lease_id=self.worker_lease_id)
+
     def _load_state(self, job: JobRuntimeRecord) -> dict[str, Any]:
         job_workspace_dir = str(self.store.job_dir(job.job_id))
         checkpoint_id = job.active_checkpoint_id
@@ -196,6 +204,7 @@ class ResearchJobOrchestrator:
         return ResearchState.model_validate(merged).model_dump(mode="json")
 
     def _sync_job_runtime_fields(self, job: JobRuntimeRecord, state: dict[str, Any]) -> JobRuntimeRecord:
+        self._assert_worker_lease(job.job_id)
         return self.store.update_job(
             job.job_id,
             connector_health=dict(state.get("connector_health") or {}),
@@ -216,12 +225,12 @@ class ResearchJobOrchestrator:
         next_stage: str,
         state: dict[str, Any],
     ) -> JobCheckpoint:
-        sequence = self.store.next_checkpoint_sequence(job.job_id)
+        self._assert_worker_lease(job.job_id)
         checkpoint = JobCheckpoint(
-            checkpoint_id=f"{job.job_id}-checkpoint-{sequence:04d}",
+            checkpoint_id=f"{job.job_id}-checkpoint-pending",
             job_id=job.job_id,
             stage=stage,
-            sequence=sequence,
+            sequence=0,
             loop_count=int(state.get("loop_count", 0)),
             next_stage=next_stage,
             state_payload=state,
@@ -236,11 +245,11 @@ class ResearchJobOrchestrator:
         message: str,
         payload: dict[str, Any] | None = None,
     ) -> JobProgressEvent:
-        sequence = self.store.next_event_sequence(job.job_id)
+        self._assert_worker_lease(job.job_id)
         event = JobProgressEvent(
-            event_id=f"{job.job_id}-event-{sequence:04d}",
+            event_id=f"{job.job_id}-event-pending",
             job_id=job.job_id,
-            sequence=sequence,
+            sequence=0,
             stage=stage,
             event_type=event_type,
             message=message,
@@ -249,6 +258,7 @@ class ResearchJobOrchestrator:
         return self.store.append_event(event)
 
     def _mark_cancelled(self, job: JobRuntimeRecord, *, stage: str) -> JobRuntimeRecord:
+        self._assert_worker_lease(job.job_id)
         cancelled = self.store.update_job_status(
             job.job_id,
             status="cancelled",
@@ -259,6 +269,7 @@ class ResearchJobOrchestrator:
         return cancelled
 
     def _emit_job_artifacts(self, job: JobRuntimeRecord, state: dict[str, Any]) -> JobRuntimeRecord:
+        self._assert_worker_lease(job.job_id)
         report_text = str(state.get("final_report") or "")
         Path(job.report_path).parent.mkdir(parents=True, exist_ok=True)
         Path(job.report_path).write_text(report_text, encoding="utf-8")

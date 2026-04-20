@@ -179,6 +179,151 @@ def test_job_store_persists_jobs_events_and_checkpoints(tmp_path: Path):
     assert latest_checkpoint.next_stage == "collecting"
 
 
+def test_job_store_rejects_second_active_worker_lease(tmp_path: Path):
+    """已有活跃 lease 时，第二个 worker 不应覆盖当前 lease。"""
+    from services.research_jobs.models import JobRuntimeRecord
+    from services.research_jobs.store import ResearchJobStore, WorkerLeaseConflict
+
+    store = ResearchJobStore(workspace_dir=str(tmp_path))
+    payload = _build_runtime_record()
+    payload["worker_pid"] = None
+    payload["worker_lease_id"] = None
+    payload["last_heartbeat_at"] = None
+    store.upsert_job(JobRuntimeRecord.model_validate(payload))
+
+    first = store.acquire_worker_lease(payload["job_id"], worker_pid=111, lease_id="lease-a")
+
+    assert first.worker_lease_id == "lease-a"
+    with pytest.raises(WorkerLeaseConflict):
+        store.acquire_worker_lease(payload["job_id"], worker_pid=222, lease_id="lease-b")
+
+    loaded = store.get_job(payload["job_id"])
+    assert loaded is not None
+    assert loaded.worker_pid == 111
+    assert loaded.worker_lease_id == "lease-a"
+
+
+def test_job_store_only_matching_lease_can_clear_worker(tmp_path: Path):
+    """旧 worker 退出时不能清理新 worker 的 lease。"""
+    from services.research_jobs.models import JobRuntimeRecord
+    from services.research_jobs.store import ResearchJobStore
+
+    store = ResearchJobStore(workspace_dir=str(tmp_path))
+    payload = _build_runtime_record()
+    payload["worker_pid"] = None
+    payload["worker_lease_id"] = None
+    payload["last_heartbeat_at"] = None
+    store.upsert_job(JobRuntimeRecord.model_validate(payload))
+    store.acquire_worker_lease(payload["job_id"], worker_pid=111, lease_id="lease-a")
+
+    mismatch = store.clear_worker(payload["job_id"], lease_id="lease-b")
+
+    assert mismatch.worker_lease_id == "lease-a"
+    cleared = store.clear_worker(payload["job_id"], lease_id="lease-a")
+    assert cleared.worker_pid is None
+    assert cleared.worker_lease_id is None
+
+
+def test_orchestrator_rejects_mismatched_worker_lease(tmp_path: Path):
+    """lease 不匹配的 worker 不应推进 job 阶段。"""
+    from services.research_jobs.orchestrator import ResearchJobOrchestrator
+    from services.research_jobs.service import ResearchJobService
+    from services.research_jobs.store import WorkerLeaseConflict
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="lease fencing", max_loops=1, research_profile="default", start_worker=False)
+    service.store.acquire_worker_lease(job.job_id, worker_pid=111, lease_id="lease-a")
+    orchestrator = ResearchJobOrchestrator(service=service, worker_lease_id="lease-b")
+
+    with pytest.raises(WorkerLeaseConflict):
+        orchestrator.run(job.job_id)
+
+    loaded = service.get(job.job_id)
+    assert loaded is not None
+    assert loaded.status == "created"
+    assert loaded.current_stage == "clarifying"
+
+
+def test_orchestrator_fences_writes_after_worker_loses_lease(tmp_path: Path):
+    """worker 阶段执行中丢失 lease 后，不能继续写 checkpoint / completed event。"""
+    from services.research_jobs.orchestrator import ResearchJobOrchestrator
+    from services.research_jobs.service import ResearchJobService
+    from services.research_jobs.store import WorkerLeaseConflict
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="lease lost during stage", max_loops=1, research_profile="default", start_worker=False)
+    service.store.update_job_status(job.job_id, status="planned", current_stage="planned")
+    service.store.acquire_worker_lease(job.job_id, worker_pid=111, lease_id="lease-a")
+
+    def steal_lease(state):
+        service.store.clear_worker(job.job_id, lease_id="lease-a")
+        service.store.acquire_worker_lease(job.job_id, worker_pid=222, lease_id="lease-b")
+        return {
+            "tasks": [TaskItem(id=1, title="lease", intent="验证 lease fence", query="lease")],
+            "status": "planned",
+        }
+
+    orchestrator = ResearchJobOrchestrator(
+        service=service,
+        worker_lease_id="lease-a",
+        planner_fn=steal_lease,
+    )
+
+    with pytest.raises(WorkerLeaseConflict):
+        orchestrator.run(job.job_id)
+
+    events = service.list_events(job.job_id)
+    assert not any(event.stage == "planned" and event.event_type == "stage.completed" for event in events)
+    loaded = service.get(job.job_id)
+    assert loaded is not None
+    assert loaded.worker_lease_id == "lease-b"
+
+
+def test_job_events_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
+    """event 写入应由 store 分配单调序号，不能覆盖同一 sequence。"""
+    from services.research_jobs.models import JobProgressEvent, JobRuntimeRecord
+    from services.research_jobs.store import ResearchJobStore
+
+    store = ResearchJobStore(workspace_dir=str(tmp_path))
+    job = JobRuntimeRecord.model_validate(_build_runtime_record())
+    store.upsert_job(job)
+    event = JobProgressEvent.model_validate(_build_progress_event())
+    duplicate_sequence = event.model_copy(update={"event_type": "stage.completed"})
+
+    first = store.append_event(event)
+    second = store.append_event(duplicate_sequence)
+    events = store.list_events(job.job_id)
+
+    assert [item.sequence for item in events] == [1, 2]
+    assert first.event_id.endswith("0001")
+    assert second.event_id.endswith("0002")
+    assert [item.event_type for item in events] == ["stage.started", "stage.completed"]
+
+
+def test_job_checkpoints_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
+    """checkpoint 写入应由 store 分配单调序号，不能覆盖同一 sequence。"""
+    from services.research_jobs.models import JobCheckpoint, JobRuntimeRecord
+    from services.research_jobs.store import ResearchJobStore
+
+    store = ResearchJobStore(workspace_dir=str(tmp_path))
+    job = JobRuntimeRecord.model_validate(_build_runtime_record())
+    store.upsert_job(job)
+    checkpoint = JobCheckpoint.model_validate(_build_checkpoint())
+    duplicate_sequence = checkpoint.model_copy(update={"next_stage": "extracting"})
+
+    first = store.save_checkpoint(checkpoint)
+    second = store.save_checkpoint(duplicate_sequence)
+    latest = store.get_latest_checkpoint(job.job_id)
+
+    assert first.sequence == 1
+    assert second.sequence == 2
+    assert latest is not None
+    assert latest.sequence == 2
+    assert latest.next_stage == "extracting"
+    assert (store.checkpoint_dir(job.job_id) / "0001-planned.json").exists()
+    assert (store.checkpoint_dir(job.job_id) / "0002-planned.json").exists()
+
+
 def test_orchestrator_runs_happy_path_and_emits_bundle(tmp_path: Path):
     """orchestrator 应能跑完整 happy path，并输出 report/bundle/trace。"""
     from services.research_jobs.orchestrator import ResearchJobOrchestrator
