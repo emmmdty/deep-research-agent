@@ -201,6 +201,22 @@ class ResearchJobStore:
         jobs = [self._row_to_job(row) for row in rows]
         return [job for job in jobs if job.status in ACTIVE_JOB_STATUSES]
 
+    def get_latest_retry(self, retry_of: str) -> JobRuntimeRecord | None:
+        """返回某个原 job 已派生的最新直接 retry job。"""
+        with self._connect() as conn:
+            row = conn.execute(
+                """
+                SELECT * FROM jobs
+                WHERE retry_of = ?
+                ORDER BY attempt_index DESC, created_at DESC
+                LIMIT 1
+                """,
+                (retry_of,),
+            ).fetchone()
+        if row is None:
+            return None
+        return self._row_to_job(row)
+
     def update_job(self, job_id: str, **fields) -> JobRuntimeRecord:
         current = self.get_job(job_id)
         if current is None:

@@ -15,6 +15,7 @@ phase2 以后，**公开 CLI runtime** 已经切换为 `services/research_jobs/`
 - job 状态、event、checkpoint 存在 `workspace/research_jobs/`
 - runtime worker 通过 store 原子获取 `worker_lease_id`；已有活跃 lease 时，新 worker 不会覆盖当前 owner，worker 退出时也只能清理自己的 lease
 - event 与 checkpoint 由 store 在写入事务中分配单调 sequence，event log 和 checkpoint metadata 不再依赖调用方预先取号，也不允许静默覆盖既有 sequence
+- `cancel` 是幂等请求：已请求取消或已进入终态的 job 不会重复追加 `job.cancel_requested` 事件；`retry` 对同一个直接原 job 采用 create-or-return 语义，避免重复派生 retry job
 - phase3 以后，collecting 阶段通过 `connectors/ + policies/ + snapshot store` 统一治理 `search / fetch / file-ingest`
 - phase4 以后，`extracting` 后新增 `claim_auditing`，公开 runtime 会输出 claim graph、review queue 和 `completed + blocked` 审计门禁结果
 - `workflows/graph.py` 仍保留为 legacy runtime，主要服务 benchmark、comparator 和 hidden `legacy-run`

@@ -13,7 +13,7 @@ from configs.settings import get_settings
 from loguru import logger
 
 from policies.models import SourcePolicyOverrides
-from services.research_jobs.models import JobCheckpoint, JobProgressEvent, JobRuntimeRecord
+from services.research_jobs.models import TERMINAL_JOB_STATUSES, JobCheckpoint, JobProgressEvent, JobRuntimeRecord
 from services.research_jobs.store import ResearchJobStore
 from workflows.states import ResearchState
 
@@ -186,7 +186,9 @@ class ResearchJobService:
         return self.store.list_events(job_id, after_sequence=after_sequence)
 
     def cancel(self, job_id: str) -> JobRuntimeRecord:
-        self._require_job(job_id)
+        job = self._require_job(job_id)
+        if job.status in TERMINAL_JOB_STATUSES or job.cancel_requested:
+            return job
         updated = self.store.update_job(job_id, cancel_requested=True)
         self._append_event(updated, updated.current_stage, "job.cancel_requested", "收到取消请求")
         return updated
@@ -195,6 +197,9 @@ class ResearchJobService:
         job = self._require_job(job_id)
         if job.status not in {"failed", "cancelled", "needs_review"}:
             raise ValueError(f"当前状态不允许 retry: {job.status}")
+        existing_retry = self.store.get_latest_retry(job.job_id)
+        if existing_retry is not None:
+            return existing_retry
         checkpoint = self.store.get_latest_checkpoint(job_id)
         current_stage = checkpoint.next_stage if checkpoint is not None else "clarifying"
         initial_state = checkpoint.state_payload if checkpoint is not None else None
