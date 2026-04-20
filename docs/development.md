@@ -360,6 +360,24 @@ uv run pytest -q tests/test_phase4_auditor.py
 - 但至少有一条关键 claim 未通过审计门禁
 - 报告顶部和 review queue 都应暴露该阻塞事实
 
+## Phase 05 release gate manifest
+
+用于确认发布口径不再只依赖 benchmark 或 LLM judge 分数。
+
+### 配置与评估
+
+- `configs/release_gate.yaml`：按 `runtime_reliability`、`connector_security`、`audit_grounding`、`benchmark_diagnostics`、`docs_surface` 分层列出必需检查。
+- `scripts/release_gate.py`：读取本地 evidence JSON，输出 `passed / blocked` 和缺失项。
+- `scripts/run_portfolio12_release.py`：在 `release_manifest.json` 和 `RESULTS.md` 中写入 `release_gate`。
+
+当前 release gate 是本地 checklist / manifest，不是外部 CI，也不是生产监控。`benchmark_diagnostics` 通过只能说明诊断结果集可复现；若 runtime、connector、audit 或 docs gate 缺失，整体 release gate 仍为 `blocked`。
+
+示例：
+
+```bash
+uv run python scripts/release_gate.py --evidence /path/to/release_evidence.json
+```
+
 ## 代码规范
 
 - **Python**: 3.10+，使用类型注解

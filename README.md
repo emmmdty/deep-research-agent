@@ -87,12 +87,14 @@ uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.m
 ```
 
 `benchmark_summary.json` now exposes two layers:
-- `scorecard`: product-facing 0-100 scores for research reliability, system controllability, report quality, and evaluation reproducibility
+- `scorecard`: display-oriented 0-100 scores for research reliability, system controllability, report quality, and evaluation reproducibility
 - `legacy_metrics`: compatibility aggregates for older fields such as `aspect_coverage`, `citation_accuracy`, and `depth_score`
 - `benchmark_health`: completion, gate pass rate, judge status, and resilience signals for honest experiment reporting
 - Case-study outputs now additionally expose `case_study_strength_score_100`, `first_party_case_coverage_100`, `official_case_ratio_100`, and `case_study_gate_margin_100`
 
-For a release-grade `portfolio12` bundle, prefer `scripts/run_portfolio12_release.py`. The default `--release-mode hybrid` runs live judge on representative topics (`T01,T04,T11`) and keeps the full `portfolio12` benchmark / ablation reproducible; use `--env-file` to load the environment with live judge and search credentials.
+For a reproducible `portfolio12` diagnostics bundle, use `scripts/run_portfolio12_release.py`. The default `--release-mode hybrid` runs live judge on representative topics (`T01,T04,T11`) and keeps the full `portfolio12` benchmark / ablation reproducible; use `--env-file` to load the environment with live judge and search credentials.
+
+Phase 05 adds a local release gate manifest. Benchmark diagnostics are required but not sufficient: the gate also expects runtime recovery, connector security, claim audit grounding, and public-surface documentation checks. This is a local checklist/manifest, not an external CI or production monitoring system.
 
 ## Example Output
 

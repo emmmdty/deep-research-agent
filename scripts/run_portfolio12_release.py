@@ -23,6 +23,7 @@ from scripts.run_benchmark import (
     save_results,
     save_summary,
 )
+from scripts.release_gate import build_release_gate_evidence, evaluate_release_gate
 from scripts.runtime_env import load_runtime_env
 
 
@@ -258,6 +259,13 @@ def _build_release_manifest(
 ) -> dict[str, Any]:
     """生成 release manifest。"""
     settings = get_settings()
+    release_gate = evaluate_release_gate(
+        build_release_gate_evidence(
+            preflight=preflight,
+            full_benchmark_summary=full_benchmark["summary"],
+            full_ablation_summary=full_ablation["summary"],
+        )
+    )
     return {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "git_commit": _current_git_commit(),
@@ -272,6 +280,7 @@ def _build_release_manifest(
         "release_mode": release_mode,
         "live_topic_ids": live_topic_ids,
         "judge_status": "hybrid" if release_mode == "hybrid" else full_benchmark["summary"].get("judge_status", "unknown"),
+        "release_gate": release_gate,
         "preflight": preflight,
         "live_calibration": {
             "benchmark_output_dir": str(output_root / "live_calibration" / "benchmark"),
@@ -322,6 +331,12 @@ def _render_results_markdown(
         f"- Search Backend: `{manifest['env_profile']['search_backend']}`",
         f"- Release Mode: `{manifest['release_mode']}`",
         "",
+        "## Release Gate",
+        "",
+        f"- Status: `{manifest.get('release_gate', {}).get('status', 'unknown')}`",
+        "- Benchmark diagnostics are required but never sufficient for product release.",
+        *_release_gate_category_lines(manifest.get("release_gate", {})),
+        "",
         "## Live Calibration",
         "",
         f"- Topic IDs: `{', '.join(manifest.get('live_topic_ids', []))}`",
@@ -365,6 +380,20 @@ def _render_results_markdown(
         "- LLM-as-Judge 结果受当前 judge 模型版本影响，复现时应保留同一 env profile。",
     ]
     return "\n".join(lines)
+
+
+def _release_gate_category_lines(release_gate: dict[str, Any]) -> list[str]:
+    categories = dict(release_gate.get("categories") or {})
+    lines: list[str] = []
+    for category_name in sorted(categories):
+        category = categories[category_name]
+        passed = category.get("passed_required_check_count", 0)
+        required = category.get("required_check_count", 0)
+        lines.append(
+            f"- {category_name}: `{category.get('status', 'unknown')}` "
+            f"({passed}/{required} required checks)"
+        )
+    return lines
 
 
 def _current_git_commit() -> str:

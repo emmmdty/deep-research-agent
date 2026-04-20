@@ -1,0 +1,30 @@
+version: 1
+notes:
+  - benchmark diagnostics are required but never sufficient for product release
+  - current release gate is a local manifest/checklist, not an external CI system
+checks:
+  - id: runtime-job-recovery
+    category: runtime_reliability
+    required: true
+    command: uv run pytest -q tests/test_phase2_jobs.py
+    description: job lease, checkpoint, event log, cancel/retry, and recovery invariants
+  - id: connector-fetch-security
+    category: connector_security
+    required: true
+    command: uv run pytest -q tests/test_phase3_connectors.py
+    description: connector policy blocks unsafe fetch URLs and preserves snapshot contract
+  - id: audit-grounding
+    category: audit_grounding
+    required: true
+    command: uv run pytest -q tests/test_phase4_auditor.py
+    description: critical claims require grounded evidence edges or blocked review queue
+  - id: benchmark-diagnostics
+    category: benchmark_diagnostics
+    required: true
+    command: uv run python scripts/run_benchmark.py --help
+    description: benchmark/comparator commands remain diagnostic and reproducible
+  - id: docs-public-surface
+    category: docs_surface
+    required: true
+    command: uv run python main.py --help
+    description: docs and CLI keep the current public surface honest and API-free
