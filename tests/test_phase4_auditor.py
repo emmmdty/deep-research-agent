@@ -106,6 +106,77 @@ def test_claim_auditor_builds_blocked_review_queue_for_critical_claim():
     assert result["claims"][0].placeholder is False
     assert result["claims"][0].status in {"contradicted", "unsupported", "unverifiable"}
     assert result["claim_support_edges"]
+    assert result["claim_support_edges"][0].source_id == "source-1"
+    assert result["claim_support_edges"][0].snapshot_id == "snapshot-1"
+    assert result["claim_support_edges"][0].locator == {"kind": "snippet", "citation_id": 1}
+    assert result["claim_support_edges"][0].grounding_status == "grounded"
+
+
+def test_claim_auditor_blocks_supported_critical_claim_without_snapshot_grounding():
+    """看似 supported 但缺少 snapshot grounding 的 critical claim 必须 blocked。"""
+    from auditor.pipeline import claim_auditor_node
+
+    result = claim_auditor_node(
+        {
+            "research_topic": "LangGraph 是什么",
+            "tasks": [
+                TaskItem(
+                    id=1,
+                    title="定义",
+                    intent="解释概念",
+                    query="LangGraph 是什么",
+                    status="completed",
+                )
+            ],
+            "task_summaries": ["### 核心结论\n\nLangGraph 是一个支持状态化 agent 的框架。[1]"],
+            "evidence_notes": [
+                EvidenceNote(
+                    task_id=1,
+                    task_title="定义",
+                    query="LangGraph 是什么",
+                    summary="### 核心结论\n\nLangGraph 是一个支持状态化 agent 的框架。[1]",
+                    source_ids=[1],
+                    selected_source_ids=[1],
+                    claim_count=1,
+                )
+            ],
+            "sources_gathered": [
+                SourceRecord(
+                    citation_id=1,
+                    source_id="source-1",
+                    source_type="web",
+                    query="LangGraph 是什么",
+                    title="LangGraph Docs",
+                    canonical_uri="https://docs.langchain.com/langgraph",
+                    url="https://docs.langchain.com/langgraph",
+                    snippet="LangGraph is a framework for building stateful agents.",
+                    snapshot_ref="",
+                    task_title="定义",
+                    selected=True,
+                    trust_tier=5,
+                )
+            ],
+            "evidence_fragments": [
+                {
+                    "evidence_id": "evidence-1",
+                    "snapshot_id": "",
+                    "source_id": "source-1",
+                    "locator": {"kind": "snippet", "citation_id": 1},
+                    "excerpt": "LangGraph is a framework for building stateful agents.",
+                    "extraction_method": "source_snippet",
+                }
+            ],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert result["audit_gate_status"] == "blocked"
+    assert result["blocked_critical_claim_count"] == 1
+    assert result["claims"][0].status == "unverifiable"
+    assert result["claim_support_edges"][0].relation == "supports"
+    assert result["claim_support_edges"][0].grounding_status == "missing_snapshot"
+    assert result["critical_claim_review_queue"][0].reason == "critical_claim_unverifiable"
+    assert result["critical_claim_review_queue"][0].edge_ids == ["edge-1"]
 
 
 def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_path: Path):
@@ -327,6 +398,10 @@ def test_build_report_bundle_preserves_audited_claim_graph():
                 "relation": "contradicts",
                 "confidence": 0.95,
                 "notes": "方向相反。",
+                "source_id": "source-1",
+                "snapshot_id": "snapshot-real-1",
+                "locator": {"kind": "snippet"},
+                "grounding_status": "grounded",
             }
         ],
         "conflict_sets": [
@@ -355,7 +430,12 @@ def test_build_report_bundle_preserves_audited_claim_graph():
     assert bundle["audit_summary"]["gate_status"] == "blocked"
     assert bundle["claims"][0]["placeholder"] is False
     assert bundle["claim_support_edges"][0]["relation"] == "contradicts"
+    assert bundle["claim_support_edges"][0]["snapshot_id"] == "snapshot-real-1"
     assert bundle["conflict_sets"][0]["conflict_id"] == "conflict-1"
+
+    from artifacts.schemas import validate_instance
+
+    validate_instance("report-bundle", bundle)
 
 
 def test_phase4_metrics_helpers_use_claim_graph():

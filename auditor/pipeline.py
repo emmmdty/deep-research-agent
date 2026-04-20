@@ -22,6 +22,7 @@ from workflows.states import EvidenceNote, SourceRecord, TaskItem
 _CRITICAL_HEADING = "核心结论"
 _NEGATIVE_MARKERS = ("不", "不是", "不能", "未", "无", "没有", "并非", "does not", "not ", "no ")
 _POSITIVE_MARKERS = ("支持", "可以", "能够", "是", "supports", "support", "stateful", "framework")
+_GROUNDED = "grounded"
 
 
 def claim_auditor_node(state: dict) -> dict:
@@ -118,7 +119,7 @@ def claim_auditor_node(state: dict) -> dict:
                     )
                 )
 
-            if any(edge.relation == "contradicts" for edge in claim_edges):
+            if any(edge.relation == "contradicts" and _is_grounded_claim_edge(edge) for edge in claim_edges):
                 conflict_counter += 1
                 conflicts.append(
                     ConflictSetRecord(
@@ -240,13 +241,18 @@ def _link_claim_to_evidence(
         relation, confidence, notes = _classify_claim_relation(claim.text, fragment.excerpt)
         if relation == "context_only" and not _has_any_topic_overlap(claim.text, fragment.excerpt):
             continue
+        grounding_status = _fragment_grounding_status(fragment)
         edges.append(
             ClaimSupportEdgeRecord(
                 edge_id=f"edge-{next_index}",
                 claim_id=claim.claim_id,
                 evidence_id=fragment.evidence_id,
+                source_id=fragment.source_id,
+                snapshot_id=fragment.snapshot_id,
+                locator=dict(fragment.locator),
                 relation=relation,
                 confidence=confidence,
+                grounding_status=grounding_status,
                 notes=notes,
             )
         )
@@ -286,7 +292,10 @@ def _claim_status_from_edges(
 ) -> tuple[str, str]:
     if not edges:
         return ("unsupported", "high") if criticality == "high" else ("unverifiable", "high")
-    relations = {edge.relation for edge in edges}
+    grounded_edges = [edge for edge in edges if _is_grounded_claim_edge(edge)]
+    if not grounded_edges:
+        return "unverifiable", "high"
+    relations = {edge.relation for edge in grounded_edges}
     if "contradicts" in relations:
         return "contradicted", "low"
     if "supports" in relations:
@@ -322,6 +331,22 @@ def _review_reason_for_status(status: str) -> str:
         "unverifiable": "critical_claim_unverifiable",
     }
     return mapping.get(status, "critical_claim_blocked")
+
+
+def _fragment_grounding_status(fragment: EvidenceFragmentRecord) -> str:
+    if not fragment.source_id.strip():
+        return "missing_source"
+    if not fragment.snapshot_id.strip():
+        return "missing_snapshot"
+    if not fragment.locator:
+        return "missing_locator"
+    if not fragment.excerpt.strip():
+        return "missing_excerpt"
+    return _GROUNDED
+
+
+def _is_grounded_claim_edge(edge: ClaimSupportEdgeRecord) -> bool:
+    return edge.grounding_status == _GROUNDED and edge.relation != "context_only"
 
 
 def _normalize_text(text: str) -> str:
