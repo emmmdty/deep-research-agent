@@ -12,6 +12,70 @@ from research_policy import aspect_hits_in_text, normalize_text
 from workflows.states import EvidenceNote, MemoryStats, ReportArtifact, RunMetrics, SourceRecord, VerificationRecord
 
 
+def critical_claim_support_precision(report_artifact: ReportArtifact | None) -> float | None:
+    """统计关键 claim 中真正被支撑的比例。"""
+    claims = _artifact_items(report_artifact, "claims")
+    if not claims:
+        return None
+    critical_claims = [claim for claim in claims if _item_value(claim, "criticality") == "high"]
+    if not critical_claims:
+        return None
+    supported = sum(
+        1
+        for claim in critical_claims
+        if _item_value(claim, "status") in {"supported", "partially_supported"}
+    )
+    return round(supported / len(critical_claims), 3)
+
+
+def unsupported_critical_claim_leakage(report_artifact: ReportArtifact | None) -> float | None:
+    """统计关键 claim 中未通过审计门禁的泄漏比例。"""
+    claims = _artifact_items(report_artifact, "claims")
+    if not claims:
+        return None
+    critical_claims = [claim for claim in claims if _item_value(claim, "criticality") == "high"]
+    if not critical_claims:
+        return None
+    blocked = sum(
+        1
+        for claim in critical_claims
+        if _item_value(claim, "status") in {"unsupported", "unverifiable", "contradicted"}
+    )
+    return round(blocked / len(critical_claims), 3)
+
+
+def provenance_completeness(report_artifact: ReportArtifact | None) -> float | None:
+    """统计 claim graph 中 claim 是否完整链接到 evidence。"""
+    claims = _artifact_items(report_artifact, "claims")
+    if not claims:
+        return None
+    complete = 0
+    for claim in claims:
+        evidence_ids = list(_item_value(claim, "evidence_ids", []))
+        if evidence_ids:
+            complete += 1
+    return round(complete / len(claims), 3)
+
+
+def conflict_detection_recall(report_artifact: ReportArtifact | None) -> float | None:
+    """粗略估算冲突检测召回。"""
+    claims = _artifact_items(report_artifact, "claims")
+    conflicts = _artifact_items(report_artifact, "conflict_sets")
+    if not claims:
+        return None
+    contradicted_claim_ids = {
+        str(_item_value(claim, "claim_id"))
+        for claim in claims
+        if _item_value(claim, "status") == "contradicted"
+    }
+    if not contradicted_claim_ids:
+        return None
+    detected_ids: set[str] = set()
+    for conflict in conflicts:
+        detected_ids.update(str(claim_id) for claim_id in _item_value(conflict, "claim_ids", []))
+    return round(len(contradicted_claim_ids & detected_ids) / len(contradicted_claim_ids), 3)
+
+
 def citation_accuracy(report: str) -> float:
     """计算引用覆盖率——带引用的正文段落占比。"""
     if not report:
@@ -326,6 +390,10 @@ def evaluate_report(
     novelty_score = evidence_novelty_score(memory_stats)
     support_specificity = support_specificity_score(expected_aspects, notes, source_records)
     recovery_resilience = recovery_resilience_score(runtime_metrics, quality_gate_status=quality_gate_status)
+    claim_support_precision = critical_claim_support_precision(report_artifact)
+    critical_claim_leakage = unsupported_critical_claim_leakage(report_artifact)
+    claim_provenance = provenance_completeness(report_artifact)
+    conflict_recall = conflict_detection_recall(report_artifact)
 
     result = {
         "citation_accuracy": cit_acc,
@@ -357,6 +425,10 @@ def evaluate_report(
         "evidence_novelty_score_100": novelty_score,
         "support_specificity_score_100": support_specificity,
         "recovery_resilience_score_100": recovery_resilience,
+        "critical_claim_support_precision": claim_support_precision,
+        "unsupported_critical_claim_leakage": critical_claim_leakage,
+        "provenance_completeness": claim_provenance,
+        "conflict_detection_recall": conflict_recall,
         **depth,
     }
     if quality_gate_status is not None:
@@ -379,6 +451,18 @@ def evaluate_report(
     )
 
     return result
+
+
+def _artifact_items(report_artifact: ReportArtifact | None, field_name: str) -> list:
+    if report_artifact is None:
+        return []
+    return list(getattr(report_artifact, field_name, []) or [])
+
+
+def _item_value(item, field_name: str, default=None):
+    if isinstance(item, dict):
+        return item.get(field_name, default)
+    return getattr(item, field_name, default)
 
 
 def high_trust_aspect_score(

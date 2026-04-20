@@ -1,0 +1,365 @@
+"""Phase 02 job orchestrator、runtime contracts 与存储回归测试。"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+from jsonschema import ValidationError
+
+from workflows.states import CriticFeedback, EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
+
+
+PHASE2_SCHEMA_NAMES = [
+    "job-runtime-record",
+    "job-progress-event",
+    "job-checkpoint",
+]
+
+
+def _build_runtime_record() -> dict:
+    return {
+        "job_id": "job-phase2-001",
+        "topic": "可信深度研究 app",
+        "status": "collecting",
+        "current_stage": "collecting",
+        "created_at": "2026-04-09T00:00:00+00:00",
+        "updated_at": "2026-04-09T00:00:10+00:00",
+        "attempt_index": 1,
+        "retry_of": None,
+        "cancel_requested": False,
+        "worker_pid": 12345,
+        "worker_lease_id": "lease-001",
+        "last_heartbeat_at": "2026-04-09T00:00:10+00:00",
+        "active_checkpoint_id": "checkpoint-001",
+        "report_path": "workspace/research_jobs/job-phase2-001/report.md",
+        "report_bundle_path": "workspace/research_jobs/job-phase2-001/bundle/report_bundle.json",
+        "trace_path": "workspace/research_jobs/job-phase2-001/bundle/trace.jsonl",
+        "runtime_path": "orchestrator-v1",
+        "source_profile": "trusted-web",
+        "budget": {
+            "max_candidates_per_connector": 4,
+            "max_fetches_per_task": 3,
+            "max_total_fetches": 8,
+        },
+        "policy_overrides": {"allow_domains": ["docs.langchain.com"]},
+        "connector_health": {
+            "open_web": {
+                "connector_name": "open_web",
+                "search_attempts": 1,
+                "search_successes": 1,
+                "fetch_attempts": 1,
+                "fetch_successes": 1,
+                "policy_blocked": 0,
+                "error_count": 0,
+                "last_error": None,
+            }
+        },
+        "audit_gate_status": "unchecked",
+        "critical_claim_count": 0,
+        "blocked_critical_claim_count": 0,
+        "audit_graph_path": "workspace/research_jobs/job-phase2-001/audit/claim_graph.json",
+        "review_queue_path": "workspace/research_jobs/job-phase2-001/audit/review_queue.json",
+        "error": None,
+        "metadata": {"research_profile": "default", "source_profile": "default"},
+    }
+
+
+def _build_progress_event() -> dict:
+    return {
+        "event_id": "event-001",
+        "job_id": "job-phase2-001",
+        "sequence": 1,
+        "stage": "collecting",
+        "event_type": "stage.started",
+        "timestamp": "2026-04-09T00:00:10+00:00",
+        "message": "开始 collecting 阶段",
+        "payload": {"pending_tasks": 1},
+    }
+
+
+def _build_checkpoint() -> dict:
+    return {
+        "checkpoint_id": "checkpoint-001",
+        "job_id": "job-phase2-001",
+        "stage": "planned",
+        "sequence": 1,
+        "loop_count": 0,
+        "created_at": "2026-04-09T00:00:10+00:00",
+        "next_stage": "collecting",
+        "state_payload": {
+            "research_topic": "可信深度研究 app",
+            "research_profile": "default",
+            "tasks": [
+                {
+                    "id": 1,
+                    "title": "梳理目标",
+                    "intent": "确认当前目标",
+                    "query": "可信深度研究 app",
+                    "status": "pending",
+                }
+            ],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "evidence_notes": [],
+            "evidence_units": [],
+            "evidence_clusters": [],
+            "verification_records": [],
+            "available_capabilities": [],
+            "capability_plan": {},
+            "tool_invocations": [],
+            "coverage_status": {},
+            "loop_count": 0,
+            "max_loops": 2,
+            "quality_gate_status": "unchecked",
+            "quality_gate_fail_reason": "",
+            "status": "planned",
+            "error": None,
+            "pending_follow_up_queries": [],
+        },
+    }
+
+
+@pytest.mark.parametrize("schema_name", PHASE2_SCHEMA_NAMES)
+def test_phase2_runtime_schemas_are_loadable(schema_name: str):
+    """Phase 02 runtime schema 应存在且可加载。"""
+    from artifacts.schemas import load_schema
+
+    schema = load_schema(schema_name)
+
+    assert schema["$schema"] == "https://json-schema.org/draft/2020-12/schema"
+    assert schema["type"] == "object"
+
+
+def test_phase2_runtime_schema_validation():
+    """Phase 02 runtime fixtures 应通过 schema 校验。"""
+    from artifacts.schemas import validate_instance
+
+    validate_instance("job-runtime-record", _build_runtime_record())
+    validate_instance("job-progress-event", _build_progress_event())
+    validate_instance("job-checkpoint", _build_checkpoint())
+
+
+def test_phase2_checkpoint_schema_rejects_missing_state_payload():
+    """job checkpoint 缺少 state_payload 时应校验失败。"""
+    from artifacts.schemas import validate_instance
+
+    payload = _build_checkpoint()
+    payload.pop("state_payload")
+
+    with pytest.raises(ValidationError):
+        validate_instance("job-checkpoint", payload)
+
+
+def test_job_store_persists_jobs_events_and_checkpoints(tmp_path: Path):
+    """job store 应持久化 runtime record、event 与 checkpoint。"""
+    from services.research_jobs.models import JobCheckpoint, JobProgressEvent, JobRuntimeRecord
+    from services.research_jobs.store import ResearchJobStore
+
+    store = ResearchJobStore(workspace_dir=str(tmp_path))
+    job = JobRuntimeRecord.model_validate(_build_runtime_record())
+    event = JobProgressEvent.model_validate(_build_progress_event())
+    checkpoint = JobCheckpoint.model_validate(_build_checkpoint())
+
+    store.upsert_job(job)
+    store.append_event(event)
+    store.save_checkpoint(checkpoint)
+
+    loaded_job = store.get_job(job.job_id)
+    loaded_events = store.list_events(job.job_id)
+    latest_checkpoint = store.get_latest_checkpoint(job.job_id)
+
+    assert loaded_job is not None
+    assert loaded_job.runtime_path == "orchestrator-v1"
+    assert loaded_job.source_profile == "trusted-web"
+    assert len(loaded_events) == 1
+    assert loaded_events[0].event_type == "stage.started"
+    assert latest_checkpoint is not None
+    assert latest_checkpoint.next_stage == "collecting"
+
+
+def test_orchestrator_runs_happy_path_and_emits_bundle(tmp_path: Path):
+    """orchestrator 应能跑完整 happy path，并输出 report/bundle/trace。"""
+    from services.research_jobs.orchestrator import ResearchJobOrchestrator
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 happy path", max_loops=2, research_profile="default", start_worker=False)
+
+    source = SourceRecord(
+        citation_id=1,
+        source_type="web",
+        query="phase2 happy path",
+        title="可信深度研究 app",
+        url="https://example.com/phase2",
+        snippet="phase2 需要可恢复的 job orchestrator。",
+        selected=True,
+        trust_tier=4,
+    )
+
+    orchestrator = ResearchJobOrchestrator(
+        service=service,
+        planner_fn=lambda state: {
+            "tasks": [TaskItem(id=1, title="拆解任务", intent="规划", query="phase2 happy path")],
+            "status": "planned",
+        },
+        collect_step_fn=lambda state: (
+            {
+                "tasks": [
+                    TaskItem(
+                        id=1,
+                        title="拆解任务",
+                        intent="规划",
+                        query="phase2 happy path",
+                        status="completed",
+                        summary="phase2 需要 job orchestrator。[1]",
+                        sources="[1]",
+                    )
+                ],
+                "task_summaries": ["phase2 需要 job orchestrator。[1]"],
+                "sources_gathered": [source],
+                "evidence_notes": [],
+                "status": "researched",
+            },
+            False,
+        ),
+        verifier_fn=lambda state: {
+            "evidence_units": [],
+            "evidence_clusters": [],
+            "verification_records": [],
+            "memory_stats": state.get("memory_stats"),
+            "run_metrics": state.get("run_metrics"),
+            "status": "verified",
+        },
+        critic_fn=lambda state: {
+            "critic_feedback": CriticFeedback(
+                quality_score=8,
+                is_sufficient=True,
+                gaps=[],
+                follow_up_queries=[],
+                feedback="已足够",
+            ),
+            "loop_count": 1,
+            "run_metrics": RunMetrics(status="reviewed"),
+            "status": "reviewed",
+        },
+        writer_fn=lambda state: {
+            "final_report": "# 报告\n\nphase2 需要 job orchestrator。[1]",
+            "report_artifact": ReportArtifact(
+                topic=state["research_topic"],
+                report="# 报告\n\nphase2 需要 job orchestrator。[1]",
+                citations=[source],
+                metrics=RunMetrics(status="completed"),
+            ),
+            "status": "completed",
+        },
+    )
+
+    final_job = orchestrator.run(job.job_id)
+
+    assert final_job.status == "completed"
+    assert Path(final_job.report_path).exists()
+    assert Path(final_job.report_bundle_path).exists()
+    assert Path(final_job.trace_path).exists()
+
+    bundle = json.loads(Path(final_job.report_bundle_path).read_text(encoding="utf-8"))
+    from artifacts.schemas import validate_instance
+
+    validate_instance("report-bundle", bundle)
+    assert bundle["job"]["runtime_path"] == "orchestrator-v1"
+
+
+def test_job_service_cancel_and_retry_flow(tmp_path: Path):
+    """service 应支持 cancel 请求与基于失败 job 的 retry。"""
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 retry", max_loops=2, research_profile="default", start_worker=False)
+
+    cancelled = service.cancel(job.job_id)
+    service.store.update_job_status(job.job_id, status="failed", error="测试失败")
+    retried = service.retry(job.job_id, start_worker=False)
+
+    assert cancelled.cancel_requested is True
+    assert retried.retry_of == job.job_id
+    assert retried.attempt_index == 2
+
+
+def test_phase2_nodes_accept_checkpoint_serialized_payloads(tmp_path: Path, monkeypatch):
+    """verifier / critic / writer 应接受 checkpoint 恢复后的 dict payload。"""
+    from agents.critic import critic_node
+    from agents.verifier import verifier_node
+    from agents.writer import writer_node
+
+    settings = type("Settings", (), {"workspace_dir": str(tmp_path / "workspace")})()
+    monkeypatch.setattr("agents.verifier.get_settings", lambda: settings)
+
+    source = SourceRecord(
+        citation_id=1,
+        source_type="web",
+        query="phase2 checkpoint payload",
+        title="可信深度研究 app",
+        url="https://example.com/phase2",
+        snippet="phase2 需要 job orchestrator。",
+        selected=True,
+        trust_tier=4,
+    )
+    note = EvidenceNote(
+        task_id=1,
+        task_title="验证 checkpoint",
+        query="phase2 checkpoint payload",
+        summary="phase2 需要 job orchestrator。[1]",
+        source_ids=[1],
+        selected_source_ids=[1],
+    )
+    task = TaskItem(
+        id=1,
+        title="验证 checkpoint",
+        intent="验证序列化恢复",
+        query="phase2 checkpoint payload",
+        status="completed",
+    )
+
+    verifier_result = verifier_node(
+        {
+            "research_topic": "phase2 checkpoint payload",
+            "ablation_variant": None,
+            "sources_gathered": [source.model_dump(mode="json")],
+            "evidence_notes": [note.model_dump(mode="json")],
+            "run_metrics": RunMetrics().model_dump(mode="json"),
+        }
+    )
+    critic_result = critic_node(
+        {
+            "research_topic": "phase2 checkpoint payload",
+            "research_profile": "benchmark",
+            "ablation_variant": None,
+            "task_summaries": ["phase2 需要 job orchestrator。[1]"],
+            "sources_gathered": [source.model_dump(mode="json")],
+            "tasks": [task.model_dump(mode="json")],
+            "memory_stats": verifier_result["memory_stats"],
+            "loop_count": 0,
+            "max_loops": 2,
+            "run_metrics": RunMetrics().model_dump(mode="json"),
+        }
+    )
+    writer_result = writer_node(
+        {
+            "research_topic": "phase2 checkpoint payload",
+            "research_profile": "benchmark",
+            "tasks": [task.model_dump(mode="json")],
+            "task_summaries": ["phase2 需要 job orchestrator。[1]"],
+            "sources_gathered": [source.model_dump(mode="json")],
+            "evidence_notes": [note.model_dump(mode="json")],
+            "evidence_units": verifier_result["evidence_units"],
+            "evidence_clusters": verifier_result["evidence_clusters"],
+            "verification_records": verifier_result["verification_records"],
+            "memory_stats": verifier_result["memory_stats"],
+            "run_metrics": RunMetrics().model_dump(mode="json"),
+        }
+    )
+
+    assert verifier_result["status"] == "verified"
+    assert critic_result["status"] == "reviewed"
+    assert writer_result["status"] == "completed"

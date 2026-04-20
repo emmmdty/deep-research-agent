@@ -7,6 +7,7 @@ import re
 
 from loguru import logger
 
+from auditor.models import EvidenceFragmentRecord
 from configs.settings import get_settings
 from memory.evidence_store import EvidenceStore
 from workflows.states import (
@@ -25,8 +26,14 @@ def verifier_node(state: dict) -> dict:
     settings = get_settings()
     topic = state["research_topic"]
     ablation_variant = state.get("ablation_variant")
-    sources: list[SourceRecord] = list(state.get("sources_gathered", []))
-    notes: list[EvidenceNote] = list(state.get("evidence_notes", []))
+    sources: list[SourceRecord] = [
+        source if isinstance(source, SourceRecord) else SourceRecord.model_validate(source)
+        for source in state.get("sources_gathered", [])
+    ]
+    notes: list[EvidenceNote] = [
+        note if isinstance(note, EvidenceNote) else EvidenceNote.model_validate(note)
+        for note in state.get("evidence_notes", [])
+    ]
     run_metrics = state.get("run_metrics")
     if not isinstance(run_metrics, RunMetrics):
         run_metrics = RunMetrics.model_validate(run_metrics or {})
@@ -43,6 +50,7 @@ def verifier_node(state: dict) -> dict:
         }
 
     evidence_units = _build_evidence_units(sources)
+    evidence_fragments = _build_evidence_fragments(sources)
     clusters = _build_clusters(evidence_units)
     consistency_score, conflict_count = _entity_consistency(topic, sources)
     verification_records = _build_verification_records(notes, sources, conflict_count)
@@ -75,6 +83,7 @@ def verifier_node(state: dict) -> dict:
 
     return {
         "evidence_units": evidence_units,
+        "evidence_fragments": evidence_fragments,
         "evidence_clusters": clusters,
         "verification_records": verification_records,
         "memory_stats": memory_stats,
@@ -96,6 +105,7 @@ def _build_evidence_units(sources: list[SourceRecord]) -> list[EvidenceUnit]:
                 claim=claim,
                 snippet=source.snippet,
                 source_id=source.citation_id,
+                snapshot_ref=source.snapshot_ref,
                 source_type=source.source_type,
                 task_title=source.task_title,
                 url=source.url,
@@ -104,6 +114,24 @@ def _build_evidence_units(sources: list[SourceRecord]) -> list[EvidenceUnit]:
             )
         )
     return units
+
+
+def _build_evidence_fragments(sources: list[SourceRecord]) -> list[EvidenceFragmentRecord]:
+    fragments: list[EvidenceFragmentRecord] = []
+    for source in sources:
+        if not source.selected:
+            continue
+        fragments.append(
+            EvidenceFragmentRecord(
+                evidence_id=f"evidence-{source.citation_id}",
+                snapshot_id=source.snapshot_ref or f"snapshot-{source.citation_id}",
+                source_id=source.source_id or f"source-{source.citation_id}",
+                locator={"kind": "snippet", "citation_id": source.citation_id},
+                excerpt=source.snippet or source.title,
+                extraction_method="source_snippet",
+            )
+        )
+    return fragments
 
 
 def _build_clusters(evidence_units: list[EvidenceUnit]) -> list[EvidenceCluster]:

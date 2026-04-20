@@ -115,9 +115,9 @@ def test_researcher_node_selects_sources_and_tracks_rejections_for_benchmark(mon
         }
     )
 
-    assert len(result["sources_gathered"]) == 3
-    assert sum(1 for source in result["sources_gathered"] if source.selected) == 2
-    assert sum(1 for source in result["sources_gathered"] if not source.selected) == 1
+    assert len(result["sources_gathered"]) == 2
+    assert all(source.selected for source in result["sources_gathered"])
+    assert all(source.snapshot_ref for source in result["sources_gathered"])
     assert result["run_metrics"].selected_sources == 2
     assert result["run_metrics"].rejected_sources == 1
     assert result["evidence_notes"][0].selected_source_ids == [1, 2]

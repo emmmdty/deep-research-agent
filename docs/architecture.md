@@ -1,8 +1,23 @@
 # Deep Research Agent 架构设计文档
 
+> 本文档描述的是**当前仓库已落地的 runtime 架构事实**，用于帮助维护 legacy 实现。
+> 目标产品路线、迁移边界与未来架构决策请看：
+> `AGENTS.md`、`PLANS.md`、`specs/phase-*.md`、`docs/adr/adr-*.md`。
+> 当前不要把本文档误读为未来产品架构。
+
 ## 系统架构
 
 Deep Research Agent 是一个基于 LangGraph 的多智能体深度研究系统，采用 **Supervisor + Verifier** 模式协调多个专业 Agent 完成端到端的研究任务。
+
+phase2 以后，**公开 CLI runtime** 已经切换为 `services/research_jobs/` 下的确定性 job orchestrator：
+
+- `main.py submit/status/watch/cancel/retry` 是当前公开入口
+- job 状态、event、checkpoint 存在 `workspace/research_jobs/`
+- phase3 以后，collecting 阶段通过 `connectors/ + policies/ + snapshot store` 统一治理 `search / fetch / file-ingest`
+- phase4 以后，`extracting` 后新增 `claim_auditing`，公开 runtime 会输出 claim graph、review queue 和 `completed + blocked` 审计门禁结果
+- `workflows/graph.py` 仍保留为 legacy runtime，主要服务 benchmark、comparator 和 hidden `legacy-run`
+
+因此，本文档中的多智能体图描述的是**当前仓库仍然存在的 legacy 工作流事实**，不是公开 CLI 的顶层运行时边界。
 
 ## 工作流
 
@@ -113,31 +128,70 @@ benchmark runner 不再只输出容易落成 `0/1` 的传统字段；当前 summ
 MiniMax 等模型可能在输出中包含 `<think>` 思维链标签。
 `llm/clean.py` 提供统一清洗，所有 Agent 节点在处理 LLM 响应时自动调用。
 
-### 8. 多源研究与证据模型
+### 8. Phase 03 connector substrate 与证据模型
 
-Researcher 不再只拼接单一搜索文本，而是按来源类型收集结构化证据，并在 benchmark profile 下做来源筛选与可信度分层：
+phase3 以后，公开 runtime 的 collecting 路径不再直接把搜索候选塞进 `SourceRecord`。统一链路变成：
+
+`capability planning -> connector search -> source policy -> budget guardrails -> fetch/file-ingest -> snapshot store -> SourceRecord`
+
+这意味着：
+
+- `SourceRecord` 代表的是**已抓取文档**，不是搜索结果壳
+- `sources_gathered` 中的公开 runtime 文档都必须带 `snapshot_ref`
+- domain allow / deny、source profile、per-job fetch budget 会先于 verifier 生效
+- legacy `tools/*.py` 仍存在，但在 phase3 公开路径中只通过 adapter 使用
+
+当前公开 runtime 相关组件如下：
 
 | 组件 | 用途 | 主要产物 |
 |------|------|----------|
-| `web_search` | 通用网页搜索 | `SourceRecord(source_type="web")` |
-| `github_search` | GitHub 仓库/代码线索 | `SourceRecord(source_type="github")` |
-| `arxiv_search` | 论文搜索 | `SourceRecord(source_type="arxiv")` |
+| `connectors/registry.py` | 统一 search / fetch / file-ingest 分发 | `SearchResultItem`、fetched document |
+| `policies/source_policy.py` | source profile、domain allow / deny、auth_scope 约束 | 允许 / 拒绝决策 |
+| `policies/budget_guardrails.py` | 每 job 抓取预算 | fetch permit / rejection |
+| `connectors/snapshot_store.py` | snapshot 持久化、hash、canonical URI | `SourceSnapshot` manifest + raw text |
+| `connectors/legacy.py` | 兼容现有 `tools/*.py` | connector adapter |
 | `verifier` | 证据聚类、实体一致性、持久化记忆 | `MemoryStats` |
 | `writer` | 统一引用编号与参考来源表 | `ReportArtifact` |
 | `cost_tracker` | 记录 LLM / 搜索调用 | `RunMetrics` |
 
 核心状态对象包括：
-- `SourceRecord`：标题、URL、来源类型、查询、可信度与筛选结果
+- `SourceRecord`：已抓取文档的标题、canonical URI、`snapshot_ref`、`auth_scope`、freshness metadata
 - `EvidenceNote`：每轮研究总结及支撑来源编号
+- `source_snapshots`：runtime 中已经落盘的 snapshot manifests
 - `EvidenceUnit / EvidenceCluster / VerificationRecord / MemoryStats`
 - `RunMetrics`：耗时、LLM 调用、搜索调用、skill/MCP 激活与工具成功率
 - `ReportArtifact`：最终报告、引用表、证据表、验证记录与运行指标
+
+### 9. Phase 04 claim-level audit pipeline
+
+phase4 以后，公开 runtime 的可信边界不再停留在 `EvidenceUnit / VerificationRecord`。新增的公开事实是：
+
+- `verifier` 会先产出 `EvidenceFragment`
+- `claim_auditing` 会从 `EvidenceNote / task_summaries` 抽取 claim
+- claim graph 由以下对象组成：
+  - `Claim`
+  - `ClaimSupportEdge`
+  - `ConflictSet`
+  - `CriticalClaimReviewItem`
+- 关键 claim 未通过审计时，job 不会伪装成 fully-passed；当前语义是：
+  - `status = completed`
+  - `audit_gate_status = blocked`
+- 相关侧车产物位于：
+  - `workspace/research_jobs/<job_id>/audit/claim_graph.json`
+  - `workspace/research_jobs/<job_id>/audit/review_queue.json`
+
+因此，当前公开 runtime 的阶段事实应理解为：
+
+`clarifying -> planned -> collecting -> extracting -> claim_auditing -> rendering`
 
 ## 模块职责
 
 | 模块 | 职责 |
 |------|------|
 | `agents/` | 6 个 Agent 节点定义（LangGraph node 函数） |
+| `services/research_jobs/` | phase2 公开 job runtime、event、checkpoint、worker |
+| `connectors/` | phase3 统一 connector substrate、snapshot store、legacy adapters |
+| `policies/` | source profiles、domain policy、budget guardrails |
 | `capabilities/` | builtin / skill / mcp 注册表、MCP runtime 与适配 |
 | `workflows/` | LangGraph 状态图定义 + 状态模型 |
 | `tools/` | @tool 装饰器的工具函数 |

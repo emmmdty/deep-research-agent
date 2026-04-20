@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/conflict-set.schema.json",
+  "title": "ConflictSet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "conflict_id",
+    "claim_ids",
+    "evidence_ids",
+    "status",
+    "summary"
+  ],
+  "properties": {
+    "conflict_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "reviewed",
+        "resolved"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    }
+  }
+}

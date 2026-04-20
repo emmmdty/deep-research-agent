@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/source-policy-overrides.schema.json",
+  "title": "SourcePolicyOverrides",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "allow_domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "deny_domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_candidates_per_connector": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_fetches_per_task": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_total_fetches": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

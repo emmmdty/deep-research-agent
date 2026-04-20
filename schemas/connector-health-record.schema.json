@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/connector-health-record.schema.json",
+  "title": "ConnectorHealthRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "connector_name",
+    "search_attempts",
+    "search_successes",
+    "fetch_attempts",
+    "fetch_successes",
+    "policy_blocked",
+    "error_count",
+    "last_error"
+  ],
+  "properties": {
+    "connector_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "search_attempts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "search_successes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "fetch_attempts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "fetch_successes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "policy_blocked": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "error_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "last_error": {
+      "type": ["string", "null"]
+    }
+  }
+}

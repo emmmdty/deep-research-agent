@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/job-progress-event.schema.json",
+  "title": "JobProgressEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "job_id",
+    "sequence",
+    "stage",
+    "event_type",
+    "timestamp",
+    "message",
+    "payload"
+  ],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "job_id": { "type": "string", "minLength": 1 },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "stage": { "type": "string", "minLength": 1 },
+    "event_type": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "message": { "type": "string" },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

@@ -16,7 +16,9 @@
 - benchmark 与 comparator harness
 - 可测试、可解释、可维护的工程实现
 
-当前公开支持的入口是 CLI，不提供受支持的 HTTP API。
+当前公开支持的入口是 CLI。phase2 以后，公开命令面改为 `submit / status / watch / cancel / retry`，仍不提供受支持的 HTTP API。
+phase3 在此基础上接入了统一 connector substrate、source policy 和 snapshot store，公开 job 会先走 `search / fetch / file-ingest` 合同，再把抓取后的文档转成研究证据。
+phase4 在 `extracting` 后增加了 claim-level audit pipeline。公开 job 会额外输出 claim graph / review queue，且在关键 claim 未解决时使用 `completed + blocked` 语义。
 
 ## 主要能力
 
@@ -31,6 +33,10 @@
 - `benchmark_summary.json` 采用 `scorecard + legacy_metrics + judge_status` 双层输出，对外主展示为 `0-100` 连续值可靠性分数
 - `portfolio12` 主题集与 `run_ablation.py` 支持把项目方法点做成可复现的对照实验
 - 基于 `LLM-as-Judge` 的盲评对比
+- Phase 02 可恢复 job runtime：SQLite 持久化状态、event、checkpoint，支持 cancel / retry / stale job recovery
+- Phase 03 统一 connector substrate：`search / fetch / file-ingest`、snapshot 持久化、domain allow/deny 和每 job 抓取预算
+- Phase 04 claim-level audit pipeline：`claim_auditing`、claim graph、conflict set 与 critical claim review queue
+- 完成态 job 会在 `workspace/research_jobs/<job_id>/` 下输出 `report.md`、`report_bundle.json`、`trace.jsonl`、`snapshots/` 和 `audit/`
 
 ## 快速开始
 
@@ -48,12 +54,23 @@ cp .env.example .env
 
 补齐 API Key 后再运行研究或 benchmark。
 
-### 3. 运行研究
+### 3. 提交并观察研究任务
 
 ```bash
-uv run python main.py --topic "2024 年大语言模型 Agent 架构的最新进展"
-uv run python main.py --topic "openclaw安装教程" --profile benchmark
+uv run python main.py submit \
+  --topic "2024 年大语言模型 Agent 架构的最新进展" \
+  --source-profile trusted-web \
+  --allow-domain github.com \
+  --allow-domain docs.langchain.com \
+  --max-candidates-per-connector 4 \
+  --max-fetches-per-task 3 \
+  --max-total-fetches 8
+uv run python main.py watch --job-id <job_id>
+uv run python main.py status --job-id <job_id>
 ```
+
+公开 CLI 现在会提交后台 job。完成态 job 会把 `report.md`、`report_bundle.json`、`trace.jsonl`、`snapshots/` 和 `audit/` 写到 `workspace/research_jobs/<job_id>/`。
+如果关键 claim 仍未通过审计门禁，job 仍会完成，但会明确暴露 `audit_gate_status=blocked`。
 
 ### 4. 运行 benchmark / 对比
 
@@ -75,24 +92,20 @@ uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.m
 
 如果需要把 `portfolio12` 的 benchmark、ablation 与 `RESULTS.md` 一次打包成可复用结果集，优先使用 `scripts/run_portfolio12_release.py`。默认 `--release-mode hybrid` 会只对代表题 `T01,T04,T11` 运行 live judge，同时保留全量 `portfolio12` 的可复现实验输出；并通过 `--env-file` 显式加载带有 Judge/搜索密钥的环境文件。
 
-面试与简历相关材料可直接参考：
-
-- `docs/showcase.md`
-- `docs/resume_bullets.md`
-- `docs/interview_qa.md`
-
 ## 示例输出
 
 一个典型的 CLI 运行过程大致如下：
 
 ```text
-$ uv run python main.py --topic "Latest progress in LLM agent architectures"
-🚀 启动深度研究: topic='Latest progress in LLM agent architectures', max_loops=3
-📋 Planner 规划完成: 生成 4 个子任务
-🔍 Researcher 执行完成: 总结数=4, 来源数=12
-🧠 Critic 评分完成: quality_score=8, is_sufficient=True
-📝 Writer 报告生成完成
-🎉 深度研究完成: status=completed
+$ uv run python main.py submit --topic "Latest progress in LLM agent architectures"
+✅ 已提交 job: 20260409T120000Z-abc12345
+当前状态: created -> next: clarifying
+
+$ uv run python main.py watch --job-id 20260409T120000Z-abc12345
+[0002] clarifying stage.started - 开始 clarifying 阶段
+[0012] claim_auditing stage.completed - claim_auditing 阶段完成
+[0015] rendering stage.completed - rendering 阶段完成
+[0016] completed job.completed - job 进入 completed
 ```
 
 ## 配置项
@@ -116,6 +129,15 @@ $ uv run python main.py --topic "Latest progress in LLM agent architectures"
 - `CASE_STUDY_OFFICIAL_DOMAINS`
 - `ENABLED_SOURCES`
 - `ENABLED_COMPARATORS`
+- `BUNDLE_EMISSION_ENABLED`
+- `BUNDLE_OUTPUT_DIRNAME`
+- `JOB_RUNTIME_DIRNAME`
+- `JOB_HEARTBEAT_INTERVAL_SECONDS`
+- `JOB_STALE_TIMEOUT_SECONDS`
+- `LEGACY_CLI_ENABLED`
+- `SOURCE_POLICY_MODE`
+- `CONNECTOR_SUBSTRATE_ENABLED`
+- `SNAPSHOT_STORE_DIRNAME`
 - `MEMORY_BACKEND`
 - `JUDGE_MODEL`
 - `GPT_RESEARCHER_PYTHON`
@@ -135,6 +157,9 @@ $ uv run python main.py --topic "Latest progress in LLM agent architectures"
 
 ```text
 agents/       多智能体节点，包含 verifier
+services/research_jobs/ SQLite 持久化公开 job runtime
+connectors/   统一 search / fetch / file-ingest substrate 与适配层
+policies/     source profile、budget guardrail 与 domain 治理
 capabilities/ builtin / skill / mcp 能力注册与适配
 tools/        搜索与工具适配
 workflows/    状态图与结构化状态
@@ -151,6 +176,48 @@ docs/         架构与开发文档
 uv run ruff check .
 uv run pytest -q
 ```
+
+Phase 01 联网验收可直接使用：
+
+```bash
+WORKSPACE_DIR=workspace/phase1-live-validation \
+ENABLED_SOURCES='["web"]' \
+uv run python main.py legacy-run --topic "Datawhale是一个什么样的组织" --max-loops 2
+```
+
+然后检查 `workspace/phase1-live-validation/` 下的 Markdown 与 `bundles/<run_id>/` 侧车产物。
+
+Phase 02 联网验收可直接使用：
+
+```bash
+WORKSPACE_DIR=workspace/phase2-live-validation \
+ENABLED_SOURCES='["web"]' \
+uv run python main.py submit --topic "Datawhale是一个什么样的组织"
+uv run python main.py watch --job-id <job_id>
+```
+
+Phase 03 联网验收可直接使用：
+
+```bash
+WORKSPACE_DIR=workspace/phase3-live-validation \
+ENABLED_SOURCES='["github"]' \
+uv run python main.py submit \
+  --topic "langgraph github repository" \
+  --source-profile trusted-web \
+  --allow-domain github.com \
+  --max-candidates-per-connector 3 \
+  --max-fetches-per-task 2 \
+  --max-total-fetches 4
+uv run python main.py watch --job-id <job_id>
+```
+
+Phase 04 审计回归可直接使用：
+
+```bash
+uv run pytest -q tests/test_phase4_auditor.py
+```
+
+如果直接在 shell 中覆盖列表配置，建议使用 JSON 数组形式，例如 `ENABLED_SOURCES='["github"]'`。
 
 相关文档：
 

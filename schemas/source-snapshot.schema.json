@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/source-snapshot.schema.json",
+  "title": "SourceSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "snapshot_id",
+    "canonical_uri",
+    "fetched_at",
+    "content_hash",
+    "mime_type",
+    "auth_scope",
+    "freshness_metadata"
+  ],
+  "properties": {
+    "snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_uri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content_hash": {
+      "type": "string",
+      "minLength": 8
+    },
+    "mime_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auth_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freshness_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

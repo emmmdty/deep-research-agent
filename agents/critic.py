@@ -25,8 +25,14 @@ def critic_node(state: dict) -> dict:
     research_profile = state.get("research_profile", "default")
     ablation_variant = state.get("ablation_variant")
     task_summaries = state.get("task_summaries", [])
-    sources_gathered: list[SourceRecord] = state.get("sources_gathered", [])
-    tasks: list[TaskItem] = state.get("tasks", [])
+    sources_gathered: list[SourceRecord] = [
+        source if isinstance(source, SourceRecord) else SourceRecord.model_validate(source)
+        for source in state.get("sources_gathered", [])
+    ]
+    tasks: list[TaskItem] = [
+        task if isinstance(task, TaskItem) else TaskItem.model_validate(task)
+        for task in state.get("tasks", [])
+    ]
     memory_stats = state.get("memory_stats")
     loop_count = state.get("loop_count", 0)
     max_loops = state.get("max_loops", 3)

@@ -18,7 +18,9 @@ It is designed to show:
 - benchmark and comparator harnesses
 - testable, documented engineering decisions
 
-The supported public surface is CLI-first. There is currently no supported HTTP API.
+The supported public surface is CLI-first. Phase 02 exposes a job-oriented CLI (`submit / status / watch / cancel / retry`). There is currently no supported HTTP API.
+Phase 03 extends that runtime with a unified connector substrate, source policy, and snapshot store. Public jobs now collect fetched documents through `search / fetch / file-ingest` contracts before they become research evidence.
+Phase 04 adds a claim-level audit pipeline after extraction. Public jobs now emit claim graph artifacts and may finish as `completed` with `audit_gate_status=blocked` when critical claims remain unresolved.
 
 ## Features
 
@@ -33,6 +35,10 @@ The supported public surface is CLI-first. There is currently no supported HTTP 
 - Benchmark summary with `scorecard + legacy_metrics + judge_status`, so reliability signals are shown as 0-100 continuous scores instead of only boolean / 0-1 fields
 - `portfolio12` topic set and `run_ablation.py` for reproducible method comparisons
 - Blind pairwise report judging through `LLM-as-Judge`
+- Phase 02 resumable job runtime with SQLite-backed status, events, checkpoints, cancel, retry, and stale-job recovery
+- Phase 03 connector substrate with unified `search / fetch / file-ingest`, snapshot persistence, domain allow/deny enforcement, and per-job fetch budgets
+- Phase 04 claim-level audit pipeline with `claim_auditing`, claim graph, conflict sets, and critical-claim review queue
+- Completed jobs emit `report.md`, `report_bundle.json`, `trace.jsonl`, fetched `snapshots/`, and `audit/` artifacts under `workspace/research_jobs/<job_id>/`
 
 ## Quickstart
 
@@ -50,12 +56,23 @@ cp .env.example .env
 
 Fill in the required API keys before running research commands.
 
-### 3. Run a research task
+### 3. Submit and watch a research job
 
 ```bash
-uv run python main.py --topic "Latest progress in LLM agent architectures"
-uv run python main.py --topic "OpenClaw installation guide" --profile benchmark
+uv run python main.py submit \
+  --topic "Latest progress in LLM agent architectures" \
+  --source-profile trusted-web \
+  --allow-domain github.com \
+  --allow-domain docs.langchain.com \
+  --max-candidates-per-connector 4 \
+  --max-fetches-per-task 3 \
+  --max-total-fetches 8
+uv run python main.py watch --job-id <job_id>
+uv run python main.py status --job-id <job_id>
 ```
+
+The public CLI now submits background jobs. Completed jobs write `report.md`, `report_bundle.json`, `trace.jsonl`, `snapshots/`, and `audit/` into `workspace/research_jobs/<job_id>/`.
+If critical claims remain unsupported or contradicted, the job still completes but surfaces `audit_gate_status=blocked`.
 
 ### 4. Run benchmark and comparison commands
 
@@ -77,24 +94,20 @@ uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.m
 
 For a release-grade `portfolio12` bundle, prefer `scripts/run_portfolio12_release.py`. The default `--release-mode hybrid` runs live judge on representative topics (`T01,T04,T11`) and keeps the full `portfolio12` benchmark / ablation reproducible; use `--env-file` to load the environment with live judge and search credentials.
 
-Interview-oriented materials are included in:
-
-- `docs/showcase.md`
-- `docs/resume_bullets.md`
-- `docs/interview_qa.md`
-
 ## Example Output
 
 Representative CLI flow:
 
 ```text
-$ uv run python main.py --topic "Latest progress in LLM agent architectures"
-🚀 启动深度研究: topic='Latest progress in LLM agent architectures', max_loops=3
-📋 Planner 规划完成: 生成 4 个子任务
-🔍 Researcher 执行完成: 总结数=4, 来源数=12
-🧠 Critic 评分完成: quality_score=8, is_sufficient=True
-📝 Writer 报告生成完成
-🎉 深度研究完成: status=completed
+$ uv run python main.py submit --topic "Latest progress in LLM agent architectures"
+✅ 已提交 job: 20260409T120000Z-abc12345
+当前状态: created -> next: clarifying
+
+$ uv run python main.py watch --job-id 20260409T120000Z-abc12345
+[0002] clarifying stage.started - 开始 clarifying 阶段
+[0012] claim_auditing stage.completed - claim_auditing 阶段完成
+[0015] rendering stage.completed - rendering 阶段完成
+[0016] completed job.completed - job 进入 completed
 ```
 
 ## Configuration
@@ -118,6 +131,15 @@ Publicly supported environment variables include:
 - `CASE_STUDY_OFFICIAL_DOMAINS`
 - `ENABLED_SOURCES`
 - `ENABLED_COMPARATORS`
+- `BUNDLE_EMISSION_ENABLED`
+- `BUNDLE_OUTPUT_DIRNAME`
+- `JOB_RUNTIME_DIRNAME`
+- `JOB_HEARTBEAT_INTERVAL_SECONDS`
+- `JOB_STALE_TIMEOUT_SECONDS`
+- `LEGACY_CLI_ENABLED`
+- `SOURCE_POLICY_MODE`
+- `CONNECTOR_SUBSTRATE_ENABLED`
+- `SNAPSHOT_STORE_DIRNAME`
 - `MEMORY_BACKEND`
 - `JUDGE_MODEL`
 - `GPT_RESEARCHER_PYTHON`
@@ -137,6 +159,9 @@ See [`.env.example`](./.env.example) for the complete template.
 
 ```text
 agents/       multi-agent nodes, including verifier
+services/research_jobs/ SQLite-backed public job runtime
+connectors/   unified search / fetch / file-ingest substrate and adapters
+policies/     source profiles, budget guardrails, and domain governance
 capabilities/ builtin / skill / mcp capability registry and adapters
 tools/        search and utility tools
 workflows/    state graph and structured state models
@@ -155,6 +180,48 @@ Local verification:
 uv run ruff check .
 uv run pytest -q
 ```
+
+Phase 01 live validation:
+
+```bash
+WORKSPACE_DIR=workspace/phase1-live-validation \
+ENABLED_SOURCES='["web"]' \
+uv run python main.py legacy-run --topic "Datawhale是一个什么样的组织" --max-loops 2
+```
+
+Then inspect the emitted Markdown and sidecar bundle under `workspace/phase1-live-validation/`.
+
+Phase 02 live validation:
+
+```bash
+WORKSPACE_DIR=workspace/phase2-live-validation \
+ENABLED_SOURCES='["web"]' \
+uv run python main.py submit --topic "Datawhale是一个什么样的组织"
+uv run python main.py watch --job-id <job_id>
+```
+
+Phase 03 live validation:
+
+```bash
+WORKSPACE_DIR=workspace/phase3-live-validation \
+ENABLED_SOURCES='["github"]' \
+uv run python main.py submit \
+  --topic "langgraph github repository" \
+  --source-profile trusted-web \
+  --allow-domain github.com \
+  --max-candidates-per-connector 3 \
+  --max-fetches-per-task 2 \
+  --max-total-fetches 4
+uv run python main.py watch --job-id <job_id>
+```
+
+Phase 04 audit regression:
+
+```bash
+uv run pytest -q tests/test_phase4_auditor.py
+```
+
+If you override list settings directly from the shell, prefer JSON-array syntax such as `ENABLED_SOURCES='["github"]'`.
 
 Key developer docs:
 

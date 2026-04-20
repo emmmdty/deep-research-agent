@@ -1,0 +1,160 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "job-fixture-001",
+    "created_at": "2026-04-09T14:00:00+00:00",
+    "input_prompt": "可信深度研究 phase1",
+    "status": "completed",
+    "source_profile": "legacy-default",
+    "budget": {
+      "max_loops": 3,
+      "research_profile": "default",
+      "llm_calls": 2,
+      "search_calls": 1
+    },
+    "runtime_path": "legacy-cli",
+    "report_bundle_ref": "bundles/job-fixture-001/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-1",
+      "title": "Phase 01 设计说明",
+      "canonical_uri": "https://example.com/phase1"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-1",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Phase 01 设计说明",
+      "canonical_uri": "https://example.com/phase1",
+      "query": "可信深度研究 phase1",
+      "selected": true,
+      "snapshot_ref": "snapshot-1",
+      "metadata": {
+        "domain": "example.com"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-1",
+      "canonical_uri": "https://example.com/phase1",
+      "fetched_at": "2026-04-09T14:00:00+00:00",
+      "content_hash": "290c2d95d1b790f1fe2f0faf2a7df64da8c2340c4c258118c9d933bc3bde84fe",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "可信深度研究 phase1",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "evidence-1",
+      "snapshot_id": "snapshot-1",
+      "source_id": "source-1",
+      "locator": {
+        "kind": "legacy_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "这是 phase1 的结构化 bundle 设计摘要。",
+      "extraction_method": "legacy_source_record_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "unchecked",
+    "event_count": 5,
+    "tool_event_count": 1,
+    "stage_event_count": 2,
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 1,
+    "manual_review_required": true,
+    "stages": [
+      "researcher",
+      "writer"
+    ]
+  },
+  "audit_events": [
+    {
+      "event_id": "job-fixture-001-job-created",
+      "job_id": "job-fixture-001",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-09T14:00:00+00:00",
+      "payload": {
+        "topic": "可信深度研究 phase1",
+        "research_profile": "default",
+        "legacy_runtime": true
+      }
+    },
+    {
+      "event_id": "job-fixture-001-stage-researcher",
+      "job_id": "job-fixture-001",
+      "stage": "researcher",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-09T14:00:01+00:00",
+      "payload": {
+        "legacy_stage": "researcher"
+      }
+    },
+    {
+      "event_id": "job-fixture-001-stage-writer",
+      "job_id": "job-fixture-001",
+      "stage": "writer",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-09T14:00:02+00:00",
+      "payload": {
+        "legacy_stage": "writer"
+      }
+    },
+    {
+      "event_id": "job-fixture-001-tool-1",
+      "job_id": "job-fixture-001",
+      "stage": "researcher",
+      "event_type": "tool.invoked",
+      "timestamp": "2026-04-09T14:00:03+00:00",
+      "payload": {
+        "capability_name": "web.search",
+        "kind": "builtin",
+        "task_title": "建立最小 bundle",
+        "success": true,
+        "detail": "查询示例来源"
+      }
+    },
+    {
+      "event_id": "job-fixture-001-job-finished",
+      "job_id": "job-fixture-001",
+      "stage": "job",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-09T14:00:04+00:00",
+      "payload": {
+        "status": "completed"
+      }
+    }
+  ],
+  "report_text": "# 报告\n\n系统应输出最小 report bundle。[1]",
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "text": "系统应输出最小 report bundle，并保留来源与审核轨迹。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": true,
+      "section_ref": "建立最小 bundle",
+      "evidence_ids": [
+        "evidence-1"
+      ]
+    }
+  ],
+  "claim_support_edges": [],
+  "conflict_sets": []
+}

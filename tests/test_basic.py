@@ -31,6 +31,15 @@ class TestConfigSettings:
         assert s.search_backend == SearchBackend.TAVILY
         assert s.max_research_loops == 3
         assert s.max_search_results == 5
+        assert s.bundle_emission_enabled is True
+        assert s.bundle_output_dirname == "bundles"
+        assert s.job_runtime_dirname == "research_jobs"
+        assert s.job_heartbeat_interval_seconds == 2
+        assert s.job_stale_timeout_seconds == 15
+        assert s.legacy_cli_enabled is True
+        assert s.connector_substrate_enabled is True
+        assert s.snapshot_store_dirname == "snapshots"
+        assert s.source_policy_mode == "open-web"
 
     def test_get_llm_config(self):
         """验证 LLM 配置字典生成。"""

@@ -1,13 +1,17 @@
 """LangGraph 研究工作流图定义。
 
 工作流结构：
-    Supervisor → Planner → Researcher → Critic ─┐
-                              ↑                  │
-                              └── (不满足) ──────┘
-                              │
-                         (满足) → Writer → END
+    Supervisor → Planner → Researcher → Verifier → Critic ─┐
+                                             ↑             │
+                                             └─ (不满足) ──┘
+                                             │
+                                        (满足) → Writer → END
 
 支持迭代研究循环：Critic 评审不满足时，回到 Researcher 执行补充搜索。
+
+注意：
+    当前文件描述的是 legacy runtime。phase 迁移期间，该工作流仍保持可运行，
+    但不再代表未来产品级 deep research app 的长期架构边界。
 """
 
 from __future__ import annotations

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/claim-review-queue.schema.json",
+  "title": "ClaimReviewQueue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id",
+    "created_at",
+    "items"
+  ],
+  "properties": {
+    "job_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "review_id",
+          "claim_id",
+          "text",
+          "status",
+          "reason",
+          "blocking",
+          "evidence_ids",
+          "edge_ids"
+        ],
+        "properties": {
+          "review_id": { "type": "string", "minLength": 1 },
+          "claim_id": { "type": "string", "minLength": 1 },
+          "text": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["blocked", "queued", "resolved"] },
+          "reason": { "type": "string", "minLength": 1 },
+          "blocking": { "type": "boolean" },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "edge_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

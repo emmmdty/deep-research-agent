@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/source-policy-profile.schema.json",
+  "title": "SourcePolicyProfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_name",
+    "description",
+    "connectors",
+    "connector_order",
+    "allow_domains",
+    "deny_domains",
+    "auth_scopes",
+    "budget"
+  ],
+  "properties": {
+    "profile_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "connectors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "connector_order": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allow_domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "deny_domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "auth_scopes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_candidates_per_connector",
+        "max_fetches_per_task",
+        "max_total_fetches"
+      ],
+      "properties": {
+        "max_candidates_per_connector": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_fetches_per_task": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_total_fetches": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

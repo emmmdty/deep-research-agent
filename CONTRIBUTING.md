@@ -13,7 +13,8 @@ Fill in the required API keys in `.env` before running research or benchmark com
 
 ## Supported Entry Points
 
-- `uv run python main.py --topic "your topic"`
+- `uv run python main.py submit --topic "your topic"`
+- `uv run python main.py watch --job-id <job_id>`
 - `uv run python scripts/run_benchmark.py --comparators ours,gptr,odr,alibaba`
 - `uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba`
 - `uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.md`

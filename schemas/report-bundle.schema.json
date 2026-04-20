@@ -1,0 +1,458 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/report-bundle.schema.json",
+  "title": "ReportBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bundle_version",
+    "job",
+    "citations",
+    "sources",
+    "snapshots",
+    "evidence_fragments",
+    "audit_summary",
+    "audit_events",
+    "report_text",
+    "claims",
+    "claim_support_edges",
+    "conflict_sets"
+  ],
+  "properties": {
+    "bundle_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "job_id",
+        "created_at",
+        "input_prompt",
+        "status",
+        "source_profile",
+        "budget",
+        "runtime_path",
+        "report_bundle_ref"
+      ],
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "input_prompt": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "source_profile": {
+          "type": "string"
+        },
+        "budget": {
+          "type": "object",
+          "required": [
+            "max_loops"
+          ],
+          "properties": {
+            "max_loops": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "research_profile": {
+              "type": "string"
+            },
+            "llm_calls": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "search_calls": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": true
+        },
+        "runtime_path": {
+          "type": "string"
+        },
+        "report_bundle_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "citation_id",
+          "source_id",
+          "snapshot_id",
+          "title",
+          "canonical_uri"
+        ],
+        "properties": {
+          "citation_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "snapshot_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "canonical_uri": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "citation_id",
+          "source_type",
+          "title",
+          "canonical_uri",
+          "query",
+          "selected",
+          "snapshot_ref"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "citation_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "source_type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "canonical_uri": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "selected": {
+            "type": "boolean"
+          },
+          "snapshot_ref": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "snapshots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "snapshot_id",
+          "canonical_uri",
+          "fetched_at",
+          "content_hash",
+          "mime_type",
+          "auth_scope",
+          "freshness_metadata"
+        ],
+        "properties": {
+          "snapshot_id": {
+            "type": "string"
+          },
+          "canonical_uri": {
+            "type": "string"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "content_hash": {
+            "type": "string"
+          },
+          "mime_type": {
+            "type": "string"
+          },
+          "auth_scope": {
+            "type": "string"
+          },
+          "freshness_metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "evidence_fragments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidence_id",
+          "snapshot_id",
+          "source_id",
+          "locator",
+          "excerpt",
+          "extraction_method"
+        ],
+        "properties": {
+          "evidence_id": {
+            "type": "string"
+          },
+          "snapshot_id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "excerpt": {
+            "type": "string"
+          },
+          "extraction_method": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "audit_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "gate_status",
+        "event_count",
+        "tool_event_count",
+        "stage_event_count",
+        "stages",
+        "critical_claim_count",
+        "blocked_critical_claim_count",
+        "manual_review_required"
+      ],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "gate_status": {
+          "type": "string"
+        },
+        "event_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_event_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stage_event_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "critical_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocked_critical_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manual_review_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "audit_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_id",
+          "job_id",
+          "stage",
+          "event_type",
+          "timestamp",
+          "payload"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "event_type": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "report_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claim_id",
+          "text",
+          "criticality",
+          "uncertainty",
+          "status"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "criticality": {
+            "type": "string"
+          },
+          "uncertainty": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "placeholder": {
+            "type": "boolean"
+          },
+          "section_ref": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "claim_support_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "edge_id",
+          "claim_id",
+          "evidence_id",
+          "relation",
+          "confidence"
+        ],
+        "properties": {
+          "edge_id": {
+            "type": "string"
+          },
+          "claim_id": {
+            "type": "string"
+          },
+          "evidence_id": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "conflict_sets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "conflict_id",
+          "claim_ids",
+          "evidence_ids",
+          "status",
+          "summary"
+        ],
+        "properties": {
+          "conflict_id": {
+            "type": "string"
+          },
+          "claim_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

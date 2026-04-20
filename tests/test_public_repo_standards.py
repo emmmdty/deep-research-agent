@@ -7,8 +7,14 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 
 PROJECT_ROOT = Path(__file__).parent.parent
+REMOVED_SHOWCASE_MATERIALS = [
+    f"docs/{name}.md"
+    for name in ("showcase", "resume_bullets", "interview_qa")
+]
 
 
 def test_main_help_exposes_only_supported_cli_surface():
@@ -49,6 +55,12 @@ def test_env_example_matches_supported_public_configuration():
 
     assert "HOST=" not in content
     assert "PORT=" not in content
+    assert "BUNDLE_EMISSION_ENABLED=" in content
+    assert "BUNDLE_OUTPUT_DIRNAME=" in content
+    assert "JOB_RUNTIME_DIRNAME=" in content
+    assert "JOB_HEARTBEAT_INTERVAL_SECONDS=" in content
+    assert "JOB_STALE_TIMEOUT_SECONDS=" in content
+    assert "LEGACY_CLI_ENABLED=" in content
     assert "RESEARCH_CONCURRENCY=" in content
     assert "ENABLED_SOURCES=" in content
     assert "ENABLED_COMPARATORS=" in content
@@ -72,9 +84,95 @@ def test_gitignore_covers_local_risks_and_tracks_lockfile():
     """忽略规则应覆盖本地风险资产，但保留 lockfile 进入版本控制。"""
     content = (PROJECT_ROOT / ".gitignore").read_text(encoding="utf-8")
 
-    assert "venv_gptr/" in content
-    assert "scripts/test_gptr*.py" in content
+    required_patterns = [
+        ".env",
+        ".env.*",
+        "!.env.example",
+        ".codex",
+        ".codex/",
+        ".venv/",
+        "venv_gptr/",
+        ".ruff_cache/",
+        ".pytest_cache/",
+        ".mypy_cache/",
+        ".pyright/",
+        ".coverage.*",
+        "htmlcov/",
+        ".ipynb_checkpoints/",
+        "workspace/",
+        "my-docs/",
+        "docs/reports/",
+        "*.db",
+        "*.sqlite",
+        "*.sqlite3",
+        "*:Zone.Identifier",
+        "scripts/test_gptr*.py",
+    ]
+
+    for pattern in required_patterns:
+        assert pattern in content
+
     assert "uv.lock" not in content
+
+
+def test_public_readmes_do_not_link_removed_showcase_materials():
+    """公开 README 不应链接不再发布的面试/简历材料。"""
+    readme_paths = ["README.md", "README.zh-CN.md"]
+
+    for readme_path in readme_paths:
+        content = (PROJECT_ROOT / readme_path).read_text(encoding="utf-8")
+        for removed_path in REMOVED_SHOWCASE_MATERIALS:
+            assert removed_path not in content
+
+
+def test_non_public_files_are_not_tracked_when_inside_git_repo():
+    """公开仓库不应跟踪本地资料、运行产物和已下线展示文档。"""
+    repo_check = subprocess.run(
+        ["git", "rev-parse", "--is-inside-work-tree"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if repo_check.returncode != 0 or repo_check.stdout.strip() != "true":
+        pytest.skip("当前环境不是 Git 仓库，跳过 tracked files 发布面检查")
+
+    result = subprocess.run(
+        ["git", "ls-files"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    tracked_files = set(result.stdout.splitlines())
+
+    forbidden_exact_paths = {
+        ".codex",
+        ".env",
+        "docs/deep-research-agent-beginner-guide.md",
+        "docs/审查意见.md",
+        "docs/plans/2026-03-08-deep-research-comparators.md",
+    } | set(REMOVED_SHOWCASE_MATERIALS)
+    forbidden_prefixes = (
+        ".env.",
+        "workspace/",
+        "my-docs/",
+        "docs/reports/",
+    )
+    forbidden_suffixes = (".db", ".sqlite", ".sqlite3")
+
+    leaked = [
+        path
+        for path in tracked_files
+        if path != ".env.example"
+        and (
+            path in forbidden_exact_paths
+            or path.startswith(forbidden_prefixes)
+            or path.endswith(forbidden_suffixes)
+        )
+    ]
+
+    assert not leaked, f"公开仓库跟踪了非发布文件: {sorted(leaked)}"
 
 
 def test_required_community_and_github_files_exist():
@@ -97,6 +195,16 @@ def test_required_community_and_github_files_exist():
 
 def test_tracked_files_do_not_contain_plaintext_secrets():
     """版本控制中的文件不应包含典型明文密钥。"""
+    repo_check = subprocess.run(
+        ["git", "rev-parse", "--is-inside-work-tree"],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if repo_check.returncode != 0 or repo_check.stdout.strip() != "true":
+        pytest.skip("当前环境不是 Git 仓库，跳过 tracked files 密钥扫描")
+
     result = subprocess.run(
         ["git", "ls-files"],
         cwd=PROJECT_ROOT,

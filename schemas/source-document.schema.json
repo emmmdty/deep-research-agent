@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/source-document.schema.json",
+  "title": "SourceDocument",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "citation_id",
+    "source_type",
+    "title",
+    "canonical_uri",
+    "query",
+    "selected",
+    "snapshot_ref"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "citation_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string"
+    },
+    "canonical_uri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "query": {
+      "type": "string"
+    },
+    "selected": {
+      "type": "boolean"
+    },
+    "snapshot_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

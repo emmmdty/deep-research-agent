@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/research-job.schema.json",
+  "title": "ResearchJob",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "job_id",
+    "created_at",
+    "input_prompt",
+    "status",
+    "source_profile",
+    "budget",
+    "runtime_path",
+    "report_bundle_ref"
+  ],
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "input_prompt": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "budget": {
+      "type": "object",
+      "required": [
+        "max_loops"
+      ],
+      "properties": {
+        "max_loops": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "research_profile": {
+          "type": "string"
+        },
+        "llm_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "search_calls": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    },
+    "runtime_path": {
+      "type": "string"
+    },
+    "report_bundle_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

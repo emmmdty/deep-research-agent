@@ -3,14 +3,22 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
 
 from loguru import logger
 
 from capabilities.mcp import invoke_mcp_capability
 from capabilities.registry import build_capability_registry
+from connectors.files import LocalFileIngestor
+from connectors.legacy import LegacyConnectorAdapter
+from connectors.models import ConnectorCandidate, ConnectorHealthRecord
+from connectors.registry import ConnectorRegistry
+from connectors.snapshot_store import SnapshotInput, SnapshotStore
 from configs.settings import get_settings
 from llm.provider import get_llm
+from policies.budget_guardrails import BudgetGuard, BudgetUsage
+from policies.source_policy import load_source_policy
 from prompts.templates import SUMMARIZER_SYSTEM_PROMPT, SUMMARIZER_USER_PROMPT
 from research_policy import (
     aspect_hits_in_text,
@@ -23,6 +31,7 @@ from research_policy import (
 )
 from tools.arxiv_search import search_arxiv_papers
 from tools.github_search import search_github_repositories
+from tools.web_scraper import web_scraper_tool
 from tools.web_search import search_web
 from workflows.states import (
     EvidenceNote,
@@ -36,6 +45,39 @@ from workflows.states import (
 
 def researcher_node(state: dict) -> dict:
     """LangGraph 节点：对每个未完成的子任务执行搜索和总结。"""
+    patch, _has_more_work = collect_research_step(state, max_units=None)
+    return patch
+
+
+def _fetch_web_candidate(url: str) -> dict[str, str]:
+    """默认网页抓取；测试里的 example.com 走 snippet 回退。"""
+    if "example.com" in url:
+        return {"text": "", "mime_type": "text/html"}
+    return {"text": web_scraper_tool.invoke({"url": url}), "mime_type": "text/html"}
+
+
+def _build_phase3_connector_registry(_settings) -> ConnectorRegistry:
+    """基于 researcher 模块级 search/fetch 函数构造 registry，便于测试 monkeypatch。"""
+    return ConnectorRegistry(
+        {
+            "open_web": LegacyConnectorAdapter(source_name="web", search_fn=search_web, fetch_fn=_fetch_web_candidate),
+            "github": LegacyConnectorAdapter(source_name="github", search_fn=search_github_repositories),
+            "arxiv": LegacyConnectorAdapter(source_name="arxiv", search_fn=search_arxiv_papers),
+            "files": LocalFileIngestor(),
+        }
+    )
+
+
+def collect_research_step(
+    state: dict,
+    *,
+    max_units: int | None = 1,
+) -> tuple[dict, bool]:
+    """执行 phase2 所需的单步 collecting。
+
+    当 `max_units=1` 时，只处理一个 pending task 或一条 follow-up query；
+    当 `max_units=None` 时，保留 legacy researcher 的整段执行行为。
+    """
     settings = get_settings()
     registry = build_capability_registry(settings)
     tasks: list[TaskItem] = [
@@ -45,11 +87,14 @@ def researcher_node(state: dict) -> dict:
     research_topic = state["research_topic"]
     research_profile = state.get("research_profile", "default")
     ablation_variant = state.get("ablation_variant")
+    file_inputs: list[str] = list(state.get("file_inputs", []))
+    job_workspace_dir = str(state.get("job_workspace_dir") or getattr(settings, "workspace_dir", "workspace"))
     task_summaries: list[str] = list(state.get("task_summaries", []))
     sources_gathered: list[SourceRecord] = [
         source if isinstance(source, SourceRecord) else SourceRecord.model_validate(source)
         for source in state.get("sources_gathered", [])
     ]
+    source_snapshots: list[dict[str, Any]] = list(state.get("source_snapshots", []))
     search_results: list[str] = list(state.get("search_results", []))
     evidence_notes: list[EvidenceNote] = [
         note if isinstance(note, EvidenceNote) else EvidenceNote.model_validate(note)
@@ -67,6 +112,7 @@ def researcher_node(state: dict) -> dict:
         for invocation in state.get("tool_invocations", [])
     ]
     coverage_status: dict[str, bool] = dict(state.get("coverage_status", {}))
+    connector_health: dict[str, Any] = dict(state.get("connector_health", {}))
     run_metrics = state.get("run_metrics")
     if not isinstance(run_metrics, RunMetrics):
         run_metrics = RunMetrics.model_validate(run_metrics or {})
@@ -90,9 +136,13 @@ def researcher_node(state: dict) -> dict:
     else:
         llm = get_llm()
 
+    units_processed = 0
     if follow_up_queries:
         logger.info("🔄 Researcher 执行补充搜索: {} 个查询", len(follow_up_queries))
-        for query in follow_up_queries:
+        remaining_follow_up_queries = list(follow_up_queries)
+        for query in list(follow_up_queries):
+            if max_units is not None and units_processed >= max_units:
+                break
             target_task = _match_follow_up_task(query, tasks)
             _execute_single_search(
                 query=query,
@@ -109,23 +159,33 @@ def researcher_node(state: dict) -> dict:
                 per_task_selected_sources=settings.per_task_selected_sources,
                 task_summaries=task_summaries,
                 sources_gathered=sources_gathered,
+                source_snapshots=source_snapshots,
                 search_results=search_results,
                 evidence_notes=evidence_notes,
                 capability_plan=capability_plan,
                 tool_invocations=tool_invocations,
                 coverage_status=coverage_status,
+                connector_health=connector_health,
                 run_metrics=run_metrics,
                 registry=registry,
                 failure_context=failure_context,
-                workspace_dir=getattr(settings, "workspace_dir", "workspace"),
+                workspace_dir=job_workspace_dir,
+                source_profile=str(state.get("source_profile") or getattr(settings, "source_policy_mode", "open-web")),
+                policy_overrides=dict(state.get("policy_overrides") or {}),
+                file_inputs=file_inputs,
                 mcp_config_path=getattr(settings, "mcp_config_path", None),
                 mcp_servers=getattr(settings, "mcp_servers", []),
                 ablation_variant=ablation_variant,
                 is_follow_up=True,
             )
+            units_processed += 1
+            if remaining_follow_up_queries:
+                remaining_follow_up_queries.pop(0)
     else:
         logger.info("🔍 Researcher 开始执行 {} 个子任务", len(tasks))
         for task in tasks:
+            if max_units is not None and units_processed >= max_units:
+                break
             if task.status == "completed":
                 continue
 
@@ -144,15 +204,20 @@ def researcher_node(state: dict) -> dict:
                 per_task_selected_sources=settings.per_task_selected_sources,
                 task_summaries=task_summaries,
                 sources_gathered=sources_gathered,
+                source_snapshots=source_snapshots,
                 search_results=search_results,
                 evidence_notes=evidence_notes,
                 capability_plan=capability_plan,
                 tool_invocations=tool_invocations,
                 coverage_status=coverage_status,
+                connector_health=connector_health,
                 run_metrics=run_metrics,
                 registry=registry,
                 failure_context=failure_context,
-                workspace_dir=getattr(settings, "workspace_dir", "workspace"),
+                workspace_dir=job_workspace_dir,
+                source_profile=str(state.get("source_profile") or getattr(settings, "source_policy_mode", "open-web")),
+                policy_overrides=dict(state.get("policy_overrides") or {}),
+                file_inputs=file_inputs,
                 mcp_config_path=getattr(settings, "mcp_config_path", None),
                 mcp_servers=getattr(settings, "mcp_servers", []),
                 ablation_variant=ablation_variant,
@@ -164,6 +229,9 @@ def researcher_node(state: dict) -> dict:
             if evidence_notes:
                 latest_note = evidence_notes[-1]
                 task.sources = ", ".join(f"[{item}]" for item in latest_note.source_ids)
+            units_processed += 1
+
+        remaining_follow_up_queries = []
 
     logger.info(
         "🔍 Researcher 执行完成: 总结数={}, 来源数={}",
@@ -174,19 +242,28 @@ def researcher_node(state: dict) -> dict:
         successful = sum(1 for invocation in tool_invocations if invocation.success)
         run_metrics.tool_use_success_rate = round(successful / len(tool_invocations), 3)
 
+    has_pending_tasks = any(task.status != "completed" for task in tasks)
+    has_more_work = bool(remaining_follow_up_queries) or has_pending_tasks
+
     return {
         "tasks": tasks,
         "task_summaries": task_summaries,
         "sources_gathered": sources_gathered,
+        "source_snapshots": source_snapshots,
         "search_results": search_results,
         "evidence_notes": evidence_notes,
         "available_capabilities": available_capabilities,
         "capability_plan": capability_plan,
         "tool_invocations": tool_invocations,
         "coverage_status": coverage_status,
+        "connector_health": {
+            name: record.model_dump(mode="json") if isinstance(record, ConnectorHealthRecord) else record
+            for name, record in connector_health.items()
+        },
         "run_metrics": run_metrics,
+        "pending_follow_up_queries": remaining_follow_up_queries,
         "status": "researched",
-    }
+    }, has_more_work
 
 
 def _execute_single_search(
@@ -205,15 +282,20 @@ def _execute_single_search(
     per_task_selected_sources: int,
     task_summaries: list[str],
     sources_gathered: list[SourceRecord],
+    source_snapshots: list[dict[str, Any]],
     search_results: list[str],
     evidence_notes: list[EvidenceNote],
     capability_plan: dict[str, list[str]],
     tool_invocations: list[ToolInvocationRecord],
     coverage_status: dict[str, bool],
+    connector_health: dict[str, Any],
     run_metrics: RunMetrics,
     registry,
     failure_context: dict[str, Any],
     workspace_dir: str,
+    source_profile: str,
+    policy_overrides: dict[str, Any],
+    file_inputs: list[str],
     mcp_config_path: str | None,
     mcp_servers: list[dict[str, Any]],
     ablation_variant: str | None,
@@ -256,7 +338,7 @@ def _execute_single_search(
         for capability in planned_capabilities
     )
 
-    results = _collect_results(
+    results, selected_count, rejected_count = _collect_results(
         query=query,
         task=active_task,
         task_title=task_title,
@@ -268,6 +350,11 @@ def _execute_single_search(
         start_index=len(sources_gathered) + 1,
         mcp_capabilities=mcp_capabilities,
         workspace_dir=workspace_dir,
+        source_profile=source_profile,
+        policy_overrides=policy_overrides,
+        file_inputs=file_inputs,
+        source_snapshots=source_snapshots,
+        connector_health=connector_health,
         mcp_config_path=mcp_config_path,
         mcp_servers=mcp_servers,
         run_metrics=run_metrics,
@@ -275,9 +362,8 @@ def _execute_single_search(
     )
     sources_gathered.extend(results)
     selected_results = [record for record in results if record.selected]
-    rejected_results = [record for record in results if not record.selected]
-    run_metrics.selected_sources += len(selected_results)
-    run_metrics.rejected_sources += len(rejected_results)
+    run_metrics.selected_sources += selected_count
+    run_metrics.rejected_sources += rejected_count
     if any(
         record.metadata.get("backend") == "duckduckgo"
         for record in results
@@ -441,12 +527,233 @@ def _collect_results(
     start_index: int,
     mcp_capabilities: list[ToolCapability],
     workspace_dir: str,
+    source_profile: str,
+    policy_overrides: dict[str, Any],
+    file_inputs: list[str],
+    source_snapshots: list[dict[str, Any]],
+    connector_health: dict[str, Any],
     mcp_config_path: str | None,
     mcp_servers: list[dict[str, Any]],
     run_metrics: RunMetrics,
     is_follow_up: bool,
-) -> list[SourceRecord]:
+) -> tuple[list[SourceRecord], int, int]:
     """采集多源搜索结果。"""
+    settings = get_settings()
+    if not getattr(settings, "connector_substrate_enabled", True):
+        return _collect_results_legacy(
+            query=query,
+            task=task,
+            task_title=task_title,
+            research_profile=research_profile,
+            enabled_sources=enabled_sources,
+            max_results=max_results,
+            per_source_max_results=per_source_max_results,
+            per_task_selected_sources=per_task_selected_sources,
+            start_index=start_index,
+            mcp_capabilities=mcp_capabilities,
+            workspace_dir=workspace_dir,
+            mcp_config_path=mcp_config_path,
+            mcp_servers=mcp_servers,
+            run_metrics=run_metrics,
+            is_follow_up=is_follow_up,
+        )
+    connector_registry = _build_phase3_connector_registry(settings)
+    snapshot_store = SnapshotStore(Path(workspace_dir) / getattr(settings, "snapshot_store_dirname", "snapshots"))
+    policy = load_source_policy(source_profile).with_overrides(policy_overrides)
+
+    active_task_type = task.task_type if task else infer_task_type(query)
+    raw_items: list[dict[str, Any]] = []
+    active_sources: list[str] = []
+    case_study_task = bool(task and any(is_case_study_aspect(aspect) for aspect in task.expected_aspects))
+    for source_name in enabled_sources:
+        if research_profile == "benchmark" and not should_use_source(active_task_type, source_name):
+            continue
+        if task and task.preferred_sources and source_name not in task.preferred_sources:
+            continue
+        active_sources.append(source_name)
+
+    if file_inputs and "files" not in active_sources and source_profile == "public-then-private":
+        active_sources.append("files")
+
+    for source_name in active_sources:
+        limit = per_source_max_results if research_profile == "benchmark" else max_results
+        connector = _resolve_connector(connector_registry, source_name)
+        health = _health_record(connector_health, getattr(connector, "connector_name", str(source_name)))
+        source_queries = build_source_queries(
+            task or TaskItem(id=0, title=task_title, intent=task_title, query=query),
+            source_name,
+        )
+        if case_study_task:
+            run_metrics.case_study_query_count += len(source_queries)
+            if is_follow_up:
+                run_metrics.case_study_rescue_calls += len(source_queries)
+        if source_name == "files":
+            raw_items.extend(
+                _build_file_candidates(
+                    file_inputs,
+                    query=query,
+                    task_query=task.query if task else query,
+                    connector_name=getattr(connector, "connector_name", "files"),
+                )
+            )
+            continue
+        for source_query in source_queries:
+            health.search_attempts += 1
+            try:
+                source_candidates = connector.search(source_query, max_results=limit)
+            except Exception as exc:
+                health.error_count += 1
+                health.last_error = str(exc)
+                logger.warning("connector search 失败: connector={}, error={}", source_name, exc)
+                continue
+            if source_candidates:
+                health.search_successes += 1
+            filtered = policy.filter_candidates(source_candidates)
+            health.policy_blocked += len(filtered.blocked)
+            for candidate in filtered.allowed:
+                raw_items.append(_candidate_to_item(candidate))
+
+    for capability in mcp_capabilities:
+        try:
+            source_queries = build_source_queries(
+                task or TaskItem(id=0, title=task_title, intent=task_title, query=query),
+                "web",
+            )
+        except Exception as exc:
+            logger.warning("MCP 工具调用失败: capability={}, error={}", capability.name, exc)
+            continue
+
+        for source_query in source_queries:
+            try:
+                mcp_items = invoke_mcp_capability(
+                    capability,
+                    query=source_query,
+                    max_results=per_source_max_results if research_profile == "benchmark" else max_results,
+                    config_path=mcp_config_path,
+                    raw_servers=mcp_servers,
+                    workspace_dir=workspace_dir,
+                )
+            except Exception as exc:
+                logger.warning("MCP 工具调用失败: capability={}, error={}", capability.name, exc)
+                continue
+
+            for item in mcp_items:
+                enriched = dict(item)
+                enriched.setdefault("source_type", item.get("source_type", "web"))
+                enriched.setdefault("query", source_query)
+                enriched.setdefault("connector_name", "open_web")
+                enriched.setdefault("canonical_uri", item.get("url", ""))
+                enriched.setdefault("mcp_source", True)
+                raw_items.append(enriched)
+
+    selected_items: list[dict[str, Any]] = []
+    rejected_count = 0
+    if research_profile == "benchmark":
+        selected_items, rejected_items, _ = select_sources_for_task(
+            raw_items,
+            task or TaskItem(id=0, title=task_title, intent=task_title, query=query),
+            per_task_limit=per_task_selected_sources,
+        )
+        rejected_count += len(rejected_items)
+        ordered_items = list(selected_items)
+    else:
+        ordered_items = raw_items
+
+    results: list[SourceRecord] = []
+    citation_id = start_index
+    budget_guard = BudgetGuard(
+        policy.budget,
+        usage=BudgetUsage(total_fetches=_total_fetch_attempts(connector_health), fetches_for_task=0),
+    )
+    for item in ordered_items:
+        if not budget_guard.can_fetch():
+            rejected_count += 1
+            continue
+        source_name = item.get("source_type", "web")
+        connector_name = str(item.get("connector_name") or _map_source_name_to_connector(source_name))
+        health = _health_record(connector_health, connector_name)
+        health.fetch_attempts += 1
+        try:
+            fetched = _fetch_item(
+                item=item,
+                query=query,
+                connector_registry=connector_registry,
+                task_title=task_title,
+            )
+            snapshot = snapshot_store.persist(
+                SnapshotInput(
+                    connector_name=connector_name,
+                    source_type=fetched.source_type,
+                    canonical_uri=fetched.canonical_uri or fetched.url,
+                    title=fetched.title,
+                    text=fetched.text,
+                    mime_type=fetched.mime_type,
+                    auth_scope=fetched.auth_scope,
+                    query=fetched.query,
+                    metadata=fetched.freshness_metadata | fetched.metadata,
+                    url=fetched.url,
+                )
+            )
+            source_snapshots.append(snapshot.model_dump(mode="json"))
+            results.append(
+                SourceRecord(
+                    citation_id=citation_id,
+                    source_id=f"source-{citation_id}",
+                    source_type=fetched.source_type,
+                    query=fetched.query or query,
+                    title=fetched.title,
+                    canonical_uri=fetched.canonical_uri,
+                    url=fetched.url or fetched.canonical_uri,
+                    snippet=fetched.snippet or fetched.text[:300].replace("\n", " "),
+                    task_title=task_title,
+                    published_at=fetched.freshness_metadata.get("published_at"),
+                    snapshot_ref=snapshot.snapshot_id,
+                    fetched_at=snapshot.fetched_at,
+                    mime_type=snapshot.mime_type,
+                    auth_scope=snapshot.auth_scope,
+                    freshness_metadata=snapshot.freshness_metadata,
+                    trust_tier=_infer_trust_tier(item),
+                    relevance_score=item.get("selection_score", 0.0),
+                    selection_score=item.get("selection_score", 0.0),
+                    selected=True,
+                    metadata={
+                        key: value
+                        for key, value in item.items()
+                        if key not in _SOURCE_RECORD_RESERVED_KEYS
+                    },
+                )
+            )
+            budget_guard.record_fetch()
+            health.fetch_successes += 1
+        except Exception as exc:
+            health.error_count += 1
+            health.last_error = str(exc)
+            rejected_count += 1
+            logger.warning("connector fetch 失败: connector={}, error={}", connector_name, exc)
+            continue
+        citation_id += 1
+    return results, len(results), rejected_count
+
+
+def _collect_results_legacy(
+    *,
+    query: str,
+    task: TaskItem | None,
+    task_title: str,
+    research_profile: str,
+    enabled_sources: list[str],
+    max_results: int,
+    per_source_max_results: int,
+    per_task_selected_sources: int,
+    start_index: int,
+    mcp_capabilities: list[ToolCapability],
+    workspace_dir: str,
+    mcp_config_path: str | None,
+    mcp_servers: list[dict[str, Any]],
+    run_metrics: RunMetrics,
+    is_follow_up: bool,
+) -> tuple[list[SourceRecord], int, int]:
+    """phase03 关闭时保留原 collecting 语义。"""
     collectors = {
         "web": search_web,
         "github": search_github_repositories,
@@ -525,6 +832,7 @@ def _collect_results(
         )
         ordered_items = [*selected_items, *rejected_items]
     else:
+        rejected_items = []
         ordered_items = raw_items
 
     results: list[SourceRecord] = []
@@ -538,6 +846,7 @@ def _collect_results(
                 source_type=item.get("source_type", source_name),
                 query=item.get("query", query),
                 title=item.get("title", "无标题"),
+                canonical_uri=item.get("url", ""),
                 url=item.get("url", ""),
                 snippet=item.get("snippet", ""),
                 task_title=task_title,
@@ -555,19 +864,140 @@ def _collect_results(
             )
         )
         citation_id += 1
-    return results
+    selected_count = sum(1 for record in results if record.selected)
+    rejected_count = len(results) - selected_count if research_profile == "benchmark" else 0
+    return results, selected_count, rejected_count
 
 
 _SOURCE_RECORD_RESERVED_KEYS = {
     "index",
+    "connector_name",
+    "canonical_uri",
     "source_type",
     "title",
     "url",
     "snippet",
     "published_at",
+    "query",
+    "mcp_source",
     "selection_score",
     "rejection_reason",
 }
+
+
+def _map_source_name_to_connector(source_name: str) -> str:
+    if source_name == "web":
+        return "open_web"
+    return source_name
+
+
+def _resolve_connector(connector_registry, source_name: str):
+    return connector_registry.get(_map_source_name_to_connector(source_name))
+
+
+def _health_record(connector_health: dict[str, Any], connector_name: str) -> ConnectorHealthRecord:
+    payload = connector_health.get(connector_name)
+    record = (
+        payload
+        if isinstance(payload, ConnectorHealthRecord)
+        else ConnectorHealthRecord.model_validate(payload or {"connector_name": connector_name})
+    )
+    connector_health[connector_name] = record
+    return record
+
+
+def _candidate_to_item(candidate: ConnectorCandidate) -> dict[str, Any]:
+    payload = candidate.model_dump(mode="json")
+    payload["url"] = candidate.canonical_uri
+    payload["source_type"] = candidate.source_type
+    payload["published_at"] = candidate.published_at
+    payload["query"] = candidate.query
+    return payload
+
+
+def _build_file_candidates(
+    file_inputs: list[str],
+    *,
+    query: str,
+    task_query: str,
+    connector_name: str,
+) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    for file_path in file_inputs:
+        path = Path(file_path)
+        candidates.append(
+            {
+                "connector_name": connector_name,
+                "source_type": "files",
+                "title": path.name,
+                "url": path.resolve().as_uri(),
+                "canonical_uri": path.resolve().as_uri(),
+                "snippet": f"本地文件输入：{path.name}",
+                "query": task_query or query,
+                "file_path": str(path.resolve()),
+                "auth_scope": "private",
+            }
+        )
+    return candidates
+
+
+def _fetch_item(*, item: dict[str, Any], query: str, connector_registry, task_title: str):
+    connector_name = str(item.get("connector_name") or _map_source_name_to_connector(str(item.get("source_type") or "web")))
+    if item.get("mcp_source"):
+        text = str(item.get("snippet") or item.get("title") or "")
+        return type(
+            "McpFetchResult",
+            (),
+            {
+                "connector_name": connector_name,
+                "source_type": str(item.get("source_type") or "web"),
+                "title": str(item.get("title") or "无标题"),
+                "canonical_uri": str(item.get("canonical_uri") or item.get("url") or ""),
+                "query": str(item.get("query") or query),
+                "text": text,
+                "snippet": str(item.get("snippet") or ""),
+                "mime_type": "text/plain",
+                "auth_scope": str(item.get("auth_scope") or "public"),
+                "freshness_metadata": {
+                    "published_at": item.get("published_at"),
+                    "task_title": task_title,
+                },
+                "metadata": {
+                    key: value
+                    for key, value in item.items()
+                    if key not in _SOURCE_RECORD_RESERVED_KEYS | {"auth_scope", "file_path"}
+                },
+                "url": str(item.get("url") or item.get("canonical_uri") or ""),
+            },
+        )()
+
+    connector = connector_registry.get(connector_name)
+    if str(item.get("source_type")) == "files":
+        return connector.ingest(str(item.get("file_path")), query=str(item.get("query") or query))
+    candidate = ConnectorCandidate(
+        connector_name=connector_name,
+        source_type=str(item.get("source_type") or "web"),
+        title=str(item.get("title") or "无标题"),
+        canonical_uri=str(item.get("canonical_uri") or item.get("url") or ""),
+        query=str(item.get("query") or query),
+        snippet=str(item.get("snippet") or ""),
+        published_at=item.get("published_at"),
+        auth_scope=str(item.get("auth_scope") or "public"),
+        metadata={
+            key: value
+            for key, value in item.items()
+            if key not in _SOURCE_RECORD_RESERVED_KEYS | {"auth_scope", "file_path"}
+        },
+    )
+    return connector.fetch(candidate)
+
+
+def _total_fetch_attempts(connector_health: dict[str, Any]) -> int:
+    total = 0
+    for payload in connector_health.values():
+        record = payload if isinstance(payload, ConnectorHealthRecord) else ConnectorHealthRecord.model_validate(payload)
+        total += record.fetch_attempts
+    return total
 
 
 def _infer_trust_tier(item: dict[str, Any]) -> int:

@@ -1,5 +1,9 @@
 # 环境与依赖
 .env
+.env.*
+!.env.example
+.codex
+.codex/
 .venv/
 venv_gptr/
 __pycache__/
@@ -11,19 +15,34 @@ build/
 *.egg
 .ruff_cache/
 .pytest_cache/
+.mypy_cache/
+.pyright/
+.pyre/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+.ipynb_checkpoints/
 
 # 系统
 .DS_Store
 Thumbs.db
+desktop.ini
+*:Zone.Identifier
 
 # 研究输出（可选保留）
 workspace/
+my-docs/
+docs/reports/
+*.db
+*.sqlite
+*.sqlite3
 
 # 临时文件
 *.tmp

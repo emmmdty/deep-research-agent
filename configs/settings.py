@@ -116,7 +116,7 @@ class Settings(BaseSettings):
         description="case-study 检索时优先尝试的官方域名",
     )
     source_policy_mode: str = Field(
-        default="default",
+        default="open-web",
         description="来源选择策略模式",
     )
     enabled_capability_types: list[str] = Field(
@@ -192,6 +192,38 @@ class Settings(BaseSettings):
     workspace_dir: str = Field(
         default="workspace",
         description="研究工作区目录",
+    )
+    bundle_emission_enabled: bool = Field(
+        default=True,
+        description="是否为 legacy CLI 额外输出 phase1 bundle sidecar",
+    )
+    bundle_output_dirname: str = Field(
+        default="bundles",
+        description="phase1 sidecar bundle 输出目录名",
+    )
+    job_runtime_dirname: str = Field(
+        default="research_jobs",
+        description="phase2 job runtime 目录名",
+    )
+    job_heartbeat_interval_seconds: int = Field(
+        default=2,
+        description="phase2 worker 心跳间隔（秒）",
+    )
+    job_stale_timeout_seconds: int = Field(
+        default=15,
+        description="phase2 stale job 判定阈值（秒）",
+    )
+    legacy_cli_enabled: bool = Field(
+        default=True,
+        description="是否保留 hidden legacy CLI 直跑入口",
+    )
+    connector_substrate_enabled: bool = Field(
+        default=True,
+        description="是否启用 phase3 connector substrate",
+    )
+    snapshot_store_dirname: str = Field(
+        default="snapshots",
+        description="phase3 snapshot store 目录名",
     )
     memory_backend: str = Field(
         default="sqlite",
