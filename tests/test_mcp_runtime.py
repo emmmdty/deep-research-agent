@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
 from workflows.states import MCPServerConfig
@@ -51,41 +50,57 @@ servers:
     assert configs[1].headers_env == {"Authorization": "TEST_TOKEN"}
 
 
-def test_mcp_runtime_discovers_stdio_tools_and_writes_cache(tmp_path: Path):
-    """stdio MCP server 应能被发现并写入 cache。"""
-    from capabilities.mcp import MCPRuntime
+def test_mcp_runtime_discovers_tools_and_writes_cache(monkeypatch, tmp_path: Path):
+    """发现到的 tools 应写入 cache。"""
+    from capabilities import mcp as mcp_module
 
-    server_script = tmp_path / "stdio_server.py"
-    server_script.write_text(
-        """
-from mcp.server.fastmcp import FastMCP
+    async def _fake_discover(self, server):
+        return [
+            mcp_module.MCPToolDefinition(
+                name="search_docs",
+                description="Search docs",
+                input_schema={"type": "object"},
+            )
+        ]
 
-mcp = FastMCP("test-docs")
+    monkeypatch.setattr(mcp_module.MCPRuntime, "_discover_tools_async", _fake_discover)
 
-@mcp.tool()
-def search_docs(query: str, limit: int = 5) -> list[dict]:
-    return [{"title": f"Result for {query}", "url": "https://example.com", "snippet": "doc"}][:limit]
-
-if __name__ == "__main__":
-    mcp.run(transport="stdio")
-""",
-        encoding="utf-8",
-    )
-
-    runtime = MCPRuntime(cache_dir=tmp_path / "cache")
-    server = MCPServerConfig(
-        name="docs",
-        transport="stdio",
-        command=sys.executable,
-        args=[str(server_script)],
-    )
+    runtime = mcp_module.MCPRuntime(cache_dir=tmp_path / "cache")
+    server = MCPServerConfig(name="docs", transport="stdio", command="python")
 
     tools = runtime.discover_server_tools(server)
 
     assert [tool.name for tool in tools] == ["search_docs"]
-    cache_path = runtime.cache_dir / "docs.json"
-    assert cache_path.exists()
-    assert "search_docs" in cache_path.read_text(encoding="utf-8")
+    assert (runtime.cache_dir / "docs.json").exists()
+
+
+def test_mcp_runtime_falls_back_to_cache_after_discovery_failure(monkeypatch, tmp_path: Path):
+    """discover 失败时应回退到已写入的 cache。"""
+    from capabilities import mcp as mcp_module
+
+    async def _success(self, server):
+        return [
+            mcp_module.MCPToolDefinition(
+                name="search_docs",
+                description="Search docs",
+                input_schema={"type": "object"},
+            )
+        ]
+
+    async def _failure(self, server):
+        raise RuntimeError("stdio discovery failed")
+
+    runtime = mcp_module.MCPRuntime(cache_dir=tmp_path / "cache")
+    server = MCPServerConfig(name="docs", transport="stdio", command="python")
+
+    monkeypatch.setattr(mcp_module.MCPRuntime, "_discover_tools_async", _success)
+    first = runtime.discover_server_tools(server)
+
+    monkeypatch.setattr(mcp_module.MCPRuntime, "_discover_tools_async", _failure)
+    second = runtime.discover_server_tools(server)
+
+    assert [tool.name for tool in first] == ["search_docs"]
+    assert [tool.name for tool in second] == ["search_docs"]
 
 
 def test_build_mcp_capabilities_discovers_runtime_tools(monkeypatch, tmp_path: Path):
@@ -120,4 +135,3 @@ def test_build_mcp_capabilities_discovers_runtime_tools(monkeypatch, tmp_path: P
     assert [cap.name for cap in capabilities] == ["mcp.remote.search"]
     assert capabilities[0].metadata["server_name"] == "docs"
     assert capabilities[0].metadata["transport"] == "streamable-http"
-

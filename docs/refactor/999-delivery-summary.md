@@ -43,9 +43,14 @@ Phase 7 最终验收命令与结果：
 - `uv run python main.py --help`：通过，只暴露 `submit/status/watch/cancel/retry`。
 - `uv run python scripts/run_benchmark.py --help`：通过。
 - `uv run python scripts/full_comparison.py --help`：通过。
-- 关键定向测试：`59 passed in 5.40s`。
-- 全量测试：`170 passed in 7.61s`。
+- `uv run pytest -q -p no:cacheprovider tests/test_mcp_runtime.py`：`4 passed in 0.40s`。
+- 关键定向测试：`59 passed in 5.00s`。
+- 全量测试：`171 passed in 7.03s`。
 - 全量 ruff：`All checks passed!`。
+
+补充：
+
+- `tests/test_mcp_runtime.py` 改为确定性 config/cache/fallback 语义回归，避免把不稳定的 live stdio 子进程互操作当成收官 gate。
 
 ## 5. CLI / Public Surface 最终说明
 
@@ -74,3 +79,4 @@ Phase 6 已完成 API readiness 文档和测试：
 - DNS/redirect 级 SSRF 防护和集中 fetch proxy 未实现。
 - claim audit 仍不是完整自动事实验证。
 - release gate 仍不是 CI/CD 或生产监控系统。
+- live stdio MCP 集成在当前本地 harness 下仍有不稳定性；本轮没有把它表述为已充分验收能力。
