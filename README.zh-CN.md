@@ -90,7 +90,9 @@ uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.m
 - `benchmark_health`：补充展示完成率、质量门控通过率、judge 状态与恢复韧性
 - case-study 相关连续值指标还包括：`case_study_strength_score_100`、`first_party_case_coverage_100`、`official_case_ratio_100`、`case_study_gate_margin_100`
 
-如果需要把 `portfolio12` 的 benchmark、ablation 与 `RESULTS.md` 一次打包成可复用结果集，优先使用 `scripts/run_portfolio12_release.py`。默认 `--release-mode hybrid` 会只对代表题 `T01,T04,T11` 运行 live judge，同时保留全量 `portfolio12` 的可复现实验输出；并通过 `--env-file` 显式加载带有 Judge/搜索密钥的环境文件。
+如果需要把 `portfolio12` 的 benchmark、ablation 与 `RESULTS.md` 一次打包成可复用诊断结果集，使用 `scripts/run_portfolio12_release.py`。默认 `--release-mode hybrid` 会只对代表题 `T01,T04,T11` 运行 live judge，同时保留全量 `portfolio12` 的可复现实验输出；并通过 `--env-file` 显式加载带有 Judge/搜索密钥的环境文件。
+
+Phase 05 增加了本地 release gate manifest。benchmark diagnostics 是必需项，但不能单独证明产品可发布；gate 还要求 runtime recovery、connector security、claim audit grounding 和公开 surface 文档检查。当前这只是本地 checklist / manifest，不是外部 CI 或生产监控系统。
 
 ## 示例输出
 

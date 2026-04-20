@@ -185,5 +185,10 @@ def test_release_runner_orchestrates_hybrid_preflight_benchmark_and_ablation(mon
     assert manifest["release_mode"] == "hybrid"
     assert manifest["live_topic_ids"] == ["T01", "T04", "T11"]
     assert manifest["git_commit"] == "deadbeef"
+    assert manifest["release_gate"]["status"] == "blocked"
+    assert manifest["release_gate"]["categories"]["benchmark_diagnostics"]["status"] == "passed"
+    assert manifest["release_gate"]["categories"]["runtime_reliability"]["status"] == "missing"
+    assert any("benchmark" in reason.lower() for reason in manifest["release_gate"]["notes"])
     assert (tmp_path / "RESULTS.md").exists()
+    assert "Release Gate" in (tmp_path / "RESULTS.md").read_text(encoding="utf-8")
     assert release["full_portfolio12"]["benchmark"]["summary"]["counts"]["completed"] == 12

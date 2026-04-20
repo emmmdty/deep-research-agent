@@ -119,6 +119,8 @@ benchmark runner 不再只输出容易落成 `0/1` 的传统字段；当前 summ
 - `scripts/run_ablation.py`：运行 `ours_base / ours_verifier / ours_gate / ours_full` 四个内部变体，用于对照 verifier 与 gate 的增益
 - `scripts/run_portfolio12_release.py`：支持 `hybrid / full-live` 两种模式；默认 `hybrid` 会对 `T01,T04,T11` 做 live judge 校准，并产出全量 `portfolio12` 的 benchmark / ablation / `RESULTS.md` / `release_manifest.json`
 
+phase5 以后，`release_manifest.json` 还包含 `release_gate` 字段。该 gate 从 `configs/release_gate.yaml` 读取分层检查项，当前分为 `runtime_reliability`、`connector_security`、`audit_grounding`、`benchmark_diagnostics`、`docs_surface`。`benchmark_diagnostics` 是必需项，但不能单独让 release gate 通过。当前 release gate 是本地 manifest/checklist，不是外部 CI 或生产监控。
+
 为了让 benchmark profile 更稳定，Researcher 在使用 LLM 生成总结后还会执行一次 lightweight validator：
 
 - 若缺少 expected aspects
