@@ -16,6 +16,10 @@ from services.research_jobs.models import (
 )
 
 
+class WorkerLeaseConflict(RuntimeError):
+    """worker lease 冲突，调用方不得继续推进 job。"""
+
+
 class ResearchJobStore:
     """负责 research job runtime record、event 与 checkpoint 的持久化。"""
 
@@ -29,6 +33,7 @@ class ResearchJobStore:
     def _connect(self) -> sqlite3.Connection:
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA busy_timeout = 5000")
         return conn
 
     def _init_db(self) -> None:
@@ -227,16 +232,78 @@ class ResearchJobStore:
             updates["active_checkpoint_id"] = active_checkpoint_id
         return self.update_job(job_id, **updates)
 
-    def attach_worker(self, job_id: str, *, worker_pid: int, lease_id: str) -> JobRuntimeRecord:
-        return self.update_job(
-            job_id,
-            worker_pid=worker_pid,
-            worker_lease_id=lease_id,
-            last_heartbeat_at=utc_now_iso(),
-        )
+    def acquire_worker_lease(
+        self,
+        job_id: str,
+        *,
+        worker_pid: int,
+        lease_id: str,
+        stale_before: str | None = None,
+    ) -> JobRuntimeRecord:
+        """原子获取 worker lease。
 
-    def clear_worker(self, job_id: str) -> JobRuntimeRecord:
-        return self.update_job(job_id, worker_pid=None, worker_lease_id=None)
+        只有无 lease、同 lease 续接，或现有 lease 明确早于 stale_before 时才允许写入。
+        """
+        if not lease_id:
+            raise ValueError("lease_id 不能为空")
+        now = utc_now_iso()
+        with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            row = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+            if row is None:
+                raise KeyError(f"未知 job: {job_id}")
+            current = self._row_to_job(row)
+            if current.status not in ACTIVE_JOB_STATUSES:
+                raise WorkerLeaseConflict(f"job {job_id} 已不处于 active 状态: {current.status}")
+            has_other_lease = current.worker_lease_id is not None and current.worker_lease_id != lease_id
+            stale = self._is_stale_lease(current.last_heartbeat_at, stale_before)
+            if has_other_lease and not stale:
+                raise WorkerLeaseConflict(f"job {job_id} 已被 lease {current.worker_lease_id} 持有")
+            conn.execute(
+                """
+                UPDATE jobs
+                SET worker_pid = ?, worker_lease_id = ?, last_heartbeat_at = ?, updated_at = ?
+                WHERE job_id = ?
+                """,
+                (worker_pid, lease_id, now, now, job_id),
+            )
+            updated = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+        return self._row_to_job(updated)
+
+    def attach_worker(self, job_id: str, *, worker_pid: int, lease_id: str) -> JobRuntimeRecord:
+        """兼容旧调用名，语义已收敛为 acquire_worker_lease。"""
+        return self.acquire_worker_lease(job_id, worker_pid=worker_pid, lease_id=lease_id)
+
+    def clear_worker(self, job_id: str, *, lease_id: str | None = None) -> JobRuntimeRecord:
+        if lease_id is None:
+            return self.update_job(job_id, worker_pid=None, worker_lease_id=None)
+        now = utc_now_iso()
+        with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            row = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+            if row is None:
+                raise KeyError(f"未知 job: {job_id}")
+            current = self._row_to_job(row)
+            if current.worker_lease_id != lease_id:
+                return current
+            conn.execute(
+                """
+                UPDATE jobs
+                SET worker_pid = NULL, worker_lease_id = NULL, updated_at = ?
+                WHERE job_id = ? AND worker_lease_id = ?
+                """,
+                (now, job_id, lease_id),
+            )
+            updated = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+        return self._row_to_job(updated)
+
+    def assert_worker_lease(self, job_id: str, *, lease_id: str) -> JobRuntimeRecord:
+        job = self.get_job(job_id)
+        if job is None:
+            raise KeyError(f"未知 job: {job_id}")
+        if job.worker_lease_id != lease_id:
+            raise WorkerLeaseConflict(f"job {job_id} 当前 lease 不是 {lease_id}")
+        return job
 
     def heartbeat(self, job_id: str, *, lease_id: str | None = None) -> JobRuntimeRecord:
         job = self.get_job(job_id)
@@ -248,19 +315,23 @@ class ResearchJobStore:
 
     def next_event_sequence(self, job_id: str) -> int:
         with self._connect() as conn:
-            row = conn.execute(
-                "SELECT COALESCE(MAX(sequence), 0) AS max_sequence FROM job_events WHERE job_id = ?",
-                (job_id,),
-            ).fetchone()
-        return int(row["max_sequence"]) + 1 if row is not None else 1
+            return self._next_event_sequence(conn, job_id)
 
     def append_event(self, event: JobProgressEvent) -> JobProgressEvent:
-        payload = event.model_dump(mode="json")
-        validate_instance("job-progress-event", payload)
         with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            sequence = self._next_event_sequence(conn, event.job_id)
+            stored = event.model_copy(
+                update={
+                    "event_id": f"{event.job_id}-event-{sequence:04d}",
+                    "sequence": sequence,
+                }
+            )
+            payload = stored.model_dump(mode="json")
+            validate_instance("job-progress-event", payload)
             conn.execute(
                 """
-                INSERT OR REPLACE INTO job_events (
+                INSERT INTO job_events (
                     job_id, sequence, event_id, stage, event_type, timestamp, message, payload_json
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
@@ -275,7 +346,21 @@ class ResearchJobStore:
                     json.dumps(payload.get("payload") or {}, ensure_ascii=False),
                 ),
             )
-        return event
+        return stored
+
+    def _next_event_sequence(self, conn: sqlite3.Connection, job_id: str) -> int:
+        row = conn.execute(
+            "SELECT COALESCE(MAX(sequence), 0) AS max_sequence FROM job_events WHERE job_id = ?",
+            (job_id,),
+        ).fetchone()
+        return int(row["max_sequence"]) + 1 if row is not None else 1
+
+    def _is_stale_lease(self, last_heartbeat_at: str | None, stale_before: str | None) -> bool:
+        if stale_before is None:
+            return False
+        if last_heartbeat_at is None:
+            return True
+        return last_heartbeat_at < stale_before
 
     def list_events(self, job_id: str, *, after_sequence: int = 0) -> list[JobProgressEvent]:
         with self._connect() as conn:
@@ -291,36 +376,47 @@ class ResearchJobStore:
 
     def next_checkpoint_sequence(self, job_id: str) -> int:
         with self._connect() as conn:
-            row = conn.execute(
-                "SELECT COALESCE(MAX(sequence), 0) AS max_sequence FROM job_checkpoints WHERE job_id = ?",
-                (job_id,),
-            ).fetchone()
-        return int(row["max_sequence"]) + 1 if row is not None else 1
+            return self._next_checkpoint_sequence(conn, job_id)
 
     def save_checkpoint(self, checkpoint: JobCheckpoint) -> JobCheckpoint:
-        payload = checkpoint.model_dump(mode="json")
-        validate_instance("job-checkpoint", payload)
-        checkpoint_path = self.checkpoint_dir(checkpoint.job_id) / f"{checkpoint.sequence:04d}-{checkpoint.stage}.json"
-        checkpoint_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            sequence = self._next_checkpoint_sequence(conn, checkpoint.job_id)
+            stored = checkpoint.model_copy(
+                update={
+                    "checkpoint_id": f"{checkpoint.job_id}-checkpoint-{sequence:04d}",
+                    "sequence": sequence,
+                }
+            )
+            payload = stored.model_dump(mode="json")
+            validate_instance("job-checkpoint", payload)
+            checkpoint_path = self.checkpoint_dir(stored.job_id) / f"{stored.sequence:04d}-{stored.stage}.json"
+            checkpoint_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
             conn.execute(
                 """
-                INSERT OR REPLACE INTO job_checkpoints (
+                INSERT INTO job_checkpoints (
                     job_id, checkpoint_id, sequence, stage, loop_count, created_at, next_stage, payload_ref
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    checkpoint.job_id,
-                    checkpoint.checkpoint_id,
-                    checkpoint.sequence,
-                    checkpoint.stage,
-                    checkpoint.loop_count,
-                    checkpoint.created_at,
-                    checkpoint.next_stage,
+                    stored.job_id,
+                    stored.checkpoint_id,
+                    stored.sequence,
+                    stored.stage,
+                    stored.loop_count,
+                    stored.created_at,
+                    stored.next_stage,
                     str(checkpoint_path),
                 ),
             )
-        return checkpoint
+        return stored
+
+    def _next_checkpoint_sequence(self, conn: sqlite3.Connection, job_id: str) -> int:
+        row = conn.execute(
+            "SELECT COALESCE(MAX(sequence), 0) AS max_sequence FROM job_checkpoints WHERE job_id = ?",
+            (job_id,),
+        ).fetchone()
+        return int(row["max_sequence"]) + 1 if row is not None else 1
 
     def get_checkpoint(self, job_id: str, checkpoint_id: str) -> JobCheckpoint | None:
         with self._connect() as conn:
