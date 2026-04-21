@@ -56,3 +56,23 @@ Run at least:
 - one baseline smoke command if safe
 
 Record the exact commands and outcomes in `.agent/STATUS.md`.
+
+## Attempt 1 clarified sub-steps
+
+1. Verify `main` baseline from the main worktree before creating a Phase 0 worktree.
+2. Create `../_codex_worktrees/phase0-read-and-model-attempt-1` from branch `codex/phase0-read-and-model/attempt-1`.
+3. Bootstrap missing local-only assets by explicit inspection, not by `git status`.
+4. Freeze repo-specific decisions that were still open after preflight:
+   - unmapped top-level directory handling
+   - source-profile migration strategy
+   - documentation authority split
+5. Write `.agent/EXECUTION_BACKLOG.md` with grounded keep/migrate/archive/delete lists, file impact map, risk log, command registry, and phase acceptance commands.
+6. Refresh `.agent/STATUS.md` to reflect the real execution run rather than the preflight-only state.
+7. Re-run baseline safe validation in the Phase 0 worktree.
+
+## Attempt 1 validation commands
+
+- `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help`
+- `UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q`
+- `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .`
+- `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py`
