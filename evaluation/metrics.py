@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 from loguru import logger
 
 from research_policy import aspect_hits_in_text, normalize_text
-from workflows.states import EvidenceNote, MemoryStats, ReportArtifact, RunMetrics, SourceRecord, VerificationRecord
+from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, RunMetrics, SourceRecord, VerificationRecord
 
 
 def critical_claim_support_precision(report_artifact: ReportArtifact | None) -> float | None:

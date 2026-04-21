@@ -33,7 +33,7 @@ from tools.arxiv_search import search_arxiv_papers
 from tools.github_search import search_github_repositories
 from tools.web_scraper import web_scraper_tool
 from tools.web_search import search_web
-from workflows.states import (
+from legacy.workflows.states import (
     EvidenceNote,
     RunMetrics,
     SourceRecord,

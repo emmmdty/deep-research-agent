@@ -1,14 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "deep-research-agent"
 version = "0.1.0"
-description = "A LangGraph-based deep research agent with multi-source evidence gathering, benchmarking, and comparator harnesses."
+description = "An evidence-first deep research runtime for company and industry analysis."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [
     { name = "emmmdty" },
 ]
-keywords = ["langgraph", "llm", "research-agent", "benchmark", "python"]
+keywords = ["deep-research", "evidence-first", "audit", "research-runtime", "python"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -47,7 +51,7 @@ Repository = "https://github.com/emmmdty/deep-research-agent"
 Issues = "https://github.com/emmmdty/deep-research-agent/issues"
 
 [project.scripts]
-deep-research-agent = "main:main"
+deep-research-agent = "deep_research_agent.gateway.cli:main"
 
 [dependency-groups]
 dev = [
@@ -57,3 +61,10 @@ dev = [
     "pytest-cov>=7.0.0",
     "ruff>=0.14.0",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["deep_research_agent*"]

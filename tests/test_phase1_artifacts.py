@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import pytest
 from jsonschema import ValidationError
 
-from workflows.states import EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, ToolInvocationRecord
+from legacy.workflows.states import EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, ToolInvocationRecord
 
 
 SCHEMA_NAMES = [

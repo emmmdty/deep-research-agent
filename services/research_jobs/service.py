@@ -15,7 +15,7 @@ from loguru import logger
 from policies.models import SourcePolicyOverrides
 from services.research_jobs.models import TERMINAL_JOB_STATUSES, JobCheckpoint, JobProgressEvent, JobRuntimeRecord
 from services.research_jobs.store import ResearchJobStore
-from workflows.states import ResearchState
+from legacy.workflows.states import ResearchState
 
 
 def _run_id() -> str:

@@ -12,7 +12,7 @@ import httpx
 import yaml
 from loguru import logger
 
-from workflows.states import MCPServerConfig, MCPToolDefinition, ToolCapability
+from legacy.workflows.states import MCPServerConfig, MCPToolDefinition, ToolCapability
 
 try:  # pragma: no cover - 由集成测试覆盖
     from mcp import ClientSession, StdioServerParameters

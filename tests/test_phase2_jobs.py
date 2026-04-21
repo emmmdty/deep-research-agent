@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 from jsonschema import ValidationError
 
-from workflows.states import CriticFeedback, EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
+from legacy.workflows.states import CriticFeedback, EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
 
 PHASE2_SCHEMA_NAMES = [
@@ -601,12 +601,12 @@ def test_completed_job_projection_keeps_active_checkpoint_explainable(tmp_path: 
 
 def test_phase2_nodes_accept_checkpoint_serialized_payloads(tmp_path: Path, monkeypatch):
     """verifier / critic / writer 应接受 checkpoint 恢复后的 dict payload。"""
-    from agents.critic import critic_node
-    from agents.verifier import verifier_node
-    from agents.writer import writer_node
+    from legacy.agents.critic import critic_node
+    from legacy.agents.verifier import verifier_node
+    from legacy.agents.writer import writer_node
 
     settings = type("Settings", (), {"workspace_dir": str(tmp_path / "workspace")})()
-    monkeypatch.setattr("agents.verifier.get_settings", lambda: settings)
+    monkeypatch.setattr("legacy.agents.verifier.get_settings", lambda: settings)
 
     source = SourceRecord(
         citation_id=1,

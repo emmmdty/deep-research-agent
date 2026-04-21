@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from workflows.states import MCPServerConfig
+from legacy.workflows.states import MCPServerConfig
 
 
 def test_load_mcp_server_configs_supports_yaml_and_env_fallback(tmp_path: Path):

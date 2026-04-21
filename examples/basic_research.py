@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-from workflows.graph import run_research
+from legacy.workflows.graph import run_research
 from evaluation.metrics import evaluate_report
 from rich.console import Console
 from rich.markdown import Markdown

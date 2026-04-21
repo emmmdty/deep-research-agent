@@ -5,12 +5,12 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
-from workflows.states import EvidenceNote, RunMetrics, SourceRecord
+from legacy.workflows.states import EvidenceNote, RunMetrics, SourceRecord
 
 
 def test_verifier_node_builds_clusters_and_persists_memory(tmp_path: Path, monkeypatch):
     """Verifier 应把来源转成证据并落到持久化记忆中。"""
-    from agents import verifier
+    from legacy.agents import verifier
 
     settings = SimpleNamespace(workspace_dir=str(tmp_path / "workspace"))
     monkeypatch.setattr(verifier, "get_settings", lambda: settings)
@@ -64,7 +64,7 @@ def test_verifier_node_builds_clusters_and_persists_memory(tmp_path: Path, monke
 
 def test_verifier_node_detects_entity_drift_for_conflicting_sources(tmp_path: Path, monkeypatch):
     """当同一主题出现相互冲突的实体定义时，Verifier 应降低一致性分数。"""
-    from agents import verifier
+    from legacy.agents import verifier
 
     settings = SimpleNamespace(workspace_dir=str(tmp_path / "workspace"))
     monkeypatch.setattr(verifier, "get_settings", lambda: settings)
@@ -117,7 +117,7 @@ def test_verifier_node_detects_entity_drift_for_conflicting_sources(tmp_path: Pa
 
 def test_verifier_node_ignores_general_sources_when_scoring_entity_consistency(tmp_path: Path, monkeypatch):
     """中性来源不应把单一主实体的可信度拉低。"""
-    from agents import verifier
+    from legacy.agents import verifier
 
     settings = SimpleNamespace(workspace_dir=str(tmp_path / "workspace"))
     monkeypatch.setattr(verifier, "get_settings", lambda: settings)

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
-from workflows.states import RunMetrics, SourceRecord, TaskItem, TopicSpec
+from legacy.workflows.states import RunMetrics, SourceRecord, TaskItem, TopicSpec
 
 
 class _FailIfCalledLLM:
@@ -26,7 +26,7 @@ class _StaticLLM:
 
 def test_planner_node_uses_benchmark_tasks_without_llm(monkeypatch):
     """benchmark profile 下，Planner 应直接生成稳定任务。"""
-    from agents import planner
+    from legacy.agents import planner
 
     topic_spec = TopicSpec(
         id="T06C",
@@ -51,7 +51,7 @@ def test_planner_node_uses_benchmark_tasks_without_llm(monkeypatch):
 
 def test_researcher_node_selects_sources_and_tracks_rejections_for_benchmark(monkeypatch):
     """benchmark profile 下，Researcher 应只选中高相关来源并记录过滤统计。"""
-    from agents import researcher
+    from legacy.agents import researcher
 
     task = TaskItem(
         id=1,
@@ -125,7 +125,7 @@ def test_researcher_node_selects_sources_and_tracks_rejections_for_benchmark(mon
 
 def test_researcher_node_benchmark_falls_back_to_deterministic_summary_when_llm_unavailable(monkeypatch):
     """benchmark profile 在 LLM 不可用时仍应生成可评测的稳定总结。"""
-    from agents import researcher
+    from legacy.agents import researcher
 
     task = TaskItem(
         id=1,
@@ -193,7 +193,7 @@ def test_researcher_node_benchmark_falls_back_to_deterministic_summary_when_llm_
 
 def test_researcher_node_records_capability_plan_and_skill_usage(tmp_path, monkeypatch):
     """Researcher 应暴露能力注册表，并记录任务级 capability plan。"""
-    from agents import researcher
+    from legacy.agents import researcher
 
     skill_dir = tmp_path / "skills" / "install-guide"
     skill_dir.mkdir(parents=True)
@@ -279,7 +279,7 @@ Use this skill for installation, setup, requirements, and troubleshooting tasks.
 
 def test_critic_node_keeps_failed_quality_gate_blocking_on_last_loop():
     """benchmark profile 到达最后一轮且 gate 失败时，不应再放行 Writer。"""
-    from agents.critic import critic_node
+    from legacy.agents.critic import critic_node
 
     tasks = [
         TaskItem(
@@ -330,8 +330,8 @@ def test_critic_node_keeps_failed_quality_gate_blocking_on_last_loop():
 
 def test_graph_routes_failed_quality_gate_to_terminal_failure():
     """严格 gate 失败时，工作流应进入失败终态，而不是继续写报告。"""
-    from workflows.graph import _should_continue
-    from workflows.states import CriticFeedback
+    from legacy.workflows.graph import _should_continue
+    from legacy.workflows.states import CriticFeedback
 
     route = _should_continue(
         {
@@ -351,7 +351,7 @@ def test_graph_routes_failed_quality_gate_to_terminal_failure():
 
 def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
     """benchmark profile 下，Writer 应走确定性报告生成。"""
-    from agents import writer
+    from legacy.agents import writer
     from evaluation.metrics import citation_accuracy
 
     monkeypatch.setattr(writer, "get_llm", lambda: _FailIfCalledLLM())
@@ -399,7 +399,7 @@ def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
 
 def test_researcher_uses_llm_summary_in_benchmark_when_available(monkeypatch):
     """benchmark profile 下若 LLM 可用，应优先使用 LLM 总结，而不是总是 deterministic 回退。"""
-    from agents import researcher
+    from legacy.agents import researcher
 
     class _FakeResponse:
         content = (
@@ -466,7 +466,7 @@ def test_researcher_uses_llm_summary_in_benchmark_when_available(monkeypatch):
 
 def test_researcher_follow_up_queries_replace_original_task_summary(monkeypatch):
     """补检索命中某个 task 时，应回填原任务而不是追加一条补充研究。"""
-    from agents import researcher
+    from legacy.agents import researcher
 
     task = TaskItem(
         id=1,
@@ -528,7 +528,7 @@ def test_researcher_follow_up_queries_replace_original_task_summary(monkeypatch)
 
 def test_researcher_repairs_invalid_benchmark_summary_with_deterministic_fallback(monkeypatch):
     """benchmark profile 下，LLM 总结若缺方面/缺引用，应触发 deterministic repair。"""
-    from agents import researcher
+    from legacy.agents import researcher
 
     task = TaskItem(
         id=1,

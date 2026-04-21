@@ -8,11 +8,11 @@ from typing import Any, Callable
 from loguru import logger
 
 from auditor.pipeline import claim_auditor_node
-from agents.critic import critic_node
-from agents.planner import planner_node
-from agents.researcher import collect_research_step
-from agents.verifier import verifier_node
-from agents.writer import writer_node
+from legacy.agents.critic import critic_node
+from legacy.agents.planner import planner_node
+from legacy.agents.researcher import collect_research_step
+from legacy.agents.verifier import verifier_node
+from legacy.agents.writer import writer_node
 from artifacts.bundle import emit_report_artifacts
 from services.research_jobs.models import (
     TERMINAL_JOB_STATUSES,
@@ -20,7 +20,7 @@ from services.research_jobs.models import (
     JobProgressEvent,
     JobRuntimeRecord,
 )
-from workflows.states import CriticFeedback, ResearchState
+from legacy.workflows.states import CriticFeedback, ResearchState
 
 
 class ResearchJobOrchestrator:

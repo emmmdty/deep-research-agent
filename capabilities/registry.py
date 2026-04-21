@@ -7,7 +7,7 @@ from typing import Iterable
 
 from capabilities.mcp import build_mcp_capabilities
 from capabilities.skills import load_skill_definitions
-from workflows.states import TaskItem, ToolCapability
+from legacy.workflows.states import TaskItem, ToolCapability
 
 
 @dataclass

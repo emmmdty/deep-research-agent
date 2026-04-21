@@ -5,7 +5,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 from configs.settings import Settings
-from workflows.states import SourceRecord
+from legacy.workflows.states import SourceRecord
 
 
 class _FakeLLM:

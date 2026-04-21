@@ -6,7 +6,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from workflows.states import EvidenceCluster, EvidenceUnit
+from legacy.workflows.states import EvidenceCluster, EvidenceUnit
 
 
 class EvidenceStore:

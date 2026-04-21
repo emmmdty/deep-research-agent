@@ -97,7 +97,7 @@ def test_run_comparator_skips_when_optional_comparator_not_configured(monkeypatc
 def test_run_ours_comparator_marks_failed_quality_gate_as_failed(monkeypatch, tmp_path: Path):
     """严格 quality gate 失败时，ours comparator 不应再伪装成 completed。"""
     from evaluation.comparators import BenchmarkTopic, run_ours_comparator
-    from workflows.states import RunMetrics
+    from legacy.workflows.states import RunMetrics
 
     topic = BenchmarkTopic(
         id="T01",
@@ -108,7 +108,7 @@ def test_run_ours_comparator_marks_failed_quality_gate_as_failed(monkeypatch, tm
     )
 
     monkeypatch.setattr(
-        "workflows.graph.run_research",
+        "legacy.workflows.graph.run_research",
         lambda *args, **kwargs: {
             "status": "failed_quality_gate",
             "error": "缺少真实案例证据",

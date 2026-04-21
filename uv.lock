@@ -899,7 +899,7 @@ wheels = [
 [[package]]
 name = "deep-research-agent"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "arxiv" },
     { name = "beautifulsoup4" },

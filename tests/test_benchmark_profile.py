@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from workflows.states import EvidenceNote, SourceRecord, TaskItem, TopicSpec
+from legacy.workflows.states import EvidenceNote, SourceRecord, TaskItem, TopicSpec
 
 
 def test_build_benchmark_tasks_covers_all_expected_aspects():
@@ -701,7 +701,7 @@ def test_framework_comparison_query_bundle_prefers_official_docs_and_orgs():
 
 def test_match_follow_up_task_prefers_exact_case_study_aspect_over_generic_agent_keyword():
     """case-study 的 follow-up query 不应被 ReAct 任务中的通用 agent 关键词抢走。"""
-    from agents.researcher import _match_follow_up_task
+    from legacy.agents.researcher import _match_follow_up_task
 
     tasks = [
         TaskItem(
@@ -732,7 +732,7 @@ def test_match_follow_up_task_prefers_exact_case_study_aspect_over_generic_agent
 
 def test_framework_official_docs_have_high_trust_and_video_is_low_trust():
     """官方框架文档应提升为高可信，视频类结果应显著降权。"""
-    from agents.researcher import _infer_trust_tier
+    from legacy.agents.researcher import _infer_trust_tier
 
     assert _infer_trust_tier({"source_type": "web", "url": "https://docs.langchain.com/oss/python/langgraph/overview"}) == 4
     assert _infer_trust_tier({"source_type": "web", "url": "https://docs.crewai.com/en/introduction"}) == 4

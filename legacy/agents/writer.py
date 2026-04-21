@@ -8,7 +8,7 @@ from llm.provider import get_llm
 from prompts.templates import WRITER_SYSTEM_PROMPT, WRITER_USER_PROMPT
 from research_policy import build_benchmark_report
 from auditor.models import ClaimRecord, ClaimSupportEdgeRecord, ConflictSetRecord, CriticalClaimReviewItem, EvidenceFragmentRecord
-from workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TaskItem
+from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
 
 def writer_node(state: dict) -> dict:

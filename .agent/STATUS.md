@@ -28,19 +28,17 @@
 ## Current overall status
 - current_phase: phase1_structure
 - current_phase_slug: phase1-structure
-- current_attempt: 0
+- current_attempt: 1
 - last_successful_phase: phase0_read_and_model
-- overall_state: ready_for_phase1
+- overall_state: phase1_validated_pending_merge
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- active_branch: codex/phase1-structure/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase1-structure-attempt-1
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - phase0 main smoke already passed before opening Phase 1
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
@@ -79,16 +77,22 @@
   - Next action: create the fresh Phase 1 worktree after cleaning up the Phase 0 worktree and branch.
 
 ### Phase 1 - structure
-- status: pending
-- attempts: 0
-- summary: Canonical `src/` package root, archive legacy runtime boundary, make `main.py` a thin wrapper, and update packaging/import paths.
+- status: completed
+- attempts: 1
+- summary: Created the canonical `src/deep_research_agent/` package tree, moved `agents/` and `workflows/` under `legacy/`, made `main.py` a thin wrapper, and updated packaging/imports so the new src package is importable.
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python -c "import deep_research_agent; print(deep_research_agent.__file__)"`
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help`
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .`
 - artifacts:
+  - `tests/test_phase1_structure_rebuild.py`
+  - `src/deep_research_agent/`
+  - `legacy/agents/`
+  - `legacy/workflows/`
 - blockers:
 - notes:
+  - Focused validation passed: `tests/test_phase1_structure_rebuild.py`, `tests/test_cli_runtime.py`, `tests/test_phase2_jobs.py`, `tests/test_phase3_connectors.py`, `tests/test_phase4_auditor.py` -> 51 passed.
+  - Pending next step: commit branch, merge to `main`, rerun main smoke, then advance to Phase 2.
 
 ### Phase 2 - runtime_provider
 - status: pending
@@ -173,3 +177,8 @@
 - [2026-04-21T11:49:14Z] Phase 0 froze handling for unmapped directories, source-profile migration, command registry, phase acceptance commands, and file-impact mapping in `.agent/EXECUTION_BACKLOG.md`.
 - [2026-04-21T11:49:14Z] Phase 0 acceptance passed in the phase worktree; next action is commit + merge + main smoke before advancing to Phase 1.
 - [2026-04-21T11:52:03Z] Merged Phase 0 into `main` via commit `2aca4d7e28aaa8a825c864c4e3795fc211ae404f` and reran main smoke successfully (`main.py --help`, `pytest --collect-only -q`, `ruff check .`).
+- [2026-04-21T11:52:03Z] Verified Phase 0 outputs on `main` before opening Phase 1, then created worktree `../_codex_worktrees/phase1-structure-attempt-1` on branch `codex/phase1-structure/attempt-1`.
+- [2026-04-21T11:52:03Z] Bootstrapped local-only assets in the Phase 1 worktree by symlinking `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr`.
+- [2026-04-21T11:52:03Z] Phase 1 TDD red step: added `tests/test_phase1_structure_rebuild.py` and confirmed it failed before the structure rebuild (`3 failed`).
+- [2026-04-21T11:52:03Z] Phase 1 structure rebuild created `src/deep_research_agent/`, moved `agents/` and `workflows/` under `legacy/`, added the canonical package wrappers, and converted `main.py` to a thin wrapper over `deep_research_agent.gateway.cli`.
+- [2026-04-21T11:52:03Z] Phase 1 validation passed in the worktree: package import smoke, CLI help, `ruff check .`, and focused regressions (`51 passed`).
