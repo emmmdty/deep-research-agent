@@ -1,0 +1,210 @@
+{
+  "generated_at": "2026-04-21T00:00:00+00:00",
+  "status": "route_plan_only",
+  "task_roles": [
+    {
+      "task_role": "planning",
+      "auto": {
+        "selected_profile": "openai",
+        "provider_type": "openai",
+        "model": "gpt-4o-mini",
+        "routing_mode": "auto",
+        "reason": "auto:planning:openai"
+      },
+      "manual": {
+        "anthropic": {
+          "selected_profile": "anthropic",
+          "provider_type": "anthropic",
+          "model": "claude-3-5-haiku-latest",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic"
+        },
+        "anthropic_compatible": {
+          "selected_profile": "anthropic_compatible",
+          "provider_type": "anthropic_compatible",
+          "model": "claude-compatible-model",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic_compatible"
+        },
+        "openai": {
+          "selected_profile": "openai",
+          "provider_type": "openai",
+          "model": "gpt-4o-mini",
+          "routing_mode": "manual",
+          "reason": "manual:openai"
+        },
+        "openai_compatible": {
+          "selected_profile": "openai_compatible",
+          "provider_type": "openai_compatible",
+          "model": "MiniMax-M2.5",
+          "routing_mode": "manual",
+          "reason": "manual:openai_compatible"
+        }
+      }
+    },
+    {
+      "task_role": "query_rewrite",
+      "auto": {
+        "selected_profile": "openai",
+        "provider_type": "openai",
+        "model": "gpt-4o-mini",
+        "routing_mode": "auto",
+        "reason": "auto:query_rewrite:openai"
+      },
+      "manual": {
+        "anthropic": {
+          "selected_profile": "anthropic",
+          "provider_type": "anthropic",
+          "model": "claude-3-5-haiku-latest",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic"
+        },
+        "anthropic_compatible": {
+          "selected_profile": "anthropic_compatible",
+          "provider_type": "anthropic_compatible",
+          "model": "claude-compatible-model",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic_compatible"
+        },
+        "openai": {
+          "selected_profile": "openai",
+          "provider_type": "openai",
+          "model": "gpt-4o-mini",
+          "routing_mode": "manual",
+          "reason": "manual:openai"
+        },
+        "openai_compatible": {
+          "selected_profile": "openai_compatible",
+          "provider_type": "openai_compatible",
+          "model": "MiniMax-M2.5",
+          "routing_mode": "manual",
+          "reason": "manual:openai_compatible"
+        }
+      }
+    },
+    {
+      "task_role": "extraction",
+      "auto": {
+        "selected_profile": "openai",
+        "provider_type": "openai",
+        "model": "gpt-4o-mini",
+        "routing_mode": "auto",
+        "reason": "auto:extraction:openai"
+      },
+      "manual": {
+        "anthropic": {
+          "selected_profile": "anthropic",
+          "provider_type": "anthropic",
+          "model": "claude-3-5-haiku-latest",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic"
+        },
+        "anthropic_compatible": {
+          "selected_profile": "anthropic_compatible",
+          "provider_type": "anthropic_compatible",
+          "model": "claude-compatible-model",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic_compatible"
+        },
+        "openai": {
+          "selected_profile": "openai",
+          "provider_type": "openai",
+          "model": "gpt-4o-mini",
+          "routing_mode": "manual",
+          "reason": "manual:openai"
+        },
+        "openai_compatible": {
+          "selected_profile": "openai_compatible",
+          "provider_type": "openai_compatible",
+          "model": "MiniMax-M2.5",
+          "routing_mode": "manual",
+          "reason": "manual:openai_compatible"
+        }
+      }
+    },
+    {
+      "task_role": "synthesis",
+      "auto": {
+        "selected_profile": "openai",
+        "provider_type": "openai",
+        "model": "gpt-4o-mini",
+        "routing_mode": "auto",
+        "reason": "auto:synthesis:openai"
+      },
+      "manual": {
+        "anthropic": {
+          "selected_profile": "anthropic",
+          "provider_type": "anthropic",
+          "model": "claude-3-5-haiku-latest",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic"
+        },
+        "anthropic_compatible": {
+          "selected_profile": "anthropic_compatible",
+          "provider_type": "anthropic_compatible",
+          "model": "claude-compatible-model",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic_compatible"
+        },
+        "openai": {
+          "selected_profile": "openai",
+          "provider_type": "openai",
+          "model": "gpt-4o-mini",
+          "routing_mode": "manual",
+          "reason": "manual:openai"
+        },
+        "openai_compatible": {
+          "selected_profile": "openai_compatible",
+          "provider_type": "openai_compatible",
+          "model": "MiniMax-M2.5",
+          "routing_mode": "manual",
+          "reason": "manual:openai_compatible"
+        }
+      }
+    },
+    {
+      "task_role": "judge",
+      "auto": {
+        "selected_profile": "anthropic",
+        "provider_type": "anthropic",
+        "model": "claude-3-5-haiku-latest",
+        "routing_mode": "auto",
+        "reason": "auto:judge:anthropic"
+      },
+      "manual": {
+        "anthropic": {
+          "selected_profile": "anthropic",
+          "provider_type": "anthropic",
+          "model": "claude-3-5-haiku-latest",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic"
+        },
+        "anthropic_compatible": {
+          "selected_profile": "anthropic_compatible",
+          "provider_type": "anthropic_compatible",
+          "model": "claude-compatible-model",
+          "routing_mode": "manual",
+          "reason": "manual:anthropic_compatible"
+        },
+        "openai": {
+          "selected_profile": "openai",
+          "provider_type": "openai",
+          "model": "gpt-4o-mini",
+          "routing_mode": "manual",
+          "reason": "manual:openai"
+        },
+        "openai_compatible": {
+          "selected_profile": "openai_compatible",
+          "provider_type": "openai_compatible",
+          "model": "MiniMax-M2.5",
+          "routing_mode": "manual",
+          "reason": "manual:openai_compatible"
+        }
+      }
+    }
+  ],
+  "latency_cost": {
+    "value": null,
+    "reason": "no_live_provider_backed_routing_eval"
+  }
+}

@@ -19,21 +19,21 @@
 
 ## Command registry additions
 - metric_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_metrics.py --source-root evals/reports/phase5_local_smoke --output-root evals/reports/followup_metrics --json
-- ablation_runner:
+- ablation_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_ablation_pack.py --baseline-root evals/reports/phase5_local_smoke --followup-root evals/reports/followup_metrics --output-root evals/reports/followup_metrics --json
 - scorecard_renderer:
-- latency_profiler:
-- cost_aggregator:
+- latency_profiler: ablation_runner writes `evals/reports/followup_metrics/latency_cost_summary.json`
+- cost_aggregator: ablation_runner imports the committed Phase 7 cost placeholders and records the null-cost reason
 
 ## Current overall status
 - current_phase: phase8_ablation_and_perf
 - current_phase_slug: phase8-ablation-and-perf
-- current_attempt: 0
+- current_attempt: 1
 - last_successful_phase: phase7_metrics_instrumentation
 - overall_state: in_progress
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- active_branch: codex/phase8-ablation-and-perf/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase8-ablation-and-perf-attempt-1
 - main_clean_before_phase: yes
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
@@ -82,13 +82,30 @@
   - worktree-local bootstrap symlinks remain untracked and will be removed before cleanup
 
 ### Phase 8 - ablation_and_perf
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Added the deterministic Phase 8 ablation harness and CLI entrypoint, generated the required ablation/performance pack under `evals/reports/followup_metrics/`, and sanitized provider-routing artifacts so local API keys are never serialized into review outputs.
 - acceptance_checks:
+- `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+- `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_phase7_value_metrics.py tests/test_phase8_value_ablations.py` -> pass (12 passed)
+- `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_ablation_pack.py --baseline-root evals/reports/phase5_local_smoke --followup-root evals/reports/followup_metrics --output-root evals/reports/followup_metrics --json` -> pass
 - artifacts:
+- `scripts/run_value_ablation_pack.py`
+- `src/deep_research_agent/evals/value_ablations.py`
+- `tests/test_phase8_value_ablations.py`
+- `evals/reports/followup_metrics/ablation_summary.csv`
+- `evals/reports/followup_metrics/ablation_summary.md`
+- `evals/reports/followup_metrics/latency_cost_summary.json`
+- `evals/reports/followup_metrics/provider_routing_comparison.json`
 - blockers:
 - notes:
+- `audit_on_vs_off`: removing support-edge auditing drops `critical_claim_support_precision` from `1.0` to `0.0` and raises unsupported-claim leakage from `0.0` to `1.0` without changing completion.
+- `strict_source_policy_vs_relaxed`: relaxing trusted-only enforcement drops `policy_compliance_rate` from `1.0` to `0.667` while completion and bundle emission stay at `1.0`.
+- `evidence_first_vs_baseline_synthesis`: clearing snapshot links/support edges drops provenance completeness and support precision from `1.0` to `0.0`, and raises citation error from `0.0` to `1.0`.
+- `rerank_on_vs_off`: downgrading one critical support edge reduces `critical_claim_support_precision` from `1.0` to `0.5` with no completion change.
+- `provider_auto_vs_manual`: deterministic routing comparison emitted route-plan evidence only; judge auto-route selected `anthropic`, while live latency/cost and quality deltas remain null with reason `no_live_provider_backed_routing_eval`.
+- `new_runtime_vs_legacy`: recorded as `not_comparable` with reason `no_like_for_like_legacy_runtime_fixture`.
+- Phase 8 initially surfaced a secret-handling regression because the provider routing artifact serialized `api_key` values from local provider profiles; fixed by reducing the artifact to a safe route summary and adding a regression assertion that `api_key` never appears in the JSON.
 
 ### Phase 9 - value_pack
 - status: pending
@@ -115,12 +132,12 @@
 - estimated_api_cost_per_completed_job: null (`provider_free_fixture_run`)
 
 ## Ablation deltas snapshot
-- audit_value_delta:
-- source_policy_value_delta:
-- evidence_first_value_delta:
-- rerank_value_delta:
-- provider_routing_value_delta:
-- new_runtime_value_delta:
+- audit_value_delta: unsupported claim leakage +1.0 and critical claim support precision -1.0 when audit support edges are removed; completion unchanged
+- source_policy_value_delta: policy compliance -0.333 when trusted-only enforcement is relaxed; bundle emission and completion unchanged
+- evidence_first_value_delta: provenance completeness -1.0, critical claim support precision -1.0, citation error +1.0 without evidence-first grounding
+- rerank_value_delta: critical claim support precision -0.5 when rerank-like edge selection is disabled; completion unchanged
+- provider_routing_value_delta: deterministic route-plan only; judge auto-route selects `anthropic`, but live latency/quality deltas remain unavailable (`no_live_provider_backed_routing_eval`)
+- new_runtime_value_delta: not comparable because no like-for-like legacy runtime fixture remains (`no_like_for_like_legacy_runtime_fixture`)
 
 ## Decisions log
 - [2026-04-21T15:12:25Z] Follow-up metrics run started from `main@791c44b982110e115731a62b119306f0093accf4`.
@@ -132,3 +149,9 @@
 - [2026-04-21T15:12:25Z] Phase 7 green step completed: implemented `src/deep_research_agent/evals/value_metrics.py`, `scripts/run_value_metrics.py`, the fresh rerun runtime sidecar, and `docs/final/METRIC_DEFINITIONS.md`.
 - [2026-04-21T15:12:25Z] Phase 7 acceptance passed in the worktree and produced `headline_metrics.json`, `value_dashboard.json`, `stage_timing_breakdown.json`, and a fresh measured `company12` runtime sidecar under `evals/reports/followup_metrics/`.
 - [2026-04-21T15:12:25Z] Merged Phase 7 into `main` via `bf200d264779486a00a2602f391ac3aa2ce40b8b` and reran the Phase 7 mainline smoke successfully.
+- [2026-04-21T15:12:25Z] Verified the merged Phase 7 baseline on `main@7cb7bfa40c61e5ff2670d8336ac03b3d91c94483`, then created worktree `../_codex_worktrees/phase8-ablation-and-perf-attempt-1` on branch `codex/phase8-ablation-and-perf/attempt-1`.
+- [2026-04-21T15:12:25Z] Bootstrapped the Phase 8 worktree by symlinking `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr`; baseline help check and focused Phase 7 regression test passed in the new worktree.
+- [2026-04-21T15:12:25Z] Phase 8 TDD red step completed: `tests/test_phase8_value_ablations.py` failed first because `scripts/run_value_ablation_pack.py` did not exist.
+- [2026-04-21T15:12:25Z] Phase 8 green step completed: implemented `src/deep_research_agent/evals/value_ablations.py`, `scripts/run_value_ablation_pack.py`, and the required ablation/performance artifacts under `evals/reports/followup_metrics/`.
+- [2026-04-21T15:12:25Z] Phase 8 uncovered a local-secret regression because the initial `provider_routing_comparison.json` serialized provider `api_key` fields from the local settings profile. Replaced raw route dumps with safe summaries and added a regression assertion that `api_key` never appears in the comparison JSON.
+- [2026-04-21T15:12:25Z] Phase 8 acceptance passed in the worktree: lint pass, focused regression slice pass (12 passed), ablation pack regenerated, and provider routing output verified as `API_KEY_REDACTED`.
