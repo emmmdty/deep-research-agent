@@ -81,6 +81,33 @@ def test_eval_runner_saved_artifacts_are_stable_across_reruns(tmp_path: Path):
     )
 
 
+def test_file_based_suite_artifacts_do_not_embed_checkout_absolute_paths(tmp_path: Path):
+    """文件套件保存的 artifacts 不应泄漏当前 checkout 的绝对路径。"""
+    from deep_research_agent.evals.runner import PROJECT_ROOT, run_eval_suite
+
+    expectations = {
+        "trusted8": ("trusted-langgraph-brief", "repo:///evals/datasets/files/trusted_brief.md"),
+        "file8": ("file-public-private-mix", "repo:///evals/datasets/files/company_context.md"),
+    }
+
+    for suite_name, (task_id, stable_uri) in expectations.items():
+        output_root = tmp_path / suite_name
+        run_eval_suite(suite_name=suite_name, output_root=output_root)
+        bundle_path = output_root / task_id / "bundle" / "report_bundle.json"
+        sources_path = output_root / task_id / "bundle" / "sources.json"
+        claim_graph_path = output_root / task_id / "audit" / "claim_graph.json"
+
+        bundle_text = bundle_path.read_text(encoding="utf-8")
+        sources_text = sources_path.read_text(encoding="utf-8")
+        claim_graph_text = claim_graph_path.read_text(encoding="utf-8")
+
+        assert str(PROJECT_ROOT) not in bundle_text
+        assert str(PROJECT_ROOT) not in sources_text
+        assert str(PROJECT_ROOT) not in claim_graph_text
+        assert stable_uri in bundle_text
+        assert stable_uri in sources_text
+
+
 def test_local_release_smoke_writes_manifest_with_passing_release_gate(tmp_path: Path):
     """本地低成本 release smoke 应写出 manifest 与通过的 release gate。"""
     from scripts import run_local_release_smoke

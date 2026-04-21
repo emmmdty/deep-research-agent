@@ -12,7 +12,7 @@
       "source_id": "trusted-langgraph-brief-file-1",
       "snapshot_id": "trusted-langgraph-brief-file-snapshot-1",
       "title": "trusted_brief.md",
-      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md"
+      "canonical_uri": "repo:///evals/datasets/files/trusted_brief.md"
     }
   ],
   "sources": [
@@ -32,12 +32,12 @@
       "citation_id": 2,
       "source_type": "files",
       "title": "trusted_brief.md",
-      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md",
+      "canonical_uri": "repo:///evals/datasets/files/trusted_brief.md",
       "query": "Trusted-only research smoke",
       "selected": true,
       "snapshot_ref": "trusted-langgraph-brief-file-snapshot-1",
       "metadata": {
-        "file_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md"
+        "file_path": "evals/datasets/files/trusted_brief.md"
       }
     }
   ],
@@ -58,14 +58,14 @@
     },
     {
       "snapshot_id": "trusted-langgraph-brief-file-snapshot-1",
-      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md",
+      "canonical_uri": "repo:///evals/datasets/files/trusted_brief.md",
       "fetched_at": "2026-04-21T00:00:00+00:00",
-      "content_hash": "160b4beecf2fe6e0ab16e907d7e8fa365e70045e5624f2bd9047431e15addc72",
+      "content_hash": "4a64282dea022b02bcbc02ddfe6ff2c1b6bad28e5f74693c85f035f8314a7912",
       "mime_type": "text/markdown",
       "auth_scope": "private",
       "freshness_metadata": {
         "file_name": "trusted_brief.md",
-        "file_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md"
+        "file_path": "evals/datasets/files/trusted_brief.md"
       }
     }
   ]
