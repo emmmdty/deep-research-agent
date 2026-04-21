@@ -32,6 +32,19 @@ SUITES_ROOT = PROJECT_ROOT / "evals" / "suites"
 DEFAULT_REPORTS_ROOT = PROJECT_ROOT / "evals" / "reports"
 SUPPORTED_CLAIM_STATUSES = {"supported", "partially_supported"}
 BLOCKING_CLAIM_STATUSES = {"unsupported", "unverifiable", "contradicted"}
+FROZEN_ARTIFACT_TIMESTAMP = "2026-04-21T00:00:00+00:00"
+RESEARCH_METRIC_ORDER = (
+    "completion_rate",
+    "bundle_emission_rate",
+    "audit_pass_rate",
+    "critical_claim_support_precision",
+    "citation_error_rate",
+    "provenance_completeness",
+    "rubric_coverage",
+    "policy_compliance_rate",
+    "file_input_success_rate",
+    "conflict_detection_recall",
+)
 
 
 def run_eval_suite(*, suite_name: str, output_root: str | Path | None = None) -> dict[str, Any]:
@@ -236,12 +249,13 @@ def _run_research_task(task: EvalTaskSpec, task_output_root: Path) -> dict[str, 
     ).run(job.job_id)
 
     stable_paths = _copy_task_artifacts(final_job, task_output_root)
+    _normalize_task_artifacts(task, stable_paths)
     shutil.rmtree(task_output_root / "workspace", ignore_errors=True)
     bundle = json.loads(stable_paths["bundle_path"].read_text(encoding="utf-8"))
     task_metrics = _compute_research_task_metrics(task, bundle, all_sources, file_input_count=len(task.file_inputs))
     return {
         "task_id": task.task_id,
-        "job_id": final_job.job_id,
+        "job_id": task.task_id,
         "status": final_job.status,
         "audit_gate_status": getattr(final_job.audit_gate_status, "value", str(final_job.audit_gate_status)),
         "report_path": _display_path(stable_paths["report_path"]),
@@ -347,10 +361,17 @@ def _aggregate_research_metrics(task_results: list[dict[str, Any]]) -> dict[str,
             "conflict_detection_recall": 1.0,
         }
     aggregate: dict[str, float] = {}
-    metric_names = set()
+    metric_names = {
+        metric_name
+        for task_result in task_results
+        for metric_name in task_result["task_metrics"]
+    }
+    ordered_metric_names = [
+        metric_name for metric_name in RESEARCH_METRIC_ORDER if metric_name in metric_names
+    ] + sorted(metric_names.difference(RESEARCH_METRIC_ORDER))
     for task_result in task_results:
         metric_names.update(task_result["task_metrics"])
-    for metric_name in metric_names:
+    for metric_name in ordered_metric_names:
         values = [float(task_result["task_metrics"].get(metric_name, 1.0)) for task_result in task_results]
         aggregate[metric_name] = round(sum(values) / len(values), 3)
     aggregate.setdefault("completion_rate", 0.0)
@@ -601,6 +622,9 @@ def _copy_task_artifacts(final_job, task_output_root: Path) -> dict[str, Path]:
         "report_path": stable_report_path,
         "bundle_path": stable_bundle_dir / "report_bundle.json",
         "manifest_path": stable_bundle_dir / "manifest.json",
+        "trace_path": stable_bundle_dir / "trace.jsonl",
+        "claim_graph_path": stable_audit_dir / "claim_graph.json",
+        "review_queue_path": stable_audit_dir / "review_queue.json",
     }
 
 
@@ -610,6 +634,69 @@ def _display_path(path: Path) -> str:
         return str(resolved.relative_to(PROJECT_ROOT))
     except ValueError:
         return str(resolved)
+
+
+def _normalize_task_artifacts(task: EvalTaskSpec, stable_paths: dict[str, Path]) -> None:
+    bundle_path = stable_paths["bundle_path"]
+    manifest_path = stable_paths["manifest_path"]
+    trace_path = stable_paths["trace_path"]
+    claim_graph_path = stable_paths["claim_graph_path"]
+    review_queue_path = stable_paths["review_queue_path"]
+    sources_path = bundle_path.parent / "sources.json"
+
+    bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+    bundle["job"]["job_id"] = task.task_id
+    bundle["job"]["created_at"] = FROZEN_ARTIFACT_TIMESTAMP
+    for snapshot in bundle.get("snapshots") or []:
+        snapshot["fetched_at"] = FROZEN_ARTIFACT_TIMESTAMP
+    normalized_events = []
+    checkpoint_counter = 0
+    for index, event in enumerate(bundle.get("audit_events") or [], start=1):
+        updated = dict(event)
+        payload = dict(updated.get("payload") or {})
+        if "checkpoint_id" in payload:
+            checkpoint_counter += 1
+            payload["checkpoint_id"] = f"{task.task_id}-checkpoint-{checkpoint_counter:04d}"
+        if updated.get("event_type") == "bundle.emitted":
+            payload["report_path"] = _display_path(stable_paths["report_path"])
+            payload["report_bundle_path"] = _display_path(stable_paths["bundle_path"])
+            payload["trace_path"] = _display_path(stable_paths["trace_path"])
+        updated["payload"] = payload
+        updated["event_id"] = f"{task.task_id}-event-{index:04d}"
+        updated["job_id"] = task.task_id
+        updated["timestamp"] = FROZEN_ARTIFACT_TIMESTAMP
+        normalized_events.append(updated)
+    bundle["audit_events"] = normalized_events
+    bundle_path.write_text(json.dumps(bundle, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    if sources_path.exists():
+        sources_payload = {
+            "citations": bundle.get("citations") or [],
+            "sources": bundle.get("sources") or [],
+            "snapshots": bundle.get("snapshots") or [],
+        }
+        sources_path.write_text(json.dumps(sources_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["generated_at"] = FROZEN_ARTIFACT_TIMESTAMP
+    manifest["job"]["job_id"] = task.task_id
+    manifest["job"]["created_at"] = FROZEN_ARTIFACT_TIMESTAMP
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    trace_path.write_text(
+        "\n".join(json.dumps(event, ensure_ascii=False) for event in normalized_events) + "\n",
+        encoding="utf-8",
+    )
+
+    if claim_graph_path.exists():
+        claim_graph = json.loads(claim_graph_path.read_text(encoding="utf-8"))
+        claim_graph["job_id"] = task.task_id
+        claim_graph_path.write_text(json.dumps(claim_graph, ensure_ascii=False, indent=2), encoding="utf-8")
+    if review_queue_path.exists():
+        review_queue = json.loads(review_queue_path.read_text(encoding="utf-8"))
+        review_queue["job_id"] = task.task_id
+        review_queue["created_at"] = FROZEN_ARTIFACT_TIMESTAMP
+        review_queue_path.write_text(json.dumps(review_queue, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _compute_research_task_metrics(

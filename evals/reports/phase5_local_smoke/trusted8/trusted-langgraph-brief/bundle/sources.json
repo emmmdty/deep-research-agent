@@ -45,7 +45,7 @@
     {
       "snapshot_id": "snapshot-trusted-docs",
       "canonical_uri": "https://docs.langchain.com/langgraph/overview",
-      "fetched_at": "2026-04-21T13:34:58.853803+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "54ab351c6031e46c3fa164b3ce007a0c6174724b20b1cbbaeaa1b74180de4578",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -59,7 +59,7 @@
     {
       "snapshot_id": "trusted-langgraph-brief-file-snapshot-1",
       "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md",
-      "fetched_at": "2026-04-21T13:34:58.853826+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "160b4beecf2fe6e0ab16e907d7e8fa365e70045e5624f2bd9047431e15addc72",
       "mime_type": "text/markdown",
       "auth_scope": "private",

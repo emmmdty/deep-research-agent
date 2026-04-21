@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-21T13:34:59.110382+00:00",
+  "generated_at": "2026-04-21T00:00:00+00:00",
   "job": {
-    "job_id": "20260421T133458Z-64336d39",
-    "created_at": "2026-04-21T13:34:58.884874+00:00",
+    "job_id": "file-public-private-mix",
+    "created_at": "2026-04-21T00:00:00+00:00",
     "input_prompt": "Public plus private file-ingest smoke",
     "status": "completed",
     "source_profile": "public_then_private",

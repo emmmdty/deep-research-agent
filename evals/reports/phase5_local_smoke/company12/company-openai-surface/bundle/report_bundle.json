@@ -1,8 +1,8 @@
 {
   "bundle_version": "1.0.0",
   "job": {
-    "job_id": "20260421T133458Z-00859618",
-    "created_at": "2026-04-21T13:34:58.160330+00:00",
+    "job_id": "company-openai-surface",
+    "created_at": "2026-04-21T00:00:00+00:00",
     "input_prompt": "OpenAI enterprise surface smoke",
     "status": "completed",
     "source_profile": "company_broad",
@@ -59,7 +59,7 @@
     {
       "snapshot_id": "snapshot-openai-home",
       "canonical_uri": "https://openai.com/",
-      "fetched_at": "2026-04-21T13:34:58.358752+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "440a0347201ce2343176e2b3af904208a85c249eb6da1857aac1cf4f8ab18574",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -73,7 +73,7 @@
     {
       "snapshot_id": "snapshot-openai-platform",
       "canonical_uri": "https://platform.openai.com/docs/overview",
-      "fetched_at": "2026-04-21T13:34:58.358811+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "8246bf427b68fafef69676720a97f667f57c3d9a9b3521fbd661716b6cab10a2",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -131,186 +131,186 @@
   },
   "audit_events": [
     {
-      "event_id": "20260421T133458Z-00859618-event-0001",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0001",
+      "job_id": "company-openai-surface",
       "stage": "job",
       "event_type": "job.created",
-      "timestamp": "2026-04-21T13:34:58.160330+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
         "topic": "OpenAI enterprise surface smoke",
         "research_profile": "eval_smoke"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0002",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0002",
+      "job_id": "company-openai-surface",
       "stage": "clarifying",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.186001+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0003",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0003",
+      "job_id": "company-openai-surface",
       "stage": "clarifying",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.198231+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0002",
+        "checkpoint_id": "company-openai-surface-checkpoint-0001",
         "next_stage": "planned"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0004",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0004",
+      "job_id": "company-openai-surface",
       "stage": "planned",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.206489+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0005",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0005",
+      "job_id": "company-openai-surface",
       "stage": "planned",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.219095+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0003",
+        "checkpoint_id": "company-openai-surface-checkpoint-0002",
         "next_stage": "collecting"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0006",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0006",
+      "job_id": "company-openai-surface",
       "stage": "collecting",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.226440+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0007",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0007",
+      "job_id": "company-openai-surface",
       "stage": "collecting",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.235762+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0004",
+        "checkpoint_id": "company-openai-surface-checkpoint-0003",
         "next_stage": "normalizing"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0008",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0008",
+      "job_id": "company-openai-surface",
       "stage": "normalizing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.242251+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0009",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0009",
+      "job_id": "company-openai-surface",
       "stage": "normalizing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.252155+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0005",
+        "checkpoint_id": "company-openai-surface-checkpoint-0004",
         "next_stage": "extracting"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0010",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0010",
+      "job_id": "company-openai-surface",
       "stage": "extracting",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.259397+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0011",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0011",
+      "job_id": "company-openai-surface",
       "stage": "extracting",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.274762+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0006",
+        "checkpoint_id": "company-openai-surface-checkpoint-0005",
         "next_stage": "claim_auditing"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0012",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0012",
+      "job_id": "company-openai-surface",
       "stage": "claim_auditing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.283310+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0013",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0013",
+      "job_id": "company-openai-surface",
       "stage": "claim_auditing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.294603+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0007",
+        "checkpoint_id": "company-openai-surface-checkpoint-0006",
         "next_stage": "synthesizing"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0014",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0014",
+      "job_id": "company-openai-surface",
       "stage": "synthesizing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.301623+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0015",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0015",
+      "job_id": "company-openai-surface",
       "stage": "synthesizing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.316796+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0008",
+        "checkpoint_id": "company-openai-surface-checkpoint-0007",
         "next_stage": "rendering"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0016",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0016",
+      "job_id": "company-openai-surface",
       "stage": "rendering",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.326493+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0017",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0017",
+      "job_id": "company-openai-surface",
       "stage": "rendering",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.338752+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0009",
+        "checkpoint_id": "company-openai-surface-checkpoint-0008",
         "next_stage": "completed"
       }
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0018",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0018",
+      "job_id": "company-openai-surface",
       "stage": "completed",
       "event_type": "job.completed",
-      "timestamp": "2026-04-21T13:34:58.349731+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-00859618-event-0019",
-      "job_id": "20260421T133458Z-00859618",
+      "event_id": "company-openai-surface-event-0019",
+      "job_id": "company-openai-surface",
       "stage": "bundle",
       "event_type": "bundle.emitted",
-      "timestamp": "2026-04-21T13:34:58.354043+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "report_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/company12/company-openai-surface/workspace/research_jobs/20260421T133458Z-00859618/report.md",
-        "report_bundle_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/company12/company-openai-surface/workspace/research_jobs/20260421T133458Z-00859618/bundle/report_bundle.json",
-        "trace_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/company12/company-openai-surface/workspace/research_jobs/20260421T133458Z-00859618/bundle/trace.jsonl"
+        "report_path": "evals/reports/phase5_local_smoke/company12/company-openai-surface/report.md",
+        "report_bundle_path": "evals/reports/phase5_local_smoke/company12/company-openai-surface/bundle/report_bundle.json",
+        "trace_path": "evals/reports/phase5_local_smoke/company12/company-openai-surface/bundle/trace.jsonl"
       }
     }
   ],
