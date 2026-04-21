@@ -1,0 +1,104 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-public-docs",
+      "snapshot_id": "snapshot-public-docs",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "file-public-private-mix-file-1",
+      "snapshot_id": "file-public-private-mix-file-snapshot-1",
+      "title": "company_context.md",
+      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "file-public-private-mix-file-2",
+      "snapshot_id": "file-public-private-mix-file-snapshot-2",
+      "title": "industry_context.txt",
+      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-public-docs",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "query": "public provenance docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-public-docs",
+      "metadata": {}
+    },
+    {
+      "source_id": "file-public-private-mix-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "company_context.md",
+      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md",
+      "query": "Public plus private file-ingest smoke",
+      "selected": true,
+      "snapshot_ref": "file-public-private-mix-file-snapshot-1",
+      "metadata": {
+        "file_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md"
+      }
+    },
+    {
+      "source_id": "file-public-private-mix-file-2",
+      "citation_id": 3,
+      "source_type": "files",
+      "title": "industry_context.txt",
+      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt",
+      "query": "Public plus private file-ingest smoke",
+      "selected": true,
+      "snapshot_ref": "file-public-private-mix-file-snapshot-2",
+      "metadata": {
+        "file_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-public-docs",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "fetched_at": "2026-04-21T13:34:59.110427+00:00",
+      "content_hash": "ad1657d2861698b972a31fb86aa2e5594a0daa4b430bcb54bc94dad4858cf97d",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "public provenance docs",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "file-public-private-mix-file-snapshot-1",
+      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md",
+      "fetched_at": "2026-04-21T13:34:59.110454+00:00",
+      "content_hash": "e5211675d5cbbe4077080ce440c11a994cbea697d2dc49dc33fb6009049ab9ee",
+      "mime_type": "text/markdown",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "company_context.md",
+        "file_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md"
+      }
+    },
+    {
+      "snapshot_id": "file-public-private-mix-file-snapshot-2",
+      "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt",
+      "fetched_at": "2026-04-21T13:34:59.110462+00:00",
+      "content_hash": "aaffaae7bf04865c19400dadff1ea23ac5897e1a055972e906fe430d32166cac",
+      "mime_type": "text/plain",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "industry_context.txt",
+        "file_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt"
+      }
+    }
+  ]
+}

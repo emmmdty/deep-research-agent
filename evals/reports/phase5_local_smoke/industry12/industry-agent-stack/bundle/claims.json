@@ -1,0 +1,30 @@
+{
+  "claims": [
+    {
+      "claim_id": "claim-agent-stack-1",
+      "text": "Workflow orchestration and retrieval quality are separate layers in the enterprise research stack.",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Market structure",
+      "evidence_ids": [
+        "evidence-langgraph-docs",
+        "evidence-rag-paper"
+      ]
+    },
+    {
+      "claim_id": "claim-agent-stack-2",
+      "text": "Vendor comparisons should keep orchestration guarantees and retrieval depth visible as distinct criteria.",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Comparison",
+      "evidence_ids": [
+        "evidence-langgraph-repo",
+        "evidence-rag-paper"
+      ]
+    }
+  ]
+}

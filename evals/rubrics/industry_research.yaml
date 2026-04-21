@@ -1,0 +1,9 @@
+rubric_name: industry_research
+dimensions:
+  - market_structure
+  - comparison_coverage
+  - uncertainty_honesty
+pass_criteria:
+  rubric_coverage_min: 0.80
+  conflict_detection_recall_min: 0.80
+  citation_error_rate_max: 0.05

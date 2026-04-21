@@ -1,0 +1,18 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-public-private-mix-claim-1",
+      "text": "The runtime can ground a report in a public source while preserving explicit provenance for private Markdown and text inputs used during synthesis.[1][2][3]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-public-private-mix-file-evidence-1",
+        "file-public-private-mix-file-evidence-2",
+        "file-public-private-mix-evidence-3"
+      ]
+    }
+  ]
+}

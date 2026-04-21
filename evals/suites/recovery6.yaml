@@ -1,0 +1,20 @@
+suite_name: recovery6
+executor: reliability_fixture
+description: Deterministic local recovery and controllability suite.
+dataset_path: evals/datasets/recovery6.smoke.yaml
+rubric_path: evals/rubrics/recovery_reliability.yaml
+thresholds:
+  completion_rate:
+    min: 1.0
+  cancel_success_rate:
+    min: 1.0
+  retry_success_rate:
+    min: 1.0
+  resume_success_rate:
+    min: 1.0
+  refine_success_rate:
+    min: 1.0
+  stale_recovery_success_rate:
+    min: 1.0
+  idle_skip_rate:
+    min: 1.0

@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "20260421T133458Z-00859618",
+    "created_at": "2026-04-21T13:34:58.160330+00:00",
+    "input_prompt": "OpenAI enterprise surface smoke",
+    "status": "completed",
+    "source_profile": "company_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_smoke",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-openai-home",
+      "snapshot_id": "snapshot-openai-home",
+      "title": "OpenAI",
+      "canonical_uri": "https://openai.com/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-openai-platform",
+      "snapshot_id": "snapshot-openai-platform",
+      "title": "OpenAI Platform Overview",
+      "canonical_uri": "https://platform.openai.com/docs/overview"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-openai-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "OpenAI",
+      "canonical_uri": "https://openai.com/",
+      "query": "OpenAI official overview",
+      "selected": true,
+      "snapshot_ref": "snapshot-openai-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-openai-platform",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "OpenAI Platform Overview",
+      "canonical_uri": "https://platform.openai.com/docs/overview",
+      "query": "OpenAI API overview",
+      "selected": true,
+      "snapshot_ref": "snapshot-openai-platform",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-openai-home",
+      "canonical_uri": "https://openai.com/",
+      "fetched_at": "2026-04-21T13:34:58.358752+00:00",
+      "content_hash": "440a0347201ce2343176e2b3af904208a85c249eb6da1857aac1cf4f8ab18574",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "OpenAI official overview",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-openai-platform",
+      "canonical_uri": "https://platform.openai.com/docs/overview",
+      "fetched_at": "2026-04-21T13:34:58.358811+00:00",
+      "content_hash": "8246bf427b68fafef69676720a97f667f57c3d9a9b3521fbd661716b6cab10a2",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "OpenAI API overview",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "company-openai-surface-evidence-1",
+      "snapshot_id": "snapshot-openai-home",
+      "source_id": "source-openai-home",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "OpenAI presents ChatGPT, API access, and enterprise adoption materials on its official site.",
+      "extraction_method": "fixture_source_snippet"
+    },
+    {
+      "evidence_id": "company-openai-surface-evidence-2",
+      "snapshot_id": "snapshot-openai-platform",
+      "source_id": "source-openai-platform",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "excerpt": "The platform overview documents API capabilities, tooling, and developer onboarding.",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "20260421T133458Z-00859618-event-0001",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T13:34:58.160330+00:00",
+      "payload": {
+        "topic": "OpenAI enterprise surface smoke",
+        "research_profile": "eval_smoke"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0002",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.186001+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0003",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.198231+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0002",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0004",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.206489+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0005",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.219095+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0003",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0006",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.226440+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0007",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.235762+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0004",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0008",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.242251+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0009",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.252155+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0005",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0010",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.259397+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0011",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.274762+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0006",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0012",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.283310+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0013",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.294603+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0007",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0014",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.301623+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0015",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.316796+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0008",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0016",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T13:34:58.326493+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0017",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T13:34:58.338752+00:00",
+      "payload": {
+        "checkpoint_id": "20260421T133458Z-00859618-checkpoint-0009",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0018",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T13:34:58.349731+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260421T133458Z-00859618-event-0019",
+      "job_id": "20260421T133458Z-00859618",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T13:34:58.354043+00:00",
+      "payload": {
+        "report_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/company12/company-openai-surface/workspace/research_jobs/20260421T133458Z-00859618/report.md",
+        "report_bundle_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/company12/company-openai-surface/workspace/research_jobs/20260421T133458Z-00859618/bundle/report_bundle.json",
+        "trace_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/company12/company-openai-surface/workspace/research_jobs/20260421T133458Z-00859618/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# OpenAI Enterprise Surface\n\nOpenAI exposes a public product surface spanning ChatGPT, API access, and enterprise-facing materials.[1][2]\n\nThe public API and docs surface provides a concrete developer path rather than a prose-only marketing layer.[2]\n",
+  "claims": [
+    {
+      "claim_id": "company-openai-surface-claim-1",
+      "text": "OpenAI exposes a public product surface spanning ChatGPT, API access, and enterprise-facing materials.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-openai-surface-evidence-1",
+        "company-openai-surface-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-openai-surface-edge-1",
+      "claim_id": "company-openai-surface-claim-1",
+      "evidence_id": "company-openai-surface-evidence-1",
+      "source_id": "source-openai-home",
+      "snapshot_id": "snapshot-openai-home",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI"
+    },
+    {
+      "edge_id": "company-openai-surface-edge-2",
+      "claim_id": "company-openai-surface-claim-1",
+      "evidence_id": "company-openai-surface-evidence-2",
+      "source_id": "source-openai-platform",
+      "snapshot_id": "snapshot-openai-platform",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI Platform Overview"
+    }
+  ],
+  "conflict_sets": []
+}

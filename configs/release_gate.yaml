@@ -8,16 +8,41 @@ checks:
     required: true
     command: uv run pytest -q tests/test_phase2_jobs.py
     description: job lease, checkpoint, event log, cancel/retry, and recovery invariants
+  - id: recovery6-smoke
+    category: runtime_reliability
+    required: true
+    command: uv run python main.py eval run --suite recovery6 --output-root evals/reports/phase5_local_smoke/recovery6
+    description: local recovery smoke covers cancel, retry, resume, refine, and stale recovery semantics
   - id: connector-fetch-security
     category: connector_security
     required: true
     command: uv run pytest -q tests/test_phase3_connectors.py
     description: connector policy blocks unsafe fetch URLs and preserves snapshot contract
+  - id: trusted8-smoke
+    category: source_policy_eval
+    required: true
+    command: uv run python main.py eval run --suite trusted8 --output-root evals/reports/phase5_local_smoke/trusted8
+    description: trusted-only local smoke verifies approved domains and private file handling remain policy compliant
+  - id: file8-smoke
+    category: file_ingest_eval
+    required: true
+    command: uv run python main.py eval run --suite file8 --output-root evals/reports/phase5_local_smoke/file8
+    description: file-ingest local smoke emits mixed public/private bundles with explicit provenance
   - id: audit-grounding
     category: audit_grounding
     required: true
     command: uv run pytest -q tests/test_phase4_auditor.py
     description: critical claims require grounded evidence edges or blocked review queue
+  - id: company12-smoke
+    category: company_research
+    required: true
+    command: uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12
+    description: company research smoke emits a grounded report bundle and passes claim-centric thresholds
+  - id: industry12-smoke
+    category: industry_research
+    required: true
+    command: uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12
+    description: industry comparison smoke emits a grounded bundle and preserves comparison coverage
   - id: benchmark-diagnostics
     category: benchmark_diagnostics
     required: true
@@ -27,4 +52,9 @@ checks:
     category: docs_surface
     required: true
     command: uv run python main.py --help
-    description: docs and CLI keep the current public surface honest and API-free
+    description: docs and CLI keep the current public surface honest, including eval and bundle entrypoints
+  - id: api-contract-smoke
+    category: api_contract
+    required: true
+    command: uv run python -c "from deep_research_agent.gateway.api import create_app; schema=create_app().openapi(); assert '/v1/research/jobs' in schema['paths']"
+    description: the HTTP API contract and batch surface remain loadable from the local app object

@@ -1,0 +1,104 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-langgraph-docs",
+      "snapshot_id": "snapshot-langgraph-docs",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-langgraph-repo",
+      "snapshot_id": "snapshot-langgraph-repo",
+      "title": "langchain-ai/langgraph",
+      "canonical_uri": "https://github.com/langchain-ai/langgraph"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "source-rag-paper",
+      "snapshot_id": "snapshot-rag-paper",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "canonical_uri": "https://arxiv.org/abs/2005.11401"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-langgraph-docs",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "query": "LangGraph durable execution docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-langgraph-docs",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-langgraph-repo",
+      "citation_id": 2,
+      "source_type": "github",
+      "title": "langchain-ai/langgraph",
+      "canonical_uri": "https://github.com/langchain-ai/langgraph",
+      "query": "langgraph github durable agents",
+      "selected": true,
+      "snapshot_ref": "snapshot-langgraph-repo",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-rag-paper",
+      "citation_id": 3,
+      "source_type": "arxiv",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "canonical_uri": "https://arxiv.org/abs/2005.11401",
+      "query": "retrieval augmented generation evidence paper",
+      "selected": true,
+      "snapshot_ref": "snapshot-rag-paper",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-langgraph-docs",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "fetched_at": "2026-04-21T13:34:58.645639+00:00",
+      "content_hash": "09a00fbbcd354c193302b79b09c650b79db0083847dbbc7cb7c3af3c72f0dfea",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "LangGraph durable execution docs",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-langgraph-repo",
+      "canonical_uri": "https://github.com/langchain-ai/langgraph",
+      "fetched_at": "2026-04-21T13:34:58.645663+00:00",
+      "content_hash": "33e87c5d94db89dcf1f36523616e3ccd3d6d7b3f8acc232e40c0d648fc373635",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "langgraph github durable agents",
+        "source_type": "github",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-rag-paper",
+      "canonical_uri": "https://arxiv.org/abs/2005.11401",
+      "fetched_at": "2026-04-21T13:34:58.645669+00:00",
+      "content_hash": "67d6bc0c8b3ea2165a33eb590f9daa2f52ae4ba379958c87c361c00dcf178008",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "retrieval augmented generation evidence paper",
+        "source_type": "arxiv",
+        "selected": true
+      }
+    }
+  ]
+}

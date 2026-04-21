@@ -1,0 +1,35 @@
+variant: smoke_local
+tasks:
+  - task_id: file-public-private-mix
+    topic: Public plus private file-ingest smoke
+    source_profile: public_then_private
+    research_profile: eval_smoke
+    required_questions:
+      - Which public source anchors the topic?
+      - Which private files add scoped internal context?
+      - Does the output keep private provenance explicit?
+    answered_questions:
+      - Which public source anchors the topic?
+      - Which private files add scoped internal context?
+      - Does the output keep private provenance explicit?
+    report_markdown: |
+      # Public + Private File Ingest
+
+      The runtime can ground a report in a public source while preserving explicit provenance for private Markdown and text inputs used during synthesis.[1][2][3]
+    task_summaries:
+      - Public and private materials remain distinguishable in the emitted artifact bundle.[1][2][3]
+    sources:
+      - citation_id: 1
+        source_id: source-public-docs
+        source_type: web
+        query: public provenance docs
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        url: https://docs.langchain.com/langgraph/overview
+        snippet: Public documentation provides the baseline context for the workflow.
+        snapshot_ref: snapshot-public-docs
+        trust_tier: 5
+        auth_scope: public
+    file_inputs:
+      - evals/datasets/files/company_context.md
+      - evals/datasets/files/industry_context.txt

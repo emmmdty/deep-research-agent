@@ -36,3 +36,13 @@ def test_release_gate_passes_when_all_required_domains_have_evidence():
 
     assert result["status"] == "passed"
     assert result["required_check_count"] == result["passed_required_check_count"]
+
+
+def test_release_gate_config_requires_phase5_eval_suites():
+    """Phase 5 之后 release gate 应显式要求本地 eval suites。"""
+    from scripts.release_gate import load_release_gate_config
+
+    config = load_release_gate_config()
+    check_ids = {check["id"] for check in config["checks"]}
+
+    assert {"company12-smoke", "industry12-smoke", "trusted8-smoke", "file8-smoke", "recovery6-smoke"} <= check_ids

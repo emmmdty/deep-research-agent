@@ -25,6 +25,26 @@ def test_main_parser_uses_settings_default_max_loops_for_submit(monkeypatch):
     assert args.source_profile == "company_broad"
 
 
+def test_main_parser_exposes_eval_run_subcommand(monkeypatch):
+    """公开 CLI 应暴露 eval run 入口。"""
+    import main
+
+    settings = SimpleNamespace(
+        max_research_loops=7,
+        workspace_dir="workspace",
+        legacy_cli_enabled=True,
+        source_policy_mode="company_broad",
+    )
+    monkeypatch.setattr(main, "get_settings", lambda: settings)
+
+    parser = main.build_parser()
+    args = parser.parse_args(["eval", "run", "--suite", "company12"])
+
+    assert args.command == "eval"
+    assert args.eval_command == "run"
+    assert args.suite == "company12"
+
+
 def test_run_cli_uses_settings_workspace_dir(tmp_path, monkeypatch):
     """legacy helper 输出目录应跟随 Settings.workspace_dir。"""
     import main

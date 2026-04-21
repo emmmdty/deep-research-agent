@@ -1,0 +1,22 @@
+suite_name: industry12
+executor: research_fixture
+description: Low-cost local smoke for industry comparison tasks.
+dataset_path: evals/datasets/industry12.smoke.yaml
+rubric_path: evals/rubrics/industry_research.yaml
+thresholds:
+  completion_rate:
+    min: 1.0
+  bundle_emission_rate:
+    min: 1.0
+  audit_pass_rate:
+    min: 1.0
+  critical_claim_support_precision:
+    min: 0.85
+  citation_error_rate:
+    max: 0.05
+  provenance_completeness:
+    min: 0.95
+  rubric_coverage:
+    min: 0.80
+  conflict_detection_recall:
+    min: 0.80
