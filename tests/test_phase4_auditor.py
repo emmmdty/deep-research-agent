@@ -181,6 +181,7 @@ def test_claim_auditor_blocks_supported_critical_claim_without_snapshot_groundin
 
 def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_path: Path):
     """orchestrator 应经过 claim_auditing 阶段，并保留 completed+blocked 语义。"""
+    from artifacts.schemas import validate_instance
     from services.research_jobs.orchestrator import ResearchJobOrchestrator
     from services.research_jobs.service import ResearchJobService
 
@@ -321,14 +322,20 @@ def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_pat
     final_job = orchestrator.run(job.job_id)
     events = service.list_events(job.job_id)
     bundle = json.loads(Path(final_job.report_bundle_path).read_text(encoding="utf-8"))
+    manifest = json.loads((Path(final_job.report_bundle_path).parent / "manifest.json").read_text(encoding="utf-8"))
+    audit_decision = json.loads((Path(final_job.report_bundle_path).parent / "audit_decision.json").read_text(encoding="utf-8"))
 
     assert final_job.status == "completed"
     assert final_job.audit_gate_status == "blocked"
     assert any(event.stage == "claim_auditing" and event.event_type == "stage.completed" for event in events)
+    validate_instance("report-bundle", bundle)
+    validate_instance("artifact-manifest", manifest)
     assert bundle["audit_summary"]["gate_status"] == "blocked"
     assert bundle["claims"][0]["placeholder"] is False
     assert bundle["claim_support_edges"]
     assert bundle["conflict_sets"]
+    assert audit_decision["gate_status"] == "blocked"
+    assert audit_decision["review_queue_ref"] == "audit/review_queue.json"
 
 
 def test_build_report_bundle_preserves_audited_claim_graph():

@@ -187,6 +187,11 @@ phase4 以后，公开 runtime 的可信边界不再停留在 `EvidenceUnit / Ve
   - `audit_gate_status = blocked`
 - 当前 relation 判定仍是启发式文本 overlap，不等于完整自动事实核验
 - 相关侧车产物位于：
+  - `workspace/research_jobs/<job_id>/bundle/report.html`
+  - `workspace/research_jobs/<job_id>/bundle/claims.json`
+  - `workspace/research_jobs/<job_id>/bundle/sources.json`
+  - `workspace/research_jobs/<job_id>/bundle/audit_decision.json`
+  - `workspace/research_jobs/<job_id>/bundle/manifest.json`
   - `workspace/research_jobs/<job_id>/audit/claim_graph.json`
   - `workspace/research_jobs/<job_id>/audit/review_queue.json`
 

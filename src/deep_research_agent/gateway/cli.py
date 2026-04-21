@@ -236,6 +236,7 @@ def run_cli(
             workspace_dir=output_dir,
             bundle_output_dirname=getattr(settings, "bundle_output_dirname", "bundles"),
             source_profile=getattr(settings, "source_policy_mode", "legacy-default"),
+            report_path=output_file,
         )
         if artifact_paths is not None:
             console.print(f"🧾 Bundle 已保存到: [cyan]{artifact_paths['bundle_path']}[/cyan]")

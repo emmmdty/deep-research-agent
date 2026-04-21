@@ -265,7 +265,12 @@ uv run python main.py watch --job-id <job_id>
 
 - `workspace/phase3-live-validation/research_jobs/jobs.db`
 - `workspace/phase3-live-validation/research_jobs/<job_id>/report.md`
+- `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/report.html`
 - `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/report_bundle.json`
+- `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/claims.json`
+- `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/sources.json`
+- `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/audit_decision.json`
+- `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/manifest.json`
 - `workspace/phase3-live-validation/research_jobs/<job_id>/bundle/trace.jsonl`
 - `workspace/phase3-live-validation/research_jobs/<job_id>/snapshots/*.json`
 - `workspace/phase3-live-validation/research_jobs/<job_id>/snapshots/*.txt`
@@ -292,13 +297,21 @@ assert status == "completed"
 
 job_root = root / job_id
 snapshot_dir = job_root / "snapshots"
+bundle_dir = Path(bundle_path).parent
 bundle = json.loads(Path(bundle_path).read_text(encoding="utf-8"))
+manifest = json.loads((bundle_dir / "manifest.json").read_text(encoding="utf-8"))
 validate_instance("report-bundle", bundle)
+validate_instance("artifact-manifest", manifest)
 
 assert Path(trace_path).exists()
 assert snapshot_dir.exists()
 assert list(snapshot_dir.glob("*.json"))
 assert list(snapshot_dir.glob("*.txt"))
+assert (bundle_dir / "report.html").exists()
+assert (bundle_dir / "claims.json").exists()
+assert (bundle_dir / "sources.json").exists()
+assert (bundle_dir / "audit_decision.json").exists()
+assert (bundle_dir / "manifest.json").exists()
 assert bundle["sources"]
 assert bundle["snapshots"]
 assert all(source["snapshot_ref"] for source in bundle["sources"])
@@ -357,6 +370,8 @@ uv run pytest -q tests/test_phase4_auditor.py
 
 - `workspace/research_jobs/<job_id>/audit/claim_graph.json`
 - `workspace/research_jobs/<job_id>/audit/review_queue.json`
+- `workspace/research_jobs/<job_id>/bundle/audit_decision.json`
+- `workspace/research_jobs/<job_id>/bundle/manifest.json`
 
 若 `status = completed` 且 `audit_gate_status = blocked`，表示：
 

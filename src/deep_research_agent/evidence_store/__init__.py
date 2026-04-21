@@ -1,7 +1,7 @@
-"""Canonical evidence-store boundary exposed from the src package."""
+"""Canonical evidence-store boundary."""
 
 from __future__ import annotations
 
-from memory.evidence_store import EvidenceStore
+from .store import EvidenceStore
 
 __all__ = ["EvidenceStore"]

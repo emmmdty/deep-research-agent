@@ -12,6 +12,7 @@ from legacy.workflows.states import RunMetrics, SourceRecord
 
 
 PHASE3_SCHEMA_NAMES = [
+    "artifact-manifest",
     "connector-health-record",
     "source-policy-profile",
     "source-policy-overrides",
@@ -458,7 +459,8 @@ def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Pat
 
 
 def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, monkeypatch):
-    """公开 orchestrator 路径应把 snapshot 写入 job 目录，而不是 workspace 根目录。"""
+    """公开 orchestrator 路径应把 snapshot 和 bundle sidecars 写入 job 目录。"""
+    from artifacts.schemas import validate_instance
     from legacy.agents import researcher
     from connectors.legacy import LegacyConnectorAdapter
     from connectors.registry import ConnectorRegistry
@@ -570,10 +572,24 @@ def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, mo
 
     job_snapshot_dir = Path(final_job.report_path).parent / "snapshots"
     workspace_snapshot_dir = tmp_path / "snapshots"
+    bundle_dir = Path(final_job.report_bundle_path).parent
+    manifest = json.loads((bundle_dir / "manifest.json").read_text(encoding="utf-8"))
+    bundle = json.loads(Path(final_job.report_bundle_path).read_text(encoding="utf-8"))
+    audit_decision = json.loads((bundle_dir / "audit_decision.json").read_text(encoding="utf-8"))
 
     assert list(job_snapshot_dir.glob("*.json"))
     assert list(job_snapshot_dir.glob("*.txt"))
     assert not list(workspace_snapshot_dir.glob("*.json"))
+    assert Path(final_job.report_path).exists()
+    assert (bundle_dir / "report.html").exists()
+    assert (bundle_dir / "claims.json").exists()
+    assert (bundle_dir / "sources.json").exists()
+    assert (bundle_dir / "audit_decision.json").exists()
+    assert (bundle_dir / "manifest.json").exists()
+    validate_instance("report-bundle", bundle)
+    validate_instance("artifact-manifest", manifest)
+    assert manifest["artifacts"]["report_bundle"] == "bundle/report_bundle.json"
+    assert audit_decision["gate_status"] == bundle["audit_summary"]["gate_status"]
 
 
 def test_service_build_initial_state_preserves_file_inputs(tmp_path: Path):

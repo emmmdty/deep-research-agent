@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deep-research-agent.local/schemas/artifact-manifest.schema.json",
+  "title": "ArtifactManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated_at", "job", "audit_summary", "artifacts", "counts"],
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "job_id",
+        "created_at",
+        "input_prompt",
+        "status",
+        "source_profile",
+        "budget",
+        "runtime_path",
+        "report_bundle_ref"
+      ],
+      "properties": {
+        "job_id": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "input_prompt": { "type": "string" },
+        "status": { "type": "string", "minLength": 1 },
+        "source_profile": { "type": "string", "minLength": 1 },
+        "budget": { "type": "object", "additionalProperties": true },
+        "runtime_path": { "type": "string", "minLength": 1 },
+        "report_bundle_ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "audit_summary": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["gate_status", "critical_claim_count", "blocked_critical_claim_count"],
+      "properties": {
+        "gate_status": { "type": "string", "minLength": 1 },
+        "critical_claim_count": { "type": "integer", "minimum": 0 },
+        "blocked_critical_claim_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "report_markdown",
+        "report_html",
+        "report_bundle",
+        "claims",
+        "sources",
+        "audit_decision",
+        "trace",
+        "manifest",
+        "review_queue",
+        "claim_graph"
+      ],
+      "properties": {
+        "report_markdown": { "type": ["string", "null"] },
+        "report_html": { "type": ["string", "null"] },
+        "report_bundle": { "type": ["string", "null"] },
+        "claims": { "type": ["string", "null"] },
+        "sources": { "type": ["string", "null"] },
+        "audit_decision": { "type": ["string", "null"] },
+        "trace": { "type": ["string", "null"] },
+        "manifest": { "type": ["string", "null"] },
+        "review_queue": { "type": ["string", "null"] },
+        "claim_graph": { "type": ["string", "null"] }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sources",
+        "snapshots",
+        "evidence_fragments",
+        "claims",
+        "claim_support_edges",
+        "conflict_sets"
+      ],
+      "properties": {
+        "sources": { "type": "integer", "minimum": 0 },
+        "snapshots": { "type": "integer", "minimum": 0 },
+        "evidence_fragments": { "type": "integer", "minimum": 0 },
+        "claims": { "type": "integer", "minimum": 0 },
+        "claim_support_edges": { "type": "integer", "minimum": 0 },
+        "conflict_sets": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}
