@@ -26,25 +26,25 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py
 
 ## Current overall status
-- current_phase: phase3_pipeline
-- current_phase_slug: phase3-pipeline
-- current_attempt: 1
-- last_successful_phase: phase2_runtime_provider
-- overall_state: phase3_acceptance_passed_pending_merge
+- current_phase: phase4_surface_docs
+- current_phase_slug: phase4-surface-docs
+- current_attempt: 0
+- last_successful_phase: phase3_pipeline
+- overall_state: ready_for_phase4
 
 ## Worktree state
-- active_branch: codex/phase3-pipeline/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase3-pipeline-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_basic.py tests/test_scripts.py` -> pass (81 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_basic.py tests/test_scripts.py` -> pass (82 passed)
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
-- missing_assets: none in the Phase 3 worktree after bootstrap
+- missing_assets: none in the current main worktree
 - recreated_assets:
 - symlinked_assets:
   - .env -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/.env
@@ -53,7 +53,7 @@
   - workspace -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace
   - venv_gptr -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr
 - copied_assets:
-- blockers_from_local_assets: none; Phase 2 lifecycle smoke and Phase 3 frozen-snapshot smoke both used isolated temp workspaces to avoid writing runtime artifacts into the shared `workspace/` symlink
+- blockers_from_local_assets: none in the current main worktree; Phase 2 lifecycle smoke and Phase 3 frozen-snapshot smoke both used isolated temp workspaces to avoid writing runtime artifacts into the shared `workspace/` symlink
 
 ## Phase ledger
 
@@ -120,7 +120,7 @@
   - Phase 2 worktree was removed and branch `codex/phase2-runtime-provider/attempt-1` was deleted after merge.
 
 ### Phase 3 - pipeline
-- status: acceptance_passed_pending_merge
+- status: completed
 - attempts: 1
 - summary: Promoted connectors, evidence-store, auditor, and reporting logic into the canonical `src/` package, converted top-level packages into compatibility shims, and upgraded bundle emission so completed jobs now write validated sidecar artifacts (`report.html`, `claims.json`, `sources.json`, `audit_decision.json`, `manifest.json`) in addition to the authoritative `report_bundle.json`.
 - acceptance_checks:
@@ -140,6 +140,8 @@
   - Top-level `connectors/`, `auditor/`, `artifacts/`, and `memory/evidence_store.py` now forward to canonical `src/` modules instead of carrying the main implementation.
   - `emit_report_artifacts()` now validates `report_bundle.json`, writes the sidecar artifact set, and emits `manifest.json` as the index contract for later API/artifact serving work.
   - Updated `docs/development.md` and `docs/architecture.md` so the documented Phase 3 validation path matches the expanded artifact set.
+  - Merge target commit on `main`: `f211d5a`
+  - Phase 3 worktree was removed and branch `codex/phase3-pipeline/attempt-1` was deleted after merge.
 
 ### Phase 4 - surface_docs
 - status: pending
@@ -217,3 +219,4 @@
 - [2026-04-21T12:50:14Z] Phase 3 promoted connectors, auditor, reporting, and evidence-store implementations into the canonical `src/` package and converted the legacy top-level packages into compatibility shims.
 - [2026-04-21T12:50:14Z] Phase 3 extended the report compiler to emit `report.html`, `claims.json`, `sources.json`, `audit_decision.json`, and `manifest.json`, and introduced `schemas/artifact-manifest.schema.json` to validate the emitted manifest contract.
 - [2026-04-21T12:50:14Z] Final Phase 3 validation passed in the worktree: focused runtime/audit regressions (`55 passed`), broader regression suite (`82 passed`), `ruff check .`, CLI help smoke, and a frozen-snapshot end-to-end job smoke with `source_count=1`, `snapshot_count=1`, and `evidence_count=1`.
+- [2026-04-21T12:52:09Z] Merged Phase 3 into `main` via commit `f211d5a`, reran main smoke successfully (`main.py --help`, `ruff check .`, broader regression suite = `82 passed`), reran the frozen-snapshot smoke on `main`, removed worktree `../_codex_worktrees/phase3-pipeline-attempt-1`, and deleted branch `codex/phase3-pipeline/attempt-1`.
