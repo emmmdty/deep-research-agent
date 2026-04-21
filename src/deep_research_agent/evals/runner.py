@@ -23,6 +23,7 @@ from deep_research_agent.evals.contracts import (
     EvalTaskSpec,
 )
 from deep_research_agent.research_jobs import ResearchJobOrchestrator, ResearchJobService
+from deep_research_agent.research_jobs.models import JobRuntimeRecord
 from legacy.workflows.states import CriticFeedback, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 from policies import load_source_policy
 
@@ -47,7 +48,12 @@ RESEARCH_METRIC_ORDER = (
 )
 
 
-def run_eval_suite(*, suite_name: str, output_root: str | Path | None = None) -> dict[str, Any]:
+def run_eval_suite(
+    *,
+    suite_name: str,
+    output_root: str | Path | None = None,
+    capture_runtime_metrics: bool = False,
+) -> dict[str, Any]:
     """Run one deterministic local eval suite and persist its summary."""
 
     if suite_name not in EVAL_SUITE_NAMES:
@@ -60,7 +66,12 @@ def run_eval_suite(*, suite_name: str, output_root: str | Path | None = None) ->
     if suite.executor == "reliability_fixture":
         result = _run_reliability_suite(suite, dataset, suite_output_root)
     else:
-        result = _run_research_fixture_suite(suite, dataset, suite_output_root)
+        result = _run_research_fixture_suite(
+            suite,
+            dataset,
+            suite_output_root,
+            capture_runtime_metrics=capture_runtime_metrics,
+        )
 
     summary_path = suite_output_root / "summary.json"
     results_markdown_path = suite_output_root / "RESULTS.md"
@@ -89,8 +100,17 @@ def _run_research_fixture_suite(
     suite: EvalSuiteDefinition,
     dataset: EvalDataset,
     suite_output_root: Path,
+    *,
+    capture_runtime_metrics: bool,
 ) -> dict[str, Any]:
-    task_results = [_run_research_task(task, suite_output_root / task.task_id) for task in dataset.tasks]
+    task_results = [
+        _run_research_task(
+            task,
+            suite_output_root / task.task_id,
+            capture_runtime_metrics=capture_runtime_metrics,
+        )
+        for task in dataset.tasks
+    ]
     metrics = _aggregate_research_metrics(task_results)
     threshold_results = _evaluate_thresholds(metrics, suite.thresholds)
     status = "passed" if all(item["passed"] for item in threshold_results.values()) else "failed"
@@ -107,7 +127,12 @@ def _run_research_fixture_suite(
     }
 
 
-def _run_research_task(task: EvalTaskSpec, task_output_root: Path) -> dict[str, Any]:
+def _run_research_task(
+    task: EvalTaskSpec,
+    task_output_root: Path,
+    *,
+    capture_runtime_metrics: bool,
+) -> dict[str, Any]:
     task_output_root.mkdir(parents=True, exist_ok=True)
     workspace_dir = task_output_root / "workspace"
     ingested_sources, ingested_evidence = _ingest_task_files(task)
@@ -248,7 +273,17 @@ def _run_research_task(task: EvalTaskSpec, task_output_root: Path) -> dict[str, 
         writer_fn=writer_fn,
     ).run(job.job_id)
 
+    runtime_metrics_payload = None
+    if capture_runtime_metrics:
+        runtime_metrics_payload = _build_runtime_metrics_payload(final_job, stable_job_id=task.task_id)
+
     stable_paths = _copy_task_artifacts(final_job, task_output_root)
+    if runtime_metrics_payload is not None:
+        runtime_metrics_path = task_output_root / "runtime_metrics.json"
+        runtime_metrics_path.write_text(
+            json.dumps(runtime_metrics_payload, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
     _normalize_task_artifacts(task, stable_paths)
     shutil.rmtree(task_output_root / "workspace", ignore_errors=True)
     bundle = json.loads(stable_paths["bundle_path"].read_text(encoding="utf-8"))
@@ -819,3 +854,71 @@ def _first_claim_text(report_markdown: str, topic: str) -> str:
             continue
         return line
     return topic
+
+
+def _build_runtime_metrics_payload(final_job: JobRuntimeRecord, *, stable_job_id: str) -> dict[str, Any]:
+    bundle_path = Path(final_job.report_bundle_path)
+    trace_path = Path(final_job.trace_path)
+    bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+    events = [
+        json.loads(line)
+        for line in trace_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    created_at = _parse_iso(final_job.created_at)
+    first_progress_at = None
+    bundle_emitted_at = None
+    stage_started_at: dict[str, datetime] = {}
+    stage_runtime_seconds: dict[str, float] = {}
+
+    for event in events:
+        timestamp = _parse_iso(str(event.get("timestamp") or final_job.created_at))
+        event_type = str(event.get("event_type") or "")
+        stage = str(event.get("stage") or "")
+        if event_type == "stage.started":
+            stage_started_at[stage] = timestamp
+        elif event_type == "stage.completed":
+            if first_progress_at is None:
+                first_progress_at = timestamp
+            started_at = stage_started_at.get(stage)
+            if started_at is not None:
+                stage_runtime_seconds[stage] = round((timestamp - started_at).total_seconds(), 6)
+        elif event_type == "bundle.emitted":
+            bundle_emitted_at = timestamp
+
+    if first_progress_at is None:
+        first_progress_at = created_at
+    if bundle_emitted_at is None:
+        bundle_emitted_at = max((_parse_iso(str(event.get("timestamp") or final_job.created_at)) for event in events), default=created_at)
+
+    budget = dict(bundle.get("job", {}).get("budget") or {})
+    prompt_tokens = int(budget.get("prompt_tokens") or 0)
+    completion_tokens = int(budget.get("completion_tokens") or 0)
+    estimated_api_cost_usd = budget.get("estimated_api_cost_usd")
+    llm_calls = int(budget.get("llm_calls") or 0)
+    search_calls = int(budget.get("search_calls") or 0)
+    cost_reason = None
+    if estimated_api_cost_usd is None:
+        cost_reason = "provider_free_fixture_run" if llm_calls == 0 else "cost_not_recorded"
+
+    return {
+        "measurement_version": 1,
+        "job_id": stable_job_id,
+        "runtime_job_id": final_job.job_id,
+        "created_at": final_job.created_at,
+        "first_progress_timestamp": first_progress_at.isoformat(),
+        "bundle_emitted_timestamp": bundle_emitted_at.isoformat(),
+        "ttff_seconds": round((first_progress_at - created_at).total_seconds(), 6),
+        "ttfr_seconds": round((bundle_emitted_at - created_at).total_seconds(), 6),
+        "stage_runtime_seconds": stage_runtime_seconds,
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "llm_calls": llm_calls,
+        "search_calls": search_calls,
+        "estimated_api_cost_usd": estimated_api_cost_usd,
+        "cost_reason": cost_reason,
+    }
+
+
+def _parse_iso(value: str) -> datetime:
+    return datetime.fromisoformat(value)

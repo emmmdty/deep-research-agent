@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-openai-home",
+      "snapshot_id": "snapshot-openai-home",
+      "title": "OpenAI",
+      "canonical_uri": "https://openai.com/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-openai-platform",
+      "snapshot_id": "snapshot-openai-platform",
+      "title": "OpenAI Platform Overview",
+      "canonical_uri": "https://platform.openai.com/docs/overview"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-openai-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "OpenAI",
+      "canonical_uri": "https://openai.com/",
+      "query": "OpenAI official overview",
+      "selected": true,
+      "snapshot_ref": "snapshot-openai-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-openai-platform",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "OpenAI Platform Overview",
+      "canonical_uri": "https://platform.openai.com/docs/overview",
+      "query": "OpenAI API overview",
+      "selected": true,
+      "snapshot_ref": "snapshot-openai-platform",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-openai-home",
+      "canonical_uri": "https://openai.com/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "440a0347201ce2343176e2b3af904208a85c249eb6da1857aac1cf4f8ab18574",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "OpenAI official overview",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-openai-platform",
+      "canonical_uri": "https://platform.openai.com/docs/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "8246bf427b68fafef69676720a97f667f57c3d9a9b3521fbd661716b6cab10a2",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "OpenAI API overview",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

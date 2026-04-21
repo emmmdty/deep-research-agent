@@ -1,0 +1,96 @@
+{
+  "suite_name": "company12",
+  "description": "Low-cost local smoke for company deep-research tasks.",
+  "variant": "smoke_local",
+  "status": "passed",
+  "task_count": 1,
+  "metrics": {
+    "completion_rate": 1.0,
+    "bundle_emission_rate": 1.0,
+    "audit_pass_rate": 1.0,
+    "critical_claim_support_precision": 1.0,
+    "citation_error_rate": 0.0,
+    "provenance_completeness": 1.0,
+    "rubric_coverage": 1.0,
+    "policy_compliance_rate": 1.0,
+    "file_input_success_rate": 1.0,
+    "conflict_detection_recall": 1.0
+  },
+  "threshold_results": {
+    "completion_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "bundle_emission_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "audit_pass_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "critical_claim_support_precision": {
+      "value": 1.0,
+      "min": 0.85,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "citation_error_rate": {
+      "value": 0.0,
+      "min": null,
+      "max": 0.05,
+      "passed": true,
+      "reason": ""
+    },
+    "provenance_completeness": {
+      "value": 1.0,
+      "min": 0.95,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "rubric_coverage": {
+      "value": 1.0,
+      "min": 0.8,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    }
+  },
+  "rubric_path": "evals/rubrics/company_research.yaml",
+  "tasks": [
+    {
+      "task_id": "company-openai-surface",
+      "job_id": "company-openai-surface",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/followup_metrics/company12_fresh/company-openai-surface/report.md",
+      "bundle_path": "evals/reports/followup_metrics/company12_fresh/company-openai-surface/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/followup_metrics/company12_fresh/company-openai-surface/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    }
+  ],
+  "summary_path": "evals/reports/followup_metrics/company12_fresh/summary.json",
+  "results_markdown_path": "evals/reports/followup_metrics/company12_fresh/RESULTS.md"
+}

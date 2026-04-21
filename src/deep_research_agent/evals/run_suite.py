@@ -14,13 +14,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run one deterministic local eval suite")
     parser.add_argument("--suite", required=True, choices=EVAL_SUITE_NAMES)
     parser.add_argument("--output-root", type=str, default=None)
+    parser.add_argument("--capture-runtime-metrics", action="store_true")
     parser.add_argument("--json", action="store_true")
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
-    result = run_eval_suite(suite_name=args.suite, output_root=args.output_root)
+    result = run_eval_suite(
+        suite_name=args.suite,
+        output_root=args.output_root,
+        capture_runtime_metrics=args.capture_runtime_metrics,
+    )
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:

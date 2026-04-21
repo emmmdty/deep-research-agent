@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-21T00:00:00+00:00",
+  "timing_status": "measured",
+  "jobs": [
+    {
+      "suite_name": "company12",
+      "task_id": "company-openai-surface",
+      "job_id": "company-openai-surface",
+      "ttff_seconds": 0.299367,
+      "ttfr_seconds": 1.344091,
+      "stage_runtime_seconds": {
+        "clarifying": 0.075739,
+        "planned": 0.077556,
+        "collecting": 0.07495,
+        "normalizing": 0.09045,
+        "extracting": 0.090291,
+        "claim_auditing": 0.079403,
+        "synthesizing": 0.109364,
+        "rendering": 0.096602
+      }
+    }
+  ],
+  "stage_summary": {
+    "claim_auditing": {
+      "count": 1,
+      "p50_seconds": 0.079403,
+      "p95_seconds": 0.079403,
+      "avg_seconds": 0.079403
+    },
+    "clarifying": {
+      "count": 1,
+      "p50_seconds": 0.075739,
+      "p95_seconds": 0.075739,
+      "avg_seconds": 0.075739
+    },
+    "collecting": {
+      "count": 1,
+      "p50_seconds": 0.07495,
+      "p95_seconds": 0.07495,
+      "avg_seconds": 0.07495
+    },
+    "extracting": {
+      "count": 1,
+      "p50_seconds": 0.090291,
+      "p95_seconds": 0.090291,
+      "avg_seconds": 0.090291
+    },
+    "normalizing": {
+      "count": 1,
+      "p50_seconds": 0.09045,
+      "p95_seconds": 0.09045,
+      "avg_seconds": 0.09045
+    },
+    "planned": {
+      "count": 1,
+      "p50_seconds": 0.077556,
+      "p95_seconds": 0.077556,
+      "avg_seconds": 0.077556
+    },
+    "rendering": {
+      "count": 1,
+      "p50_seconds": 0.096602,
+      "p95_seconds": 0.096602,
+      "avg_seconds": 0.096602
+    },
+    "synthesizing": {
+      "count": 1,
+      "p50_seconds": 0.109364,
+      "p95_seconds": 0.109364,
+      "avg_seconds": 0.109364
+    }
+  }
+}

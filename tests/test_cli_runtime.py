@@ -45,6 +45,53 @@ def test_main_parser_exposes_eval_run_subcommand(monkeypatch):
     assert args.suite == "company12"
 
 
+def test_eval_run_cli_can_request_runtime_metric_capture(monkeypatch):
+    """eval run 应支持显式开启 fresh runtime measurement sidecar。"""
+    import main
+
+    settings = SimpleNamespace(
+        max_research_loops=7,
+        workspace_dir="workspace",
+        legacy_cli_enabled=True,
+        source_policy_mode="company_broad",
+    )
+    captured: dict[str, object] = {}
+
+    monkeypatch.setattr(main, "get_settings", lambda: settings)
+
+    def fake_run_eval_suite(*, suite_name, output_root=None, capture_runtime_metrics=False):
+        captured["suite_name"] = suite_name
+        captured["output_root"] = output_root
+        captured["capture_runtime_metrics"] = capture_runtime_metrics
+        return {
+            "suite_name": suite_name,
+            "status": "passed",
+            "summary_path": "tmp/summary.json",
+        }
+
+    monkeypatch.setattr(main._cli, "run_eval_suite", fake_run_eval_suite)
+
+    exit_code = main.run_command(
+        [
+            "eval",
+            "run",
+            "--suite",
+            "company12",
+            "--output-root",
+            "tmp/company12_fresh",
+            "--capture-runtime-metrics",
+            "--json",
+        ]
+    )
+
+    assert exit_code == 0
+    assert captured == {
+        "suite_name": "company12",
+        "output_root": "tmp/company12_fresh",
+        "capture_runtime_metrics": True,
+    }
+
+
 def test_run_cli_uses_settings_workspace_dir(tmp_path, monkeypatch):
     """legacy helper 输出目录应跟随 Settings.workspace_dir。"""
     import main

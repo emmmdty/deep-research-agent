@@ -169,6 +169,11 @@ def build_parser() -> argparse.ArgumentParser:
     eval_run_parser = eval_subparsers.add_parser("run", help="执行一个 local eval suite")
     eval_run_parser.add_argument("--suite", required=True, choices=EVAL_SUITE_NAMES, help="suite 名称")
     eval_run_parser.add_argument("--output-root", type=str, default=None, help="suite 输出目录")
+    eval_run_parser.add_argument(
+        "--capture-runtime-metrics",
+        action="store_true",
+        help="在 fresh rerun 中保存 pre-normalization runtime timing sidecar",
+    )
     eval_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
 
     return parser
@@ -329,7 +334,11 @@ def run_command(argv: list[str] | None = None) -> int:
         if args.eval_command != "run":
             parser.error("eval 目前只支持 `run` 子命令")
             return 2
-        result = run_eval_suite(suite_name=args.suite, output_root=args.output_root)
+        result = run_eval_suite(
+            suite_name=args.suite,
+            output_root=args.output_root,
+            capture_runtime_metrics=args.capture_runtime_metrics,
+        )
         if args.json:
             _print_json(result)
         else:
