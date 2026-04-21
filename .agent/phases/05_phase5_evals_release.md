@@ -67,3 +67,4 @@ Run at least:
 - Upgraded `configs/release_gate.yaml` and `scripts/release_gate.py` so release proof requires suite evidence in addition to runtime/security/docs/API diagnostics.
 - Normalized saved suite artifacts into stable relative paths under `evals/reports/phase5_local_smoke/` so the committed manifests remain valid after worktree cleanup.
 - Added rerun-stability normalization for saved snapshots, checkpoint ids, emitted bundle paths, and aggregate metric ordering; rerunning `scripts/run_local_release_smoke.py` on the same output root now preserves byte-identical committed artifacts.
+- Normalized file-ingest fixtures to repo-scoped URIs and repo-relative locator paths so `trusted8` and `file8` smoke artifacts are portable across worktrees and `main`, not just stable within one checkout.

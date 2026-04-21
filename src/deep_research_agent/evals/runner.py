@@ -430,6 +430,40 @@ def _render_suite_markdown(result: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _repo_relative_path(path: str | Path) -> str:
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(PROJECT_ROOT).as_posix()
+    except ValueError:
+        return str(resolved)
+
+
+def _repo_scoped_uri(path: str | Path) -> str:
+    resolved = Path(path).resolve()
+    try:
+        relative = resolved.relative_to(PROJECT_ROOT).as_posix()
+    except ValueError:
+        return resolved.as_uri()
+    return f"repo:///{relative}"
+
+
+def _normalize_file_fetch_result(fetch_result: ConnectorFetchResult, *, file_path: Path) -> ConnectorFetchResult:
+    relative_path = _repo_relative_path(file_path)
+    stable_uri = _repo_scoped_uri(file_path)
+    freshness_metadata = dict(fetch_result.freshness_metadata)
+    freshness_metadata["file_path"] = relative_path
+    metadata = dict(fetch_result.metadata)
+    metadata["file_path"] = relative_path
+    return fetch_result.model_copy(
+        update={
+            "canonical_uri": stable_uri,
+            "url": stable_uri,
+            "freshness_metadata": freshness_metadata,
+            "metadata": metadata,
+        }
+    )
+
+
 def _ingest_task_files(task: EvalTaskSpec) -> tuple[list[SourceRecord], list[dict[str, Any]]]:
     sources: list[SourceRecord] = []
     evidence: list[dict[str, Any]] = []
@@ -437,7 +471,11 @@ def _ingest_task_files(task: EvalTaskSpec) -> tuple[list[SourceRecord], list[dic
     starting_citation = len(task.sources)
     for offset, relative_path in enumerate(task.file_inputs, start=1):
         file_path = (PROJECT_ROOT / relative_path).resolve()
-        fetch_result = ingestor.ingest(str(file_path), query=task.topic)
+        fetch_result = _normalize_file_fetch_result(
+            ingestor.ingest(str(file_path), query=task.topic),
+            file_path=file_path,
+        )
+        stable_file_path = _repo_relative_path(file_path)
         citation_id = starting_citation + offset
         source_id = f"{task.task_id}-file-{offset}"
         snapshot_id = f"{task.task_id}-file-snapshot-{offset}"
@@ -448,7 +486,7 @@ def _ingest_task_files(task: EvalTaskSpec) -> tuple[list[SourceRecord], list[dic
                 "source_id": source_id,
                 "snapshot_id": snapshot_id,
                 "excerpt": fetch_result.text[:400],
-                "locator": {"kind": "file_excerpt", "path": str(file_path)},
+                "locator": {"kind": "file_excerpt", "path": stable_file_path},
                 "extraction_method": "local_file_ingest",
             }
         )

@@ -170,7 +170,7 @@
 ### Phase 5 - evals_release
 - status: in_progress
 - attempts: 1
-- summary: Added the canonical `evals/` tree, deterministic local suite runner, suite-aware release gate evidence, and committed Phase 5 local smoke artifacts under `evals/reports/phase5_local_smoke/`; saved smoke outputs are now normalized so reruns on the same path are byte-stable.
+- summary: Added the canonical `evals/` tree, deterministic local suite runner, suite-aware release gate evidence, and committed Phase 5 local smoke artifacts under `evals/reports/phase5_local_smoke/`; saved smoke outputs are now normalized so reruns are byte-stable and file-ingest artifacts remain portable across worktrees and `main`.
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (67 passed)
@@ -194,6 +194,7 @@
   - `main.py eval run --suite <name>` is now the supported developer entrypoint for deterministic local evals.
   - Stable saved outputs are copied into suite task roots (`report.md`, `bundle/`, `audit/`) so committed summaries do not depend on ephemeral worktree runtime paths.
   - Added regression coverage so same-path reruns preserve `summary.json`, `sources.json`, `report_bundle.json`, and `release_manifest.json` exactly.
+  - File-ingest suites now serialize repo-relative paths and `repo:///...` URIs so saved eval artifacts do not leak checkout-specific absolute paths.
 
 ### Phase 6 - finalize
 - status: pending

@@ -25,7 +25,7 @@
       "snapshot_id": "file-public-private-mix-file-snapshot-1",
       "locator": {
         "kind": "file_excerpt",
-        "path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md"
+        "path": "evals/datasets/files/company_context.md"
       },
       "relation": "supports",
       "confidence": 0.99,
@@ -40,7 +40,7 @@
       "snapshot_id": "file-public-private-mix-file-snapshot-2",
       "locator": {
         "kind": "file_excerpt",
-        "path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt"
+        "path": "evals/datasets/files/industry_context.txt"
       },
       "relation": "supports",
       "confidence": 0.99,
