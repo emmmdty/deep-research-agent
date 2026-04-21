@@ -222,6 +222,8 @@ curl -s http://127.0.0.1:8000/v1/research/jobs \
 ## Further Reading
 
 - [README](../README.md)
+- [Final Change Report](../FINAL_CHANGE_REPORT.md)
+- [Experiment Summary](./final/EXPERIMENT_SUMMARY.md)
 - [Architecture](./architecture.md)
 - [API Contract](../specs/api-readiness-contract.md)
 - [ADR-0008](./adr/adr-0008-http-api-surface.md)
