@@ -5,16 +5,16 @@
   "status": "passed",
   "task_count": 1,
   "metrics": {
-    "file_input_success_rate": 1.0,
-    "audit_pass_rate": 1.0,
-    "policy_compliance_rate": 1.0,
-    "bundle_emission_rate": 1.0,
-    "critical_claim_support_precision": 1.0,
-    "conflict_detection_recall": 1.0,
-    "rubric_coverage": 1.0,
-    "citation_error_rate": 0.0,
     "completion_rate": 1.0,
-    "provenance_completeness": 1.0
+    "bundle_emission_rate": 1.0,
+    "audit_pass_rate": 1.0,
+    "critical_claim_support_precision": 1.0,
+    "citation_error_rate": 0.0,
+    "provenance_completeness": 1.0,
+    "rubric_coverage": 1.0,
+    "policy_compliance_rate": 1.0,
+    "file_input_success_rate": 1.0,
+    "conflict_detection_recall": 1.0
   },
   "threshold_results": {
     "completion_rate": {
@@ -57,7 +57,7 @@
   "tasks": [
     {
       "task_id": "trusted-langgraph-brief",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "job_id": "trusted-langgraph-brief",
       "status": "completed",
       "audit_gate_status": "passed",
       "report_path": "evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/report.md",

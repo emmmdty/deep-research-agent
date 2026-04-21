@@ -170,16 +170,17 @@
 ### Phase 5 - evals_release
 - status: in_progress
 - attempts: 1
-- summary: Added the canonical `evals/` tree, deterministic local suite runner, suite-aware release gate evidence, and committed Phase 5 local smoke artifacts under `evals/reports/phase5_local_smoke/`.
+- summary: Added the canonical `evals/` tree, deterministic local suite runner, suite-aware release gate evidence, and committed Phase 5 local smoke artifacts under `evals/reports/phase5_local_smoke/`; saved smoke outputs are now normalized so reruns on the same path are byte-stable.
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (65 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (67 passed)
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite trusted8 --output-root evals/reports/phase5_local_smoke/trusted8` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite file8 --output-root evals/reports/phase5_local_smoke/file8` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite recovery6 --output-root evals/reports/phase5_local_smoke/recovery6` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke` -> pass (`release_gate.status = passed`)
+  - `find evals/reports/phase5_local_smoke -type f -print0 | sort -z | xargs -0 sha256sum` before/after rerun -> pass (no diff)
 - artifacts:
   - `src/deep_research_agent/evals/`
   - `evals/`
@@ -192,6 +193,7 @@
   - The old benchmark/comparator stack remains diagnostic only; it is no longer sufficient release proof by itself.
   - `main.py eval run --suite <name>` is now the supported developer entrypoint for deterministic local evals.
   - Stable saved outputs are copied into suite task roots (`report.md`, `bundle/`, `audit/`) so committed summaries do not depend on ephemeral worktree runtime paths.
+  - Added regression coverage so same-path reruns preserve `summary.json`, `sources.json`, `report_bundle.json`, and `release_manifest.json` exactly.
 
 ### Phase 6 - finalize
 - status: pending

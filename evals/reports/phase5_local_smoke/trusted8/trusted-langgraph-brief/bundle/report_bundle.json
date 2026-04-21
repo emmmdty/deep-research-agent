@@ -1,8 +1,8 @@
 {
   "bundle_version": "1.0.0",
   "job": {
-    "job_id": "20260421T133458Z-86a4c97c",
-    "created_at": "2026-04-21T13:34:58.678764+00:00",
+    "job_id": "trusted-langgraph-brief",
+    "created_at": "2026-04-21T00:00:00+00:00",
     "input_prompt": "Trusted-only research smoke",
     "status": "completed",
     "source_profile": "trusted_only",
@@ -61,7 +61,7 @@
     {
       "snapshot_id": "snapshot-trusted-docs",
       "canonical_uri": "https://docs.langchain.com/langgraph/overview",
-      "fetched_at": "2026-04-21T13:34:58.853803+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "54ab351c6031e46c3fa164b3ce007a0c6174724b20b1cbbaeaa1b74180de4578",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -75,7 +75,7 @@
     {
       "snapshot_id": "trusted-langgraph-brief-file-snapshot-1",
       "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md",
-      "fetched_at": "2026-04-21T13:34:58.853826+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "160b4beecf2fe6e0ab16e907d7e8fa365e70045e5624f2bd9047431e15addc72",
       "mime_type": "text/markdown",
       "auth_scope": "private",
@@ -131,186 +131,186 @@
   },
   "audit_events": [
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0001",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0001",
+      "job_id": "trusted-langgraph-brief",
       "stage": "job",
       "event_type": "job.created",
-      "timestamp": "2026-04-21T13:34:58.678764+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
         "topic": "Trusted-only research smoke",
         "research_profile": "eval_smoke"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0002",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0002",
+      "job_id": "trusted-langgraph-brief",
       "stage": "clarifying",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.695932+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0003",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0003",
+      "job_id": "trusted-langgraph-brief",
       "stage": "clarifying",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.705517+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0002",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0001",
         "next_stage": "planned"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0004",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0004",
+      "job_id": "trusted-langgraph-brief",
       "stage": "planned",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.713689+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0005",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0005",
+      "job_id": "trusted-langgraph-brief",
       "stage": "planned",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.723618+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0003",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0002",
         "next_stage": "collecting"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0006",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0006",
+      "job_id": "trusted-langgraph-brief",
       "stage": "collecting",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.731163+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0007",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0007",
+      "job_id": "trusted-langgraph-brief",
       "stage": "collecting",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.740739+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0004",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0003",
         "next_stage": "normalizing"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0008",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0008",
+      "job_id": "trusted-langgraph-brief",
       "stage": "normalizing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.750524+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0009",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0009",
+      "job_id": "trusted-langgraph-brief",
       "stage": "normalizing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.761912+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0005",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0004",
         "next_stage": "extracting"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0010",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0010",
+      "job_id": "trusted-langgraph-brief",
       "stage": "extracting",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.771046+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0011",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0011",
+      "job_id": "trusted-langgraph-brief",
       "stage": "extracting",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.785202+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0006",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0005",
         "next_stage": "claim_auditing"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0012",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0012",
+      "job_id": "trusted-langgraph-brief",
       "stage": "claim_auditing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.792010+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0013",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0013",
+      "job_id": "trusted-langgraph-brief",
       "stage": "claim_auditing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.803516+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0007",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0006",
         "next_stage": "synthesizing"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0014",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0014",
+      "job_id": "trusted-langgraph-brief",
       "stage": "synthesizing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.812216+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0015",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0015",
+      "job_id": "trusted-langgraph-brief",
       "stage": "synthesizing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.822270+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0008",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0007",
         "next_stage": "rendering"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0016",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0016",
+      "job_id": "trusted-langgraph-brief",
       "stage": "rendering",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.829350+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0017",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0017",
+      "job_id": "trusted-langgraph-brief",
       "stage": "rendering",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.840525+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-86a4c97c-checkpoint-0009",
+        "checkpoint_id": "trusted-langgraph-brief-checkpoint-0008",
         "next_stage": "completed"
       }
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0018",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0018",
+      "job_id": "trusted-langgraph-brief",
       "stage": "completed",
       "event_type": "job.completed",
-      "timestamp": "2026-04-21T13:34:58.846493+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-86a4c97c-event-0019",
-      "job_id": "20260421T133458Z-86a4c97c",
+      "event_id": "trusted-langgraph-brief-event-0019",
+      "job_id": "trusted-langgraph-brief",
       "stage": "bundle",
       "event_type": "bundle.emitted",
-      "timestamp": "2026-04-21T13:34:58.849370+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "report_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/workspace/research_jobs/20260421T133458Z-86a4c97c/report.md",
-        "report_bundle_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/workspace/research_jobs/20260421T133458Z-86a4c97c/bundle/report_bundle.json",
-        "trace_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/workspace/research_jobs/20260421T133458Z-86a4c97c/bundle/trace.jsonl"
+        "report_path": "evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/report.md",
+        "report_bundle_path": "evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/bundle/report_bundle.json",
+        "trace_path": "evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/bundle/trace.jsonl"
       }
     }
   ],

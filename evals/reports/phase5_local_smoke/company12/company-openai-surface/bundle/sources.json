@@ -43,7 +43,7 @@
     {
       "snapshot_id": "snapshot-openai-home",
       "canonical_uri": "https://openai.com/",
-      "fetched_at": "2026-04-21T13:34:58.358752+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "440a0347201ce2343176e2b3af904208a85c249eb6da1857aac1cf4f8ab18574",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -57,7 +57,7 @@
     {
       "snapshot_id": "snapshot-openai-platform",
       "canonical_uri": "https://platform.openai.com/docs/overview",
-      "fetched_at": "2026-04-21T13:34:58.358811+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "8246bf427b68fafef69676720a97f667f57c3d9a9b3521fbd661716b6cab10a2",
       "mime_type": "text/plain",
       "auth_scope": "public",

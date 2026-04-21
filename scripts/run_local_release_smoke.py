@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -17,6 +16,8 @@ from deep_research_agent.gateway.cli import build_parser
 from scripts.release_gate import build_release_gate_evidence, evaluate_release_gate, load_release_gate_config
 from scripts.run_benchmark import build_benchmark_summary
 from evaluation.comparators import load_topics
+
+FROZEN_RELEASE_TIMESTAMP = "2026-04-21T00:00:00+00:00"
 
 
 def run_release_smoke(*, output_root: str | Path) -> dict[str, Any]:
@@ -42,7 +43,7 @@ def run_release_smoke(*, output_root: str | Path) -> dict[str, Any]:
     config = load_release_gate_config()
     release_gate = evaluate_release_gate(evidence, config=config)
     manifest = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": FROZEN_RELEASE_TIMESTAMP,
         "suite_order": list(EVAL_SUITE_NAMES),
         "suites": suite_summaries,
         "evidence": evidence,

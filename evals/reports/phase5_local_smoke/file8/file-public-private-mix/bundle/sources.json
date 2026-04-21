@@ -65,7 +65,7 @@
     {
       "snapshot_id": "snapshot-public-docs",
       "canonical_uri": "https://docs.langchain.com/langgraph/overview",
-      "fetched_at": "2026-04-21T13:34:59.110427+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "ad1657d2861698b972a31fb86aa2e5594a0daa4b430bcb54bc94dad4858cf97d",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -79,7 +79,7 @@
     {
       "snapshot_id": "file-public-private-mix-file-snapshot-1",
       "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/company_context.md",
-      "fetched_at": "2026-04-21T13:34:59.110454+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "e5211675d5cbbe4077080ce440c11a994cbea697d2dc49dc33fb6009049ab9ee",
       "mime_type": "text/markdown",
       "auth_scope": "private",
@@ -91,7 +91,7 @@
     {
       "snapshot_id": "file-public-private-mix-file-snapshot-2",
       "canonical_uri": "file:///home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/industry_context.txt",
-      "fetched_at": "2026-04-21T13:34:59.110462+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "aaffaae7bf04865c19400dadff1ea23ac5897e1a055972e906fe430d32166cac",
       "mime_type": "text/plain",
       "auth_scope": "private",

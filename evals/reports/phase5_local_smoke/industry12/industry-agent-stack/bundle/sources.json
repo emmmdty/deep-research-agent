@@ -61,7 +61,7 @@
     {
       "snapshot_id": "snapshot-langgraph-docs",
       "canonical_uri": "https://docs.langchain.com/langgraph/overview",
-      "fetched_at": "2026-04-21T13:34:58.645639+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "09a00fbbcd354c193302b79b09c650b79db0083847dbbc7cb7c3af3c72f0dfea",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -75,7 +75,7 @@
     {
       "snapshot_id": "snapshot-langgraph-repo",
       "canonical_uri": "https://github.com/langchain-ai/langgraph",
-      "fetched_at": "2026-04-21T13:34:58.645663+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "33e87c5d94db89dcf1f36523616e3ccd3d6d7b3f8acc232e40c0d648fc373635",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -89,7 +89,7 @@
     {
       "snapshot_id": "snapshot-rag-paper",
       "canonical_uri": "https://arxiv.org/abs/2005.11401",
-      "fetched_at": "2026-04-21T13:34:58.645669+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "67d6bc0c8b3ea2165a33eb590f9daa2f52ae4ba379958c87c361c00dcf178008",
       "mime_type": "text/plain",
       "auth_scope": "public",

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-21T13:34:59.399896+00:00",
+  "generated_at": "2026-04-21T00:00:00+00:00",
   "suite_order": [
     "company12",
     "industry12",
@@ -15,16 +15,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "threshold_results": {
         "completion_rate": {
@@ -81,7 +81,7 @@
       "tasks": [
         {
           "task_id": "company-openai-surface",
-          "job_id": "20260421T133458Z-00859618",
+          "job_id": "company-openai-surface",
           "status": "completed",
           "audit_gate_status": "passed",
           "report_path": "evals/reports/phase5_local_smoke/company12/company-openai-surface/report.md",
@@ -111,16 +111,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "threshold_results": {
         "completion_rate": {
@@ -184,7 +184,7 @@
       "tasks": [
         {
           "task_id": "industry-agent-stack",
-          "job_id": "20260421T133458Z-2de282a4",
+          "job_id": "industry-agent-stack",
           "status": "completed",
           "audit_gate_status": "passed",
           "report_path": "evals/reports/phase5_local_smoke/industry12/industry-agent-stack/report.md",
@@ -214,16 +214,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "threshold_results": {
         "completion_rate": {
@@ -266,7 +266,7 @@
       "tasks": [
         {
           "task_id": "trusted-langgraph-brief",
-          "job_id": "20260421T133458Z-86a4c97c",
+          "job_id": "trusted-langgraph-brief",
           "status": "completed",
           "audit_gate_status": "passed",
           "report_path": "evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/report.md",
@@ -296,16 +296,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "threshold_results": {
         "completion_rate": {
@@ -348,7 +348,7 @@
       "tasks": [
         {
           "task_id": "file-public-private-mix",
-          "job_id": "20260421T133458Z-64336d39",
+          "job_id": "file-public-private-mix",
           "status": "completed",
           "audit_gate_status": "passed",
           "report_path": "evals/reports/phase5_local_smoke/file8/file-public-private-mix/report.md",
@@ -473,16 +473,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "summary_path": "evals/reports/phase5_local_smoke/company12/summary.json"
     },
@@ -490,16 +490,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "summary_path": "evals/reports/phase5_local_smoke/industry12/summary.json"
     },
@@ -507,16 +507,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "summary_path": "evals/reports/phase5_local_smoke/trusted8/summary.json"
     },
@@ -528,16 +528,16 @@
       "status": "passed",
       "task_count": 1,
       "metrics": {
-        "file_input_success_rate": 1.0,
-        "audit_pass_rate": 1.0,
-        "policy_compliance_rate": 1.0,
-        "bundle_emission_rate": 1.0,
-        "critical_claim_support_precision": 1.0,
-        "conflict_detection_recall": 1.0,
-        "rubric_coverage": 1.0,
-        "citation_error_rate": 0.0,
         "completion_rate": 1.0,
-        "provenance_completeness": 1.0
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
       },
       "summary_path": "evals/reports/phase5_local_smoke/file8/summary.json"
     },

@@ -1,8 +1,8 @@
 {
   "bundle_version": "1.0.0",
   "job": {
-    "job_id": "20260421T133458Z-2de282a4",
-    "created_at": "2026-04-21T13:34:58.450147+00:00",
+    "job_id": "industry-agent-stack",
+    "created_at": "2026-04-21T00:00:00+00:00",
     "input_prompt": "Enterprise agent stack industry smoke",
     "status": "completed",
     "source_profile": "industry_broad",
@@ -77,7 +77,7 @@
     {
       "snapshot_id": "snapshot-langgraph-docs",
       "canonical_uri": "https://docs.langchain.com/langgraph/overview",
-      "fetched_at": "2026-04-21T13:34:58.645639+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "09a00fbbcd354c193302b79b09c650b79db0083847dbbc7cb7c3af3c72f0dfea",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -91,7 +91,7 @@
     {
       "snapshot_id": "snapshot-langgraph-repo",
       "canonical_uri": "https://github.com/langchain-ai/langgraph",
-      "fetched_at": "2026-04-21T13:34:58.645663+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "33e87c5d94db89dcf1f36523616e3ccd3d6d7b3f8acc232e40c0d648fc373635",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -105,7 +105,7 @@
     {
       "snapshot_id": "snapshot-rag-paper",
       "canonical_uri": "https://arxiv.org/abs/2005.11401",
-      "fetched_at": "2026-04-21T13:34:58.645669+00:00",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
       "content_hash": "67d6bc0c8b3ea2165a33eb590f9daa2f52ae4ba379958c87c361c00dcf178008",
       "mime_type": "text/plain",
       "auth_scope": "public",
@@ -171,186 +171,186 @@
   },
   "audit_events": [
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0001",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0001",
+      "job_id": "industry-agent-stack",
       "stage": "job",
       "event_type": "job.created",
-      "timestamp": "2026-04-21T13:34:58.450147+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
         "topic": "Enterprise agent stack industry smoke",
         "research_profile": "eval_smoke"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0002",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0002",
+      "job_id": "industry-agent-stack",
       "stage": "clarifying",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.471118+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0003",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0003",
+      "job_id": "industry-agent-stack",
       "stage": "clarifying",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.481972+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0002",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0001",
         "next_stage": "planned"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0004",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0004",
+      "job_id": "industry-agent-stack",
       "stage": "planned",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.489889+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0005",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0005",
+      "job_id": "industry-agent-stack",
       "stage": "planned",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.504340+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0003",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0002",
         "next_stage": "collecting"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0006",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0006",
+      "job_id": "industry-agent-stack",
       "stage": "collecting",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.513076+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0007",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0007",
+      "job_id": "industry-agent-stack",
       "stage": "collecting",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.524195+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0004",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0003",
         "next_stage": "normalizing"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0008",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0008",
+      "job_id": "industry-agent-stack",
       "stage": "normalizing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.533375+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0009",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0009",
+      "job_id": "industry-agent-stack",
       "stage": "normalizing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.546141+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0005",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0004",
         "next_stage": "extracting"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0010",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0010",
+      "job_id": "industry-agent-stack",
       "stage": "extracting",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.553162+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0011",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0011",
+      "job_id": "industry-agent-stack",
       "stage": "extracting",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.563379+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0006",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0005",
         "next_stage": "claim_auditing"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0012",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0012",
+      "job_id": "industry-agent-stack",
       "stage": "claim_auditing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.570283+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0013",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0013",
+      "job_id": "industry-agent-stack",
       "stage": "claim_auditing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.580305+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0007",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0006",
         "next_stage": "synthesizing"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0014",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0014",
+      "job_id": "industry-agent-stack",
       "stage": "synthesizing",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.586927+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0015",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0015",
+      "job_id": "industry-agent-stack",
       "stage": "synthesizing",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.604593+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0008",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0007",
         "next_stage": "rendering"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0016",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0016",
+      "job_id": "industry-agent-stack",
       "stage": "rendering",
       "event_type": "stage.started",
-      "timestamp": "2026-04-21T13:34:58.616129+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0017",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0017",
+      "job_id": "industry-agent-stack",
       "stage": "rendering",
       "event_type": "stage.completed",
-      "timestamp": "2026-04-21T13:34:58.628170+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "checkpoint_id": "20260421T133458Z-2de282a4-checkpoint-0009",
+        "checkpoint_id": "industry-agent-stack-checkpoint-0008",
         "next_stage": "completed"
       }
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0018",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0018",
+      "job_id": "industry-agent-stack",
       "stage": "completed",
       "event_type": "job.completed",
-      "timestamp": "2026-04-21T13:34:58.636709+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {}
     },
     {
-      "event_id": "20260421T133458Z-2de282a4-event-0019",
-      "job_id": "20260421T133458Z-2de282a4",
+      "event_id": "industry-agent-stack-event-0019",
+      "job_id": "industry-agent-stack",
       "stage": "bundle",
       "event_type": "bundle.emitted",
-      "timestamp": "2026-04-21T13:34:58.641190+00:00",
+      "timestamp": "2026-04-21T00:00:00+00:00",
       "payload": {
-        "report_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/industry12/industry-agent-stack/workspace/research_jobs/20260421T133458Z-2de282a4/report.md",
-        "report_bundle_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/industry12/industry-agent-stack/workspace/research_jobs/20260421T133458Z-2de282a4/bundle/report_bundle.json",
-        "trace_path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/reports/phase5_local_smoke/industry12/industry-agent-stack/workspace/research_jobs/20260421T133458Z-2de282a4/bundle/trace.jsonl"
+        "report_path": "evals/reports/phase5_local_smoke/industry12/industry-agent-stack/report.md",
+        "report_bundle_path": "evals/reports/phase5_local_smoke/industry12/industry-agent-stack/bundle/report_bundle.json",
+        "trace_path": "evals/reports/phase5_local_smoke/industry12/industry-agent-stack/bundle/trace.jsonl"
       }
     }
   ],
