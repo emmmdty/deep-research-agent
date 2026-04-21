@@ -1,0 +1,43 @@
+variant: smoke_local
+tasks:
+  - task_id: company-openai-surface
+    topic: OpenAI enterprise surface smoke
+    source_profile: company_broad
+    research_profile: eval_smoke
+    required_questions:
+      - What official product surfaces are visible?
+      - What public developer surface exists?
+    answered_questions:
+      - What official product surfaces are visible?
+      - What public developer surface exists?
+    report_markdown: |
+      # OpenAI Enterprise Surface
+
+      OpenAI exposes a public product surface spanning ChatGPT, API access, and enterprise-facing materials.[1][2]
+
+      The public API and docs surface provides a concrete developer path rather than a prose-only marketing layer.[2]
+    task_summaries:
+      - OpenAI exposes public product, API, and enterprise materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-openai-home
+        source_type: web
+        query: OpenAI official overview
+        title: OpenAI
+        canonical_uri: https://openai.com/
+        url: https://openai.com/
+        snippet: OpenAI presents ChatGPT, API access, and enterprise adoption materials on its official site.
+        snapshot_ref: snapshot-openai-home
+        trust_tier: 5
+        auth_scope: public
+      - citation_id: 2
+        source_id: source-openai-platform
+        source_type: web
+        query: OpenAI API overview
+        title: OpenAI Platform Overview
+        canonical_uri: https://platform.openai.com/docs/overview
+        url: https://platform.openai.com/docs/overview
+        snippet: The platform overview documents API capabilities, tooling, and developer onboarding.
+        snapshot_ref: snapshot-openai-platform
+        trust_tier: 5
+        auth_scope: public

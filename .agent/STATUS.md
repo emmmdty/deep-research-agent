@@ -21,20 +21,20 @@
 - build: none documented
 - api_smoke: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py
 - cli_smoke: UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help
-- eval_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
+- eval_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json
 - test_collect: UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
 - current_phase: phase5_evals_release
 - current_phase_slug: phase5-evals-release
-- current_attempt: 0
+- current_attempt: 1
 - last_successful_phase: phase4_surface_docs
-- overall_state: ready_for_phase5
+- overall_state: phase5_in_progress
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- active_branch: codex/phase5-evals-release/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
@@ -168,21 +168,30 @@
   - Phase 4 worktree was removed and branch `codex/phase4-surface-docs/attempt-1` was deleted after merge.
 
 ### Phase 5 - evals_release
-- status: pending
-- attempts: 0
-- summary: Rebuild tests/evals/release gates around claim-centric metrics and runnable manifests.
+- status: in_progress
+- attempts: 1
+- summary: Added the canonical `evals/` tree, deterministic local suite runner, suite-aware release gate evidence, and committed Phase 5 local smoke artifacts under `evals/reports/phase5_local_smoke/`.
 - acceptance_checks:
-  - lint
-  - unit tests
-  - integration tests
-  - e2e smoke
-  - one reliability suite
-  - one policy suite
-  - one file-ingest suite
-  - one company task and one industry task with saved bundles
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (65 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite trusted8 --output-root evals/reports/phase5_local_smoke/trusted8` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite file8 --output-root evals/reports/phase5_local_smoke/file8` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite recovery6 --output-root evals/reports/phase5_local_smoke/recovery6` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke` -> pass (`release_gate.status = passed`)
 - artifacts:
+  - `src/deep_research_agent/evals/`
+  - `evals/`
+  - `scripts/run_local_release_smoke.py`
+  - `configs/release_gate.yaml`
+  - `evals/reports/phase5_local_smoke/`
 - blockers:
 - notes:
+  - The local release gate now requires company/industry/trusted/file/recovery suite evidence in addition to runtime/security/docs/API diagnostics.
+  - The old benchmark/comparator stack remains diagnostic only; it is no longer sufficient release proof by itself.
+  - `main.py eval run --suite <name>` is now the supported developer entrypoint for deterministic local evals.
+  - Stable saved outputs are copied into suite task roots (`report.md`, `bundle/`, `audit/`) so committed summaries do not depend on ephemeral worktree runtime paths.
 
 ### Phase 6 - finalize
 - status: pending
@@ -239,3 +248,8 @@
 - [2026-04-21T12:52:09Z] Rewrote the public docs to match the new surface (`README.md`, `README.zh-CN` note, `docs/architecture.md`, `docs/development.md`, `specs/api-readiness-contract.md`) and added Phase 4 ADRs plus a migration note.
 - [2026-04-21T12:52:09Z] Phase 4 acceptance passed in the worktree: focused API/CLI/schema regressions (`10 passed`), runtime/auditor/public-surface slice (`60 passed`), broader smoke suite (`87 passed`), `ruff check .`, CLI help smoke, and OpenAPI route smoke.
 - [2026-04-21T12:52:09Z] Merged Phase 4 into `main` via commit `d8ac8ef`, reran main smoke successfully (`main.py --help`, `ruff check .`, OpenAPI smoke, broader regression suite = `87 passed`), removed worktree `../_codex_worktrees/phase4-surface-docs-attempt-1`, and deleted branch `codex/phase4-surface-docs/attempt-1`.
+- [2026-04-21T12:52:09Z] Verified the merged Phase 4 baseline on `main`, then created Phase 5 worktree `../_codex_worktrees/phase5-evals-release-attempt-1` on branch `codex/phase5-evals-release/attempt-1`.
+- [2026-04-21T12:52:09Z] Bootstrapped local-only assets in the Phase 5 worktree by symlinking `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr`; tracked `.python-version` was already present.
+- [2026-04-21T13:34:58Z] Phase 5 TDD red step added `tests/test_phase5_evals.py`, expanded `tests/test_release_gate.py` and `tests/test_cli_runtime.py`, then implemented the canonical `src/deep_research_agent/evals/` runner plus `evals/` suite/dataset/rubric tree until the new slice passed.
+- [2026-04-21T13:34:58Z] Phase 5 wrote committed low-cost smoke outputs under `evals/reports/phase5_local_smoke/`, including company, industry, trusted, file, and recovery suite summaries plus `release_manifest.json` with `release_gate.status = passed`.
+- [2026-04-21T13:34:58Z] Phase 5 normalized saved task artifact paths into stable relative paths (`evals/reports/...`) and copied bundle/audit sidecars out of transient runtime workspaces before cleanup.

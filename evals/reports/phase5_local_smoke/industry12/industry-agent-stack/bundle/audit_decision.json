@@ -1,0 +1,9 @@
+{
+  "gate_status": "passed",
+  "critical_claim_count": 2,
+  "blocked_critical_claim_count": 0,
+  "blocking_claim_ids": [],
+  "summary": "Audit gate passed",
+  "review_queue_ref": "audit/review_queue.json",
+  "claim_graph_ref": "audit/claim_graph.json"
+}

@@ -1,0 +1,51 @@
+{
+  "job_id": "20260421T133458Z-00859618",
+  "claims": [
+    {
+      "claim_id": "company-openai-surface-claim-1",
+      "text": "OpenAI exposes a public product surface spanning ChatGPT, API access, and enterprise-facing materials.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-openai-surface-evidence-1",
+        "company-openai-surface-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-openai-surface-edge-1",
+      "claim_id": "company-openai-surface-claim-1",
+      "evidence_id": "company-openai-surface-evidence-1",
+      "source_id": "source-openai-home",
+      "snapshot_id": "snapshot-openai-home",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI"
+    },
+    {
+      "edge_id": "company-openai-surface-edge-2",
+      "claim_id": "company-openai-surface-claim-1",
+      "evidence_id": "company-openai-surface-evidence-2",
+      "source_id": "source-openai-platform",
+      "snapshot_id": "snapshot-openai-platform",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI Platform Overview"
+    }
+  ],
+  "conflict_sets": []
+}

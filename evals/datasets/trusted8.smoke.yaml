@@ -1,0 +1,32 @@
+variant: smoke_local
+tasks:
+  - task_id: trusted-langgraph-brief
+    topic: Trusted-only research smoke
+    source_profile: trusted_only
+    research_profile: eval_smoke
+    required_questions:
+      - Which trusted public sources are in scope?
+      - How do approved private files augment the public record?
+    answered_questions:
+      - Which trusted public sources are in scope?
+      - How do approved private files augment the public record?
+    report_markdown: |
+      # Trusted-Only Retrieval Smoke
+
+      Under the trusted-only policy, the runtime combines approved public LangChain sources with a private brief to keep provenance explicit and policy-compliant.[1][2]
+    task_summaries:
+      - Trusted-only mode keeps official docs, approved repositories, and private files inside one explicit provenance chain.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-trusted-docs
+        source_type: web
+        query: trusted langgraph docs
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        url: https://docs.langchain.com/langgraph/overview
+        snippet: The LangGraph overview is an approved trusted public source for orchestration concepts.
+        snapshot_ref: snapshot-trusted-docs
+        trust_tier: 5
+        auth_scope: public
+    file_inputs:
+      - evals/datasets/files/trusted_brief.md

@@ -33,6 +33,7 @@ The supported developer CLI lives behind `main.py`:
 - `refine`
 - `bundle`
 - `batch run`
+- `eval run`
 
 ### Local HTTP API
 
@@ -124,6 +125,16 @@ Submit it:
 uv run python main.py batch run --file batch.jsonl --json
 ```
 
+### 6. Run local evals and the release smoke pack
+
+```bash
+uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12 --json
+uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12 --json
+uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json
+```
+
+The committed Phase 5 local smoke outputs live under `evals/reports/phase5_local_smoke/`.
+
 ## Artifact Contract
 
 Completed jobs write their runtime artifacts under `workspace/research_jobs/<job_id>/`.
@@ -168,6 +179,8 @@ src/deep_research_agent/
   reporting/        bundle compiler and delivery artifacts
   providers/        provider routing and abstraction
   evidence_store/   evidence storage primitives
+  evals/            deterministic local suite runner and eval contracts
+evals/              suite definitions, frozen datasets, rubrics, committed smoke outputs
 legacy/             archived workflow path retained for compatibility only
 tests/              runtime, connector, auditor, and public-surface regressions
 docs/               architecture, development, ADRs, and migration notes
@@ -181,6 +194,7 @@ Key local checks:
 uv run python main.py --help
 uv run ruff check .
 uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
+uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke
 ```
 
 For broader validation, see:
@@ -198,6 +212,7 @@ For broader validation, see:
 - There is no auth, tenant isolation, external queue, or object storage layer yet.
 - Review writes are append-only and visible through runtime events and sidecars, but they do not fully recompile the report bundle JSON in Phase 4.
 - `legacy-run` is still present as a hidden compatibility path and is not the supported public runtime.
+- The heavy benchmark/comparator stack still exists for diagnostics, but the Phase 5 release gate now depends on local claim-centric suite manifests under `evals/`.
 
 ## License
 

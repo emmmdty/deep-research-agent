@@ -1,0 +1,96 @@
+{
+  "suite_name": "recovery6",
+  "description": "Deterministic local recovery and controllability suite.",
+  "variant": "smoke_local",
+  "status": "passed",
+  "task_count": 6,
+  "metrics": {
+    "completion_rate": 1.0,
+    "cancel_success_rate": 1.0,
+    "retry_success_rate": 1.0,
+    "resume_success_rate": 1.0,
+    "refine_success_rate": 1.0,
+    "stale_recovery_success_rate": 1.0,
+    "idle_skip_rate": 1.0
+  },
+  "threshold_results": {
+    "completion_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "cancel_success_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "retry_success_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "resume_success_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "refine_success_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "stale_recovery_success_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "idle_skip_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    }
+  },
+  "rubric_path": "evals/rubrics/recovery_reliability.yaml",
+  "tasks": [
+    {
+      "scenario_id": "cancel_created_job",
+      "passed": true
+    },
+    {
+      "scenario_id": "retry_failed_job",
+      "passed": true
+    },
+    {
+      "scenario_id": "resume_failed_job",
+      "passed": true
+    },
+    {
+      "scenario_id": "refine_failed_job",
+      "passed": true
+    },
+    {
+      "scenario_id": "stale_recovery",
+      "passed": true
+    },
+    {
+      "scenario_id": "idle_created_noop",
+      "passed": true
+    }
+  ],
+  "summary_path": "evals/reports/phase5_local_smoke/recovery6/summary.json",
+  "results_markdown_path": "evals/reports/phase5_local_smoke/recovery6/RESULTS.md"
+}

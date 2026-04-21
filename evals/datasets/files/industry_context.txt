@@ -1,0 +1,3 @@
+Industry comparison notes:
+- Retrieval depth and orchestration guarantees should be discussed separately.
+- Private notes must remain marked as private provenance in the final artifact bundle.

@@ -1,14 +1,16 @@
 # Deep Research Agent Architecture
 
-This document describes the current implemented architecture after Phase 4.
+This document describes the current implemented architecture after Phase 5.
 
 ## System Boundary
 
-The supported system is an evidence-first research runtime with three public entrypoints:
+The supported system is an evidence-first research runtime with five implemented surfaces:
 
 - developer CLI
 - local HTTP API
 - batch submission path
+- local eval suite runner
+- local release-smoke manifest
 
 All three surfaces share the same deterministic runtime:
 
@@ -17,6 +19,8 @@ All three surfaces share the same deterministic runtime:
 - append-only events
 - checkpoint files
 - filesystem report artifacts
+
+The eval and release-smoke surfaces reuse the same runtime and artifact contracts, then aggregate claim-centric evidence into suite summaries and release-gate manifests.
 
 The legacy LangGraph workflow remains archived and compatibility-only. It is not the supported product boundary.
 
@@ -125,6 +129,25 @@ Owns public surfaces:
 - `contracts.py` for stable public request/response models
 - `artifacts.py` for stable artifact-name resolution
 
+### `src/deep_research_agent/evals/`
+
+Owns the canonical Phase 5 local eval stack:
+
+- suite definitions and threshold loading
+- deterministic fixture execution over the rebuilt runtime
+- company / industry / trusted / file / recovery suite summaries
+- saved bundle-aware metrics and suite manifests
+
+### `evals/`
+
+Owns the filesystem contract for evaluation assets:
+
+- `evals/suites/` for suite config and thresholds
+- `evals/datasets/` for frozen smoke fixtures
+- `evals/rubrics/` for rubric metadata
+- `evals/reports/` for committed low-cost outputs and release manifests
+- `evals/legacy_diagnostics/` for the older benchmark narrative
+
 ## Public Surface Contract
 
 ### CLI
@@ -140,6 +163,7 @@ Supported commands:
 - `refine`
 - `bundle`
 - `batch run`
+- `eval run`
 
 ### HTTP API
 
@@ -158,6 +182,17 @@ Implemented endpoints:
 - `POST /v1/batch/research`
 
 The HTTP response contract does not expose workspace paths. It returns stable artifact URLs keyed by public names.
+
+### Eval and Release Manifests
+
+Phase 5 adds saved deterministic suite outputs:
+
+- `evals/reports/phase5_local_smoke/<suite>/summary.json`
+- `evals/reports/phase5_local_smoke/<suite>/RESULTS.md`
+- `evals/reports/phase5_local_smoke/release_manifest.json`
+- `evals/reports/phase5_local_smoke/RESULTS.md`
+
+The release gate now consumes claim-centric suite evidence in addition to runtime/security/docs/API diagnostics.
 
 ## Artifact Delivery
 
@@ -195,5 +230,6 @@ Phase 4 does not fully recompile `report_bundle.json` after manual review.
 - no external queue
 - no object storage indirection
 - no full bundle recompilation after manual review
+- heavy benchmark/comparator tooling remains as diagnostics and historical comparison, not the primary release contract
 
 These are deliberate follow-on items for later phases, not hidden assumptions.

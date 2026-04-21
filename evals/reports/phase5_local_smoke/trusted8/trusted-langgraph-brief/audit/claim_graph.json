@@ -1,0 +1,51 @@
+{
+  "job_id": "20260421T133458Z-86a4c97c",
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-brief-claim-1",
+      "text": "Under the trusted-only policy, the runtime combines approved public LangChain sources with a private brief to keep provenance explicit and policy-compliant.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-brief-file-evidence-1",
+        "trusted-langgraph-brief-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "trusted-langgraph-brief-edge-1",
+      "claim_id": "trusted-langgraph-brief-claim-1",
+      "evidence_id": "trusted-langgraph-brief-file-evidence-1",
+      "source_id": "trusted-langgraph-brief-file-1",
+      "snapshot_id": "trusted-langgraph-brief-file-snapshot-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1/evals/datasets/files/trusted_brief.md"
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "trusted_brief.md"
+    },
+    {
+      "edge_id": "trusted-langgraph-brief-edge-2",
+      "claim_id": "trusted-langgraph-brief-claim-1",
+      "evidence_id": "trusted-langgraph-brief-evidence-2",
+      "source_id": "source-trusted-docs",
+      "snapshot_id": "snapshot-trusted-docs",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangGraph Overview"
+    }
+  ],
+  "conflict_sets": []
+}

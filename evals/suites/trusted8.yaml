@@ -1,0 +1,16 @@
+suite_name: trusted8
+executor: research_fixture
+description: Trusted-only source-profile smoke for public trusted sources plus approved files.
+dataset_path: evals/datasets/trusted8.smoke.yaml
+rubric_path: evals/rubrics/file_research.yaml
+thresholds:
+  completion_rate:
+    min: 1.0
+  bundle_emission_rate:
+    min: 1.0
+  audit_pass_rate:
+    min: 1.0
+  provenance_completeness:
+    min: 0.95
+  policy_compliance_rate:
+    min: 1.0

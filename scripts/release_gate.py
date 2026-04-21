@@ -119,21 +119,65 @@ def build_release_gate_evidence(
     preflight: dict[str, Any],
     full_benchmark_summary: dict[str, Any],
     full_ablation_summary: dict[str, Any],
+    suite_summaries: dict[str, dict[str, Any]] | None = None,
+    diagnostics: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """从现有 release runner 结果提取已知 evidence。"""
+    evidence: dict[str, Any] = {}
+    suite_summaries = suite_summaries or {}
+    diagnostics = diagnostics or {}
+
+    if "company12" in suite_summaries:
+        summary = suite_summaries["company12"]
+        evidence["company12-smoke"] = _suite_status_payload(summary)
+    if "industry12" in suite_summaries:
+        summary = suite_summaries["industry12"]
+        evidence["industry12-smoke"] = _suite_status_payload(summary)
+    if "trusted8" in suite_summaries:
+        summary = suite_summaries["trusted8"]
+        evidence["trusted8-smoke"] = _suite_status_payload(summary)
+        evidence.setdefault(
+            "connector-fetch-security",
+            {
+                "status": "passed" if _suite_passed(summary) else "failed",
+                "policy_compliance_rate": summary.get("metrics", {}).get("policy_compliance_rate"),
+            },
+        )
+    if "file8" in suite_summaries:
+        summary = suite_summaries["file8"]
+        evidence["file8-smoke"] = _suite_status_payload(summary)
+    if "recovery6" in suite_summaries:
+        summary = suite_summaries["recovery6"]
+        evidence["recovery6-smoke"] = _suite_status_payload(summary)
+        evidence.setdefault(
+            "runtime-job-recovery",
+            {
+                "status": "passed" if _suite_passed(summary) else "failed",
+                "resume_success_rate": summary.get("metrics", {}).get("resume_success_rate"),
+                "retry_success_rate": summary.get("metrics", {}).get("retry_success_rate"),
+                "stale_recovery_success_rate": summary.get("metrics", {}).get("stale_recovery_success_rate"),
+            },
+        )
+
+    audit_summary = _audit_suite_status(suite_summaries)
+    if audit_summary is not None:
+        evidence.setdefault("audit-grounding", audit_summary)
+
+    evidence.update(diagnostics)
+
     counts = dict(full_benchmark_summary.get("counts") or {})
     completed = int(counts.get("completed") or 0)
     benchmark_passed = completed > 0 and bool(full_ablation_summary)
     if preflight.get("judge_status") not in {"scored", "skipped"}:
         benchmark_passed = False
-    return {
-        "benchmark-diagnostics": {
+    if completed > 0 or full_benchmark_summary or full_ablation_summary:
+        evidence["benchmark-diagnostics"] = {
             "status": "passed" if benchmark_passed else "missing",
             "completed": completed,
             "judge_status": full_benchmark_summary.get("judge_status", "unknown"),
             "quality_gate_passed": counts.get("quality_gate_passed", 0),
         }
-    }
+    return evidence
 
 
 def _evidence_status(payload: Any) -> str:
@@ -158,6 +202,44 @@ def _benchmark_is_the_only_passed_required_category(
         if payload["required_check_count"] > 0 and payload["status"] == "passed"
     ]
     return passed_required_categories == [BENCHMARK_CATEGORY]
+
+
+def _suite_passed(summary: dict[str, Any]) -> bool:
+    return str(summary.get("status") or "") == "passed"
+
+
+def _suite_status_payload(summary: dict[str, Any]) -> dict[str, Any]:
+    payload = {
+        "status": "passed" if _suite_passed(summary) else "failed",
+        "task_count": summary.get("task_count"),
+        "metrics": summary.get("metrics"),
+        "summary_path": summary.get("summary_path"),
+    }
+    return payload
+
+
+def _audit_suite_status(suite_summaries: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    company = suite_summaries.get("company12")
+    industry = suite_summaries.get("industry12")
+    if company is None or industry is None:
+        return None
+
+    metrics = []
+    for summary in (company, industry):
+        metrics.append(summary.get("metrics", {}))
+    support_precision = min(float(metric.get("critical_claim_support_precision", 0.0)) for metric in metrics)
+    citation_error_rate = max(float(metric.get("citation_error_rate", 1.0)) for metric in metrics)
+    passed = (
+        _suite_passed(company)
+        and _suite_passed(industry)
+        and support_precision >= 0.85
+        and citation_error_rate <= 0.05
+    )
+    return {
+        "status": "passed" if passed else "failed",
+        "critical_claim_support_precision": support_precision,
+        "citation_error_rate": citation_error_rate,
+    }
 
 
 def main() -> None:
