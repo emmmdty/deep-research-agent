@@ -26,22 +26,23 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: phase5_evals_release
-- current_phase_slug: phase5-evals-release
+- current_phase: phase6_finalize
+- current_phase_slug: phase6-finalize
 - current_attempt: 1
-- last_successful_phase: phase4_surface_docs
-- overall_state: phase5_in_progress
+- last_successful_phase: phase5_evals_release
+- overall_state: ready_for_phase6
 
 ## Worktree state
-- active_branch: codex/phase5-evals-release/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase5-evals-release-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - OpenAPI smoke (`uv run python - <<'PY' ... app.openapi() ... PY`) -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_basic.py tests/test_scripts.py` -> pass (87 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (68 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json` -> pass (`release_gate.status = passed`)
+  - `git status --short` -> clean
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
@@ -168,12 +169,12 @@
   - Phase 4 worktree was removed and branch `codex/phase4-surface-docs/attempt-1` was deleted after merge.
 
 ### Phase 5 - evals_release
-- status: in_progress
+- status: completed
 - attempts: 1
 - summary: Added the canonical `evals/` tree, deterministic local suite runner, suite-aware release gate evidence, and committed Phase 5 local smoke artifacts under `evals/reports/phase5_local_smoke/`; saved smoke outputs are now normalized so reruns are byte-stable and file-ingest artifacts remain portable across worktrees and `main`.
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (67 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (68 passed)
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite trusted8 --output-root evals/reports/phase5_local_smoke/trusted8` -> pass
@@ -195,6 +196,7 @@
   - Stable saved outputs are copied into suite task roots (`report.md`, `bundle/`, `audit/`) so committed summaries do not depend on ephemeral worktree runtime paths.
   - Added regression coverage so same-path reruns preserve `summary.json`, `sources.json`, `report_bundle.json`, and `release_manifest.json` exactly.
   - File-ingest suites now serialize repo-relative paths and `repo:///...` URIs so saved eval artifacts do not leak checkout-specific absolute paths.
+  - Merge chain on `main`: `e87bc9e` (initial Phase 5 merge), `44d28cb` (deterministic artifact repair), `764fecd` (file-ingest portability repair and clean main rerun).
 
 ### Phase 6 - finalize
 - status: pending
@@ -256,3 +258,7 @@
 - [2026-04-21T13:34:58Z] Phase 5 TDD red step added `tests/test_phase5_evals.py`, expanded `tests/test_release_gate.py` and `tests/test_cli_runtime.py`, then implemented the canonical `src/deep_research_agent/evals/` runner plus `evals/` suite/dataset/rubric tree until the new slice passed.
 - [2026-04-21T13:34:58Z] Phase 5 wrote committed low-cost smoke outputs under `evals/reports/phase5_local_smoke/`, including company, industry, trusted, file, and recovery suite summaries plus `release_manifest.json` with `release_gate.status = passed`.
 - [2026-04-21T13:34:58Z] Phase 5 normalized saved task artifact paths into stable relative paths (`evals/reports/...`) and copied bundle/audit sidecars out of transient runtime workspaces before cleanup.
+- [2026-04-21T13:42:54Z] First Phase 5 repair commit `d5a4d96` stabilized timestamps, checkpoint ids, emitted bundle paths, and aggregate metric ordering; rerunning the smoke tree inside the phase worktree produced byte-identical outputs.
+- [2026-04-21T13:44:25Z] The first post-merge rerun on `main` exposed a remaining portability bug: `trusted8` and `file8` artifacts still embedded checkout-specific absolute file paths and file-derived hashes.
+- [2026-04-21T13:47:24Z] Second Phase 5 repair commit `07c662b` normalized file-ingest fixtures to repo-relative paths and `repo:///...` URIs and added regression coverage that forbids checkout absolute-path leakage in saved artifacts.
+- [2026-04-21T13:48:14Z] Final Phase 5 post-merge smoke on `main` passed (`ruff check .`, Phase 5 regression slice = `68 passed`, `main.py --help`, local release smoke, `git status --short` clean); Phase 5 is complete and Phase 6 can start in a fresh worktree.
