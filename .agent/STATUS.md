@@ -26,19 +26,21 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py
 
 ## Current overall status
-- current_phase: phase1_structure
-- current_phase_slug: phase1-structure
-- current_attempt: 1
-- last_successful_phase: phase0_read_and_model
-- overall_state: phase1_validated_pending_merge
+- current_phase: phase2_runtime_provider
+- current_phase_slug: phase2-runtime-provider
+- current_attempt: 0
+- last_successful_phase: phase1_structure
+- overall_state: ready_for_phase2
 
 ## Worktree state
-- active_branch: codex/phase1-structure/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase1-structure-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
-  - phase0 main smoke already passed before opening Phase 1
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py` -> pass (51 passed)
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
@@ -79,7 +81,7 @@
 ### Phase 1 - structure
 - status: completed
 - attempts: 1
-- summary: Created the canonical `src/deep_research_agent/` package tree, moved `agents/` and `workflows/` under `legacy/`, made `main.py` a thin wrapper, and updated packaging/imports so the new src package is importable.
+- summary: Created the canonical `src/deep_research_agent/` package tree, moved `agents/` and `workflows/` under `legacy/`, made `main.py` a thin wrapper, updated packaging/imports so the new src package is importable, and verified the structure on `main`.
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python -c "import deep_research_agent; print(deep_research_agent.__file__)"`
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help`
@@ -92,7 +94,7 @@
 - blockers:
 - notes:
   - Focused validation passed: `tests/test_phase1_structure_rebuild.py`, `tests/test_cli_runtime.py`, `tests/test_phase2_jobs.py`, `tests/test_phase3_connectors.py`, `tests/test_phase4_auditor.py` -> 51 passed.
-  - Pending next step: commit branch, merge to `main`, rerun main smoke, then advance to Phase 2.
+  - Merge target landed on `main`; next action is Phase 2 in a fresh worktree.
 
 ### Phase 2 - runtime_provider
 - status: pending
@@ -182,3 +184,5 @@
 - [2026-04-21T11:52:03Z] Phase 1 TDD red step: added `tests/test_phase1_structure_rebuild.py` and confirmed it failed before the structure rebuild (`3 failed`).
 - [2026-04-21T11:52:03Z] Phase 1 structure rebuild created `src/deep_research_agent/`, moved `agents/` and `workflows/` under `legacy/`, added the canonical package wrappers, and converted `main.py` to a thin wrapper over `deep_research_agent.gateway.cli`.
 - [2026-04-21T11:52:03Z] Phase 1 validation passed in the worktree: package import smoke, CLI help, `ruff check .`, and focused regressions (`51 passed`).
+- [2026-04-21T12:00:00Z] Phase 1 first merge exposed a post-merge test assumption mismatch caused by lingering top-level `__pycache__` directories; repaired on the same phase branch by tightening `tests/test_phase1_structure_rebuild.py` to assert absence of live Python modules rather than directory shells.
+- [2026-04-21T12:00:00Z] Final Phase 1 post-merge smoke on `main` passed (`main.py --help`, `ruff check .`, focused regressions = `51 passed`).
