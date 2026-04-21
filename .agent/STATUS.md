@@ -26,18 +26,21 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py
 
 ## Current overall status
-- current_phase: phase0_read_and_model
-- current_phase_slug: phase0-read-and-model
-- current_attempt: 1
-- last_successful_phase: none
-- overall_state: phase0_validated_pending_merge
+- current_phase: phase1_structure
+- current_phase_slug: phase1-structure
+- current_attempt: 0
+- last_successful_phase: phase0_read_and_model
+- overall_state: ready_for_phase1
 
 ## Worktree state
-- active_branch: codex/phase0-read-and-model/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase0-read-and-model-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
-- post_merge_smoke_status: not applicable; phase not merged yet
+- post_merge_smoke_status:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
@@ -57,7 +60,7 @@
 ### Phase 0 - read_and_model
 - status: completed
 - attempts: 1
-- summary: Phase 0 execution backlog, file-impact map, command registry, risk log, and open-decision resolution have been frozen against the live repo; acceptance checks passed in the phase worktree.
+- summary: Phase 0 execution backlog, file-impact map, command registry, risk log, and open-decision resolution are frozen on `main`; phase worktree validation and post-merge smoke both passed.
 - acceptance_checks:
   - baseline on main: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - baseline on main: `UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q` -> pass
@@ -72,7 +75,8 @@
 - notes:
   - Phase 0 froze unmapped-directory handling and source-profile migration strategy.
   - Active phase file now includes clarified sub-steps and validation commands.
-  - Pending next step: commit the Phase 0 control files, merge to `main`, rerun main-branch smoke, then update status for Phase 1.
+  - Merge target commit on `main`: `2aca4d7e28aaa8a825c864c4e3795fc211ae404f`
+  - Next action: create the fresh Phase 1 worktree after cleaning up the Phase 0 worktree and branch.
 
 ### Phase 1 - structure
 - status: pending
@@ -168,3 +172,4 @@
 - [2026-04-21T11:49:14Z] Re-ran safe validation in the Phase 0 worktree: CLI help pass, pytest collect pass, ruff pass, focused runtime regressions pass (45 passed).
 - [2026-04-21T11:49:14Z] Phase 0 froze handling for unmapped directories, source-profile migration, command registry, phase acceptance commands, and file-impact mapping in `.agent/EXECUTION_BACKLOG.md`.
 - [2026-04-21T11:49:14Z] Phase 0 acceptance passed in the phase worktree; next action is commit + merge + main smoke before advancing to Phase 1.
+- [2026-04-21T11:52:03Z] Merged Phase 0 into `main` via commit `2aca4d7e28aaa8a825c864c4e3795fc211ae404f` and reran main smoke successfully (`main.py --help`, `pytest --collect-only -q`, `ruff check .`).
