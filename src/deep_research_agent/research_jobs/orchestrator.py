@@ -7,12 +7,12 @@ from typing import Any, Callable
 
 from loguru import logger
 
-from auditor.pipeline import claim_auditor_node
+from deep_research_agent.auditor.pipeline import claim_auditor_node
+from deep_research_agent.reporting.bundle import emit_report_artifacts
 from legacy.agents.planner import planner_node
 from legacy.agents.researcher import collect_research_step
 from legacy.agents.verifier import verifier_node
 from legacy.agents.writer import writer_node
-from artifacts.bundle import emit_report_artifacts
 from deep_research_agent.research_jobs.models import (
     TERMINAL_JOB_STATUSES,
     JobStatus,
@@ -303,10 +303,15 @@ class ResearchJobOrchestrator:
             },
         )
 
+        state_for_artifacts = dict(state)
+        if not state_for_artifacts.get("review_queue_path"):
+            state_for_artifacts["review_queue_path"] = job.review_queue_path
+        if not state_for_artifacts.get("audit_graph_path"):
+            state_for_artifacts["audit_graph_path"] = job.audit_graph_path
         trace_events = [event.model_dump(mode="json") for event in self.store.list_events(job.job_id)]
         emit_report_artifacts(
-            state,
-            topic=str(state.get("research_topic") or job.topic),
+            state_for_artifacts,
+            topic=str(state_for_artifacts.get("research_topic") or job.topic),
             max_loops=int(job.metadata.get("max_loops", 3)),
             research_profile=str(job.metadata.get("research_profile", "default")),
             workspace_dir=self.store.job_dir(job.job_id),
@@ -317,6 +322,7 @@ class ResearchJobOrchestrator:
             runtime_path=job.runtime_path,
             trace_events=trace_events,
             report_bundle_ref="bundle/report_bundle.json",
+            report_path=Path(job.report_path),
         )
         return self.store.update_job(
             job.job_id,

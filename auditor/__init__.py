@@ -1,1 +1,1 @@
-"""Phase 04 claim-level audit pipeline。"""
+"""Compatibility package for canonical auditor submodules."""
