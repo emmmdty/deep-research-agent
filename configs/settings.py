@@ -1,14 +1,18 @@
-"""项目配置管理，基于 Pydantic BaseSettings 自动加载 .env 文件。"""
+"""Project settings and Phase 2 provider/profile foundations."""
 
 from __future__ import annotations
 
 import json
+import os
 from enum import Enum
 from pathlib import Path
 from typing import Any, Optional
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
+
+from deep_research_agent.common import DEFAULT_SOURCE_PROFILE, resolve_source_profile_name
+from deep_research_agent.providers.models import ProviderCapabilities, ProviderProfile, ProviderType
 
 
 class SearchBackend(str, Enum):
@@ -19,13 +23,12 @@ class SearchBackend(str, Enum):
 
 
 class LLMProvider(str, Enum):
-    """支持的 LLM 提供商。"""
+    """Canonical provider classes exposed by the runtime."""
 
-    MINIMAX = "minimax"
-    DEEPSEEK = "deepseek"
     OPENAI = "openai"
-    AGICTO = "agicto"
-    CUSTOM = "custom"
+    ANTHROPIC = "anthropic"
+    OPENAI_COMPATIBLE = "openai_compatible"
+    ANTHROPIC_COMPATIBLE = "anthropic_compatible"
 
 
 # 项目根目录（deep-research-agent/）
@@ -37,20 +40,20 @@ class Settings(BaseSettings):
 
     # ---------- LLM 配置 ----------
     llm_provider: LLMProvider = Field(
-        default=LLMProvider.MINIMAX,
-        description="LLM 提供商",
+        default=LLMProvider.OPENAI_COMPATIBLE,
+        description="默认 provider profile",
     )
     llm_model_name: str = Field(
         default="MiniMax-M2.5",
-        description="模型名称",
+        description="当前默认 provider profile 的模型名称覆盖",
     )
     llm_api_key: Optional[str] = Field(
         default=None,
-        description="LLM API 密钥",
+        description="当前默认 provider profile 的 API key 覆盖",
     )
     llm_base_url: Optional[str] = Field(
         default=None,
-        description="LLM API 基地址",
+        description="当前默认 provider profile 的 base URL 覆盖",
     )
     llm_temperature: float = Field(
         default=0.0,
@@ -59,6 +62,37 @@ class Settings(BaseSettings):
     llm_max_tokens: int = Field(
         default=4096,
         description="LLM 最大输出 token 数",
+    )
+    openai_api_key: Optional[str] = Field(default=None, description="OpenAI API 密钥")
+    openai_model_name: str = Field(default="gpt-4o-mini", description="OpenAI 默认模型")
+    anthropic_api_key: Optional[str] = Field(default=None, description="Anthropic API 密钥")
+    anthropic_model_name: str = Field(
+        default="claude-3-5-haiku-latest",
+        description="Anthropic 默认模型",
+    )
+    openai_compatible_api_key: Optional[str] = Field(
+        default=None,
+        description="OpenAI-compatible API 密钥",
+    )
+    openai_compatible_base_url: Optional[str] = Field(
+        default=None,
+        description="OpenAI-compatible base URL",
+    )
+    openai_compatible_model_name: str = Field(
+        default="MiniMax-M2.5",
+        description="OpenAI-compatible 默认模型",
+    )
+    anthropic_compatible_api_key: Optional[str] = Field(
+        default=None,
+        description="Anthropic-compatible API 密钥",
+    )
+    anthropic_compatible_base_url: Optional[str] = Field(
+        default=None,
+        description="Anthropic-compatible base URL",
+    )
+    anthropic_compatible_model_name: str = Field(
+        default="claude-compatible-model",
+        description="Anthropic-compatible 默认模型",
     )
 
     # ---------- 搜索配置 ----------
@@ -116,7 +150,7 @@ class Settings(BaseSettings):
         description="case-study 检索时优先尝试的官方域名",
     )
     source_policy_mode: str = Field(
-        default="open-web",
+        default=DEFAULT_SOURCE_PROFILE,
         description="来源选择策略模式",
     )
     enabled_capability_types: list[str] = Field(
@@ -261,48 +295,169 @@ class Settings(BaseSettings):
             return json.loads(value)
         return value
 
-    def get_llm_config(self) -> dict:
-        """返回用于初始化 LLM 客户端的配置字典。"""
+    @field_validator("llm_provider", mode="before")
+    @classmethod
+    def _normalize_provider_alias(cls, value: Any) -> Any:
+        if isinstance(value, str):
+            aliases = {
+                "minimax": LLMProvider.OPENAI_COMPATIBLE.value,
+                "deepseek": LLMProvider.OPENAI_COMPATIBLE.value,
+                "agicto": LLMProvider.OPENAI_COMPATIBLE.value,
+                "custom": LLMProvider.OPENAI_COMPATIBLE.value,
+            }
+            return aliases.get(value, value)
+        return value
 
-        # 根据 provider 自动匹配 API key 和 base_url
-        provider_defaults = {
-            LLMProvider.MINIMAX: {
-                "env_key": "MINIMAX_API_KEY",
-                "base_url": "https://api.minimaxi.com/v1",
-                "model": "MiniMax-M2.5",
-            },
-            LLMProvider.DEEPSEEK: {
-                "env_key": "DEEPSEEK_API_KEY",
-                "base_url": "https://api.deepseek.com",
-                "model": "deepseek-chat",
-            },
-            LLMProvider.AGICTO: {
-                "env_key": "AGICTO_API_KEY",
-                "base_url": "https://api.agicto.cn/v1",
-                "model": "gpt-4o-mini",
-            },
-            LLMProvider.OPENAI: {
-                "env_key": "OPENAI_API_KEY",
-                "base_url": "https://api.openai.com/v1",
-                "model": "gpt-4o-mini",
-            },
+    @field_validator("source_policy_mode", mode="before")
+    @classmethod
+    def _normalize_source_policy_mode(cls, value: Any) -> Any:
+        if value is None:
+            return DEFAULT_SOURCE_PROFILE
+        if isinstance(value, str):
+            return resolve_source_profile_name(value)
+        return value
+
+    def get_default_provider_profile_name(self) -> str:
+        return self.llm_provider.value
+
+    def get_provider_profiles(self) -> dict[str, ProviderProfile]:
+        """Build canonical provider profiles with legacy env fallbacks."""
+
+        selected_profile = self.get_default_provider_profile_name()
+
+        def _pick(explicit: str | None, generic: str | None, fallback: str | None, *, profile_name: str) -> str | None:
+            if explicit:
+                return explicit
+            if profile_name == selected_profile and generic:
+                return generic
+            return fallback
+
+        selected_generic_model = self.llm_model_name if selected_profile else None
+
+        profiles = {
+            "openai": ProviderProfile(
+                name="openai",
+                provider_type=ProviderType.OPENAI,
+                model=_pick(None, selected_generic_model, self.openai_model_name, profile_name="openai")
+                or self.openai_model_name,
+                api_key=_pick(
+                    self.openai_api_key,
+                    self.llm_api_key,
+                    os.getenv("OPENAI_API_KEY"),
+                    profile_name="openai",
+                ),
+                base_url=_pick(None, self.llm_base_url, "https://api.openai.com/v1", profile_name="openai"),
+                temperature=self.llm_temperature,
+                max_tokens=self.llm_max_tokens,
+                priority=10,
+                capabilities=ProviderCapabilities(
+                    reasoning=True,
+                    structured_output=True,
+                    fast=True,
+                    file_understanding=True,
+                ),
+            ),
+            "anthropic": ProviderProfile(
+                name="anthropic",
+                provider_type=ProviderType.ANTHROPIC,
+                model=_pick(
+                    None,
+                    selected_generic_model,
+                    self.anthropic_model_name,
+                    profile_name="anthropic",
+                )
+                or self.anthropic_model_name,
+                api_key=_pick(
+                    self.anthropic_api_key,
+                    self.llm_api_key,
+                    os.getenv("ANTHROPIC_API_KEY"),
+                    profile_name="anthropic",
+                ),
+                base_url=_pick(None, self.llm_base_url, "https://api.anthropic.com", profile_name="anthropic"),
+                temperature=self.llm_temperature,
+                max_tokens=self.llm_max_tokens,
+                priority=10,
+                capabilities=ProviderCapabilities(
+                    reasoning=True,
+                    structured_output=True,
+                    judge_preferred=True,
+                ),
+            ),
+            "openai_compatible": ProviderProfile(
+                name="openai_compatible",
+                provider_type=ProviderType.OPENAI_COMPATIBLE,
+                model=(
+                    self.llm_model_name
+                    if selected_profile == "openai_compatible" and self.llm_model_name
+                    else self.openai_compatible_model_name
+                ),
+                api_key=_pick(
+                    self.openai_compatible_api_key,
+                    self.llm_api_key,
+                    os.getenv("OPENAI_COMPATIBLE_API_KEY")
+                    or os.getenv("MINIMAX_API_KEY")
+                    or os.getenv("DEEPSEEK_API_KEY")
+                    or os.getenv("AGICTO_API_KEY"),
+                    profile_name="openai_compatible",
+                ),
+                base_url=_pick(
+                    self.openai_compatible_base_url,
+                    self.llm_base_url,
+                    os.getenv("OPENAI_COMPATIBLE_BASE_URL") or "https://api.minimaxi.com/v1",
+                    profile_name="openai_compatible",
+                ),
+                temperature=self.llm_temperature,
+                max_tokens=self.llm_max_tokens,
+                priority=25,
+                capabilities=ProviderCapabilities(
+                    reasoning=True,
+                    structured_output=True,
+                    fast=True,
+                ),
+                metadata={"legacy_aliases": ["minimax", "deepseek", "agicto", "custom"]},
+            ),
+            "anthropic_compatible": ProviderProfile(
+                name="anthropic_compatible",
+                provider_type=ProviderType.ANTHROPIC_COMPATIBLE,
+                model=(
+                    self.llm_model_name
+                    if selected_profile == "anthropic_compatible" and self.llm_model_name
+                    else self.anthropic_compatible_model_name
+                ),
+                api_key=_pick(
+                    self.anthropic_compatible_api_key,
+                    self.llm_api_key,
+                    os.getenv("ANTHROPIC_COMPATIBLE_API_KEY"),
+                    profile_name="anthropic_compatible",
+                ),
+                base_url=_pick(
+                    self.anthropic_compatible_base_url,
+                    self.llm_base_url,
+                    os.getenv("ANTHROPIC_COMPATIBLE_BASE_URL"),
+                    profile_name="anthropic_compatible",
+                ),
+                temperature=self.llm_temperature,
+                max_tokens=self.llm_max_tokens,
+                priority=30,
+                capabilities=ProviderCapabilities(
+                    reasoning=True,
+                    structured_output=True,
+                    judge_preferred=True,
+                ),
+            ),
         }
+        return profiles
 
-        defaults = provider_defaults.get(self.llm_provider, {})
+    def get_llm_config(self) -> dict:
+        """Return the resolved config for the selected provider profile."""
 
-        # 优先使用显式设置的值，否则使用 provider 默认值
-        import os
-
-        api_key = self.llm_api_key or os.getenv(defaults.get("env_key", ""), "")
-        base_url = self.llm_base_url or defaults.get("base_url", "")
-        model = self.llm_model_name or defaults.get("model", "")
-
+        profile = self.get_provider_profiles()[self.get_default_provider_profile_name()]
         return {
-            "api_key": api_key,
-            "base_url": base_url,
-            "model": model,
-            "temperature": self.llm_temperature,
-            "max_tokens": self.llm_max_tokens,
+            "api_key": profile.api_key or "",
+            "base_url": profile.base_url or "",
+            "model": profile.model,
+            "temperature": profile.temperature,
+            "max_tokens": profile.max_tokens,
         }
 
 

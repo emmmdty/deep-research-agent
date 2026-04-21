@@ -13,7 +13,7 @@ def test_main_parser_uses_settings_default_max_loops_for_submit(monkeypatch):
         max_research_loops=7,
         workspace_dir="workspace",
         legacy_cli_enabled=True,
-        source_policy_mode="open-web",
+        source_policy_mode="company_broad",
     )
     monkeypatch.setattr(main, "get_settings", lambda: settings)
 
@@ -22,7 +22,7 @@ def test_main_parser_uses_settings_default_max_loops_for_submit(monkeypatch):
 
     assert args.command == "submit"
     assert args.max_loops == 7
-    assert args.source_profile == "open-web"
+    assert args.source_profile == "company_broad"
 
 
 def test_run_cli_uses_settings_workspace_dir(tmp_path, monkeypatch):
@@ -84,6 +84,18 @@ def test_submit_cli_dispatches_to_job_service(monkeypatch):
             }
             return SimpleNamespace(job_id="job-001", status="created")
 
+        def resume(self, job_id, *, start_worker=True):
+            captured["resume"] = {"job_id": job_id, "start_worker": start_worker}
+            return SimpleNamespace(job_id=job_id, status="created", current_stage="collecting")
+
+        def refine(self, job_id, instruction, *, start_worker=True):
+            captured["refine"] = {
+                "job_id": job_id,
+                "instruction": instruction,
+                "start_worker": start_worker,
+            }
+            return SimpleNamespace(job_id=job_id, status="created", current_stage="planned")
+
     monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
 
     exit_code = main.run_command(
@@ -96,7 +108,7 @@ def test_submit_cli_dispatches_to_job_service(monkeypatch):
             "--profile",
             "benchmark",
             "--source-profile",
-            "trusted-web",
+            "company_trusted",
             "--allow-domain",
             "docs.langchain.com",
             "--deny-domain",
@@ -118,7 +130,7 @@ def test_submit_cli_dispatches_to_job_service(monkeypatch):
         "max_loops": 4,
         "research_profile": "benchmark",
         "start_worker": True,
-        "source_profile": "trusted-web",
+        "source_profile": "company_trusted",
         "allow_domains": ["docs.langchain.com"],
         "deny_domains": ["reddit.com"],
         "connector_budget": {
@@ -127,4 +139,67 @@ def test_submit_cli_dispatches_to_job_service(monkeypatch):
             "max_total_fetches": 8,
         },
         "file_inputs": None,
+    }
+
+
+def test_resume_cli_dispatches_to_job_service(monkeypatch):
+    """resume 子命令应调用 job service 恢复任务。"""
+    import main
+
+    captured: dict[str, object] = {}
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            captured["recovered"] = True
+
+        def resume(self, job_id, *, start_worker=True):
+            captured["resume"] = {"job_id": job_id, "start_worker": start_worker}
+            return SimpleNamespace(job_id=job_id, status="created", current_stage="collecting")
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(["resume", "--job-id", "job-123", "--json"])
+
+    assert exit_code == 0
+    assert captured["recovered"] is True
+    assert captured["resume"] == {"job_id": "job-123", "start_worker": True}
+
+
+def test_refine_cli_dispatches_to_job_service(monkeypatch):
+    """refine 子命令应调用 job service 记录 refinement 并恢复任务。"""
+    import main
+
+    captured: dict[str, object] = {}
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            captured["recovered"] = True
+
+        def refine(self, job_id, instruction, *, start_worker=True):
+            captured["refine"] = {
+                "job_id": job_id,
+                "instruction": instruction,
+                "start_worker": start_worker,
+            }
+            return SimpleNamespace(job_id=job_id, status="created", current_stage="planned")
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(
+        [
+            "refine",
+            "--job-id",
+            "job-123",
+            "--instruction",
+            "Expand the competitor analysis for Anthropic.",
+            "--json",
+        ]
+    )
+
+    assert exit_code == 0
+    assert captured["recovered"] is True
+    assert captured["refine"] == {
+        "job_id": "job-123",
+        "instruction": "Expand the competitor analysis for Anthropic.",
+        "start_worker": True,
     }

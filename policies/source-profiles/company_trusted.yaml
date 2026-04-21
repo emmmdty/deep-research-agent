@@ -1,0 +1,24 @@
+profile_name: company_trusted
+description: Prefer trusted public sources and public repositories for company research.
+connectors:
+  - open_web
+  - github
+  - arxiv
+connector_order:
+  - open_web
+  - github
+  - arxiv
+allow_domains:
+  - docs.langchain.com
+  - reference.langchain.com
+  - github.com
+  - arxiv.org
+deny_domains:
+  - reddit.com
+  - x.com
+auth_scopes:
+  - public
+budget:
+  max_candidates_per_connector: 4
+  max_fetches_per_task: 3
+  max_total_fetches: 8

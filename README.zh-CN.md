@@ -16,7 +16,7 @@
 - benchmark 与 comparator harness
 - 可测试、可解释、可维护的工程实现
 
-当前公开支持的入口是 CLI。phase2 以后，公开命令面改为 `submit / status / watch / cancel / retry`，仍不提供受支持的 HTTP API。
+当前公开支持的入口是 CLI。phase2 以后，公开命令面改为 `submit / status / watch / cancel / retry / resume / refine`，仍不提供受支持的 HTTP API。
 phase3 在此基础上接入了统一 connector substrate、source policy 和 snapshot store，公开 job 会先走 `search / fetch / file-ingest` 合同，再把抓取后的文档转成研究证据。
 phase4 在 `extracting` 后增加了 claim-level audit pipeline。公开 job 会额外输出 claim graph / review queue，且在关键 claim 未解决时使用 `completed + blocked` 语义。
 
@@ -33,7 +33,7 @@ phase4 在 `extracting` 后增加了 claim-level audit pipeline。公开 job 会
 - `benchmark_summary.json` 采用 `scorecard + legacy_metrics + judge_status` 双层输出，对外主展示为 `0-100` 连续值可靠性分数
 - `portfolio12` 主题集与 `run_ablation.py` 支持把项目方法点做成可复现的对照实验
 - 基于 `LLM-as-Judge` 的盲评对比
-- Phase 02 可恢复 job runtime：SQLite 持久化状态、event、checkpoint，支持 cancel / retry / stale job recovery
+- Phase 02 可恢复 job runtime：SQLite 持久化状态、event、checkpoint，支持 cancel / retry / resume / refine / stale job recovery
 - Phase 03 统一 connector substrate：`search / fetch / file-ingest`、snapshot 持久化、domain allow/deny 和每 job 抓取预算
 - Phase 04 claim-level audit pipeline：`claim_auditing`、claim graph、conflict set 与 critical claim review queue
 - 完成态 job 会在 `workspace/research_jobs/<job_id>/` 下输出 `report.md`、`report_bundle.json`、`trace.jsonl`、`snapshots/` 和 `audit/`
@@ -59,7 +59,7 @@ cp .env.example .env
 ```bash
 uv run python main.py submit \
   --topic "2024 年大语言模型 Agent 架构的最新进展" \
-  --source-profile trusted-web \
+  --source-profile company_trusted \
   --allow-domain github.com \
   --allow-domain docs.langchain.com \
   --max-candidates-per-connector 4 \
@@ -71,6 +71,7 @@ uv run python main.py status --job-id <job_id>
 
 公开 CLI 现在会提交后台 job。完成态 job 会把 `report.md`、`report_bundle.json`、`trace.jsonl`、`snapshots/` 和 `audit/` 写到 `workspace/research_jobs/<job_id>/`。
 如果关键 claim 仍未通过审计门禁，job 仍会完成，但会明确暴露 `audit_gate_status=blocked`。
+当前 canonical source profile 包括：`company_trusted`、`company_broad`、`industry_trusted`、`industry_broad`、`public_then_private`、`trusted_only`。
 
 ### 4. 运行 benchmark / 对比
 
@@ -118,6 +119,12 @@ $ uv run python main.py watch --job-id 20260409T120000Z-abc12345
 - `LLM_MODEL_NAME`
 - `LLM_API_KEY`
 - `LLM_BASE_URL`
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- `OPENAI_COMPATIBLE_API_KEY`
+- `OPENAI_COMPATIBLE_BASE_URL`
+- `ANTHROPIC_COMPATIBLE_API_KEY`
+- `ANTHROPIC_COMPATIBLE_BASE_URL`
 - `SEARCH_BACKEND`
 - `TAVILY_API_KEY`
 - `MAX_RESEARCH_LOOPS`
@@ -205,7 +212,7 @@ WORKSPACE_DIR=workspace/phase3-live-validation \
 ENABLED_SOURCES='["github"]' \
 uv run python main.py submit \
   --topic "langgraph github repository" \
-  --source-profile trusted-web \
+  --source-profile company_trusted \
   --allow-domain github.com \
   --max-candidates-per-connector 3 \
   --max-fetches-per-task 2 \

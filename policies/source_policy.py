@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from artifacts.schemas import validate_instance
 from connectors.models import ConnectorCandidate
 from connectors.utils import canonicalize_uri, domain_from_uri, fetch_uri_block_reason
+from deep_research_agent.common import resolve_source_profile_name
 from policies.models import ConnectorBudget, SourcePolicyOverrides
 
 
@@ -96,7 +97,8 @@ class SourcePolicy(BaseModel):
 
 def load_source_policy(profile_name: str) -> SourcePolicy:
     """加载预定义 source profile。"""
-    path = POLICY_ROOT / f"{profile_name}.yaml"
+    resolved_profile_name = resolve_source_profile_name(profile_name)
+    path = POLICY_ROOT / f"{resolved_profile_name}.yaml"
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     validate_instance("source-policy-profile", payload)
     return SourcePolicy.model_validate(payload)

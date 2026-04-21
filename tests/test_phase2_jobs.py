@@ -22,7 +22,7 @@ def _build_runtime_record() -> dict:
     return {
         "job_id": "job-phase2-001",
         "topic": "可信深度研究 app",
-        "status": "collecting",
+        "status": "running",
         "current_stage": "collecting",
         "created_at": "2026-04-09T00:00:00+00:00",
         "updated_at": "2026-04-09T00:00:10+00:00",
@@ -37,7 +37,7 @@ def _build_runtime_record() -> dict:
         "report_bundle_path": "workspace/research_jobs/job-phase2-001/bundle/report_bundle.json",
         "trace_path": "workspace/research_jobs/job-phase2-001/bundle/trace.jsonl",
         "runtime_path": "orchestrator-v1",
-        "source_profile": "trusted-web",
+        "source_profile": "company_trusted",
         "budget": {
             "max_candidates_per_connector": 4,
             "max_fetches_per_task": 3,
@@ -141,6 +141,19 @@ def test_phase2_runtime_schema_validation():
     validate_instance("job-checkpoint", _build_checkpoint())
 
 
+def test_job_runtime_record_rejects_legacy_needs_review_status():
+    """needs_review 不应再作为生命周期终态存在。"""
+    from pydantic import ValidationError
+
+    from services.research_jobs.models import JobRuntimeRecord
+
+    payload = _build_runtime_record()
+    payload["status"] = "needs_review"
+
+    with pytest.raises(ValidationError):
+        JobRuntimeRecord.model_validate(payload)
+
+
 def test_phase2_checkpoint_schema_rejects_missing_state_payload():
     """job checkpoint 缺少 state_payload 时应校验失败。"""
     from artifacts.schemas import validate_instance
@@ -172,7 +185,7 @@ def test_job_store_persists_jobs_events_and_checkpoints(tmp_path: Path):
 
     assert loaded_job is not None
     assert loaded_job.runtime_path == "orchestrator-v1"
-    assert loaded_job.source_profile == "trusted-web"
+    assert loaded_job.source_profile == "company_trusted"
     assert len(loaded_events) == 1
     assert loaded_events[0].event_type == "stage.started"
     assert latest_checkpoint is not None
@@ -252,7 +265,7 @@ def test_orchestrator_fences_writes_after_worker_loses_lease(tmp_path: Path):
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="lease lost during stage", max_loops=1, research_profile="default", start_worker=False)
-    service.store.update_job_status(job.job_id, status="planned", current_stage="planned")
+    service.store.update_job_status(job.job_id, status="running", current_stage="planned")
     service.store.acquire_worker_lease(job.job_id, worker_pid=111, lease_id="lease-a")
 
     def steal_lease(state):
@@ -302,14 +315,14 @@ def test_job_events_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
 
 def test_job_checkpoints_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
     """checkpoint 写入应由 store 分配单调序号，不能覆盖同一 sequence。"""
-    from services.research_jobs.models import JobCheckpoint, JobRuntimeRecord
+    from services.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
     from services.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
     job = JobRuntimeRecord.model_validate(_build_runtime_record())
     store.upsert_job(job)
     checkpoint = JobCheckpoint.model_validate(_build_checkpoint())
-    duplicate_sequence = checkpoint.model_copy(update={"next_stage": "extracting"})
+    duplicate_sequence = checkpoint.model_copy(update={"next_stage": RuntimeStage.EXTRACTING})
 
     first = store.save_checkpoint(checkpoint)
     second = store.save_checkpoint(duplicate_sequence)
@@ -431,6 +444,47 @@ def test_job_service_cancel_and_retry_flow(tmp_path: Path):
     assert retried.attempt_index == 2
 
 
+def test_job_service_resume_reuses_latest_checkpoint(tmp_path: Path):
+    """resume 应复用同一 job，并从最新 checkpoint 的 next_stage 恢复。"""
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 resume", max_loops=2, research_profile="default", start_worker=False)
+    service.store.update_job_status(job.job_id, status="failed", current_stage="failed", error="phase2 failed")
+
+    resumed = service.resume(job.job_id, start_worker=False)
+
+    assert resumed.job_id == job.job_id
+    assert resumed.status == "created"
+    assert resumed.current_stage == "clarifying"
+    assert resumed.error is None
+    assert any(event.event_type == "job.resumed" for event in service.list_events(job.job_id))
+
+
+def test_job_service_refine_restarts_from_safe_boundary(tmp_path: Path):
+    """refine 应记录 refinement event，并从安全边界恢复。"""
+    from services.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="phase2 refine", max_loops=2, research_profile="default", start_worker=False)
+    service.store.update_job_status(job.job_id, status="failed", current_stage="failed", error="phase2 failed")
+
+    refined = service.refine(
+        job.job_id,
+        "Expand competitor coverage for Anthropic and OpenAI.",
+        start_worker=False,
+    )
+    checkpoint = service.store.get_checkpoint(refined.job_id, refined.active_checkpoint_id or "")
+
+    assert refined.job_id == job.job_id
+    assert refined.status == "created"
+    assert refined.current_stage == "planned"
+    assert checkpoint is not None
+    assert checkpoint.next_stage == "planned"
+    assert checkpoint.state_payload["refinement_history"][-1]["instruction"].startswith("Expand competitor")
+    assert any(event.event_type == "job.refine_requested" for event in service.list_events(job.job_id))
+
+
 def test_job_service_cancel_is_idempotent(tmp_path: Path):
     """重复 cancel 不应重复追加 cancel_requested event。"""
     from services.research_jobs.service import ResearchJobService
@@ -482,7 +536,7 @@ def test_job_service_retry_is_idempotent_for_same_source_job(tmp_path: Path):
 
 def test_recover_stale_jobs_skips_live_worker(tmp_path: Path, monkeypatch):
     """心跳新且 pid 存活时，不应触发 stale recovery。"""
-    from services.research_jobs import service as service_module
+    from deep_research_agent.research_jobs import service as service_module
     from services.research_jobs.service import ResearchJobService
 
     spawned: list[str] = []
@@ -503,11 +557,38 @@ def test_recover_stale_jobs_skips_live_worker(tmp_path: Path, monkeypatch):
     assert loaded.worker_lease_id == "lease-live"
 
 
+def test_recover_stale_jobs_skips_intentionally_idle_created_job(tmp_path: Path, monkeypatch):
+    """显式 no-worker 的 created job 不应在下一条 CLI 命令里被自动拉起。"""
+    from deep_research_agent.research_jobs import service as service_module
+    from services.research_jobs.service import ResearchJobService
+
+    spawned: list[str] = []
+    service = ResearchJobService(
+        workspace_dir=str(tmp_path),
+        stale_timeout_seconds=1,
+        spawn_worker_fn=spawned.append,
+    )
+    job = service.submit(topic="phase2 idle no-worker", max_loops=2, research_profile="default", start_worker=False)
+    monkeypatch.setattr(service_module, "_process_exists", lambda pid: False)
+
+    recovered = service.recover_stale_jobs()
+
+    assert recovered == []
+    assert spawned == []
+    loaded = service.get(job.job_id)
+    assert loaded is not None
+    assert loaded.status == "created"
+    assert loaded.current_stage == "clarifying"
+    assert loaded.worker_pid is None
+    assert loaded.worker_lease_id is None
+    assert not any(event.event_type == "job.recovered" for event in service.list_events(job.job_id))
+
+
 def test_recover_stale_jobs_clears_stale_lease_and_spawns_once(tmp_path: Path, monkeypatch):
     """陈旧 worker 应清理旧 lease 并触发一次恢复 spawn。"""
     from datetime import datetime, timedelta, timezone
 
-    from services.research_jobs import service as service_module
+    from deep_research_agent.research_jobs import service as service_module
     from services.research_jobs.service import ResearchJobService
 
     spawned: list[str] = []

@@ -1,0 +1,27 @@
+profile_name: trusted_only
+description: Restrict retrieval to trusted public sources and approved private files.
+connectors:
+  - open_web
+  - github
+  - arxiv
+  - files
+connector_order:
+  - open_web
+  - github
+  - arxiv
+  - files
+allow_domains:
+  - docs.langchain.com
+  - reference.langchain.com
+  - github.com
+  - arxiv.org
+deny_domains:
+  - reddit.com
+  - x.com
+auth_scopes:
+  - public
+  - private
+budget:
+  max_candidates_per_connector: 4
+  max_fetches_per_task: 3
+  max_total_fetches: 8

@@ -18,7 +18,7 @@ It is designed to show:
 - benchmark and comparator harnesses
 - testable, documented engineering decisions
 
-The supported public surface is CLI-first. Phase 02 exposes a job-oriented CLI (`submit / status / watch / cancel / retry`). There is currently no supported HTTP API.
+The supported public surface is CLI-first. Phase 02 exposes a job-oriented CLI (`submit / status / watch / cancel / retry / resume / refine`). There is currently no supported HTTP API.
 Phase 03 extends that runtime with a unified connector substrate, source policy, and snapshot store. Public jobs now collect fetched documents through `search / fetch / file-ingest` contracts before they become research evidence.
 Phase 04 adds a claim-level audit pipeline after extraction. Public jobs now emit claim graph artifacts and may finish as `completed` with `audit_gate_status=blocked` when critical claims remain unresolved.
 
@@ -35,7 +35,7 @@ Phase 04 adds a claim-level audit pipeline after extraction. Public jobs now emi
 - Benchmark summary with `scorecard + legacy_metrics + judge_status`, so reliability signals are shown as 0-100 continuous scores instead of only boolean / 0-1 fields
 - `portfolio12` topic set and `run_ablation.py` for reproducible method comparisons
 - Blind pairwise report judging through `LLM-as-Judge`
-- Phase 02 resumable job runtime with SQLite-backed status, events, checkpoints, cancel, retry, and stale-job recovery
+- Phase 02 resumable job runtime with SQLite-backed status, events, checkpoints, cancel, retry, resume, refine, and stale-job recovery
 - Phase 03 connector substrate with unified `search / fetch / file-ingest`, snapshot persistence, domain allow/deny enforcement, and per-job fetch budgets
 - Phase 04 claim-level audit pipeline with `claim_auditing`, claim graph, conflict sets, and critical-claim review queue
 - Completed jobs emit `report.md`, `report_bundle.json`, `trace.jsonl`, fetched `snapshots/`, and `audit/` artifacts under `workspace/research_jobs/<job_id>/`
@@ -61,7 +61,7 @@ Fill in the required API keys before running research commands.
 ```bash
 uv run python main.py submit \
   --topic "Latest progress in LLM agent architectures" \
-  --source-profile trusted-web \
+  --source-profile company_trusted \
   --allow-domain github.com \
   --allow-domain docs.langchain.com \
   --max-candidates-per-connector 4 \
@@ -73,6 +73,7 @@ uv run python main.py status --job-id <job_id>
 
 The public CLI now submits background jobs. Completed jobs write `report.md`, `report_bundle.json`, `trace.jsonl`, `snapshots/`, and `audit/` into `workspace/research_jobs/<job_id>/`.
 If critical claims remain unsupported or contradicted, the job still completes but surfaces `audit_gate_status=blocked`.
+Canonical source profiles are `company_trusted`, `company_broad`, `industry_trusted`, `industry_broad`, `public_then_private`, and `trusted_only`.
 
 ### 4. Run benchmark and comparison commands
 
@@ -120,6 +121,12 @@ Publicly supported environment variables include:
 - `LLM_MODEL_NAME`
 - `LLM_API_KEY`
 - `LLM_BASE_URL`
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- `OPENAI_COMPATIBLE_API_KEY`
+- `OPENAI_COMPATIBLE_BASE_URL`
+- `ANTHROPIC_COMPATIBLE_API_KEY`
+- `ANTHROPIC_COMPATIBLE_BASE_URL`
 - `SEARCH_BACKEND`
 - `TAVILY_API_KEY`
 - `MAX_RESEARCH_LOOPS`
@@ -209,7 +216,7 @@ WORKSPACE_DIR=workspace/phase3-live-validation \
 ENABLED_SOURCES='["github"]' \
 uv run python main.py submit \
   --topic "langgraph github repository" \
-  --source-profile trusted-web \
+  --source-profile company_trusted \
   --allow-domain github.com \
   --max-candidates-per-connector 3 \
   --max-fetches-per-task 2 \
