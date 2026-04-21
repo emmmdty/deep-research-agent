@@ -25,22 +25,22 @@
 - cost_aggregator: ablation_runner imports the committed Phase 7 cost placeholders and records the null-cost reason
 
 ## Current overall status
-- current_phase: phase8_ablation_and_perf
-- current_phase_slug: phase8-ablation-and-perf
-- current_attempt: 1
-- last_successful_phase: phase7_metrics_instrumentation
+- current_phase: phase9_value_pack
+- current_phase_slug: phase9-value-pack
+- current_attempt: 0
+- last_successful_phase: phase8_ablation_and_perf
 - overall_state: in_progress
 
 ## Worktree state
-- active_branch: codex/phase8-ablation-and-perf/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase8-ablation-and-perf-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_cli_runtime.py tests/test_phase7_value_metrics.py` -> pass (18 passed)
-  - temp-root fresh measured rerun (`main.py eval run --suite company12 --output-root /tmp/main-phase7-company12 --capture-runtime-metrics --json`) -> pass
-  - temp-root value-metrics render (`scripts/run_value_metrics.py --source-root evals/reports/phase5_local_smoke --source-root /tmp/main-phase7-company12 --output-root /tmp/main-phase7-metrics --json`) -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_phase7_value_metrics.py tests/test_phase8_value_ablations.py` -> pass (12 passed)
+  - temp-root ablation pack render (`scripts/run_value_ablation_pack.py --baseline-root evals/reports/phase5_local_smoke --followup-root evals/reports/followup_metrics --output-root /tmp/main-phase8-ablation --json`) -> pass
+  - temp-root provider routing redaction check (`'api_key' not in /tmp/main-phase8-ablation/provider_routing_comparison.json`) -> pass (`API_KEY_REDACTED`)
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .env.*, .venv, .codex/config.toml, .python-version, workspace/, venv_gptr/
@@ -106,6 +106,7 @@
 - `provider_auto_vs_manual`: deterministic routing comparison emitted route-plan evidence only; judge auto-route selected `anthropic`, while live latency/cost and quality deltas remain null with reason `no_live_provider_backed_routing_eval`.
 - `new_runtime_vs_legacy`: recorded as `not_comparable` with reason `no_like_for_like_legacy_runtime_fixture`.
 - Phase 8 initially surfaced a secret-handling regression because the provider routing artifact serialized `api_key` values from local provider profiles; fixed by reducing the artifact to a safe route summary and adding a regression assertion that `api_key` never appears in the JSON.
+- merged to `main` via commit `763c153dfc4adf87d5b91b795b541933cef7a311`, passed the required mainline smoke, and the Phase 8 worktree/branch were removed after merge.
 
 ### Phase 9 - value_pack
 - status: pending
@@ -155,3 +156,4 @@
 - [2026-04-21T15:12:25Z] Phase 8 green step completed: implemented `src/deep_research_agent/evals/value_ablations.py`, `scripts/run_value_ablation_pack.py`, and the required ablation/performance artifacts under `evals/reports/followup_metrics/`.
 - [2026-04-21T15:12:25Z] Phase 8 uncovered a local-secret regression because the initial `provider_routing_comparison.json` serialized provider `api_key` fields from the local settings profile. Replaced raw route dumps with safe summaries and added a regression assertion that `api_key` never appears in the comparison JSON.
 - [2026-04-21T15:12:25Z] Phase 8 acceptance passed in the worktree: lint pass, focused regression slice pass (12 passed), ablation pack regenerated, and provider routing output verified as `API_KEY_REDACTED`.
+- [2026-04-21T15:12:25Z] Merged Phase 8 into `main` via `763c153dfc4adf87d5b91b795b541933cef7a311`, reran mainline smoke successfully, removed worktree `../_codex_worktrees/phase8-ablation-and-perf-attempt-1`, and deleted branch `codex/phase8-ablation-and-perf/attempt-1`.
