@@ -7,6 +7,29 @@ English | [简体中文](./README.zh-CN.md)
 
 An evidence-first Deep Research Agent for company and industry research.
 
+## Measured Value
+
+A deterministic, evidence-first Deep Research Agent that emits grounded report bundles instead of chat-only answers.
+
+Committed follow-up metrics from `evals/reports/followup_metrics/`:
+
+- `completion_rate=1.0`
+- `bundle_emission_rate=1.0`
+- `critical_claim_support_precision=1.0`
+- `citation_error_rate=0.0`
+- `policy_compliance_rate=1.0`
+- `resume_success_rate=1.0`
+- `stale_recovery_success_rate=1.0`
+- `ttfr_seconds_p50=1.344091`
+
+Review paths:
+
+- [Value Scorecard](./docs/final/VALUE_SCORECARD.md)
+- [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md)
+- [Release Manifest](./evals/reports/phase5_local_smoke/release_manifest.json)
+
+The HTTP API is still local-only. This repository is not a multi-tenant production SaaS.
+
 This repository is built around:
 
 - a deterministic async job runtime

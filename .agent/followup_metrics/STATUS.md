@@ -20,20 +20,20 @@
 ## Command registry additions
 - metric_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_metrics.py --source-root evals/reports/phase5_local_smoke --output-root evals/reports/followup_metrics --json
 - ablation_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_ablation_pack.py --baseline-root evals/reports/phase5_local_smoke --followup-root evals/reports/followup_metrics --output-root evals/reports/followup_metrics --json
-- scorecard_renderer:
+- scorecard_renderer: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_value_scorecard.py --release-manifest evals/reports/phase5_local_smoke/release_manifest.json --metrics-root evals/reports/followup_metrics --docs-root docs/final --metrics-readme evals/reports/followup_metrics/README.md --json
 - latency_profiler: ablation_runner writes `evals/reports/followup_metrics/latency_cost_summary.json`
 - cost_aggregator: ablation_runner imports the committed Phase 7 cost placeholders and records the null-cost reason
 
 ## Current overall status
 - current_phase: phase9_value_pack
 - current_phase_slug: phase9-value-pack
-- current_attempt: 0
+- current_attempt: 1
 - last_successful_phase: phase8_ablation_and_perf
 - overall_state: in_progress
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- active_branch: codex/phase9-value-pack/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase9-value-pack-attempt-1
 - main_clean_before_phase: yes
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
@@ -109,13 +109,30 @@
 - merged to `main` via commit `763c153dfc4adf87d5b91b795b541933cef7a311`, passed the required mainline smoke, and the Phase 8 worktree/branch were removed after merge.
 
 ### Phase 9 - value_pack
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Added a reproducible value-scorecard generator, wrote the committed reviewer-facing scorecard outputs under `docs/final/`, added a follow-up metrics README, and updated the top-level README plus final docs so the project’s measured value is visible without overstating the local-only deployment shape.
 - acceptance_checks:
+- `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+- `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py tests/test_phase4_surfaces.py tests/test_phase7_value_metrics.py tests/test_phase8_value_ablations.py tests/test_phase9_value_pack.py` -> pass (81 passed)
+- `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+- `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py::test_http_api_submit_status_events_bundle_and_artifacts` -> pass
+- `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_value_scorecard.py --release-manifest evals/reports/phase5_local_smoke/release_manifest.json --metrics-root evals/reports/followup_metrics --docs-root /tmp/phase9-scorecard-docs --metrics-readme /tmp/phase9-followup-metrics-README.md --json` -> pass
 - artifacts:
+- `scripts/build_value_scorecard.py`
+- `src/deep_research_agent/evals/value_scorecard.py`
+- `tests/test_phase9_value_pack.py`
+- `docs/final/VALUE_SCORECARD.md`
+- `docs/final/VALUE_SCORECARD.json`
+- `evals/reports/followup_metrics/README.md`
+- `README.md`
+- `docs/final/EXPERIMENT_SUMMARY.md`
+- `FINAL_CHANGE_REPORT.md`
 - blockers:
 - notes:
+- Scorecard generation is reproducible from committed artifacts and rewrites public artifact references to repo-relative paths, so the published scorecard no longer depends on deleted worktree paths.
+- README now exposes measurable headline values near the top and links directly to the scorecard, experiment summary, and release manifest.
+- The value pack preserves the current boundary honestly: the HTTP API is local-only, provider-routing live latency/quality is still unmeasured, and the repo is not positioned as a multi-tenant production SaaS.
 
 ## Headline metrics snapshot
 - completion_rate: 1.0
@@ -157,3 +174,8 @@
 - [2026-04-21T15:12:25Z] Phase 8 uncovered a local-secret regression because the initial `provider_routing_comparison.json` serialized provider `api_key` fields from the local settings profile. Replaced raw route dumps with safe summaries and added a regression assertion that `api_key` never appears in the comparison JSON.
 - [2026-04-21T15:12:25Z] Phase 8 acceptance passed in the worktree: lint pass, focused regression slice pass (12 passed), ablation pack regenerated, and provider routing output verified as `API_KEY_REDACTED`.
 - [2026-04-21T15:12:25Z] Merged Phase 8 into `main` via `763c153dfc4adf87d5b91b795b541933cef7a311`, reran mainline smoke successfully, removed worktree `../_codex_worktrees/phase8-ablation-and-perf-attempt-1`, and deleted branch `codex/phase8-ablation-and-perf/attempt-1`.
+- [2026-04-21T15:12:25Z] Verified the merged Phase 8 baseline on `main@9c29e0803b709fdb6260c3653cbea5347c7a4015`, then created worktree `../_codex_worktrees/phase9-value-pack-attempt-1` on branch `codex/phase9-value-pack/attempt-1`.
+- [2026-04-21T15:12:25Z] Bootstrapped the Phase 9 worktree by symlinking `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr`; baseline help check and focused regression slice passed in the new worktree.
+- [2026-04-21T15:12:25Z] Phase 9 TDD red step completed: `tests/test_phase9_value_pack.py` failed first because no scorecard generator or scorecard docs existed.
+- [2026-04-21T15:12:25Z] Phase 9 green step completed: implemented `src/deep_research_agent/evals/value_scorecard.py`, `scripts/build_value_scorecard.py`, generated `docs/final/VALUE_SCORECARD.{md,json}`, and added `evals/reports/followup_metrics/README.md`.
+- [2026-04-21T15:12:25Z] Phase 9 acceptance passed in the worktree: lint pass, broad regression slice pass (81 passed), CLI help pass, API smoke pass, and temp-root scorecard generation pass.

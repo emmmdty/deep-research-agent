@@ -25,6 +25,16 @@ It is not a frontend, not a chat shell, and not a multi-agent-count demo.
 - Split lifecycle `status` from `audit_gate_status` and stabilized cancel/retry/resume/refine flows.
 - Added claim-centric artifact delivery: `report_bundle.json`, `manifest.json`, `claims.json`, `sources.json`, `trace.jsonl`, `claim_graph.json`, and review sidecars.
 
+### Measured value pack
+
+- Added follow-up value metrics, ablations, and latency/cost summaries under `evals/reports/followup_metrics/`.
+- Added the reviewer-facing scorecard outputs:
+  - `docs/final/VALUE_SCORECARD.md`
+  - `docs/final/VALUE_SCORECARD.json`
+- Added a reproducible scorecard generator at `scripts/build_value_scorecard.py`.
+- Made the project story measurable instead of descriptive-only: grounded bundle emission, source-policy/provenance retention, recovery-flow reliability, file-ingest capability, and stage timing now have committed artifacts.
+- Preserved the current deployment boundary honestly: the HTTP API is local-only and the repo is not a multi-tenant production SaaS.
+
 ### Public surfaces
 
 - Added the supported CLI commands:
@@ -145,10 +155,19 @@ At the end of Phase 5, `main` passed:
 - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json`
 - `git status --short` stayed clean after the release-smoke rerun
 
+The follow-up metrics/value pack adds these review artifacts on top of that baseline:
+
+- `docs/final/VALUE_SCORECARD.md`
+- `docs/final/VALUE_SCORECARD.json`
+- `evals/reports/followup_metrics/ablation_summary.md`
+- `evals/reports/followup_metrics/latency_cost_summary.json`
+- `evals/reports/followup_metrics/provider_routing_comparison.json`
+
 ## Pointers
 
 - `README.md`
 - `docs/architecture.md`
 - `docs/development.md`
 - `docs/final/EXPERIMENT_SUMMARY.md`
+- `docs/final/VALUE_SCORECARD.md`
 - `evals/README.md`

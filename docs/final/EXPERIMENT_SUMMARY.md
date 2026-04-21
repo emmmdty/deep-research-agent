@@ -28,6 +28,36 @@ From the committed `release_manifest.json`:
 - `file8`: `passed` with `completion_rate=1.0`, `audit_pass_rate=1.0`, `policy_compliance_rate=1.0`
 - `recovery6`: `passed` with `completion_rate=1.0`, `resume_success_rate=1.0`, `stale_recovery_success_rate=1.0`
 
+## Follow-up Value Pack
+
+The follow-up metrics/value-pack artifacts live under `evals/reports/followup_metrics/`.
+
+Measured follow-up highlights from the committed scorecard inputs:
+
+- `completion_rate=1.0`
+- `bundle_emission_rate=1.0`
+- `critical_claim_support_precision=1.0`
+- `citation_error_rate=0.0`
+- `policy_compliance_rate=1.0`
+- `resume_success_rate=1.0`
+- `stale_recovery_success_rate=1.0`
+- `ttff_seconds_p50=0.299367`
+- `ttfr_seconds_p50=1.344091`
+
+Comparative evidence is recorded in:
+
+- `docs/final/VALUE_SCORECARD.md`
+- `docs/final/VALUE_SCORECARD.json`
+- `evals/reports/followup_metrics/ablation_summary.md`
+- `evals/reports/followup_metrics/latency_cost_summary.json`
+- `evals/reports/followup_metrics/provider_routing_comparison.json`
+
+Interpretation limits:
+
+- The ablations show clear regressions when audit support edges, strict source policy, or evidence-first provenance are weakened.
+- Provider routing is only compared at the deterministic route-plan level in this local pack; live latency/quality tradeoffs remain unmeasured.
+- The HTTP API remains local-only and the repository is still not a multi-tenant production SaaS.
+
 ## Verification Commands
 
 ```bash
