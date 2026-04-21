@@ -5,7 +5,15 @@
 
 [English](./README.md) | 简体中文
 
-这是一个基于 LangGraph 的深度研究 Agent 项目，重点展示多智能体工作流、多源证据采集、结构化评测，以及 comparator 驱动的 benchmark 工程化能力。
+这是一个面向公司/行业研究的 evidence-first Deep Research Agent，当前公开边界已经收敛为：
+
+- 确定性异步 job runtime
+- source policy + snapshotting
+- claim-level audit + review queue
+- report bundle 交付物
+- CLI + 本地 HTTP API + batch entrypoint
+
+中文 README 还没有逐段完全重写，Phase 4 的最新文档事实以 [README.md](./README.md)、[docs/architecture.md](./docs/architecture.md) 和 [docs/development.md](./docs/development.md) 为准。
 
 ## 项目定位
 
@@ -16,9 +24,12 @@
 - benchmark 与 comparator harness
 - 可测试、可解释、可维护的工程实现
 
-当前公开支持的入口是 CLI。phase2 以后，公开命令面改为 `submit / status / watch / cancel / retry / resume / refine`，仍不提供受支持的 HTTP API。
-phase3 在此基础上接入了统一 connector substrate、source policy 和 snapshot store，公开 job 会先走 `search / fetch / file-ingest` 合同，再把抓取后的文档转成研究证据。
-phase4 在 `extracting` 后增加了 claim-level audit pipeline。公开 job 会额外输出 claim graph / review queue，且在关键 claim 未解决时使用 `completed + blocked` 语义。
+当前公开支持的入口包括：
+
+- CLI：`submit / status / watch / cancel / retry / resume / refine / bundle / batch run`
+- 本地 HTTP API：`/v1/research/jobs*`、`/bundle`、`/artifacts/{artifact_name}`、`/v1/batch/research`
+
+phase4 以后，公开 API 仍然复用本地 SQLite + filesystem runtime；它不是多租户或生产级服务边界。
 
 ## 主要能力
 

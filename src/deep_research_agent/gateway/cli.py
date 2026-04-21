@@ -18,6 +18,8 @@ from pathlib import Path
 
 from configs.settings import get_settings
 from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
+from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
+from deep_research_agent.gateway.batch import load_batch_requests
 from dotenv import load_dotenv
 from loguru import logger
 from rich.console import Console
@@ -144,6 +146,23 @@ def build_parser() -> argparse.ArgumentParser:
     refine_parser.add_argument("--no-worker", action="store_true", help="只更新状态，不启动后台 worker")
     refine_parser.add_argument("--json", action="store_true", help="输出 JSON")
 
+    bundle_parser = subparsers.add_parser("bundle", help="读取 job bundle 或 sidecar artifacts")
+    bundle_parser.add_argument("--job-id", required=True, type=str, help="job ID")
+    bundle_parser.add_argument(
+        "--artifact-name",
+        type=str,
+        default="report_bundle.json",
+        choices=ARTIFACT_NAME_CHOICES,
+        help="要读取的 artifact 名称（默认 report_bundle.json）",
+    )
+    bundle_parser.add_argument("--json", action="store_true", help="将 JSON artifact 以结构化 JSON 输出")
+
+    batch_parser = subparsers.add_parser("batch", help="批量 research job 操作")
+    batch_subparsers = batch_parser.add_subparsers(dest="batch_command")
+    batch_run_parser = batch_subparsers.add_parser("run", help="从 JSON/JSONL 文件批量创建 job")
+    batch_run_parser.add_argument("--file", required=True, type=str, help="JSON 或 JSONL batch 文件路径")
+    batch_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
+
     return parser
 
 
@@ -267,6 +286,15 @@ def _connector_budget_from_args(args) -> dict | None:
     return payload or None
 
 
+def _artifact_payload(job, artifact_name: str):
+    path = artifact_path_for_job(job, artifact_name)
+    if not path.exists():
+        raise FileNotFoundError(path)
+    if path.suffix == ".json":
+        return load_json_artifact(path)
+    return path.read_text(encoding="utf-8")
+
+
 def run_command(argv: list[str] | None = None) -> int:
     """执行一条 CLI 命令。"""
     settings = get_settings()
@@ -366,6 +394,54 @@ def run_command(argv: list[str] | None = None) -> int:
         else:
             console.print(f"🧭 已记录 refinement 并恢复 job: [cyan]{job.job_id}[/cyan]")
             console.print(f"当前阶段: [bold]{job.current_stage}[/bold]")
+        return 0
+
+    if args.command == "bundle":
+        job = service.get(args.job_id)
+        if job is None:
+            console.print(f"[red]未找到 job: {args.job_id}[/red]")
+            return 1
+        try:
+            payload = _artifact_payload(job, args.artifact_name)
+        except FileNotFoundError:
+            console.print(f"[red]缺少 artifact: {args.artifact_name}[/red]")
+            return 1
+        if args.json and isinstance(payload, (dict, list)):
+            _print_json(payload)
+        elif isinstance(payload, (dict, list)):
+            console.print(json.dumps(payload, ensure_ascii=False, indent=2))
+        else:
+            console.print(payload)
+        return 0
+
+    if args.command == "batch":
+        if args.batch_command != "run":
+            parser.error("batch 目前只支持 `run` 子命令")
+            return 2
+        requests = load_batch_requests(args.file)
+        jobs = [
+            service.submit(
+                topic=item.topic,
+                max_loops=item.max_loops,
+                research_profile=item.research_profile,
+                start_worker=item.start_worker,
+                source_profile=item.source_profile,
+                allow_domains=item.allow_domains,
+                deny_domains=item.deny_domains,
+                connector_budget=item.connector_budget,
+            )
+            for item in requests
+        ]
+        payload = {
+            "accepted_count": len(jobs),
+            "jobs": [_jsonable_model(job) for job in jobs],
+        }
+        if args.json:
+            _print_json(payload)
+        else:
+            console.print(f"✅ 已接收 batch jobs: [cyan]{len(jobs)}[/cyan]")
+            for job in jobs:
+                console.print(f"- {job.job_id} :: {job.topic}")
         return 0
 
     if args.command == "watch":

@@ -5,40 +5,52 @@
 
 English | [简体中文](./README.zh-CN.md)
 
-A LangGraph-based deep research agent project focused on multi-source evidence gathering, structured evaluation, and comparator-driven benchmarking.
+An evidence-first Deep Research Agent for company and industry research.
 
-## Project Positioning
+This repository is built around:
 
-This repository is maintained as a public research-engineering / portfolio project.
+- a deterministic async job runtime
+- source policy and snapshotting
+- claim-level audit and review queue artifacts
+- report bundles as the authoritative machine-readable output
+- OpenAI / Anthropic provider abstraction
+- CLI, local HTTP API, and batch entrypoints
 
-It is designed to show:
+It is not a chat shell, not a frontend, and not a “more agents = better” demo.
 
-- a multi-agent deep research workflow
-- structured evidence and citation handling
-- benchmark and comparator harnesses
-- testable, documented engineering decisions
+## Public Surfaces
 
-The supported public surface is CLI-first. Phase 02 exposes a job-oriented CLI (`submit / status / watch / cancel / retry / resume / refine`). There is currently no supported HTTP API.
-Phase 03 extends that runtime with a unified connector substrate, source policy, and snapshot store. Public jobs now collect fetched documents through `search / fetch / file-ingest` contracts before they become research evidence.
-Phase 04 adds a claim-level audit pipeline after extraction. Public jobs now emit claim graph artifacts and may finish as `completed` with `audit_gate_status=blocked` when critical claims remain unresolved.
+### CLI
 
-## Features
+The supported developer CLI lives behind `main.py`:
 
-- Hierarchical workflow: `Supervisor -> Planner -> Researcher -> Verifier -> Critic -> Writer`
-- Multi-source research with `web`, `github`, and `arxiv`
-- Capability registry with `builtin / skill / mcp` routing
-- Structured artifacts: `SourceRecord`, `EvidenceNote`, `EvidenceUnit`, `VerificationRecord`, `RunMetrics`, `ReportArtifact`
-- Benchmark runner and full comparator harness
-- Benchmark profile uses a strict `quality_gate`: if the final loop still fails the gate, the workflow terminates as failure instead of emitting a pseudo-complete report
-- Case-study aspects are treated as production evidence tasks and only count `official + first-party repo` evidence; surveys and generic blogs do not pass the gate
-- Case-study retrieval now uses query bundles with `site:` official-domain expansion, first-party GitHub repo search, and dedicated rescue queries instead of a single generic query
-- Benchmark summary with `scorecard + legacy_metrics + judge_status`, so reliability signals are shown as 0-100 continuous scores instead of only boolean / 0-1 fields
-- `portfolio12` topic set and `run_ablation.py` for reproducible method comparisons
-- Blind pairwise report judging through `LLM-as-Judge`
-- Phase 02 resumable job runtime with SQLite-backed status, events, checkpoints, cancel, retry, resume, refine, and stale-job recovery
-- Phase 03 connector substrate with unified `search / fetch / file-ingest`, snapshot persistence, domain allow/deny enforcement, and per-job fetch budgets
-- Phase 04 claim-level audit pipeline with `claim_auditing`, claim graph, conflict sets, and critical-claim review queue
-- Completed jobs emit `report.md`, `report_bundle.json`, `trace.jsonl`, fetched `snapshots/`, and `audit/` artifacts under `workspace/research_jobs/<job_id>/`
+- `submit`
+- `status`
+- `watch`
+- `cancel`
+- `retry`
+- `resume`
+- `refine`
+- `bundle`
+- `batch run`
+
+### Local HTTP API
+
+Phase 4 adds a local FastAPI surface over the same deterministic job runtime:
+
+- `POST /v1/research/jobs`
+- `GET /v1/research/jobs/{job_id}`
+- `GET /v1/research/jobs/{job_id}/events`
+- `POST /v1/research/jobs/{job_id}:cancel`
+- `POST /v1/research/jobs/{job_id}:retry`
+- `POST /v1/research/jobs/{job_id}:resume`
+- `POST /v1/research/jobs/{job_id}:refine`
+- `POST /v1/research/jobs/{job_id}:review`
+- `GET /v1/research/jobs/{job_id}/bundle`
+- `GET /v1/research/jobs/{job_id}/artifacts/{artifact_name}`
+- `POST /v1/batch/research`
+
+This is a real local API, but it is still backed by the local SQLite/filesystem runtime. It is not an auth-enabled, multi-tenant production service.
 
 ## Quickstart
 
@@ -54,196 +66,138 @@ uv sync --group dev
 cp .env.example .env
 ```
 
-Fill in the required API keys before running research commands.
+Fill in the required provider and search credentials before running live research commands.
 
-### 3. Submit and watch a research job
+### 3. Submit a job from the CLI
 
 ```bash
 uv run python main.py submit \
-  --topic "Latest progress in LLM agent architectures" \
+  --topic "Anthropic company profile" \
   --source-profile company_trusted \
-  --allow-domain github.com \
-  --allow-domain docs.langchain.com \
+  --allow-domain anthropic.com \
   --max-candidates-per-connector 4 \
   --max-fetches-per-task 3 \
   --max-total-fetches 8
+
 uv run python main.py watch --job-id <job_id>
 uv run python main.py status --job-id <job_id>
+uv run python main.py bundle --job-id <job_id> --json
 ```
 
-The public CLI now submits background jobs. Completed jobs write `report.md`, `report_bundle.json`, `trace.jsonl`, `snapshots/`, and `audit/` into `workspace/research_jobs/<job_id>/`.
-If critical claims remain unsupported or contradicted, the job still completes but surfaces `audit_gate_status=blocked`.
-Canonical source profiles are `company_trusted`, `company_broad`, `industry_trusted`, `industry_broad`, `public_then_private`, and `trusted_only`.
-
-### 4. Run benchmark and comparison commands
+### 4. Start the local HTTP API
 
 ```bash
-uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
-uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set portfolio12 --summary
-uv run python scripts/run_ablation.py --topic-set portfolio12 --profile benchmark
-uv run python scripts/run_portfolio12_release.py --env-file /absolute/path/.env --topic-set portfolio12 --release-mode hybrid
-uv run python scripts/optimize_local3.py --profile benchmark --max-rounds 3 --skip-judge
-uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
-uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.md
+uv run uvicorn deep_research_agent.gateway.api:app --reload
 ```
 
-`benchmark_summary.json` now exposes two layers:
-- `scorecard`: display-oriented 0-100 scores for research reliability, system controllability, report quality, and evaluation reproducibility
-- `legacy_metrics`: compatibility aggregates for older fields such as `aspect_coverage`, `citation_accuracy`, and `depth_score`
-- `benchmark_health`: completion, gate pass rate, judge status, and resilience signals for honest experiment reporting
-- Case-study outputs now additionally expose `case_study_strength_score_100`, `first_party_case_coverage_100`, `official_case_ratio_100`, and `case_study_gate_margin_100`
+Then submit and inspect a job:
 
-For a reproducible `portfolio12` diagnostics bundle, use `scripts/run_portfolio12_release.py`. The default `--release-mode hybrid` runs live judge on representative topics (`T01,T04,T11`) and keeps the full `portfolio12` benchmark / ablation reproducible; use `--env-file` to load the environment with live judge and search credentials.
+```bash
+curl -s http://127.0.0.1:8000/v1/research/jobs \
+  -X POST \
+  -H 'content-type: application/json' \
+  -d '{
+    "topic": "AI coding agent market map",
+    "max_loops": 2,
+    "research_profile": "default",
+    "source_profile": "industry_broad",
+    "start_worker": false
+  }'
 
-Phase 05 adds a local release gate manifest. Benchmark diagnostics are required but not sufficient: the gate also expects runtime recovery, connector security, claim audit grounding, and public-surface documentation checks. This is a local checklist/manifest, not an external CI or production monitoring system.
-
-## Example Output
-
-Representative CLI flow:
-
-```text
-$ uv run python main.py submit --topic "Latest progress in LLM agent architectures"
-✅ 已提交 job: 20260409T120000Z-abc12345
-当前状态: created -> next: clarifying
-
-$ uv run python main.py watch --job-id 20260409T120000Z-abc12345
-[0002] clarifying stage.started - 开始 clarifying 阶段
-[0012] claim_auditing stage.completed - claim_auditing 阶段完成
-[0015] rendering stage.completed - rendering 阶段完成
-[0016] completed job.completed - job 进入 completed
+curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>
+curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/events
+curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/bundle
 ```
 
-## Configuration
+### 5. Run a batch file
 
-Publicly supported environment variables include:
+Create `batch.jsonl`:
 
-- `LLM_PROVIDER`
-- `LLM_MODEL_NAME`
-- `LLM_API_KEY`
-- `LLM_BASE_URL`
-- `OPENAI_API_KEY`
-- `ANTHROPIC_API_KEY`
-- `OPENAI_COMPATIBLE_API_KEY`
-- `OPENAI_COMPATIBLE_BASE_URL`
-- `ANTHROPIC_COMPATIBLE_API_KEY`
-- `ANTHROPIC_COMPATIBLE_BASE_URL`
-- `SEARCH_BACKEND`
-- `TAVILY_API_KEY`
-- `MAX_RESEARCH_LOOPS`
-- `MAX_SEARCH_RESULTS`
-- `RESEARCH_PROFILE`
-- `RESEARCH_CONCURRENCY`
-- `ENABLED_CAPABILITY_TYPES`
-- `SKILL_PATHS`
-- `MCP_CONFIG_PATH`
-- `MCP_SERVERS`
-- `CASE_STUDY_OFFICIAL_DOMAINS`
-- `ENABLED_SOURCES`
-- `ENABLED_COMPARATORS`
-- `BUNDLE_EMISSION_ENABLED`
-- `BUNDLE_OUTPUT_DIRNAME`
-- `JOB_RUNTIME_DIRNAME`
-- `JOB_HEARTBEAT_INTERVAL_SECONDS`
-- `JOB_STALE_TIMEOUT_SECONDS`
-- `LEGACY_CLI_ENABLED`
-- `SOURCE_POLICY_MODE`
-- `CONNECTOR_SUBSTRATE_ENABLED`
-- `SNAPSHOT_STORE_DIRNAME`
-- `MEMORY_BACKEND`
-- `JUDGE_MODEL`
-- `GPT_RESEARCHER_PYTHON`
-- `OPEN_DEEP_RESEARCH_COMMAND`
-- `OPEN_DEEP_RESEARCH_REPORT_DIR`
-- `ALIBABA_RUNNER_MODE`
-- `ALIBABA_COMMAND`
-- `ALIBABA_REPORT_DIR`
-- `GEMINI_ENABLED`
-- `GEMINI_ALLOWLIST_REQUIRED`
-- `GEMINI_COMMAND`
-- `GEMINI_REPORT_DIR`
+```jsonl
+{"topic":"Anthropic company profile","max_loops":1,"research_profile":"default","start_worker":false}
+{"topic":"AI coding agent market map","max_loops":2,"research_profile":"benchmark","source_profile":"industry_broad","start_worker":false}
+```
 
-See [`.env.example`](./.env.example) for the complete template.
+Submit it:
+
+```bash
+uv run python main.py batch run --file batch.jsonl --json
+```
+
+## Artifact Contract
+
+Completed jobs write their runtime artifacts under `workspace/research_jobs/<job_id>/`.
+
+The stable artifact names are:
+
+- `report.md`
+- `report.html`
+- `report_bundle.json`
+- `claims.json`
+- `sources.json`
+- `audit_decision.json`
+- `trace.jsonl`
+- `manifest.json`
+- `review_queue.json`
+- `claim_graph.json`
+- `review_actions.jsonl`
+
+`report_bundle.json` is the authoritative machine-readable output. The sidecar files are derived delivery and audit views.
+
+## Source Profiles
+
+Canonical source profiles are:
+
+- `company_trusted`
+- `company_broad`
+- `industry_trusted`
+- `industry_broad`
+- `public_then_private`
+- `trusted_only`
 
 ## Repository Layout
 
+The canonical execution path now lives under `src/deep_research_agent/`:
+
 ```text
-agents/       multi-agent nodes, including verifier
-services/research_jobs/ SQLite-backed public job runtime
-connectors/   unified search / fetch / file-ingest substrate and adapters
-policies/     source profiles, budget guardrails, and domain governance
-capabilities/ builtin / skill / mcp capability registry and adapters
-tools/        search and utility tools
-workflows/    state graph and structured state models
-evaluation/   metrics, judge, cost tracking, comparator registry
-memory/       sqlite-backed evidence memory
-scripts/      benchmark, comparison, and offline comparison commands
-tests/        regression and unit tests
-docs/         architecture and development notes
+src/deep_research_agent/
+  gateway/          CLI, HTTP API, batch helpers, public contracts
+  research_jobs/    deterministic runtime, store, service, worker, orchestrator
+  connectors/       search / fetch / file-ingest substrate and snapshot store
+  auditor/          claim audit, review queue, audit sidecars
+  reporting/        bundle compiler and delivery artifacts
+  providers/        provider routing and abstraction
+  evidence_store/   evidence storage primitives
+legacy/             archived workflow path retained for compatibility only
+tests/              runtime, connector, auditor, and public-surface regressions
+docs/               architecture, development, ADRs, and migration notes
 ```
 
 ## Development
 
-Local verification:
+Key local checks:
 
 ```bash
+uv run python main.py --help
 uv run ruff check .
-uv run pytest -q
+uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
 ```
 
-Phase 01 live validation:
-
-```bash
-WORKSPACE_DIR=workspace/phase1-live-validation \
-ENABLED_SOURCES='["web"]' \
-uv run python main.py legacy-run --topic "Datawhale是一个什么样的组织" --max-loops 2
-```
-
-Then inspect the emitted Markdown and sidecar bundle under `workspace/phase1-live-validation/`.
-
-Phase 02 live validation:
-
-```bash
-WORKSPACE_DIR=workspace/phase2-live-validation \
-ENABLED_SOURCES='["web"]' \
-uv run python main.py submit --topic "Datawhale是一个什么样的组织"
-uv run python main.py watch --job-id <job_id>
-```
-
-Phase 03 live validation:
-
-```bash
-WORKSPACE_DIR=workspace/phase3-live-validation \
-ENABLED_SOURCES='["github"]' \
-uv run python main.py submit \
-  --topic "langgraph github repository" \
-  --source-profile company_trusted \
-  --allow-domain github.com \
-  --max-candidates-per-connector 3 \
-  --max-fetches-per-task 2 \
-  --max-total-fetches 4
-uv run python main.py watch --job-id <job_id>
-```
-
-Phase 04 audit regression:
-
-```bash
-uv run pytest -q tests/test_phase4_auditor.py
-```
-
-If you override list settings directly from the shell, prefer JSON-array syntax such as `ENABLED_SOURCES='["github"]'`.
-
-Key developer docs:
+For broader validation, see:
 
 - [Architecture](./docs/architecture.md)
 - [Development Guide](./docs/development.md)
-- [Contributing](./CONTRIBUTING.md)
-- [Security Policy](./SECURITY.md)
+- [API Contract](./specs/api-readiness-contract.md)
+- [ADR-0008](./docs/adr/adr-0008-http-api-surface.md)
+- [ADR-0009](./docs/adr/adr-0009-batch-and-artifact-contract.md)
+- [Phase 4 Migration Note](./docs/migrations/phase4-surface-migration.md)
 
-## Limitations
+## Current Limits
 
-- Comparator integrations such as `odr`, `alibaba`, and `gemini` still depend on your configured command templates or imported report directories.
-- MCP support is file-first and capability-first: v1 supports `stdio` / `sse` / `streamable-http` server discovery, cache, and routing through the capability layer. External server behavior still depends on each server's published schema and auth requirements.
-- The repository intentionally does not expose a supported HTTP server surface in the current version.
+- The local HTTP API still uses SQLite, filesystem artifacts, and local subprocess workers.
+- There is no auth, tenant isolation, external queue, or object storage layer yet.
+- Review writes are append-only and visible through runtime events and sidecars, but they do not fully recompile the report bundle JSON in Phase 4.
+- `legacy-run` is still present as a hidden compatibility path and is not the supported public runtime.
 
 ## License
 

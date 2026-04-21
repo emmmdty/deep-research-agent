@@ -28,6 +28,7 @@ dependencies = [
     "arxiv>=2.4.1",
     "beautifulsoup4>=4.14.3",
     "ddgs>=9.11.2",
+    "fastapi>=0.115.0,<1.0.0",
     "gpt-researcher>=0.12.3",
     "httpx>=0.28.1",
     "langchain>=0.2.10,<0.4.0",
@@ -43,6 +44,7 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "rich>=14.3.3",
     "tavily-python>=0.7.22",
+    "uvicorn>=0.30.0,<1.0.0",
     "langchain-anthropic>=0.1.0,<0.4.0",
 ]
 
