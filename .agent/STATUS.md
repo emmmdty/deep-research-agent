@@ -19,41 +19,37 @@
 - integration_tests: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py
 - e2e_smoke: phase-specific synthetic or frozen-snapshot job smoke; no single global e2e command exists yet
 - build: none documented
-- api_smoke: not applicable yet; current public surface has no supported HTTP API
+- api_smoke: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py
 - cli_smoke: UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help
 - eval_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
 - test_collect: UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q
-- focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py
+- focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: phase4_surface_docs
-- current_phase_slug: phase4-surface-docs
-- current_attempt: 1
-- last_successful_phase: phase3_pipeline
-- overall_state: phase4_acceptance_passed
+- current_phase: phase5_evals_release
+- current_phase_slug: phase5-evals-release
+- current_attempt: 0
+- last_successful_phase: phase4_surface_docs
+- overall_state: ready_for_phase5
 
 ## Worktree state
-- active_branch: codex/phase4-surface-docs/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase4-surface-docs-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_basic.py tests/test_scripts.py` -> pass (82 passed)
+  - OpenAPI smoke (`uv run python - <<'PY' ... app.openapi() ... PY`) -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_basic.py tests/test_scripts.py` -> pass (87 passed)
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
 - missing_assets: none in the current main worktree
 - recreated_assets:
 - symlinked_assets:
-  - .env -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/.env
-  - .venv -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/.venv
-  - .codex/config.toml -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/.codex/config.toml
-  - workspace -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace
-  - venv_gptr -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr
 - copied_assets:
-- blockers_from_local_assets: none in the current main worktree; Phase 2 lifecycle smoke and Phase 3 frozen-snapshot smoke both used isolated temp workspaces to avoid writing runtime artifacts into the shared `workspace/` symlink
+- blockers_from_local_assets: none in the current main worktree; phase worktrees bootstrap local-only assets as needed and remove those symlinks before cleanup
 
 ## Phase ledger
 
@@ -168,6 +164,8 @@
   - The HTTP API is intentionally local and still backed by SQLite/filesystem runtime semantics; it is a supported local surface, not a server-grade multi-tenant service.
   - Public API responses now use stable artifact URLs instead of raw workspace paths; the CLI keeps its developer-oriented JSON output style.
   - Review actions are append-only, recorded in runtime events, written to `review_actions.jsonl`, and mirrored into `audit_decision.json` / `trace.jsonl` when those artifacts already exist.
+  - Merge target commit on `main`: `d8ac8ef`
+  - Phase 4 worktree was removed and branch `codex/phase4-surface-docs/attempt-1` was deleted after merge.
 
 ### Phase 5 - evals_release
 - status: pending
@@ -240,3 +238,4 @@
 - [2026-04-21T12:52:09Z] Implemented `src/deep_research_agent/gateway/api.py`, `contracts.py`, `artifacts.py`, and `batch.py`; added review recording to `ResearchJobService`; and extended the CLI with `bundle` plus `batch run`.
 - [2026-04-21T12:52:09Z] Rewrote the public docs to match the new surface (`README.md`, `README.zh-CN` note, `docs/architecture.md`, `docs/development.md`, `specs/api-readiness-contract.md`) and added Phase 4 ADRs plus a migration note.
 - [2026-04-21T12:52:09Z] Phase 4 acceptance passed in the worktree: focused API/CLI/schema regressions (`10 passed`), runtime/auditor/public-surface slice (`60 passed`), broader smoke suite (`87 passed`), `ruff check .`, CLI help smoke, and OpenAPI route smoke.
+- [2026-04-21T12:52:09Z] Merged Phase 4 into `main` via commit `d8ac8ef`, reran main smoke successfully (`main.py --help`, `ruff check .`, OpenAPI smoke, broader regression suite = `87 passed`), removed worktree `../_codex_worktrees/phase4-surface-docs-attempt-1`, and deleted branch `codex/phase4-surface-docs/attempt-1`.
