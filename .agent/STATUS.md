@@ -29,19 +29,21 @@
 - current_phase: phase6_finalize
 - current_phase_slug: phase6-finalize
 - current_attempt: 1
-- last_successful_phase: phase5_evals_release
-- overall_state: phase6_in_progress
+- last_successful_phase: phase6_finalize
+- overall_state: completed
 
 ## Worktree state
-- active_branch: codex/phase6-finalize/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase6-finalize-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py` -> pass (68 passed)
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json` -> pass (`release_gate.status = passed`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py tests/test_basic.py tests/test_scripts.py` -> pass (98 passed)
+  - CLI demo (`submit --no-worker` + `status --json`) -> pass
+  - API demo (`POST /v1/research/jobs` -> `202`, `GET /v1/research/jobs/{job_id}` -> `200`) -> pass
+  - final handoff doc checks -> pass
+  - repo-scoped artifact path check (`repo:///` in committed file suites) -> pass
   - `git status --short` -> clean
 
 ## Local-only / ignored asset audit
@@ -49,11 +51,6 @@
 - missing_assets: none in the current main worktree
 - recreated_assets:
 - symlinked_assets:
-  - `.env` -> main worktree
-  - `.venv` -> main worktree
-  - `.codex/config.toml` -> main worktree
-  - `workspace/` -> main worktree
-  - `venv_gptr/` -> main worktree
 - copied_assets:
 - blockers_from_local_assets: none in the current main worktree; phase worktrees bootstrap local-only assets as needed and remove those symlinks before cleanup
 
@@ -204,22 +201,25 @@
   - Merge chain on `main`: `e87bc9e` (initial Phase 5 merge), `44d28cb` (deterministic artifact repair), `764fecd` (file-ingest portability repair and clean main rerun).
 
 ### Phase 6 - finalize
-- status: in_progress
+- status: completed
 - attempts: 1
-- summary: Writing the final handoff docs, experiment summary, and final README/docs index updates before the last validation pass and `main` cleanup.
+- summary: Added the final handoff docs, linked them from the main developer entrypoints, verified the final CLI/API/demo flows plus artifact paths, and closed the run on a clean `main`.
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py tests/test_basic.py tests/test_scripts.py` -> pass (98 passed)
   - CLI demo (`submit --no-worker` + `status --json`) -> pass
   - API demo (`POST /v1/research/jobs` -> `202`, `GET /v1/research/jobs/{job_id}` -> `200`) -> pass
   - final artifact/doc existence checks -> pass
+  - `git status --short` on `main` after final smoke -> clean
 - artifacts:
 - `FINAL_CHANGE_REPORT.md`
 - `docs/final/EXPERIMENT_SUMMARY.md`
 - blockers:
 - notes:
-  - Phase 6 worktree bootstrapped `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr` from the main worktree before finalize edits.
+  - Phase 6 worktree bootstrapped `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr` from the main worktree before finalize edits, then removed those symlinks before worktree cleanup.
   - Final artifact-path check confirmed the committed `trusted8` and `file8` smoke bundles still use repo-scoped URIs after Phase 5.
+  - Merge target commit on `main`: `8fff990`
+  - Final handoff docs now live at `FINAL_CHANGE_REPORT.md` and `docs/final/EXPERIMENT_SUMMARY.md`.
 
 ## Decisions log
 - [2026-04-21T11:31:48Z] User requested control-layer preflight only; no worktrees, merges, or implementation phases started.
@@ -273,3 +273,6 @@
 - [2026-04-21T13:44:25Z] The first post-merge rerun on `main` exposed a remaining portability bug: `trusted8` and `file8` artifacts still embedded checkout-specific absolute file paths and file-derived hashes.
 - [2026-04-21T13:47:24Z] Second Phase 5 repair commit `07c662b` normalized file-ingest fixtures to repo-relative paths and `repo:///...` URIs and added regression coverage that forbids checkout absolute-path leakage in saved artifacts.
 - [2026-04-21T13:48:14Z] Final Phase 5 post-merge smoke on `main` passed (`ruff check .`, Phase 5 regression slice = `68 passed`, `main.py --help`, local release smoke, `git status --short` clean); Phase 5 is complete and Phase 6 can start in a fresh worktree.
+- [2026-04-21T13:49:32Z] Verified the merged Phase 5 baseline on `main`, created Phase 6 worktree `../_codex_worktrees/phase6-finalize-attempt-1` on branch `codex/phase6-finalize/attempt-1`, and bootstrapped the required local-only assets there via symlinks.
+- [2026-04-21T13:54:57Z] Phase 6 added `FINAL_CHANGE_REPORT.md`, `docs/final/EXPERIMENT_SUMMARY.md`, and README/development-guide links to those handoff docs; the final Phase 6 worktree validation passed (`ruff check .`, broad regression slice = `98 passed`, CLI demo, API demo, artifact/doc checks).
+- [2026-04-21T13:56:06Z] Merged Phase 6 into `main` via commit `8fff990`, reran the final main smoke successfully (`98 passed`, CLI/API demos, artifact path checks, clean git status), removed worktree `../_codex_worktrees/phase6-finalize-attempt-1`, deleted branch `codex/phase6-finalize/attempt-1`, and completed the autonomous execution run.
