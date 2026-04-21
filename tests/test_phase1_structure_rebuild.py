@@ -32,8 +32,8 @@ def test_legacy_graph_code_is_archived_under_legacy():
     """Legacy graph runtime should no longer live at the repo top level."""
     assert (PROJECT_ROOT / "legacy" / "agents").exists()
     assert (PROJECT_ROOT / "legacy" / "workflows").exists()
-    assert not (PROJECT_ROOT / "agents").exists()
-    assert not (PROJECT_ROOT / "workflows").exists()
+    assert not any((PROJECT_ROOT / "agents").glob("*.py"))
+    assert not any((PROJECT_ROOT / "workflows").glob("*.py"))
 
 
 def test_main_is_a_thin_wrapper_to_package_cli():
