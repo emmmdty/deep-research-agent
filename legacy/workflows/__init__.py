@@ -11,14 +11,14 @@ __all__ = [
 
 def __getattr__(name: str):
     if name in {"build_research_graph", "run_research"}:
-        from workflows.graph import build_research_graph, run_research
+        from legacy.workflows.graph import build_research_graph, run_research
 
         return {
             "build_research_graph": build_research_graph,
             "run_research": run_research,
         }[name]
     if name in {"ResearchState", "TaskItem", "CriticFeedback"}:
-        from workflows.states import CriticFeedback, ResearchState, TaskItem
+        from legacy.workflows.states import CriticFeedback, ResearchState, TaskItem
 
         return {
             "ResearchState": ResearchState,

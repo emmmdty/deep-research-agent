@@ -127,7 +127,7 @@ class TestWorkflowStates:
 
     def test_task_item(self):
         """验证 TaskItem 创建。"""
-        from workflows.states import TaskItem
+        from legacy.workflows.states import TaskItem
 
         task = TaskItem(id=1, title="测试", intent="验证", query="test query")
         assert task.status == "pending"
@@ -135,7 +135,7 @@ class TestWorkflowStates:
 
     def test_critic_feedback(self):
         """验证 CriticFeedback 创建。"""
-        from workflows.states import CriticFeedback
+        from legacy.workflows.states import CriticFeedback
 
         fb = CriticFeedback(quality_score=8, is_sufficient=True, feedback="好")
         assert fb.quality_score == 8
@@ -143,7 +143,7 @@ class TestWorkflowStates:
 
     def test_graph_build(self):
         """验证 LangGraph 工作流可以构建。"""
-        from workflows.graph import build_research_graph
+        from legacy.workflows.graph import build_research_graph
 
         graph = build_research_graph()
         assert graph is not None

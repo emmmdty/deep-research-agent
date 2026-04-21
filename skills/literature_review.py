@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from loguru import logger
 
-from workflows.graph import run_research
+from legacy.workflows.graph import run_research
 
 
 LITERATURE_REVIEW_TOPIC_TEMPLATE = """\

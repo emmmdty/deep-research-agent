@@ -226,7 +226,7 @@ def should_use_source(task_type: str, source_name: str) -> bool:
 
 def build_benchmark_tasks(topic_spec) -> list[Any]:
     """根据 TopicSpec 生成稳定的 benchmark 任务。"""
-    from workflows.states import TaskItem
+    from legacy.workflows.states import TaskItem
 
     task_type = infer_task_type(topic_spec.topic)
     tasks: list[TaskItem] = []

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from workflows.states import SourceRecord
+from legacy.workflows.states import SourceRecord
 
 
 def test_aspect_coverage_supports_partial_keyword_hits():
@@ -93,7 +93,7 @@ def test_unsupported_core_claim_count_skips_weak_claims_with_limit_markers():
 def test_build_report_metrics_merges_memory_and_tooling_signals():
     """报告指标应吸收 verifier/memory 与工具调用信号。"""
     from evaluation.comparators import BenchmarkTopic, build_report_metrics
-    from workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
+    from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
 
     metrics = build_report_metrics(
         report_text="# 报告\n\n内容 [1]\n\n补充内容 [2]",
@@ -192,7 +192,7 @@ def test_build_report_metrics_merges_memory_and_tooling_signals():
 def test_evaluate_report_emits_case_study_reliability_metrics():
     """case-study 评估应输出连续值强度指标，而不是只保留数量计数。"""
     from evaluation.metrics import evaluate_report
-    from workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
+    from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
 
     report = (
         "# 报告\n\n"
@@ -288,7 +288,7 @@ def test_evaluate_report_emits_case_study_reliability_metrics():
 def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs():
     """没有冲突或 judge 时，应返回可解释的空值，而不是 0 分。"""
     from evaluation.comparators import BenchmarkTopic, build_report_metrics
-    from workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
+    from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
 
     report = (
         "# 报告\n\n"

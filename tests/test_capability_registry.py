@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
-from workflows.states import TaskItem
+from legacy.workflows.states import TaskItem
 
 
 def test_load_skill_definitions_parses_skill_md_frontmatter(tmp_path: Path):

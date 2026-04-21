@@ -9,7 +9,7 @@ from loguru import logger
 from llm.provider import get_llm
 from prompts.templates import CRITIC_SYSTEM_PROMPT, CRITIC_USER_PROMPT
 from research_policy import evaluate_quality_gate
-from workflows.states import CriticFeedback, RunMetrics, SourceRecord, TaskItem
+from legacy.workflows.states import CriticFeedback, RunMetrics, SourceRecord, TaskItem
 
 
 def critic_node(state: dict) -> dict:

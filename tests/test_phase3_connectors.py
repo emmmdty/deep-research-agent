@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 from jsonschema import ValidationError
 
-from workflows.states import RunMetrics, SourceRecord
+from legacy.workflows.states import RunMetrics, SourceRecord
 
 
 PHASE3_SCHEMA_NAMES = [
@@ -199,10 +199,10 @@ def test_web_fetch_rejects_unsafe_url_before_scraper():
 
 def test_researcher_does_not_fetch_policy_blocked_private_url(tmp_path: Path, monkeypatch):
     """collecting 遇到 fetch policy 拦截的 URL 时，不应调用 connector fetch。"""
-    from agents import researcher
+    from legacy.agents import researcher
     from connectors.legacy import LegacyConnectorAdapter
     from connectors.registry import ConnectorRegistry
-    from workflows.states import TaskItem
+    from legacy.workflows.states import TaskItem
 
     settings = type(
         "Settings",
@@ -283,7 +283,7 @@ def test_researcher_does_not_fetch_policy_blocked_private_url(tmp_path: Path, mo
 
 def test_phase3_source_record_and_verifier_preserve_snapshot_ref(tmp_path: Path, monkeypatch):
     """verifier 生成的 evidence unit 应继承 snapshot_ref。"""
-    from agents import verifier
+    from legacy.agents import verifier
 
     settings = type("Settings", (), {"workspace_dir": str(tmp_path / "workspace")})()
     monkeypatch.setattr(verifier, "get_settings", lambda: settings)
@@ -377,10 +377,10 @@ def test_phase3_bundle_prefers_real_snapshots_over_synthetic():
 
 def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Path, monkeypatch):
     """collecting 应把 fetched source 转成带 snapshot_ref 的 SourceRecord。"""
-    from agents import researcher
+    from legacy.agents import researcher
     from connectors.legacy import LegacyConnectorAdapter
     from connectors.registry import ConnectorRegistry
-    from workflows.states import TaskItem
+    from legacy.workflows.states import TaskItem
 
     settings = type(
         "Settings",
@@ -459,12 +459,12 @@ def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Pat
 
 def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, monkeypatch):
     """公开 orchestrator 路径应把 snapshot 写入 job 目录，而不是 workspace 根目录。"""
-    from agents import researcher
+    from legacy.agents import researcher
     from connectors.legacy import LegacyConnectorAdapter
     from connectors.registry import ConnectorRegistry
     from services.research_jobs.orchestrator import ResearchJobOrchestrator
     from services.research_jobs.service import ResearchJobService
-    from workflows.states import CriticFeedback, ReportArtifact, TaskItem
+    from legacy.workflows.states import CriticFeedback, ReportArtifact, TaskItem
 
     settings = type(
         "Settings",

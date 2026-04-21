@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 
 from configs.settings import PROJECT_ROOT, Settings, get_settings
 from evaluation.metrics import evaluate_report
-from workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TopicSpec
+from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TopicSpec
 
 
 COMPARATOR_ALIASES = {
@@ -220,7 +220,7 @@ def run_ours_comparator(
     ablation_variant: str | None = None,
 ) -> ComparatorResult:
     """运行当前项目自身的研究工作流。"""
-    from workflows.graph import run_research
+    from legacy.workflows.graph import run_research
 
     output_dir = Path(output_root) / comparator_name
     output_dir.mkdir(parents=True, exist_ok=True)

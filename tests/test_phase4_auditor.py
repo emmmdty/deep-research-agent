@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 from jsonschema import ValidationError
 
-from workflows.states import EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
+from legacy.workflows.states import EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
 
 PHASE4_SCHEMA_NAMES = [

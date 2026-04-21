@@ -16,7 +16,7 @@ from auditor.models import (
     EvidenceFragmentRecord,
 )
 from auditor.store import write_claim_graph, write_review_queue
-from workflows.states import EvidenceNote, SourceRecord, TaskItem
+from legacy.workflows.states import EvidenceNote, SourceRecord, TaskItem
 
 
 _CRITICAL_HEADING = "核心结论"
