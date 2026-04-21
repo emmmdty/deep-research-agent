@@ -309,6 +309,7 @@ class ResearchState(BaseModel):
     quality_gate_status: str = Field(default="unchecked", description="质量门控状态")
     quality_gate_fail_reason: str = Field(default="", description="质量门控失败原因")
     pending_follow_up_queries: list[str] = Field(default_factory=list, description="待执行的补充查询")
+    refinement_history: list[dict[str, Any]] = Field(default_factory=list, description="显式 refinement 记录")
     audit_gate_status: str = Field(default="unchecked", description="审计门禁状态")
     audit_block_reason: str = Field(default="", description="审计阻塞原因")
     critical_claim_count: int = Field(default=0, description="关键 claim 数")

@@ -17,6 +17,7 @@ import time
 from pathlib import Path
 
 from configs.settings import get_settings
+from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
 from dotenv import load_dotenv
 from loguru import logger
 from rich.console import Console
@@ -60,9 +61,9 @@ def build_parser() -> argparse.ArgumentParser:
     settings = get_settings()
     default_max_loops = getattr(settings, "max_research_loops", 3)
     default_profile = getattr(settings, "research_profile", "default")
-    default_source_profile = getattr(settings, "source_policy_mode", "open-web")
+    default_source_profile = getattr(settings, "source_policy_mode", "company_broad")
     parser = argparse.ArgumentParser(
-        description="Deep Research Agent — 多智能体深度研究系统",
+        description="Deep Research Agent — evidence-first research runtime",
     )
     subparsers = parser.add_subparsers(dest="command")
 
@@ -84,6 +85,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--source-profile",
         type=str,
         default=default_source_profile,
+        choices=CANONICAL_SOURCE_PROFILES,
         help=f"来源策略 profile（默认 {default_source_profile}）",
     )
     submit_parser.add_argument("--allow-domain", action="append", default=[], help="额外允许的域名，可重复")
@@ -106,6 +108,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="单个 job 的最大 fetch 总数覆盖",
     )
+    submit_parser.add_argument(
+        "--no-worker",
+        action="store_true",
+        help="只创建 job，不启动后台 worker",
+    )
     submit_parser.add_argument("--json", action="store_true", help="输出 JSON")
 
     status_parser = subparsers.add_parser("status", help="查询 job 状态")
@@ -123,7 +130,19 @@ def build_parser() -> argparse.ArgumentParser:
 
     retry_parser = subparsers.add_parser("retry", help="基于旧 job 创建 retry")
     retry_parser.add_argument("--job-id", required=True, type=str, help="原 job ID")
+    retry_parser.add_argument("--no-worker", action="store_true", help="只创建 retry job，不启动后台 worker")
     retry_parser.add_argument("--json", action="store_true", help="输出 JSON")
+
+    resume_parser = subparsers.add_parser("resume", help="从最新 checkpoint 恢复同一个 job")
+    resume_parser.add_argument("--job-id", required=True, type=str, help="job ID")
+    resume_parser.add_argument("--no-worker", action="store_true", help="只恢复状态，不启动后台 worker")
+    resume_parser.add_argument("--json", action="store_true", help="输出 JSON")
+
+    refine_parser = subparsers.add_parser("refine", help="记录 refinement 指令并从安全边界恢复")
+    refine_parser.add_argument("--job-id", required=True, type=str, help="job ID")
+    refine_parser.add_argument("--instruction", required=True, type=str, help="refinement 指令")
+    refine_parser.add_argument("--no-worker", action="store_true", help="只更新状态，不启动后台 worker")
+    refine_parser.add_argument("--json", action="store_true", help="输出 JSON")
 
     return parser
 
@@ -225,7 +244,7 @@ def run_cli(
 
 
 def _print_json(payload) -> None:
-    console.print(json.dumps(payload, ensure_ascii=False, indent=2))
+    sys.stdout.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
 
 def _jsonable_model(value):
@@ -276,7 +295,7 @@ def run_command(argv: list[str] | None = None) -> int:
             topic=args.topic,
             max_loops=args.max_loops,
             research_profile=args.profile,
-            start_worker=True,
+            start_worker=not args.no_worker,
             source_profile=args.source_profile,
             allow_domains=args.allow_domain,
             deny_domains=args.deny_domain,
@@ -320,12 +339,32 @@ def run_command(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "retry":
-        job = service.retry(args.job_id, start_worker=True)
+        job = service.retry(args.job_id, start_worker=not args.no_worker)
         payload = _jsonable_model(job)
         if args.json:
             _print_json(payload)
         else:
             console.print(f"🔁 已创建 retry job: [cyan]{job.job_id}[/cyan] (retry_of={job.retry_of})")
+        return 0
+
+    if args.command == "resume":
+        job = service.resume(args.job_id, start_worker=not args.no_worker)
+        payload = _jsonable_model(job)
+        if args.json:
+            _print_json(payload)
+        else:
+            console.print(f"▶️ 已恢复 job: [cyan]{job.job_id}[/cyan]")
+            console.print(f"当前阶段: [bold]{job.current_stage}[/bold]")
+        return 0
+
+    if args.command == "refine":
+        job = service.refine(args.job_id, args.instruction, start_worker=not args.no_worker)
+        payload = _jsonable_model(job)
+        if args.json:
+            _print_json(payload)
+        else:
+            console.print(f"🧭 已记录 refinement 并恢复 job: [cyan]{job.job_id}[/cyan]")
+            console.print(f"当前阶段: [bold]{job.current_stage}[/bold]")
         return 0
 
     if args.command == "watch":
@@ -345,7 +384,7 @@ def run_command(argv: list[str] | None = None) -> int:
             if job is None:
                 console.print(f"[red]未找到 job: {args.job_id}[/red]")
                 return 1
-            if job.status in {"completed", "failed", "cancelled", "needs_review"}:
+            if job.status in {"completed", "failed", "cancelled"}:
                 if not args.json:
                     console.print(f"终态: [bold]{job.status}[/bold]")
                     if getattr(job, "audit_gate_status", "unchecked") != "unchecked":

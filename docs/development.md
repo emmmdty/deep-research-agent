@@ -91,6 +91,8 @@ uv run python main.py watch --job-id <job_id>
 uv run python main.py status --job-id <job_id>
 uv run python main.py cancel --job-id <job_id>
 uv run python main.py retry --job-id <job_id>
+uv run python main.py resume --job-id <job_id>
+uv run python main.py refine --job-id <job_id> --instruction "补充竞争对手分析"
 
 # legacy 直跑（迁移期保留）
 uv run python main.py legacy-run --topic "你的研究主题"
@@ -117,8 +119,10 @@ uv run python scripts/compare_agents.py --file-a our.md --file-b competitor.md
 ```
 
 说明：
-- 公开 CLI 已切到 phase2 orchestrator，`submit/watch/status/cancel/retry` 是默认入口
+- 公开 CLI 已切到 phase2 orchestrator，`submit/watch/status/cancel/retry/resume/refine` 是默认入口
+- `submit / retry / resume / refine` 支持 `--no-worker`，用于本地离线 smoke 或只更新 runtime 状态
 - phase3 以后，`submit` 还支持 `--source-profile`、`--allow-domain`、`--deny-domain`、`--max-candidates-per-connector`、`--max-fetches-per-task`、`--max-total-fetches`
+- canonical source profiles 是 `company_trusted`、`company_broad`、`industry_trusted`、`industry_broad`、`public_then_private`、`trusted_only`
 - phase4 以后，`status --json` 会额外暴露 `audit_gate_status`、关键 claim 计数和 audit artifacts 路径
 - `legacy-run` 只用于迁移期验证和维持旧路径可运行，不是长期产品契约
 - `--summary` 会生成 `benchmark_summary.json/.md`
@@ -249,7 +253,7 @@ WORKSPACE_DIR=workspace/phase3-live-validation \
 ENABLED_SOURCES='["github"]' \
 uv run python main.py submit \
   --topic "langgraph github repository" \
-  --source-profile trusted-web \
+  --source-profile company_trusted \
   --allow-domain github.com \
   --max-candidates-per-connector 3 \
   --max-fetches-per-task 2 \
@@ -321,7 +325,7 @@ sample.write_text("# LangGraph\n\nLangGraph 是一个用于构建多步骤 agent
 service = ResearchJobService(Settings(workspace_dir=str(workspace)))
 job = service.submit(
     topic="根据本地文件总结 LangGraph 的定位",
-    source_profile="public-then-private",
+    source_profile="public_then_private",
     file_inputs=[str(sample.resolve())],
 )
 print(job.job_id)

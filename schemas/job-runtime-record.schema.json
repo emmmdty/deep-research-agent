@@ -31,8 +31,27 @@
   "properties": {
     "job_id": { "type": "string", "minLength": 1 },
     "topic": { "type": "string", "minLength": 1 },
-    "status": { "type": "string", "minLength": 1 },
-    "current_stage": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["created", "running", "completed", "failed", "cancelled"]
+    },
+    "current_stage": {
+      "type": "string",
+      "enum": [
+        "created",
+        "clarifying",
+        "planned",
+        "collecting",
+        "normalizing",
+        "extracting",
+        "claim_auditing",
+        "synthesizing",
+        "rendering",
+        "completed",
+        "failed",
+        "cancelled"
+      ]
+    },
     "created_at": { "type": "string", "format": "date-time" },
     "updated_at": { "type": "string", "format": "date-time" },
     "attempt_index": { "type": "integer", "minimum": 1 },
@@ -46,7 +65,17 @@
     "report_bundle_path": { "type": "string", "minLength": 1 },
     "trace_path": { "type": "string", "minLength": 1 },
     "runtime_path": { "type": "string", "minLength": 1 },
-    "source_profile": { "type": "string", "minLength": 1 },
+    "source_profile": {
+      "type": "string",
+      "enum": [
+        "company_trusted",
+        "company_broad",
+        "industry_trusted",
+        "industry_broad",
+        "public_then_private",
+        "trusted_only"
+      ]
+    },
     "budget": {
       "type": "object",
       "additionalProperties": true
@@ -59,7 +88,10 @@
       "type": "object",
       "additionalProperties": true
     },
-    "audit_gate_status": { "type": "string", "minLength": 1 },
+    "audit_gate_status": {
+      "type": "string",
+      "enum": ["unchecked", "passed", "blocked", "pending_manual_review"]
+    },
     "critical_claim_count": { "type": "integer", "minimum": 0 },
     "blocked_critical_claim_count": { "type": "integer", "minimum": 0 },
     "audit_graph_path": { "type": "string" },

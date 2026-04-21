@@ -17,11 +17,43 @@
   "properties": {
     "checkpoint_id": { "type": "string", "minLength": 1 },
     "job_id": { "type": "string", "minLength": 1 },
-    "stage": { "type": "string", "minLength": 1 },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "created",
+        "clarifying",
+        "planned",
+        "collecting",
+        "normalizing",
+        "extracting",
+        "claim_auditing",
+        "synthesizing",
+        "rendering",
+        "completed",
+        "failed",
+        "cancelled"
+      ]
+    },
     "sequence": { "type": "integer", "minimum": 1 },
     "loop_count": { "type": "integer", "minimum": 0 },
     "created_at": { "type": "string", "format": "date-time" },
-    "next_stage": { "type": "string", "minLength": 1 },
+    "next_stage": {
+      "type": "string",
+      "enum": [
+        "created",
+        "clarifying",
+        "planned",
+        "collecting",
+        "normalizing",
+        "extracting",
+        "claim_auditing",
+        "synthesizing",
+        "rendering",
+        "completed",
+        "failed",
+        "cancelled"
+      ]
+    },
     "state_payload": {
       "type": "object",
       "additionalProperties": true

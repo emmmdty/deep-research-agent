@@ -27,7 +27,7 @@ class TestConfigSettings:
         from configs.settings import Settings, LLMProvider, SearchBackend
 
         s = Settings()
-        assert s.llm_provider == LLMProvider.MINIMAX
+        assert s.llm_provider == LLMProvider.OPENAI_COMPATIBLE
         assert s.search_backend == SearchBackend.TAVILY
         assert s.max_research_loops == 3
         assert s.max_search_results == 5
@@ -39,7 +39,7 @@ class TestConfigSettings:
         assert s.legacy_cli_enabled is True
         assert s.connector_substrate_enabled is True
         assert s.snapshot_store_dirname == "snapshots"
-        assert s.source_policy_mode == "open-web"
+        assert s.source_policy_mode == "company_broad"
 
     def test_get_llm_config(self):
         """验证 LLM 配置字典生成。"""
