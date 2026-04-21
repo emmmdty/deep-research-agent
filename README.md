@@ -201,6 +201,8 @@ For broader validation, see:
 
 - [Architecture](./docs/architecture.md)
 - [Development Guide](./docs/development.md)
+- [Final Change Report](./FINAL_CHANGE_REPORT.md)
+- [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md)
 - [API Contract](./specs/api-readiness-contract.md)
 - [ADR-0008](./docs/adr/adr-0008-http-api-surface.md)
 - [ADR-0009](./docs/adr/adr-0009-batch-and-artifact-contract.md)
