@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -318,6 +319,61 @@ class ResearchJobService:
             self._spawn_worker_fn(job_id)
         return self._require_job(job_id)
 
+    def record_review(
+        self,
+        job_id: str,
+        *,
+        review_item_id: str,
+        claim_id: str,
+        decision: str,
+        reason: str,
+        reviewer: str,
+    ) -> JobRuntimeRecord:
+        """Persist one append-only review action for a completed or blocked job."""
+
+        if decision not in {"approve", "downgrade", "reject", "override"}:
+            raise ValueError(f"unsupported review decision: {decision}")
+        job = self._require_job(job_id)
+        review_action = {
+            "review_item_id": review_item_id,
+            "claim_id": claim_id,
+            "decision": decision,
+            "reason": reason,
+            "reviewer": reviewer,
+            "created_at": utc_now_iso(),
+        }
+        audit_dir = Path(job.review_queue_path).parent
+        audit_dir.mkdir(parents=True, exist_ok=True)
+        actions_path = audit_dir / "review_actions.jsonl"
+        with actions_path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(review_action, ensure_ascii=False) + "\n")
+
+        metadata = dict(job.metadata)
+        metadata["review_actions_path"] = str(actions_path)
+        metadata["latest_review_action"] = review_action
+        if decision in {"approve", "override"}:
+            gate_status = AuditGateStatus.PASSED
+        elif decision == "reject":
+            gate_status = AuditGateStatus.BLOCKED
+        else:
+            gate_status = AuditGateStatus.PENDING_MANUAL_REVIEW
+
+        updated = self.store.update_job(
+            job_id,
+            audit_gate_status=gate_status,
+            metadata=metadata,
+        )
+        self._append_event(
+            updated,
+            "review",
+            "job.review_recorded",
+            "记录人工 review 动作",
+            review_action,
+        )
+        self._append_review_trace(updated, review_action)
+        self._update_audit_decision(updated, review_action)
+        return self._require_job(job_id)
+
     def recover_stale_jobs(self) -> list[JobRuntimeRecord]:
         """Detect stale workers and restore resumable jobs."""
         recovered: list[JobRuntimeRecord] = []
@@ -427,3 +483,29 @@ class ResearchJobService:
         if checkpoint is None:
             raise ValueError(f"job {job_id} 缺少可恢复 checkpoint")
         return checkpoint
+
+    def _append_review_trace(self, job: JobRuntimeRecord, review_action: dict) -> None:
+        trace_path = Path(job.trace_path)
+        if not trace_path.exists():
+            return
+        entry = {
+            "event_id": f"{job.job_id}-manual-review",
+            "stage": "review",
+            "event_type": "manual.review_recorded",
+            "timestamp": review_action["created_at"],
+            "payload": review_action,
+        }
+        with trace_path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+    def _update_audit_decision(self, job: JobRuntimeRecord, review_action: dict) -> None:
+        audit_decision_path = Path(job.report_bundle_path).parent / "audit_decision.json"
+        if not audit_decision_path.exists():
+            return
+        payload = json.loads(audit_decision_path.read_text(encoding="utf-8"))
+        payload["gate_status"] = str(job.audit_gate_status)
+        payload.setdefault("manual_reviews", []).append(review_action)
+        audit_decision_path.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )

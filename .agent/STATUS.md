@@ -28,13 +28,13 @@
 ## Current overall status
 - current_phase: phase4_surface_docs
 - current_phase_slug: phase4-surface-docs
-- current_attempt: 0
+- current_attempt: 1
 - last_successful_phase: phase3_pipeline
-- overall_state: ready_for_phase4
+- overall_state: phase4_acceptance_passed
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- active_branch: codex/phase4-surface-docs/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase4-surface-docs-attempt-1
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
@@ -144,17 +144,30 @@
   - Phase 3 worktree was removed and branch `codex/phase3-pipeline/attempt-1` was deleted after merge.
 
 ### Phase 4 - surface_docs
-- status: pending
-- attempts: 0
-- summary: Add the HTTP API, stabilize CLI/batch public surfaces, and rewrite docs/ADRs to match the new system truth.
+- status: completed
+- attempts: 1
+- summary: Added the local FastAPI surface over the deterministic runtime, introduced `bundle` and `batch run` CLI commands, exposed stable artifact-name routing without leaking workspace paths, and rewrote the public docs/ADRs/migration notes to match the implemented Phase 4 surface.
 - acceptance_checks:
-  - API smoke tests
-  - CLI smoke tests
-  - batch path smoke
-  - public request/response schema validation
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py tests/test_cli_runtime.py` -> pass (10 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - OpenAPI smoke (`uv run python - <<'PY' ... app.openapi() ... PY`) -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py` -> pass (60 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_basic.py tests/test_scripts.py` -> pass (87 passed)
 - artifacts:
+  - `src/deep_research_agent/gateway/api.py`
+  - `src/deep_research_agent/gateway/contracts.py`
+  - `src/deep_research_agent/gateway/artifacts.py`
+  - `src/deep_research_agent/gateway/batch.py`
+  - `tests/test_phase4_surfaces.py`
+  - `docs/adr/adr-0008-http-api-surface.md`
+  - `docs/adr/adr-0009-batch-and-artifact-contract.md`
+  - `docs/migrations/phase4-surface-migration.md`
 - blockers:
 - notes:
+  - The HTTP API is intentionally local and still backed by SQLite/filesystem runtime semantics; it is a supported local surface, not a server-grade multi-tenant service.
+  - Public API responses now use stable artifact URLs instead of raw workspace paths; the CLI keeps its developer-oriented JSON output style.
+  - Review actions are append-only, recorded in runtime events, written to `review_actions.jsonl`, and mirrored into `audit_decision.json` / `trace.jsonl` when those artifacts already exist.
 
 ### Phase 5 - evals_release
 - status: pending
@@ -220,3 +233,10 @@
 - [2026-04-21T12:50:14Z] Phase 3 extended the report compiler to emit `report.html`, `claims.json`, `sources.json`, `audit_decision.json`, and `manifest.json`, and introduced `schemas/artifact-manifest.schema.json` to validate the emitted manifest contract.
 - [2026-04-21T12:50:14Z] Final Phase 3 validation passed in the worktree: focused runtime/audit regressions (`55 passed`), broader regression suite (`82 passed`), `ruff check .`, CLI help smoke, and a frozen-snapshot end-to-end job smoke with `source_count=1`, `snapshot_count=1`, and `evidence_count=1`.
 - [2026-04-21T12:52:09Z] Merged Phase 3 into `main` via commit `f211d5a`, reran main smoke successfully (`main.py --help`, `ruff check .`, broader regression suite = `82 passed`), reran the frozen-snapshot smoke on `main`, removed worktree `../_codex_worktrees/phase3-pipeline-attempt-1`, and deleted branch `codex/phase3-pipeline/attempt-1`.
+- [2026-04-21T12:52:09Z] Verified the merged Phase 3 baseline on `main`, then created Phase 4 worktree `../_codex_worktrees/phase4-surface-docs-attempt-1` on branch `codex/phase4-surface-docs/attempt-1`.
+- [2026-04-21T12:52:09Z] Bootstrapped local-only assets in the Phase 4 worktree by symlinking `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr`; tracked `.python-version` was already present.
+- [2026-04-21T12:52:09Z] Phase 4 design baseline reuses the approved repository specs (`PROJECT_SPEC.md`, `TASK2_SPEC.yaml`, `04_phase4_surface_docs.md`) and focuses implementation on three public surfaces: HTTP API, CLI bundle/batch commands, and reproducible docs/ADRs.
+- [2026-04-21T12:52:09Z] Phase 4 TDD red step: added `tests/test_phase4_surfaces.py`, extended `tests/test_cli_runtime.py` for `bundle` and `batch run`, and removed the obsolete `tests/test_phase6_api_readiness.py` that enforced the pre-Phase-4 “no HTTP API” contract.
+- [2026-04-21T12:52:09Z] Implemented `src/deep_research_agent/gateway/api.py`, `contracts.py`, `artifacts.py`, and `batch.py`; added review recording to `ResearchJobService`; and extended the CLI with `bundle` plus `batch run`.
+- [2026-04-21T12:52:09Z] Rewrote the public docs to match the new surface (`README.md`, `README.zh-CN` note, `docs/architecture.md`, `docs/development.md`, `specs/api-readiness-contract.md`) and added Phase 4 ADRs plus a migration note.
+- [2026-04-21T12:52:09Z] Phase 4 acceptance passed in the worktree: focused API/CLI/schema regressions (`10 passed`), runtime/auditor/public-surface slice (`60 passed`), broader smoke suite (`87 passed`), `ruff check .`, CLI help smoke, and OpenAPI route smoke.

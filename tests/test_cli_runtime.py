@@ -203,3 +203,72 @@ def test_refine_cli_dispatches_to_job_service(monkeypatch):
         "instruction": "Expand the competitor analysis for Anthropic.",
         "start_worker": True,
     }
+
+
+def test_bundle_cli_reads_report_bundle_json(tmp_path, monkeypatch, capsys):
+    """bundle 子命令应输出 job 的 report bundle。"""
+    import json
+    import main
+
+    bundle_dir = tmp_path / "workspace" / "research_jobs" / "job-123" / "bundle"
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+    bundle_path = bundle_dir / "report_bundle.json"
+    bundle_path.write_text(json.dumps({"job": {"job_id": "job-123"}, "report_text": "ok"}), encoding="utf-8")
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            return []
+
+        def get(self, job_id):
+            return SimpleNamespace(
+                job_id=job_id,
+                report_bundle_path=str(bundle_path),
+                report_path=str(bundle_dir.parent / "report.md"),
+                trace_path=str(bundle_dir / "trace.jsonl"),
+                review_queue_path=str(bundle_dir.parent / "audit" / "review_queue.json"),
+                audit_graph_path=str(bundle_dir.parent / "audit" / "claim_graph.json"),
+            )
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(["bundle", "--job-id", "job-123", "--json"])
+
+    assert exit_code == 0
+    assert json.loads(capsys.readouterr().out)["job"]["job_id"] == "job-123"
+
+
+def test_batch_run_cli_dispatches_submit_requests_from_jsonl(tmp_path, monkeypatch, capsys):
+    """batch run 应从 JSONL 读取多个 submit 请求并逐个创建 job。"""
+    import json
+    import main
+
+    batch_path = tmp_path / "batch.jsonl"
+    batch_path.write_text(
+        "\n".join(
+            [
+                json.dumps({"topic": "job-a", "max_loops": 1, "research_profile": "default", "start_worker": False}),
+                json.dumps({"topic": "job-b", "max_loops": 2, "research_profile": "benchmark", "start_worker": False}),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    captured: list[dict[str, object]] = []
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            return []
+
+        def submit(self, **kwargs):
+            captured.append(kwargs)
+            return SimpleNamespace(job_id=f"job-{len(captured)}", status="created")
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(["batch", "run", "--file", str(batch_path), "--json"])
+
+    assert exit_code == 0
+    assert [item["topic"] for item in captured] == ["job-a", "job-b"]
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["accepted_count"] == 2
