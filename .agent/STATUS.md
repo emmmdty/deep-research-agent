@@ -26,25 +26,25 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py
 
 ## Current overall status
-- current_phase: phase2_runtime_provider
-- current_phase_slug: phase2-runtime-provider
-- current_attempt: 1
-- last_successful_phase: phase1_structure
-- overall_state: phase2_acceptance_passed_pending_merge
+- current_phase: phase3_pipeline
+- current_phase_slug: phase3-pipeline
+- current_attempt: 0
+- last_successful_phase: phase2_runtime_provider
+- overall_state: ready_for_phase3
 
 ## Worktree state
-- active_branch: codex/phase2-runtime-provider/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase2-runtime-provider-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
 - post_merge_smoke_status:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py` -> pass (51 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_cli_runtime.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_basic.py tests/test_scripts.py` -> pass (81 passed)
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
-- missing_assets: none in the Phase 2 worktree after bootstrap
+- missing_assets: none in the current main worktree
 - recreated_assets:
 - symlinked_assets:
   - .env -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/.env
@@ -53,7 +53,7 @@
   - workspace -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace
   - venv_gptr -> /home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr
 - copied_assets:
-- blockers_from_local_assets: none; Phase 2 lifecycle smoke used an isolated temp `WORKSPACE_DIR` to avoid writing runtime artifacts into the shared `workspace/` symlink
+- blockers_from_local_assets: none in the current main worktree; Phase 2 lifecycle smoke used an isolated temp `WORKSPACE_DIR` to avoid writing runtime artifacts into the shared `workspace/` symlink
 
 ## Phase ledger
 
@@ -97,7 +97,7 @@
   - Merge target landed on `main`; next action is Phase 2 in a fresh worktree.
 
 ### Phase 2 - runtime_provider
-- status: acceptance_passed_pending_merge
+- status: completed
 - attempts: 1
 - summary: Canonicalized the runtime/service/store/orchestrator stack, introduced the provider routing layer for OpenAI/Anthropic/compatible backends, switched source-profile handling to the Task 2 contract, updated the CLI public lifecycle commands, and fixed no-worker stale recovery so deterministic local control-plane smoke passes.
 - acceptance_checks:
@@ -116,6 +116,8 @@
   - Added `langchain-anthropic` to `pyproject.toml` / `uv.lock` for native Anthropic provider support.
   - `services/research_jobs/*` and `llm/provider.py` now proxy to the canonical `src/` implementations to keep the migration phase-scoped.
   - The first CLI smoke failure exposed that `recover_stale_jobs()` was auto-starting intentionally idle `--no-worker` jobs on the next CLI invocation; repaired in the same attempt and covered with a regression test.
+  - Merge target commit on `main`: `fd7819a`
+  - Phase 2 worktree was removed and branch `codex/phase2-runtime-provider/attempt-1` was deleted after merge.
 
 ### Phase 3 - pipeline
 - status: pending
@@ -200,3 +202,4 @@
 - [2026-04-21T12:32:04Z] Phase 2 promoted the canonical runtime modules under `src/deep_research_agent/research_jobs/`, added canonical provider routing under `src/deep_research_agent/providers/`, switched public source-profile names to the Task 2 contract, and updated the public CLI/runtime docs.
 - [2026-04-21T12:32:04Z] Phase 2 acceptance initially exposed a deterministic smoke bug: `recover_stale_jobs()` treated intentionally idle `--no-worker` jobs as stale on the next CLI command and auto-spawned a worker. Repaired in-attempt by skipping recovery for jobs with no lease, pid, or heartbeat and by adding a regression test.
 - [2026-04-21T12:32:04Z] Final Phase 2 validation passed in the worktree: focused runtime/CLI regressions (`30 passed`), broader regression suite (`81 passed`), `ruff check .`, and isolated lifecycle smoke with `submit/status/cancel/retry/resume/refine` while preserving `worker_pid == null`.
+- [2026-04-21T12:35:00Z] Merged Phase 2 into `main` via commit `fd7819a`, reran main smoke successfully (`main.py --help`, `ruff check .`, broader regression suite = `81 passed`), removed worktree `../_codex_worktrees/phase2-runtime-provider-attempt-1`, and deleted branch `codex/phase2-runtime-provider/attempt-1`.
