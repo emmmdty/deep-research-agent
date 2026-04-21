@@ -25,22 +25,23 @@
 - cost_aggregator: ablation_runner imports the committed Phase 7 cost placeholders and records the null-cost reason
 
 ## Current overall status
-- current_phase: phase9_value_pack
-- current_phase_slug: phase9-value-pack
-- current_attempt: 1
-- last_successful_phase: phase8_ablation_and_perf
-- overall_state: in_progress
+- current_phase: followup_metrics_complete
+- current_phase_slug: followup-metrics-complete
+- current_attempt: 0
+- last_successful_phase: phase9_value_pack
+- overall_state: completed
 
 ## Worktree state
-- active_branch: codex/phase9-value-pack/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase9-value-pack-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - post_merge_smoke_status:
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_phase7_value_metrics.py tests/test_phase8_value_ablations.py` -> pass (12 passed)
-  - temp-root ablation pack render (`scripts/run_value_ablation_pack.py --baseline-root evals/reports/phase5_local_smoke --followup-root evals/reports/followup_metrics --output-root /tmp/main-phase8-ablation --json`) -> pass
-  - temp-root provider routing redaction check (`'api_key' not in /tmp/main-phase8-ablation/provider_routing_comparison.json`) -> pass (`API_KEY_REDACTED`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_cli_runtime.py tests/test_phase4_surfaces.py tests/test_phase7_value_metrics.py tests/test_phase8_value_ablations.py tests/test_phase9_value_pack.py` -> pass (81 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py::test_http_api_submit_status_events_bundle_and_artifacts` -> pass
+  - temp-root scorecard render (`scripts/build_value_scorecard.py --release-manifest evals/reports/phase5_local_smoke/release_manifest.json --metrics-root evals/reports/followup_metrics --docs-root /tmp/main-phase9-scorecard-docs --metrics-readme /tmp/main-phase9-followup-metrics-README.md --json`) -> pass
+  - `git status --short` after the final rerun -> clean
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .env.*, .venv, .codex/config.toml, .python-version, workspace/, venv_gptr/
@@ -133,6 +134,17 @@
 - Scorecard generation is reproducible from committed artifacts and rewrites public artifact references to repo-relative paths, so the published scorecard no longer depends on deleted worktree paths.
 - README now exposes measurable headline values near the top and links directly to the scorecard, experiment summary, and release manifest.
 - The value pack preserves the current boundary honestly: the HTTP API is local-only, provider-routing live latency/quality is still unmeasured, and the repo is not positioned as a multi-tenant production SaaS.
+- merged to `main` via commit `8f0f5e6e4a772f916918f7d77309d28b5ce0f76d`, passed the final mainline smoke, and the Phase 9 worktree/branch were removed after merge.
+
+## Final follow-up summary
+- result: completed
+- final_main_commit: `8f0f5e6e4a772f916918f7d77309d28b5ce0f76d`
+- release_gate_status: `passed`
+- value_scorecard_paths: `docs/final/VALUE_SCORECARD.md`, `docs/final/VALUE_SCORECARD.json`
+- measured_headlines: `completion_rate=1.0`, `bundle_emission_rate=1.0`, `critical_claim_support_precision=1.0`, `policy_compliance_rate=1.0`, `resume_success_rate=1.0`, `stale_recovery_success_rate=1.0`, `ttff_seconds_p50=0.299367`, `ttfr_seconds_p50=1.344091`
+- strongest_ablation_evidence: audit off causes support precision -1.0 and unsupported-claim leakage +1.0; evidence-first removal causes provenance -1.0 and citation error +1.0; rerank off causes support precision -0.5
+- explicit_limits: local-only HTTP API, SQLite/filesystem runtime, no auth or tenant isolation, no live provider cost calculation, provider routing live latency/quality still not measured
+- final_repo_state_after_smoke: clean
 
 ## Headline metrics snapshot
 - completion_rate: 1.0
@@ -179,3 +191,4 @@
 - [2026-04-21T15:12:25Z] Phase 9 TDD red step completed: `tests/test_phase9_value_pack.py` failed first because no scorecard generator or scorecard docs existed.
 - [2026-04-21T15:12:25Z] Phase 9 green step completed: implemented `src/deep_research_agent/evals/value_scorecard.py`, `scripts/build_value_scorecard.py`, generated `docs/final/VALUE_SCORECARD.{md,json}`, and added `evals/reports/followup_metrics/README.md`.
 - [2026-04-21T15:12:25Z] Phase 9 acceptance passed in the worktree: lint pass, broad regression slice pass (81 passed), CLI help pass, API smoke pass, and temp-root scorecard generation pass.
+- [2026-04-21T15:12:25Z] Merged Phase 9 into `main` via `8f0f5e6e4a772f916918f7d77309d28b5ce0f76d`, reran the final mainline smoke successfully, removed worktree `../_codex_worktrees/phase9-value-pack-attempt-1`, deleted branch `codex/phase9-value-pack/attempt-1`, and confirmed `git status --short` stayed clean after the rerun.
