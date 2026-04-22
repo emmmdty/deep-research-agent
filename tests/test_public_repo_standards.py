@@ -67,12 +67,12 @@ def test_env_example_matches_supported_public_configuration():
     assert "OPEN_DEEP_RESEARCH_COMMAND=" in content
 
 
-def test_pyproject_has_public_metadata_and_no_dead_server_dependencies():
-    """包元数据应适合公开仓库，且不再保留未使用的服务依赖。"""
+def test_pyproject_has_public_metadata_and_supported_api_dependencies():
+    """包元数据应适合公开仓库，并声明当前支持的 HTTP API 依赖。"""
     content = (PROJECT_ROOT / "pyproject.toml").read_text(encoding="utf-8")
 
-    assert "fastapi" not in content
-    assert "uvicorn" not in content
+    assert "fastapi" in content
+    assert "uvicorn" in content
     assert "license" in content
     assert "keywords" in content
     assert "classifiers" in content
