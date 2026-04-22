@@ -1,0 +1,62 @@
+{
+  "baseline_commit": "e7219f195667e3b25d4c178231f44ebfb7cd8101",
+  "baseline_tag": "v0.2.0-native-regression",
+  "post_change_commit": "ae792b5b43652ca718eeb6c0da41fabfbcbadb21",
+  "selected_target": "industry12_discriminativeness",
+  "baseline_metrics": {
+    "industry12_suite_status": "passed",
+    "industry12_task_count": 12,
+    "industry12_conflict_case_count": 0,
+    "industry12_multi_claim_task_count": 0,
+    "industry12_uncertainty_case_count": 0,
+    "industry12_casebook_conflict_example_present": false
+  },
+  "post_change_metrics": {
+    "industry12_suite_status": "passed",
+    "industry12_task_count": 12,
+    "industry12_conflict_case_count": 4,
+    "industry12_multi_claim_task_count": 4,
+    "industry12_uncertainty_case_count": 4,
+    "industry12_casebook_conflict_example_present": true
+  },
+  "deltas": {
+    "industry12_suite_status": {
+      "before": "passed",
+      "after": "passed",
+      "delta": "unchanged"
+    },
+    "industry12_task_count": {
+      "before": 12,
+      "after": 12,
+      "delta": 0
+    },
+    "industry12_conflict_case_count": {
+      "before": 0,
+      "after": 4,
+      "delta": 4
+    },
+    "industry12_multi_claim_task_count": {
+      "before": 0,
+      "after": 4,
+      "delta": 4
+    },
+    "industry12_uncertainty_case_count": {
+      "before": 0,
+      "after": 4,
+      "delta": 4
+    },
+    "industry12_casebook_conflict_example_present": {
+      "before": false,
+      "after": true,
+      "delta": true
+    }
+  },
+  "interpretation": "industry12 bundle structure is now meaningfully conflict-aware while keeping the suite passing and the task count unchanged.",
+  "artifact_paths": {
+    "baseline_industry12_summary": "evals/reports/native_regression/industry12/summary.json",
+    "post_industry12_summary": "evals/reports/native_regression/industry12/summary.json",
+    "post_casebook": "docs/benchmarks/native/CASEBOOK.md",
+    "optimization_summary": "evals/reports/native_optimization/optimization_summary.json",
+    "before_after_markdown": "evals/reports/native_optimization/BEFORE_AFTER.md"
+  }
+}

@@ -2,13 +2,26 @@
   "job_id": "industry-model-gateway",
   "claims": [
     {
-      "claim_id": "industry-model-gateway-claim-1",
-      "text": "Public gateway documentation and repositories make provider routing and abstraction visible as a separate operational layer in AI infrastructure.[1][2]",
+      "claim_id": "claim-model-gateway-1",
+      "text": "Public gateway materials consistently present provider routing and fallback as a distinct operational layer.",
       "criticality": "high",
       "uncertainty": "low",
       "status": "supported",
       "placeholder": false,
-      "section_ref": "Overview",
+      "section_ref": "Market structure",
+      "evidence_ids": [
+        "industry-model-gateway-evidence-1",
+        "industry-model-gateway-evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-model-gateway-2",
+      "text": "Public gateway materials do not yet justify treating policy, logging, and evaluation ownership as fully standardized inside the same layer.",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Uncertainty",
       "evidence_ids": [
         "industry-model-gateway-evidence-1",
         "industry-model-gateway-evidence-2"
@@ -17,35 +30,67 @@
   ],
   "claim_support_edges": [
     {
-      "edge_id": "industry-model-gateway-edge-1",
-      "claim_id": "industry-model-gateway-claim-1",
+      "edge_id": "edge-model-gateway-1",
+      "claim_id": "claim-model-gateway-1",
       "evidence_id": "industry-model-gateway-evidence-1",
       "source_id": "source-litellm-home",
       "snapshot_id": "snapshot-litellm-home",
-      "locator": {
-        "kind": "source_snippet",
-        "citation_id": 1
-      },
+      "locator": {},
       "relation": "supports",
       "confidence": 0.99,
       "grounding_status": "grounded",
-      "notes": "LiteLLM Docs"
+      "notes": ""
     },
     {
-      "edge_id": "industry-model-gateway-edge-2",
-      "claim_id": "industry-model-gateway-claim-1",
+      "edge_id": "edge-model-gateway-2",
+      "claim_id": "claim-model-gateway-1",
       "evidence_id": "industry-model-gateway-evidence-2",
       "source_id": "source-litellm-repo",
       "snapshot_id": "snapshot-litellm-repo",
-      "locator": {
-        "kind": "source_snippet",
-        "citation_id": 2
-      },
+      "locator": {},
       "relation": "supports",
-      "confidence": 0.99,
+      "confidence": 0.97,
       "grounding_status": "grounded",
-      "notes": "BerriAI/litellm"
+      "notes": ""
+    },
+    {
+      "edge_id": "edge-model-gateway-3",
+      "claim_id": "claim-model-gateway-2",
+      "evidence_id": "industry-model-gateway-evidence-1",
+      "source_id": "source-litellm-home",
+      "snapshot_id": "snapshot-litellm-home",
+      "locator": {},
+      "relation": "supports",
+      "confidence": 0.91,
+      "grounding_status": "grounded",
+      "notes": ""
+    },
+    {
+      "edge_id": "edge-model-gateway-4",
+      "claim_id": "claim-model-gateway-2",
+      "evidence_id": "industry-model-gateway-evidence-2",
+      "source_id": "source-litellm-repo",
+      "snapshot_id": "snapshot-litellm-repo",
+      "locator": {},
+      "relation": "context_only",
+      "confidence": 0.82,
+      "grounding_status": "grounded",
+      "notes": ""
     }
   ],
-  "conflict_sets": []
+  "conflict_sets": [
+    {
+      "conflict_id": "conflict-model-gateway",
+      "claim_ids": [
+        "claim-model-gateway-1",
+        "claim-model-gateway-2"
+      ],
+      "evidence_ids": [
+        "industry-model-gateway-evidence-1",
+        "industry-model-gateway-evidence-2"
+      ],
+      "status": "reviewed",
+      "summary": "Public gateway materials agree on routing/fallback as the core layer, but they leave the surrounding control-plane boundary only partially settled."
+    }
+  ]
 }

@@ -1,13 +1,26 @@
 {
   "claims": [
     {
-      "claim_id": "industry-model-gateway-claim-1",
-      "text": "Public gateway documentation and repositories make provider routing and abstraction visible as a separate operational layer in AI infrastructure.[1][2]",
+      "claim_id": "claim-model-gateway-1",
+      "text": "Public gateway materials consistently present provider routing and fallback as a distinct operational layer.",
       "criticality": "high",
       "uncertainty": "low",
       "status": "supported",
       "placeholder": false,
-      "section_ref": "Overview",
+      "section_ref": "Market structure",
+      "evidence_ids": [
+        "industry-model-gateway-evidence-1",
+        "industry-model-gateway-evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-model-gateway-2",
+      "text": "Public gateway materials do not yet justify treating policy, logging, and evaluation ownership as fully standardized inside the same layer.",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Uncertainty",
       "evidence_ids": [
         "industry-model-gateway-evidence-1",
         "industry-model-gateway-evidence-2"

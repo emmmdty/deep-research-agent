@@ -1,6 +1,6 @@
 {
   "gate_status": "passed",
-  "critical_claim_count": 1,
+  "critical_claim_count": 2,
   "blocked_critical_claim_count": 0,
   "blocking_claim_ids": [],
   "summary": "Audit gate passed",

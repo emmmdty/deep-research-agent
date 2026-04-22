@@ -138,16 +138,16 @@
       },
       {
         "suite_name": "industry12",
-        "task_id": "industry-durable-runtime",
-        "description": "Durable runtime and recovery regression",
+        "task_id": "industry-governance-policy",
+        "description": "Governance and source policy regression",
         "key_metrics": {
           "completion_rate": 1.0,
           "bundle_emission_rate": 1.0,
           "policy_compliance_rate": 1.0
         },
-        "conclusion": "Durable runtime and recovery regression emits a grounded report bundle from deterministic native fixtures.",
-        "report_path": "evals/reports/native_regression/industry12/industry-durable-runtime/report.md",
-        "bundle_path": "evals/reports/native_regression/industry12/industry-durable-runtime/bundle/report_bundle.json"
+        "conclusion": "Governance and source policy regression emits a grounded report bundle from deterministic native fixtures.",
+        "report_path": "evals/reports/native_regression/industry12/industry-governance-policy/report.md",
+        "bundle_path": "evals/reports/native_regression/industry12/industry-governance-policy/bundle/report_bundle.json"
       },
       {
         "suite_name": "trusted8",
@@ -191,6 +191,11 @@
         "summary_path": "evals/reports/native_regression/recovery6/summary.json"
       }
     ]
+  },
+  "latest_optimization_cycle": {
+    "selected_target": "industry12_discriminativeness",
+    "summary": "The latest optimization cycle hardens `industry12` benchmark discriminativeness by adding explicit multi-claim, conflict-aware, uncertainty-bearing regression cases.",
+    "release_gate_note": "smoke_local remains the authoritative merge-safe gate; this is benchmark hardening rather than a release-gate change."
   },
   "artifacts": {
     "release_manifest": "evals/reports/native_regression/release_manifest.json",

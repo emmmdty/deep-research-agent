@@ -31,7 +31,7 @@
       "synthesizing",
       "rendering"
     ],
-    "critical_claim_count": 1,
+    "critical_claim_count": 2,
     "blocked_critical_claim_count": 0,
     "manual_review_required": false
   },
@@ -51,8 +51,8 @@
     "sources": 2,
     "snapshots": 2,
     "evidence_fragments": 2,
-    "claims": 1,
-    "claim_support_edges": 2,
-    "conflict_sets": 0
+    "claims": 2,
+    "claim_support_edges": 4,
+    "conflict_sets": 1
   }
 }

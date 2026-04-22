@@ -125,7 +125,7 @@
       "synthesizing",
       "rendering"
     ],
-    "critical_claim_count": 1,
+    "critical_claim_count": 2,
     "blocked_critical_claim_count": 0,
     "manual_review_required": false
   },
@@ -314,16 +314,29 @@
       }
     }
   ],
-  "report_text": "# Governance and Source Policy\n\nPublic protocol and tool-use materials show permissions, safety boundaries, and policy enforcement as explicit system concerns.[1][2]\n\nThat keeps governance attached to connectors and execution policy rather than burying it inside synthesis prompts.[1][2]\n",
+  "report_text": "# Governance and Source Policy\n\nPublic protocol and tool-use materials show permissions, safety boundaries, and policy enforcement as explicit system concerns.[1][2]\n\nThe same materials also surface a real comparison tension: governance is clearly first-class, but the exact split between protocol-level permissions and product-specific safety overlays remains uncertain enough that reviewer-facing reports should state that ambiguity explicitly.[1][2]\n",
   "claims": [
     {
-      "claim_id": "industry-governance-policy-claim-1",
-      "text": "Public protocol and tool-use materials show permissions, safety boundaries, and policy enforcement as explicit system concerns.[1][2]",
+      "claim_id": "claim-governance-policy-1",
+      "text": "Public protocol and tool-use materials consistently show permissions and policy enforcement as explicit system concerns.",
       "criticality": "high",
       "uncertainty": "low",
       "status": "supported",
       "placeholder": false,
-      "section_ref": "Overview",
+      "section_ref": "Market structure",
+      "evidence_ids": [
+        "industry-governance-policy-evidence-1",
+        "industry-governance-policy-evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-governance-policy-2",
+      "text": "Public materials do not fully resolve how much governance belongs to protocol-level permissions versus product-specific safety overlays.",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Uncertainty",
       "evidence_ids": [
         "industry-governance-policy-evidence-1",
         "industry-governance-policy-evidence-2"
@@ -332,35 +345,67 @@
   ],
   "claim_support_edges": [
     {
-      "edge_id": "industry-governance-policy-edge-1",
-      "claim_id": "industry-governance-policy-claim-1",
+      "edge_id": "edge-governance-policy-1",
+      "claim_id": "claim-governance-policy-1",
       "evidence_id": "industry-governance-policy-evidence-1",
       "source_id": "source-mcp-governance",
       "snapshot_id": "snapshot-mcp-governance",
-      "locator": {
-        "kind": "source_snippet",
-        "citation_id": 1
-      },
+      "locator": {},
       "relation": "supports",
-      "confidence": 0.99,
+      "confidence": 0.98,
       "grounding_status": "grounded",
-      "notes": "Model Context Protocol Introduction"
+      "notes": ""
     },
     {
-      "edge_id": "industry-governance-policy-edge-2",
-      "claim_id": "industry-governance-policy-claim-1",
+      "edge_id": "edge-governance-policy-2",
+      "claim_id": "claim-governance-policy-1",
       "evidence_id": "industry-governance-policy-evidence-2",
       "source_id": "source-openai-safety",
       "snapshot_id": "snapshot-openai-safety",
-      "locator": {
-        "kind": "source_snippet",
-        "citation_id": 2
-      },
+      "locator": {},
       "relation": "supports",
-      "confidence": 0.99,
+      "confidence": 0.95,
       "grounding_status": "grounded",
-      "notes": "OpenAI Agents Guide"
+      "notes": ""
+    },
+    {
+      "edge_id": "edge-governance-policy-3",
+      "claim_id": "claim-governance-policy-2",
+      "evidence_id": "industry-governance-policy-evidence-1",
+      "source_id": "source-mcp-governance",
+      "snapshot_id": "snapshot-mcp-governance",
+      "locator": {},
+      "relation": "supports",
+      "confidence": 0.9,
+      "grounding_status": "grounded",
+      "notes": ""
+    },
+    {
+      "edge_id": "edge-governance-policy-4",
+      "claim_id": "claim-governance-policy-2",
+      "evidence_id": "industry-governance-policy-evidence-2",
+      "source_id": "source-openai-safety",
+      "snapshot_id": "snapshot-openai-safety",
+      "locator": {},
+      "relation": "context_only",
+      "confidence": 0.81,
+      "grounding_status": "grounded",
+      "notes": ""
     }
   ],
-  "conflict_sets": []
+  "conflict_sets": [
+    {
+      "conflict_id": "conflict-governance-policy",
+      "claim_ids": [
+        "claim-governance-policy-1",
+        "claim-governance-policy-2"
+      ],
+      "evidence_ids": [
+        "industry-governance-policy-evidence-1",
+        "industry-governance-policy-evidence-2"
+      ],
+      "status": "reviewed",
+      "summary": "Public governance materials agree that permissions are first-class, but they leave the boundary between protocol governance and product safety overlays only partially resolved."
+    }
+  ]
 }

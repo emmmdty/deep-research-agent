@@ -28,15 +28,15 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: native_optimization_phase16
-- current_phase_slug: phase16-optimize-weakest-native-axis
+- current_phase: native_optimization_phase17
+- current_phase_slug: phase17-rerun-and-compare
 - current_attempt: 1
-- last_successful_phase: phase15_freeze_and_select
-- overall_state: phase16_implementation_validated_pending_merge
+- last_successful_phase: phase16_implement_targeted_optimization
+- overall_state: phase17_artifacts_regenerated_pending_merge
 
 ## Worktree state
-- active_branch: codex/phase16-optimize-weakest-native-axis/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase16-optimize-weakest-native-axis-attempt-1
+- active_branch: codex/phase17-rerun-and-compare/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase17-rerun-and-compare-attempt-1
 - main_clean_before_phase: yes
 - main_baseline_commit: e7219f195667e3b25d4c178231f44ebfb7cd8101
 - baseline_verification_status:

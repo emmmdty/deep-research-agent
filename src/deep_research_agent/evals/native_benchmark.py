@@ -52,10 +52,15 @@ AUTHORITATIVE_BOUNDARY_REASONS = [
 ]
 CASEBOOK_SELECTION = {
     "company12": ["company-openai-platform", "company-openai-vs-anthropic"],
-    "industry12": ["industry-agent-orchestration", "industry-durable-runtime"],
+    "industry12": ["industry-agent-orchestration", "industry-governance-policy"],
     "trusted8": ["trusted-langgraph-overview"],
     "file8": ["file-openai-private-brief"],
     "recovery6": ["stale_recovery"],
+}
+LATEST_OPTIMIZATION_CYCLE = {
+    "selected_target": "industry12_discriminativeness",
+    "summary": "The latest optimization cycle hardens `industry12` benchmark discriminativeness by adding explicit multi-claim, conflict-aware, uncertainty-bearing regression cases.",
+    "release_gate_note": "smoke_local remains the authoritative merge-safe gate; this is benchmark hardening rather than a release-gate change.",
 }
 
 
@@ -163,6 +168,7 @@ def build_native_benchmark_summary(*, reports_root: str | Path, docs_root: str |
         "coverage": {"still_not_covered": list(STILL_NOT_COVERED)},
         "authoritative_for_repo_boundary": list(AUTHORITATIVE_BOUNDARY_REASONS),
         "casebook": {"selected_cases": casebook_cases},
+        "latest_optimization_cycle": dict(LATEST_OPTIMIZATION_CYCLE),
         "artifacts": {
             "release_manifest": "evals/reports/native_regression/release_manifest.json",
             "native_summary_json": "evals/reports/native_regression/native_summary.json",
@@ -342,6 +348,16 @@ def _render_native_scorecard(summary: dict[str, Any]) -> str:
     lines.extend(["", "## Why this benchmark is authoritative for this repo's product boundary", ""])
     for item in summary["authoritative_for_repo_boundary"]:
         lines.append(f"- {item}")
+    lines.extend(
+        [
+            "",
+            "## Latest Optimization Cycle",
+            "",
+            f"- selected target: `{summary['latest_optimization_cycle']['selected_target']}`",
+            f"- {summary['latest_optimization_cycle']['summary']}",
+            f"- {summary['latest_optimization_cycle']['release_gate_note']}",
+        ]
+    )
     lines.append("")
     return "\n".join(lines)
 

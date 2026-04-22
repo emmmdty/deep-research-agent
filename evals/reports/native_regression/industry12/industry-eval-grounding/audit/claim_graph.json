@@ -2,13 +2,26 @@
   "job_id": "industry-eval-grounding",
   "claims": [
     {
-      "claim_id": "industry-eval-grounding-claim-1",
-      "text": "Public evaluation guidance and framework materials emphasize grounded claims, evidence linkage, and reproducibility instead of report-shape-only scoring.[1][2]",
+      "claim_id": "claim-eval-grounding-1",
+      "text": "Public evaluation materials consistently separate evidence-grounded quality signals from cosmetic report-shape scoring.",
       "criticality": "high",
       "uncertainty": "low",
       "status": "supported",
       "placeholder": false,
-      "section_ref": "Overview",
+      "section_ref": "Grounding",
+      "evidence_ids": [
+        "industry-eval-grounding-evidence-1",
+        "industry-eval-grounding-evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-eval-grounding-2",
+      "text": "Public evaluation materials still leave some uncertainty about how much review should stay human-mediated versus automated.",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Uncertainty",
       "evidence_ids": [
         "industry-eval-grounding-evidence-1",
         "industry-eval-grounding-evidence-2"
@@ -17,35 +30,67 @@
   ],
   "claim_support_edges": [
     {
-      "edge_id": "industry-eval-grounding-edge-1",
-      "claim_id": "industry-eval-grounding-claim-1",
+      "edge_id": "edge-eval-grounding-1",
+      "claim_id": "claim-eval-grounding-1",
       "evidence_id": "industry-eval-grounding-evidence-1",
       "source_id": "source-openai-evals",
       "snapshot_id": "snapshot-openai-evals",
-      "locator": {
-        "kind": "source_snippet",
-        "citation_id": 1
-      },
+      "locator": {},
       "relation": "supports",
       "confidence": 0.99,
       "grounding_status": "grounded",
-      "notes": "OpenAI Evals Design Guide"
+      "notes": ""
     },
     {
-      "edge_id": "industry-eval-grounding-edge-2",
-      "claim_id": "industry-eval-grounding-claim-1",
+      "edge_id": "edge-eval-grounding-2",
+      "claim_id": "claim-eval-grounding-1",
       "evidence_id": "industry-eval-grounding-evidence-2",
       "source_id": "source-langsmith-evals",
       "snapshot_id": "snapshot-langsmith-evals",
-      "locator": {
-        "kind": "source_snippet",
-        "citation_id": 2
-      },
+      "locator": {},
       "relation": "supports",
-      "confidence": 0.99,
+      "confidence": 0.96,
       "grounding_status": "grounded",
-      "notes": "LangSmith Evaluation Concepts"
+      "notes": ""
+    },
+    {
+      "edge_id": "edge-eval-grounding-3",
+      "claim_id": "claim-eval-grounding-2",
+      "evidence_id": "industry-eval-grounding-evidence-1",
+      "source_id": "source-openai-evals",
+      "snapshot_id": "snapshot-openai-evals",
+      "locator": {},
+      "relation": "supports",
+      "confidence": 0.9,
+      "grounding_status": "grounded",
+      "notes": ""
+    },
+    {
+      "edge_id": "edge-eval-grounding-4",
+      "claim_id": "claim-eval-grounding-2",
+      "evidence_id": "industry-eval-grounding-evidence-2",
+      "source_id": "source-langsmith-evals",
+      "snapshot_id": "snapshot-langsmith-evals",
+      "locator": {},
+      "relation": "context_only",
+      "confidence": 0.84,
+      "grounding_status": "grounded",
+      "notes": ""
     }
   ],
-  "conflict_sets": []
+  "conflict_sets": [
+    {
+      "conflict_id": "conflict-eval-grounding",
+      "claim_ids": [
+        "claim-eval-grounding-1",
+        "claim-eval-grounding-2"
+      ],
+      "evidence_ids": [
+        "industry-eval-grounding-evidence-1",
+        "industry-eval-grounding-evidence-2"
+      ],
+      "status": "reviewed",
+      "summary": "Public eval guidance agrees that evidence-grounded metrics matter, but it leaves the exact mix of automation and human review only partially resolved."
+    }
+  ]
 }

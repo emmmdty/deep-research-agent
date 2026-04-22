@@ -32,15 +32,15 @@ These cases are selected from the deterministic native regression artifacts and 
 - key metrics: `completion_rate=1.0, bundle_emission_rate=1.0, policy_compliance_rate=1.0`
 - conclusion: Agent orchestration market structure regression emits a grounded report bundle from deterministic native fixtures.
 
-## industry12 / industry-durable-runtime
+## industry12 / industry-governance-policy
 
 - suite name: `industry12`
-- task id: `industry-durable-runtime`
-- one-line task description: Durable runtime and recovery regression
-- report path: `evals/reports/native_regression/industry12/industry-durable-runtime/report.md`
-- bundle path: `evals/reports/native_regression/industry12/industry-durable-runtime/bundle/report_bundle.json`
+- task id: `industry-governance-policy`
+- one-line task description: Governance and source policy regression
+- report path: `evals/reports/native_regression/industry12/industry-governance-policy/report.md`
+- bundle path: `evals/reports/native_regression/industry12/industry-governance-policy/bundle/report_bundle.json`
 - key metrics: `completion_rate=1.0, bundle_emission_rate=1.0, policy_compliance_rate=1.0`
-- conclusion: Durable runtime and recovery regression emits a grounded report bundle from deterministic native fixtures.
+- conclusion: Governance and source policy regression emits a grounded report bundle from deterministic native fixtures.
 
 ## trusted8 / trusted-langgraph-overview
 

@@ -134,10 +134,10 @@ def test_build_native_benchmark_summary_writes_docs_and_repo_relative_paths(tmp_
                         bundle_path="evals/reports/native_regression/industry12/industry-agent-orchestration/bundle/report_bundle.json",
                     ),
                     _task_payload(
-                        task_id="industry-durable-runtime",
+                        task_id="industry-governance-policy",
                         suite_name="industry12",
-                        report_path="evals/reports/native_regression/industry12/industry-durable-runtime/report.md",
-                        bundle_path="evals/reports/native_regression/industry12/industry-durable-runtime/bundle/report_bundle.json",
+                        report_path="evals/reports/native_regression/industry12/industry-governance-policy/report.md",
+                        bundle_path="evals/reports/native_regression/industry12/industry-governance-policy/bundle/report_bundle.json",
                     ),
                 ],
             },
@@ -228,7 +228,7 @@ def test_build_native_benchmark_summary_writes_docs_and_repo_relative_paths(tmp_
     assert "company-openai-platform" in casebook
     assert "company-openai-vs-anthropic" in casebook
     assert "industry-agent-orchestration" in casebook
-    assert "industry-durable-runtime" in casebook
+    assert "industry-governance-policy" in casebook
     assert "trusted-langgraph-overview" in casebook
     assert "file-openai-private-brief" in casebook
     assert "stale_recovery" in casebook
@@ -241,3 +241,5 @@ def test_build_native_benchmark_summary_writes_docs_and_repo_relative_paths(tmp_
     assert "smoke_local" in scorecard
     assert "regression_local" in scorecard
     assert "authoritative for this repo" in scorecard
+    assert "Latest Optimization Cycle" in scorecard
+    assert "smoke_local remains the authoritative merge-safe gate" in scorecard

@@ -20,17 +20,17 @@
 - baseline_tag_created: yes
 
 ## Current overall status
-- current_phase: phase16_implement_targeted_optimization
-- current_phase_slug: phase16-optimize-weakest-native-axis
+- current_phase: phase17_rerun_and_compare
+- current_phase_slug: phase17-rerun-and-compare
 - current_attempt: 1
-- last_successful_phase: phase15_freeze_and_select
-- overall_state: phase16_completed_pending_merge
+- last_successful_phase: phase16_implement_targeted_optimization
+- overall_state: phase17_completed_pending_merge
 
 ## Worktree state
-- active_branch: codex/phase16-optimize-weakest-native-axis/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase16-optimize-weakest-native-axis-attempt-1
+- active_branch: codex/phase17-rerun-and-compare/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase17-rerun-and-compare-attempt-1
 - main_clean_before_phase: yes
-- post_merge_smoke_status: Phase 15 post-merge `scripts/run_local_release_smoke.py` rerun passed on `main` via `/tmp/native_opt_phase15_postmerge/release`
+- post_merge_smoke_status: Phase 16 post-merge validation passed on `main` via `ruff`, `tests/test_phase5_evals.py tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, and `/tmp/native_opt_phase16_postmerge/industry12_{smoke,regression}`
 
 ## Selected optimization target
 - target_name: industry12_discriminativeness
@@ -117,13 +117,26 @@
   - The new optimization-summary code is additive and does not alter the existing `smoke_local` or `native_regression` manifest shapes.
 
 ### Phase 17 - rerun_and_compare
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Rebuilt the committed `phase5_local_smoke` and `native_regression` artifacts, regenerated the native scorecard/casebook/native summary, and produced the new stable optimization artifacts under `evals/reports/native_optimization/`. The before/after result matches the planned benchmark-hardening target: `industry12_conflict_case_count`, `industry12_multi_claim_task_count`, and `industry12_uncertainty_case_count` all moved from `0` to `4` while `industry12` still passes with `task_count=12`.
 - acceptance_checks:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (4 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json` -> pass (`release_gate.status=passed`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_optimization_summary.py --baseline-tag v0.2.0-native-regression --reports-root evals/reports/native_regression --output-root evals/reports/native_optimization --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
 - artifacts:
-- blockers:
+  - `evals/reports/native_optimization/optimization_summary.json`
+  - `evals/reports/native_optimization/BEFORE_AFTER.md`
+  - `evals/reports/native_regression/native_summary.json`
+  - `docs/benchmarks/native/CASEBOOK.md`
+  - `docs/benchmarks/native/NATIVE_SCORECARD.md`
+- blockers: none
 - notes:
+  - `CASEBOOK.md` now keeps `industry-agent-orchestration` and swaps the second industry example to `industry-governance-policy`.
+  - `NATIVE_SCORECARD.md` adds only a small benchmark-hardening note and explicitly preserves `smoke_local` as the authoritative gate.
 
 ### Phase 18 - manual_and_handoff
 - status: pending
@@ -139,3 +152,4 @@
 - [2026-04-22T15:48:14Z] Created local annotated tag `v0.2.0-native-regression` on baseline commit `e7219f1`.
 - [2026-04-22T15:49:00Z] Selected `industry12_discriminativeness` as the sole optimization target because the suite's rubric promises conflict and uncertainty evaluation that the current deterministic fixtures do not actually exercise.
 - [2026-04-22T15:57:41Z] Completed the Phase 16 hardening pass: the four target `industry12` tasks now emit explicit multi-claim/conflict-aware bundles, and the additive optimization-summary module/script are covered by focused tests.
+- [2026-04-22T16:00:40Z] Regenerated the committed native artifacts and recorded the stable before/after comparison: `industry12` remains `passed` with `task_count=12`, while conflict/multi-claim/uncertainty case counts each moved from `0` to `4`.

@@ -1,13 +1,26 @@
 {
   "claims": [
     {
-      "claim_id": "industry-observability-claim-1",
-      "text": "Public observability materials make traces, spans, and diagnostic visibility explicit parts of AI system operation rather than hidden implementation details.[1][2]",
+      "claim_id": "claim-observability-1",
+      "text": "Public observability materials consistently position tracing and diagnostic visibility as a separate operational layer.",
       "criticality": "high",
       "uncertainty": "low",
       "status": "supported",
       "placeholder": false,
-      "section_ref": "Overview",
+      "section_ref": "Market structure",
+      "evidence_ids": [
+        "industry-observability-evidence-1",
+        "industry-observability-evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-observability-2",
+      "text": "Public observability materials do not fully settle whether evaluation ownership belongs inside observability tooling or in adjacent systems.",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Uncertainty",
       "evidence_ids": [
         "industry-observability-evidence-1",
         "industry-observability-evidence-2"

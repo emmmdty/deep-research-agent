@@ -1,13 +1,26 @@
 {
   "claims": [
     {
-      "claim_id": "industry-eval-grounding-claim-1",
-      "text": "Public evaluation guidance and framework materials emphasize grounded claims, evidence linkage, and reproducibility instead of report-shape-only scoring.[1][2]",
+      "claim_id": "claim-eval-grounding-1",
+      "text": "Public evaluation materials consistently separate evidence-grounded quality signals from cosmetic report-shape scoring.",
       "criticality": "high",
       "uncertainty": "low",
       "status": "supported",
       "placeholder": false,
-      "section_ref": "Overview",
+      "section_ref": "Grounding",
+      "evidence_ids": [
+        "industry-eval-grounding-evidence-1",
+        "industry-eval-grounding-evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-eval-grounding-2",
+      "text": "Public evaluation materials still leave some uncertainty about how much review should stay human-mediated versus automated.",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Uncertainty",
       "evidence_ids": [
         "industry-eval-grounding-evidence-1",
         "industry-eval-grounding-evidence-2"

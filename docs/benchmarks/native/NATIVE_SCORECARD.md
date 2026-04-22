@@ -33,3 +33,9 @@
 - It measures the repo's real product boundary: deterministic runtime, evidence-first bundles, source policy, file ingest, and recovery semantics.
 - It runs entirely from repo-local frozen fixtures, so failures stay actionable and reproducible for this codebase.
 - It reuses the same eval stack and manifest discipline as the existing smoke release gate instead of inventing a second benchmark system.
+
+## Latest Optimization Cycle
+
+- selected target: `industry12_discriminativeness`
+- The latest optimization cycle hardens `industry12` benchmark discriminativeness by adding explicit multi-claim, conflict-aware, uncertainty-bearing regression cases.
+- smoke_local remains the authoritative merge-safe gate; this is benchmark hardening rather than a release-gate change.
