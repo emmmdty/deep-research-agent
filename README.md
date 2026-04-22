@@ -28,6 +28,8 @@ Review paths:
 - [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md)
 - [Native Scorecard](./docs/benchmarks/native/NATIVE_SCORECARD.md)
 - [Native Casebook](./docs/benchmarks/native/CASEBOOK.md)
+- [Native Usage Guide (zh-CN)](./docs/benchmarks/native/USAGE_GUIDE.zh-CN.md)
+- [Native Optimization Report](./docs/final/NATIVE_OPTIMIZATION_REPORT.md)
 - [Release Manifest](./evals/reports/phase5_local_smoke/release_manifest.json)
 
 The HTTP API is still local-only. This repository is not a multi-tenant production SaaS.
@@ -164,6 +166,7 @@ uv run python scripts/build_native_benchmark_summary.py --reports-root evals/rep
 
 The committed Phase 5 local smoke outputs under `evals/reports/phase5_local_smoke/` remain the authoritative merge-safe gate.
 The committed deterministic native regression outputs live under `evals/reports/native_regression/`, with reviewer-facing docs under `docs/benchmarks/native/`.
+The latest benchmark-hardening comparison lives under `evals/reports/native_optimization/`.
 
 ### 7. Run an external benchmark smoke and refresh the portfolio summary
 

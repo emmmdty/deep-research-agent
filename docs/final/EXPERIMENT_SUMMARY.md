@@ -75,6 +75,13 @@ Reviewer-facing native docs:
 - `docs/benchmarks/native/README.md`
 - `docs/benchmarks/native/NATIVE_SCORECARD.md`
 - `docs/benchmarks/native/CASEBOOK.md`
+- `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`
+
+Latest native optimization-cycle artifacts:
+
+- `evals/reports/native_optimization/optimization_summary.json`
+- `evals/reports/native_optimization/BEFORE_AFTER.md`
+- `docs/final/NATIVE_OPTIMIZATION_REPORT.md`
 
 ## Follow-up Value Pack
 

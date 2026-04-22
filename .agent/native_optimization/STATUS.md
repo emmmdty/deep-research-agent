@@ -20,17 +20,17 @@
 - baseline_tag_created: yes
 
 ## Current overall status
-- current_phase: phase17_rerun_and_compare
-- current_phase_slug: phase17-rerun-and-compare
+- current_phase: phase18_manual_and_handoff
+- current_phase_slug: phase18-manual-and-handoff
 - current_attempt: 1
-- last_successful_phase: phase16_implement_targeted_optimization
-- overall_state: phase17_completed_pending_merge
+- last_successful_phase: phase17_rerun_and_compare
+- overall_state: phase18_validation_passed_pending_merge
 
 ## Worktree state
-- active_branch: codex/phase17-rerun-and-compare/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase17-rerun-and-compare-attempt-1
+- active_branch: codex/phase18-manual-and-handoff/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase18-manual-and-handoff-attempt-1
 - main_clean_before_phase: yes
-- post_merge_smoke_status: Phase 16 post-merge validation passed on `main` via `ruff`, `tests/test_phase5_evals.py tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, and `/tmp/native_opt_phase16_postmerge/industry12_{smoke,regression}`
+- post_merge_smoke_status: Phase 17 post-merge validation passed on `main` via `ruff`, `tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, `scripts/run_local_release_smoke.py`, and `/tmp/native_opt_phase17_postmerge/industry12_regression`
 
 ## Selected optimization target
 - target_name: industry12_discriminativeness
@@ -139,13 +139,27 @@
   - `NATIVE_SCORECARD.md` adds only a small benchmark-hardening note and explicitly preserves `smoke_local` as the authoritative gate.
 
 ### Phase 18 - manual_and_handoff
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Added a simplified Chinese reviewer manual, wrote the single-cycle optimization handoff report, and linked both outputs from the top-level README plus the native benchmark/final summary docs. This phase intentionally changed only reviewer-facing documentation and did not alter the runtime, provider, release-gate, or benchmark execution contracts.
 - acceptance_checks:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (4 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant smoke_local --output-root /tmp/native_opt_phase18_validation/industry12_smoke --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_phase18_validation/industry12_regression --json` -> pass
+  - `git status --short` in the Phase 18 worktree -> doc/status deltas only before commit
 - artifacts:
-- blockers:
+  - `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`
+  - `docs/final/NATIVE_OPTIMIZATION_REPORT.md`
+  - `README.md`
+  - `docs/benchmarks/native/README.md`
+  - `docs/final/EXPERIMENT_SUMMARY.md`
+  - `.agent/native_optimization/STATUS.md`
+  - `.agent/STATUS.md`
+- blockers: none
 - notes:
+  - Phase 18 bootstrapped `.env`, `.venv`, `workspace/`, `venv_gptr/`, and `.codex/config.toml` into the fresh worktree via safe symlinks before doc work began.
+  - The new manual points reviewers to `release_manifest.json`, `native_summary.json`, `optimization_summary.json`, `BEFORE_AFTER.md`, and the emitted bundle/audit artifacts without changing those artifact contracts.
 
 ## Decisions log
 - [2026-04-22T15:47:32Z] Preserved the staged `.agent/native_optimization/` tree to `/tmp/native_opt_seed_20260422T154732Z/native_optimization` and saved `/tmp/native_opt_seed_20260422T154732Z/native_optimization_cached.diff` before cleaning `main`.
@@ -153,3 +167,4 @@
 - [2026-04-22T15:49:00Z] Selected `industry12_discriminativeness` as the sole optimization target because the suite's rubric promises conflict and uncertainty evaluation that the current deterministic fixtures do not actually exercise.
 - [2026-04-22T15:57:41Z] Completed the Phase 16 hardening pass: the four target `industry12` tasks now emit explicit multi-claim/conflict-aware bundles, and the additive optimization-summary module/script are covered by focused tests.
 - [2026-04-22T16:00:40Z] Regenerated the committed native artifacts and recorded the stable before/after comparison: `industry12` remains `passed` with `task_count=12`, while conflict/multi-claim/uncertainty case counts each moved from `0` to `4`.
+- [2026-04-22T16:07:10Z] Drafted the final reviewer handoff docs for this optimization cycle: `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`, `docs/final/NATIVE_OPTIMIZATION_REPORT.md`, and the related README/native-summary links.
