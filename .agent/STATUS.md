@@ -28,27 +28,28 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: native_regression_expansion
-- current_phase_slug: native-regression-expansion
+- current_phase: native_optimization_phase15
+- current_phase_slug: phase15-freeze-and-select
 - current_attempt: 1
-- last_successful_phase: phase6_finalize
-- overall_state: validation_passed_pending_merge
+- last_successful_phase: native_regression_expansion
+- overall_state: phase15_freeze_and_select_in_progress
 
 ## Worktree state
-- active_branch: codex/native-regression-expansion/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/native-regression-expansion-attempt-1
+- active_branch: codex/phase15-freeze-and-select/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase15-freeze-and-select-attempt-1
 - main_clean_before_phase: yes
-- main_baseline_commit: 6b2739860070f6943bc6dc2ba84951abf319957e
+- main_baseline_commit: e7219f195667e3b25d4c178231f44ebfb7cd8101
 - baseline_verification_status:
   - `git status --short` on `main` -> clean
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --output-root /tmp/native_plan_baseline/company12 --json` -> pass (`variant=smoke_local`, `task_count=1`)
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root /tmp/native_plan_baseline/release --json` -> pass (`release_gate.status=passed`)
-  - worktree bootstrap: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
-  - worktree bootstrap: `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_cli_runtime.py` -> pass (15 passed)
+  - `git rev-parse --short HEAD` on `main` -> `e7219f1`
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root /tmp/native_opt_baseline/release --json` -> pass (`release_gate.status=passed`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --variant smoke_local --output-root /tmp/native_opt_baseline/company12_smoke --json` -> pass (`task_count=1`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_baseline/industry12_regression --json` -> pass (`task_count=12`)
+  - `git show --stat v0.2.0-native-regression --no-patch` -> annotated local tag confirmed on `e7219f1`
 
 ## Local-only / ignored asset audit
-- checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
-- missing_assets: `.env`, `.venv`, `workspace/`, `venv_gptr/`, `.codex/config.toml` were absent in the fresh native-regression worktree before bootstrap
+- checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/, .agent/native_optimization/
+- missing_assets: `.env`, `.venv`, `workspace/`, `venv_gptr/`, `.codex/config.toml`, and `.agent/native_optimization/` were absent in the fresh Phase 15 worktree before bootstrap
 - recreated_assets:
 - symlinked_assets:
   - `.env` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.env`
@@ -57,7 +58,9 @@
   - `venv_gptr/` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr`
   - `.codex/config.toml` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.codex/config.toml`
 - copied_assets:
-- blockers_from_local_assets: none; the native-regression worktree has the required local-only assets via temporary symlinks that will be removed before cleanup
+  - `.agent/native_optimization/` <- `/tmp/native_opt_seed_20260422T154732Z/native_optimization`
+  - audit diff <- `/tmp/native_opt_seed_20260422T154732Z/native_optimization_cached.diff`
+- blockers_from_local_assets: none; the Phase 15 worktree has the required local-only assets via safe symlinks and a copied optimization seed
 
 ## Native regression expansion
 - status: implementation complete in the phase worktree; required validation passed and merge/cleanup is next
