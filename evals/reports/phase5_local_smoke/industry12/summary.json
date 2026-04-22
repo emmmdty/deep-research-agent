@@ -79,6 +79,8 @@
     {
       "task_id": "industry-agent-stack",
       "job_id": "industry-agent-stack",
+      "topic": "Enterprise agent stack industry smoke",
+      "description": "Enterprise agent stack industry smoke",
       "status": "completed",
       "audit_gate_status": "passed",
       "report_path": "evals/reports/phase5_local_smoke/industry12/industry-agent-stack/report.md",

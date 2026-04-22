@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-retrieval-design-memo-claim-1",
+      "text": "Public retrieval guidance and a private retrieval memo can be combined while preserving the distinction between anchor evidence and internal interpretation.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-retrieval-design-memo-file-evidence-1",
+        "file-retrieval-design-memo-evidence-2"
+      ]
+    }
+  ]
+}

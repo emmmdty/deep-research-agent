@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "industry-document-ingest-claim-1",
+      "text": "Public retrieval and framework materials keep parsing, chunking, and document handling visible as a separate workflow concern.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-document-ingest-evidence-1",
+        "industry-document-ingest-evidence-2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "job_id": "industry-coding-agents",
+  "claims": [
+    {
+      "claim_id": "industry-coding-agents-claim-1",
+      "text": "Public product and developer materials make coding agents visible as a distinct segment with workflow, tool-use, and review-surface differences.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-coding-agents-evidence-1",
+        "industry-coding-agents-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "industry-coding-agents-edge-1",
+      "claim_id": "industry-coding-agents-claim-1",
+      "evidence_id": "industry-coding-agents-evidence-1",
+      "source_id": "source-openai-codex",
+      "snapshot_id": "snapshot-openai-codex",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI Codex"
+    },
+    {
+      "edge_id": "industry-coding-agents-edge-2",
+      "claim_id": "industry-coding-agents-claim-1",
+      "evidence_id": "industry-coding-agents-evidence-2",
+      "source_id": "source-anthropic-claude-code",
+      "snapshot_id": "snapshot-anthropic-claude-code",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Claude Code Overview"
+    }
+  ],
+  "conflict_sets": []
+}

@@ -1,0 +1,19 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-provenance-review-claim-1",
+      "text": "Public observability material and multiple private notes can be combined while keeping every private input explicitly attributable.[1][2][3]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-provenance-review-file-evidence-1",
+        "file-provenance-review-file-evidence-2",
+        "file-provenance-review-file-evidence-3",
+        "file-provenance-review-evidence-4"
+      ]
+    }
+  ]
+}

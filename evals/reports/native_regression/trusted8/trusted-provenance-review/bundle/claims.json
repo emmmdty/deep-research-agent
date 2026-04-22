@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "trusted-provenance-review-claim-1",
+      "text": "Trusted review-oriented public material and the approved audit playbook keep provenance and reviewability explicit under the trusted-only profile.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-provenance-review-file-evidence-1",
+        "trusted-provenance-review-evidence-2"
+      ]
+    }
+  ]
+}

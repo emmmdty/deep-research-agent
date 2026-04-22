@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-industry-private-brief-claim-1",
+      "text": "A public retrieval paper and a private industry note can be combined while preserving explicit provenance boundaries.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-industry-private-brief-file-evidence-1",
+        "file-industry-private-brief-evidence-2"
+      ]
+    }
+  ]
+}

@@ -40,6 +40,90 @@ def test_eval_runner_executes_recovery_suite_and_writes_summary(tmp_path: Path):
     assert Path(result["results_markdown_path"]).exists()
 
 
+def test_eval_runner_accepts_explicit_smoke_variant_and_preserves_current_behavior(tmp_path: Path):
+    """显式传入 smoke_local 时应保持现有 suite 语义。"""
+    from deep_research_agent.evals.runner import run_eval_suite
+
+    implicit = run_eval_suite(suite_name="company12", output_root=tmp_path / "implicit")
+    explicit = run_eval_suite(
+        suite_name="company12",
+        variant="smoke_local",
+        output_root=tmp_path / "explicit",
+    )
+
+    assert implicit["variant"] == "smoke_local"
+    assert explicit["variant"] == "smoke_local"
+    assert implicit["task_count"] == explicit["task_count"] == 1
+    assert implicit["metrics"] == explicit["metrics"]
+
+
+def test_regression_local_variants_emit_expected_task_counts(tmp_path: Path):
+    """native regression tier 应为五个 suite 提供精确的目标任务数。"""
+    from deep_research_agent.evals.runner import run_eval_suite
+
+    expectations = {
+        "company12": 12,
+        "industry12": 12,
+        "trusted8": 8,
+        "file8": 8,
+        "recovery6": 6,
+    }
+
+    for suite_name, expected_task_count in expectations.items():
+        result = run_eval_suite(
+            suite_name=suite_name,
+            variant="regression_local",
+            output_root=tmp_path / suite_name,
+        )
+
+        assert result["variant"] == "regression_local"
+        assert result["status"] == "passed"
+        assert result["task_count"] == expected_task_count
+
+
+def test_recovery_regression_variant_records_control_plane_details(tmp_path: Path):
+    """recovery6 regression_local 应保存可审阅的控制平面细节，而不只是布尔结果。"""
+    from deep_research_agent.evals.runner import run_eval_suite
+
+    result = run_eval_suite(
+        suite_name="recovery6",
+        variant="regression_local",
+        output_root=tmp_path / "recovery6_regression",
+    )
+
+    tasks = {task["scenario_id"]: task for task in result["tasks"]}
+
+    cancel_case = tasks["cancel_created_job"]
+    assert cancel_case["title"]
+    assert cancel_case["description"]
+    assert cancel_case["details"]["final_status"] == "cancelled"
+    assert cancel_case["details"]["spawned_worker_count"] == 0
+
+    retry_case = tasks["retry_failed_job"]
+    assert retry_case["details"]["retry_of"] == retry_case["details"]["base_job_id"]
+    assert retry_case["details"]["attempt_index"] == 2
+    assert retry_case["details"]["derived_job_id"] != retry_case["details"]["base_job_id"]
+
+    resume_case = tasks["resume_failed_job"]
+    assert resume_case["details"]["resumed_job_id"] == resume_case["details"]["base_job_id"]
+    assert resume_case["details"]["active_checkpoint_id"].endswith("checkpoint-0002")
+    assert resume_case["details"]["error_cleared"] is True
+
+    refine_case = tasks["refine_failed_job"]
+    assert refine_case["details"]["current_stage"] == "planned"
+    assert refine_case["details"]["refinement_history_count"] == 1
+    assert refine_case["details"]["pending_follow_up_queries"] == ["Expand the evidence map."]
+
+    stale_case = tasks["stale_recovery"]
+    assert stale_case["details"]["recovered_job_ids"] == [stale_case["details"]["base_job_id"]]
+    assert stale_case["details"]["spawned_worker"] is True
+    assert stale_case["details"]["worker_lease_cleared"] is True
+
+    idle_case = tasks["idle_created_noop"]
+    assert idle_case["details"]["recovered_job_ids"] == []
+    assert idle_case["details"]["spawned_worker"] is False
+
+
 def test_eval_runner_saved_artifacts_are_stable_across_reruns(tmp_path: Path):
     """同一路径重复执行应产生稳定的 summary 与 bundle 工件。"""
     from deep_research_agent.evals.runner import FROZEN_ARTIFACT_TIMESTAMP, run_eval_suite

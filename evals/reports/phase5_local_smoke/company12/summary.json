@@ -72,6 +72,8 @@
     {
       "task_id": "company-openai-surface",
       "job_id": "company-openai-surface",
+      "topic": "OpenAI enterprise surface smoke",
+      "description": "OpenAI enterprise surface smoke",
       "status": "completed",
       "audit_gate_status": "passed",
       "report_path": "evals/reports/phase5_local_smoke/company12/company-openai-surface/report.md",

@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "industry-observability",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "LLM observability and tracing regression",
+    "status": "completed",
+    "source_profile": "industry_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-opentelemetry-docs",
+      "snapshot_id": "snapshot-opentelemetry-docs",
+      "title": "OpenTelemetry Documentation",
+      "canonical_uri": "https://opentelemetry.io/docs/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-langsmith-observability",
+      "snapshot_id": "snapshot-langsmith-observability",
+      "title": "LangSmith Observability",
+      "canonical_uri": "https://docs.smith.langchain.com/observability"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-opentelemetry-docs",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "OpenTelemetry Documentation",
+      "canonical_uri": "https://opentelemetry.io/docs/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-opentelemetry-docs",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-langsmith-observability",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "LangSmith Observability",
+      "canonical_uri": "https://docs.smith.langchain.com/observability",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-langsmith-observability",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-opentelemetry-docs",
+      "canonical_uri": "https://opentelemetry.io/docs/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "461be3baca380c0054e562400bb4cde17c1680b04d50dfa8203425602a44437b",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-langsmith-observability",
+      "canonical_uri": "https://docs.smith.langchain.com/observability",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "246476f58f16de6a4a68c9a09f338830b490ed87050c81429d7461dc516054ba",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "industry-observability-evidence-1",
+      "snapshot_id": "snapshot-opentelemetry-docs",
+      "source_id": "source-opentelemetry-docs",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "OpenTelemetry Documentation",
+      "extraction_method": "fixture_source_snippet"
+    },
+    {
+      "evidence_id": "industry-observability-evidence-2",
+      "snapshot_id": "snapshot-langsmith-observability",
+      "source_id": "source-langsmith-observability",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "excerpt": "LangSmith Observability",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "industry-observability-event-0001",
+      "job_id": "industry-observability",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "topic": "LLM observability and tracing regression",
+        "research_profile": "eval_regression"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0002",
+      "job_id": "industry-observability",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0003",
+      "job_id": "industry-observability",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0001",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0004",
+      "job_id": "industry-observability",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0005",
+      "job_id": "industry-observability",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0002",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0006",
+      "job_id": "industry-observability",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0007",
+      "job_id": "industry-observability",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0003",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0008",
+      "job_id": "industry-observability",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0009",
+      "job_id": "industry-observability",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0004",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0010",
+      "job_id": "industry-observability",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0011",
+      "job_id": "industry-observability",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0005",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0012",
+      "job_id": "industry-observability",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0013",
+      "job_id": "industry-observability",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0006",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0014",
+      "job_id": "industry-observability",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0015",
+      "job_id": "industry-observability",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0007",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0016",
+      "job_id": "industry-observability",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0017",
+      "job_id": "industry-observability",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-observability-checkpoint-0008",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "industry-observability-event-0018",
+      "job_id": "industry-observability",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-observability-event-0019",
+      "job_id": "industry-observability",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "report_path": "evals/reports/native_regression/industry12/industry-observability/report.md",
+        "report_bundle_path": "evals/reports/native_regression/industry12/industry-observability/bundle/report_bundle.json",
+        "trace_path": "evals/reports/native_regression/industry12/industry-observability/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# Observability and Tracing\n\nPublic observability materials make traces, spans, and diagnostic visibility explicit parts of AI system operation rather than hidden implementation details.[1][2]\n\nThat keeps observability separate from model quality and report wording in market-level analysis.[1][2]\n",
+  "claims": [
+    {
+      "claim_id": "industry-observability-claim-1",
+      "text": "Public observability materials make traces, spans, and diagnostic visibility explicit parts of AI system operation rather than hidden implementation details.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-observability-evidence-1",
+        "industry-observability-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "industry-observability-edge-1",
+      "claim_id": "industry-observability-claim-1",
+      "evidence_id": "industry-observability-evidence-1",
+      "source_id": "source-opentelemetry-docs",
+      "snapshot_id": "snapshot-opentelemetry-docs",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenTelemetry Documentation"
+    },
+    {
+      "edge_id": "industry-observability-edge-2",
+      "claim_id": "industry-observability-claim-1",
+      "evidence_id": "industry-observability-evidence-2",
+      "source_id": "source-langsmith-observability",
+      "snapshot_id": "snapshot-langsmith-observability",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangSmith Observability"
+    }
+  ],
+  "conflict_sets": []
+}

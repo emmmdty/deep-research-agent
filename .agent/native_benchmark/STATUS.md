@@ -1,5 +1,45 @@
 # Native Benchmark Preflight Status
 
+## Implementation run
+
+- implementation_started_at_utc: `2026-04-22T14:29:35Z`
+- implementation_branch: `codex/native-regression-expansion/attempt-1`
+- implementation_worktree: `/home/tjk/myProjects/internship-projects/_codex_worktrees/native-regression-expansion-attempt-1`
+- main_baseline_commit: `6b2739860070f6943bc6dc2ba84951abf319957e`
+- main_repo_state_before_worktree: clean
+- bootstrap_assets_symlinked:
+  - `.env`
+  - `.venv`
+  - `workspace/`
+  - `venv_gptr/`
+  - `.codex/config.toml`
+- baseline_verification:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --output-root /tmp/native_plan_baseline/company12 --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root /tmp/native_plan_baseline/release --json` -> pass
+  - worktree bootstrap `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - worktree bootstrap `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_cli_runtime.py` -> pass (15 passed)
+- current_execution_state: implementation and validation passed in phase `native_regression_expansion`
+- current_focus: remove bootstrap-only symlinks, merge to `main`, rerun smoke on `main`, and clean up the linked worktree
+- produced_outputs:
+  - `evals/reports/native_regression/release_manifest.json`
+  - `evals/reports/native_regression/native_summary.json`
+  - `evals/reports/native_regression/RESULTS.md`
+  - `docs/benchmarks/native/README.md`
+  - `docs/benchmarks/native/NATIVE_SCORECARD.md`
+  - `docs/benchmarks/native/CASEBOOK.md`
+- implementation_validation:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_native_regression_pack.py tests/test_cli_runtime.py tests/test_release_gate.py tests/test_release_runner.py` -> pass (24 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --variant smoke_local --output-root /tmp/native_regression_validation/company12_smoke --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --variant regression_local --output-root /tmp/native_regression_validation/company12_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_regression_validation/industry12_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite trusted8 --variant regression_local --output-root /tmp/native_regression_validation/trusted8_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite file8 --variant regression_local --output-root /tmp/native_regression_validation/file8_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite recovery6 --variant regression_local --output-root /tmp/native_regression_validation/recovery6_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json` -> pass
+
 ## Run metadata
 
 - recorded_start_time_utc: `2026-04-22T12:18:27Z`

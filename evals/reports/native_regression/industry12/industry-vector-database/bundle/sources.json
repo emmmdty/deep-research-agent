@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-pinecone-docs-segment",
+      "snapshot_id": "snapshot-pinecone-docs-segment",
+      "title": "Pinecone Docs",
+      "canonical_uri": "https://docs.pinecone.io/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-weaviate-docs-segment",
+      "snapshot_id": "snapshot-weaviate-docs-segment",
+      "title": "Weaviate Docs",
+      "canonical_uri": "https://docs.weaviate.io/"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-pinecone-docs-segment",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Pinecone Docs",
+      "canonical_uri": "https://docs.pinecone.io/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-pinecone-docs-segment",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-weaviate-docs-segment",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Weaviate Docs",
+      "canonical_uri": "https://docs.weaviate.io/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-weaviate-docs-segment",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-pinecone-docs-segment",
+      "canonical_uri": "https://docs.pinecone.io/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "3c36571bb058ff303582931178ac61e94b1c07d3252bdd9b5bc6971e77afbfc6",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-weaviate-docs-segment",
+      "canonical_uri": "https://docs.weaviate.io/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "6631c9a7536eb872ee4e45a58f3ade77f18387b7656ac21111064f2191d8e69c",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

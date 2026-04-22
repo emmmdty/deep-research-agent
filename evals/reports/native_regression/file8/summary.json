@@ -1,0 +1,245 @@
+{
+  "suite_name": "file8",
+  "description": "Deterministic mixed public/private regression suite.",
+  "variant": "regression_local",
+  "status": "passed",
+  "task_count": 8,
+  "metrics": {
+    "completion_rate": 1.0,
+    "bundle_emission_rate": 1.0,
+    "audit_pass_rate": 1.0,
+    "critical_claim_support_precision": 1.0,
+    "citation_error_rate": 0.0,
+    "provenance_completeness": 1.0,
+    "rubric_coverage": 1.0,
+    "policy_compliance_rate": 1.0,
+    "file_input_success_rate": 1.0,
+    "conflict_detection_recall": 1.0
+  },
+  "threshold_results": {
+    "completion_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "bundle_emission_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "audit_pass_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "provenance_completeness": {
+      "value": 1.0,
+      "min": 0.95,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    },
+    "file_input_success_rate": {
+      "value": 1.0,
+      "min": 1.0,
+      "max": null,
+      "passed": true,
+      "reason": ""
+    }
+  },
+  "rubric_path": "evals/rubrics/file_research_regression.yaml",
+  "tasks": [
+    {
+      "task_id": "file-openai-private-brief",
+      "job_id": "file-openai-private-brief",
+      "topic": "OpenAI plus private brief regression",
+      "description": "OpenAI plus private brief regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-openai-private-brief/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-openai-private-brief/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-openai-private-brief/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-industry-private-brief",
+      "job_id": "file-industry-private-brief",
+      "topic": "Industry public plus private notes regression",
+      "description": "Industry public plus private notes regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-industry-private-brief/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-industry-private-brief/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-industry-private-brief/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-competitor-matrix",
+      "job_id": "file-competitor-matrix",
+      "topic": "Competitor matrix mixed-ingest regression",
+      "description": "Competitor matrix mixed-ingest regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-competitor-matrix/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-competitor-matrix/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-competitor-matrix/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-retrieval-design-memo",
+      "job_id": "file-retrieval-design-memo",
+      "topic": "Retrieval design memo mixed-ingest regression",
+      "description": "Retrieval design memo mixed-ingest regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-retrieval-design-memo/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-retrieval-design-memo/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-retrieval-design-memo/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-governance-checklist",
+      "job_id": "file-governance-checklist",
+      "topic": "Governance checklist mixed-ingest regression",
+      "description": "Governance checklist mixed-ingest regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-governance-checklist/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-governance-checklist/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-governance-checklist/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-audit-playbook",
+      "job_id": "file-audit-playbook",
+      "topic": "Audit playbook mixed-ingest regression",
+      "description": "Audit playbook mixed-ingest regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-audit-playbook/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-audit-playbook/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-audit-playbook/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-mcp-brief",
+      "job_id": "file-mcp-brief",
+      "topic": "MCP connector brief mixed-ingest regression",
+      "description": "MCP connector brief mixed-ingest regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-mcp-brief/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-mcp-brief/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-mcp-brief/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    },
+    {
+      "task_id": "file-provenance-review",
+      "job_id": "file-provenance-review",
+      "topic": "Provenance review mixed-ingest regression",
+      "description": "Provenance review mixed-ingest regression",
+      "status": "completed",
+      "audit_gate_status": "passed",
+      "report_path": "evals/reports/native_regression/file8/file-provenance-review/report.md",
+      "bundle_path": "evals/reports/native_regression/file8/file-provenance-review/bundle/report_bundle.json",
+      "manifest_path": "evals/reports/native_regression/file8/file-provenance-review/bundle/manifest.json",
+      "task_metrics": {
+        "completion_rate": 1.0,
+        "bundle_emission_rate": 1.0,
+        "audit_pass_rate": 1.0,
+        "critical_claim_support_precision": 1.0,
+        "citation_error_rate": 0.0,
+        "provenance_completeness": 1.0,
+        "rubric_coverage": 1.0,
+        "policy_compliance_rate": 1.0,
+        "file_input_success_rate": 1.0,
+        "conflict_detection_recall": 1.0
+      }
+    }
+  ],
+  "summary_path": "evals/reports/native_regression/file8/summary.json",
+  "results_markdown_path": "evals/reports/native_regression/file8/RESULTS.md"
+}

@@ -1,0 +1,51 @@
+{
+  "job_id": "trusted-langgraph-human-loop",
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-human-loop-claim-1",
+      "text": "Trusted LangGraph human-in-the-loop materials and the approved audit playbook keep review boundaries explicit and provenance-safe.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-human-loop-file-evidence-1",
+        "trusted-langgraph-human-loop-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "trusted-langgraph-human-loop-edge-1",
+      "claim_id": "trusted-langgraph-human-loop-claim-1",
+      "evidence_id": "trusted-langgraph-human-loop-file-evidence-1",
+      "source_id": "trusted-langgraph-human-loop-file-1",
+      "snapshot_id": "trusted-langgraph-human-loop-file-snapshot-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "evals/datasets/files/audit_playbook.txt"
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "audit_playbook.txt"
+    },
+    {
+      "edge_id": "trusted-langgraph-human-loop-edge-2",
+      "claim_id": "trusted-langgraph-human-loop-claim-1",
+      "evidence_id": "trusted-langgraph-human-loop-evidence-2",
+      "source_id": "source-trusted-hitl",
+      "snapshot_id": "snapshot-trusted-hitl",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangGraph Human-in-the-Loop"
+    }
+  ],
+  "conflict_sets": []
+}

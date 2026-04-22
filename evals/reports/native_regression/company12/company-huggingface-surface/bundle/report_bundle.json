@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "company-huggingface-surface",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "Hugging Face platform surface regression",
+    "status": "completed",
+    "source_profile": "company_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-hf-home",
+      "snapshot_id": "snapshot-hf-home",
+      "title": "Hugging Face",
+      "canonical_uri": "https://huggingface.co/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-hf-docs",
+      "snapshot_id": "snapshot-hf-docs",
+      "title": "Hugging Face Docs",
+      "canonical_uri": "https://huggingface.co/docs"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-hf-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Hugging Face",
+      "canonical_uri": "https://huggingface.co/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-hf-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-hf-docs",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Hugging Face Docs",
+      "canonical_uri": "https://huggingface.co/docs",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-hf-docs",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-hf-home",
+      "canonical_uri": "https://huggingface.co/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "a3ebb110c8707d12a37e86f0b8f9c5a17bb1cc1cfb9692f0af34f8aa6b2bed2c",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-hf-docs",
+      "canonical_uri": "https://huggingface.co/docs",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "f90dda176f0106337ff37289e3934a54e469fa47b480187c01753929315a2d49",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "company-huggingface-surface-evidence-1",
+      "snapshot_id": "snapshot-hf-home",
+      "source_id": "source-hf-home",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "Hugging Face",
+      "extraction_method": "fixture_source_snippet"
+    },
+    {
+      "evidence_id": "company-huggingface-surface-evidence-2",
+      "snapshot_id": "snapshot-hf-docs",
+      "source_id": "source-hf-docs",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "excerpt": "Hugging Face Docs",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "company-huggingface-surface-event-0001",
+      "job_id": "company-huggingface-surface",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "topic": "Hugging Face platform surface regression",
+        "research_profile": "eval_regression"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0002",
+      "job_id": "company-huggingface-surface",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0003",
+      "job_id": "company-huggingface-surface",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0001",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0004",
+      "job_id": "company-huggingface-surface",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0005",
+      "job_id": "company-huggingface-surface",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0002",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0006",
+      "job_id": "company-huggingface-surface",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0007",
+      "job_id": "company-huggingface-surface",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0003",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0008",
+      "job_id": "company-huggingface-surface",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0009",
+      "job_id": "company-huggingface-surface",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0004",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0010",
+      "job_id": "company-huggingface-surface",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0011",
+      "job_id": "company-huggingface-surface",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0005",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0012",
+      "job_id": "company-huggingface-surface",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0013",
+      "job_id": "company-huggingface-surface",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0006",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0014",
+      "job_id": "company-huggingface-surface",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0015",
+      "job_id": "company-huggingface-surface",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0007",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0016",
+      "job_id": "company-huggingface-surface",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0017",
+      "job_id": "company-huggingface-surface",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-huggingface-surface-checkpoint-0008",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0018",
+      "job_id": "company-huggingface-surface",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-huggingface-surface-event-0019",
+      "job_id": "company-huggingface-surface",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "report_path": "evals/reports/native_regression/company12/company-huggingface-surface/report.md",
+        "report_bundle_path": "evals/reports/native_regression/company12/company-huggingface-surface/bundle/report_bundle.json",
+        "trace_path": "evals/reports/native_regression/company12/company-huggingface-surface/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# Hugging Face Surface\n\nHugging Face exposes a public platform surface and an extensive official documentation surface for models, datasets, and tooling.[1][2]\n\nThose official materials make developer self-service a visible part of the company surface.[1][2]\n",
+  "claims": [
+    {
+      "claim_id": "company-huggingface-surface-claim-1",
+      "text": "Hugging Face exposes a public platform surface and an extensive official documentation surface for models, datasets, and tooling.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-huggingface-surface-evidence-1",
+        "company-huggingface-surface-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-huggingface-surface-edge-1",
+      "claim_id": "company-huggingface-surface-claim-1",
+      "evidence_id": "company-huggingface-surface-evidence-1",
+      "source_id": "source-hf-home",
+      "snapshot_id": "snapshot-hf-home",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Hugging Face"
+    },
+    {
+      "edge_id": "company-huggingface-surface-edge-2",
+      "claim_id": "company-huggingface-surface-claim-1",
+      "evidence_id": "company-huggingface-surface-evidence-2",
+      "source_id": "source-hf-docs",
+      "snapshot_id": "snapshot-hf-docs",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Hugging Face Docs"
+    }
+  ],
+  "conflict_sets": []
+}

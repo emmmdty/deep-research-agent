@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-anthropic-home",
+      "snapshot_id": "snapshot-anthropic-home",
+      "title": "Anthropic",
+      "canonical_uri": "https://www.anthropic.com/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-anthropic-docs",
+      "snapshot_id": "snapshot-anthropic-docs",
+      "title": "Anthropic Docs Overview",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/overview"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-anthropic-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Anthropic",
+      "canonical_uri": "https://www.anthropic.com/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-anthropic-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-anthropic-docs",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Anthropic Docs Overview",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/overview",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-anthropic-docs",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-anthropic-home",
+      "canonical_uri": "https://www.anthropic.com/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "aac8dab4a0916363d382fd4efed900282d8ac9a67325a0e14878c3da8380f726",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-anthropic-docs",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "35df2f814034a5a1747ce6c27e554d0251d4449ff44ae8ad7c37c0c3612db317",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

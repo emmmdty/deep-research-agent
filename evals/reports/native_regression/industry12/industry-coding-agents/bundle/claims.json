@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "industry-coding-agents-claim-1",
+      "text": "Public product and developer materials make coding agents visible as a distinct segment with workflow, tool-use, and review-surface differences.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-coding-agents-evidence-1",
+        "industry-coding-agents-evidence-2"
+      ]
+    }
+  ]
+}

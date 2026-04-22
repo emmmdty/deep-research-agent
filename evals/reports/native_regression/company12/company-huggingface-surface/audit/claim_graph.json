@@ -1,0 +1,51 @@
+{
+  "job_id": "company-huggingface-surface",
+  "claims": [
+    {
+      "claim_id": "company-huggingface-surface-claim-1",
+      "text": "Hugging Face exposes a public platform surface and an extensive official documentation surface for models, datasets, and tooling.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-huggingface-surface-evidence-1",
+        "company-huggingface-surface-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-huggingface-surface-edge-1",
+      "claim_id": "company-huggingface-surface-claim-1",
+      "evidence_id": "company-huggingface-surface-evidence-1",
+      "source_id": "source-hf-home",
+      "snapshot_id": "snapshot-hf-home",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Hugging Face"
+    },
+    {
+      "edge_id": "company-huggingface-surface-edge-2",
+      "claim_id": "company-huggingface-surface-claim-1",
+      "evidence_id": "company-huggingface-surface-evidence-2",
+      "source_id": "source-hf-docs",
+      "snapshot_id": "snapshot-hf-docs",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Hugging Face Docs"
+    }
+  ],
+  "conflict_sets": []
+}

@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "company-openai-vs-anthropic-claim-1",
+      "text": "OpenAI and Anthropic both expose official company and developer surfaces, but the public materials emphasize slightly different product framing and onboarding entrypoints.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-openai-vs-anthropic-evidence-1",
+        "company-openai-vs-anthropic-evidence-2"
+      ]
+    }
+  ]
+}

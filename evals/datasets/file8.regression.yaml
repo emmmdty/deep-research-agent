@@ -1,0 +1,220 @@
+variant: regression_local
+tasks:
+  - task_id: file-openai-private-brief
+    topic: OpenAI plus private brief regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors the company surface?
+      - Which private note narrows the interpretation?
+    answered_questions:
+      - Which public source anchors the company surface?
+      - Which private note narrows the interpretation?
+    report_markdown: |
+      # OpenAI Public + Private Brief
+
+      A public OpenAI anchor source and a private company note can coexist in one bundle while keeping private provenance explicit.[1][2]
+
+      The output remains reviewable because the public anchor and private context are clearly separated.[1][2]
+    task_summaries:
+      - Public company context and a private note remain distinguishable in the emitted bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-openai
+        title: OpenAI
+        canonical_uri: https://openai.com/
+        snapshot_ref: snapshot-file-openai
+    file_inputs:
+      - evals/datasets/files/company_context.md
+
+  - task_id: file-industry-private-brief
+    topic: Industry public plus private notes regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors the retrieval topic?
+      - Which private note adds scoped comparison context?
+    answered_questions:
+      - Which public source anchors the retrieval topic?
+      - Which private note adds scoped comparison context?
+    report_markdown: |
+      # Industry Public + Private Notes
+
+      A public retrieval paper and a private industry note can be combined while preserving explicit provenance boundaries.[1][2]
+
+      The result keeps the public anchor visible and the private comparison note clearly marked as supplemental.[1][2]
+    task_summaries:
+      - Public retrieval evidence and a private industry note remain explicitly separated in the bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-rag
+        source_type: arxiv
+        title: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+        canonical_uri: https://arxiv.org/abs/2005.11401
+        snapshot_ref: snapshot-file-rag
+    file_inputs:
+      - evals/datasets/files/industry_context.txt
+
+  - task_id: file-competitor-matrix
+    topic: Competitor matrix mixed-ingest regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors orchestration concepts?
+      - Which private matrix adds internal comparison context?
+    answered_questions:
+      - Which public source anchors orchestration concepts?
+      - Which private matrix adds internal comparison context?
+    report_markdown: |
+      # Competitor Matrix Mixed Ingest
+
+      Public orchestration documentation and a private competitor matrix can be combined without blurring public and private provenance.[1][2]
+
+      That makes comparison reasoning reviewable instead of flattening all evidence into one undifferentiated note stream.[1][2]
+    task_summaries:
+      - Public orchestration docs and a private competitor matrix stay provenance-safe in one bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-langgraph
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        snapshot_ref: snapshot-file-langgraph
+    file_inputs:
+      - evals/datasets/files/competitor_matrix.md
+
+  - task_id: file-retrieval-design-memo
+    topic: Retrieval design memo mixed-ingest regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors retrieval structure?
+      - Which private memo adds local design interpretation?
+    answered_questions:
+      - Which public source anchors retrieval structure?
+      - Which private memo adds local design interpretation?
+    report_markdown: |
+      # Retrieval Design Memo
+
+      Public retrieval guidance and a private retrieval memo can be combined while preserving the distinction between anchor evidence and internal interpretation.[1][2]
+
+      The bundle remains reviewable because each private contribution retains explicit provenance.[1][2]
+    task_summaries:
+      - Public retrieval guidance and a private memo remain provenance-separated in the final bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-llamaindex
+        title: LlamaIndex RAG Guide
+        canonical_uri: https://docs.llamaindex.ai/en/stable/optimizing/basic_strategies/basic_strategies/
+        snapshot_ref: snapshot-file-llamaindex
+    file_inputs:
+      - evals/datasets/files/retrieval_notes.md
+
+  - task_id: file-governance-checklist
+    topic: Governance checklist mixed-ingest regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors source-policy thinking?
+      - Which private governance note adds internal review constraints?
+    answered_questions:
+      - Which public source anchors source-policy thinking?
+      - Which private governance note adds internal review constraints?
+    report_markdown: |
+      # Governance Checklist Mixed Ingest
+
+      A public agents guide and a private governance checklist can be combined while keeping private control notes explicit.[1][2]
+
+      That keeps source-policy interpretation reviewable rather than burying private assumptions inside public-seeming prose.[1][2]
+    task_summaries:
+      - Public policy guidance and a private governance checklist remain clearly separated in one bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-openai-agents
+        title: OpenAI Agents Guide
+        canonical_uri: https://platform.openai.com/docs/guides/agents
+        snapshot_ref: snapshot-file-openai-agents
+    file_inputs:
+      - evals/datasets/files/governance_checklist.md
+
+  - task_id: file-audit-playbook
+    topic: Audit playbook mixed-ingest regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors review surface design?
+      - Which private audit playbook adds scoped review expectations?
+    answered_questions:
+      - Which public source anchors review surface design?
+      - Which private audit playbook adds scoped review expectations?
+    report_markdown: |
+      # Audit Playbook Mixed Ingest
+
+      Public review-surface material and a private audit playbook can be delivered together without obscuring which guidance is private.[1][2]
+
+      The emitted bundle stays reviewer-friendly because provenance remains explicit throughout the artifact set.[1][2]
+    task_summaries:
+      - Public review material and private audit guidance remain explicitly distinguished in the bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-langgraph-hitl
+        title: LangGraph Human-in-the-Loop
+        canonical_uri: https://docs.langchain.com/langgraph/concepts/human_in_the_loop
+        snapshot_ref: snapshot-file-langgraph-hitl
+    file_inputs:
+      - evals/datasets/files/audit_playbook.txt
+
+  - task_id: file-mcp-brief
+    topic: MCP connector brief mixed-ingest regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors tool-integration policy?
+      - Which private brief adds internal connector constraints?
+    answered_questions:
+      - Which public source anchors tool-integration policy?
+      - Which private brief adds internal connector constraints?
+    report_markdown: |
+      # MCP Brief Mixed Ingest
+
+      Public MCP protocol material and a private connector brief can be combined while keeping internal constraints visibly private.[1][2]
+
+      That preserves the public/private boundary even in a tool-integration case that mixes protocol and local policy notes.[1][2]
+    task_summaries:
+      - Public MCP material and a private connector brief remain provenance-safe inside one bundle.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-file-mcp
+        title: Model Context Protocol Introduction
+        canonical_uri: https://modelcontextprotocol.io/introduction
+        snapshot_ref: snapshot-file-mcp
+    file_inputs:
+      - evals/datasets/files/mcp_connector_brief.md
+
+  - task_id: file-provenance-review
+    topic: Provenance review mixed-ingest regression
+    source_profile: public_then_private
+    research_profile: eval_regression
+    required_questions:
+      - Which public source anchors operational reviewability?
+      - Which private files add scoped review context?
+    answered_questions:
+      - Which public source anchors operational reviewability?
+      - Which private files add scoped review context?
+    report_markdown: |
+      # Provenance Review Mixed Ingest
+
+      Public observability material and multiple private notes can be combined while keeping every private input explicitly attributable.[1][2][3]
+
+      This shows that mixed-ingest reviewability depends on provenance clarity, not on pretending all inputs are public.[1][2][3]
+    task_summaries:
+      - Public observability material and multiple private notes remain explicitly attributable in the final bundle.[1][2][3]
+    sources:
+      - citation_id: 1
+        source_id: source-file-observability
+        title: OpenTelemetry Documentation
+        canonical_uri: https://opentelemetry.io/docs/
+        snapshot_ref: snapshot-file-observability
+    file_inputs:
+      - evals/datasets/files/company_context.md
+      - evals/datasets/files/governance_checklist.md
+      - evals/datasets/files/audit_playbook.txt

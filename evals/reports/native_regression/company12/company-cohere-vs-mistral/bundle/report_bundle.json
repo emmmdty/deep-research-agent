@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "company-cohere-vs-mistral",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "Cohere vs Mistral enterprise developer surface comparison",
+    "status": "completed",
+    "source_profile": "company_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-cohere-home-compare",
+      "snapshot_id": "snapshot-cohere-home-compare",
+      "title": "Cohere",
+      "canonical_uri": "https://cohere.com/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-mistral-home-compare",
+      "snapshot_id": "snapshot-mistral-home-compare",
+      "title": "Mistral AI",
+      "canonical_uri": "https://mistral.ai/"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-cohere-home-compare",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Cohere",
+      "canonical_uri": "https://cohere.com/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-cohere-home-compare",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-mistral-home-compare",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Mistral AI",
+      "canonical_uri": "https://mistral.ai/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-mistral-home-compare",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-cohere-home-compare",
+      "canonical_uri": "https://cohere.com/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "9c114c76f37d1cc9771e060f15a40f9f53e40babb2ebb2bf2a3709f48f0ac939",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-mistral-home-compare",
+      "canonical_uri": "https://mistral.ai/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "fe6628dbf997b521a9d18f08fd225532af69b9a662f4ecb3416a80f3dfab1394",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "company-cohere-vs-mistral-evidence-1",
+      "snapshot_id": "snapshot-cohere-home-compare",
+      "source_id": "source-cohere-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "Cohere",
+      "extraction_method": "fixture_source_snippet"
+    },
+    {
+      "evidence_id": "company-cohere-vs-mistral-evidence-2",
+      "snapshot_id": "snapshot-mistral-home-compare",
+      "source_id": "source-mistral-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "excerpt": "Mistral AI",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "company-cohere-vs-mistral-event-0001",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "topic": "Cohere vs Mistral enterprise developer surface comparison",
+        "research_profile": "eval_regression"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0002",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0003",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0001",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0004",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0005",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0002",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0006",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0007",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0003",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0008",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0009",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0004",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0010",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0011",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0005",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0012",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0013",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0006",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0014",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0015",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0007",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0016",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0017",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "company-cohere-vs-mistral-checkpoint-0008",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0018",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "company-cohere-vs-mistral-event-0019",
+      "job_id": "company-cohere-vs-mistral",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "report_path": "evals/reports/native_regression/company12/company-cohere-vs-mistral/report.md",
+        "report_bundle_path": "evals/reports/native_regression/company12/company-cohere-vs-mistral/bundle/report_bundle.json",
+        "trace_path": "evals/reports/native_regression/company12/company-cohere-vs-mistral/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# Cohere vs Mistral Comparison\n\nCohere and Mistral both expose official enterprise-facing public surfaces while pairing them with separate technical documentation layers.[1][2]\n\nComparing those official materials shows how each company makes its developer surface inspectable to external reviewers.[1][2]\n",
+  "claims": [
+    {
+      "claim_id": "company-cohere-vs-mistral-claim-1",
+      "text": "Cohere and Mistral both expose official enterprise-facing public surfaces while pairing them with separate technical documentation layers.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-cohere-vs-mistral-evidence-1",
+        "company-cohere-vs-mistral-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-cohere-vs-mistral-edge-1",
+      "claim_id": "company-cohere-vs-mistral-claim-1",
+      "evidence_id": "company-cohere-vs-mistral-evidence-1",
+      "source_id": "source-cohere-home-compare",
+      "snapshot_id": "snapshot-cohere-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Cohere"
+    },
+    {
+      "edge_id": "company-cohere-vs-mistral-edge-2",
+      "claim_id": "company-cohere-vs-mistral-claim-1",
+      "evidence_id": "company-cohere-vs-mistral-evidence-2",
+      "source_id": "source-mistral-home-compare",
+      "snapshot_id": "snapshot-mistral-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Mistral AI"
+    }
+  ],
+  "conflict_sets": []
+}

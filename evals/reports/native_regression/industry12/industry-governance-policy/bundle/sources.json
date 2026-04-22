@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-mcp-governance",
+      "snapshot_id": "snapshot-mcp-governance",
+      "title": "Model Context Protocol Introduction",
+      "canonical_uri": "https://modelcontextprotocol.io/introduction"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-openai-safety",
+      "snapshot_id": "snapshot-openai-safety",
+      "title": "OpenAI Agents Guide",
+      "canonical_uri": "https://platform.openai.com/docs/guides/agents"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-mcp-governance",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Model Context Protocol Introduction",
+      "canonical_uri": "https://modelcontextprotocol.io/introduction",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-mcp-governance",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-openai-safety",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "OpenAI Agents Guide",
+      "canonical_uri": "https://platform.openai.com/docs/guides/agents",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-openai-safety",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-mcp-governance",
+      "canonical_uri": "https://modelcontextprotocol.io/introduction",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "402ee8ce3982e201d2e8ee1a1fbd48a4fb87615bd7367d799f69a0e5b07ca21c",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-openai-safety",
+      "canonical_uri": "https://platform.openai.com/docs/guides/agents",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "2cad6ca482ca518f90ff1c1a745c94939f6478963170d5bf6a1e5c42b4583c33",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

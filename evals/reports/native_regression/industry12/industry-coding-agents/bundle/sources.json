@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-openai-codex",
+      "snapshot_id": "snapshot-openai-codex",
+      "title": "OpenAI Codex",
+      "canonical_uri": "https://openai.com/codex/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-anthropic-claude-code",
+      "snapshot_id": "snapshot-anthropic-claude-code",
+      "title": "Claude Code Overview",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/claude-code/overview"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-openai-codex",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "OpenAI Codex",
+      "canonical_uri": "https://openai.com/codex/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-openai-codex",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-anthropic-claude-code",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Claude Code Overview",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/claude-code/overview",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-anthropic-claude-code",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-openai-codex",
+      "canonical_uri": "https://openai.com/codex/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "7aabdff4e1cacc8882ff12a2dcb4ebd9f7d985aab7224283a9c7b4fa06d0dcf5",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-anthropic-claude-code",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/claude-code/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "f9d158b9df3c51ade57d91dd3f5ebb6cf99cdc94d4dae710dc8966f196912414",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

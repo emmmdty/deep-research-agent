@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-opentelemetry-docs",
+      "snapshot_id": "snapshot-opentelemetry-docs",
+      "title": "OpenTelemetry Documentation",
+      "canonical_uri": "https://opentelemetry.io/docs/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-langsmith-observability",
+      "snapshot_id": "snapshot-langsmith-observability",
+      "title": "LangSmith Observability",
+      "canonical_uri": "https://docs.smith.langchain.com/observability"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-opentelemetry-docs",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "OpenTelemetry Documentation",
+      "canonical_uri": "https://opentelemetry.io/docs/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-opentelemetry-docs",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-langsmith-observability",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "LangSmith Observability",
+      "canonical_uri": "https://docs.smith.langchain.com/observability",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-langsmith-observability",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-opentelemetry-docs",
+      "canonical_uri": "https://opentelemetry.io/docs/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "461be3baca380c0054e562400bb4cde17c1680b04d50dfa8203425602a44437b",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-langsmith-observability",
+      "canonical_uri": "https://docs.smith.langchain.com/observability",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "246476f58f16de6a4a68c9a09f338830b490ed87050c81429d7461dc516054ba",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

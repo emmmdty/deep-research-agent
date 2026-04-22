@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-persistence-claim-1",
+      "text": "Trusted LangGraph persistence materials and an approved governance checklist keep durable-state interpretation bounded and reviewable.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-persistence-file-evidence-1",
+        "trusted-langgraph-persistence-evidence-2"
+      ]
+    }
+  ]
+}

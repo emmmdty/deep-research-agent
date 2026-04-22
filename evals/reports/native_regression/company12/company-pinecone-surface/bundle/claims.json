@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "company-pinecone-surface-claim-1",
+      "text": "Pinecone exposes a public vector-database platform surface and a separate documentation surface for implementation details.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-pinecone-surface-evidence-1",
+        "company-pinecone-surface-evidence-2"
+      ]
+    }
+  ]
+}

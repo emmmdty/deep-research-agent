@@ -1,0 +1,4 @@
+Audit playbook for deterministic native regression:
+- Check whether critical claims point to grounded evidence.
+- Separate execution success from audit-gate success.
+- Surface uncertainty instead of flattening competing evidence.

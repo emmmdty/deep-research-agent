@@ -26,6 +26,8 @@ Review paths:
 
 - [Value Scorecard](./docs/final/VALUE_SCORECARD.md)
 - [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md)
+- [Native Scorecard](./docs/benchmarks/native/NATIVE_SCORECARD.md)
+- [Native Casebook](./docs/benchmarks/native/CASEBOOK.md)
 - [Release Manifest](./evals/reports/phase5_local_smoke/release_manifest.json)
 
 The HTTP API is still local-only. This repository is not a multi-tenant production SaaS.
@@ -149,15 +151,19 @@ Submit it:
 uv run python main.py batch run --file batch.jsonl --json
 ```
 
-### 6. Run local evals and the release smoke pack
+### 6. Run local evals, the release smoke pack, and the native regression layer
 
 ```bash
 uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12 --json
 uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12 --json
+uv run python main.py eval run --suite company12 --variant regression_local --output-root evals/reports/native_regression/company12 --json
 uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json
+uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json
+uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json
 ```
 
-The committed Phase 5 local smoke outputs live under `evals/reports/phase5_local_smoke/`.
+The committed Phase 5 local smoke outputs under `evals/reports/phase5_local_smoke/` remain the authoritative merge-safe gate.
+The committed deterministic native regression outputs live under `evals/reports/native_regression/`, with reviewer-facing docs under `docs/benchmarks/native/`.
 
 ### 7. Run an external benchmark smoke and refresh the portfolio summary
 
@@ -169,11 +175,12 @@ uv run python scripts/build_benchmark_portfolio_summary.py --output-root evals/e
 The benchmark portfolio is layered:
 
 - authoritative release gate: native Phase 5 local smoke suites under `evals/reports/phase5_local_smoke/`
+- native regression: reviewer-facing deterministic regression suites under `evals/reports/native_regression/`
 - secondary regression: FACTS Grounding open smoke
 - external regression: LongFact / SAFE smoke and LongBench v2 short smoke
 - challenge track: BrowseComp guarded smoke, GAIA supported subset, and LongBench v2 medium/long challenge policy
 
-Reviewer-facing benchmark docs live under [docs/benchmarks](./docs/benchmarks/README.md).
+Reviewer-facing benchmark docs live under [docs/benchmarks](./docs/benchmarks/README.md), including the repo-native [Native Scorecard](./docs/benchmarks/native/NATIVE_SCORECARD.md).
 
 ## Artifact Contract
 
@@ -235,6 +242,8 @@ uv run python main.py --help
 uv run ruff check .
 uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
 uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke
+uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression
+uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native
 uv run python scripts/build_benchmark_portfolio_summary.py --output-root evals/external/reports/portfolio_summary
 ```
 

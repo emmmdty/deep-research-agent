@@ -58,6 +58,8 @@
     {
       "task_id": "file-public-private-mix",
       "job_id": "file-public-private-mix",
+      "topic": "Public plus private file-ingest smoke",
+      "description": "Public plus private file-ingest smoke",
       "status": "completed",
       "audit_gate_status": "passed",
       "report_path": "evals/reports/phase5_local_smoke/file8/file-public-private-mix/report.md",

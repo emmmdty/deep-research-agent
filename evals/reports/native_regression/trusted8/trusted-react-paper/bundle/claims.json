@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "trusted-react-paper-claim-1",
+      "text": "The ReAct paper and the approved MCP connector brief create a trusted-only interpretation path for tool-use reasoning and control boundaries.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-react-paper-file-evidence-1",
+        "trusted-react-paper-evidence-2"
+      ]
+    }
+  ]
+}

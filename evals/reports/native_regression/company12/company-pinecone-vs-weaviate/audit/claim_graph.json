@@ -1,0 +1,51 @@
+{
+  "job_id": "company-pinecone-vs-weaviate",
+  "claims": [
+    {
+      "claim_id": "company-pinecone-vs-weaviate-claim-1",
+      "text": "Pinecone and Weaviate both expose public vector-platform stories, but their official surfaces emphasize slightly different onboarding and platform framing choices.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-pinecone-vs-weaviate-evidence-1",
+        "company-pinecone-vs-weaviate-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-pinecone-vs-weaviate-edge-1",
+      "claim_id": "company-pinecone-vs-weaviate-claim-1",
+      "evidence_id": "company-pinecone-vs-weaviate-evidence-1",
+      "source_id": "source-pinecone-home-compare",
+      "snapshot_id": "snapshot-pinecone-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Pinecone"
+    },
+    {
+      "edge_id": "company-pinecone-vs-weaviate-edge-2",
+      "claim_id": "company-pinecone-vs-weaviate-claim-1",
+      "evidence_id": "company-pinecone-vs-weaviate-evidence-2",
+      "source_id": "source-weaviate-home-compare",
+      "snapshot_id": "snapshot-weaviate-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Weaviate"
+    }
+  ],
+  "conflict_sets": []
+}

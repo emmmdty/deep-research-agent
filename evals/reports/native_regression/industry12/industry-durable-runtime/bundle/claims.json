@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "industry-durable-runtime-claim-1",
+      "text": "Public orchestration materials make state handling, resumability, and durable execution explicit parts of the runtime story.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-durable-runtime-evidence-1",
+        "industry-durable-runtime-evidence-2"
+      ]
+    }
+  ]
+}

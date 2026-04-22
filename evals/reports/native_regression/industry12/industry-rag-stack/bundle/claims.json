@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "industry-rag-stack-claim-1",
+      "text": "Public papers and framework materials treat retrieval as a distinct layer from downstream generation, making retrieval quality a separate evaluation target.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-rag-stack-evidence-1",
+        "industry-rag-stack-evidence-2"
+      ]
+    }
+  ]
+}

@@ -58,6 +58,8 @@
     {
       "task_id": "trusted-langgraph-brief",
       "job_id": "trusted-langgraph-brief",
+      "topic": "Trusted-only research smoke",
+      "description": "Trusted-only research smoke",
       "status": "completed",
       "audit_gate_status": "passed",
       "report_path": "evals/reports/phase5_local_smoke/trusted8/trusted-langgraph-brief/report.md",

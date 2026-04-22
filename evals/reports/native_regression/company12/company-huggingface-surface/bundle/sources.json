@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-hf-home",
+      "snapshot_id": "snapshot-hf-home",
+      "title": "Hugging Face",
+      "canonical_uri": "https://huggingface.co/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-hf-docs",
+      "snapshot_id": "snapshot-hf-docs",
+      "title": "Hugging Face Docs",
+      "canonical_uri": "https://huggingface.co/docs"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-hf-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Hugging Face",
+      "canonical_uri": "https://huggingface.co/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-hf-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-hf-docs",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Hugging Face Docs",
+      "canonical_uri": "https://huggingface.co/docs",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-hf-docs",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-hf-home",
+      "canonical_uri": "https://huggingface.co/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "a3ebb110c8707d12a37e86f0b8f9c5a17bb1cc1cfb9692f0af34f8aa6b2bed2c",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-hf-docs",
+      "canonical_uri": "https://huggingface.co/docs",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "f90dda176f0106337ff37289e3934a54e469fa47b480187c01753929315a2d49",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

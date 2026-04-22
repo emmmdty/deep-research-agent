@@ -1,0 +1,51 @@
+{
+  "job_id": "industry-eval-grounding",
+  "claims": [
+    {
+      "claim_id": "industry-eval-grounding-claim-1",
+      "text": "Public evaluation guidance and framework materials emphasize grounded claims, evidence linkage, and reproducibility instead of report-shape-only scoring.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-eval-grounding-evidence-1",
+        "industry-eval-grounding-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "industry-eval-grounding-edge-1",
+      "claim_id": "industry-eval-grounding-claim-1",
+      "evidence_id": "industry-eval-grounding-evidence-1",
+      "source_id": "source-openai-evals",
+      "snapshot_id": "snapshot-openai-evals",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI Evals Design Guide"
+    },
+    {
+      "edge_id": "industry-eval-grounding-edge-2",
+      "claim_id": "industry-eval-grounding-claim-1",
+      "evidence_id": "industry-eval-grounding-evidence-2",
+      "source_id": "source-langsmith-evals",
+      "snapshot_id": "snapshot-langsmith-evals",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangSmith Evaluation Concepts"
+    }
+  ],
+  "conflict_sets": []
+}

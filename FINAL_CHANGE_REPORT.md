@@ -28,10 +28,18 @@ It is not a frontend, not a chat shell, and not a multi-agent-count demo.
 ### Measured value pack
 
 - Added follow-up value metrics, ablations, and latency/cost summaries under `evals/reports/followup_metrics/`.
+- Added the deterministic native regression layer under `evals/reports/native_regression/` with reviewer-facing docs in `docs/benchmarks/native/`.
 - Added the reviewer-facing scorecard outputs:
   - `docs/final/VALUE_SCORECARD.md`
   - `docs/final/VALUE_SCORECARD.json`
+- Added the native reviewer outputs:
+  - `docs/benchmarks/native/README.md`
+  - `docs/benchmarks/native/NATIVE_SCORECARD.md`
+  - `docs/benchmarks/native/CASEBOOK.md`
 - Added a reproducible scorecard generator at `scripts/build_value_scorecard.py`.
+- Added reproducible native benchmark builder/runner scripts:
+  - `scripts/run_native_regression.py`
+  - `scripts/build_native_benchmark_summary.py`
 - Made the project story measurable instead of descriptive-only: grounded bundle emission, source-policy/provenance retention, recovery-flow reliability, file-ingest capability, and stage timing now have committed artifacts.
 - Preserved the current deployment boundary honestly: the HTTP API is local-only and the repo is not a multi-tenant production SaaS.
 
@@ -47,6 +55,8 @@ It is not a frontend, not a chat shell, and not a multi-agent-count demo.
 - Added the canonical local eval stack in `src/deep_research_agent/evals/`.
 - Added the root `evals/` tree for suites, datasets, rubrics, committed smoke outputs, and legacy diagnostic notes.
 - Added the Phase 5 low-cost release smoke runner in `scripts/run_local_release_smoke.py`.
+- Expanded the native/custom benchmark surface with `regression_local` variants for `company12`, `industry12`, `trusted8`, `file8`, and `recovery6`.
+- Preserved the current `smoke_local` release smoke pack as the authoritative merge-safe gate while adding a wider deterministic native regression layer.
 - Upgraded `configs/release_gate.yaml` and `scripts/release_gate.py` so release proof now requires suite evidence, not benchmark-only diagnostics.
 - Normalized saved smoke artifacts so reruns are byte-stable and file-ingest outputs are portable across worktrees and `main`.
 
@@ -139,11 +149,16 @@ uv run python scripts/run_local_release_smoke.py --output-root evals/reports/pha
 
 - `evals/reports/phase5_local_smoke/release_manifest.json`
 - `evals/reports/phase5_local_smoke/RESULTS.md`
+- `evals/reports/native_regression/release_manifest.json`
+- `evals/reports/native_regression/native_summary.json`
+- `evals/reports/native_regression/RESULTS.md`
 - `evals/reports/phase5_local_smoke/company12/summary.json`
 - `evals/reports/phase5_local_smoke/industry12/summary.json`
 - `evals/reports/phase5_local_smoke/trusted8/summary.json`
 - `evals/reports/phase5_local_smoke/file8/summary.json`
 - `evals/reports/phase5_local_smoke/recovery6/summary.json`
+- `docs/benchmarks/native/NATIVE_SCORECARD.md`
+- `docs/benchmarks/native/CASEBOOK.md`
 
 ## Final Verification Snapshot
 

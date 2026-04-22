@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 
 
 EVAL_SUITE_NAMES = ("company12", "industry12", "trusted8", "file8", "recovery6")
+EVAL_VARIANT_NAMES = ("smoke_local", "regression_local")
 
 
 class EvalThreshold(BaseModel):
@@ -107,12 +108,30 @@ class EvalTaskSpec(BaseModel):
     deny_domains: list[str] = Field(default_factory=list)
 
 
+class EvalScenarioSpec(BaseModel):
+    """One deterministic reliability/control-plane scenario."""
+
+    scenario_id: str
+    title: str = Field(default="")
+    description: str = Field(default="")
+    check_ids: list[str] = Field(default_factory=list)
+
+
 class EvalDataset(BaseModel):
     """Dataset payload for a suite."""
 
     variant: str = Field(default="smoke_local")
     tasks: list[EvalTaskSpec] = Field(default_factory=list)
-    scenarios: list[str] = Field(default_factory=list)
+    scenarios: list[str | EvalScenarioSpec] = Field(default_factory=list)
+
+
+class EvalSuiteVariantDefinition(BaseModel):
+    """Optional per-variant overrides for one suite."""
+
+    description: str | None = None
+    dataset_path: str | None = None
+    rubric_path: str | None = None
+    thresholds: dict[str, EvalThreshold] = Field(default_factory=dict)
 
 
 class EvalSuiteDefinition(BaseModel):
@@ -124,3 +143,4 @@ class EvalSuiteDefinition(BaseModel):
     dataset_path: str | None = None
     rubric_path: str | None = None
     thresholds: dict[str, EvalThreshold] = Field(default_factory=dict)
+    variants: dict[str, EvalSuiteVariantDefinition] = Field(default_factory=dict)

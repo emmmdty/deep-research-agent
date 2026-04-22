@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-github-claim-1",
+      "text": "The official LangGraph repository and the approved governance checklist let reviewers study runtime-facing material without leaving the trusted-only envelope.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-github-file-evidence-1",
+        "trusted-langgraph-github-evidence-2"
+      ]
+    }
+  ]
+}

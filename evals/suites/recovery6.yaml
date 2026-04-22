@@ -18,3 +18,8 @@ thresholds:
     min: 1.0
   idle_skip_rate:
     min: 1.0
+variants:
+  regression_local:
+    description: Deterministic local reliability regression suite for recovery/control-plane semantics.
+    dataset_path: evals/datasets/recovery6.regression.yaml
+    rubric_path: evals/rubrics/recovery_reliability_regression.yaml

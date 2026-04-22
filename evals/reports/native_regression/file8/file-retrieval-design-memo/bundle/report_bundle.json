@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "file-retrieval-design-memo",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "Retrieval design memo mixed-ingest regression",
+    "status": "completed",
+    "source_profile": "public_then_private",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-file-llamaindex",
+      "snapshot_id": "snapshot-file-llamaindex",
+      "title": "LlamaIndex RAG Guide",
+      "canonical_uri": "https://docs.llamaindex.ai/en/stable/optimizing/basic_strategies/basic_strategies/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "file-retrieval-design-memo-file-1",
+      "snapshot_id": "file-retrieval-design-memo-file-snapshot-1",
+      "title": "retrieval_notes.md",
+      "canonical_uri": "repo:///evals/datasets/files/retrieval_notes.md"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-file-llamaindex",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LlamaIndex RAG Guide",
+      "canonical_uri": "https://docs.llamaindex.ai/en/stable/optimizing/basic_strategies/basic_strategies/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-file-llamaindex",
+      "metadata": {}
+    },
+    {
+      "source_id": "file-retrieval-design-memo-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "retrieval_notes.md",
+      "canonical_uri": "repo:///evals/datasets/files/retrieval_notes.md",
+      "query": "Retrieval design memo mixed-ingest regression",
+      "selected": true,
+      "snapshot_ref": "file-retrieval-design-memo-file-snapshot-1",
+      "metadata": {
+        "file_path": "evals/datasets/files/retrieval_notes.md"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-file-llamaindex",
+      "canonical_uri": "https://docs.llamaindex.ai/en/stable/optimizing/basic_strategies/basic_strategies/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "47110639be1110ecaa5cd598de0fab1941b6737d84c7ce8703344a8da1030549",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "file-retrieval-design-memo-file-snapshot-1",
+      "canonical_uri": "repo:///evals/datasets/files/retrieval_notes.md",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "120abb449a951419ebc1abd722a990f54e975acab9758d321ceda6f109f53e65",
+      "mime_type": "text/markdown",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "retrieval_notes.md",
+        "file_path": "evals/datasets/files/retrieval_notes.md"
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "file-retrieval-design-memo-file-evidence-1",
+      "snapshot_id": "file-retrieval-design-memo-file-snapshot-1",
+      "source_id": "file-retrieval-design-memo-file-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "evals/datasets/files/retrieval_notes.md"
+      },
+      "excerpt": "# Retrieval Notes\n\nRegression-tier retrieval notes:\n\n- Retrieval quality and answer quality are related but not identical.\n- Vector store fit, reranking, and provenance controls should be evaluated separately.\n- Public anchors must remain visible in the final report bundle.\n",
+      "extraction_method": "local_file_ingest"
+    },
+    {
+      "evidence_id": "file-retrieval-design-memo-evidence-2",
+      "snapshot_id": "snapshot-file-llamaindex",
+      "source_id": "source-file-llamaindex",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "LlamaIndex RAG Guide",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "file-retrieval-design-memo-event-0001",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "topic": "Retrieval design memo mixed-ingest regression",
+        "research_profile": "eval_regression"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0002",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0003",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0001",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0004",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0005",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0002",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0006",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0007",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0003",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0008",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0009",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0004",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0010",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0011",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0005",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0012",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0013",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0006",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0014",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0015",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0007",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0016",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0017",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "file-retrieval-design-memo-checkpoint-0008",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0018",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "file-retrieval-design-memo-event-0019",
+      "job_id": "file-retrieval-design-memo",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "report_path": "evals/reports/native_regression/file8/file-retrieval-design-memo/report.md",
+        "report_bundle_path": "evals/reports/native_regression/file8/file-retrieval-design-memo/bundle/report_bundle.json",
+        "trace_path": "evals/reports/native_regression/file8/file-retrieval-design-memo/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# Retrieval Design Memo\n\nPublic retrieval guidance and a private retrieval memo can be combined while preserving the distinction between anchor evidence and internal interpretation.[1][2]\n\nThe bundle remains reviewable because each private contribution retains explicit provenance.[1][2]\n",
+  "claims": [
+    {
+      "claim_id": "file-retrieval-design-memo-claim-1",
+      "text": "Public retrieval guidance and a private retrieval memo can be combined while preserving the distinction between anchor evidence and internal interpretation.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-retrieval-design-memo-file-evidence-1",
+        "file-retrieval-design-memo-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "file-retrieval-design-memo-edge-1",
+      "claim_id": "file-retrieval-design-memo-claim-1",
+      "evidence_id": "file-retrieval-design-memo-file-evidence-1",
+      "source_id": "file-retrieval-design-memo-file-1",
+      "snapshot_id": "file-retrieval-design-memo-file-snapshot-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "evals/datasets/files/retrieval_notes.md"
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "retrieval_notes.md"
+    },
+    {
+      "edge_id": "file-retrieval-design-memo-edge-2",
+      "claim_id": "file-retrieval-design-memo-claim-1",
+      "evidence_id": "file-retrieval-design-memo-evidence-2",
+      "source_id": "source-file-llamaindex",
+      "snapshot_id": "snapshot-file-llamaindex",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LlamaIndex RAG Guide"
+    }
+  ],
+  "conflict_sets": []
+}

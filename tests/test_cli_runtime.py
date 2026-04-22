@@ -43,6 +43,7 @@ def test_main_parser_exposes_eval_run_subcommand(monkeypatch):
     assert args.command == "eval"
     assert args.eval_command == "run"
     assert args.suite == "company12"
+    assert args.variant == "smoke_local"
 
 
 def test_eval_run_cli_can_request_runtime_metric_capture(monkeypatch):
@@ -59,8 +60,9 @@ def test_eval_run_cli_can_request_runtime_metric_capture(monkeypatch):
 
     monkeypatch.setattr(main, "get_settings", lambda: settings)
 
-    def fake_run_eval_suite(*, suite_name, output_root=None, capture_runtime_metrics=False):
+    def fake_run_eval_suite(*, suite_name, variant="smoke_local", output_root=None, capture_runtime_metrics=False):
         captured["suite_name"] = suite_name
+        captured["variant"] = variant
         captured["output_root"] = output_root
         captured["capture_runtime_metrics"] = capture_runtime_metrics
         return {
@@ -77,6 +79,8 @@ def test_eval_run_cli_can_request_runtime_metric_capture(monkeypatch):
             "run",
             "--suite",
             "company12",
+            "--variant",
+            "regression_local",
             "--output-root",
             "tmp/company12_fresh",
             "--capture-runtime-metrics",
@@ -87,6 +91,7 @@ def test_eval_run_cli_can_request_runtime_metric_capture(monkeypatch):
     assert exit_code == 0
     assert captured == {
         "suite_name": "company12",
+        "variant": "regression_local",
         "output_root": "tmp/company12_fresh",
         "capture_runtime_metrics": True,
     }

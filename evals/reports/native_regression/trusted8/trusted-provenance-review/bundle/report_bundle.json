@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "trusted-provenance-review",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "Trusted provenance review regression",
+    "status": "completed",
+    "source_profile": "trusted_only",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-trusted-review",
+      "snapshot_id": "snapshot-trusted-review",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "trusted-provenance-review-file-1",
+      "snapshot_id": "trusted-provenance-review-file-snapshot-1",
+      "title": "audit_playbook.txt",
+      "canonical_uri": "repo:///evals/datasets/files/audit_playbook.txt"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-trusted-review",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-trusted-review",
+      "metadata": {}
+    },
+    {
+      "source_id": "trusted-provenance-review-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "audit_playbook.txt",
+      "canonical_uri": "repo:///evals/datasets/files/audit_playbook.txt",
+      "query": "Trusted provenance review regression",
+      "selected": true,
+      "snapshot_ref": "trusted-provenance-review-file-snapshot-1",
+      "metadata": {
+        "file_path": "evals/datasets/files/audit_playbook.txt"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-trusted-review",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "df6da079d5717bd10c3ce20aafa3066409587f66ddc82755f81c22accbbad29a",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "trusted-provenance-review-file-snapshot-1",
+      "canonical_uri": "repo:///evals/datasets/files/audit_playbook.txt",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "76a14b5dd5ae1c383f69a593c4b0be3a24a76e98f124fa307f6487def758ff6c",
+      "mime_type": "text/plain",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "audit_playbook.txt",
+        "file_path": "evals/datasets/files/audit_playbook.txt"
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "trusted-provenance-review-file-evidence-1",
+      "snapshot_id": "trusted-provenance-review-file-snapshot-1",
+      "source_id": "trusted-provenance-review-file-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "evals/datasets/files/audit_playbook.txt"
+      },
+      "excerpt": "Audit playbook for deterministic native regression:\n- Check whether critical claims point to grounded evidence.\n- Separate execution success from audit-gate success.\n- Surface uncertainty instead of flattening competing evidence.\n",
+      "extraction_method": "local_file_ingest"
+    },
+    {
+      "evidence_id": "trusted-provenance-review-evidence-2",
+      "snapshot_id": "snapshot-trusted-review",
+      "source_id": "source-trusted-review",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "LangGraph Overview",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "trusted-provenance-review-event-0001",
+      "job_id": "trusted-provenance-review",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "topic": "Trusted provenance review regression",
+        "research_profile": "eval_regression"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0002",
+      "job_id": "trusted-provenance-review",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0003",
+      "job_id": "trusted-provenance-review",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0001",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0004",
+      "job_id": "trusted-provenance-review",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0005",
+      "job_id": "trusted-provenance-review",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0002",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0006",
+      "job_id": "trusted-provenance-review",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0007",
+      "job_id": "trusted-provenance-review",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0003",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0008",
+      "job_id": "trusted-provenance-review",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0009",
+      "job_id": "trusted-provenance-review",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0004",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0010",
+      "job_id": "trusted-provenance-review",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0011",
+      "job_id": "trusted-provenance-review",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0005",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0012",
+      "job_id": "trusted-provenance-review",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0013",
+      "job_id": "trusted-provenance-review",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0006",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0014",
+      "job_id": "trusted-provenance-review",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0015",
+      "job_id": "trusted-provenance-review",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0007",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0016",
+      "job_id": "trusted-provenance-review",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0017",
+      "job_id": "trusted-provenance-review",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "trusted-provenance-review-checkpoint-0008",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0018",
+      "job_id": "trusted-provenance-review",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "trusted-provenance-review-event-0019",
+      "job_id": "trusted-provenance-review",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "report_path": "evals/reports/native_regression/trusted8/trusted-provenance-review/report.md",
+        "report_bundle_path": "evals/reports/native_regression/trusted8/trusted-provenance-review/bundle/report_bundle.json",
+        "trace_path": "evals/reports/native_regression/trusted8/trusted-provenance-review/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# Trusted Provenance Review\n\nTrusted review-oriented public material and the approved audit playbook keep provenance and reviewability explicit under the trusted-only profile.[1][2]\n\nThis case demonstrates that private notes can refine trusted interpretation without broadening domain scope.[1][2]\n",
+  "claims": [
+    {
+      "claim_id": "trusted-provenance-review-claim-1",
+      "text": "Trusted review-oriented public material and the approved audit playbook keep provenance and reviewability explicit under the trusted-only profile.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-provenance-review-file-evidence-1",
+        "trusted-provenance-review-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "trusted-provenance-review-edge-1",
+      "claim_id": "trusted-provenance-review-claim-1",
+      "evidence_id": "trusted-provenance-review-file-evidence-1",
+      "source_id": "trusted-provenance-review-file-1",
+      "snapshot_id": "trusted-provenance-review-file-snapshot-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "evals/datasets/files/audit_playbook.txt"
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "audit_playbook.txt"
+    },
+    {
+      "edge_id": "trusted-provenance-review-edge-2",
+      "claim_id": "trusted-provenance-review-claim-1",
+      "evidence_id": "trusted-provenance-review-evidence-2",
+      "source_id": "source-trusted-review",
+      "snapshot_id": "snapshot-trusted-review",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangGraph Overview"
+    }
+  ],
+  "conflict_sets": []
+}

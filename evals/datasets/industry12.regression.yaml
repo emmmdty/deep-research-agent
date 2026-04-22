@@ -1,0 +1,364 @@
+variant: regression_local
+tasks:
+  - task_id: industry-agent-orchestration
+    topic: Agent orchestration market structure regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Which public materials describe orchestration as a distinct layer?
+      - Which comparison axes stay visible across orchestration stacks?
+    answered_questions:
+      - Which public materials describe orchestration as a distinct layer?
+      - Which comparison axes stay visible across orchestration stacks?
+    report_markdown: |
+      # Agent Orchestration Structure
+
+      Public materials from orchestration frameworks and related repositories treat durable execution and workflow control as a distinct layer in the agent stack.[1][2]
+
+      That makes orchestration guarantees a separate comparison axis rather than a side note under general model quality.[1][2]
+    task_summaries:
+      - Durable execution and workflow control remain a distinct market layer in public orchestration materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-langgraph-overview
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        snapshot_ref: snapshot-langgraph-overview
+      - citation_id: 2
+        source_id: source-langgraph-repo
+        source_type: github
+        title: langchain-ai/langgraph
+        canonical_uri: https://github.com/langchain-ai/langgraph
+        snapshot_ref: snapshot-langgraph-repo
+
+  - task_id: industry-rag-stack
+    topic: Retrieval stack structure regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why is retrieval a separate layer from generation?
+      - Which components remain visible in public retrieval materials?
+    answered_questions:
+      - Why is retrieval a separate layer from generation?
+      - Which components remain visible in public retrieval materials?
+    report_markdown: |
+      # Retrieval Stack Structure
+
+      Public papers and framework materials treat retrieval as a distinct layer from downstream generation, making retrieval quality a separate evaluation target.[1][2]
+
+      The visible stack includes query planning, document selection, and grounding rather than a single monolithic model score.[1][2]
+    task_summaries:
+      - Retrieval remains a distinct layer from downstream generation in public technical materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-rag-paper
+        source_type: arxiv
+        title: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+        canonical_uri: https://arxiv.org/abs/2005.11401
+        snapshot_ref: snapshot-rag-paper
+      - citation_id: 2
+        source_id: source-llamaindex-rag
+        title: LlamaIndex RAG Guide
+        canonical_uri: https://docs.llamaindex.ai/en/stable/optimizing/basic_strategies/basic_strategies/
+        snapshot_ref: snapshot-llamaindex-rag
+
+  - task_id: industry-model-gateway
+    topic: Model gateway and routing layer regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why does routing appear as its own market layer?
+      - What public materials show routing and provider abstraction explicitly?
+    answered_questions:
+      - Why does routing appear as its own market layer?
+      - What public materials show routing and provider abstraction explicitly?
+    report_markdown: |
+      # Model Gateway and Routing Layer
+
+      Public gateway documentation and repositories make provider routing and abstraction visible as a separate operational layer in AI infrastructure.[1][2]
+
+      That keeps routing, fallback, and provider-switching distinct from the application logic that consumes models.[1][2]
+    task_summaries:
+      - Provider routing shows up as a distinct operational layer in public gateway materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-litellm-home
+        title: LiteLLM Docs
+        canonical_uri: https://docs.litellm.ai/
+        snapshot_ref: snapshot-litellm-home
+      - citation_id: 2
+        source_id: source-litellm-repo
+        source_type: github
+        title: BerriAI/litellm
+        canonical_uri: https://github.com/BerriAI/litellm
+        snapshot_ref: snapshot-litellm-repo
+
+  - task_id: industry-eval-grounding
+    topic: Grounding and evaluation layer regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Which public materials describe grounding-focused evaluation?
+      - Why does evaluation stay separate from report formatting?
+    answered_questions:
+      - Which public materials describe grounding-focused evaluation?
+      - Why does evaluation stay separate from report formatting?
+    report_markdown: |
+      # Grounding and Evaluation Layer
+
+      Public evaluation guidance and framework materials emphasize grounded claims, evidence linkage, and reproducibility instead of report-shape-only scoring.[1][2]
+
+      That keeps evaluation tied to research quality signals rather than cosmetic document traits.[1][2]
+    task_summaries:
+      - Public evaluation materials separate grounded evidence quality from cosmetic report scoring.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-openai-evals
+        title: OpenAI Evals Design Guide
+        canonical_uri: https://platform.openai.com/docs/guides/evals
+        snapshot_ref: snapshot-openai-evals
+      - citation_id: 2
+        source_id: source-langsmith-evals
+        title: LangSmith Evaluation Concepts
+        canonical_uri: https://docs.smith.langchain.com/evaluation/concepts
+        snapshot_ref: snapshot-langsmith-evals
+
+  - task_id: industry-memory-context
+    topic: Memory and context management regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why is memory/context management a distinct design problem?
+      - Which public materials show context control and persistence explicitly?
+    answered_questions:
+      - Why is memory/context management a distinct design problem?
+      - Which public materials show context control and persistence explicitly?
+    report_markdown: |
+      # Memory and Context Management
+
+      Public framework and product materials treat context management and persistence as explicit design problems rather than invisible implementation details.[1][2]
+
+      That makes memory policy, persistence, and context control separate comparison axes in the broader agent stack.[1][2]
+    task_summaries:
+      - Memory and context management remain explicit design layers in public agent materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-langgraph-memory
+        title: LangGraph Memory Overview
+        canonical_uri: https://docs.langchain.com/langgraph/concepts/memory
+        snapshot_ref: snapshot-langgraph-memory
+      - citation_id: 2
+        source_id: source-anthropic-context
+        title: Context Windows and Prompting Overview
+        canonical_uri: https://docs.anthropic.com/en/docs/build-with-claude/context-windows
+        snapshot_ref: snapshot-anthropic-context
+
+  - task_id: industry-mcp-tooling
+    topic: MCP tooling integration regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why does tool integration show up as its own market concern?
+      - Which public materials make permissions and tool discovery explicit?
+    answered_questions:
+      - Why does tool integration show up as its own market concern?
+      - Which public materials make permissions and tool discovery explicit?
+    report_markdown: |
+      # MCP and Tool Integration
+
+      Public MCP and tool-use materials make tool discovery, permissions, and execution boundaries explicit design concerns in agent systems.[1][2]
+
+      That keeps tool integration separate from generic reasoning claims and highlights control-plane concerns.[1][2]
+    task_summaries:
+      - Public MCP and tool-use materials frame tool integration as a distinct systems concern.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-mcp-spec
+        title: Model Context Protocol Introduction
+        canonical_uri: https://modelcontextprotocol.io/introduction
+        snapshot_ref: snapshot-mcp-spec
+      - citation_id: 2
+        source_id: source-anthropic-tool-use
+        title: Anthropic Tool Use Overview
+        canonical_uri: https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview
+        snapshot_ref: snapshot-anthropic-tool-use
+
+  - task_id: industry-vector-database
+    topic: Vector database segment regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why is vector infrastructure still a visible segment?
+      - Which comparison axes stay visible in official materials?
+    answered_questions:
+      - Why is vector infrastructure still a visible segment?
+      - Which comparison axes stay visible in official materials?
+    report_markdown: |
+      # Vector Database Segment
+
+      Public vendor materials keep vector infrastructure visible as its own segment, with developer onboarding and deployment framing exposed in official docs.[1][2]
+
+      That supports comparison on infrastructure and workflow terms rather than only on downstream application outcomes.[1][2]
+    task_summaries:
+      - Vector infrastructure remains a visible public segment with its own onboarding and positioning signals.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-pinecone-docs-segment
+        title: Pinecone Docs
+        canonical_uri: https://docs.pinecone.io/
+        snapshot_ref: snapshot-pinecone-docs-segment
+      - citation_id: 2
+        source_id: source-weaviate-docs-segment
+        title: Weaviate Docs
+        canonical_uri: https://docs.weaviate.io/
+        snapshot_ref: snapshot-weaviate-docs-segment
+
+  - task_id: industry-observability
+    topic: LLM observability and tracing regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why does observability show up as a separate layer?
+      - Which public materials make tracing and diagnostics explicit?
+    answered_questions:
+      - Why does observability show up as a separate layer?
+      - Which public materials make tracing and diagnostics explicit?
+    report_markdown: |
+      # Observability and Tracing
+
+      Public observability materials make traces, spans, and diagnostic visibility explicit parts of AI system operation rather than hidden implementation details.[1][2]
+
+      That keeps observability separate from model quality and report wording in market-level analysis.[1][2]
+    task_summaries:
+      - Public observability materials frame tracing and diagnostics as distinct operational layers.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-opentelemetry-docs
+        title: OpenTelemetry Documentation
+        canonical_uri: https://opentelemetry.io/docs/
+        snapshot_ref: snapshot-opentelemetry-docs
+      - citation_id: 2
+        source_id: source-langsmith-observability
+        title: LangSmith Observability
+        canonical_uri: https://docs.smith.langchain.com/observability
+        snapshot_ref: snapshot-langsmith-observability
+
+  - task_id: industry-coding-agents
+    topic: Coding agent market regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Which public materials make coding agents visible as a segment?
+      - Which comparison axes stay visible across coding-agent offerings?
+    answered_questions:
+      - Which public materials make coding agents visible as a segment?
+      - Which comparison axes stay visible across coding-agent offerings?
+    report_markdown: |
+      # Coding Agent Segment
+
+      Public product and developer materials make coding agents visible as a distinct segment with workflow, tool-use, and review-surface differences.[1][2]
+
+      That supports segment analysis on integration and control-plane terms rather than treating all assistants as interchangeable.[1][2]
+    task_summaries:
+      - Coding agents are publicly positioned as a distinct workflow segment with visible integration differences.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-openai-codex
+        title: OpenAI Codex
+        canonical_uri: https://openai.com/codex/
+        snapshot_ref: snapshot-openai-codex
+      - citation_id: 2
+        source_id: source-anthropic-claude-code
+        title: Claude Code Overview
+        canonical_uri: https://docs.anthropic.com/en/docs/claude-code/overview
+        snapshot_ref: snapshot-anthropic-claude-code
+
+  - task_id: industry-document-ingest
+    topic: Document ingest and provenance regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why does ingest quality remain a visible workflow layer?
+      - Which public materials expose parsing or document-processing concerns?
+    answered_questions:
+      - Why does ingest quality remain a visible workflow layer?
+      - Which public materials expose parsing or document-processing concerns?
+    report_markdown: |
+      # Document Ingest Layer
+
+      Public retrieval and framework materials keep parsing, chunking, and document handling visible as a separate workflow concern.[1][2]
+
+      That makes ingest quality and provenance retention part of the research stack rather than an invisible preprocessing detail.[1][2]
+    task_summaries:
+      - Public materials keep parsing and provenance visible as a separate document-ingest layer.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-unstructured-home
+        title: Unstructured Documentation
+        canonical_uri: https://docs.unstructured.io/
+        snapshot_ref: snapshot-unstructured-home
+      - citation_id: 2
+        source_id: source-llamaindex-ingestion
+        title: LlamaIndex Ingestion Pipeline
+        canonical_uri: https://docs.llamaindex.ai/en/stable/module_guides/loading/ingestion_pipeline/
+        snapshot_ref: snapshot-llamaindex-ingestion
+
+  - task_id: industry-governance-policy
+    topic: Governance and source policy regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why do source policy and governance remain explicit system layers?
+      - Which public materials describe permissions or safety boundaries?
+    answered_questions:
+      - Why do source policy and governance remain explicit system layers?
+      - Which public materials describe permissions or safety boundaries?
+    report_markdown: |
+      # Governance and Source Policy
+
+      Public protocol and tool-use materials show permissions, safety boundaries, and policy enforcement as explicit system concerns.[1][2]
+
+      That keeps governance attached to connectors and execution policy rather than burying it inside synthesis prompts.[1][2]
+    task_summaries:
+      - Public integration materials keep permissions and policy visible as first-class system layers.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-mcp-governance
+        title: Model Context Protocol Introduction
+        canonical_uri: https://modelcontextprotocol.io/introduction
+        snapshot_ref: snapshot-mcp-governance
+      - citation_id: 2
+        source_id: source-openai-safety
+        title: OpenAI Agents Guide
+        canonical_uri: https://platform.openai.com/docs/guides/agents
+        snapshot_ref: snapshot-openai-safety
+
+  - task_id: industry-durable-runtime
+    topic: Durable runtime and recovery regression
+    source_profile: industry_broad
+    research_profile: eval_regression
+    required_questions:
+      - Why does durable runtime remain a separate comparison axis?
+      - Which public materials make recovery or state handling explicit?
+    answered_questions:
+      - Why does durable runtime remain a separate comparison axis?
+      - Which public materials make recovery or state handling explicit?
+    report_markdown: |
+      # Durable Runtime and Recovery
+
+      Public orchestration materials make state handling, resumability, and durable execution explicit parts of the runtime story.[1][2]
+
+      That keeps recovery semantics visible as a control-plane comparison axis instead of treating them as incidental implementation details.[1][2]
+    task_summaries:
+      - Public orchestration materials keep durable execution and recovery visible as a runtime layer.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-langgraph-persistence
+        title: LangGraph Persistence
+        canonical_uri: https://docs.langchain.com/langgraph/concepts/persistence
+        snapshot_ref: snapshot-langgraph-persistence
+      - citation_id: 2
+        source_id: source-langgraph-overview-runtime
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        snapshot_ref: snapshot-langgraph-overview-runtime

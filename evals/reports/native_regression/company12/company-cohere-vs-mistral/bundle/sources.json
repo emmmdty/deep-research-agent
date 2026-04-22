@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-cohere-home-compare",
+      "snapshot_id": "snapshot-cohere-home-compare",
+      "title": "Cohere",
+      "canonical_uri": "https://cohere.com/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-mistral-home-compare",
+      "snapshot_id": "snapshot-mistral-home-compare",
+      "title": "Mistral AI",
+      "canonical_uri": "https://mistral.ai/"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-cohere-home-compare",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Cohere",
+      "canonical_uri": "https://cohere.com/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-cohere-home-compare",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-mistral-home-compare",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Mistral AI",
+      "canonical_uri": "https://mistral.ai/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-mistral-home-compare",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-cohere-home-compare",
+      "canonical_uri": "https://cohere.com/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "9c114c76f37d1cc9771e060f15a40f9f53e40babb2ebb2bf2a3709f48f0ac939",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-mistral-home-compare",
+      "canonical_uri": "https://mistral.ai/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "fe6628dbf997b521a9d18f08fd225532af69b9a662f4ecb3416a80f3dfab1394",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

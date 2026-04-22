@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-trusted-rag-paper",
+      "snapshot_id": "snapshot-trusted-rag-paper",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "canonical_uri": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "trusted-rag-paper-file-1",
+      "snapshot_id": "trusted-rag-paper-file-snapshot-1",
+      "title": "retrieval_notes.md",
+      "canonical_uri": "repo:///evals/datasets/files/retrieval_notes.md"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-trusted-rag-paper",
+      "citation_id": 1,
+      "source_type": "arxiv",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "canonical_uri": "https://arxiv.org/abs/2005.11401",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-trusted-rag-paper",
+      "metadata": {}
+    },
+    {
+      "source_id": "trusted-rag-paper-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "retrieval_notes.md",
+      "canonical_uri": "repo:///evals/datasets/files/retrieval_notes.md",
+      "query": "Trusted RAG paper regression",
+      "selected": true,
+      "snapshot_ref": "trusted-rag-paper-file-snapshot-1",
+      "metadata": {
+        "file_path": "evals/datasets/files/retrieval_notes.md"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-trusted-rag-paper",
+      "canonical_uri": "https://arxiv.org/abs/2005.11401",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "06665e5ce4166b39465b26f8c8d0e52eebaa2683bc9c6c37c6592f9f886c36a4",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "arxiv",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "trusted-rag-paper-file-snapshot-1",
+      "canonical_uri": "repo:///evals/datasets/files/retrieval_notes.md",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "120abb449a951419ebc1abd722a990f54e975acab9758d321ceda6f109f53e65",
+      "mime_type": "text/markdown",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "retrieval_notes.md",
+        "file_path": "evals/datasets/files/retrieval_notes.md"
+      }
+    }
+  ]
+}

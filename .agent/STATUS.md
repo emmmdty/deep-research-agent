@@ -1,11 +1,11 @@
 # Run Status
 
 ## Static run info
-- run_id: execute-20260421T114914Z
+- run_id: execute-20260422T142935Z-native-regression
 - main_repo_abs: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_branch: main
 - worktrees_root: ../_codex_worktrees
-- started_at: 2026-04-21T11:49:14Z
+- started_at: 2026-04-22T14:29:35Z
 - codex_model: gpt-5.4
 - codex_reasoning_effort: medium
 - sandbox_mode: danger-full-access
@@ -22,37 +22,64 @@
 - api_smoke: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py
 - cli_smoke: UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help
 - eval_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json
+- native_regression_runner: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json
+- native_summary_builder: UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json
 - test_collect: UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: phase6_finalize
-- current_phase_slug: phase6-finalize
+- current_phase: native_regression_expansion
+- current_phase_slug: native-regression-expansion
 - current_attempt: 1
 - last_successful_phase: phase6_finalize
-- overall_state: completed
+- overall_state: validation_passed_pending_merge
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- active_branch: codex/native-regression-expansion/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/native-regression-expansion-attempt-1
 - main_clean_before_phase: yes
-- main_baseline_commit: 4a7995b6eec6d47a2d84efba750fcd53e55f418c
-- post_merge_smoke_status:
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
-  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase1_structure_rebuild.py tests/test_phase5_evals.py tests/test_release_gate.py tests/test_release_runner.py tests/test_phase2_jobs.py tests/test_phase2_providers.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py tests/test_basic.py tests/test_scripts.py` -> pass (98 passed)
-  - CLI demo (`submit --no-worker` + `status --json`) -> pass
-  - API demo (`POST /v1/research/jobs` -> `202`, `GET /v1/research/jobs/{job_id}` -> `200`) -> pass
-  - final handoff doc checks -> pass
-  - repo-scoped artifact path check (`repo:///` in committed file suites) -> pass
-  - `git status --short` -> clean
+- main_baseline_commit: 6b2739860070f6943bc6dc2ba84951abf319957e
+- baseline_verification_status:
+  - `git status --short` on `main` -> clean
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --output-root /tmp/native_plan_baseline/company12 --json` -> pass (`variant=smoke_local`, `task_count=1`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root /tmp/native_plan_baseline/release --json` -> pass (`release_gate.status=passed`)
+  - worktree bootstrap: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - worktree bootstrap: `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_cli_runtime.py` -> pass (15 passed)
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
-- missing_assets: none in the current main worktree
+- missing_assets: `.env`, `.venv`, `workspace/`, `venv_gptr/`, `.codex/config.toml` were absent in the fresh native-regression worktree before bootstrap
 - recreated_assets:
 - symlinked_assets:
+  - `.env` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.env`
+  - `.venv` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.venv`
+  - `workspace/` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace`
+  - `venv_gptr/` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr`
+  - `.codex/config.toml` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.codex/config.toml`
 - copied_assets:
-- blockers_from_local_assets: none in the current main worktree; phase worktrees bootstrap local-only assets as needed and remove those symlinks before cleanup
+- blockers_from_local_assets: none; the native-regression worktree has the required local-only assets via temporary symlinks that will be removed before cleanup
+
+## Native regression expansion
+- status: implementation complete in the phase worktree; required validation passed and merge/cleanup is next
+- key_outputs:
+  - `evals/reports/native_regression/release_manifest.json`
+  - `evals/reports/native_regression/native_summary.json`
+  - `evals/reports/native_regression/RESULTS.md`
+  - `docs/benchmarks/native/README.md`
+  - `docs/benchmarks/native/NATIVE_SCORECARD.md`
+  - `docs/benchmarks/native/CASEBOOK.md`
+- validation_passes:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_native_regression_pack.py tests/test_cli_runtime.py tests/test_release_gate.py tests/test_release_runner.py` -> pass (24 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --variant smoke_local --output-root /tmp/native_regression_validation/company12_smoke --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --variant regression_local --output-root /tmp/native_regression_validation/company12_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_regression_validation/industry12_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite trusted8 --variant regression_local --output-root /tmp/native_regression_validation/trusted8_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite file8 --variant regression_local --output-root /tmp/native_regression_validation/file8_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite recovery6 --variant regression_local --output-root /tmp/native_regression_validation/recovery6_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json` -> pass
 
 ## Phase ledger
 

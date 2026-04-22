@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-competitor-matrix-claim-1",
+      "text": "Public orchestration documentation and a private competitor matrix can be combined without blurring public and private provenance.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-competitor-matrix-file-evidence-1",
+        "file-competitor-matrix-evidence-2"
+      ]
+    }
+  ]
+}

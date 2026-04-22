@@ -55,14 +55,18 @@ uv run python main.py eval run --suite industry12 --output-root evals/reports/ph
 uv run python main.py eval run --suite trusted8 --output-root evals/reports/phase5_local_smoke/trusted8 --json
 uv run python main.py eval run --suite file8 --output-root evals/reports/phase5_local_smoke/file8 --json
 uv run python main.py eval run --suite recovery6 --output-root evals/reports/phase5_local_smoke/recovery6 --json
+uv run python main.py eval run --suite company12 --variant regression_local --output-root evals/reports/native_regression/company12 --json
 ```
 
 `eval run` uses the canonical `evals/` tree:
 
 - `evals/suites/` for suite metadata and thresholds
-- `evals/datasets/` for frozen local smoke fixtures
+- `evals/datasets/` for frozen local smoke and regression fixtures
 - `evals/rubrics/` for rubric metadata
 - `evals/reports/` for saved summaries and release manifests
+
+`smoke_local` remains the authoritative merge-safe gate.
+`regression_local` expands deterministic native coverage for reviewer-facing regression runs.
 
 ### Local release smoke
 
@@ -71,6 +75,15 @@ uv run python scripts/run_local_release_smoke.py --output-root evals/reports/pha
 ```
 
 This command runs the Phase 5 local smoke pack, writes suite summaries plus `release_manifest.json`, and evaluates the current `configs/release_gate.yaml` checklist against saved evidence.
+
+### Native regression summary pack
+
+```bash
+uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json
+uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json
+```
+
+These commands generate the wider deterministic native regression surface without replacing the release smoke gate.
 
 ### Local HTTP API
 
@@ -167,6 +180,8 @@ uv run python main.py --help
 
 ```bash
 uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json
+uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json
+uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json
 ```
 
 ## Practical Smoke Flow
@@ -218,6 +233,7 @@ curl -s http://127.0.0.1:8000/v1/research/jobs \
 - The public API is local and deterministic, not server-grade.
 - The older benchmark/comparator scripts remain valid as diagnostics, but they are not sufficient release proof on their own.
 - The canonical Phase 5 release surface is the local suite manifest under `evals/reports/phase5_local_smoke/`.
+- The broader deterministic native regression layer lives under `evals/reports/native_regression/` and `docs/benchmarks/native/`.
 - Some agent sandboxes can hang on FastAPI/Starlette `TestClient` requests even when the repository code is healthy. If a sandboxed `uv run pytest -q` or `tests/test_phase4_surfaces.py` run stalls around `client.post("/v1/research/jobs", ...)`, rerun the same command in a normal local terminal or outside the sandbox before treating it as a code regression.
 - When that sandbox-only hang happens, leftover "background terminal running" entries are usually just stale diagnostic/sandbox sessions. If host-level `ps` shows they are the stuck sandboxed pytest/debug commands, they are safe to stop.
 

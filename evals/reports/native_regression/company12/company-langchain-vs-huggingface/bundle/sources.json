@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-langgraph-overview-compare",
+      "snapshot_id": "snapshot-langgraph-overview-compare",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-hf-docs-compare",
+      "snapshot_id": "snapshot-hf-docs-compare",
+      "title": "Hugging Face Docs",
+      "canonical_uri": "https://huggingface.co/docs"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-langgraph-overview-compare",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-langgraph-overview-compare",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-hf-docs-compare",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Hugging Face Docs",
+      "canonical_uri": "https://huggingface.co/docs",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-hf-docs-compare",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-langgraph-overview-compare",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "df6da079d5717bd10c3ce20aafa3066409587f66ddc82755f81c22accbbad29a",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-hf-docs-compare",
+      "canonical_uri": "https://huggingface.co/docs",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "f90dda176f0106337ff37289e3934a54e469fa47b480187c01753929315a2d49",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

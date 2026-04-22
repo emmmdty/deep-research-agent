@@ -1,0 +1,42 @@
+variant: regression_local
+scenarios:
+  - scenario_id: cancel_created_job
+    title: cancel before worker spawn
+    description: Cancel a created job before any worker lease is acquired.
+    check_ids:
+      - final_status_cancelled
+      - no_worker_spawned
+  - scenario_id: retry_failed_job
+    title: retry preserves lineage
+    description: Retry a failed job into a new attempt while keeping retry lineage and stage intent visible.
+    check_ids:
+      - retry_of_linked
+      - attempt_index_incremented
+      - new_job_created
+  - scenario_id: resume_failed_job
+    title: resume same job from checkpoint
+    description: Resume the same failed job from its latest checkpoint instead of forking a new job id.
+    check_ids:
+      - same_job_resumed
+      - checkpoint_restored
+      - error_cleared
+  - scenario_id: refine_failed_job
+    title: refine returns to safe stage
+    description: Record a refinement request and move the failed job back to the safe planning boundary.
+    check_ids:
+      - safe_stage_selected
+      - refinement_history_recorded
+      - follow_up_query_seeded
+  - scenario_id: stale_recovery
+    title: stale worker recovery
+    description: Detect a stale worker, clear the old lease, restore the checkpoint, and respawn deterministically.
+    check_ids:
+      - stale_job_detected
+      - worker_lease_cleared
+      - worker_respawned
+  - scenario_id: idle_created_noop
+    title: idle created job is not misdetected
+    description: Leave an idle created job untouched when no worker lease or heartbeat exists.
+    check_ids:
+      - no_false_positive_recovery
+      - no_worker_spawned

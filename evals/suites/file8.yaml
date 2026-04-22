@@ -14,3 +14,8 @@ thresholds:
     min: 0.95
   file_input_success_rate:
     min: 1.0
+variants:
+  regression_local:
+    description: Deterministic mixed public/private regression suite.
+    dataset_path: evals/datasets/file8.regression.yaml
+    rubric_path: evals/rubrics/file_research_regression.yaml

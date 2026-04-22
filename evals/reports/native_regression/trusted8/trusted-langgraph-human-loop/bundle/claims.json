@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-human-loop-claim-1",
+      "text": "Trusted LangGraph human-in-the-loop materials and the approved audit playbook keep review boundaries explicit and provenance-safe.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-human-loop-file-evidence-1",
+        "trusted-langgraph-human-loop-evidence-2"
+      ]
+    }
+  ]
+}

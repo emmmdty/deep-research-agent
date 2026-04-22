@@ -4,6 +4,9 @@ This directory documents the layered benchmark portfolio that now sits next to t
 
 ## Reviewer entrypoints
 
+- [Native benchmark overview](./native/README.md)
+- [Native scorecard](./native/NATIVE_SCORECARD.md)
+- [Native casebook](./native/CASEBOOK.md)
 - [Portfolio overview](./PORTFOLIO.md)
 - [Portfolio summary README](../../evals/external/reports/portfolio_summary/README.md)
 - [Portfolio summary JSON](../../evals/external/reports/portfolio_summary/portfolio_summary.json)
@@ -20,6 +23,7 @@ This directory documents the layered benchmark portfolio that now sits next to t
 ## Current layering
 
 - authoritative release gate: native Phase 5 local smoke suites under `evals/reports/phase5_local_smoke/`
+- reviewer-facing native regression: deterministic `regression_local` suites under `evals/reports/native_regression/`
 - secondary regression: FACTS Grounding open smoke
 - external regression: LongFact / SAFE smoke and LongBench v2 short smoke
 - challenge track: BrowseComp guarded smoke, GAIA supported subset, and LongBench v2 medium/long challenge policy

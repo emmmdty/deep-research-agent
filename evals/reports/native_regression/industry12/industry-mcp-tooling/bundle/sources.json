@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-mcp-spec",
+      "snapshot_id": "snapshot-mcp-spec",
+      "title": "Model Context Protocol Introduction",
+      "canonical_uri": "https://modelcontextprotocol.io/introduction"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-anthropic-tool-use",
+      "snapshot_id": "snapshot-anthropic-tool-use",
+      "title": "Anthropic Tool Use Overview",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-mcp-spec",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Model Context Protocol Introduction",
+      "canonical_uri": "https://modelcontextprotocol.io/introduction",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-mcp-spec",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-anthropic-tool-use",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Anthropic Tool Use Overview",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-anthropic-tool-use",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-mcp-spec",
+      "canonical_uri": "https://modelcontextprotocol.io/introduction",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "402ee8ce3982e201d2e8ee1a1fbd48a4fb87615bd7367d799f69a0e5b07ca21c",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-anthropic-tool-use",
+      "canonical_uri": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "7baa7259cfebc7a8c75797761843586ad009c3b6391696986c965b4b2271f124",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

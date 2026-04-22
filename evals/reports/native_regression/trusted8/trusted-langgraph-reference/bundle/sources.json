@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-trusted-reference",
+      "snapshot_id": "snapshot-trusted-reference",
+      "title": "LangGraph Reference",
+      "canonical_uri": "https://reference.langchain.com/python/langgraph/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "trusted-langgraph-reference-file-1",
+      "snapshot_id": "trusted-langgraph-reference-file-snapshot-1",
+      "title": "trusted_brief.md",
+      "canonical_uri": "repo:///evals/datasets/files/trusted_brief.md"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-trusted-reference",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Reference",
+      "canonical_uri": "https://reference.langchain.com/python/langgraph/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-trusted-reference",
+      "metadata": {}
+    },
+    {
+      "source_id": "trusted-langgraph-reference-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "trusted_brief.md",
+      "canonical_uri": "repo:///evals/datasets/files/trusted_brief.md",
+      "query": "Trusted LangGraph reference regression",
+      "selected": true,
+      "snapshot_ref": "trusted-langgraph-reference-file-snapshot-1",
+      "metadata": {
+        "file_path": "evals/datasets/files/trusted_brief.md"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-trusted-reference",
+      "canonical_uri": "https://reference.langchain.com/python/langgraph/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "5d6431e466c2282d210b0245095d557041ababe06580b0773fc26ab917907aa4",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "trusted-langgraph-reference-file-snapshot-1",
+      "canonical_uri": "repo:///evals/datasets/files/trusted_brief.md",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "4a64282dea022b02bcbc02ddfe6ff2c1b6bad28e5f74693c85f035f8314a7912",
+      "mime_type": "text/markdown",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "trusted_brief.md",
+        "file_path": "evals/datasets/files/trusted_brief.md"
+      }
+    }
+  ]
+}

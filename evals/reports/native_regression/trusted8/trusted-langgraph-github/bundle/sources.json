@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-trusted-github",
+      "snapshot_id": "snapshot-trusted-github",
+      "title": "langchain-ai/langgraph",
+      "canonical_uri": "https://github.com/langchain-ai/langgraph"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "trusted-langgraph-github-file-1",
+      "snapshot_id": "trusted-langgraph-github-file-snapshot-1",
+      "title": "governance_checklist.md",
+      "canonical_uri": "repo:///evals/datasets/files/governance_checklist.md"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-trusted-github",
+      "citation_id": 1,
+      "source_type": "github",
+      "title": "langchain-ai/langgraph",
+      "canonical_uri": "https://github.com/langchain-ai/langgraph",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-trusted-github",
+      "metadata": {}
+    },
+    {
+      "source_id": "trusted-langgraph-github-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "governance_checklist.md",
+      "canonical_uri": "repo:///evals/datasets/files/governance_checklist.md",
+      "query": "Trusted GitHub runtime regression",
+      "selected": true,
+      "snapshot_ref": "trusted-langgraph-github-file-snapshot-1",
+      "metadata": {
+        "file_path": "evals/datasets/files/governance_checklist.md"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-trusted-github",
+      "canonical_uri": "https://github.com/langchain-ai/langgraph",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "e6e96bc6f01ac10aec4d9b93ddfcf39f0cffd5b689cd8fa338fed8b7801e64e4",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "github",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "trusted-langgraph-github-file-snapshot-1",
+      "canonical_uri": "repo:///evals/datasets/files/governance_checklist.md",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "f115cc697c93642da773c8679ef380010928dc5f251780d35cd29c8ac1630ba2",
+      "mime_type": "text/markdown",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "governance_checklist.md",
+        "file_path": "evals/datasets/files/governance_checklist.md"
+      }
+    }
+  ]
+}

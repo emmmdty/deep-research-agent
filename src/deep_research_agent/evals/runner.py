@@ -15,16 +15,18 @@ from deep_research_agent.connectors.files import LocalFileIngestor as CanonicalL
 from deep_research_agent.connectors.models import ConnectorFetchResult
 from deep_research_agent.evals.contracts import (
     EVAL_SUITE_NAMES,
+    EVAL_VARIANT_NAMES,
     EvalClaimSpec,
     EvalDataset,
     EvalEdgeSpec,
+    EvalScenarioSpec,
     EvalSourceSpec,
     EvalSuiteDefinition,
     EvalTaskSpec,
 )
 from deep_research_agent.research_jobs import ResearchJobOrchestrator, ResearchJobService
-from deep_research_agent.research_jobs.models import JobRuntimeRecord
-from legacy.workflows.states import CriticFeedback, ReportArtifact, RunMetrics, SourceRecord, TaskItem
+from deep_research_agent.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
+from legacy.workflows.states import CriticFeedback, ReportArtifact, ResearchState, RunMetrics, SourceRecord, TaskItem
 from policies import load_source_policy
 
 
@@ -46,11 +48,50 @@ RESEARCH_METRIC_ORDER = (
     "file_input_success_rate",
     "conflict_detection_recall",
 )
+DEFAULT_RELIABILITY_SCENARIOS: dict[str, EvalScenarioSpec] = {
+    "cancel_created_job": EvalScenarioSpec(
+        scenario_id="cancel_created_job",
+        title="cancel before worker spawn",
+        description="Cancel a freshly created job before any worker lease exists.",
+        check_ids=["final_status_cancelled", "no_worker_spawned"],
+    ),
+    "retry_failed_job": EvalScenarioSpec(
+        scenario_id="retry_failed_job",
+        title="retry preserves lineage",
+        description="Retry a failed job into a new attempt while preserving retry_of lineage.",
+        check_ids=["retry_of_linked", "attempt_index_incremented", "new_job_created"],
+    ),
+    "resume_failed_job": EvalScenarioSpec(
+        scenario_id="resume_failed_job",
+        title="resume same job from checkpoint",
+        description="Resume the same failed job from its latest checkpoint and clear prior error state.",
+        check_ids=["same_job_resumed", "checkpoint_restored", "error_cleared"],
+    ),
+    "refine_failed_job": EvalScenarioSpec(
+        scenario_id="refine_failed_job",
+        title="refine returns to safe stage",
+        description="Record a refinement request and restart the failed job at the refinement-safe stage.",
+        check_ids=["safe_stage_selected", "refinement_history_recorded", "follow_up_query_seeded"],
+    ),
+    "stale_recovery": EvalScenarioSpec(
+        scenario_id="stale_recovery",
+        title="stale worker recovery",
+        description="Fence a stale worker lease, restore the latest checkpoint, and respawn the job deterministically.",
+        check_ids=["stale_job_detected", "worker_lease_cleared", "worker_respawned"],
+    ),
+    "idle_created_noop": EvalScenarioSpec(
+        scenario_id="idle_created_noop",
+        title="idle created job is not misdetected",
+        description="Leave an idle created job untouched when no worker lease or heartbeat exists.",
+        check_ids=["no_false_positive_recovery", "no_worker_spawned"],
+    ),
+}
 
 
 def run_eval_suite(
     *,
     suite_name: str,
+    variant: str = "smoke_local",
     output_root: str | Path | None = None,
     capture_runtime_metrics: bool = False,
 ) -> dict[str, Any]:
@@ -58,16 +99,23 @@ def run_eval_suite(
 
     if suite_name not in EVAL_SUITE_NAMES:
         raise ValueError(f"unsupported eval suite: {suite_name}")
+    if variant not in EVAL_VARIANT_NAMES:
+        raise ValueError(f"unsupported eval variant: {variant}")
     suite = _load_suite_definition(suite_name)
-    dataset = _load_dataset(suite)
+    resolved_suite = _resolve_suite_variant(suite, variant=variant)
+    dataset = _load_dataset(resolved_suite["dataset_path"])
+    if dataset.variant != variant:
+        raise ValueError(
+            f"dataset variant mismatch for {suite_name}: expected {variant}, got {dataset.variant}"
+        )
     suite_output_root = Path(output_root or DEFAULT_REPORTS_ROOT / suite_name).resolve()
     suite_output_root.mkdir(parents=True, exist_ok=True)
 
     if suite.executor == "reliability_fixture":
-        result = _run_reliability_suite(suite, dataset, suite_output_root)
+        result = _run_reliability_suite(resolved_suite, dataset, suite_output_root)
     else:
         result = _run_research_fixture_suite(
-            suite,
+            resolved_suite,
             dataset,
             suite_output_root,
             capture_runtime_metrics=capture_runtime_metrics,
@@ -88,16 +136,50 @@ def _load_suite_definition(suite_name: str) -> EvalSuiteDefinition:
     return EvalSuiteDefinition.model_validate(payload)
 
 
-def _load_dataset(suite: EvalSuiteDefinition) -> EvalDataset:
-    if suite.dataset_path is None:
+def _load_dataset(dataset_path: str | None) -> EvalDataset:
+    if dataset_path is None:
         return EvalDataset()
-    path = (PROJECT_ROOT / suite.dataset_path).resolve()
+    path = (PROJECT_ROOT / dataset_path).resolve()
     payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     return EvalDataset.model_validate(payload)
 
 
-def _run_research_fixture_suite(
+def _resolve_suite_variant(
     suite: EvalSuiteDefinition,
+    *,
+    variant: str,
+) -> dict[str, Any]:
+    variant_definition = suite.variants.get(variant)
+    if variant_definition is None and variant != "smoke_local":
+        raise ValueError(f"unsupported eval variant for {suite.suite_name}: {variant}")
+    return {
+        "suite_name": suite.suite_name,
+        "executor": suite.executor,
+        "description": (
+            variant_definition.description
+            if variant_definition is not None and variant_definition.description is not None
+            else suite.description
+        ),
+        "dataset_path": (
+            variant_definition.dataset_path
+            if variant_definition is not None and variant_definition.dataset_path is not None
+            else suite.dataset_path
+        ),
+        "rubric_path": (
+            variant_definition.rubric_path
+            if variant_definition is not None and variant_definition.rubric_path is not None
+            else suite.rubric_path
+        ),
+        "thresholds": (
+            variant_definition.thresholds
+            if variant_definition is not None and variant_definition.thresholds
+            else suite.thresholds
+        ),
+    }
+
+
+def _run_research_fixture_suite(
+    suite: dict[str, Any],
     dataset: EvalDataset,
     suite_output_root: Path,
     *,
@@ -112,17 +194,17 @@ def _run_research_fixture_suite(
         for task in dataset.tasks
     ]
     metrics = _aggregate_research_metrics(task_results)
-    threshold_results = _evaluate_thresholds(metrics, suite.thresholds)
+    threshold_results = _evaluate_thresholds(metrics, suite["thresholds"])
     status = "passed" if all(item["passed"] for item in threshold_results.values()) else "failed"
     return {
-        "suite_name": suite.suite_name,
-        "description": suite.description,
+        "suite_name": suite["suite_name"],
+        "description": suite["description"],
         "variant": dataset.variant,
         "status": status,
         "task_count": len(task_results),
         "metrics": metrics,
         "threshold_results": threshold_results,
-        "rubric_path": suite.rubric_path,
+        "rubric_path": suite["rubric_path"],
         "tasks": task_results,
     }
 
@@ -291,6 +373,8 @@ def _run_research_task(
     return {
         "task_id": task.task_id,
         "job_id": task.task_id,
+        "topic": task.topic,
+        "description": task.topic,
         "status": final_job.status,
         "audit_gate_status": getattr(final_job.audit_gate_status, "value", str(final_job.audit_gate_status)),
         "report_path": _display_path(stable_paths["report_path"]),
@@ -301,7 +385,7 @@ def _run_research_task(
 
 
 def _run_reliability_suite(
-    suite: EvalSuiteDefinition,
+    suite: dict[str, Any],
     dataset: EvalDataset,
     suite_output_root: Path,
 ) -> dict[str, Any]:
@@ -311,44 +395,29 @@ def _run_reliability_suite(
         workspace_dir=str(workspace_dir),
         spawn_worker_fn=lambda job_id: spawned_jobs.append(job_id),
     )
-    scenarios = {}
+    scenarios = {
+        "cancel_created_job": _exercise_cancel_created_job(service=service, spawned_jobs=spawned_jobs),
+        "retry_failed_job": _exercise_retry_failed_job(service=service),
+        "resume_failed_job": _exercise_resume_failed_job(service=service),
+        "refine_failed_job": _exercise_refine_failed_job(service=service),
+        "stale_recovery": _exercise_stale_recovery(service=service, spawned_jobs=spawned_jobs),
+        "idle_created_noop": _exercise_idle_created_noop(service=service, spawned_jobs=spawned_jobs),
+    }
 
-    created = service.submit(topic="cancel scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    cancelled = service.cancel(created.job_id)
-    scenarios["cancel_created_job"] = cancelled.status == "cancelled"
-
-    retried_base = service.submit(topic="retry scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    service.store.update_job_status(retried_base.job_id, status="failed", current_stage="failed", error="boom")
-    retried = service.retry(retried_base.job_id, start_worker=False)
-    scenarios["retry_failed_job"] = retried.retry_of == retried_base.job_id and retried.attempt_index == 2
-
-    resumed_base = service.submit(topic="resume scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    service.store.update_job_status(resumed_base.job_id, status="failed", current_stage="failed", error="boom")
-    resumed = service.resume(resumed_base.job_id, start_worker=False)
-    scenarios["resume_failed_job"] = resumed.job_id == resumed_base.job_id and resumed.status == "created"
-
-    refined_base = service.submit(topic="refine scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    service.store.update_job_status(refined_base.job_id, status="failed", current_stage="failed", error="boom")
-    refined = service.refine(refined_base.job_id, "Expand the evidence map.", start_worker=False)
-    scenarios["refine_failed_job"] = refined.current_stage == "planned"
-
-    stale_job = service.submit(topic="stale recovery scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    service.store.update_job_status(stale_job.job_id, status="running", current_stage="collecting")
-    service.store.acquire_worker_lease(stale_job.job_id, worker_pid=43210, lease_id="lease-stale")
-    stale_heartbeat = (datetime.now(timezone.utc) - timedelta(seconds=3600)).isoformat()
-    service.store.update_job(stale_job.job_id, last_heartbeat_at=stale_heartbeat)
-    recovered_jobs = service.recover_stale_jobs()
-    scenarios["stale_recovery"] = any(item.job_id == stale_job.job_id for item in recovered_jobs) and stale_job.job_id in spawned_jobs
-
-    idle_job = service.submit(topic="idle noop scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    idle_recovered = service.recover_stale_jobs()
-    scenarios["idle_created_noop"] = all(item.job_id != idle_job.job_id for item in idle_recovered)
-
-    scenario_order = dataset.scenarios or list(scenarios)
-    ordered_results = [
-        {"scenario_id": scenario_id, "passed": bool(scenarios.get(scenario_id, False))}
-        for scenario_id in scenario_order
-    ]
+    scenario_specs = _resolve_reliability_scenarios(dataset)
+    ordered_results = []
+    for spec in scenario_specs:
+        payload = scenarios.get(spec.scenario_id, {"passed": False, "details": {}})
+        ordered_results.append(
+            {
+                "scenario_id": spec.scenario_id,
+                "title": spec.title,
+                "description": spec.description,
+                "check_ids": list(spec.check_ids),
+                "passed": bool(payload.get("passed", False)),
+                "details": _normalize_reliability_details(spec.scenario_id, dict(payload.get("details") or {})),
+            }
+        )
     metrics = {
         "completion_rate": _scenario_rate(ordered_results),
         "cancel_success_rate": _scenario_rate(ordered_results, "cancel_created_job"),
@@ -359,19 +428,214 @@ def _run_reliability_suite(
         "idle_skip_rate": _scenario_rate(ordered_results, "idle_created_noop"),
     }
     shutil.rmtree(workspace_dir, ignore_errors=True)
-    threshold_results = _evaluate_thresholds(metrics, suite.thresholds)
+    threshold_results = _evaluate_thresholds(metrics, suite["thresholds"])
     status = "passed" if all(item["passed"] for item in threshold_results.values()) else "failed"
     return {
-        "suite_name": suite.suite_name,
-        "description": suite.description,
+        "suite_name": suite["suite_name"],
+        "description": suite["description"],
         "variant": dataset.variant,
         "status": status,
         "task_count": len(ordered_results),
         "metrics": metrics,
         "threshold_results": threshold_results,
-        "rubric_path": suite.rubric_path,
+        "rubric_path": suite["rubric_path"],
         "tasks": ordered_results,
     }
+
+
+def _resolve_reliability_scenarios(dataset: EvalDataset) -> list[EvalScenarioSpec]:
+    if not dataset.scenarios:
+        return [DEFAULT_RELIABILITY_SCENARIOS[key] for key in DEFAULT_RELIABILITY_SCENARIOS]
+    scenario_specs: list[EvalScenarioSpec] = []
+    for item in dataset.scenarios:
+        if isinstance(item, str):
+            scenario_specs.append(DEFAULT_RELIABILITY_SCENARIOS.get(item, EvalScenarioSpec(scenario_id=item, title=item)))
+        else:
+            scenario_specs.append(item)
+    return scenario_specs
+
+
+def _exercise_cancel_created_job(*, service: ResearchJobService, spawned_jobs: list[str]) -> dict[str, Any]:
+    created = service.submit(topic="cancel scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+    cancelled = service.cancel(created.job_id)
+    details = {
+        "base_job_id": created.job_id,
+        "final_status": _enum_value(cancelled.status),
+        "final_stage": _enum_value(cancelled.current_stage),
+        "cancel_requested": bool(cancelled.cancel_requested),
+        "spawned_worker_count": len(spawned_jobs),
+    }
+    passed = (
+        details["final_status"] == "cancelled"
+        and details["final_stage"] == "cancelled"
+        and details["cancel_requested"] is True
+        and details["spawned_worker_count"] == 0
+    )
+    return {"passed": passed, "details": details}
+
+
+def _exercise_retry_failed_job(*, service: ResearchJobService) -> dict[str, Any]:
+    retried_base = service.submit(topic="retry scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+    checkpoint = _seed_checkpoint(service, retried_base.job_id, next_stage=RuntimeStage.COLLECTING, state_status="collecting")
+    service.store.update_job_status(retried_base.job_id, status="failed", current_stage="failed", error="boom")
+    retried = service.retry(retried_base.job_id, start_worker=False)
+    details = {
+        "base_job_id": retried_base.job_id,
+        "derived_job_id": retried.job_id,
+        "retry_of": retried.retry_of,
+        "attempt_index": retried.attempt_index,
+        "current_stage": _enum_value(retried.current_stage),
+        "seed_checkpoint_id": checkpoint.checkpoint_id,
+    }
+    passed = (
+        details["retry_of"] == details["base_job_id"]
+        and details["attempt_index"] == 2
+        and details["derived_job_id"] != details["base_job_id"]
+        and details["current_stage"] == "collecting"
+    )
+    return {"passed": passed, "details": details}
+
+
+def _exercise_resume_failed_job(*, service: ResearchJobService) -> dict[str, Any]:
+    resumed_base = service.submit(topic="resume scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+    checkpoint = _seed_checkpoint(service, resumed_base.job_id, next_stage=RuntimeStage.EXTRACTING, state_status="extracting")
+    service.store.update_job_status(resumed_base.job_id, status="failed", current_stage="failed", error="boom")
+    resumed = service.resume(resumed_base.job_id, start_worker=False)
+    details = {
+        "base_job_id": resumed_base.job_id,
+        "resumed_job_id": resumed.job_id,
+        "active_checkpoint_id": resumed.active_checkpoint_id,
+        "current_stage": _enum_value(resumed.current_stage),
+        "error_cleared": resumed.error is None,
+        "seed_checkpoint_id": checkpoint.checkpoint_id,
+    }
+    passed = (
+        details["resumed_job_id"] == details["base_job_id"]
+        and details["active_checkpoint_id"] == checkpoint.checkpoint_id
+        and details["current_stage"] == "extracting"
+        and details["error_cleared"] is True
+    )
+    return {"passed": passed, "details": details}
+
+
+def _exercise_refine_failed_job(*, service: ResearchJobService) -> dict[str, Any]:
+    refined_base = service.submit(topic="refine scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+    _seed_checkpoint(service, refined_base.job_id, next_stage=RuntimeStage.COLLECTING, state_status="collecting")
+    service.store.update_job_status(refined_base.job_id, status="failed", current_stage="failed", error="boom")
+    refined = service.refine(refined_base.job_id, "Expand the evidence map.", start_worker=False)
+    latest_checkpoint = service.store.get_latest_checkpoint(refined_base.job_id)
+    state_payload = latest_checkpoint.state_payload if latest_checkpoint is not None else {}
+    details = {
+        "base_job_id": refined_base.job_id,
+        "active_checkpoint_id": refined.active_checkpoint_id,
+        "current_stage": _enum_value(refined.current_stage),
+        "refinement_history_count": len(state_payload.get("refinement_history", [])),
+        "pending_follow_up_queries": list(state_payload.get("pending_follow_up_queries", [])),
+    }
+    passed = (
+        details["current_stage"] == "planned"
+        and details["refinement_history_count"] == 1
+        and details["pending_follow_up_queries"] == ["Expand the evidence map."]
+    )
+    return {"passed": passed, "details": details}
+
+
+def _exercise_stale_recovery(*, service: ResearchJobService, spawned_jobs: list[str]) -> dict[str, Any]:
+    stale_job = service.submit(topic="stale recovery scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+    checkpoint = _seed_checkpoint(service, stale_job.job_id, next_stage=RuntimeStage.EXTRACTING, state_status="extracting")
+    service.store.update_job_status(stale_job.job_id, status="running", current_stage="collecting")
+    service.store.acquire_worker_lease(stale_job.job_id, worker_pid=43210, lease_id="lease-stale")
+    stale_heartbeat = (datetime.now(timezone.utc) - timedelta(seconds=3600)).isoformat()
+    service.store.update_job(stale_job.job_id, last_heartbeat_at=stale_heartbeat)
+    spawn_count_before = len(spawned_jobs)
+    recovered_jobs = service.recover_stale_jobs()
+    refreshed = service.get(stale_job.job_id)
+    recovered_job_ids = [item.job_id for item in recovered_jobs]
+    details = {
+        "base_job_id": stale_job.job_id,
+        "recovered_job_ids": recovered_job_ids,
+        "spawned_worker": len(spawned_jobs) == spawn_count_before + 1 and stale_job.job_id in spawned_jobs,
+        "worker_lease_cleared": refreshed is not None and refreshed.worker_lease_id is None,
+        "active_checkpoint_id": refreshed.active_checkpoint_id if refreshed is not None else "",
+        "current_stage": _enum_value(refreshed.current_stage) if refreshed is not None else "",
+        "seed_checkpoint_id": checkpoint.checkpoint_id,
+    }
+    passed = (
+        recovered_job_ids == [stale_job.job_id]
+        and details["spawned_worker"] is True
+        and details["worker_lease_cleared"] is True
+        and details["active_checkpoint_id"] == checkpoint.checkpoint_id
+        and details["current_stage"] == "extracting"
+    )
+    return {"passed": passed, "details": details}
+
+
+def _exercise_idle_created_noop(*, service: ResearchJobService, spawned_jobs: list[str]) -> dict[str, Any]:
+    idle_job = service.submit(topic="idle noop scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+    idle_recovered = service.recover_stale_jobs()
+    recovered_job_ids = [item.job_id for item in idle_recovered if item.job_id == idle_job.job_id]
+    details = {
+        "base_job_id": idle_job.job_id,
+        "recovered_job_ids": recovered_job_ids,
+        "spawned_worker": idle_job.job_id in spawned_jobs,
+    }
+    passed = idle_job.job_id not in recovered_job_ids and details["spawned_worker"] is False
+    return {"passed": passed, "details": details}
+
+
+def _seed_checkpoint(
+    service: ResearchJobService,
+    job_id: str,
+    *,
+    next_stage: RuntimeStage,
+    state_status: str,
+) -> JobCheckpoint:
+    latest = service.store.get_latest_checkpoint(job_id)
+    if latest is None:
+        raise ValueError(f"missing checkpoint for fixture job: {job_id}")
+    state_payload = dict(latest.state_payload)
+    state_payload["status"] = state_status
+    checkpoint = service.store.save_checkpoint(
+        JobCheckpoint(
+            checkpoint_id=f"{job_id}-checkpoint-pending",
+            job_id=job_id,
+            stage=latest.next_stage,
+            sequence=0,
+            loop_count=int(state_payload.get("loop_count", latest.loop_count)),
+            next_stage=next_stage,
+            state_payload=ResearchState.model_validate(state_payload).model_dump(mode="json"),
+        )
+    )
+    service.store.update_job(job_id, active_checkpoint_id=checkpoint.checkpoint_id)
+    return checkpoint
+
+
+def _enum_value(value: Any) -> Any:
+    return getattr(value, "value", value)
+
+
+def _normalize_reliability_details(scenario_id: str, details: dict[str, Any]) -> dict[str, Any]:
+    job_id_map: dict[str, str] = {}
+    if isinstance(details.get("base_job_id"), str):
+        job_id_map[details["base_job_id"]] = f"{scenario_id}-job"
+    if isinstance(details.get("derived_job_id"), str):
+        job_id_map[details["derived_job_id"]] = f"{scenario_id}-derived-job"
+
+    def normalize(value: Any) -> Any:
+        if isinstance(value, str):
+            if value in job_id_map:
+                return job_id_map[value]
+            if "checkpoint-" in value:
+                suffix = value.rsplit("checkpoint-", 1)[-1]
+                return f"{scenario_id}-checkpoint-{suffix}"
+            return value
+        if isinstance(value, list):
+            return [normalize(item) for item in value]
+        if isinstance(value, dict):
+            return {key: normalize(item) for key, item in value.items()}
+        return value
+
+    return {key: normalize(value) for key, value in details.items()}
 
 
 def _scenario_rate(results: list[dict[str, Any]], scenario_id: str | None = None) -> float:

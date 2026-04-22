@@ -1,0 +1,361 @@
+variant: regression_local
+tasks:
+  - task_id: company-openai-platform
+    topic: OpenAI platform surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official product surface is visible?
+      - What official developer entrypoint is visible?
+    answered_questions:
+      - What official product surface is visible?
+      - What official developer entrypoint is visible?
+    report_markdown: |
+      # OpenAI Platform Surface
+
+      OpenAI presents a combined company, product, and developer surface across its official site and platform overview.[1][2]
+
+      The official platform entrypoint makes the developer path explicit instead of leaving it as prose-only positioning.[1][2]
+    task_summaries:
+      - OpenAI keeps company and developer entrypoints visible in official public materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-openai-home
+        title: OpenAI
+        canonical_uri: https://openai.com/
+        snapshot_ref: snapshot-openai-home
+      - citation_id: 2
+        source_id: source-openai-platform
+        title: OpenAI Platform Overview
+        canonical_uri: https://platform.openai.com/docs/overview
+        snapshot_ref: snapshot-openai-platform
+
+  - task_id: company-anthropic-platform
+    topic: Anthropic enterprise surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official company and product surfaces are visible?
+      - What official developer documentation is visible?
+    answered_questions:
+      - What official company and product surfaces are visible?
+      - What official developer documentation is visible?
+    report_markdown: |
+      # Anthropic Enterprise Surface
+
+      Anthropic exposes a public company surface and a separate official developer documentation surface for Claude and related tools.[1][2]
+
+      That split makes enterprise positioning and developer onboarding visible as distinct but connected public entrypoints.[1][2]
+    task_summaries:
+      - Anthropic separates company positioning from developer onboarding while keeping both official and public.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-anthropic-home
+        title: Anthropic
+        canonical_uri: https://www.anthropic.com/
+        snapshot_ref: snapshot-anthropic-home
+      - citation_id: 2
+        source_id: source-anthropic-docs
+        title: Anthropic Docs Overview
+        canonical_uri: https://docs.anthropic.com/en/docs/overview
+        snapshot_ref: snapshot-anthropic-docs
+
+  - task_id: company-langchain-surface
+    topic: LangChain platform surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official product surface is visible?
+      - What runtime/developer surface is visible?
+    answered_questions:
+      - What official product surface is visible?
+      - What runtime/developer surface is visible?
+    report_markdown: |
+      # LangChain Surface
+
+      LangChain presents a company-level platform story while LangGraph documentation and repository materials expose the runtime-facing developer surface.[1][2]
+
+      The public materials make orchestration, deployment, and developer workflow part of the visible product boundary.[1][2]
+    task_summaries:
+      - LangChain's company story and LangGraph runtime surface are both visible through official materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-langchain-home
+        title: LangChain
+        canonical_uri: https://www.langchain.com/
+        snapshot_ref: snapshot-langchain-home
+      - citation_id: 2
+        source_id: source-langgraph-docs
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        snapshot_ref: snapshot-langgraph-docs
+
+  - task_id: company-huggingface-surface
+    topic: Hugging Face platform surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What public platform surface is visible?
+      - What official documentation surface is visible?
+    answered_questions:
+      - What public platform surface is visible?
+      - What official documentation surface is visible?
+    report_markdown: |
+      # Hugging Face Surface
+
+      Hugging Face exposes a public platform surface and an extensive official documentation surface for models, datasets, and tooling.[1][2]
+
+      Those official materials make developer self-service a visible part of the company surface.[1][2]
+    task_summaries:
+      - Hugging Face keeps platform discovery and documentation tightly connected in public materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-hf-home
+        title: Hugging Face
+        canonical_uri: https://huggingface.co/
+        snapshot_ref: snapshot-hf-home
+      - citation_id: 2
+        source_id: source-hf-docs
+        title: Hugging Face Docs
+        canonical_uri: https://huggingface.co/docs
+        snapshot_ref: snapshot-hf-docs
+
+  - task_id: company-cohere-surface
+    topic: Cohere enterprise surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official enterprise platform surface is visible?
+      - What official developer documentation is visible?
+    answered_questions:
+      - What official enterprise platform surface is visible?
+      - What official developer documentation is visible?
+    report_markdown: |
+      # Cohere Enterprise Surface
+
+      Cohere exposes an enterprise-facing public surface and a separate developer documentation surface for model and platform usage.[1][2]
+
+      The official materials show that enterprise positioning and API onboarding are both part of the public company boundary.[1][2]
+    task_summaries:
+      - Cohere's official site and docs together define a visible enterprise developer surface.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-cohere-home
+        title: Cohere
+        canonical_uri: https://cohere.com/
+        snapshot_ref: snapshot-cohere-home
+      - citation_id: 2
+        source_id: source-cohere-docs
+        title: Cohere Docs
+        canonical_uri: https://docs.cohere.com/
+        snapshot_ref: snapshot-cohere-docs
+
+  - task_id: company-mistral-surface
+    topic: Mistral platform surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official product surface is visible?
+      - What official developer documentation is visible?
+    answered_questions:
+      - What official product surface is visible?
+      - What official developer documentation is visible?
+    report_markdown: |
+      # Mistral Platform Surface
+
+      Mistral exposes a public company and product surface while separate official docs provide the technical entrypoint for developers.[1][2]
+
+      That pairing makes the developer surface part of the visible platform story rather than an implied capability.[1][2]
+    task_summaries:
+      - Mistral combines public company positioning with a clear official developer entrypoint.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-mistral-home
+        title: Mistral AI
+        canonical_uri: https://mistral.ai/
+        snapshot_ref: snapshot-mistral-home
+      - citation_id: 2
+        source_id: source-mistral-docs
+        title: Mistral Docs
+        canonical_uri: https://docs.mistral.ai/
+        snapshot_ref: snapshot-mistral-docs
+
+  - task_id: company-pinecone-surface
+    topic: Pinecone platform surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official platform surface is visible?
+      - What official documentation is visible?
+    answered_questions:
+      - What official platform surface is visible?
+      - What official documentation is visible?
+    report_markdown: |
+      # Pinecone Platform Surface
+
+      Pinecone exposes a public vector-database platform surface and a separate documentation surface for implementation details.[1][2]
+
+      The official materials make infrastructure positioning and developer onboarding visible as one product story.[1][2]
+    task_summaries:
+      - Pinecone's official site and docs make its platform and implementation surface explicit.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-pinecone-home
+        title: Pinecone
+        canonical_uri: https://www.pinecone.io/
+        snapshot_ref: snapshot-pinecone-home
+      - citation_id: 2
+        source_id: source-pinecone-docs
+        title: Pinecone Docs
+        canonical_uri: https://docs.pinecone.io/
+        snapshot_ref: snapshot-pinecone-docs
+
+  - task_id: company-weaviate-surface
+    topic: Weaviate platform surface regression
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - What official platform surface is visible?
+      - What official documentation is visible?
+    answered_questions:
+      - What official platform surface is visible?
+      - What official documentation is visible?
+    report_markdown: |
+      # Weaviate Platform Surface
+
+      Weaviate exposes a public platform story and a separate documentation surface for technical implementation and usage.[1][2]
+
+      The official materials make vector infrastructure and developer workflow part of the same visible boundary.[1][2]
+    task_summaries:
+      - Weaviate's company and developer surfaces are both explicit in official public materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-weaviate-home
+        title: Weaviate
+        canonical_uri: https://weaviate.io/
+        snapshot_ref: snapshot-weaviate-home
+      - citation_id: 2
+        source_id: source-weaviate-docs
+        title: Weaviate Docs
+        canonical_uri: https://docs.weaviate.io/
+        snapshot_ref: snapshot-weaviate-docs
+
+  - task_id: company-openai-vs-anthropic
+    topic: OpenAI vs Anthropic public surface comparison
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - How do the official public surfaces position each company?
+      - How visible is the developer entrypoint in each official stack?
+    answered_questions:
+      - How do the official public surfaces position each company?
+      - How visible is the developer entrypoint in each official stack?
+    report_markdown: |
+      # OpenAI vs Anthropic Surface Comparison
+
+      OpenAI and Anthropic both expose official company and developer surfaces, but the public materials emphasize slightly different product framing and onboarding entrypoints.[1][2]
+
+      Comparing the official sites and documentation layers is a cleaner baseline than inferring differences from third-party commentary.[1][2]
+    task_summaries:
+      - OpenAI and Anthropic both keep official company and developer entrypoints visible, enabling apples-to-apples surface comparison.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-openai-home-compare
+        title: OpenAI
+        canonical_uri: https://openai.com/
+        snapshot_ref: snapshot-openai-home-compare
+      - citation_id: 2
+        source_id: source-anthropic-home-compare
+        title: Anthropic
+        canonical_uri: https://www.anthropic.com/
+        snapshot_ref: snapshot-anthropic-home-compare
+
+  - task_id: company-langchain-vs-huggingface
+    topic: LangChain vs Hugging Face developer surface comparison
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - How do the official public surfaces differ?
+      - What parts of the developer workflow are visible in each official entrypoint?
+    answered_questions:
+      - How do the official public surfaces differ?
+      - What parts of the developer workflow are visible in each official entrypoint?
+    report_markdown: |
+      # LangChain vs Hugging Face Developer Surface
+
+      LangChain and Hugging Face both expose public developer surfaces, but their official materials emphasize different workflow layers and platform abstractions.[1][2]
+
+      Comparing official documentation and product surfaces keeps the analysis anchored to the companies' own public boundaries.[1][2]
+    task_summaries:
+      - LangChain and Hugging Face expose different workflow layers through their official public surfaces.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-langgraph-overview-compare
+        title: LangGraph Overview
+        canonical_uri: https://docs.langchain.com/langgraph/overview
+        snapshot_ref: snapshot-langgraph-overview-compare
+      - citation_id: 2
+        source_id: source-hf-docs-compare
+        title: Hugging Face Docs
+        canonical_uri: https://huggingface.co/docs
+        snapshot_ref: snapshot-hf-docs-compare
+
+  - task_id: company-pinecone-vs-weaviate
+    topic: Pinecone vs Weaviate platform comparison
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - How do the official platform stories differ?
+      - How explicit is developer onboarding in each official documentation surface?
+    answered_questions:
+      - How do the official platform stories differ?
+      - How explicit is developer onboarding in each official documentation surface?
+    report_markdown: |
+      # Pinecone vs Weaviate Comparison
+
+      Pinecone and Weaviate both expose public vector-platform stories, but their official surfaces emphasize slightly different onboarding and platform framing choices.[1][2]
+
+      Using the official sites and docs keeps the comparison within the product boundary that reviewers can actually inspect.[1][2]
+    task_summaries:
+      - Pinecone and Weaviate both make vector infrastructure public, but the official framing and onboarding emphasis differ.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-pinecone-home-compare
+        title: Pinecone
+        canonical_uri: https://www.pinecone.io/
+        snapshot_ref: snapshot-pinecone-home-compare
+      - citation_id: 2
+        source_id: source-weaviate-home-compare
+        title: Weaviate
+        canonical_uri: https://weaviate.io/
+        snapshot_ref: snapshot-weaviate-home-compare
+
+  - task_id: company-cohere-vs-mistral
+    topic: Cohere vs Mistral enterprise developer surface comparison
+    source_profile: company_broad
+    research_profile: eval_regression
+    required_questions:
+      - How do the official public surfaces position each company?
+      - How visible is the technical developer entrypoint in each stack?
+    answered_questions:
+      - How do the official public surfaces position each company?
+      - How visible is the technical developer entrypoint in each stack?
+    report_markdown: |
+      # Cohere vs Mistral Comparison
+
+      Cohere and Mistral both expose official enterprise-facing public surfaces while pairing them with separate technical documentation layers.[1][2]
+
+      Comparing those official materials shows how each company makes its developer surface inspectable to external reviewers.[1][2]
+    task_summaries:
+      - Cohere and Mistral both keep enterprise positioning and technical entrypoints visible in official public materials.[1][2]
+    sources:
+      - citation_id: 1
+        source_id: source-cohere-home-compare
+        title: Cohere
+        canonical_uri: https://cohere.com/
+        snapshot_ref: snapshot-cohere-home-compare
+      - citation_id: 2
+        source_id: source-mistral-home-compare
+        title: Mistral AI
+        canonical_uri: https://mistral.ai/
+        snapshot_ref: snapshot-mistral-home-compare

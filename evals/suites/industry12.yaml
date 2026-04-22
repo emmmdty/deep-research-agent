@@ -20,3 +20,8 @@ thresholds:
     min: 0.80
   conflict_detection_recall:
     min: 0.80
+variants:
+  regression_local:
+    description: Deterministic local regression suite for industry research cases.
+    dataset_path: evals/datasets/industry12.regression.yaml
+    rubric_path: evals/rubrics/industry_research_regression.yaml

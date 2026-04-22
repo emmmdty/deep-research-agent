@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-governance-checklist-claim-1",
+      "text": "A public agents guide and a private governance checklist can be combined while keeping private control notes explicit.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-governance-checklist-file-evidence-1",
+        "file-governance-checklist-evidence-2"
+      ]
+    }
+  ]
+}

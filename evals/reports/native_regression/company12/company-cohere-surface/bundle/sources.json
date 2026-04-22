@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-cohere-home",
+      "snapshot_id": "snapshot-cohere-home",
+      "title": "Cohere",
+      "canonical_uri": "https://cohere.com/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-cohere-docs",
+      "snapshot_id": "snapshot-cohere-docs",
+      "title": "Cohere Docs",
+      "canonical_uri": "https://docs.cohere.com/"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-cohere-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Cohere",
+      "canonical_uri": "https://cohere.com/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-cohere-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-cohere-docs",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Cohere Docs",
+      "canonical_uri": "https://docs.cohere.com/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-cohere-docs",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-cohere-home",
+      "canonical_uri": "https://cohere.com/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "9c114c76f37d1cc9771e060f15a40f9f53e40babb2ebb2bf2a3709f48f0ac939",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-cohere-docs",
+      "canonical_uri": "https://docs.cohere.com/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "b915746bf568fdc9fbdd9ec6ae6bcfc18ccbf2abb8596bbcbc1ab54ef12f4640",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ]
+}

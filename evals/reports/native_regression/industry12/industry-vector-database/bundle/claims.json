@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "industry-vector-database-claim-1",
+      "text": "Public vendor materials keep vector infrastructure visible as its own segment, with developer onboarding and deployment framing exposed in official docs.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-vector-database-evidence-1",
+        "industry-vector-database-evidence-2"
+      ]
+    }
+  ]
+}

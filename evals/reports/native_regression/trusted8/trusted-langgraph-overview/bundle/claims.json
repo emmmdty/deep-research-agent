@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-overview-claim-1",
+      "text": "Under the trusted-only policy, LangGraph overview materials and an approved private brief define a bounded runtime picture with explicit provenance.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-overview-file-evidence-1",
+        "trusted-langgraph-overview-evidence-2"
+      ]
+    }
+  ]
+}

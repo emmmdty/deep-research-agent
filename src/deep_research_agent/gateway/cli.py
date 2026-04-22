@@ -18,7 +18,7 @@ from pathlib import Path
 
 from configs.settings import get_settings
 from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
-from deep_research_agent.evals import BENCHMARK_NAMES, EVAL_SUITE_NAMES, run_eval_suite, run_external_benchmark
+from deep_research_agent.evals import BENCHMARK_NAMES, EVAL_SUITE_NAMES, EVAL_VARIANT_NAMES, run_eval_suite, run_external_benchmark
 from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
 from deep_research_agent.gateway.batch import load_batch_requests
 from dotenv import load_dotenv
@@ -168,6 +168,12 @@ def build_parser() -> argparse.ArgumentParser:
     eval_subparsers = eval_parser.add_subparsers(dest="eval_command")
     eval_run_parser = eval_subparsers.add_parser("run", help="执行一个 local eval suite")
     eval_run_parser.add_argument("--suite", required=True, choices=EVAL_SUITE_NAMES, help="suite 名称")
+    eval_run_parser.add_argument(
+        "--variant",
+        default="smoke_local",
+        choices=EVAL_VARIANT_NAMES,
+        help="suite variant，默认 smoke_local",
+    )
     eval_run_parser.add_argument("--output-root", type=str, default=None, help="suite 输出目录")
     eval_run_parser.add_argument(
         "--capture-runtime-metrics",
@@ -347,6 +353,7 @@ def run_command(argv: list[str] | None = None) -> int:
             return 2
         result = run_eval_suite(
             suite_name=args.suite,
+            variant=args.variant,
             output_root=args.output_root,
             capture_runtime_metrics=args.capture_runtime_metrics,
         )

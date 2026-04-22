@@ -1,0 +1,366 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "industry-durable-runtime",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "Durable runtime and recovery regression",
+    "status": "completed",
+    "source_profile": "industry_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-langgraph-persistence",
+      "snapshot_id": "snapshot-langgraph-persistence",
+      "title": "LangGraph Persistence",
+      "canonical_uri": "https://docs.langchain.com/langgraph/concepts/persistence"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-langgraph-overview-runtime",
+      "snapshot_id": "snapshot-langgraph-overview-runtime",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-langgraph-persistence",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Persistence",
+      "canonical_uri": "https://docs.langchain.com/langgraph/concepts/persistence",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-langgraph-persistence",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-langgraph-overview-runtime",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "LangGraph Overview",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-langgraph-overview-runtime",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-langgraph-persistence",
+      "canonical_uri": "https://docs.langchain.com/langgraph/concepts/persistence",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "3a3931e88a66baa61259ce261df10b33f4eacaf5befb8fc080b56418c7179a7b",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-langgraph-overview-runtime",
+      "canonical_uri": "https://docs.langchain.com/langgraph/overview",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "df6da079d5717bd10c3ce20aafa3066409587f66ddc82755f81c22accbbad29a",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "industry-durable-runtime-evidence-1",
+      "snapshot_id": "snapshot-langgraph-persistence",
+      "source_id": "source-langgraph-persistence",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "excerpt": "LangGraph Persistence",
+      "extraction_method": "fixture_source_snippet"
+    },
+    {
+      "evidence_id": "industry-durable-runtime-evidence-2",
+      "snapshot_id": "snapshot-langgraph-overview-runtime",
+      "source_id": "source-langgraph-overview-runtime",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "excerpt": "LangGraph Overview",
+      "extraction_method": "fixture_source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "audit_events": [
+    {
+      "event_id": "industry-durable-runtime-event-0001",
+      "job_id": "industry-durable-runtime",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "topic": "Durable runtime and recovery regression",
+        "research_profile": "eval_regression"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0002",
+      "job_id": "industry-durable-runtime",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0003",
+      "job_id": "industry-durable-runtime",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0001",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0004",
+      "job_id": "industry-durable-runtime",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0005",
+      "job_id": "industry-durable-runtime",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0002",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0006",
+      "job_id": "industry-durable-runtime",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0007",
+      "job_id": "industry-durable-runtime",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0003",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0008",
+      "job_id": "industry-durable-runtime",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0009",
+      "job_id": "industry-durable-runtime",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0004",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0010",
+      "job_id": "industry-durable-runtime",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0011",
+      "job_id": "industry-durable-runtime",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0005",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0012",
+      "job_id": "industry-durable-runtime",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0013",
+      "job_id": "industry-durable-runtime",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0006",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0014",
+      "job_id": "industry-durable-runtime",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0015",
+      "job_id": "industry-durable-runtime",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0007",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0016",
+      "job_id": "industry-durable-runtime",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0017",
+      "job_id": "industry-durable-runtime",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "checkpoint_id": "industry-durable-runtime-checkpoint-0008",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0018",
+      "job_id": "industry-durable-runtime",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "industry-durable-runtime-event-0019",
+      "job_id": "industry-durable-runtime",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-21T00:00:00+00:00",
+      "payload": {
+        "report_path": "evals/reports/native_regression/industry12/industry-durable-runtime/report.md",
+        "report_bundle_path": "evals/reports/native_regression/industry12/industry-durable-runtime/bundle/report_bundle.json",
+        "trace_path": "evals/reports/native_regression/industry12/industry-durable-runtime/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "# Durable Runtime and Recovery\n\nPublic orchestration materials make state handling, resumability, and durable execution explicit parts of the runtime story.[1][2]\n\nThat keeps recovery semantics visible as a control-plane comparison axis instead of treating them as incidental implementation details.[1][2]\n",
+  "claims": [
+    {
+      "claim_id": "industry-durable-runtime-claim-1",
+      "text": "Public orchestration materials make state handling, resumability, and durable execution explicit parts of the runtime story.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-durable-runtime-evidence-1",
+        "industry-durable-runtime-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "industry-durable-runtime-edge-1",
+      "claim_id": "industry-durable-runtime-claim-1",
+      "evidence_id": "industry-durable-runtime-evidence-1",
+      "source_id": "source-langgraph-persistence",
+      "snapshot_id": "snapshot-langgraph-persistence",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangGraph Persistence"
+    },
+    {
+      "edge_id": "industry-durable-runtime-edge-2",
+      "claim_id": "industry-durable-runtime-claim-1",
+      "evidence_id": "industry-durable-runtime-evidence-2",
+      "source_id": "source-langgraph-overview-runtime",
+      "snapshot_id": "snapshot-langgraph-overview-runtime",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "LangGraph Overview"
+    }
+  ],
+  "conflict_sets": []
+}

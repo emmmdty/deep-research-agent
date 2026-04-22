@@ -1,0 +1,51 @@
+{
+  "job_id": "trusted-langgraph-github",
+  "claims": [
+    {
+      "claim_id": "trusted-langgraph-github-claim-1",
+      "text": "The official LangGraph repository and the approved governance checklist let reviewers study runtime-facing material without leaving the trusted-only envelope.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "trusted-langgraph-github-file-evidence-1",
+        "trusted-langgraph-github-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "trusted-langgraph-github-edge-1",
+      "claim_id": "trusted-langgraph-github-claim-1",
+      "evidence_id": "trusted-langgraph-github-file-evidence-1",
+      "source_id": "trusted-langgraph-github-file-1",
+      "snapshot_id": "trusted-langgraph-github-file-snapshot-1",
+      "locator": {
+        "kind": "file_excerpt",
+        "path": "evals/datasets/files/governance_checklist.md"
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "governance_checklist.md"
+    },
+    {
+      "edge_id": "trusted-langgraph-github-edge-2",
+      "claim_id": "trusted-langgraph-github-claim-1",
+      "evidence_id": "trusted-langgraph-github-evidence-2",
+      "source_id": "source-trusted-github",
+      "snapshot_id": "snapshot-trusted-github",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "langchain-ai/langgraph"
+    }
+  ],
+  "conflict_sets": []
+}

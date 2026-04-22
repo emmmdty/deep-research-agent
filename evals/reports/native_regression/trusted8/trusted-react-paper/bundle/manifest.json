@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-04-21T00:00:00+00:00",
+  "job": {
+    "job_id": "trusted-react-paper",
+    "created_at": "2026-04-21T00:00:00+00:00",
+    "input_prompt": "Trusted ReAct paper regression",
+    "status": "completed",
+    "source_profile": "trusted_only",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "eval_regression",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 19,
+    "tool_event_count": 0,
+    "stage_event_count": 8,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 1,
+    "blocked_critical_claim_count": 0,
+    "manual_review_required": false
+  },
+  "artifacts": {
+    "report_markdown": "report.md",
+    "report_html": "bundle/report.html",
+    "report_bundle": "bundle/report_bundle.json",
+    "claims": "bundle/claims.json",
+    "sources": "bundle/sources.json",
+    "audit_decision": "bundle/audit_decision.json",
+    "trace": "bundle/trace.jsonl",
+    "manifest": "bundle/manifest.json",
+    "review_queue": "audit/review_queue.json",
+    "claim_graph": "audit/claim_graph.json"
+  },
+  "counts": {
+    "sources": 2,
+    "snapshots": 2,
+    "evidence_fragments": 2,
+    "claims": 1,
+    "claim_support_edges": 2,
+    "conflict_sets": 0
+  }
+}

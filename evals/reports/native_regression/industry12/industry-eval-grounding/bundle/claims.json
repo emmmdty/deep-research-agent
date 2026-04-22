@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "industry-eval-grounding-claim-1",
+      "text": "Public evaluation guidance and framework materials emphasize grounded claims, evidence linkage, and reproducibility instead of report-shape-only scoring.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "industry-eval-grounding-evidence-1",
+        "industry-eval-grounding-evidence-2"
+      ]
+    }
+  ]
+}

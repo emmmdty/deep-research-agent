@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "company-anthropic-platform-claim-1",
+      "text": "Anthropic exposes a public company surface and a separate official developer documentation surface for Claude and related tools.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-anthropic-platform-evidence-1",
+        "company-anthropic-platform-evidence-2"
+      ]
+    }
+  ]
+}

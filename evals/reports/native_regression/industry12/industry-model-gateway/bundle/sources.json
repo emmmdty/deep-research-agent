@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-litellm-home",
+      "snapshot_id": "snapshot-litellm-home",
+      "title": "LiteLLM Docs",
+      "canonical_uri": "https://docs.litellm.ai/"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-litellm-repo",
+      "snapshot_id": "snapshot-litellm-repo",
+      "title": "BerriAI/litellm",
+      "canonical_uri": "https://github.com/BerriAI/litellm"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-litellm-home",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LiteLLM Docs",
+      "canonical_uri": "https://docs.litellm.ai/",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-litellm-home",
+      "metadata": {}
+    },
+    {
+      "source_id": "source-litellm-repo",
+      "citation_id": 2,
+      "source_type": "github",
+      "title": "BerriAI/litellm",
+      "canonical_uri": "https://github.com/BerriAI/litellm",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-litellm-repo",
+      "metadata": {}
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-litellm-home",
+      "canonical_uri": "https://docs.litellm.ai/",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "3f0e28c02d15ff9c52bdaef4c3176c7527d2655ff071f6b2b70a180aefb34b66",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "snapshot-litellm-repo",
+      "canonical_uri": "https://github.com/BerriAI/litellm",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "26e64338d5f0e41a587d719934d7a326b0abaf7d71fb7b419e93b6cdd447bac8",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "github",
+        "selected": true
+      }
+    }
+  ]
+}

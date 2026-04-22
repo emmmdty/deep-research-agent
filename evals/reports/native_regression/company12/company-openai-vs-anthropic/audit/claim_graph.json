@@ -1,0 +1,51 @@
+{
+  "job_id": "company-openai-vs-anthropic",
+  "claims": [
+    {
+      "claim_id": "company-openai-vs-anthropic-claim-1",
+      "text": "OpenAI and Anthropic both expose official company and developer surfaces, but the public materials emphasize slightly different product framing and onboarding entrypoints.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-openai-vs-anthropic-evidence-1",
+        "company-openai-vs-anthropic-evidence-2"
+      ]
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "company-openai-vs-anthropic-edge-1",
+      "claim_id": "company-openai-vs-anthropic-claim-1",
+      "evidence_id": "company-openai-vs-anthropic-evidence-1",
+      "source_id": "source-openai-home-compare",
+      "snapshot_id": "snapshot-openai-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 1
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "OpenAI"
+    },
+    {
+      "edge_id": "company-openai-vs-anthropic-edge-2",
+      "claim_id": "company-openai-vs-anthropic-claim-1",
+      "evidence_id": "company-openai-vs-anthropic-evidence-2",
+      "source_id": "source-anthropic-home-compare",
+      "snapshot_id": "snapshot-anthropic-home-compare",
+      "locator": {
+        "kind": "source_snippet",
+        "citation_id": 2
+      },
+      "relation": "supports",
+      "confidence": 0.99,
+      "grounding_status": "grounded",
+      "notes": "Anthropic"
+    }
+  ],
+  "conflict_sets": []
+}

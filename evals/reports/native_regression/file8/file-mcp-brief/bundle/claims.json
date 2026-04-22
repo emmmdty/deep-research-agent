@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "file-mcp-brief-claim-1",
+      "text": "Public MCP protocol material and a private connector brief can be combined while keeping internal constraints visibly private.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "file-mcp-brief-file-evidence-1",
+        "file-mcp-brief-evidence-2"
+      ]
+    }
+  ]
+}

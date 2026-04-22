@@ -1,0 +1,17 @@
+{
+  "claims": [
+    {
+      "claim_id": "company-langchain-surface-claim-1",
+      "text": "LangChain presents a company-level platform story while LangGraph documentation and repository materials expose the runtime-facing developer surface.[1][2]",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Overview",
+      "evidence_ids": [
+        "company-langchain-surface-evidence-1",
+        "company-langchain-surface-evidence-2"
+      ]
+    }
+  ]
+}

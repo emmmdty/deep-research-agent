@@ -1,0 +1,72 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-trusted-hitl",
+      "snapshot_id": "snapshot-trusted-hitl",
+      "title": "LangGraph Human-in-the-Loop",
+      "canonical_uri": "https://docs.langchain.com/langgraph/concepts/human_in_the_loop"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "trusted-langgraph-human-loop-file-1",
+      "snapshot_id": "trusted-langgraph-human-loop-file-snapshot-1",
+      "title": "audit_playbook.txt",
+      "canonical_uri": "repo:///evals/datasets/files/audit_playbook.txt"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-trusted-hitl",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "LangGraph Human-in-the-Loop",
+      "canonical_uri": "https://docs.langchain.com/langgraph/concepts/human_in_the_loop",
+      "query": "",
+      "selected": true,
+      "snapshot_ref": "snapshot-trusted-hitl",
+      "metadata": {}
+    },
+    {
+      "source_id": "trusted-langgraph-human-loop-file-1",
+      "citation_id": 2,
+      "source_type": "files",
+      "title": "audit_playbook.txt",
+      "canonical_uri": "repo:///evals/datasets/files/audit_playbook.txt",
+      "query": "Trusted human-in-the-loop regression",
+      "selected": true,
+      "snapshot_ref": "trusted-langgraph-human-loop-file-snapshot-1",
+      "metadata": {
+        "file_path": "evals/datasets/files/audit_playbook.txt"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-trusted-hitl",
+      "canonical_uri": "https://docs.langchain.com/langgraph/concepts/human_in_the_loop",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "b635967bde6c1ab8e2e13c970bcedc4fd2c070a3098ddd09fdb3e13eae37aaf9",
+      "mime_type": "text/plain",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "published_at": null,
+        "query": "",
+        "source_type": "web",
+        "selected": true
+      }
+    },
+    {
+      "snapshot_id": "trusted-langgraph-human-loop-file-snapshot-1",
+      "canonical_uri": "repo:///evals/datasets/files/audit_playbook.txt",
+      "fetched_at": "2026-04-21T00:00:00+00:00",
+      "content_hash": "76a14b5dd5ae1c383f69a593c4b0be3a24a76e98f124fa307f6487def758ff6c",
+      "mime_type": "text/plain",
+      "auth_scope": "private",
+      "freshness_metadata": {
+        "file_name": "audit_playbook.txt",
+        "file_path": "evals/datasets/files/audit_playbook.txt"
+      }
+    }
+  ]
+}
