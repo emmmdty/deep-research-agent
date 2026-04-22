@@ -1,0 +1,9 @@
+benchmark: gaia
+title: GAIA Supported Smoke
+subset: smoke_supported
+dataset_manifest: evals/external/dataset_manifests/gaia_supported_smoke.json
+supported_capabilities:
+  - text
+  - file_read
+notes:
+  - "GAIA smoke only evaluates tasks whose capabilities are explicitly supported in this local environment."

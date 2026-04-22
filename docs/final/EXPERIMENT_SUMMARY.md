@@ -17,6 +17,23 @@ The release decision is recorded in:
 
 - `evals/reports/phase5_local_smoke/release_manifest.json`
 
+## External Benchmark Portfolio
+
+A separate external benchmark portfolio now complements the native release gate.
+
+Reviewer entrypoints:
+
+- `evals/external/reports/portfolio_summary/portfolio_summary.json`
+- `evals/external/reports/portfolio_summary/README.md`
+- `docs/benchmarks/PORTFOLIO.md`
+
+Current interpretation:
+
+- the native Phase 5 local smoke pack remains the authoritative release gate
+- FACTS Grounding open smoke is the secondary regression layer
+- LongFact / SAFE smoke and LongBench v2 short smoke are external regression diagnostics
+- BrowseComp guarded smoke, GAIA supported subset, and LongBench v2 medium/long are challenge tracks only
+
 ## Current Result Snapshot
 
 From the committed `release_manifest.json`:
@@ -80,3 +97,4 @@ uv run python scripts/run_local_release_smoke.py --output-root evals/reports/pha
 - These are low-cost local smoke suites, not the full heavy benchmark/comparator portfolio.
 - The heavy benchmark/comparator tooling remains available for diagnostics, but it is not the release gate.
 - The current release contract is intentionally local and deterministic.
+- The external benchmark portfolio is still smoke/subset-first; private/blind submissions and multimodal challenge coverage remain deferred.

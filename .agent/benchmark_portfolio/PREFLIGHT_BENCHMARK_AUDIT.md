@@ -10,12 +10,12 @@ Scope stayed within preflight boundaries:
 - no benchmark adapter/runtime code was added
 - no benchmark phase was started
 
-The benchmark control docs exist locally, `BENCHMARK_PLAN_SPEC.yaml` parses,
-and the current repository baseline still matches the benchmark spec's native
-eval/release assumptions. The run is still blocked from starting benchmark
-integration phases because the entire `.agent/benchmark_portfolio/` tree is
-currently untracked on `main`, so fresh phase worktrees created from `main`
-would not contain the benchmark runbook they are supposed to execute.
+The benchmark control docs exist locally and are now tracked on the current
+`main` branch, `BENCHMARK_PLAN_SPEC.yaml` parses successfully, and the current
+repository baseline still matches the benchmark spec's native eval/release
+assumptions. The only remaining issues are documentation-layer boundary
+ambiguities between the root runbook and the benchmark overlay; those are real
+but do not block starting the benchmark integration run.
 
 ## Checked Control Files
 
@@ -47,10 +47,9 @@ would not contain the benchmark runbook they are supposed to execute.
 - `main.py --help` confirms the native CLI/eval surface is still present.
 - `evals/reports/phase5_local_smoke/release_manifest.json` exists and reflects a
   passed native release gate.
-- `docs/final/VALUE_SCORECARD.md` and
-  `evals/reports/followup_metrics/*` exist, so the benchmark spec's assumed
-  post-Phase-6 baseline is still present.
-- Native eval assets still exist:
+- `docs/final/VALUE_SCORECARD.md` and `docs/final/EXPERIMENT_SUMMARY.md` still
+  describe the native Phase 5/6 baseline expected by the benchmark spec.
+- Native eval/release assets still exist:
   - `evals/suites/company12.yaml`
   - `evals/suites/industry12.yaml`
   - `evals/suites/trusted8.yaml`
@@ -63,14 +62,14 @@ would not contain the benchmark runbook they are supposed to execute.
 
 ## Findings
 
-### 1. Benchmark control docs exist locally
+### 1. Benchmark control docs exist locally and are tracked on `main`
 
 All required benchmark control-layer docs requested by the preflight prompt are
-present in the workspace.
+present in the workspace, and `git ls-files .agent/benchmark_portfolio` now
+returns the benchmark portfolio files.
 
-The directory also contains `:Zone.Identifier` sidecar files. Those are ignored
-Windows metadata artifacts and are not part of the benchmark control-layer
-contract.
+The directory also contains `:Zone.Identifier` sidecar files. Those are Windows
+metadata artifacts and are not part of the benchmark control-layer contract.
 
 ### 2. The benchmark plan spec is syntactically valid
 
@@ -92,10 +91,9 @@ The current repo still matches those assumptions:
 - `docs/final/EXPERIMENT_SUMMARY.md` and `docs/final/VALUE_SCORECARD.md` still
   describe the native release gate as authoritative
 
-### 4. Existing doc layers have manageable but real boundary ambiguity
+### 4. Existing doc layers still have manageable boundary ambiguity
 
-These are not hard blockers by themselves, but they should be carried forward
-explicitly in Phase 10 implementation notes:
+These are minor documentation alignment issues, not blockers:
 
 - Root `AGENTS.md` points the active run loop at `.agent/STATUS.md` and
   `.agent/phases/*`, while the benchmark runbook uses
@@ -111,19 +109,27 @@ explicitly in Phase 10 implementation notes:
   Phase 10 must treat those as legacy diagnostics, not as the new external
   benchmark substrate.
 
-### 5. Hard blocker: benchmark control layer is not tracked on `main`
+### 5. The prior hard blocker is resolved
 
-This is the decisive preflight blocker.
+The decisive blocker from the previous preflight is no longer present.
 
-Evidence:
-- `git status --short` reports `?? .agent/benchmark_portfolio/`
-- `git ls-files .agent/benchmark_portfolio` returns no tracked files
-- `git check-ignore -v ...` does not report these files as ignored
+Fresh evidence:
+- `git status --short --branch` reports `## main...origin/main [ahead 1]` with
+  no modified or untracked files, so the local `main` worktree is clean
+- `git rev-parse HEAD` resolves to
+  `9323205619775b7a1cb28b1f12c8458b0b02f828`
+- `git log --oneline --decorate -1` shows
+  `9323205 (HEAD -> main) benchmark: add benchmark portfolio control-layer files`
 
 Operational consequence:
-- the benchmark runbook requires creating fresh linked worktrees from `main`
-- those worktrees would not include `.agent/benchmark_portfolio/*`
-- Phase 10-14 would therefore start without the control files they depend on
+- fresh linked worktrees created from the current local `main` will include the
+  benchmark runbook
+- the benchmark integration phases can now be started locally
+
+The branch being ahead of `origin/main` by one commit is not a local preflight
+blocker because the benchmark runbook creates worktrees from local `main`, not
+from the remote tip. If this run needs to be reproduced from another clone
+before Phase 10 starts, push or merge that commit first.
 
 ## Conflicts And Compatibility Notes
 
@@ -134,13 +140,14 @@ Operational consequence:
 - No conflict was found with the benchmark plan's assumption that benchmark
   logic should stay outside the main runtime path; the existing eval layout
   already separates `src/deep_research_agent/evals/` and `evals/`.
-- The benchmark runbook's clean-baseline assumption does conflict with current
-  repo state because `.agent/benchmark_portfolio/` is still untracked.
+- A minor documentation conflict remains between the root runbook and the
+  benchmark overlay over which STATUS/phase files are active during benchmark
+  work. The overlay is sufficient to proceed, but this boundary should stay
+  explicit during Phase 10.
 
-## Required Next Manual Action
+## Required Next Action
 
-Track and commit the full `.agent/benchmark_portfolio/` control layer on the
-starting branch, then rerun this preflight before launching
-`START_BENCHMARK_INTEGRATION_RUN.md`.
+Start `.agent/benchmark_portfolio/prompts/START_BENCHMARK_INTEGRATION_RUN.md`
+from the current local `main` baseline, following the benchmark worktree loop.
 
-NOT_READY
+READY_WITH_MINOR_DOC_FIXES

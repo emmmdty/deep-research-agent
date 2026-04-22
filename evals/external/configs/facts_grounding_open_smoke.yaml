@@ -1,0 +1,8 @@
+benchmark: facts_grounding
+title: FACTS Grounding Open Smoke
+split: open
+subset: smoke
+dataset_manifest: evals/external/dataset_manifests/facts_grounding_open_smoke.json
+notes:
+  - "This committed smoke fixture validates the adapter, manifest, and score plumbing for the open FACTS track."
+  - "The artifact set is local and reproducible; it is not a private/blind submission."

@@ -18,7 +18,7 @@ from pathlib import Path
 
 from configs.settings import get_settings
 from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
-from deep_research_agent.evals import EVAL_SUITE_NAMES, run_eval_suite
+from deep_research_agent.evals import BENCHMARK_NAMES, EVAL_SUITE_NAMES, run_eval_suite, run_external_benchmark
 from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
 from deep_research_agent.gateway.batch import load_batch_requests
 from dotenv import load_dotenv
@@ -175,6 +175,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="在 fresh rerun 中保存 pre-normalization runtime timing sidecar",
     )
     eval_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
+
+    benchmark_parser = subparsers.add_parser("benchmark", help="运行 external benchmark portfolio")
+    benchmark_subparsers = benchmark_parser.add_subparsers(dest="benchmark_command")
+    benchmark_run_parser = benchmark_subparsers.add_parser("run", help="执行一个 external benchmark run")
+    benchmark_run_parser.add_argument("--benchmark", required=True, choices=BENCHMARK_NAMES, help="benchmark 名称")
+    benchmark_run_parser.add_argument("--split", type=str, default=None, help="benchmark split，例如 open")
+    benchmark_run_parser.add_argument("--subset", type=str, default="smoke", help="subset 名称，例如 smoke")
+    benchmark_run_parser.add_argument("--bucket", type=str, default=None, help="可选 context bucket")
+    benchmark_run_parser.add_argument("--config", type=str, default=None, help="可选 benchmark 配置路径")
+    benchmark_run_parser.add_argument("--output-root", type=str, default=None, help="benchmark 输出目录")
+    benchmark_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
 
     return parser
 
@@ -345,6 +356,29 @@ def run_command(argv: list[str] | None = None) -> int:
             console.print(f"✅ eval suite 完成: [cyan]{args.suite}[/cyan]")
             console.print(f"status: [bold]{result['status']}[/bold]")
             console.print(f"summary: [cyan]{result['summary_path']}[/cyan]")
+        return 0
+
+    if args.command == "benchmark":
+        if args.benchmark_command != "run":
+            parser.error("benchmark 目前只支持 `run` 子命令")
+            return 2
+        benchmark_output_root = args.output_root or str(
+            Path("evals") / "external" / "reports" / f"{args.benchmark}_{args.subset}"
+        )
+        result = run_external_benchmark(
+            benchmark_name=args.benchmark,
+            split=args.split,
+            subset=args.subset,
+            bucket=args.bucket,
+            output_root=benchmark_output_root,
+            config_path=args.config,
+        )
+        if args.json:
+            _print_json(result)
+        else:
+            console.print(f"✅ external benchmark 完成: [cyan]{args.benchmark}[/cyan]")
+            console.print(f"status: [bold]{result['status']}[/bold]")
+            console.print(f"output_root: [cyan]{result['output_root']}[/cyan]")
         return 0
 
     service = _build_job_service()

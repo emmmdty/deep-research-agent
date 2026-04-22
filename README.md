@@ -57,6 +57,7 @@ The supported developer CLI lives behind `main.py`:
 - `bundle`
 - `batch run`
 - `eval run`
+- `benchmark run`
 
 ### Local HTTP API
 
@@ -158,6 +159,22 @@ uv run python scripts/run_local_release_smoke.py --output-root evals/reports/pha
 
 The committed Phase 5 local smoke outputs live under `evals/reports/phase5_local_smoke/`.
 
+### 7. Run an external benchmark smoke and refresh the portfolio summary
+
+```bash
+uv run python main.py benchmark run --benchmark facts_grounding --split open --subset smoke --output-root evals/external/reports/facts_grounding_open_smoke --json
+uv run python scripts/build_benchmark_portfolio_summary.py --output-root evals/external/reports/portfolio_summary --json
+```
+
+The benchmark portfolio is layered:
+
+- authoritative release gate: native Phase 5 local smoke suites under `evals/reports/phase5_local_smoke/`
+- secondary regression: FACTS Grounding open smoke
+- external regression: LongFact / SAFE smoke and LongBench v2 short smoke
+- challenge track: BrowseComp guarded smoke, GAIA supported subset, and LongBench v2 medium/long challenge policy
+
+Reviewer-facing benchmark docs live under [docs/benchmarks](./docs/benchmarks/README.md).
+
 ## Artifact Contract
 
 Completed jobs write their runtime artifacts under `workspace/research_jobs/<job_id>/`.
@@ -218,6 +235,7 @@ uv run python main.py --help
 uv run ruff check .
 uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
 uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke
+uv run python scripts/build_benchmark_portfolio_summary.py --output-root evals/external/reports/portfolio_summary
 ```
 
 For broader validation, see:
@@ -238,6 +256,7 @@ For broader validation, see:
 - Review writes are append-only and visible through runtime events and sidecars, but they do not fully recompile the report bundle JSON in Phase 4.
 - `legacy-run` is still present as a hidden compatibility path and is not the supported public runtime.
 - The heavy benchmark/comparator stack still exists for diagnostics, but the Phase 5 release gate now depends on local claim-centric suite manifests under `evals/`.
+- The external benchmark portfolio is smoke/subset-first and reviewer-facing; it is not a production benchmark service and it does not override the native release gate.
 
 ## License
 

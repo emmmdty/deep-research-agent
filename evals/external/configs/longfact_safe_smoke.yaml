@@ -1,0 +1,10 @@
+benchmark: longfact_safe
+title: LongFact / SAFE Smoke
+subset: smoke
+dataset_manifest: evals/external/dataset_manifests/longfact_safe_smoke.json
+search_backend: fixture_search_trace
+judge_backend: fixture_safe_judge
+drift_risk: "SAFE-style judging and search traces can drift against live providers; this repo keeps the smoke path deterministic and local."
+notes:
+  - "This smoke fixture validates the LongFact/SAFE adapter and manifest contract without fabricating paid judge calls."
+  - "Live search and judge backends can be added later without changing the artifact schema."

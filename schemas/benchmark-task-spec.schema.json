@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "task_id",
+    "prompt",
+    "eligible",
+    "metadata",
+    "attachments"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string"
+    },
+    "prompt": {
+      "type": "string"
+    },
+    "expected_answer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prediction": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "eligible": {
+      "type": "boolean"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

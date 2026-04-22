@@ -7,6 +7,15 @@
 - Baseline manifest: `evals/reports/phase5_local_smoke/release_manifest.json`
 - Follow-up metrics root: `evals/reports/followup_metrics`
 
+## Benchmark Layering
+
+- authoritative release gate: native Phase 5 local smoke pack under `evals/reports/phase5_local_smoke/`
+- secondary regression: FACTS Grounding open smoke
+- external regression: LongFact / SAFE smoke and LongBench v2 short smoke
+- challenge-only: BrowseComp guarded smoke, GAIA supported subset, and LongBench v2 medium/long
+- reviewer summary: `evals/external/reports/portfolio_summary/portfolio_summary.json`
+- benchmark docs: `docs/benchmarks/PORTFOLIO.md`
+
 ## What The Deep Research Agent Does
 
 - Runs deterministic research jobs through planning, collection, extraction, claim auditing, synthesis, and rendering stages.
@@ -214,6 +223,9 @@ Stage timing summary:
 - `latency_cost_summary`: `evals/reports/followup_metrics/latency_cost_summary.json`
 - `provider_routing_comparison`: `evals/reports/followup_metrics/provider_routing_comparison.json`
 - `metrics_readme`: `evals/reports/followup_metrics/README.md`
+- `benchmark_portfolio_summary`: `evals/external/reports/portfolio_summary/portfolio_summary.json`
+- `benchmark_portfolio_readme`: `evals/external/reports/portfolio_summary/README.md`
+- `benchmark_docs_portfolio`: `docs/benchmarks/PORTFOLIO.md`
 - `scorecard_markdown`: `docs/final/VALUE_SCORECARD.md`
 - `scorecard_json`: `docs/final/VALUE_SCORECARD.json`
 - `experiment_summary`: `docs/final/EXPERIMENT_SUMMARY.md`

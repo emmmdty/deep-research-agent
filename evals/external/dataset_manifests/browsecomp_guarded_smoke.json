@@ -1,0 +1,12 @@
+{
+  "benchmark": "browsecomp",
+  "subset": "smoke",
+  "tasks": [
+    {
+      "task_id": "browsecomp-001",
+      "prompt": "Find the documented role of report_bundle.json in the deep research runtime.",
+      "expected_answer": "report_bundle.json is the authoritative machine-readable output bundle.",
+      "prediction": "report_bundle.json is the authoritative machine-readable output bundle."
+    }
+  ]
+}

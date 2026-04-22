@@ -1,0 +1,23 @@
+{
+  "benchmark": "longbench_v2",
+  "bucket": "short",
+  "subset": "smoke",
+  "tasks": [
+    {
+      "task_id": "longbench-short-001",
+      "prompt": "Which artifact is the authoritative machine-readable output of the deep research runtime?",
+      "prediction": "B",
+      "metadata": {
+        "correct_option": "B",
+        "predicted_option": "B",
+        "category": "report_bundle_contract",
+        "options": {
+          "A": "report.md",
+          "B": "report_bundle.json",
+          "C": "README.md",
+          "D": "RESULTS.md"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+benchmark: browsecomp
+title: BrowseComp Guarded Smoke
+subset: smoke
+dataset_manifest: evals/external/dataset_manifests/browsecomp_guarded_smoke.json
+denylist_terms:
+  - benchmark leaks
+  - hidden answer
+canary_terms:
+  - BROWSECOMP_CANARY
+notes:
+  - "BrowseComp remains challenge-only and never upgrades into the authoritative release gate."

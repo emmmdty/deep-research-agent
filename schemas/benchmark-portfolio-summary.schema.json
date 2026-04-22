@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "generated_at",
+    "authoritative_release_gate",
+    "secondary_regression",
+    "external_regression",
+    "challenge_track",
+    "deferred",
+    "runs",
+    "artifacts",
+    "notes"
+  ],
+  "properties": {
+    "generated_at": {
+      "type": "string"
+    },
+    "authoritative_release_gate": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "secondary_regression": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "external_regression": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "challenge_track": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deferred": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "artifacts": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
