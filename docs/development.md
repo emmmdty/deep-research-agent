@@ -218,6 +218,8 @@ curl -s http://127.0.0.1:8000/v1/research/jobs \
 - The public API is local and deterministic, not server-grade.
 - The older benchmark/comparator scripts remain valid as diagnostics, but they are not sufficient release proof on their own.
 - The canonical Phase 5 release surface is the local suite manifest under `evals/reports/phase5_local_smoke/`.
+- Some agent sandboxes can hang on FastAPI/Starlette `TestClient` requests even when the repository code is healthy. If a sandboxed `uv run pytest -q` or `tests/test_phase4_surfaces.py` run stalls around `client.post("/v1/research/jobs", ...)`, rerun the same command in a normal local terminal or outside the sandbox before treating it as a code regression.
+- When that sandbox-only hang happens, leftover "background terminal running" entries are usually just stale diagnostic/sandbox sessions. If host-level `ps` shows they are the stuck sandboxed pytest/debug commands, they are safe to stop.
 
 ## Further Reading
 
