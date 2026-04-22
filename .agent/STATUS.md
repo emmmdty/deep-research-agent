@@ -35,8 +35,8 @@
 - overall_state: native_optimization_run_completed
 
 ## Worktree state
-- active_branch: codex/phase18-manual-and-handoff/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase18-manual-and-handoff-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
 - main_baseline_commit: e7219f195667e3b25d4c178231f44ebfb7cd8101
 - baseline_verification_status:
@@ -61,7 +61,7 @@
 - blockers_from_local_assets: none; the Phase 18 worktree has the required local-only assets via safe symlinks
 
 ## Native regression expansion
-- status: implementation complete in the phase worktree; required validation passed and merge/cleanup is next
+- status: merged to `main`; reviewer-facing native regression layer is complete
 - key_outputs:
   - `evals/reports/native_regression/release_manifest.json`
   - `evals/reports/native_regression/native_summary.json`
@@ -107,6 +107,7 @@
   - The optimization cycle remains benchmark hardening only; `smoke_local` is still the authoritative release gate.
   - Phase 18 adds reviewer-facing documentation and discoverability links without changing the native benchmark runtime or artifact contracts.
   - Merge target commit on `main`: `07b234e`
+  - The temporary Phase 18 worktree and `codex/phase18-manual-and-handoff/attempt-1` branch were removed after merge; the current checkout is the `main` worktree above.
 
 ## Phase ledger
 

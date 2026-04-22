@@ -27,10 +27,10 @@
 - overall_state: completed_on_main
 
 ## Worktree state
-- active_branch: codex/phase18-manual-and-handoff/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase18-manual-and-handoff-attempt-1
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
 - main_clean_before_phase: yes
-- post_merge_smoke_status: Phase 18 post-merge validation passed on `main` via `ruff`, `tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, `/tmp/native_opt_phase18_postmerge/industry12_smoke`, `/tmp/native_opt_phase18_postmerge/industry12_regression`, and `git status --short`
+- post_merge_smoke_status: Phase 18 post-merge validation passed on `main` via `ruff`, `tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, `/tmp/native_opt_phase18_postmerge/industry12_smoke`, `/tmp/native_opt_phase18_postmerge/industry12_regression`, and `git status --short`; the temporary Phase 18 worktree and branch were removed afterward.
 
 ## Selected optimization target
 - target_name: industry12_discriminativeness
@@ -174,4 +174,4 @@
 - [2026-04-22T15:57:41Z] Completed the Phase 16 hardening pass: the four target `industry12` tasks now emit explicit multi-claim/conflict-aware bundles, and the additive optimization-summary module/script are covered by focused tests.
 - [2026-04-22T16:00:40Z] Regenerated the committed native artifacts and recorded the stable before/after comparison: `industry12` remains `passed` with `task_count=12`, while conflict/multi-claim/uncertainty case counts each moved from `0` to `4`.
 - [2026-04-22T16:07:10Z] Drafted the final reviewer handoff docs for this optimization cycle: `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`, `docs/final/NATIVE_OPTIMIZATION_REPORT.md`, and the related README/native-summary links.
-- [2026-04-22T16:09:20Z] Merged Phase 18 into `main` and re-verified `ruff`, focused native tests, and `industry12` smoke/regression on `main`; the run is now complete pending worktree cleanup.
+- [2026-04-22T16:09:20Z] Merged Phase 18 into `main` and re-verified `ruff`, focused native tests, and `industry12` smoke/regression on `main`; the run is complete on `main`, and the temporary Phase 18 worktree/branch have been removed.
