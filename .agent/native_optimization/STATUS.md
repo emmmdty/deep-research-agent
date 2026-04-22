@@ -23,14 +23,14 @@
 - current_phase: phase18_manual_and_handoff
 - current_phase_slug: phase18-manual-and-handoff
 - current_attempt: 1
-- last_successful_phase: phase17_rerun_and_compare
-- overall_state: phase18_validation_passed_pending_merge
+- last_successful_phase: phase18_manual_and_handoff
+- overall_state: completed_on_main
 
 ## Worktree state
 - active_branch: codex/phase18-manual-and-handoff/attempt-1
 - active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase18-manual-and-handoff-attempt-1
 - main_clean_before_phase: yes
-- post_merge_smoke_status: Phase 17 post-merge validation passed on `main` via `ruff`, `tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, `scripts/run_local_release_smoke.py`, and `/tmp/native_opt_phase17_postmerge/industry12_regression`
+- post_merge_smoke_status: Phase 18 post-merge validation passed on `main` via `ruff`, `tests/test_native_regression_pack.py tests/test_native_optimization_summary.py`, `/tmp/native_opt_phase18_postmerge/industry12_smoke`, `/tmp/native_opt_phase18_postmerge/industry12_regression`, and `git status --short`
 
 ## Selected optimization target
 - target_name: industry12_discriminativeness
@@ -148,6 +148,11 @@
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant smoke_local --output-root /tmp/native_opt_phase18_validation/industry12_smoke --json` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_phase18_validation/industry12_regression --json` -> pass
   - `git status --short` in the Phase 18 worktree -> doc/status deltas only before commit
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (4 passed)
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant smoke_local --output-root /tmp/native_opt_phase18_postmerge/industry12_smoke --json` -> pass
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_phase18_postmerge/industry12_regression --json` -> pass
+  - post-merge on `main`: `git status --short` -> clean
 - artifacts:
   - `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`
   - `docs/final/NATIVE_OPTIMIZATION_REPORT.md`
@@ -160,6 +165,7 @@
 - notes:
   - Phase 18 bootstrapped `.env`, `.venv`, `workspace/`, `venv_gptr/`, and `.codex/config.toml` into the fresh worktree via safe symlinks before doc work began.
   - The new manual points reviewers to `release_manifest.json`, `native_summary.json`, `optimization_summary.json`, `BEFORE_AFTER.md`, and the emitted bundle/audit artifacts without changing those artifact contracts.
+  - Merge target commit on `main`: `07b234e`
 
 ## Decisions log
 - [2026-04-22T15:47:32Z] Preserved the staged `.agent/native_optimization/` tree to `/tmp/native_opt_seed_20260422T154732Z/native_optimization` and saved `/tmp/native_opt_seed_20260422T154732Z/native_optimization_cached.diff` before cleaning `main`.
@@ -168,3 +174,4 @@
 - [2026-04-22T15:57:41Z] Completed the Phase 16 hardening pass: the four target `industry12` tasks now emit explicit multi-claim/conflict-aware bundles, and the additive optimization-summary module/script are covered by focused tests.
 - [2026-04-22T16:00:40Z] Regenerated the committed native artifacts and recorded the stable before/after comparison: `industry12` remains `passed` with `task_count=12`, while conflict/multi-claim/uncertainty case counts each moved from `0` to `4`.
 - [2026-04-22T16:07:10Z] Drafted the final reviewer handoff docs for this optimization cycle: `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`, `docs/final/NATIVE_OPTIMIZATION_REPORT.md`, and the related README/native-summary links.
+- [2026-04-22T16:09:20Z] Merged Phase 18 into `main` and re-verified `ruff`, focused native tests, and `industry12` smoke/regression on `main`; the run is now complete pending worktree cleanup.

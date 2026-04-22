@@ -28,11 +28,11 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: native_optimization_phase18
+- current_phase: native_optimization_complete
 - current_phase_slug: phase18-manual-and-handoff
 - current_attempt: 1
-- last_successful_phase: native_optimization_phase17
-- overall_state: phase18_docs_validation_passed_pending_merge
+- last_successful_phase: native_optimization_phase18
+- overall_state: native_optimization_run_completed
 
 ## Worktree state
 - active_branch: codex/phase18-manual-and-handoff/attempt-1
@@ -83,7 +83,7 @@
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json` -> pass
 
 ## Native optimization follow-up
-- status: Phase 18 reviewer/handoff docs drafted in the phase worktree; validation passed and merge/cleanup is next
+- status: merged to `main`; Phase 18 reviewer/handoff docs are complete and post-merge validation passed
 - key_outputs:
   - `docs/benchmarks/native/USAGE_GUIDE.zh-CN.md`
   - `docs/final/NATIVE_OPTIMIZATION_REPORT.md`
@@ -98,9 +98,15 @@
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant smoke_local --output-root /tmp/native_opt_phase18_validation/industry12_smoke --json` -> pass
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_phase18_validation/industry12_regression --json` -> pass
   - `git status --short` in the Phase 18 worktree -> doc/status deltas only before commit
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (4 passed)
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant smoke_local --output-root /tmp/native_opt_phase18_postmerge/industry12_smoke --json` -> pass
+  - post-merge on `main`: `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_phase18_postmerge/industry12_regression --json` -> pass
+  - post-merge on `main`: `git status --short` -> clean
 - notes:
   - The optimization cycle remains benchmark hardening only; `smoke_local` is still the authoritative release gate.
   - Phase 18 adds reviewer-facing documentation and discoverability links without changing the native benchmark runtime or artifact contracts.
+  - Merge target commit on `main`: `07b234e`
 
 ## Phase ledger
 
@@ -279,6 +285,7 @@
 - [2026-04-21T11:31:48Z] Applied minimal doc fixes in AGENTS.md, .agent/IMPLEMENT.md, .agent/phases/04_phase4_surface_docs.md, .agent/context/METHODOLOGY.md, .agent/context/EVAL_AND_GATES.md, .agent/context/REPO_AUDIT.md, and .agent/context/TASK1_OUTPUT_FULL.md.
 - [2026-04-21T11:31:48Z] Preflight readiness verdict: READY_WITH_MINOR_DOC_FIXES.
 - [2026-04-22T16:07:10Z] Native optimization follow-up advanced into Phase 18 in a fresh worktree and added reviewer-facing docs plus README/native-summary links without changing the release-gate contract.
+- [2026-04-22T16:09:20Z] Native optimization Phase 18 merged to `main`; post-merge verification passed for `ruff`, focused native tests, and `industry12` smoke/regression, with `git status --short` clean on `main`.
 - [2026-04-21T11:49:14Z] Started the full autonomous execution run from Phase 0 in worktree `../_codex_worktrees/phase0-read-and-model-attempt-1` on branch `codex/phase0-read-and-model/attempt-1`.
 - [2026-04-21T11:49:14Z] Verified `main` baseline before creating the worktree using `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` and `UV_CACHE_DIR=/tmp/uv-cache uv run pytest --collect-only -q`.
 - [2026-04-21T11:49:14Z] Bootstrapped missing local-only assets in the Phase 0 worktree by symlinking `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr`; tracked `.python-version` was already present.
