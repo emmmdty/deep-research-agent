@@ -124,6 +124,38 @@ def test_recovery_regression_variant_records_control_plane_details(tmp_path: Pat
     assert idle_case["details"]["spawned_worker"] is False
 
 
+def test_industry12_regression_hardens_conflict_and_uncertainty_cases(tmp_path: Path):
+    """industry12 regression_local 的四个目标任务应显式触发多 claim、冲突与不确定性语义。"""
+    from deep_research_agent.evals.runner import run_eval_suite
+
+    output_root = tmp_path / "industry12_regression"
+    result = run_eval_suite(
+        suite_name="industry12",
+        variant="regression_local",
+        output_root=output_root,
+    )
+
+    assert result["status"] == "passed"
+    assert result["task_count"] == 12
+
+    targeted_task_ids = {
+        "industry-model-gateway",
+        "industry-eval-grounding",
+        "industry-observability",
+        "industry-governance-policy",
+    }
+    tasks = {task["task_id"]: task for task in result["tasks"]}
+
+    for task_id in targeted_task_ids:
+        bundle_path = Path(tasks[task_id]["bundle_path"])
+        bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+
+        assert len(bundle["claims"]) >= 2
+        assert bundle["claim_support_edges"]
+        assert bundle["conflict_sets"]
+        assert any(claim["uncertainty"] in {"medium", "high"} for claim in bundle["claims"])
+
+
 def test_eval_runner_saved_artifacts_are_stable_across_reruns(tmp_path: Path):
     """同一路径重复执行应产生稳定的 summary 与 bundle 工件。"""
     from deep_research_agent.evals.runner import FROZEN_ARTIFACT_TIMESTAMP, run_eval_suite

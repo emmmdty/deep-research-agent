@@ -20,17 +20,17 @@
 - baseline_tag_created: yes
 
 ## Current overall status
-- current_phase: phase15_freeze_and_select
-- current_phase_slug: phase15-freeze-and-select
+- current_phase: phase16_implement_targeted_optimization
+- current_phase_slug: phase16-optimize-weakest-native-axis
 - current_attempt: 1
-- last_successful_phase: native_regression_expansion_merged_on_main
-- overall_state: phase15_completed_pending_merge
+- last_successful_phase: phase15_freeze_and_select
+- overall_state: phase16_completed_pending_merge
 
 ## Worktree state
-- active_branch: codex/phase15-freeze-and-select/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase15-freeze-and-select-attempt-1
+- active_branch: codex/phase16-optimize-weakest-native-axis/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase16-optimize-weakest-native-axis-attempt-1
 - main_clean_before_phase: yes
-- post_merge_smoke_status: pending
+- post_merge_smoke_status: Phase 15 post-merge `scripts/run_local_release_smoke.py` rerun passed on `main` via `/tmp/native_opt_phase15_postmerge/release`
 
 ## Selected optimization target
 - target_name: industry12_discriminativeness
@@ -47,7 +47,8 @@
 - target_files:
   - `evals/datasets/industry12.regression.yaml`
   - `evals/rubrics/industry_research_regression.yaml`
-  - `src/deep_research_agent/evals/`
+  - `src/deep_research_agent/evals/native_optimization.py`
+  - `scripts/build_native_optimization_summary.py`
   - `tests/test_phase5_evals.py`
   - `tests/test_native_optimization_summary.py`
   - `docs/benchmarks/native/CASEBOOK.md`
@@ -96,13 +97,24 @@
   - Added worktree-local ignore entries for `/.venv`, `/workspace`, and `/venv_gptr` via `.git/info/exclude` so bootstrap symlinks do not pollute tracked status.
 
 ### Phase 16 - implement_targeted_optimization
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Hardened exactly four `industry12` regression tasks (`industry-model-gateway`, `industry-eval-grounding`, `industry-observability`, `industry-governance-policy`) with explicit multi-claim structures, explicit claim-support edges, non-empty conflict sets, and medium/high uncertainty claims. Added the new additive comparison module `src/deep_research_agent/evals/native_optimization.py` plus the thin script wrapper `scripts/build_native_optimization_summary.py`, and covered both surfaces with test-first regressions.
 - acceptance_checks:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase5_evals.py tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (14 passed)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant smoke_local --output-root /tmp/native_opt_validation/industry12_smoke --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_validation/industry12_regression --json` -> pass
 - artifacts:
-- blockers:
+  - `evals/datasets/industry12.regression.yaml`
+  - `src/deep_research_agent/evals/native_optimization.py`
+  - `scripts/build_native_optimization_summary.py`
+  - `tests/test_phase5_evals.py`
+  - `tests/test_native_optimization_summary.py`
+- blockers: none
 - notes:
+  - `industry12` still passes with `task_count=12`; the hardening is structural rather than a task-count expansion.
+  - The new optimization-summary code is additive and does not alter the existing `smoke_local` or `native_regression` manifest shapes.
 
 ### Phase 17 - rerun_and_compare
 - status: pending
@@ -126,3 +138,4 @@
 - [2026-04-22T15:47:32Z] Preserved the staged `.agent/native_optimization/` tree to `/tmp/native_opt_seed_20260422T154732Z/native_optimization` and saved `/tmp/native_opt_seed_20260422T154732Z/native_optimization_cached.diff` before cleaning `main`.
 - [2026-04-22T15:48:14Z] Created local annotated tag `v0.2.0-native-regression` on baseline commit `e7219f1`.
 - [2026-04-22T15:49:00Z] Selected `industry12_discriminativeness` as the sole optimization target because the suite's rubric promises conflict and uncertainty evaluation that the current deterministic fixtures do not actually exercise.
+- [2026-04-22T15:57:41Z] Completed the Phase 16 hardening pass: the four target `industry12` tasks now emit explicit multi-claim/conflict-aware bundles, and the additive optimization-summary module/script are covered by focused tests.

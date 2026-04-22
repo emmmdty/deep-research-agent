@@ -77,9 +77,9 @@ tasks:
 
       Public gateway documentation and repositories make provider routing and abstraction visible as a separate operational layer in AI infrastructure.[1][2]
 
-      That keeps routing, fallback, and provider-switching distinct from the application logic that consumes models.[1][2]
+      The same public materials are less definitive about how much adjacent control-plane scope belongs inside that layer, so comparisons should keep the core routing claim separate from the more tentative claim about policy and observability ownership.[1][2]
     task_summaries:
-      - Provider routing shows up as a distinct operational layer in public gateway materials.[1][2]
+      - Provider routing shows up as a distinct operational layer in public gateway materials, but adjacent control-plane ownership remains less settled.[1][2]
     sources:
       - citation_id: 1
         source_id: source-litellm-home
@@ -92,6 +92,68 @@ tasks:
         title: BerriAI/litellm
         canonical_uri: https://github.com/BerriAI/litellm
         snapshot_ref: snapshot-litellm-repo
+    claims:
+      - claim_id: claim-model-gateway-1
+        text: Public gateway materials consistently present provider routing and fallback as a distinct operational layer.
+        criticality: high
+        uncertainty: low
+        status: supported
+        section_ref: Market structure
+        evidence_ids:
+          - industry-model-gateway-evidence-1
+          - industry-model-gateway-evidence-2
+      - claim_id: claim-model-gateway-2
+        text: Public gateway materials do not yet justify treating policy, logging, and evaluation ownership as fully standardized inside the same layer.
+        criticality: high
+        uncertainty: medium
+        status: supported
+        section_ref: Uncertainty
+        evidence_ids:
+          - industry-model-gateway-evidence-1
+          - industry-model-gateway-evidence-2
+    claim_support_edges:
+      - edge_id: edge-model-gateway-1
+        claim_id: claim-model-gateway-1
+        evidence_id: industry-model-gateway-evidence-1
+        source_id: source-litellm-home
+        snapshot_id: snapshot-litellm-home
+        relation: supports
+        confidence: 0.99
+        grounding_status: grounded
+      - edge_id: edge-model-gateway-2
+        claim_id: claim-model-gateway-1
+        evidence_id: industry-model-gateway-evidence-2
+        source_id: source-litellm-repo
+        snapshot_id: snapshot-litellm-repo
+        relation: supports
+        confidence: 0.97
+        grounding_status: grounded
+      - edge_id: edge-model-gateway-3
+        claim_id: claim-model-gateway-2
+        evidence_id: industry-model-gateway-evidence-1
+        source_id: source-litellm-home
+        snapshot_id: snapshot-litellm-home
+        relation: supports
+        confidence: 0.91
+        grounding_status: grounded
+      - edge_id: edge-model-gateway-4
+        claim_id: claim-model-gateway-2
+        evidence_id: industry-model-gateway-evidence-2
+        source_id: source-litellm-repo
+        snapshot_id: snapshot-litellm-repo
+        relation: context_only
+        confidence: 0.82
+        grounding_status: grounded
+    conflict_sets:
+      - conflict_id: conflict-model-gateway
+        claim_ids:
+          - claim-model-gateway-1
+          - claim-model-gateway-2
+        evidence_ids:
+          - industry-model-gateway-evidence-1
+          - industry-model-gateway-evidence-2
+        status: reviewed
+        summary: Public gateway materials agree on routing/fallback as the core layer, but they leave the surrounding control-plane boundary only partially settled.
 
   - task_id: industry-eval-grounding
     topic: Grounding and evaluation layer regression
@@ -108,9 +170,9 @@ tasks:
 
       Public evaluation guidance and framework materials emphasize grounded claims, evidence linkage, and reproducibility instead of report-shape-only scoring.[1][2]
 
-      That keeps evaluation tied to research quality signals rather than cosmetic document traits.[1][2]
+      Those materials also leave a live boundary question: grounded evidence quality is stable, but the exact balance between human review, automated judges, and report formatting checks is still presented with some uncertainty.[1][2]
     task_summaries:
-      - Public evaluation materials separate grounded evidence quality from cosmetic report scoring.[1][2]
+      - Public evaluation materials separate grounded evidence quality from cosmetic report scoring, while leaving some uncertainty about how much human review remains mandatory.[1][2]
     sources:
       - citation_id: 1
         source_id: source-openai-evals
@@ -122,6 +184,68 @@ tasks:
         title: LangSmith Evaluation Concepts
         canonical_uri: https://docs.smith.langchain.com/evaluation/concepts
         snapshot_ref: snapshot-langsmith-evals
+    claims:
+      - claim_id: claim-eval-grounding-1
+        text: Public evaluation materials consistently separate evidence-grounded quality signals from cosmetic report-shape scoring.
+        criticality: high
+        uncertainty: low
+        status: supported
+        section_ref: Grounding
+        evidence_ids:
+          - industry-eval-grounding-evidence-1
+          - industry-eval-grounding-evidence-2
+      - claim_id: claim-eval-grounding-2
+        text: Public evaluation materials still leave some uncertainty about how much review should stay human-mediated versus automated.
+        criticality: high
+        uncertainty: high
+        status: supported
+        section_ref: Uncertainty
+        evidence_ids:
+          - industry-eval-grounding-evidence-1
+          - industry-eval-grounding-evidence-2
+    claim_support_edges:
+      - edge_id: edge-eval-grounding-1
+        claim_id: claim-eval-grounding-1
+        evidence_id: industry-eval-grounding-evidence-1
+        source_id: source-openai-evals
+        snapshot_id: snapshot-openai-evals
+        relation: supports
+        confidence: 0.99
+        grounding_status: grounded
+      - edge_id: edge-eval-grounding-2
+        claim_id: claim-eval-grounding-1
+        evidence_id: industry-eval-grounding-evidence-2
+        source_id: source-langsmith-evals
+        snapshot_id: snapshot-langsmith-evals
+        relation: supports
+        confidence: 0.96
+        grounding_status: grounded
+      - edge_id: edge-eval-grounding-3
+        claim_id: claim-eval-grounding-2
+        evidence_id: industry-eval-grounding-evidence-1
+        source_id: source-openai-evals
+        snapshot_id: snapshot-openai-evals
+        relation: supports
+        confidence: 0.9
+        grounding_status: grounded
+      - edge_id: edge-eval-grounding-4
+        claim_id: claim-eval-grounding-2
+        evidence_id: industry-eval-grounding-evidence-2
+        source_id: source-langsmith-evals
+        snapshot_id: snapshot-langsmith-evals
+        relation: context_only
+        confidence: 0.84
+        grounding_status: grounded
+    conflict_sets:
+      - conflict_id: conflict-eval-grounding
+        claim_ids:
+          - claim-eval-grounding-1
+          - claim-eval-grounding-2
+        evidence_ids:
+          - industry-eval-grounding-evidence-1
+          - industry-eval-grounding-evidence-2
+        status: reviewed
+        summary: Public eval guidance agrees that evidence-grounded metrics matter, but it leaves the exact mix of automation and human review only partially resolved.
 
   - task_id: industry-memory-context
     topic: Memory and context management regression
@@ -228,9 +352,9 @@ tasks:
 
       Public observability materials make traces, spans, and diagnostic visibility explicit parts of AI system operation rather than hidden implementation details.[1][2]
 
-      That keeps observability separate from model quality and report wording in market-level analysis.[1][2]
+      At the same time, the public materials leave some uncertainty about how much observability platforms own evaluation workflows versus simply exposing telemetry for other systems to interpret.[1][2]
     task_summaries:
-      - Public observability materials frame tracing and diagnostics as distinct operational layers.[1][2]
+      - Public observability materials frame tracing and diagnostics as distinct operational layers, but the evaluation boundary around those tools remains less settled.[1][2]
     sources:
       - citation_id: 1
         source_id: source-opentelemetry-docs
@@ -242,6 +366,68 @@ tasks:
         title: LangSmith Observability
         canonical_uri: https://docs.smith.langchain.com/observability
         snapshot_ref: snapshot-langsmith-observability
+    claims:
+      - claim_id: claim-observability-1
+        text: Public observability materials consistently position tracing and diagnostic visibility as a separate operational layer.
+        criticality: high
+        uncertainty: low
+        status: supported
+        section_ref: Market structure
+        evidence_ids:
+          - industry-observability-evidence-1
+          - industry-observability-evidence-2
+      - claim_id: claim-observability-2
+        text: Public observability materials do not fully settle whether evaluation ownership belongs inside observability tooling or in adjacent systems.
+        criticality: high
+        uncertainty: medium
+        status: supported
+        section_ref: Uncertainty
+        evidence_ids:
+          - industry-observability-evidence-1
+          - industry-observability-evidence-2
+    claim_support_edges:
+      - edge_id: edge-observability-1
+        claim_id: claim-observability-1
+        evidence_id: industry-observability-evidence-1
+        source_id: source-opentelemetry-docs
+        snapshot_id: snapshot-opentelemetry-docs
+        relation: supports
+        confidence: 0.98
+        grounding_status: grounded
+      - edge_id: edge-observability-2
+        claim_id: claim-observability-1
+        evidence_id: industry-observability-evidence-2
+        source_id: source-langsmith-observability
+        snapshot_id: snapshot-langsmith-observability
+        relation: supports
+        confidence: 0.97
+        grounding_status: grounded
+      - edge_id: edge-observability-3
+        claim_id: claim-observability-2
+        evidence_id: industry-observability-evidence-1
+        source_id: source-opentelemetry-docs
+        snapshot_id: snapshot-opentelemetry-docs
+        relation: context_only
+        confidence: 0.83
+        grounding_status: grounded
+      - edge_id: edge-observability-4
+        claim_id: claim-observability-2
+        evidence_id: industry-observability-evidence-2
+        source_id: source-langsmith-observability
+        snapshot_id: snapshot-langsmith-observability
+        relation: supports
+        confidence: 0.9
+        grounding_status: grounded
+    conflict_sets:
+      - conflict_id: conflict-observability
+        claim_ids:
+          - claim-observability-1
+          - claim-observability-2
+        evidence_ids:
+          - industry-observability-evidence-1
+          - industry-observability-evidence-2
+        status: reviewed
+        summary: Public observability materials clearly define tracing as a layer, while leaving the eval-versus-telemetry boundary less definitive.
 
   - task_id: industry-coding-agents
     topic: Coding agent market regression
@@ -318,9 +504,9 @@ tasks:
 
       Public protocol and tool-use materials show permissions, safety boundaries, and policy enforcement as explicit system concerns.[1][2]
 
-      That keeps governance attached to connectors and execution policy rather than burying it inside synthesis prompts.[1][2]
+      The same materials also surface a real comparison tension: governance is clearly first-class, but the exact split between protocol-level permissions and product-specific safety overlays remains uncertain enough that reviewer-facing reports should state that ambiguity explicitly.[1][2]
     task_summaries:
-      - Public integration materials keep permissions and policy visible as first-class system layers.[1][2]
+      - Public integration materials keep permissions and policy visible as first-class system layers, while leaving the protocol-versus-product overlay boundary only partially settled.[1][2]
     sources:
       - citation_id: 1
         source_id: source-mcp-governance
@@ -332,6 +518,68 @@ tasks:
         title: OpenAI Agents Guide
         canonical_uri: https://platform.openai.com/docs/guides/agents
         snapshot_ref: snapshot-openai-safety
+    claims:
+      - claim_id: claim-governance-policy-1
+        text: Public protocol and tool-use materials consistently show permissions and policy enforcement as explicit system concerns.
+        criticality: high
+        uncertainty: low
+        status: supported
+        section_ref: Market structure
+        evidence_ids:
+          - industry-governance-policy-evidence-1
+          - industry-governance-policy-evidence-2
+      - claim_id: claim-governance-policy-2
+        text: Public materials do not fully resolve how much governance belongs to protocol-level permissions versus product-specific safety overlays.
+        criticality: high
+        uncertainty: high
+        status: supported
+        section_ref: Uncertainty
+        evidence_ids:
+          - industry-governance-policy-evidence-1
+          - industry-governance-policy-evidence-2
+    claim_support_edges:
+      - edge_id: edge-governance-policy-1
+        claim_id: claim-governance-policy-1
+        evidence_id: industry-governance-policy-evidence-1
+        source_id: source-mcp-governance
+        snapshot_id: snapshot-mcp-governance
+        relation: supports
+        confidence: 0.98
+        grounding_status: grounded
+      - edge_id: edge-governance-policy-2
+        claim_id: claim-governance-policy-1
+        evidence_id: industry-governance-policy-evidence-2
+        source_id: source-openai-safety
+        snapshot_id: snapshot-openai-safety
+        relation: supports
+        confidence: 0.95
+        grounding_status: grounded
+      - edge_id: edge-governance-policy-3
+        claim_id: claim-governance-policy-2
+        evidence_id: industry-governance-policy-evidence-1
+        source_id: source-mcp-governance
+        snapshot_id: snapshot-mcp-governance
+        relation: supports
+        confidence: 0.9
+        grounding_status: grounded
+      - edge_id: edge-governance-policy-4
+        claim_id: claim-governance-policy-2
+        evidence_id: industry-governance-policy-evidence-2
+        source_id: source-openai-safety
+        snapshot_id: snapshot-openai-safety
+        relation: context_only
+        confidence: 0.81
+        grounding_status: grounded
+    conflict_sets:
+      - conflict_id: conflict-governance-policy
+        claim_ids:
+          - claim-governance-policy-1
+          - claim-governance-policy-2
+        evidence_ids:
+          - industry-governance-policy-evidence-1
+          - industry-governance-policy-evidence-2
+        status: reviewed
+        summary: Public governance materials agree that permissions are first-class, but they leave the boundary between protocol governance and product safety overlays only partially resolved.
 
   - task_id: industry-durable-runtime
     topic: Durable runtime and recovery regression
