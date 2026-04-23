@@ -1,6 +1,7 @@
 import { FormEvent, useMemo, useState } from "react";
 
 import { createApiClient, getDefaultApiBaseUrl, PublicJobEvent, PublicJobResponse, SubmitJobRequest } from "./api/client";
+import { benchmarkCases, benchmarkSuites, benchmarkSummary } from "./benchmarkData";
 
 type NavItem = {
   href: string;
@@ -142,7 +143,7 @@ export function App() {
       <main className="main-panel">
         <section className="hero-card">
           <div>
-            <span className="eyebrow">Phase 21 Web Shell</span>
+            <span className="eyebrow">Phase 23 Web Console</span>
             <h2>Evidence-first operations, not a chat transcript.</h2>
             <p>
               This shell is wired for the local FastAPI boundary at <code>{apiBaseUrl}</code>. It keeps lifecycle
@@ -267,6 +268,84 @@ export function App() {
           ) : (
             <p>Submit a job or load a known job id to inspect status, events, and artifacts.</p>
           )}
+        </section>
+
+        <section className="surface-card benchmark-console" aria-label="Benchmark console">
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">Native Benchmarks</span>
+              <h3>smoke_local gate plus regression_local evidence.</h3>
+            </div>
+            <span className="status-pill">local deterministic</span>
+          </div>
+
+          <div className="benchmark-gates" aria-label="Benchmark gates">
+            <article>
+              <span className="eyebrow">Authoritative merge gate</span>
+              <h4>{benchmarkSummary.smokeGate.label}</h4>
+              <p>
+                <code>{benchmarkSummary.smokeGate.name}</code> is the merge-safe proof for the local product boundary.
+              </p>
+              <span className="result-pill">{benchmarkSummary.smokeGate.status}</span>
+            </article>
+            <article>
+              <span className="eyebrow">Reviewer regression layer</span>
+              <h4>{benchmarkSummary.regressionLayer.label}</h4>
+              <p>
+                <code>{benchmarkSummary.regressionLayer.name}</code> expands deterministic suite coverage for review.
+              </p>
+              <span className="result-pill">{benchmarkSummary.regressionLayer.status}</span>
+            </article>
+          </div>
+
+          <div className="benchmark-links" aria-label="Benchmark artifact links">
+            {benchmarkSummary.links.map((link) => (
+              <a href={link.href} key={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="suite-table" role="table" aria-label="Native benchmark suites">
+            <div className="suite-row suite-header" role="row">
+              <span role="columnheader">Suite</span>
+              <span role="columnheader">Coverage</span>
+              <span role="columnheader">Status</span>
+              <span role="columnheader">Key metrics</span>
+            </div>
+            {benchmarkSuites.map((suite) => (
+              <div className="suite-row" role="row" key={suite.name}>
+                <div role="cell">
+                  <strong>{suite.name}</strong>
+                  <small>{suite.purpose}</small>
+                </div>
+                <span role="cell">
+                  {suite.smokeTasks} -&gt; {suite.regressionTasks}
+                </span>
+                <span className="result-pill" role="cell">
+                  {suite.status}
+                </span>
+                <span role="cell">{Object.entries(suite.metrics).map(([key, value]) => `${key}=${value}`).join(", ")}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="casebook-list" aria-label="Casebook links">
+            <h4>Selected casebook entries</h4>
+            {benchmarkCases.map((item) => (
+              <article key={item.taskId}>
+                <div>
+                  <code>{item.suite}</code>
+                  <strong>{item.taskId}</strong>
+                  <p>{item.description}</p>
+                </div>
+                <div className="artifact-actions">
+                  <a href={item.reportPath}>Report</a>
+                  <a href={item.bundlePath}>Bundle</a>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
       </main>
     </div>

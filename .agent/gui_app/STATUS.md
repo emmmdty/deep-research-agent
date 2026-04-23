@@ -11,17 +11,17 @@
 - approval_policy: never
 
 ## Current overall status
-- current_phase: job_ux
-- current_phase_slug: phase22-job-ux
+- current_phase: benchmark_console
+- current_phase_slug: phase23-benchmark-console
 - current_attempt: 1
-- last_successful_phase: phase22_job_ux
-- overall_state: phase22_job_workspace_completed
+- last_successful_phase: phase23_benchmark_console
+- overall_state: phase23_benchmark_console_completed
 
 ## Worktree state
-- active_branch: codex/phase22-job-ux/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase22-job-ux-attempt-1
-- main_clean_before_phase: yes after Phase 21 was merged to `main`
-- post_merge_smoke_status: passed for Phase 22 on `main`
+- active_branch: codex/phase23-benchmark-console/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase23-benchmark-console-attempt-1
+- main_clean_before_phase: yes after Phase 22 was merged to `main`
+- post_merge_smoke_status: pending for Phase 23
 
 ## Local-only / ignored asset audit
 - checked_paths: `.env`, `.env.example`, `.python-version`, `.venv`, `.codex/config.toml`, `workspace`, `venv_gptr`
@@ -33,7 +33,7 @@
   - `workspace` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace`
   - `venv_gptr` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr`
 - copied_assets: none
-- generated_assets: Phase 22 regenerated a local ignored `.venv` in the worktree via `uv run`
+- generated_assets: Phase 22 and Phase 23 regenerated local ignored `.venv` directories in phase worktrees via `uv run`
 - blockers_from_local_assets: none
 
 ## Phase ledger
@@ -110,13 +110,28 @@
   - Known jobs are stored client-side in `localStorage` because the backend has no list-jobs endpoint.
 
 ### Phase 23 - benchmark_console
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Added a native benchmark console to the React GUI. The view exposes the authoritative `smoke_local` merge gate, the `regression_local` reviewer layer, suite coverage for company12/industry12/trusted8/file8/recovery6, key metrics, scorecard/casebook links, manifest links, and selected casebook report/bundle links.
 - acceptance_checks:
+  - RED: `npm test -- src/benchmark-console.test.tsx` failed because `Benchmark console` did not exist
+  - GREEN: `npm test -- src/benchmark-console.test.tsx` -> pass (`1` test)
+  - `npm test` -> pass (`4` files, `6` tests)
+  - `npm run lint` -> pass (`tsc -p tsconfig.json --noEmit`)
+  - `npm run build` -> pass (`vite build`, output under `apps/gui-web/dist/`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass (`970` bytes help output)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py::test_http_api_submit_status_events_bundle_and_artifacts` -> pass (`1 passed in 2.28s`)
 - artifacts:
+  - `apps/gui-web/src/benchmark-console.test.tsx`
+  - `apps/gui-web/src/benchmarkData.ts`
+  - `apps/gui-web/src/App.tsx`
+  - `docs/gui/BENCHMARK_CONSOLE.md`
 - blockers:
+  - none
 - notes:
+  - The console presents committed deterministic benchmark artifacts; it does not add browser-triggered benchmark orchestration.
+  - `smoke_local` remains the authoritative merge-safe gate.
+  - `regression_local` is displayed as reviewer-facing wider coverage.
 
 ### Phase 24 - desktop_handoff
 - status: pending

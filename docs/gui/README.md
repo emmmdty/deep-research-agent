@@ -22,3 +22,4 @@ Phase 22 adds the bounded research-job workspace: submit local no-worker jobs, l
 
 ## Runbooks
 - `docs/gui/JOB_FLOW.md` documents the submit/status/events/bundle flow.
+- `docs/gui/BENCHMARK_CONSOLE.md` documents the native benchmark evidence view.
