@@ -28,11 +28,11 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: docs_tree_hygiene_validated
+- current_phase: docs_tree_hygiene_complete
 - current_phase_slug: docs-tree-hygiene
 - current_attempt: 1
 - last_successful_phase: native_optimization_phase18
-- overall_state: documentation_and_repository_structure_hygiene_validated
+- overall_state: documentation_and_repository_structure_hygiene_completed
 
 ## Worktree state
 - active_branch: main
@@ -48,7 +48,7 @@
   - `git show --stat v0.2.0-native-regression --no-patch` -> annotated local tag confirmed on `e7219f1`
 
 ## Documentation and tree hygiene
-- status: validation passed on `main` after the initial worktree creation blocker
+- status: completed on `main` after the initial worktree creation blocker
 - requested_branch: `codex/docs-tree-hygiene`
 - requested_worktree: `../_codex_worktrees/docs-tree-hygiene`
 - worktree_blocker:
@@ -69,7 +69,7 @@
   - move old graph-first `examples/basic_research.py` to `legacy/examples/basic_research.py`
   - move placeholder or legacy-only root `skills/` and `mcp_servers/` under `legacy/`
   - keep import-sensitive compatibility roots in place and label them explicitly
-- validation_status: pass; staging and commit are pending at this status update
+- validation_status: pass on `main`; cleanup and status commits were pushed non-interactively
 - validation_passes:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass (`All checks passed!`)
   - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (`4 passed in 1.91s`)
@@ -81,7 +81,9 @@
   - targeted stale-claim scan over current-facing docs -> pass (no matches)
 - git_finalization:
   - Git metadata writability check -> pass for `.git/index.lock`, `.git/refs/heads`, and `.git/objects`
-  - `git add -A`, commit, and non-interactive push remain to run after this status update
+  - primary cleanup commit: `3910d69` (`docs: clarify repository map and legacy boundaries`)
+  - non-interactive push: available and used for `origin/main`
+  - final status note: this section records the completed hygiene run; see final Git log for the latest pushed commit hash
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
