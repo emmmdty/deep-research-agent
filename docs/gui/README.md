@@ -18,8 +18,12 @@ npm run build
 ```
 
 ## Current Phase
-Phase 22 adds the bounded research-job workspace: submit local no-worker jobs, load known or manual job ids, poll job events, and inspect bundle JSON from the existing API.
+Phase 24 completes the local web GUI handoff docs and records desktop packaging status. The web GUI is the runnable surface; Tauri desktop packaging is scaffolded but blocked until Rust/Cargo are available.
 
 ## Runbooks
 - `docs/gui/JOB_FLOW.md` documents the submit/status/events/bundle flow.
 - `docs/gui/BENCHMARK_CONSOLE.md` documents the native benchmark evidence view.
+- `docs/gui/USAGE_GUIDE.zh-CN.md` is the Chinese operator guide.
+- `docs/gui/ARCHITECTURE.md` documents the GUI architecture boundary.
+- `docs/gui/DEMO_FLOW.md` documents the bounded local demo flow.
+- `docs/gui/DESKTOP_STATUS.md` records desktop wrapper status.

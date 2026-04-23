@@ -14,6 +14,7 @@ An evidence-first Deep Research Agent for company and industry research.
 - Start with `src/deep_research_agent/` for the canonical implementation.
 - Start with `evals/reports/phase5_local_smoke/` for the merge-safe `smoke_local` gate.
 - Start with [Native Benchmark](./docs/benchmarks/native/README.md) for deterministic `regression_local` evidence.
+- Start with [GUI Web Console](./docs/gui/README.md) for the local operator/reviewer interface.
 
 ## Measured Value
 
@@ -40,6 +41,7 @@ Review paths:
 - [Native Casebook](./docs/benchmarks/native/CASEBOOK.md)
 - [Native Usage Guide (zh-CN)](./docs/benchmarks/native/USAGE_GUIDE.zh-CN.md)
 - [Native Optimization Report](./docs/final/NATIVE_OPTIMIZATION_REPORT.md)
+- [GUI Web Console](./docs/gui/README.md)
 - [Release Manifest](./evals/reports/phase5_local_smoke/release_manifest.json)
 
 The HTTP API is still local-only. This repository is not a multi-tenant production SaaS.
@@ -53,7 +55,7 @@ This repository is built around:
 - OpenAI / Anthropic provider abstraction
 - CLI, local HTTP API, and batch entrypoints
 
-It is not a chat shell, not a frontend, and not a “more agents = better” demo.
+It is not a chat shell and not a “more agents = better” demo. The GUI is an operator/reviewer console layered over the existing local API.
 
 ## Public Surfaces
 
@@ -90,6 +92,18 @@ Phase 4 adds a local FastAPI surface over the same deterministic job runtime:
 - `POST /v1/batch/research`
 
 This is a real local API, but it is still backed by the local SQLite/filesystem runtime. It is not an auth-enabled, multi-tenant production service.
+
+### Local Web GUI
+
+The web GUI lives under `apps/gui-web/` and consumes the local API at `http://127.0.0.1:8000`.
+
+```bash
+cd apps/gui-web
+npm install
+npm run dev
+```
+
+GUI docs live under [docs/gui](./docs/gui/README.md). Desktop/Tauri packaging is scaffolded but currently blocked until Rust/Cargo are installed.
 
 ## Quickstart
 

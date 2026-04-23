@@ -13,11 +13,15 @@ This is the recommended reading order for reviewers.
 7. [`docs/benchmarks/native/NATIVE_SCORECARD.md`](./benchmarks/native/NATIVE_SCORECARD.md) - smoke and regression scorecard.
 8. [`docs/benchmarks/native/CASEBOOK.md`](./benchmarks/native/CASEBOOK.md) - selected deterministic regression cases.
 9. [`docs/final/NATIVE_OPTIMIZATION_REPORT.md`](./final/NATIVE_OPTIMIZATION_REPORT.md) - latest native benchmark hardening cycle.
+10. [`docs/gui/README.md`](./gui/README.md) - local GUI overview, runbooks, and desktop status.
 
 ## Engineering Detail
 
 - [`docs/architecture.md`](./architecture.md) - implemented architecture and current limits.
 - [`docs/development.md`](./development.md) - local commands, validation, and compatibility notes.
+- [`docs/gui/ARCHITECTURE.md`](./gui/ARCHITECTURE.md) - GUI-specific architecture and local API boundary.
+- [`docs/gui/DEMO_FLOW.md`](./gui/DEMO_FLOW.md) - bounded web GUI demo flow.
+- [`docs/gui/DESKTOP_STATUS.md`](./gui/DESKTOP_STATUS.md) - Tauri desktop status and prerequisites.
 - [`specs/api-readiness-contract.md`](../specs/api-readiness-contract.md) - implemented local HTTP API and batch contract.
 - [`docs/adr/adr-0008-http-api-surface.md`](./adr/adr-0008-http-api-surface.md) - local HTTP API decision.
 - [`docs/adr/adr-0009-batch-and-artifact-contract.md`](./adr/adr-0009-batch-and-artifact-contract.md) - batch and artifact contract decision.
