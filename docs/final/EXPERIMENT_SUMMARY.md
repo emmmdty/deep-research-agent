@@ -72,6 +72,8 @@ From the committed native regression manifest:
 
 Reviewer-facing native docs:
 
+- `docs/REPO_MAP.md`
+- `docs/DOCS_INDEX.md`
 - `docs/benchmarks/native/README.md`
 - `docs/benchmarks/native/NATIVE_SCORECARD.md`
 - `docs/benchmarks/native/CASEBOOK.md`

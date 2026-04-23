@@ -7,6 +7,14 @@ English | [简体中文](./README.zh-CN.md)
 
 An evidence-first Deep Research Agent for company and industry research.
 
+## Where To Start
+
+- Start with [Repository Map](./docs/REPO_MAP.md) if you want to understand which root areas are canonical, compatibility-only, or legacy/archive.
+- Start with [Docs Index](./docs/DOCS_INDEX.md) if you want the reviewer-facing reading order.
+- Start with `src/deep_research_agent/` for the canonical implementation.
+- Start with `evals/reports/phase5_local_smoke/` for the merge-safe `smoke_local` gate.
+- Start with [Native Benchmark](./docs/benchmarks/native/README.md) for deterministic `regression_local` evidence.
+
 ## Measured Value
 
 A deterministic, evidence-first Deep Research Agent that emits grounded report bundles instead of chat-only answers.
@@ -24,6 +32,8 @@ Committed follow-up metrics from `evals/reports/followup_metrics/`:
 
 Review paths:
 
+- [Repository Map](./docs/REPO_MAP.md)
+- [Docs Index](./docs/DOCS_INDEX.md)
 - [Value Scorecard](./docs/final/VALUE_SCORECARD.md)
 - [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md)
 - [Native Scorecard](./docs/benchmarks/native/NATIVE_SCORECARD.md)
@@ -236,6 +246,8 @@ tests/              runtime, connector, auditor, and public-surface regressions
 docs/               architecture, development, ADRs, and migration notes
 ```
 
+Root compatibility packages such as `artifacts/`, `auditor/`, `connectors/`, `services/`, `llm/`, `memory/`, and `tools/` remain for legacy imports and diagnostics. They are not the primary architecture. See [Repository Map](./docs/REPO_MAP.md) for the full top-level classification.
+
 ## Development
 
 Key local checks:
@@ -254,6 +266,8 @@ For broader validation, see:
 
 - [Architecture](./docs/architecture.md)
 - [Development Guide](./docs/development.md)
+- [Repository Map](./docs/REPO_MAP.md)
+- [Docs Index](./docs/DOCS_INDEX.md)
 - [Final Change Report](./FINAL_CHANGE_REPORT.md)
 - [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md)
 - [API Contract](./specs/api-readiness-contract.md)

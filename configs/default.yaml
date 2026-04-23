@@ -8,7 +8,8 @@ configs/settings.py 会自动读取 .env 文件，
 # LLM 配置
 # ============================================================
 llm:
-  # 提供商：minimax / deepseek / openai / agicto / custom
+  # 提供商：openai / anthropic / openai_compatible / anthropic_compatible
+  # 兼容层仍会把 minimax / deepseek / agicto / custom 等旧别名归一为 openai_compatible。
   provider: minimax
 
   # 模型名称
@@ -34,7 +35,7 @@ search:
 # 研究流程配置
 # ============================================================
 research:
-  # 最大迭代研究循环次数（Critic 不满足时回到 Researcher）
+  # 最大研究循环次数
   max_loops: 3
 
   # case-study 任务优先尝试的官方域名

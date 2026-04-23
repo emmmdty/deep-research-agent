@@ -1,19 +1,19 @@
 """基础研究示例——演示如何使用 Deep Research Agent。
 
 使用方式：
-    uv run python examples/basic_research.py
+    uv run python legacy/examples/basic_research.py
 """
 # ruff: noqa: E402
 
 import sys
 from pathlib import Path
 
-# 添加项目根目录到 Python 路径
-sys.path.insert(0, str(Path(__file__).parent.parent))
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).parent.parent / ".env")
+load_dotenv(PROJECT_ROOT / ".env")
 
 from legacy.workflows.graph import run_research
 from evaluation.metrics import evaluate_report

@@ -64,6 +64,9 @@ It is not a frontend, not a chat shell, and not a multi-agent-count demo.
 
 - `legacy/agents/`
 - `legacy/workflows/`
+- `legacy/examples/`
+- `legacy/skills/`
+- `legacy/mcp_servers/`
 - `evals/legacy_diagnostics/`
 - legacy graph-adjacent prompt and skill wrappers are compatibility-only, not the supported execution path
 
@@ -72,8 +75,9 @@ Phase 0 also froze the handling of previously unmapped directories:
 - `capabilities/`: split; MCP runtime concerns migrated toward canonical connector ownership, legacy graph routing treated as archive/compatibility material
 - `prompts/`: archived with the legacy graph runtime
 - `schemas/`: kept and re-scoped as live contract schemas
-- `examples/`: re-scoped to current CLI/API/batch demos; legacy example flow is no longer the target product path
-- `skills/`: archived as legacy wrappers
+- `examples/`: re-scoped to README-based CLI/API/batch demos; legacy example flow lives under `legacy/examples/`
+- `skills/`: archived under `legacy/skills/` as legacy wrappers
+- `mcp_servers/`: archived under `legacy/mcp_servers/` as placeholder material
 - `workspace/`: retained only as a runtime/eval data root, never as source
 
 ## Deleted or Replaced
@@ -181,6 +185,8 @@ The follow-up metrics/value pack adds these review artifacts on top of that base
 ## Pointers
 
 - `README.md`
+- `docs/REPO_MAP.md`
+- `docs/DOCS_INDEX.md`
 - `docs/architecture.md`
 - `docs/development.md`
 - `docs/final/EXPERIMENT_SUMMARY.md`

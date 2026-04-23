@@ -5,49 +5,63 @@
 
 [English](./README.md) | 简体中文
 
-这是一个面向公司/行业研究的 evidence-first Deep Research Agent，当前公开边界已经收敛为：
+面向公司/行业研究的 evidence-first Deep Research Agent。当前仓库的主线不是聊天壳、不是前端、也不是“多 agent 数量展示”，而是一个本地可运行、可恢复、可审计的研究 job runtime。
+
+## 从哪里开始
+
+- 先看 [仓库地图](./docs/REPO_MAP.md)：了解哪些根目录是 canonical、compatibility、benchmark/eval、legacy/archive。
+- 再看 [文档索引](./docs/DOCS_INDEX.md)：按 reviewer 视角阅读最终文档。
+- 看 `src/deep_research_agent/`：当前 canonical 实现。
+- 看 `evals/reports/phase5_local_smoke/`：权威 merge-safe `smoke_local` gate。
+- 看 [Native Benchmark](./docs/benchmarks/native/README.md)：确定性的 `regression_local` reviewer evidence。
+
+## 当前项目边界
+
+当前公开支持的能力包括：
 
 - 确定性异步 job runtime
 - source policy + snapshotting
 - claim-level audit + review queue
 - report bundle 交付物
-- CLI + 本地 HTTP API + batch entrypoint
+- OpenAI / Anthropic / compatible provider abstraction
+- CLI、本地 HTTP API、batch entrypoint
+- 本地 eval runner、`smoke_local` release gate、`regression_local` native regression layer
 
-中文 README 还没有逐段完全重写，Phase 4 的最新文档事实以 [README.md](./README.md)、[docs/architecture.md](./docs/architecture.md) 和 [docs/development.md](./docs/development.md) 为准。
+本地 HTTP API 是真实实现，但仍然基于 SQLite、filesystem artifacts 和本地 worker。它不是带 auth、tenant isolation、外部 queue、object storage 的生产 SaaS 边界。
 
-## 项目定位
+## 主要入口
 
-该仓库当前按公开的研究工程 / 作品集项目维护，目标不是做成一个完整产品，而是展示：
+### CLI
 
-- 多智能体深度研究流程
-- 结构化证据与引用建模
-- benchmark 与 comparator harness
-- 可测试、可解释、可维护的工程实现
+支持的 developer CLI 通过 `main.py` 暴露：
 
-当前公开支持的入口包括：
+- `submit`
+- `status`
+- `watch`
+- `cancel`
+- `retry`
+- `resume`
+- `refine`
+- `bundle`
+- `batch run`
+- `eval run`
+- `benchmark run`
 
-- CLI：`submit / status / watch / cancel / retry / resume / refine / bundle / batch run`
-- 本地 HTTP API：`/v1/research/jobs*`、`/bundle`、`/artifacts/{artifact_name}`、`/v1/batch/research`
+### 本地 HTTP API
 
-phase4 以后，公开 API 仍然复用本地 SQLite + filesystem runtime；它不是多租户或生产级服务边界。
+本地 FastAPI surface 复用同一套 deterministic job runtime：
 
-## 主要能力
-
-- 分层工作流：`Supervisor -> Planner -> Researcher -> Verifier -> Critic -> Writer`
-- 默认多源研究：`web`、`github`、`arxiv`
-- `builtin / skill / mcp` 统一 capability registry 与任务路由
-- 结构化状态对象：`SourceRecord`、`EvidenceNote`、`EvidenceUnit`、`VerificationRecord`、`RunMetrics`、`ReportArtifact`
-- 统一 benchmark 与 comparator 入口
-- benchmark profile 采用严格 `quality_gate`：最后一轮仍未达标时直接失败终止，不再输出伪完成报告
-- `case-study / 行业应用案例` 方面会走专用检索与筛选链，只接受 `官方站点 + 一手仓库` 证据；综述、泛博客和背景文章不会通过 gate
-- case-study 检索默认使用多模板 query bundle：官方域名 `site:` 扩展、GitHub 一手仓库搜索、以及失败后的 rescue queries
-- `benchmark_summary.json` 采用 `scorecard + legacy_metrics + judge_status` 双层输出，对外主展示为 `0-100` 连续值可靠性分数
-- `portfolio12` 主题集与 `run_ablation.py` 支持把项目方法点做成可复现的对照实验
-- 基于 `LLM-as-Judge` 的盲评对比
-- Phase 02 可恢复 job runtime：SQLite 持久化状态、event、checkpoint，支持 cancel / retry / resume / refine / stale job recovery
-- Phase 03 统一 connector substrate：`search / fetch / file-ingest`、snapshot 持久化、domain allow/deny 和每 job 抓取预算
-- Phase 04 claim-level audit pipeline：`claim_auditing`、claim graph、conflict set 与 critical claim review queue
-- 完成态 job 会在 `workspace/research_jobs/<job_id>/` 下输出 `report.md`、`report_bundle.json`、`trace.jsonl`、`snapshots/` 和 `audit/`
+- `POST /v1/research/jobs`
+- `GET /v1/research/jobs/{job_id}`
+- `GET /v1/research/jobs/{job_id}/events`
+- `POST /v1/research/jobs/{job_id}:cancel`
+- `POST /v1/research/jobs/{job_id}:retry`
+- `POST /v1/research/jobs/{job_id}:resume`
+- `POST /v1/research/jobs/{job_id}:refine`
+- `POST /v1/research/jobs/{job_id}:review`
+- `GET /v1/research/jobs/{job_id}/bundle`
+- `GET /v1/research/jobs/{job_id}/artifacts/{artifact_name}`
+- `POST /v1/batch/research`
 
 ## 快速开始
 
@@ -63,194 +77,167 @@ uv sync --group dev
 cp .env.example .env
 ```
 
-补齐 API Key 后再运行研究或 benchmark。
+运行 live research 前需要补齐 provider 和 search credentials。
 
-### 3. 提交并观察研究任务
+### 3. 提交并查看研究任务
 
 ```bash
 uv run python main.py submit \
-  --topic "2024 年大语言模型 Agent 架构的最新进展" \
+  --topic "Anthropic company profile" \
   --source-profile company_trusted \
-  --allow-domain github.com \
-  --allow-domain docs.langchain.com \
+  --allow-domain anthropic.com \
   --max-candidates-per-connector 4 \
   --max-fetches-per-task 3 \
   --max-total-fetches 8
+
 uv run python main.py watch --job-id <job_id>
 uv run python main.py status --job-id <job_id>
+uv run python main.py bundle --job-id <job_id> --json
 ```
 
-公开 CLI 现在会提交后台 job。完成态 job 会把 `report.md`、`report_bundle.json`、`trace.jsonl`、`snapshots/` 和 `audit/` 写到 `workspace/research_jobs/<job_id>/`。
-如果关键 claim 仍未通过审计门禁，job 仍会完成，但会明确暴露 `audit_gate_status=blocked`。
-当前 canonical source profile 包括：`company_trusted`、`company_broad`、`industry_trusted`、`industry_broad`、`public_then_private`、`trusted_only`。
-
-### 4. 运行 benchmark / 对比
+### 4. 启动本地 HTTP API
 
 ```bash
-uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set local3 --summary
-uv run python scripts/run_benchmark.py --comparators ours --profile benchmark --topic-set portfolio12 --summary
-uv run python scripts/run_ablation.py --topic-set portfolio12 --profile benchmark
-uv run python scripts/run_portfolio12_release.py --env-file /绝对路径/.env --topic-set portfolio12 --release-mode hybrid
-uv run python scripts/optimize_local3.py --profile benchmark --max-rounds 3 --skip-judge
-uv run python scripts/full_comparison.py --comparators ours,gptr,odr,alibaba
-uv run python scripts/compare_agents.py --file-a report_a.md --file-b report_b.md
+uv run uvicorn deep_research_agent.gateway.api:app --reload
 ```
 
-其中 `benchmark_summary.json` 现在分成两层：
-- `scorecard`：面向展示的 `0-100` 分数卡，包含研究可靠性、系统可控性、报告质量、评测可复现性
-- `legacy_metrics`：保留旧字段聚合结果，兼容历史脚本与结果对比
-- `benchmark_health`：补充展示完成率、质量门控通过率、judge 状态与恢复韧性
-- case-study 相关连续值指标还包括：`case_study_strength_score_100`、`first_party_case_coverage_100`、`official_case_ratio_100`、`case_study_gate_margin_100`
+提交并检查一个本地 job：
 
-如果需要把 `portfolio12` 的 benchmark、ablation 与 `RESULTS.md` 一次打包成可复用诊断结果集，使用 `scripts/run_portfolio12_release.py`。默认 `--release-mode hybrid` 会只对代表题 `T01,T04,T11` 运行 live judge，同时保留全量 `portfolio12` 的可复现实验输出；并通过 `--env-file` 显式加载带有 Judge/搜索密钥的环境文件。
+```bash
+curl -s http://127.0.0.1:8000/v1/research/jobs \
+  -X POST \
+  -H 'content-type: application/json' \
+  -d '{
+    "topic": "AI coding agent market map",
+    "max_loops": 2,
+    "research_profile": "default",
+    "source_profile": "industry_broad",
+    "start_worker": false
+  }'
 
-Phase 05 增加了本地 release gate manifest。benchmark diagnostics 是必需项，但不能单独证明产品可发布；gate 还要求 runtime recovery、connector security、claim audit grounding 和公开 surface 文档检查。当前这只是本地 checklist / manifest，不是外部 CI 或生产监控系统。
-
-## 示例输出
-
-一个典型的 CLI 运行过程大致如下：
-
-```text
-$ uv run python main.py submit --topic "Latest progress in LLM agent architectures"
-✅ 已提交 job: 20260409T120000Z-abc12345
-当前状态: created -> next: clarifying
-
-$ uv run python main.py watch --job-id 20260409T120000Z-abc12345
-[0002] clarifying stage.started - 开始 clarifying 阶段
-[0012] claim_auditing stage.completed - claim_auditing 阶段完成
-[0015] rendering stage.completed - rendering 阶段完成
-[0016] completed job.completed - job 进入 completed
+curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>
+curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/events
+curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/bundle
 ```
 
-## 配置项
+### 5. 运行 batch
 
-公开支持的环境变量包括：
+创建 `batch.jsonl`：
 
-- `LLM_PROVIDER`
-- `LLM_MODEL_NAME`
-- `LLM_API_KEY`
-- `LLM_BASE_URL`
-- `OPENAI_API_KEY`
-- `ANTHROPIC_API_KEY`
-- `OPENAI_COMPATIBLE_API_KEY`
-- `OPENAI_COMPATIBLE_BASE_URL`
-- `ANTHROPIC_COMPATIBLE_API_KEY`
-- `ANTHROPIC_COMPATIBLE_BASE_URL`
-- `SEARCH_BACKEND`
-- `TAVILY_API_KEY`
-- `MAX_RESEARCH_LOOPS`
-- `MAX_SEARCH_RESULTS`
-- `RESEARCH_PROFILE`
-- `RESEARCH_CONCURRENCY`
-- `ENABLED_CAPABILITY_TYPES`
-- `SKILL_PATHS`
-- `MCP_CONFIG_PATH`
-- `MCP_SERVERS`
-- `CASE_STUDY_OFFICIAL_DOMAINS`
-- `ENABLED_SOURCES`
-- `ENABLED_COMPARATORS`
-- `BUNDLE_EMISSION_ENABLED`
-- `BUNDLE_OUTPUT_DIRNAME`
-- `JOB_RUNTIME_DIRNAME`
-- `JOB_HEARTBEAT_INTERVAL_SECONDS`
-- `JOB_STALE_TIMEOUT_SECONDS`
-- `LEGACY_CLI_ENABLED`
-- `SOURCE_POLICY_MODE`
-- `CONNECTOR_SUBSTRATE_ENABLED`
-- `SNAPSHOT_STORE_DIRNAME`
-- `MEMORY_BACKEND`
-- `JUDGE_MODEL`
-- `GPT_RESEARCHER_PYTHON`
-- `OPEN_DEEP_RESEARCH_COMMAND`
-- `OPEN_DEEP_RESEARCH_REPORT_DIR`
-- `ALIBABA_RUNNER_MODE`
-- `ALIBABA_COMMAND`
-- `ALIBABA_REPORT_DIR`
-- `GEMINI_ENABLED`
-- `GEMINI_ALLOWLIST_REQUIRED`
-- `GEMINI_COMMAND`
-- `GEMINI_REPORT_DIR`
+```jsonl
+{"topic":"Anthropic company profile","max_loops":1,"research_profile":"default","start_worker":false}
+{"topic":"AI coding agent market map","max_loops":2,"research_profile":"benchmark","source_profile":"industry_broad","start_worker":false}
+```
 
-完整模板见 [`.env.example`](./.env.example)。
+提交：
+
+```bash
+uv run python main.py batch run --file batch.jsonl --json
+```
+
+### 6. 运行本地 eval、release smoke 和 native regression
+
+```bash
+uv run python main.py eval run --suite company12 --output-root evals/reports/phase5_local_smoke/company12 --json
+uv run python main.py eval run --suite industry12 --output-root evals/reports/phase5_local_smoke/industry12 --json
+uv run python main.py eval run --suite company12 --variant regression_local --output-root evals/reports/native_regression/company12 --json
+uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke --json
+uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression --json
+uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native --json
+```
+
+解释：
+
+- `smoke_local` 是权威 merge-safe gate，提交产物位于 `evals/reports/phase5_local_smoke/`。
+- `regression_local` 是更宽的 deterministic native regression layer，提交产物位于 `evals/reports/native_regression/`。
+- reviewer-facing native docs 位于 `docs/benchmarks/native/`。
+
+## Artifact Contract
+
+完成态 job 会写入 `workspace/research_jobs/<job_id>/`。
+
+稳定 artifact 名称：
+
+- `report.md`
+- `report.html`
+- `report_bundle.json`
+- `claims.json`
+- `sources.json`
+- `audit_decision.json`
+- `trace.jsonl`
+- `manifest.json`
+- `review_queue.json`
+- `claim_graph.json`
+- `review_actions.jsonl`
+
+`report_bundle.json` 是权威机器可读输出；其他文件是阅读、审计和交付视图。
+
+## Source Profiles
+
+当前 canonical source profile 包括：
+
+- `company_trusted`
+- `company_broad`
+- `industry_trusted`
+- `industry_broad`
+- `public_then_private`
+- `trusted_only`
 
 ## 仓库结构
 
+当前 canonical execution path 位于 `src/deep_research_agent/`：
+
 ```text
-agents/       多智能体节点，包含 verifier
-services/research_jobs/ SQLite 持久化公开 job runtime
-connectors/   统一 search / fetch / file-ingest substrate 与适配层
-policies/     source profile、budget guardrail 与 domain 治理
-capabilities/ builtin / skill / mcp 能力注册与适配
-tools/        搜索与工具适配
-workflows/    状态图与结构化状态
-evaluation/   指标、Judge、成本统计、Comparator 协议
-memory/       SQLite 持久化证据记忆
-scripts/      benchmark、对比与离线比较命令
-tests/        回归测试与单元测试
-docs/         架构与开发文档
+src/deep_research_agent/
+  gateway/          CLI、本地 HTTP API、batch helpers、public contracts
+  research_jobs/    deterministic runtime、store、service、worker、orchestrator
+  connectors/       search / fetch / file-ingest substrate 与 snapshot store
+  auditor/          claim audit、review queue、audit sidecars
+  reporting/        bundle compiler 与 delivery artifacts
+  providers/        provider routing 与 abstraction
+  evidence_store/   evidence storage primitives
+  evals/            deterministic local suite runner 与 eval contracts
+evals/              suite definitions、frozen datasets、rubrics、committed smoke/regression outputs
+docs/               architecture、development、final docs、benchmark docs、migration notes
+legacy/             archived graph/runtime material and compatibility-only references
+tests/              runtime、connector、auditor、public-surface、benchmark regressions
 ```
+
+根目录下的 `artifacts/`、`auditor/`、`connectors/`、`services/`、`llm/`、`memory/`、`tools/` 等目录主要是 compatibility/support path，不是主架构入口。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
 
 ## 开发与验证
 
+关键本地检查：
+
 ```bash
+uv run python main.py --help
 uv run ruff check .
-uv run pytest -q
+uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
+uv run python scripts/run_local_release_smoke.py --output-root evals/reports/phase5_local_smoke
+uv run python scripts/run_native_regression.py --output-root evals/reports/native_regression
+uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root docs/benchmarks/native
 ```
-
-Phase 01 联网验收可直接使用：
-
-```bash
-WORKSPACE_DIR=workspace/phase1-live-validation \
-ENABLED_SOURCES='["web"]' \
-uv run python main.py legacy-run --topic "Datawhale是一个什么样的组织" --max-loops 2
-```
-
-然后检查 `workspace/phase1-live-validation/` 下的 Markdown 与 `bundles/<run_id>/` 侧车产物。
-
-Phase 02 联网验收可直接使用：
-
-```bash
-WORKSPACE_DIR=workspace/phase2-live-validation \
-ENABLED_SOURCES='["web"]' \
-uv run python main.py submit --topic "Datawhale是一个什么样的组织"
-uv run python main.py watch --job-id <job_id>
-```
-
-Phase 03 联网验收可直接使用：
-
-```bash
-WORKSPACE_DIR=workspace/phase3-live-validation \
-ENABLED_SOURCES='["github"]' \
-uv run python main.py submit \
-  --topic "langgraph github repository" \
-  --source-profile company_trusted \
-  --allow-domain github.com \
-  --max-candidates-per-connector 3 \
-  --max-fetches-per-task 2 \
-  --max-total-fetches 4
-uv run python main.py watch --job-id <job_id>
-```
-
-Phase 04 审计回归可直接使用：
-
-```bash
-uv run pytest -q tests/test_phase4_auditor.py
-```
-
-如果直接在 shell 中覆盖列表配置，建议使用 JSON 数组形式，例如 `ENABLED_SOURCES='["github"]'`。
 
 相关文档：
 
+- [仓库地图](./docs/REPO_MAP.md)
+- [文档索引](./docs/DOCS_INDEX.md)
 - [架构设计](./docs/architecture.md)
 - [开发指南](./docs/development.md)
-- [贡献指南](./CONTRIBUTING.md)
-- [安全策略](./SECURITY.md)
+- [最终变更报告](./FINAL_CHANGE_REPORT.md)
+- [实验总结](./docs/final/EXPERIMENT_SUMMARY.md)
+- [Native Scorecard](./docs/benchmarks/native/NATIVE_SCORECARD.md)
+- [Native Casebook](./docs/benchmarks/native/CASEBOOK.md)
+- [Native 中文使用手册](./docs/benchmarks/native/USAGE_GUIDE.zh-CN.md)
 
 ## 当前限制
 
-- `odr`、`alibaba`、`gemini` 等 comparator 仍依赖你本地配置的命令模板或报告导入目录。
-- MCP 当前采用 file-first + capability-first 方式：v1 已支持 `stdio` / `sse` / `streamable-http` 三类 server 的发现、缓存与能力路由；但外部 server 的具体行为仍取决于其公开 schema 和鉴权要求。
-- 当前版本不提供受支持的 HTTP 服务接口。
+- 本地 HTTP API 仍使用 SQLite、filesystem artifacts 和本地 subprocess worker。
+- 当前没有 auth、tenant isolation、external queue 或 object storage layer。
+- manual review 是 append-only 并可通过 events/sidecars 观察，但不会完整重编译 `report_bundle.json`。
+- `legacy-run` 仍作为 hidden compatibility path 存在，不是 supported public runtime。
+- heavy benchmark/comparator stack 仍可用于 diagnostics，但权威 release gate 是 `evals/reports/phase5_local_smoke/`。
+- external benchmark portfolio 是 smoke/subset-first reviewer-facing diagnostics，不是 production benchmark service。
 
 ## 许可证
 

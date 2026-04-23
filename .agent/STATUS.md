@@ -28,11 +28,11 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: native_optimization_complete
-- current_phase_slug: phase18-manual-and-handoff
+- current_phase: docs_tree_hygiene_validated
+- current_phase_slug: docs-tree-hygiene
 - current_attempt: 1
 - last_successful_phase: native_optimization_phase18
-- overall_state: native_optimization_run_completed
+- overall_state: documentation_and_repository_structure_hygiene_validated
 
 ## Worktree state
 - active_branch: main
@@ -46,6 +46,42 @@
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite company12 --variant smoke_local --output-root /tmp/native_opt_baseline/company12_smoke --json` -> pass (`task_count=1`)
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py eval run --suite industry12 --variant regression_local --output-root /tmp/native_opt_baseline/industry12_regression --json` -> pass (`task_count=12`)
   - `git show --stat v0.2.0-native-regression --no-patch` -> annotated local tag confirmed on `e7219f1`
+
+## Documentation and tree hygiene
+- status: validation passed on `main` after the initial worktree creation blocker
+- requested_branch: `codex/docs-tree-hygiene`
+- requested_worktree: `../_codex_worktrees/docs-tree-hygiene`
+- worktree_blocker:
+  - `git worktree add ../_codex_worktrees/docs-tree-hygiene -b codex/docs-tree-hygiene main` -> failed
+  - reason: `.git/refs/heads`, `.git/index`, and `.git/objects` are on a read-only filesystem in this environment
+  - safety decision: proceed with tracked file edits in the writable main worktree rather than discard the already-applied hygiene diff
+  - follow-up: Git metadata became writable before finalization, so staging, committing, and pushing can be attempted from `main`
+- local_only_assets:
+  - preserved `.env`, `.venv/`, `.codex/`, `workspace/`, `venv_gptr/`, caches, ignored `agents/`, ignored `workflows/`, and ignored `*:Zone.Identifier`
+- planned_outputs:
+  - `docs/REPO_MAP.md`
+  - `docs/DOCS_INDEX.md`
+  - `docs/migration/TREE_HYGIENE.md`
+  - refreshed `README.md` and `README.zh-CN.md`
+  - compatibility and archive README markers in ambiguous root directories
+- tree_actions:
+  - archive root `PLANS.md` body to `docs/archive/PLANS-legacy-release-train.md` and replace root `PLANS.md` with a historical marker
+  - move old graph-first `examples/basic_research.py` to `legacy/examples/basic_research.py`
+  - move placeholder or legacy-only root `skills/` and `mcp_servers/` under `legacy/`
+  - keep import-sensitive compatibility roots in place and label them explicitly
+- validation_status: pass; staging and commit are pending at this status update
+- validation_passes:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass (`All checks passed!`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_native_regression_pack.py tests/test_native_optimization_summary.py` -> pass (`4 passed in 1.91s`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass; CLI exposes `submit,status,watch,cancel,retry,resume,refine,bundle,batch,eval,benchmark`
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_native_benchmark_summary.py --reports-root evals/reports/native_regression --docs-root /tmp/tree_hygiene_native_docs --json` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_public_repo_standards.py` -> pass (`9 passed in 4.07s`)
+  - markdown link validation across 16 reviewer docs -> pass (`86` local links)
+  - explicit referenced-path validation -> pass (`17` paths)
+  - targeted stale-claim scan over current-facing docs -> pass (no matches)
+- git_finalization:
+  - Git metadata writability check -> pass for `.git/index.lock`, `.git/refs/heads`, and `.git/objects`
+  - `git add -A`, commit, and non-interactive push remain to run after this status update
 
 ## Local-only / ignored asset audit
 - checked_paths: .env, .python-version, .venv, .codex/config.toml, workspace/, venv_gptr/
