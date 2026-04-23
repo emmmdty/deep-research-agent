@@ -11,29 +11,29 @@
 - approval_policy: never
 
 ## Current overall status
-- current_phase: web_gui_scaffold
-- current_phase_slug: phase21-web-gui
+- current_phase: job_ux
+- current_phase_slug: phase22-job-ux
 - current_attempt: 1
-- last_successful_phase: phase20_gui_preflight
-- overall_state: phase21_web_shell_completed
+- last_successful_phase: phase22_job_ux
+- overall_state: phase22_job_workspace_completed
 
 ## Worktree state
-- active_branch: codex/phase21-web-gui/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase21-web-gui-attempt-1
-- main_clean_before_phase: yes after Phase 20 files were committed to `main`
-- post_merge_smoke_status: pending for Phase 21
+- active_branch: codex/phase22-job-ux/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase22-job-ux-attempt-1
+- main_clean_before_phase: yes after Phase 21 was merged to `main`
+- post_merge_smoke_status: pending for Phase 22
 
 ## Local-only / ignored asset audit
 - checked_paths: `.env`, `.env.example`, `.python-version`, `.venv`, `.codex/config.toml`, `workspace`, `venv_gptr`
-- missing_assets: `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr` were missing in the fresh Phase 21 worktree before bootstrap
+- missing_assets: `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr` were missing in fresh GUI worktrees before bootstrap
 - recreated_assets: none
 - symlinked_assets:
   - `.env` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.env`
-  - `.venv` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.venv`
   - `.codex/config.toml` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.codex/config.toml`
   - `workspace` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace`
   - `venv_gptr` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr`
 - copied_assets: none
+- generated_assets: Phase 22 regenerated a local ignored `.venv` in the worktree via `uv run`
 - blockers_from_local_assets: none
 
 ## Phase ledger
@@ -86,13 +86,27 @@
   - The shell intentionally avoids chat UI patterns and keeps Jobs, Artifacts, Benchmarks, Docs, and Settings as first-class areas.
 
 ### Phase 22 - job_ux
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Added a bounded job workspace to the React GUI. Operators can submit local no-worker research jobs, choose source profiles, load known or manual job ids, poll lifecycle events, open report HTML links, and inspect raw bundle JSON from the existing FastAPI contract.
 - acceptance_checks:
+  - RED: `npm test` failed before implementation because `Topic` and `Manual job id` controls did not exist
+  - GREEN: `npm test` -> pass (`3` files, `5` tests)
+  - `npm run lint` -> pass (`tsc -p tsconfig.json --noEmit`)
+  - `npm run build` -> pass (`vite build`, output under `apps/gui-web/dist/`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass (`970` bytes help output)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py::test_http_api_submit_status_events_bundle_and_artifacts` -> pass (`1 passed in 2.18s`)
 - artifacts:
+  - `apps/gui-web/src/job-workspace.test.tsx`
+  - `apps/gui-web/src/App.tsx`
+  - `apps/gui-web/src/api/client.ts`
+  - `docs/gui/JOB_FLOW.md`
 - blockers:
+  - none
 - notes:
+  - The GUI uses `start_worker=false` for bounded local submission.
+  - Job events are loaded with polling-compatible `after_sequence=0` requests because there is no SSE endpoint.
+  - Known jobs are stored client-side in `localStorage` because the backend has no list-jobs endpoint.
 
 ### Phase 23 - benchmark_console
 - status: pending

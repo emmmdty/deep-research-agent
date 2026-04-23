@@ -18,4 +18,7 @@ npm run build
 ```
 
 ## Current Phase
-Phase 21 establishes the shell, navigation, styling foundation, API URL helpers, and local docs. Research-job forms, artifact inspectors, and benchmark views are implemented in later GUI phases.
+Phase 22 adds the bounded research-job workspace: submit local no-worker jobs, load known or manual job ids, poll job events, and inspect bundle JSON from the existing API.
+
+## Runbooks
+- `docs/gui/JOB_FLOW.md` documents the submit/status/events/bundle flow.
