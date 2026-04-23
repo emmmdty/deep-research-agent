@@ -21,7 +21,7 @@
 - active_branch: codex/phase22-job-ux/attempt-1
 - active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase22-job-ux-attempt-1
 - main_clean_before_phase: yes after Phase 21 was merged to `main`
-- post_merge_smoke_status: pending for Phase 22
+- post_merge_smoke_status: passed for Phase 22 on `main`
 
 ## Local-only / ignored asset audit
 - checked_paths: `.env`, `.env.example`, `.python-version`, `.venv`, `.codex/config.toml`, `workspace`, `venv_gptr`
@@ -96,6 +96,7 @@
   - `npm run build` -> pass (`vite build`, output under `apps/gui-web/dist/`)
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass (`970` bytes help output)
   - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py::test_http_api_submit_status_events_bundle_and_artifacts` -> pass (`1 passed in 2.18s`)
+  - post-merge `main` smoke -> pass (`npm test`, `npm run lint`, `npm run build`, CLI help, and Phase 4 API smoke)
 - artifacts:
   - `apps/gui-web/src/job-workspace.test.tsx`
   - `apps/gui-web/src/App.tsx`
