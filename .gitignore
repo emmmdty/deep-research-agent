@@ -12,6 +12,8 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+node_modules/
+*.tsbuildinfo
 *.egg
 .ruff_cache/
 .pytest_cache/
