@@ -11,17 +11,17 @@
 - approval_policy: never
 
 ## Current overall status
-- current_phase: benchmark_console
-- current_phase_slug: phase23-benchmark-console
+- current_phase: desktop_handoff
+- current_phase_slug: phase24-desktop-handoff
 - current_attempt: 1
-- last_successful_phase: phase23_benchmark_console
-- overall_state: phase23_benchmark_console_completed
+- last_successful_phase: phase24_desktop_handoff
+- overall_state: phase24_gui_run_completed
 
 ## Worktree state
-- active_branch: codex/phase23-benchmark-console/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase23-benchmark-console-attempt-1
-- main_clean_before_phase: yes after Phase 22 was merged to `main`
-- post_merge_smoke_status: passed for Phase 23 on `main`
+- active_branch: codex/phase24-desktop-handoff/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase24-desktop-handoff-attempt-1
+- main_clean_before_phase: yes after Phase 23 was merged to `main`
+- post_merge_smoke_status: pending for Phase 24
 
 ## Local-only / ignored asset audit
 - checked_paths: `.env`, `.env.example`, `.python-version`, `.venv`, `.codex/config.toml`, `workspace`, `venv_gptr`
@@ -33,7 +33,7 @@
   - `workspace` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace`
   - `venv_gptr` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr`
 - copied_assets: none
-- generated_assets: Phase 22 and Phase 23 regenerated local ignored `.venv` directories in phase worktrees via `uv run`
+- generated_assets: Phase 22, Phase 23, and Phase 24 regenerated local ignored `.venv` directories in phase worktrees via `uv run`
 - blockers_from_local_assets: none
 
 ## Phase ledger
@@ -135,13 +135,33 @@
   - `regression_local` is displayed as reviewer-facing wider coverage.
 
 ### Phase 24 - desktop_handoff
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Added GUI handoff docs, Chinese usage guide, architecture notes, bounded demo flow, desktop status, and a Tauri scaffold location. Desktop packaging is explicitly `scaffolded_blocked` because Rust/Cargo are missing in the current environment; the web GUI remains the runnable surface.
 - acceptance_checks:
+  - RED: required file existence check failed before docs/scaffold were added
+  - GREEN: required file existence check for `docs/gui/USAGE_GUIDE.zh-CN.md`, `docs/gui/ARCHITECTURE.md`, `docs/gui/DEMO_FLOW.md`, `docs/gui/DESKTOP_STATUS.md`, and `desktop/tauri/README.md` -> pass
+  - desktop prerequisite check -> Node/npm present; `rustc` missing; `cargo` missing
+  - docs/link grep for GUI and desktop handoff references -> pass
+  - `npm test` -> pass (`4` files, `6` tests)
+  - `npm run lint` -> pass (`tsc -p tsconfig.json --noEmit`)
+  - `npm run build` -> pass (`vite build`, output under `apps/gui-web/dist/`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass (`970` bytes help output)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase4_surfaces.py::test_http_api_submit_status_events_bundle_and_artifacts` -> pass (`1 passed in 2.39s`)
 - artifacts:
+  - `docs/gui/USAGE_GUIDE.zh-CN.md`
+  - `docs/gui/ARCHITECTURE.md`
+  - `docs/gui/DEMO_FLOW.md`
+  - `docs/gui/DESKTOP_STATUS.md`
+  - `desktop/tauri/README.md`
+  - `README.md`
+  - `docs/DOCS_INDEX.md`
 - blockers:
+  - Tauri desktop build/dev smoke blocked because `rustc` and `cargo` are missing
 - notes:
+  - desktop_status: `scaffolded_blocked`
+  - Do not move runtime, provider, audit, benchmark, or artifact logic into Tauri.
+  - Complete Tauri 2 generation only after Rust/Cargo prerequisites are installed.
 
 ## Decisions log
 - [2026-04-23T10:38:58Z] GUI/app preflight started from `.agent/gui_app/prompts/00_PREFLIGHT_GUI_RUN.md`.
