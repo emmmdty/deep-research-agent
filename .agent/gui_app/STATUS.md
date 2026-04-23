@@ -11,23 +11,28 @@
 - approval_policy: never
 
 ## Current overall status
-- current_phase: gui_preflight_and_contract_freeze
-- current_phase_slug: phase20-gui-preflight
+- current_phase: web_gui_scaffold
+- current_phase_slug: phase21-web-gui
 - current_attempt: 1
-- last_successful_phase: none
-- overall_state: preflight_completed_READY_FOR_WEB_GUI
+- last_successful_phase: phase20_gui_preflight
+- overall_state: phase21_web_shell_completed
 
 ## Worktree state
-- active_branch: main
-- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
-- main_clean_before_phase: no; `.agent/gui_app/` and `.agents/` were already untracked before this preflight
-- post_merge_smoke_status: not applicable; this preflight did not create a branch, worktree, commit, or merge
+- active_branch: codex/phase21-web-gui/attempt-1
+- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase21-web-gui-attempt-1
+- main_clean_before_phase: yes after Phase 20 files were committed to `main`
+- post_merge_smoke_status: pending for Phase 21
 
 ## Local-only / ignored asset audit
 - checked_paths: `.env`, `.env.example`, `.python-version`, `.venv`, `.codex/config.toml`, `workspace`, `venv_gptr`
-- missing_assets: none for preflight
+- missing_assets: `.env`, `.venv`, `.codex/config.toml`, `workspace`, and `venv_gptr` were missing in the fresh Phase 21 worktree before bootstrap
 - recreated_assets: none
-- symlinked_assets: none
+- symlinked_assets:
+  - `.env` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.env`
+  - `.venv` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.venv`
+  - `.codex/config.toml` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/.codex/config.toml`
+  - `workspace` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/workspace`
+  - `venv_gptr` -> `/home/tjk/myProjects/internship-projects/03-deep-research-agent/venv_gptr`
 - copied_assets: none
 - blockers_from_local_assets: none
 
@@ -61,13 +66,24 @@
   - Tauri should wait until the web GUI is stable and Rust/Cargo prerequisites are available or explicitly scaffolded as blocked.
 
 ### Phase 21 - web_gui_scaffold
-- status: pending
-- attempts: 0
-- summary:
+- status: completed
+- attempts: 1
+- summary: Created the local React + TypeScript + Vite web GUI shell with operator/reviewer navigation, shadcn-style CSS variables/components, typed local API URL helpers, npm scripts, tests, and GUI README.
 - acceptance_checks:
+  - RED: `npm test` failed before implementation because `./App` and `./api/client` were missing
+  - GREEN: `npm test` -> pass (`2` files, `3` tests)
+  - `npm run lint` -> pass (`tsc -p tsconfig.json --noEmit`)
+  - `npm run build` -> pass (`vite build`, output under `apps/gui-web/dist/`)
+  - Vite dev smoke on `http://127.0.0.1:5174/` -> pass (`569` bytes fetched)
 - artifacts:
+  - `apps/gui-web/`
+  - `apps/gui-web/package-lock.json`
+  - `docs/gui/README.md`
 - blockers:
+  - none
 - notes:
+  - npm is the package manager because Node/npm are present and pnpm is missing.
+  - The shell intentionally avoids chat UI patterns and keeps Jobs, Artifacts, Benchmarks, Docs, and Settings as first-class areas.
 
 ### Phase 22 - job_ux
 - status: pending
