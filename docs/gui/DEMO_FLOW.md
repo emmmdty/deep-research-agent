@@ -7,7 +7,7 @@ This flow demonstrates the local web GUI without requiring provider-backed live 
 - Node and npm are available.
 - Python dependencies can be resolved with `uv`.
 - `.env` exists if provider-backed live commands are used.
-- Rust/Cargo are not required for the web demo.
+- Rust/Cargo are only required for the optional Tauri desktop wrapper.
 
 ## 1. Verify The Backend Boundary
 
@@ -74,4 +74,12 @@ Open Benchmark console and confirm:
 
 ## 7. Desktop Handoff
 
-Desktop status is `scaffolded_blocked` until Rust/Cargo are installed. See `docs/gui/DESKTOP_STATUS.md` and `desktop/tauri/README.md`.
+Desktop status is `READY_FOR_TAURI_BUILD`. The bounded desktop validation wraps the same web GUI and avoids provider-backed live work:
+
+```bash
+npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri
+```
+
+See `docs/gui/DESKTOP_STATUS.md`, `docs/gui/TAURI_UNBLOCK_REPORT.md`, and `desktop/tauri/README.md`.

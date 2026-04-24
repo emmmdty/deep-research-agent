@@ -315,6 +315,7 @@
   - Final handoff docs now live at `FINAL_CHANGE_REPORT.md` and `docs/final/EXPERIMENT_SUMMARY.md`.
 
 ## Decisions log
+- [2026-04-23T13:08:34Z] Tauri desktop self-check/unblock run completed on `main` because Git metadata was read-only and prevented creating a maintenance worktree/branch. Added repo-local Tauri 2 wrapper, diagnostics, and docs; bounded Tauri dev wiring and no-bundle build passed with `npm_config_cache=/tmp/npm-cache` and `CARGO_HOME=/tmp/cargo-home`. `git add ...` also failed because `.git/index.lock` is read-only, so no maintenance commit could be created in this environment. Final desktop verdict: `READY_FOR_TAURI_BUILD`.
 - [2026-04-21T11:31:48Z] User requested control-layer preflight only; no worktrees, merges, or implementation phases started.
 - [2026-04-21T11:31:48Z] Verified all required control documents exist at the requested paths.
 - [2026-04-21T11:31:48Z] Parsed .agent/context/TASK2_SPEC.yaml successfully.

@@ -190,7 +190,7 @@ Use clear labels that these actions affect the local runtime.
 - No backend job-list endpoint.
 - No SSE endpoint.
 - No benchmark API endpoint.
-- No desktop wrapper readiness because Rust/Cargo are missing locally.
+- Desktop wrapper full installer bundling is out of scope for the web GUI contract; bounded Tauri no-bundle build readiness is tracked in `docs/gui/DESKTOP_STATUS.md`.
 - No auth, tenant, queue, or object-store surface.
 - No production deployment boundary.
 

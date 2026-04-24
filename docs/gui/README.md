@@ -18,7 +18,7 @@ npm run build
 ```
 
 ## Current Phase
-Phase 24 completes the local web GUI handoff docs and records desktop packaging status. The web GUI is the runnable surface; Tauri desktop packaging is scaffolded but blocked until Rust/Cargo are available.
+The local web GUI is the primary operator/reviewer surface. The desktop wrapper under `desktop/tauri/` is now Tauri 2 build-ready for bounded local validation.
 
 ## Runbooks
 - `docs/gui/JOB_FLOW.md` documents the submit/status/events/bundle flow.
@@ -27,3 +27,4 @@ Phase 24 completes the local web GUI handoff docs and records desktop packaging 
 - `docs/gui/ARCHITECTURE.md` documents the GUI architecture boundary.
 - `docs/gui/DEMO_FLOW.md` documents the bounded local demo flow.
 - `docs/gui/DESKTOP_STATUS.md` records desktop wrapper status.
+- `docs/gui/TAURI_UNBLOCK_REPORT.md` records the desktop self-check and unblock run.

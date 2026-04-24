@@ -11,17 +11,55 @@
 - approval_policy: never
 
 ## Current overall status
-- current_phase: desktop_handoff
-- current_phase_slug: phase24-desktop-handoff
+- current_phase: tauri_desktop_unblock_check
+- current_phase_slug: tauri-desktop-unblock
 - current_attempt: 1
 - last_successful_phase: phase24_desktop_handoff
-- overall_state: phase24_gui_run_completed
+- overall_state: tauri_desktop_ready_for_bounded_build
 
 ## Worktree state
-- active_branch: codex/phase24-desktop-handoff/attempt-1
-- active_worktree: /home/tjk/myProjects/internship-projects/_codex_worktrees/phase24-desktop-handoff-attempt-1
-- main_clean_before_phase: yes after Phase 23 was merged to `main`
-- post_merge_smoke_status: passed for Phase 24 on `main`
+- active_branch: main
+- active_worktree: /home/tjk/myProjects/internship-projects/03-deep-research-agent
+- main_clean_before_phase: yes before the Tauri unblock check
+- post_merge_smoke_status: pending; Git metadata was read-only during branch/worktree creation attempts
+
+## Tauri desktop unblock run - 2026-04-23
+- run_id: gui-tauri-unblock-20260423T130834Z
+- status: completed locally; final commit may require writable Git metadata
+- final_verdict: `READY_FOR_TAURI_BUILD`
+- scope: Tauri desktop self-check and repo-local unblock only; no new GUI feature, runtime, benchmark, provider, or backend architecture work
+- worktree_attempts:
+  - `git worktree add /tmp/tauri-desktop-unblock-attempt-1 -b codex/tauri-desktop-unblock/attempt-1 main` -> failed because Git could not create nested branch refs
+  - `git worktree add /tmp/tauri-desktop-unblock-attempt-1 -b tauri-desktop-unblock-attempt-1 main` -> failed because `.git/refs/heads/*.lock` is on a read-only filesystem
+  - decision: proceed main-only because the repository was clean, the user allowed bounded main-only maintenance, and Git metadata prevented branch creation
+- toolchain:
+  - `rustc -V` -> `rustc 1.95.0 (59807616e 2026-04-14)`
+  - `cargo -V` -> `cargo 1.95.0 (f2d3ce0bd 2026-03-21)`
+  - `node -v` -> `v24.14.0`
+  - `npm -v` -> `11.12.0`
+- linux_prerequisites:
+  - WebKitGTK 4.1, OpenSSL, Ayatana appindicator, GTK 3, JavaScriptCoreGTK 4.1, libsoup 3, and librsvg were visible
+  - `pkg-config --modversion xdo` failed, but `libxdo-dev 1:3.20160805.1-4` is installed and Tauri build passed
+- repo_local_fixes:
+  - added Tauri 2 wrapper under `desktop/tauri/src-tauri/`
+  - added `desktop/tauri/package.json` and lockfile with repo-local `@tauri-apps/cli@2.10.1`
+  - added `desktop/tauri/src-tauri/icons/icon.png`
+  - added `scripts/check_tauri_env.sh`
+  - updated `.gitignore`, `docs/gui/DESKTOP_STATUS.md`, `docs/gui/TAURI_UNBLOCK_REPORT.md`, and `desktop/tauri/README.md`
+- validation:
+  - `./scripts/check_tauri_env.sh` -> pass, `TAURI_ENV_STATUS=ok`
+  - `npm_config_cache=/tmp/npm-cache npm install --prefix apps/gui-web` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass (`4` files, `6` tests)
+  - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri` -> pass
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri` -> pass
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> pass, release binary built
+  - `timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix desktop/tauri -- dev --no-watch --runner true` -> pass, Vite dev server started and no GUI window was launched
+- environment_notes:
+  - default `/home/tjk/.npm` and `/home/tjk/.cargo` caches are read-only in this environment; use `/tmp` cache overrides for repeatable local commands
+  - `.git/index.lock` is on a read-only filesystem; `git add ...` failed, so this run could not create the requested maintenance commit
+  - no sudo was used and no system packages were installed
+- remaining_tauri_blockers: none for bounded dev/build validation
 
 ## Local-only / ignored asset audit
 - checked_paths: `.env`, `.env.example`, `.python-version`, `.venv`, `.codex/config.toml`, `workspace`, `venv_gptr`
@@ -40,7 +78,7 @@
 ### Phase 20 - gui_preflight
 - status: completed
 - attempts: 1
-- summary: Local web GUI preflight passed. Existing local FastAPI, artifact, bundle, CLI, and native benchmark surfaces are sufficient to start a web GUI implementation. Desktop/Tauri validation is deferred because Rust/Cargo are missing.
+- summary: Local web GUI preflight passed. Existing local FastAPI, artifact, bundle, CLI, and native benchmark surfaces were sufficient to start a web GUI implementation. Desktop/Tauri validation was deferred at that time and is now superseded by the 2026-04-23 Tauri unblock run above.
 - verdict: READY_FOR_WEB_GUI
 - acceptance_checks:
   - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass; CLI exposes `submit,status,watch,cancel,retry,resume,refine,bundle,batch,eval,benchmark`
@@ -137,7 +175,7 @@
 ### Phase 24 - desktop_handoff
 - status: completed
 - attempts: 1
-- summary: Added GUI handoff docs, Chinese usage guide, architecture notes, bounded demo flow, desktop status, and a Tauri scaffold location. Desktop packaging is explicitly `scaffolded_blocked` because Rust/Cargo are missing in the current environment; the web GUI remains the runnable surface.
+- summary: Added GUI handoff docs, Chinese usage guide, architecture notes, bounded demo flow, desktop status, and a Tauri scaffold location. Its desktop blocker assessment was superseded by the 2026-04-23 Tauri unblock run above.
 - acceptance_checks:
   - RED: required file existence check failed before docs/scaffold were added
   - GREEN: required file existence check for `docs/gui/USAGE_GUIDE.zh-CN.md`, `docs/gui/ARCHITECTURE.md`, `docs/gui/DEMO_FLOW.md`, `docs/gui/DESKTOP_STATUS.md`, and `desktop/tauri/README.md` -> pass
@@ -158,13 +196,13 @@
   - `README.md`
   - `docs/DOCS_INDEX.md`
 - blockers:
-  - Tauri desktop build/dev smoke blocked because `rustc` and `cargo` are missing
+  - Superseded by the 2026-04-23 Tauri unblock run; bounded desktop dev/build validation now passes.
 - notes:
-  - desktop_status: `scaffolded_blocked`
+  - desktop_status_at_phase24_handoff: superseded by `READY_FOR_TAURI_BUILD`
   - Do not move runtime, provider, audit, benchmark, or artifact logic into Tauri.
-  - Complete Tauri 2 generation only after Rust/Cargo prerequisites are installed.
+  - Tauri 2 generation was completed during the 2026-04-23 unblock run.
 
 ## Decisions log
 - [2026-04-23T10:38:58Z] GUI/app preflight started from `.agent/gui_app/prompts/00_PREFLIGHT_GUI_RUN.md`.
 - [2026-04-23T10:38:58Z] Preflight prompt overrides normal GUI worktree protocol for this run: no worktree, no implementation, no application code edits.
-- [2026-04-23T10:38:58Z] Verdict recorded as `READY_FOR_WEB_GUI`; desktop wrapper is deferred because Rust/Cargo are missing.
+- [2026-04-23T10:38:58Z] Verdict recorded as `READY_FOR_WEB_GUI`; desktop wrapper readiness was deferred at that time and later resolved in the Tauri unblock run.

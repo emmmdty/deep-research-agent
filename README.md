@@ -103,7 +103,7 @@ npm install
 npm run dev
 ```
 
-GUI docs live under [docs/gui](./docs/gui/README.md). Desktop/Tauri packaging is scaffolded but currently blocked until Rust/Cargo are installed.
+GUI docs live under [docs/gui](./docs/gui/README.md). Desktop/Tauri packaging lives under `desktop/tauri/` and is validated for bounded no-bundle builds; see [Desktop Status](./docs/gui/DESKTOP_STATUS.md).
 
 ## Quickstart
 
