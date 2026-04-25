@@ -19,6 +19,8 @@ canonical runtime lives under `src/deep_research_agent/`.
 | `.github/` | canonical repo metadata | CI, issue templates, and pull request template. |
 | `src/` | canonical current implementation | Main Python package: gateway, runtime, connectors, auditor, reporting, providers, evals. |
 | `main.py` | canonical current entrypoint | Thin wrapper around `deep_research_agent.gateway.cli`. |
+| `apps/` | canonical current UI surface | Local web GUI under `apps/gui-web/` for operator/reviewer workflows over the local API. |
+| `desktop/` | canonical current desktop wrapper | Tauri desktop shell under `desktop/tauri/` around the local web GUI. |
 | `configs/` | canonical current config | Runtime settings, release gate config, MCP example config. |
 | `policies/` | active policy assets | Source profiles and policy helpers used by current runtime. |
 | `schemas/` | active contract schemas | JSON schemas for bundle, audit, runtime, connector, and benchmark artifacts. |
@@ -70,6 +72,7 @@ Do not delete or commit these during repository hygiene work.
 ## Boundary Rules
 
 - Treat `src/deep_research_agent/` as the implementation source of truth.
+- Treat `apps/gui-web/` and `desktop/tauri/` as supported local operator surfaces, not as archived experiments.
 - Treat `evals/reports/phase5_local_smoke/` as the merge-safe release smoke evidence.
 - Treat `evals/reports/native_regression/` and `docs/benchmarks/native/` as deterministic reviewer regression evidence.
 - Treat root compatibility packages as import-stability shims, not as the primary architecture.

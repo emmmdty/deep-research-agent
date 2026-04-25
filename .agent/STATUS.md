@@ -28,11 +28,40 @@
 - focused_runtime_regressions: UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_phase2_jobs.py tests/test_phase3_connectors.py tests/test_phase4_auditor.py tests/test_phase4_surfaces.py tests/test_cli_runtime.py
 
 ## Current overall status
-- current_phase: docs_tree_hygiene_complete
-- current_phase_slug: docs-tree-hygiene
+- current_phase: repository_cleanup_finalization
+- current_phase_slug: repository-cleanup-finalization
 - current_attempt: 1
-- last_successful_phase: native_optimization_phase18
-- overall_state: documentation_and_repository_structure_hygiene_completed
+- last_successful_phase: repository_cleanup_finalization
+- overall_state: single_main_worktree_cleanup_completed
+
+## Repository cleanup finalization
+- status: completed on `main`; this run absorbs the pending desktop xdo-probe hygiene diff, aligns top-level docs/status with the current GUI/Tauri mainline, and removes local repository noise without changing supported behavior
+- scope:
+  - canonicalize active imports away from root compatibility shims in live code paths
+  - sync top-level status/docs with the already-supported GUI and desktop surfaces
+  - remove untracked or ignored local noise that should not survive the cleanup run
+  - leave the repository with a single registered `main` worktree
+- key_updates:
+  - `policies/source_policy.py` and `src/deep_research_agent/research_jobs/store.py` now import canonical `deep_research_agent.*` modules directly
+  - `tests/test_public_repo_standards.py` now guards both canonical import boundaries and `docs/REPO_MAP.md` coverage for `apps/` and `desktop/`
+  - `docs/REPO_MAP.md`, `FINAL_CHANGE_REPORT.md`, and `README.zh-CN.md` now document the current local GUI/Tauri surfaces instead of stopping at the pre-GUI runtime story
+  - desktop/Tauri docs now record the fallback-aware xdo probe and the 2026-04-25 rerun state consistently
+  - the untracked `docs/assets/deep-research-agent-architecture-poster.zh-CN.svg` file and ignored `*:Zone.Identifier` files were removed from the local workspace
+- validation_passes:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass (`All checks passed!`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q` -> pass (`223 passed in 21.16s`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass (`4` files, `6` tests)
+  - `npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass
+  - `./scripts/check_tauri_env.sh` -> pass (`TAURI_ENV_STATUS=ok`)
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri` -> pass
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> pass
+  - `git diff --check` -> pass
+  - `git worktree list --porcelain` -> only the current `main` worktree is registered
+- notes:
+  - This cleanup run supersedes the stale phase18-era top-level status summary without rewriting the historical phase ledger below.
+  - The GUI/app-specific execution history still lives in `.agent/gui_app/STATUS.md`; this top-level file now reflects that those surfaces are part of the current `main` story.
 
 ## Worktree state
 - active_branch: main

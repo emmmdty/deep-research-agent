@@ -4,11 +4,11 @@
 
 `READY_FOR_TAURI_BUILD`
 
-The Tauri desktop layer is now a repo-local Tauri 2 wrapper around the existing web GUI. Bounded dev wiring and no-bundle release build validation passed on 2026-04-23.
+The Tauri desktop layer is now a repo-local Tauri 2 wrapper around the existing web GUI. Bounded dev wiring and no-bundle release build validation passed again during the 2026-04-25 repository cleanup run.
 
 ## Checked On
 
-2026-04-23
+2026-04-25
 
 ## Prerequisite Check
 
@@ -33,7 +33,12 @@ Observed:
 - `javascriptcoregtk-4.1`: `2.50.4`
 - `libsoup-3.0`: `3.0.7`
 - `librsvg-2.0`: `2.52.5`
-- `xdo`: `pkg-config` probe failed, but `libxdo-dev 1:3.20160805.1-4` is installed and the Tauri build passed.
+- `xdo_pkg_config`: `missing`
+- `xdo_fallback`: `ok`
+- `xdo_status`: `warning`
+- `TAURI_ENV_STATUS`: `ok`
+
+`pkg-config --modversion xdo` may fail on this environment because `xdo.pc` is not visible. That is not currently a blocker because `libxdo-dev` is installed, `/usr/include/xdo.h` exists, `ldconfig` can see `libxdo`, and the bounded Tauri build/dev wiring already pass. The diagnostic script now uses those fallback checks to avoid false negatives.
 
 ## Scaffold Location
 
@@ -66,6 +71,7 @@ Use temporary caches if the user-level npm/Cargo cache directories are read-only
 ```bash
 npm_config_cache=/tmp/npm-cache npm install --prefix apps/gui-web
 npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web
+npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web
 npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web
 npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri
 CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri
@@ -77,6 +83,7 @@ Observed outcomes:
 
 - Frontend install: pass, dependencies up to date.
 - Frontend tests: pass, `4` files and `6` tests.
+- Frontend lint: pass.
 - Frontend build: pass, Vite output under `apps/gui-web/dist`.
 - Desktop install: pass, `@tauri-apps/cli@2.10.1`.
 - Tauri info: pass, WebKitGTK/Rust/Cargo detected, `devUrl` and `frontendDist` recognized.
@@ -88,4 +95,5 @@ Observed outcomes:
 - Do not use `sudo` for this workflow.
 - Do not install system packages from this repo run.
 - If user-level cache directories become writable later, the temporary `npm_config_cache` and `CARGO_HOME` overrides are optional.
+- If a future Tauri build fails with actual `xdo` or linker errors, revisit the exact Linux dependency state instead of assuming the current fallback evidence is still sufficient.
 - Full installer/AppImage bundling was not required for this unblock run; the validated command is `tauri build --no-bundle`.

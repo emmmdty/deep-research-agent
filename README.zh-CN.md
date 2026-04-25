@@ -5,7 +5,7 @@
 
 [English](./README.md) | 简体中文
 
-面向公司/行业研究的 evidence-first Deep Research Agent。当前仓库的主线不是聊天壳、不是前端、也不是“多 agent 数量展示”，而是一个本地可运行、可恢复、可审计的研究 job runtime。
+面向公司/行业研究的 evidence-first Deep Research Agent。当前仓库的主线不是聊天壳，也不是“多 agent 数量展示”，而是一个本地可运行、可恢复、可审计的研究 job runtime；当前 `main` 还提供了叠加在本地 API 之上的 operator/reviewer Web GUI 与有边界的 Tauri desktop wrapper。
 
 ## 从哪里开始
 
@@ -14,6 +14,7 @@
 - 看 `src/deep_research_agent/`：当前 canonical 实现。
 - 看 `evals/reports/phase5_local_smoke/`：权威 merge-safe `smoke_local` gate。
 - 看 [Native Benchmark](./docs/benchmarks/native/README.md)：确定性的 `regression_local` reviewer evidence。
+- 看 [GUI 文档](./docs/gui/README.md)：本地 operator/reviewer GUI 与 desktop 状态。
 
 ## 当前项目边界
 
@@ -24,7 +25,7 @@
 - claim-level audit + review queue
 - report bundle 交付物
 - OpenAI / Anthropic / compatible provider abstraction
-- CLI、本地 HTTP API、batch entrypoint
+- CLI、本地 HTTP API、本地 Web GUI、bounded Tauri desktop wrapper、batch entrypoint
 - 本地 eval runner、`smoke_local` release gate、`regression_local` native regression layer
 
 本地 HTTP API 是真实实现，但仍然基于 SQLite、filesystem artifacts 和本地 worker。它不是带 auth、tenant isolation、外部 queue、object storage 的生产 SaaS 边界。
@@ -62,6 +63,27 @@
 - `GET /v1/research/jobs/{job_id}/bundle`
 - `GET /v1/research/jobs/{job_id}/artifacts/{artifact_name}`
 - `POST /v1/batch/research`
+
+### 本地 Web GUI 与 Desktop
+
+- Web GUI 位于 `apps/gui-web/`，默认请求本地 API `http://127.0.0.1:8000`
+- Tauri desktop wrapper 位于 `desktop/tauri/`
+- GUI/desktop 只是当前 runtime 的 operator/reviewer surface，不把 runtime、provider、audit、benchmark 逻辑搬进前端或 Rust
+
+启动 Web GUI：
+
+```bash
+cd apps/gui-web
+npm install
+npm run dev
+```
+
+有边界的 desktop 自检：
+
+```bash
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri
+```
 
 ## 快速开始
 
@@ -229,6 +251,8 @@ uv run python scripts/build_native_benchmark_summary.py --reports-root evals/rep
 - [Native Scorecard](./docs/benchmarks/native/NATIVE_SCORECARD.md)
 - [Native Casebook](./docs/benchmarks/native/CASEBOOK.md)
 - [Native 中文使用手册](./docs/benchmarks/native/USAGE_GUIDE.zh-CN.md)
+- [GUI 文档](./docs/gui/README.md)
+- [Desktop 状态](./docs/gui/DESKTOP_STATUS.md)
 
 ## 当前限制
 

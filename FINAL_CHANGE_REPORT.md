@@ -10,10 +10,10 @@ The supported product boundary is:
 - deterministic research job runtime under `src/deep_research_agent/research_jobs/`
 - evidence-first connector, snapshot, audit, and report-bundle pipeline
 - provider abstraction for OpenAI, Anthropic, and compatible backends
-- developer CLI, local HTTP API, batch submission surface, and deterministic eval runner
+- developer CLI, local HTTP API, local web GUI, bounded Tauri desktop wrapper, batch submission surface, and deterministic eval runner
 - release-gated local smoke evidence under `evals/reports/phase5_local_smoke/`
 
-It is not a frontend, not a chat shell, and not a multi-agent-count demo.
+It is not a frontend-first chat shell and not a multi-agent-count demo. The GUI is an operator/reviewer surface over the existing local API/runtime.
 
 ## What Changed
 
@@ -48,6 +48,8 @@ It is not a frontend, not a chat shell, and not a multi-agent-count demo.
 - Added the supported CLI commands:
   `submit`, `status`, `watch`, `cancel`, `retry`, `resume`, `refine`, `bundle`, `batch run`, and `eval run`.
 - Added the local FastAPI surface in `src/deep_research_agent/gateway/api.py`.
+- Added the local web GUI under `apps/gui-web/` for operator/reviewer workflows over jobs, bundles, and deterministic benchmark artifacts.
+- Added the repo-local Tauri 2 desktop wrapper under `desktop/tauri/` and bounded no-bundle desktop validation for the existing GUI surface.
 - Added batch file submission and stable artifact-name routing.
 
 ### Eval and release flow
@@ -95,6 +97,7 @@ Phase 0 also froze the handling of previously unmapped directories:
 ## What Remains
 
 - The HTTP API is local-only and still backed by SQLite, filesystem artifacts, and local subprocess workers.
+- The GUI and Tauri desktop shell are local operator surfaces, not a multi-tenant hosted product.
 - There is no auth, tenant isolation, external queue, or object storage indirection layer.
 - Manual review writes are append-only and surfaced through events/sidecars, but they do not fully recompile `report_bundle.json`.
 - The heavy benchmark/comparator stack remains useful for diagnostics, but it is not the authoritative release gate.
@@ -123,6 +126,21 @@ uv run python main.py bundle --job-id <job_id> --json
 
 ```bash
 uv run uvicorn deep_research_agent.gateway.api:app --reload
+```
+
+### Local web GUI
+
+```bash
+cd apps/gui-web
+npm install
+npm run dev
+```
+
+### Bounded Tauri desktop wrapper
+
+```bash
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri
 ```
 
 ### Batch

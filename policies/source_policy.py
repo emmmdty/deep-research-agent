@@ -8,10 +8,10 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, Field
 
-from artifacts.schemas import validate_instance
-from connectors.models import ConnectorCandidate
-from connectors.utils import canonicalize_uri, domain_from_uri, fetch_uri_block_reason
 from deep_research_agent.common import resolve_source_profile_name
+from deep_research_agent.connectors.models import ConnectorCandidate
+from deep_research_agent.connectors.utils import canonicalize_uri, domain_from_uri, fetch_uri_block_reason
+from deep_research_agent.reporting.schemas import validate_instance
 from policies.models import ConnectorBudget, SourcePolicyOverrides
 
 

@@ -4,6 +4,10 @@ The desktop layer is now a real Tauri 2 wrapper around the existing web GUI inst
 
 The default user-level npm and Cargo caches under `/home/tjk` are read-only in this environment. That is an environment cache-location issue, not a missing Linux package or broken Tauri config.
 
+A 2026-04-24 hygiene follow-up updated `scripts/check_tauri_env.sh` so the `xdo` probe is fallback-aware. On this machine `pkg-config --modversion xdo` still fails because `xdo.pc` is not visible, but the script now records separate `xdo_pkg_config`, `xdo_fallback`, and `xdo_status` fields and does not treat the missing `xdo.pc` file as a blocker when `libxdo-dev` / header / shared-library evidence is present.
+
+A 2026-04-25 repository cleanup reran `./scripts/check_tauri_env.sh`, the GUI `test/lint/build` trio, `tauri info`, and `tauri build --no-bundle`. Those checks remained green, and the pending xdo-probe hygiene diff was absorbed into `main`.
+
 ## Checked files
 
 - `AGENTS.md`
@@ -41,14 +45,17 @@ Rust, Cargo, Node, npm, and pkg-config are available.
 - `pkg-config --modversion webkit2gtk-4.1` -> `2.50.4`
 - `pkg-config --modversion openssl` -> `3.0.2`
 - `pkg-config --modversion xdo` -> failed because `xdo.pc` is not visible
-- `dpkg -l libxdo-dev` -> `libxdo-dev 1:3.20160805.1-4` installed
+- `dpkg-query -W libxdo-dev` -> `install ok installed 1:3.20160805.1-4`
+- `/usr/include/xdo.h` -> present
+- `ldconfig -p | grep libxdo` -> present
+- `./scripts/check_tauri_env.sh` -> `xdo_pkg_config=missing`, `xdo_fallback=ok`, `xdo_status=warning`, `TAURI_ENV_STATUS=ok`
 - `pkg-config --modversion ayatana-appindicator3-0.1` -> `0.5.90`
 - `pkg-config --modversion gtk+-3.0` -> `3.24.33`
 - `pkg-config --modversion javascriptcoregtk-4.1` -> `2.50.4`
 - `pkg-config --modversion libsoup-3.0` -> `3.0.7`
 - `pkg-config --modversion librsvg-2.0` -> `2.52.5`
 
-The required Linux development packages are present for the bounded Tauri build. The only probe anomaly is missing `xdo.pc`; the package itself is installed and the Tauri build completed.
+The required Linux development packages are present for the bounded Tauri build. `pkg-config --modversion xdo` may fail on this environment, but that is not currently a blocker because `libxdo-dev` is installed, the header and shared library are present, and both bounded Tauri build and bounded dev wiring have already passed. The diagnostic script now uses fallback checks to avoid false negatives.
 
 ## Tauri CLI findings
 
@@ -78,13 +85,15 @@ The Tauri CLI is now repo-local to `desktop/tauri`, not coupled to the web GUI p
 - `rustc -V`, `cargo -V`, `node -v`, `npm -v` -> pass.
 - `pkg-config --modversion webkit2gtk-4.1` -> pass.
 - `pkg-config --modversion openssl` -> pass.
-- `pkg-config --modversion xdo` -> probe failed, but `libxdo-dev` is installed.
+- `pkg-config --modversion xdo` -> probe failed because `xdo.pc` is not visible.
+- `dpkg-query -W libxdo-dev`, `/usr/include/xdo.h`, and `ldconfig -p | grep -q libxdo` -> pass as fallback evidence.
 - `pkg-config --modversion ayatana-appindicator3-0.1 || pkg-config --modversion appindicator3-0.1` -> pass via Ayatana.
-- `./scripts/check_tauri_env.sh` -> pass with `TAURI_ENV_STATUS=ok`.
+- `./scripts/check_tauri_env.sh` -> pass with `xdo_pkg_config=missing`, `xdo_fallback=ok`, `xdo_status=warning`, and `TAURI_ENV_STATUS=ok`.
 - `npm view @tauri-apps/cli version` -> failed because `/home/tjk/.npm` cache is read-only.
 - `npm_config_cache=/tmp/npm-cache npm view @tauri-apps/cli version` -> pass, `2.10.1`.
 - `npm_config_cache=/tmp/npm-cache npm install --prefix apps/gui-web` -> pass, up to date, zero vulnerabilities.
 - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass, `4` files and `6` tests.
+- `npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web` -> pass.
 - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass, Vite output under `apps/gui-web/dist`.
 - `npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri` -> pass, local Tauri CLI installed.
 - `npm ls @tauri-apps/cli --prefix desktop/tauri` -> pass, `@tauri-apps/cli@2.10.1`.
@@ -93,14 +102,14 @@ The Tauri CLI is now repo-local to `desktop/tauri`, not coupled to the web GUI p
 - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> failed once because `src-tauri/icons/icon.png` was missing.
 - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` after adding the icon -> pass; built `desktop/tauri/src-tauri/target/release/deep-research-agent-desktop`.
 - `timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix desktop/tauri -- dev --no-watch --runner true` -> pass; `beforeDevCommand` started Vite on `http://127.0.0.1:5173/` and the runner avoided opening a desktop window.
-- `git add ...` -> failed because `.git/index.lock` is on a read-only filesystem.
+- the original `git add ...` failure was a run-local Git metadata constraint, not a repository content blocker; the later repository cleanup run finalized the tracked diff on `main`.
 
 ## Repo-local fixes applied
 
 - Added `desktop/tauri/package.json` and `desktop/tauri/package-lock.json` with repo-local `@tauri-apps/cli@2.10.1`.
 - Added `desktop/tauri/src-tauri/` with minimal Tauri 2 Rust crate, config, capability, and opener plugin wiring.
 - Added `desktop/tauri/src-tauri/icons/icon.png` so Tauri context generation can complete.
-- Added `scripts/check_tauri_env.sh` for repeatable non-sudo Linux prerequisite checks.
+- Updated `scripts/check_tauri_env.sh` so `xdo` is evaluated as `pkg-config` plus fallback evidence instead of as a single blocking `pkg-config` probe.
 - Updated `.gitignore` to ignore Rust/Tauri generated `target/` and `src-tauri/gen/` outputs.
 - Updated desktop and GUI documentation/status files to reflect the verified desktop state.
 
@@ -112,7 +121,8 @@ Operational notes:
 
 - Use `npm_config_cache=/tmp/npm-cache` if `/home/tjk/.npm` remains read-only.
 - Use `CARGO_HOME=/tmp/cargo-home` if `/home/tjk/.cargo` remains read-only.
-- Git metadata was read-only during this run, so creating a maintenance branch/worktree and committing the verified repo changes failed.
+- If a future Tauri build fails with real `xdo` or linker errors, revisit the exact Linux dependency state at that point instead of assuming the current fallback evidence is still sufficient.
+- The original unblock run happened under read-only Git metadata. That constraint was temporary; the later repository cleanup run finalized the tracked xdo-probe hygiene diff on `main`.
 
 ## Final verdict
 

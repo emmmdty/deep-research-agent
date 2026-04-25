@@ -11,11 +11,67 @@
 - approval_policy: never
 
 ## Current overall status
-- current_phase: tauri_desktop_unblock_check
-- current_phase_slug: tauri-desktop-unblock
+- current_phase: repository_cleanup_finalization
+- current_phase_slug: repository-cleanup-finalization
 - current_attempt: 1
-- last_successful_phase: phase24_desktop_handoff
-- overall_state: tauri_desktop_ready_for_bounded_build
+- last_successful_phase: tauri_xdo_probe_hygiene_followup
+- overall_state: tauri_desktop_ready_on_clean_main
+
+## Repository cleanup finalization - 2026-04-25
+- run_id: repo-cleanup-20260425T043500Z
+- status: completed on `main`; pending xdo-probe hygiene diff and status/doc drift are absorbed into the repository cleanup run
+- scope: repo cleanup only; no new GUI feature, backend/runtime, benchmark, or provider behavior changes
+- key_updates:
+  - canonicalized active import paths away from root compatibility shims where the live runtime still depended on them
+  - refreshed `docs/REPO_MAP.md`, `FINAL_CHANGE_REPORT.md`, and `README.zh-CN.md` so GUI/Tauri are documented as current supported local surfaces
+  - refreshed `docs/gui/DESKTOP_STATUS.md`, `docs/gui/TAURI_UNBLOCK_REPORT.md`, and `desktop/tauri/README.md` with 2026-04-25 verification context
+  - removed the untracked `docs/assets/deep-research-agent-architecture-poster.zh-CN.svg` noise file and deleted ignored `*:Zone.Identifier` files from the local workspace
+- validation:
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .` -> pass
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q` -> pass (`223 passed`)
+  - `UV_CACHE_DIR=/tmp/uv-cache uv run python main.py --help` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass (`4` files, `6` tests)
+  - `npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass
+  - `./scripts/check_tauri_env.sh` -> pass (`TAURI_ENV_STATUS=ok`)
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri` -> pass
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> pass; built `desktop/tauri/src-tauri/target/release/deep-research-agent-desktop`
+- repo_hygiene:
+  - `git diff --check` -> pass
+  - `git worktree list --porcelain` -> only the current `main` worktree is registered
+- final_verdict: `READY_FOR_TAURI_BUILD`
+
+## Tauri xdo probe hygiene run - 2026-04-24
+- run_id: gui-tauri-xdo-probe-20260424T040000Z
+- status: completed locally; commit blocked by read-only Git metadata
+- scope: repo-local Tauri environment diagnostic hygiene only; no GUI feature, backend/runtime, or benchmark code changes
+- xdo_findings:
+  - `pkg-config --modversion xdo` still fails because `xdo.pc` is not visible
+  - fallback evidence is present: `dpkg-query -W libxdo-dev`, `/usr/include/xdo.h`, and `ldconfig -p | grep libxdo`
+  - `./scripts/check_tauri_env.sh` now reports `xdo_pkg_config=missing`, `xdo_fallback=ok`, `xdo_status=warning`, `TAURI_ENV_STATUS=ok`
+  - the missing `xdo.pc` file is not treated as a current Tauri build blocker on this machine
+- changed_files:
+  - `scripts/check_tauri_env.sh`
+  - `docs/gui/TAURI_UNBLOCK_REPORT.md`
+  - `docs/gui/DESKTOP_STATUS.md`
+  - `desktop/tauri/README.md`
+- validation:
+  - `./scripts/check_tauri_env.sh` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass (`4` files, `6` tests)
+  - `npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web` -> pass
+  - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri` -> pass
+  - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> pass; built `desktop/tauri/src-tauri/target/release/deep-research-agent-desktop`
+  - `timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix desktop/tauri -- dev --no-watch --runner true` -> pass; Vite started on `http://127.0.0.1:5173/` and the bounded dev command exited successfully
+- docs_notes:
+  - desktop docs now state that `pkg-config --modversion xdo` may fail on this environment
+  - the diagnostic script uses fallback checks to avoid false negatives
+  - future `xdo` or linker failures should be investigated as exact dependency errors instead of treated as today’s known false negative
+- git_finalization:
+  - `.git`, `.git/refs/heads`, and `.git/index` are not writable in this environment
+  - automatic staging/commit is blocked for this run
+  - required commit message if Git metadata becomes writable later: `chore: make tauri xdo env probe fallback-aware`
+- final_verdict: `BLOCKED_BY_READONLY_GIT_METADATA`
 
 ## Worktree state
 - active_branch: main

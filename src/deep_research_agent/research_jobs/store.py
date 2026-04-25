@@ -6,8 +6,8 @@ import json
 import sqlite3
 from pathlib import Path
 
-from artifacts.schemas import validate_instance
 from deep_research_agent.common import DEFAULT_SOURCE_PROFILE
+from deep_research_agent.reporting.schemas import validate_instance
 from deep_research_agent.research_jobs.models import (
     ACTIVE_JOB_STATUSES,
     JobCheckpoint,

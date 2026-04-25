@@ -53,13 +53,18 @@ CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:dev -
 
 The `CARGO_HOME` and `npm_config_cache` overrides are only needed when the user-level cache directories are read-only.
 
+`pkg-config --modversion xdo` may fail on this environment because `xdo.pc` is not visible. `./scripts/check_tauri_env.sh` now distinguishes `xdo_pkg_config`, `xdo_fallback`, and `xdo_status` so the missing `xdo.pc` file is not treated as a blocker when `libxdo-dev`, `/usr/include/xdo.h`, and the runtime `libxdo` library are already present.
+
 ## Last Verified
 
-2026-04-23:
+2026-04-25:
 
-- `./scripts/check_tauri_env.sh` -> pass, `TAURI_ENV_STATUS=ok`
+- `./scripts/check_tauri_env.sh` -> pass, `xdo_pkg_config=missing`, `xdo_fallback=ok`, `xdo_status=warning`, `TAURI_ENV_STATUS=ok`
 - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass, `4` files and `6` tests
+- `npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web` -> pass
 - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass
 - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri` -> pass
 - `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> pass
 - bounded `tauri dev --no-watch --runner true` -> pass; Vite started at `http://127.0.0.1:5173/`
+
+If a future Tauri build fails with real `xdo` or linker errors, revisit the exact Linux dependency state at that point instead of assuming the current fallback evidence is still sufficient.
