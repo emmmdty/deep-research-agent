@@ -10,6 +10,8 @@ from deep_research_agent.providers.models import (
     RoutingMode,
 )
 
+DEFAULT_PROVIDER_BONUS = 25
+
 
 def _provider_family(provider_name_or_type: str | None) -> str | None:
     if not provider_name_or_type:
@@ -102,7 +104,7 @@ class ProviderRouter:
             score += 30
 
         if profile.name == self.settings.get_default_provider_profile_name():
-            score += 5
+            score += DEFAULT_PROVIDER_BONUS
 
         health_bonus = request.provider_health.get(profile.name)
         if health_bonus is not None:

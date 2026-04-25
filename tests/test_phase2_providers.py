@@ -51,7 +51,7 @@ def test_provider_router_auto_routing_prefers_reasoning_for_planning():
     router = ProviderRouter(Settings())
     route = router.route(ProviderRouteRequest(task_role="planning", routing_mode="auto"))
 
-    assert route.profile.name in {"openai", "anthropic"}
+    assert route.profile.name == "openai_compatible"
     assert route.profile.capabilities.reasoning is True
 
 
