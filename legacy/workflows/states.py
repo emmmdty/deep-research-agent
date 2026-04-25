@@ -215,6 +215,11 @@ class RunMetrics(BaseModel):
     skill_activation_count: int = Field(default=0, description="skill 激活次数")
     mcp_activation_count: int = Field(default=0, description="MCP 能力激活次数")
     tool_use_success_rate: float = Field(default=0.0, description="工具调用成功率")
+    linked_sources_discovered: int = Field(default=0, description="从已抓取来源中发现的高价值子来源数")
+    linked_sources_fetched: int = Field(default=0, description="成功抓取的高价值子来源数")
+    remote_pdfs_ingested: int = Field(default=0, description="成功解析的远程 PDF 数")
+    audit_rescue_queries: int = Field(default=0, description="claim audit 触发的补采查询数")
+    policy_blocked_child_links: int = Field(default=0, description="被 source policy 拦截的子链接数")
 
     @property
     def total_tokens(self) -> int:
@@ -279,6 +284,15 @@ class ResearchState(BaseModel):
     task_summaries: list[str] = Field(default_factory=list, description="各任务的总结")
     sources_gathered: list[SourceRecord] = Field(default_factory=list, description="已收集的来源")
     source_snapshots: list[dict[str, Any]] = Field(default_factory=list, description="来源快照清单")
+    discovered_source_candidates: list[dict[str, Any]] = Field(
+        default_factory=list,
+        description="从已抓取来源中发现的候选子来源",
+    )
+    visited_source_uris: list[str] = Field(default_factory=list, description="已抓取或已排队的来源 URI")
+    blocked_source_candidates: list[dict[str, Any]] = Field(
+        default_factory=list,
+        description="被 source policy 或安全策略拦截的候选来源",
+    )
     evidence_notes: list[EvidenceNote] = Field(default_factory=list, description="结构化证据笔记")
     evidence_fragments: list[EvidenceFragmentRecord] = Field(default_factory=list, description="证据片段")
     evidence_units: list[EvidenceUnit] = Field(default_factory=list, description="证据单元")

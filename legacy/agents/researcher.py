@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
 import re
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote, urljoin
 
 from loguru import logger
 
@@ -12,7 +14,8 @@ from capabilities.mcp import invoke_mcp_capability
 from capabilities.registry import build_capability_registry
 from connectors.files import LocalFileIngestor
 from connectors.legacy import LegacyConnectorAdapter
-from connectors.models import ConnectorCandidate, ConnectorHealthRecord
+from connectors.models import ConnectorCandidate, ConnectorFetchResult, ConnectorHealthRecord
+from connectors.utils import canonicalize_uri
 from connectors.registry import ConnectorRegistry
 from connectors.snapshot_store import SnapshotInput, SnapshotStore
 from configs.settings import get_settings
@@ -40,6 +43,20 @@ from legacy.workflows.states import (
     TaskItem,
     ToolCapability,
     ToolInvocationRecord,
+)
+
+
+_MAX_LINKED_SOURCES_PER_PARENT = 3
+_HIGH_VALUE_LINK_KEYWORDS = (
+    "tech report",
+    "technical report",
+    "whitepaper",
+    "paper",
+    "pdf",
+    "model card",
+    "open weights",
+    "huggingface.co",
+    "arxiv.org",
 )
 
 
@@ -95,6 +112,9 @@ def collect_research_step(
         for source in state.get("sources_gathered", [])
     ]
     source_snapshots: list[dict[str, Any]] = list(state.get("source_snapshots", []))
+    discovered_source_candidates: list[dict[str, Any]] = list(state.get("discovered_source_candidates", []))
+    visited_source_uris: list[str] = list(state.get("visited_source_uris", []))
+    blocked_source_candidates: list[dict[str, Any]] = list(state.get("blocked_source_candidates", []))
     search_results: list[str] = list(state.get("search_results", []))
     evidence_notes: list[EvidenceNote] = [
         note if isinstance(note, EvidenceNote) else EvidenceNote.model_validate(note)
@@ -118,10 +138,10 @@ def collect_research_step(
         run_metrics = RunMetrics.model_validate(run_metrics or {})
 
     critic_feedback = state.get("critic_feedback")
-    follow_up_queries: list[str] = []
+    follow_up_queries: list[str] = list(state.get("pending_follow_up_queries", []))
     failure_context: dict[str, Any] = {}
     if critic_feedback and hasattr(critic_feedback, "follow_up_queries"):
-        follow_up_queries = critic_feedback.follow_up_queries
+        follow_up_queries = list(critic_feedback.follow_up_queries or follow_up_queries)
         failure_context = {
             "quality_gate_status": getattr(run_metrics, "quality_gate_status", ""),
             "gaps": list(getattr(critic_feedback, "gaps", [])),
@@ -160,6 +180,9 @@ def collect_research_step(
                 task_summaries=task_summaries,
                 sources_gathered=sources_gathered,
                 source_snapshots=source_snapshots,
+                discovered_source_candidates=discovered_source_candidates,
+                visited_source_uris=visited_source_uris,
+                blocked_source_candidates=blocked_source_candidates,
                 search_results=search_results,
                 evidence_notes=evidence_notes,
                 capability_plan=capability_plan,
@@ -178,6 +201,16 @@ def collect_research_step(
                 ablation_variant=ablation_variant,
                 is_follow_up=True,
             )
+            if target_task is not None:
+                target_task.status = "completed"
+                latest_note = _find_evidence_note(
+                    evidence_notes,
+                    task_id=target_task.id,
+                    task_title=target_task.title,
+                )
+                if latest_note is not None:
+                    target_task.summary = latest_note.summary
+                    target_task.sources = ", ".join(f"[{item}]" for item in latest_note.source_ids)
             units_processed += 1
             if remaining_follow_up_queries:
                 remaining_follow_up_queries.pop(0)
@@ -205,6 +238,9 @@ def collect_research_step(
                 task_summaries=task_summaries,
                 sources_gathered=sources_gathered,
                 source_snapshots=source_snapshots,
+                discovered_source_candidates=discovered_source_candidates,
+                visited_source_uris=visited_source_uris,
+                blocked_source_candidates=blocked_source_candidates,
                 search_results=search_results,
                 evidence_notes=evidence_notes,
                 capability_plan=capability_plan,
@@ -224,10 +260,13 @@ def collect_research_step(
                 is_follow_up=False,
             )
             task.status = "completed"
-            if task_summaries:
-                task.summary = task_summaries[-1]
-            if evidence_notes:
-                latest_note = evidence_notes[-1]
+            latest_note = _find_evidence_note(
+                evidence_notes,
+                task_id=task.id,
+                task_title=task.title,
+            )
+            if latest_note is not None:
+                task.summary = latest_note.summary
                 task.sources = ", ".join(f"[{item}]" for item in latest_note.source_ids)
             units_processed += 1
 
@@ -250,6 +289,9 @@ def collect_research_step(
         "task_summaries": task_summaries,
         "sources_gathered": sources_gathered,
         "source_snapshots": source_snapshots,
+        "discovered_source_candidates": discovered_source_candidates,
+        "visited_source_uris": visited_source_uris,
+        "blocked_source_candidates": blocked_source_candidates,
         "search_results": search_results,
         "evidence_notes": evidence_notes,
         "available_capabilities": available_capabilities,
@@ -283,6 +325,9 @@ def _execute_single_search(
     task_summaries: list[str],
     sources_gathered: list[SourceRecord],
     source_snapshots: list[dict[str, Any]],
+    discovered_source_candidates: list[dict[str, Any]],
+    visited_source_uris: list[str],
+    blocked_source_candidates: list[dict[str, Any]],
     search_results: list[str],
     evidence_notes: list[EvidenceNote],
     capability_plan: dict[str, list[str]],
@@ -354,6 +399,9 @@ def _execute_single_search(
         policy_overrides=policy_overrides,
         file_inputs=file_inputs,
         source_snapshots=source_snapshots,
+        discovered_source_candidates=discovered_source_candidates,
+        visited_source_uris=visited_source_uris,
+        blocked_source_candidates=blocked_source_candidates,
         connector_health=connector_health,
         mcp_config_path=mcp_config_path,
         mcp_servers=mcp_servers,
@@ -362,6 +410,14 @@ def _execute_single_search(
     )
     sources_gathered.extend(results)
     selected_results = [record for record in results if record.selected]
+    if not selected_results:
+        selected_results = _reuse_existing_sources_for_query(
+            query=query,
+            task=active_task,
+            sources=sources_gathered,
+            workspace_dir=workspace_dir,
+            limit=per_task_selected_sources,
+        )
     run_metrics.selected_sources += selected_count
     run_metrics.rejected_sources += rejected_count
     if any(
@@ -371,25 +427,18 @@ def _execute_single_search(
     ):
         run_metrics.fallback_search_calls += 1
 
-    context_records = selected_results if research_profile == "benchmark" else results
+    context_records = selected_results if research_profile == "benchmark" else (results or selected_results)
     search_context = _format_context(context_records)
     search_results.append(search_context)
 
     if not context_records:
         logger.warning("  ⚠️ 搜索无结果: '{}'", query)
-        empty_summary = f"## {task_title}\n\n暂无可用信息。\n"
-        task_summaries.append(empty_summary)
-        evidence_notes.append(
-            EvidenceNote(
-                task_id=task_id,
-                task_title=task_title,
-                query=query,
-                summary=empty_summary,
-                source_ids=[],
-                aspect_hits=[],
-                claim_count=0,
-                selected_source_ids=[],
-            )
+        _append_empty_summary(
+            task_id=task_id,
+            query=query,
+            task_title=task_title,
+            task_summaries=task_summaries,
+            evidence_notes=evidence_notes,
         )
         return
 
@@ -514,6 +563,77 @@ def _append_summary(
         evidence_notes.append(note)
 
 
+def _append_empty_summary(
+    *,
+    task_id: int | None,
+    query: str,
+    task_title: str,
+    task_summaries: list[str],
+    evidence_notes: list[EvidenceNote],
+) -> None:
+    existing_index = _find_evidence_note_index(
+        evidence_notes,
+        task_id=task_id,
+        task_title=task_title,
+    )
+    if existing_index is not None:
+        existing_note = evidence_notes[existing_index]
+        if existing_note.source_ids or existing_note.selected_source_ids:
+            logger.info("  ℹ️ 保留已有有证据摘要，跳过空结果覆盖: '{}'", task_title)
+            return
+
+    empty_summary = f"## {task_title}\n\n暂无可用信息。\n"
+    note = EvidenceNote(
+        task_id=task_id,
+        task_title=task_title,
+        query=query,
+        summary=empty_summary,
+        source_ids=[],
+        aspect_hits=[],
+        claim_count=0,
+        selected_source_ids=[],
+    )
+    if existing_index is not None and existing_index < len(task_summaries):
+        task_summaries[existing_index] = empty_summary
+        evidence_notes[existing_index] = note
+    else:
+        task_summaries.append(empty_summary)
+        evidence_notes.append(note)
+
+
+def _find_evidence_note_index(
+    evidence_notes: list[EvidenceNote],
+    *,
+    task_id: int | None,
+    task_title: str,
+) -> int | None:
+    return next(
+        (
+            index
+            for index, existing_note in enumerate(evidence_notes)
+            if (task_id is not None and existing_note.task_id == task_id)
+            or existing_note.task_title == task_title
+        ),
+        None,
+    )
+
+
+def _find_evidence_note(
+    evidence_notes: list[EvidenceNote],
+    *,
+    task_id: int | None,
+    task_title: str,
+) -> EvidenceNote | None:
+    index = _find_evidence_note_index(
+        evidence_notes,
+        task_id=task_id,
+        task_title=task_title,
+    )
+    if index is None:
+        return None
+    return evidence_notes[index]
+
+
 def _collect_results(
     *,
     query: str,
@@ -531,6 +651,9 @@ def _collect_results(
     policy_overrides: dict[str, Any],
     file_inputs: list[str],
     source_snapshots: list[dict[str, Any]],
+    discovered_source_candidates: list[dict[str, Any]],
+    visited_source_uris: list[str],
+    blocked_source_candidates: list[dict[str, Any]],
     connector_health: dict[str, Any],
     mcp_config_path: str | None,
     mcp_servers: list[dict[str, Any]],
@@ -661,11 +784,22 @@ def _collect_results(
 
     results: list[SourceRecord] = []
     citation_id = start_index
+    pending_items = list(ordered_items)
+    visited_set = set(visited_source_uris)
+    queued_set = {
+        canonicalize_uri(str(item.get("canonical_uri") or item.get("url") or ""))
+        for item in pending_items
+        if str(item.get("canonical_uri") or item.get("url") or "").strip()
+    }
     budget_guard = BudgetGuard(
         policy.budget,
         usage=BudgetUsage(total_fetches=_total_fetch_attempts(connector_health), fetches_for_task=0),
     )
-    for item in ordered_items:
+    while pending_items:
+        item = pending_items.pop(0)
+        item_uri = canonicalize_uri(str(item.get("canonical_uri") or item.get("url") or ""))
+        if item_uri in visited_set:
+            continue
         if not budget_guard.can_fetch():
             rejected_count += 1
             continue
@@ -677,6 +811,9 @@ def _collect_results(
             if not fetch_decision.allowed:
                 health.policy_blocked += 1
                 health.last_error = fetch_decision.reason
+                if item.get("parent_source_id"):
+                    run_metrics.policy_blocked_child_links += 1
+                    blocked_source_candidates.append({**item, "reason": fetch_decision.reason})
                 rejected_count += 1
                 continue
         health.fetch_attempts += 1
@@ -686,6 +823,7 @@ def _collect_results(
                 query=query,
                 connector_registry=connector_registry,
                 task_title=task_title,
+                workspace_dir=workspace_dir,
             )
             snapshot = snapshot_store.persist(
                 SnapshotInput(
@@ -702,36 +840,57 @@ def _collect_results(
                 )
             )
             source_snapshots.append(snapshot.model_dump(mode="json"))
-            results.append(
-                SourceRecord(
-                    citation_id=citation_id,
-                    source_id=f"source-{citation_id}",
-                    source_type=fetched.source_type,
-                    query=fetched.query or query,
-                    title=fetched.title,
-                    canonical_uri=fetched.canonical_uri,
-                    url=fetched.url or fetched.canonical_uri,
-                    snippet=fetched.snippet or fetched.text[:300].replace("\n", " "),
-                    task_title=task_title,
-                    published_at=fetched.freshness_metadata.get("published_at"),
-                    snapshot_ref=snapshot.snapshot_id,
-                    fetched_at=snapshot.fetched_at,
-                    mime_type=snapshot.mime_type,
-                    auth_scope=snapshot.auth_scope,
-                    freshness_metadata=snapshot.freshness_metadata,
-                    trust_tier=_infer_trust_tier(item),
-                    relevance_score=item.get("selection_score", 0.0),
-                    selection_score=item.get("selection_score", 0.0),
-                    selected=True,
-                    metadata={
-                        key: value
-                        for key, value in item.items()
-                        if key not in _SOURCE_RECORD_RESERVED_KEYS
-                    },
-                )
+            source_record = SourceRecord(
+                citation_id=citation_id,
+                source_id=f"source-{citation_id}",
+                source_type=fetched.source_type,
+                query=fetched.query or query,
+                title=fetched.title,
+                canonical_uri=fetched.canonical_uri,
+                url=fetched.url or fetched.canonical_uri,
+                snippet=_source_record_snippet(fetched, query=query),
+                task_title=task_title,
+                published_at=fetched.freshness_metadata.get("published_at"),
+                snapshot_ref=snapshot.snapshot_id,
+                fetched_at=snapshot.fetched_at,
+                mime_type=snapshot.mime_type,
+                auth_scope=snapshot.auth_scope,
+                freshness_metadata=snapshot.freshness_metadata,
+                trust_tier=_infer_trust_tier(item),
+                relevance_score=item.get("selection_score", 0.0),
+                selection_score=item.get("selection_score", 0.0),
+                selected=True,
+                metadata={
+                    key: value
+                    for key, value in item.items()
+                    if key not in _SOURCE_RECORD_RESERVED_KEYS
+                },
             )
+            results.append(source_record)
+            visited_set.add(item_uri)
+            if item_uri and item_uri not in visited_source_uris:
+                visited_source_uris.append(item_uri)
             budget_guard.record_fetch()
             health.fetch_successes += 1
+            if item.get("parent_source_id"):
+                run_metrics.linked_sources_fetched += 1
+            if fetched.mime_type == "application/pdf":
+                run_metrics.remote_pdfs_ingested += 1
+            if _should_expand_linked_sources(item, fetched):
+                child_items = _discover_linked_source_items(
+                    fetched=fetched,
+                    parent_item=item,
+                    parent_source=source_record,
+                    query=query,
+                )
+                for child_item in child_items:
+                    child_uri = canonicalize_uri(str(child_item.get("canonical_uri") or child_item.get("url") or ""))
+                    if not child_uri or child_uri in visited_set or child_uri in queued_set:
+                        continue
+                    discovered_source_candidates.append(child_item)
+                    run_metrics.linked_sources_discovered += 1
+                    pending_items.append(child_item)
+                    queued_set.add(child_uri)
         except Exception as exc:
             health.error_count += 1
             health.last_error = str(exc)
@@ -948,8 +1107,35 @@ def _build_file_candidates(
     return candidates
 
 
-def _fetch_item(*, item: dict[str, Any], query: str, connector_registry, task_title: str):
+def _fetch_item(*, item: dict[str, Any], query: str, connector_registry, task_title: str, workspace_dir: str):
     connector_name = str(item.get("connector_name") or _map_source_name_to_connector(str(item.get("source_type") or "web")))
+    if _is_remote_pdf_item(item):
+        pdf_url = str(item.get("canonical_uri") or item.get("url") or "")
+        text, pdf_metadata = _fetch_remote_pdf_text(pdf_url, workspace_dir)
+        metadata = {
+            key: value
+            for key, value in item.items()
+            if key not in _SOURCE_RECORD_RESERVED_KEYS | {"auth_scope", "file_path"}
+        }
+        metadata.update(pdf_metadata)
+        return ConnectorFetchResult(
+            connector_name=connector_name,
+            source_type="pdf",
+            title=str(item.get("title") or _title_from_url(pdf_url) or "PDF Document"),
+            canonical_uri=pdf_url,
+            query=str(item.get("query") or query),
+            text=text,
+            snippet=_query_aware_excerpt(text, query=query),
+            mime_type="application/pdf",
+            auth_scope=str(item.get("auth_scope") or "public"),
+            freshness_metadata={
+                "published_at": item.get("published_at"),
+                "task_title": task_title,
+                "content_kind": "remote_pdf",
+            },
+            metadata=metadata,
+            url=pdf_url,
+        )
     if item.get("mcp_source"):
         text = str(item.get("snippet") or item.get("title") or "")
         return type(
@@ -997,6 +1183,187 @@ def _fetch_item(*, item: dict[str, Any], query: str, connector_registry, task_ti
         },
     )
     return connector.fetch(candidate)
+
+
+def _source_record_snippet(fetched: ConnectorFetchResult, *, query: str) -> str:
+    text_excerpt = _query_aware_excerpt(fetched.text, query=query)
+    if text_excerpt:
+        return text_excerpt
+    return fetched.snippet or fetched.text[:300].replace("\n", " ")
+
+
+def _should_expand_linked_sources(item: dict[str, Any], fetched: ConnectorFetchResult) -> bool:
+    if item.get("parent_source_id"):
+        return False
+    if str(item.get("link_depth") or "0") not in {"", "0"}:
+        return False
+    return fetched.mime_type.startswith("text/html") or fetched.source_type == "web"
+
+
+def _discover_linked_source_items(
+    *,
+    fetched: ConnectorFetchResult,
+    parent_item: dict[str, Any],
+    parent_source: SourceRecord,
+    query: str,
+) -> list[dict[str, Any]]:
+    child_items: list[dict[str, Any]] = []
+    for link in _extract_high_value_links(fetched.text, base_url=fetched.url or fetched.canonical_uri):
+        if len(child_items) >= _MAX_LINKED_SOURCES_PER_PARENT:
+            break
+        url = link["url"]
+        title = link["label"] or _title_from_url(url) or "Linked source"
+        is_pdf = _looks_like_pdf_url(url)
+        child_items.append(
+            {
+                "connector_name": "open_web",
+                "source_type": "pdf" if is_pdf else "web",
+                "title": title,
+                "url": url,
+                "canonical_uri": url,
+                "snippet": f"Linked source discovered from {parent_source.title}: {title}",
+                "query": query,
+                "auth_scope": parent_item.get("auth_scope", "public"),
+                "parent_source_id": parent_source.source_id,
+                "parent_citation_id": parent_source.citation_id,
+                "discovered_from_url": parent_source.url or parent_source.canonical_uri,
+                "discovery_reason": _discovery_reason(url, title),
+                "content_kind": "remote_pdf" if is_pdf else "linked_web",
+                "link_depth": 1,
+                "trust_tier_override": parent_source.trust_tier,
+            }
+        )
+    return child_items
+
+
+def _extract_high_value_links(text: str, *, base_url: str) -> list[dict[str, str]]:
+    seen: set[str] = set()
+    links: list[dict[str, str]] = []
+
+    try:
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup(text, "html.parser")
+        for tag in soup.find_all("a", href=True):
+            href = str(tag.get("href") or "").strip()
+            label = tag.get_text(" ", strip=True)
+            _append_high_value_link(links, seen, href, label=label, base_url=base_url)
+    except Exception:
+        logger.debug("HTML link extraction failed; falling back to URL regex.")
+
+    for match in re.finditer(r"https?://[^\s<>'\")]+", text):
+        href = match.group(0).rstrip(".,;:，。；）)")
+        _append_high_value_link(links, seen, href, label="", base_url=base_url)
+
+    return links
+
+
+def _append_high_value_link(
+    links: list[dict[str, str]],
+    seen: set[str],
+    href: str,
+    *,
+    label: str,
+    base_url: str,
+) -> None:
+    if not href:
+        return
+    url = canonicalize_uri(urljoin(base_url, href))
+    if not url or url in seen:
+        return
+    if not _is_high_value_link(url, label):
+        return
+    seen.add(url)
+    links.append({"url": url, "label": label})
+
+
+def _is_high_value_link(url: str, label: str) -> bool:
+    combined = f"{url} {label}".lower()
+    return _looks_like_pdf_url(url) or any(keyword in combined for keyword in _HIGH_VALUE_LINK_KEYWORDS)
+
+
+def _looks_like_pdf_url(url: str) -> bool:
+    lowered = url.lower()
+    return ".pdf" in lowered or ("/blob/" in lowered and lowered.endswith("pdf"))
+
+
+def _is_remote_pdf_item(item: dict[str, Any]) -> bool:
+    return str(item.get("content_kind") or "") == "remote_pdf" or _looks_like_pdf_url(
+        str(item.get("canonical_uri") or item.get("url") or "")
+    )
+
+
+def _discovery_reason(url: str, label: str) -> str:
+    combined = f"{url} {label}".lower()
+    if "tech report" in combined or "technical report" in combined or _looks_like_pdf_url(url):
+        return "technical_report_link"
+    if "open weights" in combined:
+        return "open_weights_link"
+    return "high_value_link"
+
+
+def _title_from_url(url: str) -> str:
+    path = url.split("?", 1)[0].rstrip("/")
+    name = unquote(path.rsplit("/", 1)[-1]) if path else ""
+    return name or "Linked source"
+
+
+def _fetch_remote_pdf_text(url: str, workspace_dir: str) -> tuple[str, dict[str, Any]]:
+    import httpx
+    from PyPDF2 import PdfReader
+
+    download_url = _download_url_for_remote_pdf(url)
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        )
+    }
+    response = httpx.get(download_url, headers=headers, timeout=30, follow_redirects=True)
+    response.raise_for_status()
+
+    remote_docs_dir = Path(workspace_dir) / "_remote_docs"
+    remote_docs_dir.mkdir(parents=True, exist_ok=True)
+    digest = hashlib.sha1(url.encode("utf-8")).hexdigest()[:16]
+    pdf_path = remote_docs_dir / f"{digest}.pdf"
+    pdf_path.write_bytes(response.content)
+
+    reader = PdfReader(str(pdf_path))
+    text_parts: list[str] = []
+    for page in reader.pages:
+        page_text = page.extract_text()
+        if page_text:
+            text_parts.append(page_text)
+    text = "\n\n".join(text_parts).strip() or "PDF 文件无法提取文本内容。"
+    if len(text) > 20000:
+        text = text[:20000] + "\n...(内容已截断)"
+    return text, {
+        "download_url": download_url,
+        "local_pdf_path": str(pdf_path),
+        "page_count": len(reader.pages),
+        "content_length": len(response.content),
+    }
+
+
+def _download_url_for_remote_pdf(url: str) -> str:
+    if "huggingface.co" in url and "/blob/" in url:
+        return url.replace("/blob/", "/resolve/", 1)
+    return url
+
+
+def _query_aware_excerpt(text: str, *, query: str, max_chars: int = 500) -> str:
+    normalized = re.sub(r"\s+", " ", text or "").strip()
+    if not normalized:
+        return ""
+    lowered = normalized.lower()
+    query_terms = [
+        term.lower()
+        for term in re.findall(r"[0-9a-zA-Z][0-9a-zA-Z._-]*|[\u4e00-\u9fff]{2,}", query)
+        if len(term) > 1
+    ]
+    hit_positions = [lowered.find(term) for term in query_terms if lowered.find(term) >= 0]
+    start = max(min(hit_positions) - 80, 0) if hit_positions else 0
+    return normalized[start : start + max_chars].strip()
 
 
 def _total_fetch_attempts(connector_health: dict[str, Any]) -> int:
@@ -1105,6 +1472,124 @@ def _format_skill_guidance(skill_capabilities: list[ToolCapability]) -> str:
     return f"- 参考已激活 skill 的策略偏好：{descriptions}\n"
 
 
+def _reuse_existing_sources_for_query(
+    *,
+    query: str,
+    task: TaskItem | None,
+    sources: list[SourceRecord],
+    workspace_dir: str,
+    limit: int,
+) -> list[SourceRecord]:
+    if not sources:
+        return []
+    scored: list[tuple[float, SourceRecord]] = []
+    for source in sources:
+        if not source.selected:
+            continue
+        score = _source_reuse_score(source, query=query, task=task)
+        if score > 0:
+            scored.append((score, source))
+    scored.sort(key=lambda item: item[0], reverse=True)
+    reused = [source for _, source in scored[: max(limit, 1)]]
+    for source in reused:
+        snapshot_text = _snapshot_text_for_source(source, workspace_dir=workspace_dir)
+        query_excerpt = _query_aware_excerpt(snapshot_text, query=query, max_chars=900) if snapshot_text else ""
+        if query_excerpt:
+            source.snippet = _merge_reuse_snippet(source.snippet, query_excerpt, max_chars=1400)
+    return reused
+
+
+def _snapshot_text_for_source(source: SourceRecord, *, workspace_dir: str) -> str:
+    if not source.snapshot_ref:
+        return ""
+    snapshot_path = Path(workspace_dir) / "snapshots" / f"{source.snapshot_ref}.txt"
+    try:
+        return snapshot_path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+
+
+def _merge_reuse_snippet(existing: str, query_excerpt: str, *, max_chars: int) -> str:
+    existing_clean = re.sub(r"\s+", " ", existing or "").strip()
+    excerpt_clean = re.sub(r"\s+", " ", query_excerpt or "").strip()
+    if not excerpt_clean:
+        return existing_clean
+    if not existing_clean:
+        return excerpt_clean[:max_chars].strip()
+    if excerpt_clean in existing_clean:
+        return existing_clean[:max_chars].strip()
+    if existing_clean in excerpt_clean:
+        return excerpt_clean[:max_chars].strip()
+    return f"{existing_clean} ... {excerpt_clean}"[:max_chars].strip()
+
+
+def _source_reuse_score(source: SourceRecord, *, query: str, task: TaskItem | None) -> float:
+    haystack = _normalize_reuse_text(
+        " ".join(
+            [
+                source.title,
+                source.snippet,
+                source.url,
+                source.canonical_uri,
+            ]
+        )
+    )
+    if not haystack:
+        return 0.0
+
+    query_terms = _reuse_terms(query)
+    if task is not None:
+        query_terms.extend(_reuse_terms(" ".join(task.must_include_terms + task.expected_aspects)))
+    query_terms = list(dict.fromkeys(term for term in query_terms if term))
+    if not query_terms:
+        return 0.0
+
+    hits = sum(1 for term in query_terms if term in haystack)
+    if hits == 0:
+        return 0.0
+
+    score = hits / len(query_terms)
+    if source.trust_tier >= 4:
+        score += 0.2
+    if source.mime_type == "application/pdf" or source.source_type == "pdf":
+        score += 0.15
+    if any(domain in haystack for domain in ("api docs deepseek com", "huggingface co", "arxiv org", "github com")):
+        score += 0.1
+    return score
+
+
+def _reuse_terms(text: str) -> list[str]:
+    normalized = _normalize_reuse_text(text)
+    stopwords = {
+        "deepseek",
+        "official",
+        "technical",
+        "report",
+        "evidence",
+        "architecture",
+        "benchmark",
+        "comparison",
+        "analysis",
+        "2025",
+    }
+    return [
+        term
+        for term in normalized.split()
+        if len(term) > 1 and term not in stopwords
+    ]
+
+
+def _normalize_reuse_text(text: str) -> str:
+    lowered = text.lower()
+    lowered = lowered.replace("one million", "1m 100万 million")
+    lowered = lowered.replace("million-token", "million token 1m 100万")
+    lowered = lowered.replace("open-sourced", "open source opensource")
+    lowered = lowered.replace("open-source", "open source opensource")
+    lowered = lowered.replace("chatcompletions", "chat completions chatcompletions")
+    lowered = re.sub(r"[^0-9a-z\u4e00-\u9fff]+", " ", lowered)
+    return " ".join(lowered.split())
+
+
 def _match_follow_up_task(query: str, tasks: list[TaskItem]) -> TaskItem | None:
     normalized_query = query.lower()
     generic_keywords = {
@@ -1143,6 +1628,18 @@ def _match_follow_up_task(query: str, tasks: list[TaskItem]) -> TaskItem | None:
         title = task.title.lower().strip()
         if title and title in normalized_query:
             score += 80
+
+        task_query = task.query.lower().strip()
+        if task_query and task_query in normalized_query:
+            score += 120
+        else:
+            query_keyword_hits = 0
+            for keyword in _reuse_terms(task.query):
+                if keyword in generic_keywords:
+                    continue
+                if keyword in normalized_query:
+                    query_keyword_hits += 1
+            score += query_keyword_hits * 8
 
         for aspect in task.expected_aspects:
             aspect_text = aspect.lower().strip()

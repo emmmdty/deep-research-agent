@@ -179,6 +179,49 @@ def test_claim_auditor_blocks_supported_critical_claim_without_snapshot_groundin
     assert result["critical_claim_review_queue"][0].edge_ids == ["edge-1"]
 
 
+def test_claim_auditor_seeds_follow_up_for_unsupported_critical_gap():
+    """critical claim 缺少证据时，应生成补采查询并把对应任务重置为 pending。"""
+    from auditor.pipeline import claim_auditor_node
+
+    result = claim_auditor_node(
+        {
+            "research_topic": "DeepSeek-V4 architecture",
+            "tasks": [
+                TaskItem(
+                    id=1,
+                    title="DeepSeek-V4 MoE 架构",
+                    intent="确认官方技术报告中的架构参数",
+                    query="DeepSeek-V4 MoE architecture whitepaper official",
+                    status="completed",
+                )
+            ],
+            "task_summaries": ["## DeepSeek-V4 MoE 架构\n\n暂无可用信息。\n"],
+            "evidence_notes": [
+                EvidenceNote(
+                    task_id=1,
+                    task_title="DeepSeek-V4 MoE 架构",
+                    query="DeepSeek-V4 MoE architecture whitepaper official",
+                    summary="## DeepSeek-V4 MoE 架构\n\n暂无可用信息。\n",
+                    source_ids=[],
+                    selected_source_ids=[],
+                    claim_count=0,
+                )
+            ],
+            "sources_gathered": [],
+            "evidence_fragments": [],
+            "pending_follow_up_queries": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert result["audit_gate_status"] == "blocked"
+    assert result["pending_follow_up_queries"] == [
+        "DeepSeek-V4 MoE architecture whitepaper official official technical report PDF evidence"
+    ]
+    assert result["tasks"][0].status == "pending"
+    assert result["run_metrics"].audit_rescue_queries == 1
+
+
 def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_path: Path):
     """orchestrator 应经过 claim_auditing 阶段，并保留 completed+blocked 语义。"""
     from artifacts.schemas import validate_instance

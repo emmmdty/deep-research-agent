@@ -458,6 +458,429 @@ def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Pat
     assert result["source_snapshots"][0]["snapshot_id"] == result["sources_gathered"][0].snapshot_ref
 
 
+def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path, monkeypatch):
+    """collecting 应跟随官方页面中的技术报告 PDF，并把 PDF 作为可审计 snapshot。"""
+    from legacy.agents import researcher
+    from connectors.legacy import LegacyConnectorAdapter
+    from connectors.registry import ConnectorRegistry
+    from legacy.workflows.states import RunMetrics, TaskItem
+
+    settings = type(
+        "Settings",
+        (),
+        {
+            "enabled_sources": ["web"],
+            "max_search_results": 5,
+            "per_source_max_results": 4,
+            "per_task_selected_sources": 4,
+            "enabled_capability_types": ["builtin"],
+            "skill_paths": [],
+            "mcp_servers": [],
+            "workspace_dir": str(tmp_path / "workspace"),
+            "source_policy_mode": "industry_broad",
+            "connector_substrate_enabled": True,
+            "snapshot_store_dirname": "snapshots",
+        },
+    )()
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher,
+        "_fetch_remote_pdf_text",
+        lambda url, workspace_dir: (
+            "DeepSeek-V4-Pro has 1.6T total parameters and 49B active parameters. "
+            "DeepSeek Sparse Attention supports 1M context.",
+            {"download_url": url, "page_count": 1},
+        ),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        researcher,
+        "_build_phase3_connector_registry",
+        lambda _settings: ConnectorRegistry(
+            {
+                "open_web": LegacyConnectorAdapter(
+                    source_name="web",
+                    search_fn=lambda query, max_results=5: [
+                        {
+                            "source_type": "web",
+                            "title": "DeepSeek V4 Preview Release",
+                            "url": "https://api-docs.deepseek.com/news/news260424",
+                            "snippet": "DeepSeek-V4 Preview is officially live.",
+                        }
+                    ],
+                    fetch_fn=lambda url: {
+                        "text": (
+                            "<html><body><h1>DeepSeek V4 Preview Release</h1>"
+                            "<a href=\"https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/"
+                            "blob/main/DeepSeek_V4.pdf\">Tech Report</a></body></html>"
+                        ),
+                        "mime_type": "text/html",
+                    },
+                )
+            }
+        ),
+    )
+
+    result = researcher.researcher_node(
+        {
+            "research_topic": "DeepSeek-V4 architecture",
+            "research_profile": "benchmark",
+            "source_profile": "industry_broad",
+            "policy_overrides": {
+                "allow_domains": ["api-docs.deepseek.com", "huggingface.co"],
+                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+            },
+            "tasks": [
+                TaskItem(
+                    id=1,
+                    title="DeepSeek-V4 MoE 架构",
+                    intent="确认官方技术报告中的架构参数",
+                    query="DeepSeek V4 Preview Release official technical report",
+                    task_type="research",
+                    preferred_sources=["web"],
+                    must_include_terms=["DeepSeek", "V4", "1.6T", "DSA"],
+                )
+            ],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "source_snapshots": [],
+            "search_results": [],
+            "evidence_notes": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    pdf_sources = [source for source in result["sources_gathered"] if source.mime_type == "application/pdf"]
+    assert len(pdf_sources) == 1
+    assert pdf_sources[0].canonical_uri == "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
+    assert "1.6T total parameters" in pdf_sources[0].snippet
+    assert pdf_sources[0].metadata["parent_source_id"] == "source-1"
+    assert pdf_sources[0].metadata["discovery_reason"] == "technical_report_link"
+    assert any(snapshot["mime_type"] == "application/pdf" for snapshot in result["source_snapshots"])
+    assert result["run_metrics"].remote_pdfs_ingested == 1
+
+
+def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monkeypatch):
+    """页面内子链接必须继续受 allow_domains 约束，不能绕过 source policy。"""
+    from legacy.agents import researcher
+    from connectors.legacy import LegacyConnectorAdapter
+    from connectors.registry import ConnectorRegistry
+    from legacy.workflows.states import RunMetrics, TaskItem
+
+    settings = type(
+        "Settings",
+        (),
+        {
+            "enabled_sources": ["web"],
+            "max_search_results": 5,
+            "per_source_max_results": 4,
+            "per_task_selected_sources": 4,
+            "enabled_capability_types": ["builtin"],
+            "skill_paths": [],
+            "mcp_servers": [],
+            "workspace_dir": str(tmp_path / "workspace"),
+            "source_policy_mode": "industry_broad",
+            "connector_substrate_enabled": True,
+            "snapshot_store_dirname": "snapshots",
+        },
+    )()
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher,
+        "_fetch_remote_pdf_text",
+        lambda url, workspace_dir: (_ for _ in ()).throw(AssertionError("blocked PDF should not be fetched")),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        researcher,
+        "_build_phase3_connector_registry",
+        lambda _settings: ConnectorRegistry(
+            {
+                "open_web": LegacyConnectorAdapter(
+                    source_name="web",
+                    search_fn=lambda query, max_results=5: [
+                        {
+                            "source_type": "web",
+                            "title": "DeepSeek V4 Preview Release",
+                            "url": "https://api-docs.deepseek.com/news/news260424",
+                            "snippet": "DeepSeek-V4 Preview is officially live.",
+                        }
+                    ],
+                    fetch_fn=lambda url: {
+                        "text": (
+                            "<a href=\"https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/"
+                            "blob/main/DeepSeek_V4.pdf\">Tech Report</a>"
+                        ),
+                        "mime_type": "text/html",
+                    },
+                )
+            }
+        ),
+    )
+
+    result = researcher.researcher_node(
+        {
+            "research_topic": "DeepSeek-V4 architecture",
+            "research_profile": "benchmark",
+            "source_profile": "industry_broad",
+            "policy_overrides": {
+                "allow_domains": ["api-docs.deepseek.com"],
+                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+            },
+            "tasks": [
+                TaskItem(
+                    id=1,
+                    title="DeepSeek-V4 官方信息",
+                    intent="确认官方信息",
+                    query="DeepSeek V4 Preview Release official",
+                    task_type="research",
+                    preferred_sources=["web"],
+                    must_include_terms=["DeepSeek"],
+                )
+            ],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "source_snapshots": [],
+            "search_results": [],
+            "evidence_notes": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert [source.mime_type for source in result["sources_gathered"]] == ["text/html"]
+    assert result["connector_health"]["open_web"]["policy_blocked"] == 1
+    assert result["blocked_source_candidates"][0]["reason"] == "domain_not_allowed"
+
+
+def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(tmp_path: Path, monkeypatch):
+    """补采集遇到已抓取过的官方 PDF 时，应复用现有 source，而不是追加“暂无可用信息”。"""
+    from legacy.agents import researcher
+    from connectors.legacy import LegacyConnectorAdapter
+    from connectors.registry import ConnectorRegistry
+    from legacy.workflows.states import EvidenceNote, RunMetrics, TaskItem
+
+    pdf_url = "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
+    settings = type(
+        "Settings",
+        (),
+        {
+            "enabled_sources": ["web"],
+            "max_search_results": 5,
+            "per_source_max_results": 4,
+            "per_task_selected_sources": 4,
+            "enabled_capability_types": ["builtin"],
+            "skill_paths": [],
+            "mcp_servers": [],
+            "workspace_dir": str(tmp_path / "workspace"),
+            "source_policy_mode": "industry_broad",
+            "connector_substrate_enabled": True,
+            "snapshot_store_dirname": "snapshots",
+        },
+    )()
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+
+    class StaticLLM:
+        def invoke(self, messages):
+            return type("Response", (), {"content": "DeepSeek_V4.pdf confirms Muon and mHC. [5]"})()
+
+    monkeypatch.setattr(researcher, "get_llm", lambda: StaticLLM())
+    monkeypatch.setattr(
+        researcher,
+        "_build_phase3_connector_registry",
+        lambda _settings: ConnectorRegistry(
+            {
+                "open_web": LegacyConnectorAdapter(
+                    source_name="web",
+                    search_fn=lambda query, max_results=5: [
+                        {
+                            "source_type": "pdf",
+                            "title": "DeepSeek_V4.pdf",
+                            "url": pdf_url,
+                            "snippet": "DeepSeek-V4 technical report",
+                        }
+                    ],
+                    fetch_fn=lambda url: (_ for _ in ()).throw(AssertionError("visited source should be reused")),
+                )
+            }
+        ),
+    )
+    snapshot_dir = Path(settings.workspace_dir) / "snapshots"
+    snapshot_dir.mkdir(parents=True)
+    (snapshot_dir / "snapshot-pdf.txt").write_text(
+        (
+            "DeepSeek-V4 architecture overview. "
+            "Muon Optimizer: DeepSeek-V4 introduces the Muon optimizer for faster convergence "
+            "and greater training stability. mHC strengthens conventional residual connections."
+        ),
+        encoding="utf-8",
+    )
+
+    existing_source = SourceRecord(
+        citation_id=5,
+        source_id="source-5",
+        source_type="pdf",
+        query="DeepSeek-V4 Pro vs Flash",
+        title="DeepSeek_V4.pdf",
+        canonical_uri=pdf_url,
+        url=pdf_url,
+        snippet=(
+            "DeepSeek-V4-Pro has 1.6T parameters and 49B activated. "
+            "DeepSeek-V4-Flash has 284B parameters and 13B activated. "
+            "The report describes MoE, CSA, HCA, mHC, the Muon optimizer, and 1M context."
+        ),
+        task_title="Pro与Flash版本差异化分析",
+        snapshot_ref="snapshot-pdf",
+        mime_type="application/pdf",
+        trust_tier=4,
+        selected=True,
+    )
+
+    result, has_more_work = researcher.collect_research_step(
+        {
+            "research_topic": "DeepSeek-V4 architecture",
+            "research_profile": "default",
+            "source_profile": "industry_broad",
+            "policy_overrides": {
+                "allow_domains": ["huggingface.co"],
+                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+            },
+            "tasks": [
+                TaskItem(
+                    id=3,
+                    title="Muon优化器与mHC架构设计",
+                    intent="确认官方技术报告中的 Muon 和 mHC",
+                    query="DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025",
+                    task_type="research",
+                    preferred_sources=["web"],
+                    must_include_terms=["Muon", "mHC"],
+                )
+            ],
+            "task_summaries": ["## Muon优化器与mHC架构设计\n\n暂无可用信息。\n"],
+            "sources_gathered": [existing_source],
+            "source_snapshots": [],
+            "visited_source_uris": [pdf_url],
+            "search_results": [],
+            "evidence_notes": [
+                EvidenceNote(
+                    task_id=3,
+                    task_title="Muon优化器与mHC架构设计",
+                    query="DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025",
+                    summary="## Muon优化器与mHC架构设计\n\n暂无可用信息。\n",
+                    source_ids=[],
+                    selected_source_ids=[],
+                )
+            ],
+            "pending_follow_up_queries": [
+                "DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025 official technical report PDF evidence"
+            ],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert has_more_work is False
+    assert len(result["evidence_notes"]) == 1
+    assert result["evidence_notes"][0].selected_source_ids == [5]
+    assert "暂无可用信息" not in result["task_summaries"][0]
+    assert "DeepSeek_V4.pdf" in result["task_summaries"][0]
+    assert "greater training stability" in result["sources_gathered"][0].snippet
+    assert result["tasks"][0].status == "completed"
+
+
+def test_researcher_uses_query_aware_snippet_for_fetched_web_text(tmp_path: Path, monkeypatch):
+    """官方页面正文里较靠后的 API 信息应进入 source snippet，而不是只保留导航摘要。"""
+    from legacy.agents import researcher
+    from connectors.legacy import LegacyConnectorAdapter
+    from connectors.registry import ConnectorRegistry
+    from legacy.workflows.states import RunMetrics, TaskItem
+
+    settings = type(
+        "Settings",
+        (),
+        {
+            "enabled_sources": ["web"],
+            "max_search_results": 5,
+            "per_source_max_results": 4,
+            "per_task_selected_sources": 4,
+            "enabled_capability_types": ["builtin"],
+            "skill_paths": [],
+            "mcp_servers": [],
+            "workspace_dir": str(tmp_path / "workspace"),
+            "source_policy_mode": "industry_broad",
+            "connector_substrate_enabled": True,
+            "snapshot_store_dirname": "snapshots",
+        },
+    )()
+    monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+
+    class StaticLLM:
+        def invoke(self, messages):
+            return type("Response", (), {"content": "API is available via OpenAI ChatCompletions. [1]"})()
+
+    monkeypatch.setattr(researcher, "get_llm", lambda: StaticLLM())
+    monkeypatch.setattr(
+        researcher,
+        "_build_phase3_connector_registry",
+        lambda _settings: ConnectorRegistry(
+            {
+                "open_web": LegacyConnectorAdapter(
+                    source_name="web",
+                    search_fn=lambda query, max_results=5: [
+                        {
+                            "source_type": "web",
+                            "title": "DeepSeek V4 Preview Release",
+                            "url": "https://api-docs.deepseek.com/news/news260424",
+                            "snippet": "DeepSeek-V4 API OpenAI ChatCompletions deployment",
+                        }
+                    ],
+                    fetch_fn=lambda url: {
+                        "text": (
+                            "Navigation Quick Start Pricing Guides Other Resources. "
+                            "DeepSeek-V4 Preview is officially live. "
+                            "API is Available Today. Keep base_url, just update model to "
+                            "deepseek-v4-pro or deepseek-v4-flash. Supports OpenAI ChatCompletions."
+                        ),
+                        "mime_type": "text/html",
+                    },
+                )
+            }
+        ),
+    )
+
+    result = researcher.researcher_node(
+        {
+            "research_topic": "DeepSeek-V4 API boundary",
+            "research_profile": "default",
+            "source_profile": "industry_broad",
+            "policy_overrides": {
+                "allow_domains": ["api-docs.deepseek.com"],
+                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+            },
+            "tasks": [
+                TaskItem(
+                    id=5,
+                    title="推理部署模式与开源边界",
+                    intent="确认 API 模式",
+                    query="DeepSeek-V4 API OpenAI ChatCompletions deployment",
+                    task_type="research",
+                    preferred_sources=["web"],
+                    must_include_terms=["API", "OpenAI", "ChatCompletions"],
+                )
+            ],
+            "task_summaries": [],
+            "sources_gathered": [],
+            "source_snapshots": [],
+            "search_results": [],
+            "evidence_notes": [],
+            "run_metrics": RunMetrics(),
+        }
+    )
+
+    assert "API is Available Today" in result["sources_gathered"][0].snippet
+    assert "Supports OpenAI ChatCompletions" in result["sources_gathered"][0].snippet
+
+
 def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, monkeypatch):
     """公开 orchestrator 路径应把 snapshot 和 bundle sidecars 写入 job 目录。"""
     from artifacts.schemas import validate_instance

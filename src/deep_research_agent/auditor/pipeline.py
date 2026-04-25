@@ -16,7 +16,7 @@ from deep_research_agent.auditor.models import (
     EvidenceFragmentRecord,
 )
 from deep_research_agent.auditor.store import write_claim_graph, write_review_queue
-from legacy.workflows.states import EvidenceNote, SourceRecord, TaskItem
+from legacy.workflows.states import EvidenceNote, RunMetrics, SourceRecord, TaskItem
 
 
 _CRITICAL_HEADING = "核心结论"
@@ -46,11 +46,15 @@ def claim_auditor_node(state: dict) -> dict:
         for fragment in state.get("evidence_fragments", [])
     ]
     task_summaries: list[str] = [str(summary) for summary in state.get("task_summaries", [])]
+    run_metrics = state.get("run_metrics")
+    if not isinstance(run_metrics, RunMetrics):
+        run_metrics = RunMetrics.model_validate(run_metrics or {})
 
     claims: list[ClaimRecord] = []
     edges: list[ClaimSupportEdgeRecord] = []
     conflicts: list[ConflictSetRecord] = []
     review_items: list[CriticalClaimReviewItem] = []
+    claim_notes: dict[str, EvidenceNote | None] = {}
 
     task_index = {task.id: task for task in tasks}
     fragments_by_source: dict[str, list[EvidenceFragmentRecord]] = {}
@@ -88,6 +92,7 @@ def claim_auditor_node(state: dict) -> dict:
                 section_ref=section_ref,
                 evidence_ids=[],
             )
+            claim_notes[claim_id] = note
 
             candidate_fragments = _candidate_fragments(
                 note=note,
@@ -132,6 +137,17 @@ def claim_auditor_node(state: dict) -> dict:
                 )
 
     decision = _build_audit_decision(claims)
+    previous_follow_up_queries = list(state.get("pending_follow_up_queries", []))
+    pending_follow_up_queries = _build_audit_rescue_queries(
+        review_items=review_items,
+        claim_notes=claim_notes,
+        tasks=tasks,
+        existing_queries=previous_follow_up_queries,
+    )
+    new_rescue_count = len(set(pending_follow_up_queries) - set(previous_follow_up_queries))
+    if new_rescue_count:
+        run_metrics.audit_rescue_queries += new_rescue_count
+        tasks = _reset_tasks_for_audit_rescue(tasks, review_items=review_items, claim_notes=claim_notes)
     review_payload = {
         "job_id": str(state.get("job_id") or state.get("research_topic") or "unknown-job"),
         "items": [item.model_dump(mode="json") for item in review_items],
@@ -166,6 +182,9 @@ def claim_auditor_node(state: dict) -> dict:
         "claim_support_edges": edges,
         "conflict_sets": conflicts,
         "critical_claim_review_queue": review_items,
+        "tasks": tasks,
+        "pending_follow_up_queries": pending_follow_up_queries,
+        "run_metrics": run_metrics,
         "audit_gate_status": decision.gate_status,
         "audit_block_reason": decision.block_reason,
         "critical_claim_count": decision.critical_claim_count,
@@ -318,6 +337,60 @@ def _build_audit_decision(claims: list[ClaimRecord]) -> AuditDecision:
         blocked_critical_claim_count=len(blocked_claims),
         block_reason=block_reason,
     )
+
+
+def _build_audit_rescue_queries(
+    *,
+    review_items: list[CriticalClaimReviewItem],
+    claim_notes: dict[str, EvidenceNote | None],
+    tasks: list[TaskItem],
+    existing_queries: list[str],
+) -> list[str]:
+    pending = list(existing_queries)
+    task_by_title = {task.title: task for task in tasks}
+    task_by_id = {task.id: task for task in tasks}
+    for item in review_items:
+        note = claim_notes.get(item.claim_id)
+        base_query = ""
+        if note is not None:
+            base_query = note.query
+            if not base_query and note.task_id in task_by_id:
+                base_query = task_by_id[note.task_id].query
+            if not base_query and note.task_title in task_by_title:
+                base_query = task_by_title[note.task_title].query
+        if not base_query:
+            base_query = item.text
+        rescue_query = f"{base_query.strip()} official technical report PDF evidence".strip()
+        if rescue_query and rescue_query not in pending:
+            pending.append(rescue_query)
+    return pending
+
+
+def _reset_tasks_for_audit_rescue(
+    tasks: list[TaskItem],
+    *,
+    review_items: list[CriticalClaimReviewItem],
+    claim_notes: dict[str, EvidenceNote | None],
+) -> list[TaskItem]:
+    blocked_task_ids = {
+        note.task_id
+        for item in review_items
+        for note in [claim_notes.get(item.claim_id)]
+        if note is not None and note.task_id is not None
+    }
+    blocked_task_titles = {
+        note.task_title
+        for item in review_items
+        for note in [claim_notes.get(item.claim_id)]
+        if note is not None and note.task_title
+    }
+    reset_tasks: list[TaskItem] = []
+    for task in tasks:
+        if task.id in blocked_task_ids or task.title in blocked_task_titles:
+            reset_tasks.append(task.model_copy(update={"status": "pending"}))
+        else:
+            reset_tasks.append(task)
+    return reset_tasks
 
 
 def _is_blocking_status(status: str) -> bool:
