@@ -20,15 +20,6 @@ def build_parser():
         _cli.get_settings = original_get_settings
 
 
-def run_cli(*args, **kwargs):
-    original_get_settings = _cli.get_settings
-    _cli.get_settings = get_settings
-    try:
-        return _cli.run_cli(*args, **kwargs)
-    finally:
-        _cli.get_settings = original_get_settings
-
-
 def run_command(argv=None):
     original_get_settings = _cli.get_settings
     original_build_job_service = _cli._build_job_service
@@ -44,7 +35,7 @@ def run_command(argv=None):
 def main():
     raise SystemExit(run_command(sys.argv[1:]))
 
-__all__ = ["_build_job_service", "build_parser", "get_settings", "main", "run_cli", "run_command"]
+__all__ = ["_build_job_service", "build_parser", "get_settings", "main", "run_command"]
 
 
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ from deep_research_agent.auditor.models import (
     EvidenceFragmentRecord,
 )
 from deep_research_agent.auditor.store import write_claim_graph, write_review_queue
-from legacy.workflows.states import EvidenceNote, RunMetrics, SourceRecord, TaskItem
+from deep_research_agent.runtime.states import EvidenceNote, RunMetrics, SourceRecord, TaskItem
 
 
 _CRITICAL_HEADING = "核心结论"

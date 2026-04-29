@@ -1,8 +1,0 @@
-rubric_name: file_research
-dimensions:
-  - file_ingest
-  - mixed_public_private_provenance
-  - artifact_completeness
-pass_criteria:
-  file_input_success_rate_min: 1.00
-  provenance_completeness_min: 0.95

@@ -5,52 +5,52 @@
 
 [English](./README.md) | 简体中文
 
-面向公司/行业分析的 evidence-first 研究运行时：用可审计 job 和 artifact bundle 交付结论，而不是只输出一次性聊天答案。
+Deep Research Agent 是一个本地优先的研究运行时，适合公司和行业分析。它把研究任务作为可审计 job 运行，保存 checkpoint 和事件，并输出包含来源、claim、trace、review sidecar 的报告 bundle。
 
-## 核心架构
-
-- `src/deep_research_agent/gateway/`：CLI、本地 HTTP API、batch 命令和 artifact 访问。
-- `src/deep_research_agent/research_jobs/`：确定性 job 生命周期，支持 checkpoint、event、cancel、retry、resume、refine。
-- `src/deep_research_agent/connectors/`：web、GitHub、arXiv、文件接入，经过 source policy 和 snapshot。
-- `src/deep_research_agent/auditor/`：claim graph、support edge、conflict set、audit decision、review queue。
-- `src/deep_research_agent/reporting/`：report bundle 编译和 sidecar artifact 输出。
-- `src/deep_research_agent/providers/`：OpenAI、Anthropic 和 compatible provider routing。
-
-`src/deep_research_agent/` 是唯一 canonical runtime。根目录下 `services/`、`connectors/`、`artifacts/`、`policies/`、`tools/`、`evaluation/` 等目录是 compatibility 或 diagnostic layer。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
-
-## Repository Layout
-
-```text
-src/deep_research_agent/  canonical runtime
-apps/gui-web/             可选本地 reviewer UI
-apps/desktop-tauri/       实验性 desktop wrapper
-configs/                  runtime 与 source profile 配置
-schemas/                  JSON artifact 与 runtime contract
-evals/                    deterministic eval 资产和报告
-docs/                     reviewer 文档和 archive
-tests/                    回归测试
-scripts/                  smoke、eval、diagnostic 命令
-legacy/                   已归档 graph-first 路径
-```
-
-## 快速运行
+## 安装
 
 ```bash
-uv sync --group dev
+uv sync
 cp .env.example .env
+```
+
+在 `.env` 中填写 LLM provider key，以及可选的 Tavily key。
+
+## CLI
+
+```bash
 uv run python main.py --help
 ```
 
-提交一个不启动 worker 的本地 job：
+创建一个不启动 worker 的 job：
 
 ```bash
 uv run python main.py submit \
-  --topic "Anthropic company profile" \
+  --topic "OpenAI company profile" \
   --source-profile company_trusted \
-  --allow-domain anthropic.com \
   --no-worker \
   --json
 ```
+
+常用命令：
+
+```bash
+uv run python main.py status --job-id <job_id>
+uv run python main.py watch --job-id <job_id>
+uv run python main.py cancel --job-id <job_id>
+uv run python main.py retry --job-id <job_id>
+uv run python main.py resume --job-id <job_id>
+uv run python main.py refine --job-id <job_id> --instruction "Focus on product revenue signals"
+uv run python main.py bundle --job-id <job_id> --json
+```
+
+批量提交：
+
+```bash
+uv run python main.py batch run --file examples/batch_requests.json --json
+```
+
+## API
 
 启动本地 API：
 
@@ -58,80 +58,33 @@ uv run python main.py submit \
 uv run uvicorn deep_research_agent.gateway.api:app --reload
 ```
 
-核心 smoke：
+API 文档地址：`http://127.0.0.1:8000/docs`。
+
+## Web UI
 
 ```bash
-uv run python main.py --help
-uv run ruff check .
-uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
+npm ci --prefix apps/gui-web
+npm run dev --prefix apps/gui-web
 ```
 
-## Artifact Contract
+UI 默认运行在 `http://127.0.0.1:5173`，并连接 `http://127.0.0.1:8000`。如需连接其他本地 API，设置 `VITE_DRA_API_BASE_URL`。
 
-完成态 job 会写入 `workspace/research_jobs/<job_id>/`。
+## Artifacts
 
-稳定 artifact 名称：
+运行输出目录：
 
-- `report_bundle.json`：权威机器可读输出
-- `report.md`、`report.html`：面向阅读的渲染结果
-- `claims.json`、`sources.json`、`audit_decision.json`、`review_queue.json`、`claim_graph.json`：审计 sidecar
-- `trace.jsonl`、`manifest.json`、`review_actions.jsonl`：执行和 review 记录
-
-CLI 读取 artifact：
-
-```bash
-uv run python main.py bundle --job-id <job_id> --json
+```text
+workspace/research_jobs/<job_id>/
 ```
 
-本地 API 读取 artifact：
+稳定 artifact 名称包括 `report.md`、`report.html`、`report_bundle.json`、`sources.json`、`claims.json`、`audit_decision.json`、`review_queue.json`、`claim_graph.json`、`trace.jsonl` 和 `manifest.json`。
 
-```bash
-curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/bundle
-curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/artifacts/report_bundle.json
-```
+## 文档
 
-## Evaluation Summary
-
-权威 merge-safe gate 是 `evals/reports/phase5_local_smoke/` 下的本地 deterministic smoke pack。面向 reviewer 的 deterministic regression evidence 位于 `evals/reports/native_regression/` 和 [docs/benchmarks/native](./docs/benchmarks/native/README.md)。
-
-当前 committed value scorecard 中的关键指标：
-
-- completion rate: `1.0`
-- bundle emission rate: `1.0`
-- critical claim support precision: `1.0`
-- citation error rate: `0.0`
-- policy compliance rate: `1.0`
-- resume success rate: `1.0`
-
-详见 [Experiment Summary](./docs/final/EXPERIMENT_SUMMARY.md) 和 [Value Scorecard](./docs/final/VALUE_SCORECARD.md)。
-
-## 本地 UI
-
-可选 reviewer/operator UI 位于 `apps/gui-web/`，消费本地 API。
-
-```bash
-cd apps/gui-web
-npm install
-npm run dev
-```
-
-可选 desktop packaging 实验位于 `apps/desktop-tauri/`。详见 [GUI docs](./docs/gui/README.md)。
-
-## 当前限制
-
-- HTTP API 仍是本地 API：没有 auth、tenant isolation、external queue 或 object storage。
-- Runtime storage 是 SQLite + filesystem artifacts。
-- Live web research 依赖 provider/search credentials 和外部网络稳定性。
-- Legacy comparator 与 report-shape diagnostics 仍可用于诊断，但 release story 是 claim-centric bundle/eval 输出。
-- 这不是多租户 SaaS，也不是“agent 越多越好”的展示项目。
-
-## Roadmap
-
-- 推进 server profile：PostgreSQL、Redis Streams、S3-compatible object storage。
-- 扩展 claim-support evaluation，超过 deterministic smoke/regression 套件。
-- 用 capability、health、cost、rate limit 信号强化 provider routing。
-- 改进 human review flow，使 review decision 能重新编译或显式标注 bundle。
-- 持续把 legacy diagnostic code 移出公开产品主路径。
+- [用户指南](./docs/USER_GUIDE.md)
+- [API](./docs/API.md)
+- [Artifacts](./docs/ARTIFACTS.md)
+- [架构](./docs/ARCHITECTURE.md)
 
 ## 许可证
 

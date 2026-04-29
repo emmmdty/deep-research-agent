@@ -1,9 +1,0 @@
-rubric_name: company_research
-dimensions:
-  - official_surface
-  - product_scope
-  - enterprise_signal
-pass_criteria:
-  rubric_coverage_min: 0.80
-  critical_claim_support_precision_min: 0.85
-  citation_error_rate_max: 0.05

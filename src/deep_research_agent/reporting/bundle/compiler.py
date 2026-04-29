@@ -1,4 +1,4 @@
-"""Phase 01 legacy runtime 到结构化 bundle 的桥接。"""
+"""Structured report bundle compiler."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from pydantic import BaseModel
 from deep_research_agent.reporting.schemas import validate_instance
 
 
-LEGACY_STAGE_ORDER = ("supervisor", "planner", "researcher", "verifier", "critic")
+TRACE_STAGE_ORDER = ("supervisor", "planner", "researcher", "verifier", "critic")
 BLOCKING_CLAIM_STATUSES = {"contradicted", "unsupported", "unverifiable"}
 
 
@@ -57,7 +57,7 @@ def _canonical_uri(source: Mapping[str, Any]) -> str:
     if url:
         return url
     citation_id = source.get("citation_id", "unknown")
-    return f"source://legacy/{citation_id}"
+    return f"source://runtime/{citation_id}"
 
 
 def _hash_source(source: Mapping[str, Any]) -> str:
@@ -99,7 +99,7 @@ def _normalize_claim_text(text: str) -> str:
         cleaned = re.sub(r"\[\d+\]", "", line).strip(" -")
         if cleaned:
             return cleaned
-    return "占位 claim：需在后续 phase 中补齐真实 claim extraction。"
+    return "占位 claim：需补齐真实 claim extraction。"
 
 
 def _build_sources(
@@ -258,7 +258,7 @@ def build_trace_events(
     job_id: str,
     bundle_ref: str | None = None,
 ) -> list[dict[str, Any]]:
-    """从 legacy state 合成 phase1 trace 事件。"""
+    """从 runtime state 合成 trace 事件。"""
     result_data = _as_dict(result)
     artifact = _as_dict(result_data.get("report_artifact"))
     topic = str(result_data.get("research_topic") or artifact.get("topic") or "")
@@ -275,12 +275,12 @@ def build_trace_events(
             "payload": {
                 "topic": topic,
                 "research_profile": profile,
-                "legacy_runtime": True,
+                "runtime_kind": "local",
             },
         }
     ]
 
-    for index, stage in enumerate(LEGACY_STAGE_ORDER, start=1):
+    for index, stage in enumerate(TRACE_STAGE_ORDER, start=1):
         events.append(
             {
                 "event_id": f"{job_id}-stage-{index}",
@@ -288,7 +288,7 @@ def build_trace_events(
                 "stage": stage,
                 "event_type": "stage.completed",
                 "timestamp": _utc_now_iso(),
-                "payload": {"legacy_stage": stage},
+                "payload": {"stage": stage},
             }
         )
 
@@ -300,7 +300,7 @@ def build_trace_events(
                 "stage": "writer",
                 "event_type": "stage.completed",
                 "timestamp": _utc_now_iso(),
-                "payload": {"legacy_stage": "writer"},
+                "payload": {"stage": "writer"},
             }
         )
 
@@ -351,9 +351,9 @@ def build_report_bundle(
     source_profile: str,
     report_bundle_ref: str,
     trace_events: list[dict[str, Any]],
-    runtime_path: str = "legacy-cli",
+    runtime_path: str = "local-cli",
 ) -> dict[str, Any]:
-    """从 legacy state 构建 phase1 report bundle。"""
+    """从 runtime state 构建 report bundle。"""
     result_data = _as_dict(result)
     artifact = _as_dict(result_data.get("report_artifact"))
     metrics = _as_dict(result_data.get("run_metrics") or artifact.get("metrics"))
@@ -558,10 +558,10 @@ def emit_report_artifacts(
     research_profile: str,
     workspace_dir: Path,
     bundle_output_dirname: str = "bundles",
-    source_profile: str = "legacy-default",
+    source_profile: str = "company_broad",
     job_id: str | None = None,
     bundle_dir: Path | None = None,
-    runtime_path: str = "legacy-cli",
+    runtime_path: str = "local-cli",
     trace_events: list[dict[str, Any]] | None = None,
     report_bundle_ref: str | None = None,
     report_path: Path | None = None,
@@ -569,7 +569,7 @@ def emit_report_artifacts(
     """Emit the authoritative report bundle plus viewer sidecars."""
     result_data = _as_dict(result)
     if result_data.get("report_artifact") is None:
-        logger.warning("缺少 report_artifact，跳过 phase1 bundle 输出: topic='{}'", topic)
+        logger.warning("缺少 report_artifact，跳过 bundle 输出: topic='{}'", topic)
         return None
 
     resolved_job_id = job_id or _run_id()

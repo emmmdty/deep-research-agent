@@ -1,31 +1,20 @@
-"""Deep Research Agent 主入口。
-
-phase2 起，公开 CLI 入口改为 job orchestrator：
-    uv run python main.py submit --topic "可信深度研究 app"
-    uv run python main.py watch --job-id <job_id>
-
-legacy 直跑路径保留为内部 helper `run_cli()`，并通过 hidden subcommand 暂时兼容。
-"""
+"""Deep Research Agent product CLI."""
 
 from __future__ import annotations
 
 import argparse
-import inspect
 import json
 import sys
 import time
 from pathlib import Path
 
-from configs.settings import get_settings
+from deep_research_agent.config.settings import get_settings
 from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
-from deep_research_agent.evals import BENCHMARK_NAMES, EVAL_SUITE_NAMES, EVAL_VARIANT_NAMES, run_eval_suite, run_external_benchmark
 from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
 from deep_research_agent.gateway.batch import load_batch_requests
 from dotenv import load_dotenv
 from loguru import logger
 from rich.console import Console
-from rich.markdown import Markdown
-from rich.panel import Panel
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
@@ -45,15 +34,8 @@ logger.add(
 console = Console()
 
 
-def _load_run_research():
-    """懒加载 legacy 研究工作流执行函数。"""
-    from legacy.workflows.graph import run_research
-
-    return run_research
-
-
 def _build_job_service():
-    """构建 phase2 job service。"""
+    """构建 job service。"""
     from deep_research_agent.research_jobs import ResearchJobService
 
     return ResearchJobService()
@@ -164,133 +146,7 @@ def build_parser() -> argparse.ArgumentParser:
     batch_run_parser.add_argument("--file", required=True, type=str, help="JSON 或 JSONL batch 文件路径")
     batch_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
 
-    eval_parser = subparsers.add_parser("eval", help="运行本地 deterministic eval suites")
-    eval_subparsers = eval_parser.add_subparsers(dest="eval_command")
-    eval_run_parser = eval_subparsers.add_parser("run", help="执行一个 local eval suite")
-    eval_run_parser.add_argument("--suite", required=True, choices=EVAL_SUITE_NAMES, help="suite 名称")
-    eval_run_parser.add_argument(
-        "--variant",
-        default="smoke_local",
-        choices=EVAL_VARIANT_NAMES,
-        help="suite variant，默认 smoke_local",
-    )
-    eval_run_parser.add_argument("--output-root", type=str, default=None, help="suite 输出目录")
-    eval_run_parser.add_argument(
-        "--capture-runtime-metrics",
-        action="store_true",
-        help="在 fresh rerun 中保存 pre-normalization runtime timing sidecar",
-    )
-    eval_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
-
-    benchmark_parser = subparsers.add_parser("benchmark", help="运行 external benchmark portfolio")
-    benchmark_subparsers = benchmark_parser.add_subparsers(dest="benchmark_command")
-    benchmark_run_parser = benchmark_subparsers.add_parser("run", help="执行一个 external benchmark run")
-    benchmark_run_parser.add_argument("--benchmark", required=True, choices=BENCHMARK_NAMES, help="benchmark 名称")
-    benchmark_run_parser.add_argument("--split", type=str, default=None, help="benchmark split，例如 open")
-    benchmark_run_parser.add_argument("--subset", type=str, default="smoke", help="subset 名称，例如 smoke")
-    benchmark_run_parser.add_argument("--bucket", type=str, default=None, help="可选 context bucket")
-    benchmark_run_parser.add_argument("--config", type=str, default=None, help="可选 benchmark 配置路径")
-    benchmark_run_parser.add_argument("--output-root", type=str, default=None, help="benchmark 输出目录")
-    benchmark_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
-
     return parser
-
-
-def _build_legacy_parser() -> argparse.ArgumentParser:
-    """构建 hidden legacy-run 解析器。"""
-    settings = get_settings()
-    default_max_loops = getattr(settings, "max_research_loops", 3)
-    default_profile = getattr(settings, "research_profile", "default")
-    parser = argparse.ArgumentParser(prog="main.py legacy-run")
-    parser.add_argument("--topic", required=True, type=str, help="研究主题")
-    parser.add_argument(
-        "--max-loops",
-        type=int,
-        default=default_max_loops,
-        help=f"最大迭代循环次数（默认 {default_max_loops}）",
-    )
-    parser.add_argument(
-        "--profile",
-        type=str,
-        default=default_profile,
-        help=f"研究 profile（默认 {default_profile}）",
-    )
-    return parser
-
-
-def run_cli(
-    topic: str,
-    max_loops: int | None = None,
-    profile: str | None = None,
-    emit_bundle: bool | None = None,
-    run_research_fn=None,
-) -> Path:
-    """legacy helper：命令行模式直跑深度研究并输出报告。"""
-    settings = get_settings()
-    resolved_max_loops = (
-        max_loops if max_loops is not None else getattr(settings, "max_research_loops", 3)
-    )
-    resolved_profile = profile or getattr(settings, "research_profile", "default")
-    resolved_emit_bundle = (
-        emit_bundle
-        if emit_bundle is not None
-        else getattr(settings, "bundle_emission_enabled", True)
-    )
-    research_runner = run_research_fn or _load_run_research()
-
-    console.print(
-        Panel(
-            f"[bold cyan]研究主题:[/bold cyan] {topic}\n"
-            f"[bold cyan]最大迭代:[/bold cyan] {resolved_max_loops} 次\n"
-            f"[bold cyan]运行 Profile:[/bold cyan] {resolved_profile}",
-            title="🔬 Deep Research Agent",
-            border_style="blue",
-        )
-    )
-    console.print()
-
-    signature = inspect.signature(research_runner)
-    if "research_profile" in signature.parameters:
-        result = research_runner(
-            topic,
-            max_loops=resolved_max_loops,
-            research_profile=resolved_profile,
-        )
-    else:
-        result = research_runner(
-            topic,
-            max_loops=resolved_max_loops,
-        )
-
-    report = result.get("final_report", "报告生成失败")
-    console.print()
-    console.print(Panel("[bold green]✅ 研究完成[/bold green]", border_style="green"))
-    console.print()
-    console.print(Markdown(report))
-
-    output_dir = Path(getattr(settings, "workspace_dir", "workspace"))
-    output_dir.mkdir(parents=True, exist_ok=True)
-    output_file = output_dir / f"report_{topic[:20].replace(' ', '_')}.md"
-    output_file.write_text(report, encoding="utf-8")
-    console.print(f"\n📄 报告已保存到: [cyan]{output_file}[/cyan]")
-
-    if resolved_emit_bundle:
-        from deep_research_agent.reporting.bundle import emit_report_artifacts
-
-        artifact_paths = emit_report_artifacts(
-            result,
-            topic=topic,
-            max_loops=resolved_max_loops,
-            research_profile=resolved_profile,
-            workspace_dir=output_dir,
-            bundle_output_dirname=getattr(settings, "bundle_output_dirname", "bundles"),
-            source_profile=getattr(settings, "source_policy_mode", "legacy-default"),
-            report_path=output_file,
-        )
-        if artifact_paths is not None:
-            console.print(f"🧾 Bundle 已保存到: [cyan]{artifact_paths['bundle_path']}[/cyan]")
-            console.print(f"🪵 Trace 已保存到: [cyan]{artifact_paths['trace_path']}[/cyan]")
-    return output_file
 
 
 def _print_json(payload) -> None:
@@ -327,65 +183,13 @@ def _artifact_payload(job, artifact_name: str):
 
 def run_command(argv: list[str] | None = None) -> int:
     """执行一条 CLI 命令。"""
-    settings = get_settings()
-    argv = list(argv or [])
-    if argv and argv[0] == "legacy-run":
-        if not getattr(settings, "legacy_cli_enabled", True):
-            console.print("[red]当前环境未启用 legacy-run[/red]")
-            return 2
-        legacy_args = _build_legacy_parser().parse_args(argv[1:])
-        run_cli(legacy_args.topic, max_loops=legacy_args.max_loops, profile=legacy_args.profile)
-        return 0
-
     parser = build_parser()
-    args = parser.parse_args(argv)
+    args = parser.parse_args(list(argv or []))
     if not args.command:
         parser.print_help()
         console.print("\n[yellow]示例:[/yellow]")
         console.print('  uv run python main.py submit --topic "可信深度研究 app"')
         console.print("  uv run python main.py watch --job-id <job_id>")
-        console.print("  uv run python main.py eval run --suite company12")
-        return 0
-
-    if args.command == "eval":
-        if args.eval_command != "run":
-            parser.error("eval 目前只支持 `run` 子命令")
-            return 2
-        result = run_eval_suite(
-            suite_name=args.suite,
-            variant=args.variant,
-            output_root=args.output_root,
-            capture_runtime_metrics=args.capture_runtime_metrics,
-        )
-        if args.json:
-            _print_json(result)
-        else:
-            console.print(f"✅ eval suite 完成: [cyan]{args.suite}[/cyan]")
-            console.print(f"status: [bold]{result['status']}[/bold]")
-            console.print(f"summary: [cyan]{result['summary_path']}[/cyan]")
-        return 0
-
-    if args.command == "benchmark":
-        if args.benchmark_command != "run":
-            parser.error("benchmark 目前只支持 `run` 子命令")
-            return 2
-        benchmark_output_root = args.output_root or str(
-            Path("evals") / "external" / "reports" / f"{args.benchmark}_{args.subset}"
-        )
-        result = run_external_benchmark(
-            benchmark_name=args.benchmark,
-            split=args.split,
-            subset=args.subset,
-            bucket=args.bucket,
-            output_root=benchmark_output_root,
-            config_path=args.config,
-        )
-        if args.json:
-            _print_json(result)
-        else:
-            console.print(f"✅ external benchmark 完成: [cyan]{args.benchmark}[/cyan]")
-            console.print(f"status: [bold]{result['status']}[/bold]")
-            console.print(f"output_root: [cyan]{result['output_root']}[/cyan]")
         return 0
 
     service = _build_job_service()

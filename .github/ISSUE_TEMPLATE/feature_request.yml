@@ -18,4 +18,4 @@ body:
   - type: textarea
     attributes:
       label: Additional context
-      description: Links, examples, or benchmark motivation.
+      description: Links, examples, or workflow details.

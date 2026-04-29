@@ -1,39 +1,6 @@
 import { FormEvent, useMemo, useState } from "react";
 
 import { createApiClient, getDefaultApiBaseUrl, PublicJobEvent, PublicJobResponse, SubmitJobRequest } from "./api/client";
-import { benchmarkCases, benchmarkSuites, benchmarkSummary } from "./benchmarkData";
-
-type NavItem = {
-  href: string;
-  label: string;
-  description: string;
-};
-
-const navItems: NavItem[] = [
-  { href: "#/jobs", label: "Jobs", description: "Submit and inspect local research jobs." },
-  { href: "#/artifacts", label: "Artifacts", description: "Open bundles, reports, claims, sources, and audit sidecars." },
-  { href: "#/benchmarks", label: "Benchmarks", description: "Browse smoke_local and regression_local evidence." },
-  { href: "#/docs", label: "Docs", description: "Reviewer-facing runbooks and GUI contract links." },
-  { href: "#/settings", label: "Settings", description: "Local API base URL and desktop readiness." },
-];
-
-const capabilityCards = [
-  {
-    title: "Local API",
-    eyebrow: "FastAPI",
-    body: "Submit, status, event polling, bundle, artifact, review, and batch routes stay on the existing backend.",
-  },
-  {
-    title: "Evidence Surface",
-    eyebrow: "Bundles",
-    body: "The GUI treats report_bundle.json as authoritative and keeps claims, sources, audits, and traces visible.",
-  },
-  {
-    title: "Native Benchmarks",
-    eyebrow: "Deterministic",
-    body: "smoke_local remains the merge-safe gate while regression_local provides reviewer-facing suite coverage.",
-  },
-];
 
 const sourceProfiles = [
   "company_trusted",
@@ -55,297 +22,272 @@ function readKnownJobs(): string[] {
 }
 
 function saveKnownJob(jobId: string): string[] {
-  const next = Array.from(new Set([jobId, ...readKnownJobs()]));
+  const next = Array.from(new Set([jobId, ...readKnownJobs()])).slice(0, 12);
   window.localStorage.setItem(knownJobsKey, JSON.stringify(next));
   return next;
 }
 
+function statusLabel(job: PublicJobResponse | null): string {
+  if (!job) {
+    return "No job loaded";
+  }
+  return `${job.status} / ${job.current_stage}`;
+}
+
 export function App() {
-  const apiBaseUrl = getDefaultApiBaseUrl();
+  const [apiBaseUrl, setApiBaseUrl] = useState(getDefaultApiBaseUrl());
   const api = useMemo(() => createApiClient({ baseUrl: apiBaseUrl }), [apiBaseUrl]);
   const [topic, setTopic] = useState("");
   const [sourceProfile, setSourceProfile] = useState("company_broad");
+  const [maxLoops, setMaxLoops] = useState(3);
+  const [startWorker, setStartWorker] = useState(false);
   const [manualJobId, setManualJobId] = useState("");
   const [knownJobs, setKnownJobs] = useState<string[]>(() => readKnownJobs());
   const [activeJob, setActiveJob] = useState<PublicJobResponse | null>(null);
   const [events, setEvents] = useState<PublicJobEvent[]>([]);
   const [bundle, setBundle] = useState<unknown>(null);
-  const [message, setMessage] = useState("Ready for local API actions.");
+  const [message, setMessage] = useState("Ready");
+
+  async function runAction(action: () => Promise<void>) {
+    try {
+      await action();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Request failed");
+    }
+  }
 
   async function loadEvents(jobId: string) {
     const response = await api.getEvents(jobId, 0);
     setEvents(response.events);
   }
 
-  async function submitJob(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setMessage("Submitting local job...");
-    const payload: SubmitJobRequest = {
-      topic,
-      max_loops: 1,
-      research_profile: "default",
-      source_profile: sourceProfile,
-      allow_domains: [],
-      deny_domains: [],
-      connector_budget: null,
-      start_worker: false,
-    };
-    const job = await api.submitJob(payload);
-    setActiveJob(job);
-    setKnownJobs(saveKnownJob(job.job_id));
-    await loadEvents(job.job_id);
-    setMessage(`Loaded ${job.job_id}`);
-  }
-
-  async function loadManualJob(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const jobId = manualJobId.trim();
-    if (!jobId) {
-      setMessage("Enter a job id first.");
-      return;
-    }
-    setMessage(`Loading ${jobId}...`);
+  async function loadJob(jobId: string) {
     const job = await api.getJob(jobId);
     setActiveJob(job);
     setKnownJobs(saveKnownJob(job.job_id));
     await loadEvents(job.job_id);
+    setBundle(null);
     setMessage(`Loaded ${job.job_id}`);
   }
 
-  async function loadBundle() {
-    if (!activeJob) {
-      setMessage("Load a job before opening its bundle.");
+  function submitJob(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void runAction(async () => {
+      setMessage("Submitting job");
+      const payload: SubmitJobRequest = {
+        topic,
+        max_loops: maxLoops,
+        research_profile: "default",
+        source_profile: sourceProfile,
+        allow_domains: [],
+        deny_domains: [],
+        connector_budget: null,
+        start_worker: startWorker,
+      };
+      const job = await api.submitJob(payload);
+      setActiveJob(job);
+      setKnownJobs(saveKnownJob(job.job_id));
+      await loadEvents(job.job_id);
+      setBundle(null);
+      setMessage(`Created ${job.job_id}`);
+    });
+  }
+
+  function loadManualJob(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const jobId = manualJobId.trim();
+    if (!jobId) {
+      setMessage("Enter a job id");
       return;
     }
-    setBundle(await api.getBundle(activeJob.job_id));
-    setMessage(`Loaded bundle for ${activeJob.job_id}`);
+    void runAction(() => loadJob(jobId));
   }
+
+  function refreshActiveJob() {
+    if (!activeJob) {
+      setMessage("Load a job first");
+      return;
+    }
+    void runAction(() => loadJob(activeJob.job_id));
+  }
+
+  function loadBundle() {
+    if (!activeJob) {
+      setMessage("Load a job first");
+      return;
+    }
+    void runAction(async () => {
+      setBundle(await api.getBundle(activeJob.job_id));
+      setMessage(`Loaded bundle for ${activeJob.job_id}`);
+    });
+  }
+
+  const artifactEntries = activeJob ? Object.entries(activeJob.artifact_urls) : [];
 
   return (
     <div className="app-shell">
-      <aside className="sidebar" aria-label="Primary navigation">
+      <aside className="sidebar" aria-label="Workspace navigation">
         <div className="brand-block">
-          <span className="brand-kicker">Local Console</span>
-          <h1>Deep Research Agent</h1>
-          <p>Operator and reviewer workspace for jobs, bundles, audits, and native benchmark evidence.</p>
+          <span className="brand-kicker">Deep Research Agent</span>
+          <strong>{statusLabel(activeJob)}</strong>
         </div>
-
         <nav className="nav-stack">
-          {navItems.map((item) => (
-            <a href={item.href} key={item.href}>
-              <span>{item.label}</span>
-              <small>{item.description}</small>
-            </a>
-          ))}
+          <a href="#submit">Submit</a>
+          <a href="#status">Status</a>
+          <a href="#artifacts">Artifacts</a>
+          <a href="#settings">Settings</a>
         </nav>
       </aside>
 
       <main className="main-panel">
-        <section className="hero-card">
+        <header className="topbar">
           <div>
-            <span className="eyebrow">Phase 23 Web Console</span>
-            <h2>Evidence-first operations, not a chat transcript.</h2>
-            <p>
-              This shell is wired for the local FastAPI boundary at <code>{apiBaseUrl}</code>. It keeps lifecycle
-              status, audit gate status, artifacts, and benchmark surfaces as first-class areas.
-            </p>
+            <h1>Research Workbench</h1>
+            <p>Submit local research jobs, monitor progress, and open generated artifacts.</p>
           </div>
-          <div className="status-pill">READY_FOR_WEB_GUI</div>
+          <span className="status-pill">{message}</span>
+        </header>
+
+        <section className="panel settings-panel" id="settings" aria-label="API settings">
+          <label>
+            API base URL
+            <input value={apiBaseUrl} onChange={(event) => setApiBaseUrl(event.target.value)} />
+          </label>
+          <a className="text-link" href={`${apiBaseUrl.replace(/\/+$/, "")}/docs`}>
+            Open API docs
+          </a>
         </section>
 
-        <section className="card-grid" aria-label="Console capabilities">
-          {capabilityCards.map((card) => (
-            <article className="surface-card" key={card.title}>
-              <span className="eyebrow">{card.eyebrow}</span>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
-            </article>
-          ))}
-        </section>
-
-        <section className="workspace-grid" aria-label="Research job workspace">
-          <form className="surface-card form-card" onSubmit={submitJob}>
-            <span className="eyebrow">Submit</span>
-            <h3>New local research job</h3>
+        <section className="workspace-grid">
+          <form className="panel form-panel" id="submit" onSubmit={submitJob}>
+            <div className="section-heading">
+              <h2>New Job</h2>
+              <button type="submit">Submit</button>
+            </div>
             <label>
               Topic
               <textarea
                 name="topic"
                 onChange={(event) => setTopic(event.target.value)}
-                placeholder="Anthropic company profile"
+                placeholder="OpenAI company profile"
                 required
                 value={topic}
               />
             </label>
-            <label>
-              Source profile
-              <select onChange={(event) => setSourceProfile(event.target.value)} value={sourceProfile}>
-                {sourceProfiles.map((profile) => (
-                  <option key={profile} value={profile}>
-                    {profile}
-                  </option>
-                ))}
-              </select>
+            <div className="form-row">
+              <label>
+                Source profile
+                <select onChange={(event) => setSourceProfile(event.target.value)} value={sourceProfile}>
+                  {sourceProfiles.map((profile) => (
+                    <option key={profile} value={profile}>
+                      {profile}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Max loops
+                <input
+                  min="1"
+                  max="8"
+                  onChange={(event) => setMaxLoops(Number(event.target.value))}
+                  type="number"
+                  value={maxLoops}
+                />
+              </label>
+            </div>
+            <label className="checkbox-row">
+              <input checked={startWorker} onChange={(event) => setStartWorker(event.target.checked)} type="checkbox" />
+              Start worker immediately
             </label>
-            <p className="helper-text">Phase 22 uses <code>start_worker=false</code> for bounded local submission.</p>
-            <button type="submit">Submit local job</button>
           </form>
 
-          <form className="surface-card form-card" onSubmit={loadManualJob}>
-            <span className="eyebrow">Known Jobs</span>
-            <h3>Load by job id</h3>
+          <form className="panel form-panel" onSubmit={loadManualJob}>
+            <div className="section-heading">
+              <h2>Open Job</h2>
+              <button type="submit">Load</button>
+            </div>
             <label>
-              Manual job id
+              Job id
               <input
                 onChange={(event) => setManualJobId(event.target.value)}
-                placeholder="job-..."
+                placeholder="20260429T000000Z-abc12345"
                 value={manualJobId}
               />
             </label>
-            <button type="submit">Load job</button>
             <div className="known-jobs" aria-label="Known job ids">
-              {knownJobs.length === 0 ? <p>No known jobs in this browser.</p> : null}
+              {knownJobs.length === 0 ? <p>No saved jobs in this browser.</p> : null}
               {knownJobs.map((jobId) => (
-                <code key={jobId}>{jobId}</code>
+                <button key={jobId} onClick={() => void runAction(() => loadJob(jobId))} type="button">
+                  {jobId}
+                </button>
               ))}
             </div>
           </form>
         </section>
 
-        <section className="surface-card job-detail" aria-label="Job detail">
+        <section className="panel job-panel" id="status" aria-label="Job status">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">Status</span>
-              <h3>{activeJob ? activeJob.job_id : "No job loaded"}</h3>
+              <h2>{activeJob ? activeJob.job_id : "Job Status"}</h2>
+              <p>{activeJob ? activeJob.topic : "Submit or load a job to inspect runtime state."}</p>
             </div>
-            <span className="status-pill">{message}</span>
+            <button onClick={refreshActiveJob} type="button">
+              Refresh
+            </button>
           </div>
 
-          {activeJob ? (
-            <>
-              <dl className="metric-grid">
-                <div>
-                  <dt>Status</dt>
-                  <dd>{activeJob.status}</dd>
-                </div>
-                <div>
-                  <dt>Audit gate</dt>
-                  <dd>{activeJob.audit_gate_status}</dd>
-                </div>
-                <div>
-                  <dt>Stage</dt>
-                  <dd>{activeJob.current_stage}</dd>
-                </div>
-                <div>
-                  <dt>Blocked critical claims</dt>
-                  <dd>{activeJob.blocked_critical_claim_count}</dd>
-                </div>
-              </dl>
-
-              <div className="artifact-actions">
-                <button onClick={loadBundle} type="button">Load bundle</button>
-                {activeJob.artifact_urls.report_html ? (
-                  <a href={api.url(activeJob.artifact_urls.report_html)}>Open report HTML</a>
-                ) : null}
-              </div>
-
-              <div className="split-panels">
-                <article>
-                  <h4>Events</h4>
-                  {events.length === 0 ? <p>No events loaded yet.</p> : null}
-                  {events.map((item) => (
-                    <p key={item.event_id}>
-                      <code>#{item.sequence}</code> {item.stage} / {item.event_type}: {item.message}
-                    </p>
-                  ))}
-                </article>
-                <article>
-                  <h4>Bundle inspector</h4>
-                  {bundle ? <pre>{JSON.stringify(bundle, null, 2)}</pre> : <p>Load a bundle to inspect claims and sources.</p>}
-                </article>
-              </div>
-            </>
-          ) : (
-            <p>Submit a job or load a known job id to inspect status, events, and artifacts.</p>
-          )}
-        </section>
-
-        <section className="surface-card benchmark-console" aria-label="Benchmark console">
-          <div className="section-heading">
+          <dl className="metric-grid">
             <div>
-              <span className="eyebrow">Native Benchmarks</span>
-              <h3>smoke_local gate plus regression_local evidence.</h3>
+              <dt>Status</dt>
+              <dd>{activeJob?.status ?? "-"}</dd>
             </div>
-            <span className="status-pill">local deterministic</span>
-          </div>
+            <div>
+              <dt>Stage</dt>
+              <dd>{activeJob?.current_stage ?? "-"}</dd>
+            </div>
+            <div>
+              <dt>Audit</dt>
+              <dd>{activeJob?.audit_gate_status ?? "-"}</dd>
+            </div>
+            <div>
+              <dt>Blocked Claims</dt>
+              <dd>{activeJob?.blocked_critical_claim_count ?? "-"}</dd>
+            </div>
+          </dl>
 
-          <div className="benchmark-gates" aria-label="Benchmark gates">
+          <div className="split-panels">
             <article>
-              <span className="eyebrow">Authoritative merge gate</span>
-              <h4>{benchmarkSummary.smokeGate.label}</h4>
-              <p>
-                <code>{benchmarkSummary.smokeGate.name}</code> is the merge-safe proof for the local product boundary.
-              </p>
-              <span className="result-pill">{benchmarkSummary.smokeGate.status}</span>
+              <h3>Events</h3>
+              {events.length === 0 ? <p>No events loaded.</p> : null}
+              {events.map((item) => (
+                <p key={item.event_id}>
+                  <code>#{item.sequence}</code> {item.stage} / {item.event_type}: {item.message}
+                </p>
+              ))}
             </article>
-            <article>
-              <span className="eyebrow">Reviewer regression layer</span>
-              <h4>{benchmarkSummary.regressionLayer.label}</h4>
-              <p>
-                <code>{benchmarkSummary.regressionLayer.name}</code> expands deterministic suite coverage for review.
-              </p>
-              <span className="result-pill">{benchmarkSummary.regressionLayer.status}</span>
+            <article id="artifacts">
+              <div className="section-heading compact">
+                <h3>Artifacts</h3>
+                <button onClick={loadBundle} type="button">
+                  Load Bundle
+                </button>
+              </div>
+              {artifactEntries.length === 0 ? <p>No artifact links are available yet.</p> : null}
+              <div className="artifact-list">
+                {artifactEntries.map(([name, href]) => (
+                  <a href={api.url(href)} key={name}>
+                    {name}
+                  </a>
+                ))}
+              </div>
             </article>
           </div>
 
-          <div className="benchmark-links" aria-label="Benchmark artifact links">
-            {benchmarkSummary.links.map((link) => (
-              <a href={link.href} key={link.href}>
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          <div className="suite-table" role="table" aria-label="Native benchmark suites">
-            <div className="suite-row suite-header" role="row">
-              <span role="columnheader">Suite</span>
-              <span role="columnheader">Coverage</span>
-              <span role="columnheader">Status</span>
-              <span role="columnheader">Key metrics</span>
-            </div>
-            {benchmarkSuites.map((suite) => (
-              <div className="suite-row" role="row" key={suite.name}>
-                <div role="cell">
-                  <strong>{suite.name}</strong>
-                  <small>{suite.purpose}</small>
-                </div>
-                <span role="cell">
-                  {suite.smokeTasks} -&gt; {suite.regressionTasks}
-                </span>
-                <span className="result-pill" role="cell">
-                  {suite.status}
-                </span>
-                <span role="cell">{Object.entries(suite.metrics).map(([key, value]) => `${key}=${value}`).join(", ")}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="casebook-list" aria-label="Casebook links">
-            <h4>Selected casebook entries</h4>
-            {benchmarkCases.map((item) => (
-              <article key={item.taskId}>
-                <div>
-                  <code>{item.suite}</code>
-                  <strong>{item.taskId}</strong>
-                  <p>{item.description}</p>
-                </div>
-                <div className="artifact-actions">
-                  <a href={item.reportPath}>Report</a>
-                  <a href={item.bundlePath}>Bundle</a>
-                </div>
-              </article>
-            ))}
-          </div>
+          <article className="bundle-viewer">
+            <h3>Bundle Inspector</h3>
+            {bundle ? <pre>{JSON.stringify(bundle, null, 2)}</pre> : <p>Load a bundle to inspect claims and sources.</p>}
+          </article>
         </section>
       </main>
     </div>

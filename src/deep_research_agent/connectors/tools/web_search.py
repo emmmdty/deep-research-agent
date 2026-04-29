@@ -7,7 +7,7 @@ from typing import Any
 from langchain_core.tools import tool
 from loguru import logger
 
-from configs.settings import SearchBackend, get_settings
+from deep_research_agent.config.settings import SearchBackend, get_settings
 from deep_research_agent.observability.cost_tracker import get_tracker
 
 

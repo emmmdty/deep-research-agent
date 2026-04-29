@@ -1,7 +1,0 @@
-benchmark: longbench_v2
-title: LongBench v2 Short Smoke
-subset: smoke
-dataset_manifest: evals/external/dataset_manifests/longbench_v2_short_smoke.json
-notes:
-  - "The short bucket is validated locally with a committed MCQ smoke fixture."
-  - "The medium bucket remains a blocked harness until a long-context backend is explicitly enabled."

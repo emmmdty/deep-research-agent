@@ -1,6 +1,6 @@
 """默认运行时配置——YAML 格式。
 
-configs/settings.py 会自动读取 .env 文件，
+src/deep_research_agent/config/settings.py 会自动读取 .env 文件，
 此文件提供可供参考的默认配置值和各选项的详细说明。
 """
 
@@ -9,8 +9,7 @@ configs/settings.py 会自动读取 .env 文件，
 # ============================================================
 llm:
   # 提供商：openai / anthropic / openai_compatible / anthropic_compatible
-  # 兼容层仍会把 minimax / deepseek / agicto / custom 等旧别名归一为 openai_compatible。
-  provider: minimax
+  provider: openai_compatible
 
   # 模型名称
   model_name: MiniMax-M2.5

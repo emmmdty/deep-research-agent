@@ -1,8 +1,11 @@
 # Examples
 
-The current supported examples are the CLI, local HTTP API, batch, and eval commands in the root
-[`README.md`](../README.md).
+- `batch_requests.json`: batch CLI/API input with two local job requests.
+- `topic.txt`: a simple topic prompt you can paste into the CLI or Web UI.
+- `source_profile.md`: short guide to the built-in source profiles.
 
-The old graph-first script was archived at
-[`legacy/examples/basic_research.py`](../legacy/examples/basic_research.py) because it uses the hidden
-`legacy-run` path and is not the primary runtime.
+Run the batch example:
+
+```bash
+uv run python main.py batch run --file examples/batch_requests.json --json
+```

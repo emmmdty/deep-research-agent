@@ -1,7 +1,5 @@
-# Active Contract Schemas
+# Schemas
 
-This root directory contains JSON schemas for runtime, audit, bundle, connector, and benchmark
-artifacts.
+This directory contains product-visible JSON schemas for runtime records, source policy profiles, connector snapshots, report bundles, claims, sources, audit sidecars, checkpoints, progress events, and artifact manifests.
 
-These schemas remain active contract assets even though the canonical Python implementation lives
-under `src/deep_research_agent/`.
+The runtime loads these schemas through `deep_research_agent.reporting.schemas`.

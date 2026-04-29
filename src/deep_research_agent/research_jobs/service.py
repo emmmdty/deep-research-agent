@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from uuid import uuid4
 
-from configs.settings import get_settings
+from deep_research_agent.config.settings import get_settings
 from deep_research_agent.common import DEFAULT_SOURCE_PROFILE, resolve_source_profile_name
 from loguru import logger
 
@@ -27,7 +27,7 @@ from deep_research_agent.research_jobs.models import (
     utc_now_iso,
 )
 from deep_research_agent.research_jobs.store import ResearchJobStore
-from legacy.workflows.states import ResearchState
+from deep_research_agent.runtime.states import ResearchState
 
 
 def _run_id() -> str:

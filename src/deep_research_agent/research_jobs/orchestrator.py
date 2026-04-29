@@ -9,10 +9,10 @@ from loguru import logger
 
 from deep_research_agent.auditor.pipeline import claim_auditor_node
 from deep_research_agent.reporting.bundle import emit_report_artifacts
-from legacy.agents.planner import planner_node
-from legacy.agents.researcher import collect_research_step
-from legacy.agents.verifier import verifier_node
-from legacy.agents.writer import writer_node
+from deep_research_agent.runtime.planner import planner_node
+from deep_research_agent.runtime.researcher import collect_research_step
+from deep_research_agent.runtime.verifier import verifier_node
+from deep_research_agent.runtime.writer import writer_node
 from deep_research_agent.research_jobs.models import (
     TERMINAL_JOB_STATUSES,
     JobStatus,
@@ -21,7 +21,7 @@ from deep_research_agent.research_jobs.models import (
     JobRuntimeRecord,
     RuntimeStage,
 )
-from legacy.workflows.states import CriticFeedback, ResearchState
+from deep_research_agent.runtime.states import CriticFeedback, ResearchState
 
 
 def _default_synthesizer(_: dict[str, Any]) -> dict[str, Any]:

@@ -3,6 +3,6 @@
 from __future__ import annotations
 
 from .api import app, create_app
-from .cli import build_parser, main, run_cli, run_command
+from .cli import build_parser, main, run_command
 
-__all__ = ["app", "build_parser", "create_app", "main", "run_cli", "run_command"]
+__all__ = ["app", "build_parser", "create_app", "main", "run_command"]

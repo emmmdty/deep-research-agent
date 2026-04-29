@@ -5,8 +5,9 @@
 
 ## Verification
 
-- [ ] `uv run ruff check .`
-- [ ] `uv run pytest -q`
+- [ ] `uv run python main.py --help`
+- [ ] `uv run python -c "from deep_research_agent.gateway.api import app; print(app.title)"`
+- [ ] `npm run build --prefix apps/gui-web`
 
 ## Notes
 

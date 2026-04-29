@@ -1,8 +1,0 @@
-variant: smoke_local
-scenarios:
-  - cancel_created_job
-  - retry_failed_job
-  - resume_failed_job
-  - refine_failed_job
-  - stale_recovery
-  - idle_created_noop

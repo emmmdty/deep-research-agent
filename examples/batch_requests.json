@@ -1,0 +1,26 @@
+[
+  {
+    "topic": "OpenAI company profile",
+    "max_loops": 2,
+    "research_profile": "default",
+    "source_profile": "company_trusted",
+    "allow_domains": ["openai.com"],
+    "deny_domains": [],
+    "connector_budget": {
+      "max_candidates_per_connector": 4,
+      "max_fetches_per_task": 3,
+      "max_total_fetches": 8
+    },
+    "start_worker": false
+  },
+  {
+    "topic": "Enterprise AI agent platform market overview",
+    "max_loops": 2,
+    "research_profile": "default",
+    "source_profile": "industry_broad",
+    "allow_domains": [],
+    "deny_domains": ["reddit.com", "x.com"],
+    "connector_budget": null,
+    "start_worker": false
+  }
+]

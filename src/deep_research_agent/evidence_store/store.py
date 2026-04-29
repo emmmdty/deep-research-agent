@@ -6,7 +6,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from legacy.workflows.states import EvidenceCluster, EvidenceUnit
+from deep_research_agent.runtime.states import EvidenceCluster, EvidenceUnit
 
 
 class EvidenceStore:
