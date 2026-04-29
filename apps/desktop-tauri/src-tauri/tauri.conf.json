@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "identifier": "dev.deepresearchagent.desktop",
   "build": {
-    "beforeDevCommand": "npm --prefix ../../apps/gui-web run dev -- --port 5173",
+    "beforeDevCommand": "npm --prefix ../../gui-web run dev -- --port 5173",
     "devUrl": "http://127.0.0.1:5173",
-    "beforeBuildCommand": "npm --prefix ../../apps/gui-web run build",
-    "frontendDist": "../../../apps/gui-web/dist"
+    "beforeBuildCommand": "npm --prefix ../../gui-web run build",
+    "frontendDist": "../../gui-web/dist"
   },
   "app": {
     "windows": [

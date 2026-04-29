@@ -2,5 +2,5 @@
 
 These prompt templates support the archived graph/runtime path.
 
-They are not the primary product boundary and should not be used to describe the current supported
-architecture.
+Canonical current behavior lives in `src/deep_research_agent/`. Do not describe this path as the
+current architecture.

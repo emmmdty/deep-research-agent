@@ -16,14 +16,14 @@ A 2026-04-25 repository cleanup reran `./scripts/check_tauri_env.sh`, the GUI `t
 - `docs/gui/DEMO_FLOW.md`
 - `docs/gui/DESKTOP_STATUS.md`
 - `docs/gui/TAURI_UNBLOCK_REPORT.md`
-- `desktop/tauri/README.md`
-- `desktop/tauri/package.json`
-- `desktop/tauri/package-lock.json`
-- `desktop/tauri/src-tauri/Cargo.toml`
-- `desktop/tauri/src-tauri/tauri.conf.json`
-- `desktop/tauri/src-tauri/src/lib.rs`
-- `desktop/tauri/src-tauri/src/main.rs`
-- `desktop/tauri/src-tauri/capabilities/default.json`
+- `apps/desktop-tauri/README.md`
+- `apps/desktop-tauri/package.json`
+- `apps/desktop-tauri/package-lock.json`
+- `apps/desktop-tauri/src-tauri/Cargo.toml`
+- `apps/desktop-tauri/src-tauri/tauri.conf.json`
+- `apps/desktop-tauri/src-tauri/src/lib.rs`
+- `apps/desktop-tauri/src-tauri/src/main.rs`
+- `apps/desktop-tauri/src-tauri/capabilities/default.json`
 - `scripts/check_tauri_env.sh`
 - `apps/gui-web/package.json`
 - `apps/gui-web/vite.config.ts`
@@ -59,19 +59,19 @@ The required Linux development packages are present for the bounded Tauri build.
 
 - `npm ls @tauri-apps/cli --prefix apps/gui-web` -> no web-app-local Tauri CLI dependency.
 - `npm_config_cache=/tmp/npm-cache npm view @tauri-apps/cli version` -> `2.10.1`.
-- `npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri` -> added repo-local desktop CLI dependency.
-- `npm ls @tauri-apps/cli --prefix desktop/tauri` -> `@tauri-apps/cli@2.10.1`.
+- `npm_config_cache=/tmp/npm-cache npm install --prefix apps/desktop-tauri` -> added repo-local desktop CLI dependency.
+- `npm ls @tauri-apps/cli --prefix apps/desktop-tauri` -> `@tauri-apps/cli@2.10.1`.
 
-The Tauri CLI is now repo-local to `desktop/tauri`, not coupled to the web GUI package.
+The Tauri CLI is now repo-local to `apps/desktop-tauri`, not coupled to the web GUI package.
 
 ## Frontend/Tauri wiring findings
 
 - Frontend dev server: `apps/gui-web` Vite server on `http://127.0.0.1:5173`.
 - Frontend build output: `apps/gui-web/dist`.
-- Tauri `beforeDevCommand`: `npm --prefix ../../apps/gui-web run dev -- --port 5173`.
+- Tauri `beforeDevCommand`: `npm --prefix ../../gui-web run dev -- --port 5173`.
 - Tauri `devUrl`: `http://127.0.0.1:5173`.
-- Tauri `beforeBuildCommand`: `npm --prefix ../../apps/gui-web run build`.
-- Tauri `frontendDist`: `../../../apps/gui-web/dist`.
+- Tauri `beforeBuildCommand`: `npm --prefix ../../gui-web run build`.
+- Tauri `frontendDist`: `../../gui-web/dist`.
 - Tauri app boundary: Rust shell only; runtime, provider, audit, benchmark, and artifact logic remain behind the existing local API/CLI surfaces.
 
 `tauri info` recognized the configured `devUrl` and `frontendDist`, and `tauri build --no-bundle` consumed the web build output successfully.
@@ -93,20 +93,20 @@ The Tauri CLI is now repo-local to `desktop/tauri`, not coupled to the web GUI p
 - `npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web` -> pass, `4` files and `6` tests.
 - `npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web` -> pass.
 - `npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web` -> pass, Vite output under `apps/gui-web/dist`.
-- `npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri` -> pass, local Tauri CLI installed.
-- `npm ls @tauri-apps/cli --prefix desktop/tauri` -> pass, `@tauri-apps/cli@2.10.1`.
-- `npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri` -> pass; Tauri environment and app wiring detected.
-- `npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> failed because `/home/tjk/.cargo` registry cache is read-only.
-- `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` -> failed once because `src-tauri/icons/icon.png` was missing.
-- `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri` after adding the icon -> pass; built `desktop/tauri/src-tauri/target/release/deep-research-agent-desktop`.
-- `timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix desktop/tauri -- dev --no-watch --runner true` -> pass; `beforeDevCommand` started Vite on `http://127.0.0.1:5173/` and the runner avoided opening a desktop window.
+- `npm_config_cache=/tmp/npm-cache npm install --prefix apps/desktop-tauri` -> pass, local Tauri CLI installed.
+- `npm ls @tauri-apps/cli --prefix apps/desktop-tauri` -> pass, `@tauri-apps/cli@2.10.1`.
+- `npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix apps/desktop-tauri` -> pass; Tauri environment and app wiring detected.
+- `npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix apps/desktop-tauri` -> failed because `/home/tjk/.cargo` registry cache is read-only.
+- `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix apps/desktop-tauri` -> failed once because `src-tauri/icons/icon.png` was missing.
+- `CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix apps/desktop-tauri` after adding the icon -> pass; built `apps/desktop-tauri/src-tauri/target/release/deep-research-agent-desktop`.
+- `timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix apps/desktop-tauri -- dev --no-watch --runner true` -> pass; `beforeDevCommand` started Vite on `http://127.0.0.1:5173/` and the runner avoided opening a desktop window.
 - the original `git add ...` failure was a run-local Git metadata constraint, not a repository content blocker; the later repository cleanup run finalized the tracked diff on `main`.
 
 ## Repo-local fixes applied
 
-- Added `desktop/tauri/package.json` and `desktop/tauri/package-lock.json` with repo-local `@tauri-apps/cli@2.10.1`.
-- Added `desktop/tauri/src-tauri/` with minimal Tauri 2 Rust crate, config, capability, and opener plugin wiring.
-- Added `desktop/tauri/src-tauri/icons/icon.png` so Tauri context generation can complete.
+- Added `apps/desktop-tauri/package.json` and `apps/desktop-tauri/package-lock.json` with repo-local `@tauri-apps/cli@2.10.1`.
+- Added `apps/desktop-tauri/src-tauri/` with minimal Tauri 2 Rust crate, config, capability, and opener plugin wiring.
+- Added `apps/desktop-tauri/src-tauri/icons/icon.png` so Tauri context generation can complete.
 - Updated `scripts/check_tauri_env.sh` so `xdo` is evaluated as `pkg-config` plus fallback evidence instead of as a single blocking `pkg-config` probe.
 - Updated `.gitignore` to ignore Rust/Tauri generated `target/` and `src-tauri/gen/` outputs.
 - Updated desktop and GUI documentation/status files to reflect the verified desktop state.

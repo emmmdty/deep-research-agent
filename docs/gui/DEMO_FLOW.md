@@ -77,9 +77,9 @@ Open Benchmark console and confirm:
 Desktop status is `READY_FOR_TAURI_BUILD`. The bounded desktop validation wraps the same web GUI and avoids provider-backed live work:
 
 ```bash
-npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri
-CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri
-CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri
+npm_config_cache=/tmp/npm-cache npm install --prefix apps/desktop-tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix apps/desktop-tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix apps/desktop-tauri
 ```
 
-See `docs/gui/DESKTOP_STATUS.md`, `docs/gui/TAURI_UNBLOCK_REPORT.md`, and `desktop/tauri/README.md`.
+See `docs/gui/DESKTOP_STATUS.md`, `docs/gui/TAURI_UNBLOCK_REPORT.md`, and `apps/desktop-tauri/README.md`.

@@ -18,6 +18,21 @@ An evidence-first research runtime for company and industry analysis, built arou
 
 The canonical runtime is `src/deep_research_agent/`. Root packages with names such as `services/`, `connectors/`, `artifacts/`, `policies/`, `tools/`, and `evaluation/` are compatibility or diagnostic layers. See [Repository Map](./docs/REPO_MAP.md).
 
+## Repository Layout
+
+```text
+src/deep_research_agent/  canonical runtime
+apps/gui-web/             optional local reviewer UI
+apps/desktop-tauri/       experimental desktop wrapper
+configs/                  runtime and source-profile config
+schemas/                  JSON artifact and runtime contracts
+evals/                    deterministic eval assets and reports
+docs/                     reviewer docs and archives
+tests/                    regression tests
+scripts/                  smoke, eval, and diagnostic commands
+legacy/                   archived graph-first paths
+```
+
 ## Quick Run
 
 ```bash
@@ -100,7 +115,7 @@ npm install
 npm run dev
 ```
 
-Desktop packaging experiments live under `desktop/tauri/`. See [GUI docs](./docs/gui/README.md).
+Optional desktop packaging experiments live under `apps/desktop-tauri/`. See [GUI docs](./docs/gui/README.md).
 
 ## Current Limits
 

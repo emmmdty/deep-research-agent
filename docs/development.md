@@ -249,5 +249,5 @@ curl -s http://127.0.0.1:8000/v1/research/jobs \
 - [API Contract](../specs/api-readiness-contract.md)
 - [ADR-0008](./adr/adr-0008-http-api-surface.md)
 - [ADR-0009](./adr/adr-0009-batch-and-artifact-contract.md)
-- [Phase 4 Migration](./migrations/phase4-surface-migration.md)
+- [Phase 4 Migration](./archive/migrations/phase4-surface-migration.md)
 - [`evals/README.md`](../evals/README.md)

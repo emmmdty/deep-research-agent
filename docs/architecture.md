@@ -12,7 +12,7 @@ The supported system is an evidence-first research runtime with five implemented
 - local eval suite runner
 - local release-smoke manifest
 
-All three surfaces share the same deterministic runtime:
+All supported surfaces share the same deterministic runtime:
 
 - `ResearchJobService`
 - SQLite job store
@@ -86,7 +86,7 @@ Owns the document ingestion boundary:
 - URI safety checks
 - legacy tool adapters
 
-### `policies/`
+### `src/deep_research_agent/policy/` and `configs/source_profiles/`
 
 Owns source governance:
 
@@ -94,6 +94,9 @@ Owns source governance:
 - allow / deny domain rules
 - fetch budgets
 - policy overrides
+
+The root `policies/` package is a compatibility shim for older imports and tests. It is not the
+canonical source-governance implementation.
 
 ### `src/deep_research_agent/auditor/`
 

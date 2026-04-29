@@ -1,5 +1,6 @@
-# Compatibility Package
+# Compatibility Shim
 
-This root package is kept for legacy imports and older connector tests.
+Compatibility shim retained for older imports/tests.
 
-Canonical connector code lives under `src/deep_research_agent/connectors/`.
+Canonical implementation lives in `src/deep_research_agent/connectors/`.
+Do not describe this path as the current architecture.

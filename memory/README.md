@@ -1,7 +1,7 @@
-# Compatibility And Legacy Package
+# Compatibility And Legacy Shim
 
-`memory/evidence_store.py` is a compatibility wrapper for the canonical evidence store under
-`src/deep_research_agent/evidence_store/`.
+Compatibility shim retained for older imports/tests.
 
-`memory/store.py` is a legacy file-based memory helper and is not part of the primary research
-runtime.
+Canonical evidence-store implementation lives in `src/deep_research_agent/evidence_store/`.
+`memory/store.py` is a legacy file-based helper and is not part of the primary research runtime.
+Do not describe this path as the current architecture.

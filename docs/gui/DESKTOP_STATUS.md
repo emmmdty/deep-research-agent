@@ -43,7 +43,7 @@ Observed:
 ## Scaffold Location
 
 ```text
-desktop/tauri/
+apps/desktop-tauri/
 ```
 
 The scaffold now contains:
@@ -73,10 +73,10 @@ npm_config_cache=/tmp/npm-cache npm install --prefix apps/gui-web
 npm_config_cache=/tmp/npm-cache npm test --prefix apps/gui-web
 npm_config_cache=/tmp/npm-cache npm run lint --prefix apps/gui-web
 npm_config_cache=/tmp/npm-cache npm run build --prefix apps/gui-web
-npm_config_cache=/tmp/npm-cache npm install --prefix desktop/tauri
-CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix desktop/tauri
-CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix desktop/tauri
-timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix desktop/tauri -- dev --no-watch --runner true
+npm_config_cache=/tmp/npm-cache npm install --prefix apps/desktop-tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:info --prefix apps/desktop-tauri
+CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run desktop:build --prefix apps/desktop-tauri
+timeout 180s env CARGO_HOME=/tmp/cargo-home npm_config_cache=/tmp/npm-cache npm run tauri --prefix apps/desktop-tauri -- dev --no-watch --runner true
 ```
 
 Observed outcomes:
@@ -87,7 +87,7 @@ Observed outcomes:
 - Frontend build: pass, Vite output under `apps/gui-web/dist`.
 - Desktop install: pass, `@tauri-apps/cli@2.10.1`.
 - Tauri info: pass, WebKitGTK/Rust/Cargo detected, `devUrl` and `frontendDist` recognized.
-- Tauri no-bundle build: pass, release binary built at `desktop/tauri/src-tauri/target/release/deep-research-agent-desktop`.
+- Tauri no-bundle build: pass, release binary built at `apps/desktop-tauri/src-tauri/target/release/deep-research-agent-desktop`.
 - Bounded dev wiring: pass, Vite started on `http://127.0.0.1:5173/` and `--runner true` avoided opening a desktop window.
 
 ## Notes

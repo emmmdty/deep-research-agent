@@ -20,9 +20,9 @@ the canonical runtime lives under `src/deep_research_agent/`.
 | `schemas/` | active | JSON schemas for artifacts, audit, runtime, connector, and benchmark contracts. |
 | `tests/` | active | Runtime, connector, auditor, public-surface, benchmark, and repo-standard regressions. |
 | `scripts/` | active | Release smoke, native regression, benchmark, scorecard, and diagnostic commands. |
-| `evals/` | active | Suite configs, frozen datasets, rubrics, committed smoke and regression outputs. |
-| `apps/` | active UI | Local web GUI for operator/reviewer workflows over the local API. |
-| `desktop/` | active wrapper | Tauri desktop shell around the local web GUI. |
+| `evals/` | active evidence | Suite configs, frozen datasets, rubrics, committed smoke outputs, regression outputs, and derived value packs. |
+| `apps/gui-web/` | active UI | Optional local web GUI for operator/reviewer workflows over the local API. |
+| `apps/desktop-tauri/` | experimental UI wrapper | Optional Tauri desktop shell around the local web GUI; kept under `apps/` because it is not runtime code. |
 | `docs/` | public docs | Reviewer docs, architecture, development guide, ADRs, benchmark docs, GUI docs, final summaries, and archives. |
 | `.github/` | repo metadata | CI, issue templates, and pull request template. |
 | `.env.example` | setup | Public environment template. |
@@ -33,17 +33,17 @@ the canonical runtime lives under `src/deep_research_agent/`.
 | `README.md` / `README.zh-CN.md` | public docs | GitHub entrypoints. |
 | `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | repo metadata | Community and security files. |
 | `AGENTS.md` | automation guidance | Public, repo-safe guidance for coding agents. |
-| `artifacts/` | compatibility | Legacy imports forwarding to canonical reporting modules. |
-| `auditor/` | compatibility | Legacy imports forwarding to canonical auditor modules. |
-| `connectors/` | compatibility | Legacy imports forwarding to canonical connector modules. |
-| `services/` | compatibility | Legacy imports forwarding to canonical research job modules. |
-| `policies/` | compatibility | Legacy imports forwarding to canonical policy modules; source profiles now live in `configs/source_profiles/`. |
-| `tools/` | compatibility | Legacy imports forwarding to canonical connector helper tools. |
-| `llm/` | compatibility | Legacy provider import wrapper and output cleaning helpers. |
-| `memory/` | compatibility / legacy | Evidence-store wrapper plus legacy file-memory helper. |
-| `capabilities/` | legacy diagnostic support | Capability, skill, and MCP compatibility layer for archived graph paths and tests. |
-| `prompts/` | legacy diagnostic support | Prompt templates used by archived graph runtime. |
-| `evaluation/` | legacy diagnostics | Older comparator, judge, cost, and report-shape metric helpers. |
+| `artifacts/` | compatibility shim | Remains at root because tests and older imports still use `artifacts.*`; canonical reporting lives in `src/deep_research_agent/reporting/`. |
+| `auditor/` | compatibility shim | Remains at root for `auditor.*` imports; canonical audit code lives in `src/deep_research_agent/auditor/`. |
+| `connectors/` | compatibility shim | Remains at root for older connector imports; canonical connector code lives in `src/deep_research_agent/connectors/`. |
+| `services/` | compatibility shim | Remains at root for `services.research_jobs.*`; canonical runtime lives in `src/deep_research_agent/research_jobs/`. |
+| `policies/` | compatibility shim | Remains at root for older policy imports; canonical policy code lives in `src/deep_research_agent/policy/`, and source profiles live in `configs/source_profiles/`. |
+| `tools/` | compatibility shim | Remains at root for older tool imports; canonical connector helpers live under `src/deep_research_agent/connectors/tools/`. |
+| `llm/` | compatibility shim | Remains at root for legacy provider imports and output-cleaning helpers; canonical provider routing lives in `src/deep_research_agent/providers/`. |
+| `memory/` | compatibility / legacy shim | Remains at root for older memory/evidence imports; canonical evidence store lives in `src/deep_research_agent/evidence_store/`. |
+| `capabilities/` | legacy diagnostics | Remains at root for archived graph/MCP compatibility tests; not current architecture. |
+| `prompts/` | legacy diagnostics | Remains at root for archived graph prompt templates; not current architecture. |
+| `evaluation/` | legacy diagnostics | Remains at root because diagnostic scripts and tests import it; current release evidence is under `evals/`. |
 | `research_policy.py` | legacy diagnostics | Deterministic benchmark-profile policy helpers retained for older tests and scripts. |
 | `legacy/` | archived | Archived graph agents/workflows, old examples, skill wrappers, and placeholder MCP package. |
 | `examples/` | pointer | Current runnable examples are in README; old graph example is archived under `legacy/examples/`. |
@@ -62,6 +62,15 @@ than the product:
 - `docs/专家审查意见/`
 
 If they exist in a local checkout, treat them as private development notes, not GitHub product docs.
+
+## Evaluation Report Roots
+
+| Path | Reviewer meaning |
+| --- | --- |
+| `evals/reports/phase5_local_smoke/` | Merge-safe deterministic smoke gate. |
+| `evals/reports/native_regression/` | Deterministic reviewer regression evidence. |
+| `evals/reports/followup_metrics/` | Derived value-pack artifacts retained at this path because tests and final docs assert repo-relative artifact paths. |
+| `evals/reports/native_optimization/` | Derived before/after optimization artifacts retained at this path because tests and native benchmark docs assert repo-relative artifact paths. |
 
 ## Boundary Rules
 

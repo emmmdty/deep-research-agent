@@ -18,7 +18,7 @@ npm run build
 ```
 
 ## Current Phase
-The local web GUI is the primary operator/reviewer surface. The desktop wrapper under `desktop/tauri/` is now Tauri 2 build-ready for bounded local validation.
+The local web GUI is the primary operator/reviewer surface. The desktop wrapper under `apps/desktop-tauri/` is now Tauri 2 build-ready for bounded local validation.
 
 ## Runbooks
 - `docs/gui/JOB_FLOW.md` documents the submit/status/events/bundle flow.

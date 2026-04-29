@@ -19,7 +19,7 @@ This is the recommended reading order for GitHub reviewers.
 - [`specs/api-readiness-contract.md`](../specs/api-readiness-contract.md) - implemented local HTTP API and batch contract.
 - [`specs/evaluation-protocol.md`](../specs/evaluation-protocol.md) - evaluation philosophy and release-gate direction.
 - [`docs/adr/`](./adr/) - architecture decision records.
-- [`docs/migration/TREE_HYGIENE.md`](./migration/TREE_HYGIENE.md) - previous repository tree hygiene record.
+- [`docs/archive/migrations/TREE_HYGIENE.md`](./archive/migrations/TREE_HYGIENE.md) - previous repository tree hygiene record.
 
 ## Benchmark Evidence
 

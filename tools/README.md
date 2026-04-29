@@ -1,7 +1,6 @@
-# Compatibility Tools
+# Compatibility Shim
 
-These root tools are retained for older imports such as `tools.web_search`.
+Compatibility shim retained for older imports/tests such as `tools.web_search`.
 
-Canonical connector helper implementations live under
-`src/deep_research_agent/connectors/tools/`; do not treat this directory as the main product
-boundary.
+Canonical implementation lives in `src/deep_research_agent/connectors/tools/`.
+Do not describe this path as the current architecture.

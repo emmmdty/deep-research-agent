@@ -13,7 +13,7 @@ The GUI is a local operator/reviewer console for the existing Deep Research Agen
 | Job workspace | `apps/gui-web/src/App.tsx` | Submit bounded jobs, load manual job ids, poll events, inspect bundles. |
 | Benchmark view model | `apps/gui-web/src/benchmarkData.ts` | Static GUI snapshot of committed native benchmark evidence. |
 | GUI docs | `docs/gui/` | Reviewer/operator handoff docs and demo flows. |
-| Desktop scaffold | `desktop/tauri/` | Blocked Tauri handoff location until Rust/Cargo are installed. |
+| Desktop scaffold | `apps/desktop-tauri/` | Optional Tauri wrapper for bounded local desktop validation. |
 
 ## API Boundary
 

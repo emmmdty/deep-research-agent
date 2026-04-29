@@ -18,6 +18,21 @@
 
 `src/deep_research_agent/` 是唯一 canonical runtime。根目录下 `services/`、`connectors/`、`artifacts/`、`policies/`、`tools/`、`evaluation/` 等目录是 compatibility 或 diagnostic layer。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
 
+## Repository Layout
+
+```text
+src/deep_research_agent/  canonical runtime
+apps/gui-web/             可选本地 reviewer UI
+apps/desktop-tauri/       实验性 desktop wrapper
+configs/                  runtime 与 source profile 配置
+schemas/                  JSON artifact 与 runtime contract
+evals/                    deterministic eval 资产和报告
+docs/                     reviewer 文档和 archive
+tests/                    回归测试
+scripts/                  smoke、eval、diagnostic 命令
+legacy/                   已归档 graph-first 路径
+```
+
 ## 快速运行
 
 ```bash
@@ -100,7 +115,7 @@ npm install
 npm run dev
 ```
 
-Desktop packaging 实验位于 `desktop/tauri/`。详见 [GUI docs](./docs/gui/README.md)。
+可选 desktop packaging 实验位于 `apps/desktop-tauri/`。详见 [GUI docs](./docs/gui/README.md)。
 
 ## 当前限制
 

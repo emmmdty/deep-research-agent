@@ -1,5 +1,6 @@
-# Compatibility Package
+# Compatibility Shim
 
-This root package is kept for legacy imports such as `auditor.pipeline`.
+Compatibility shim retained for older imports/tests such as `auditor.pipeline`.
 
-Canonical audit code lives under `src/deep_research_agent/auditor/`.
+Canonical implementation lives in `src/deep_research_agent/auditor/`.
+Do not describe this path as the current architecture.
