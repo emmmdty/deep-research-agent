@@ -7,6 +7,10 @@ English | [简体中文](./README.zh-CN.md)
 
 Deep Research Agent is a local-first research runtime for company and industry analysis. It runs research as auditable jobs, stores checkpoints and events, and emits report bundles with sources, claims, traces, and review artifacts.
 
+## Architecture At A Glance
+
+![Deep Research Agent user-facing architecture](./docs/assets/architecture-overview.png)
+
 ## Install
 
 ```bash

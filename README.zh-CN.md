@@ -7,6 +7,10 @@
 
 Deep Research Agent 是一个本地优先的研究运行时，适合公司和行业分析。它把研究任务作为可审计 job 运行，保存 checkpoint 和事件，并输出包含来源、claim、trace、review sidecar 的报告 bundle。
 
+## 架构概览
+
+![Deep Research Agent 用户向架构图](./docs/assets/architecture-overview.png)
+
 ## 安装
 
 ```bash

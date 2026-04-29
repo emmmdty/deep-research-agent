@@ -1,5 +1,7 @@
 # Architecture
 
+![Deep Research Agent user-facing architecture](./assets/architecture-overview.png)
+
 The product runtime lives under `src/deep_research_agent/`.
 
 ```text
