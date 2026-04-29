@@ -45,6 +45,7 @@ desktop.ini
 workspace/
 my-docs/
 docs/reports/
+docs/learning/
 *.db
 *.sqlite
 *.sqlite3
