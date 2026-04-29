@@ -229,4 +229,4 @@ Stage timing summary:
 - `scorecard_markdown`: `docs/final/VALUE_SCORECARD.md`
 - `scorecard_json`: `docs/final/VALUE_SCORECARD.json`
 - `experiment_summary`: `docs/final/EXPERIMENT_SUMMARY.md`
-- `final_change_report`: `FINAL_CHANGE_REPORT.md`
+- `final_change_report`: `docs/archive/FINAL_CHANGE_REPORT.md`

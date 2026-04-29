@@ -12,7 +12,7 @@ from configs.settings import get_settings
 from deep_research_agent.evals.value_metrics import PROJECT_ROOT
 from deep_research_agent.providers.models import ProviderRouteRequest, RoutingMode
 from deep_research_agent.providers.router import ProviderRouter
-from policies import load_source_policy
+from deep_research_agent.policy import load_source_policy
 
 
 def build_value_ablation_pack(

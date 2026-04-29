@@ -19,7 +19,7 @@ labeling current, compatibility, and legacy boundaries.
 
 ## Replaced With Markers
 
-- Root `PLANS.md` now points to the archived plan and current reviewer entrypoints.
+- Root `PLANS.md` has since been removed from the public reviewer path.
 - `examples/README.md` points to README-based examples and the archived graph-first script.
 - `legacy/README.md`, `legacy/examples/README.md`, `legacy/skills/README.md`, and `legacy/mcp_servers/README.md` label archived material explicitly.
 
@@ -31,15 +31,15 @@ them:
 - `artifacts/`, `auditor/`, `connectors/`, `services/`, `llm/`, `memory/`, and `tools/` are compatibility/support paths for canonical `src/deep_research_agent/` modules.
 - `capabilities/` and `prompts/` support archived graph/runtime paths and compatibility tests.
 - `evaluation/` contains older benchmark/comparator diagnostics, not the release gate.
-- `policies/` contains active source-profile assets.
+- `policies/` is now a compatibility shim; canonical source profile assets live under `configs/source_profiles/`.
 - `schemas/` contains active JSON contract schemas.
-- `docs/refactor/` and `docs/codex/` are historical planning/refactor notes and templates.
+- `docs/refactor/` and `docs/codex/` have since been removed from the public reviewer path.
 
 ## Not Moved
 
 - `src/` remains the canonical implementation root.
 - `evals/` remains the active deterministic eval and benchmark asset root.
-- `docs/benchmarks/`, `docs/final/`, and root `FINAL_CHANGE_REPORT.md` remain current reviewer docs.
+- `docs/benchmarks/` and `docs/final/` remain current reviewer docs; the earlier final change report is archived under `docs/archive/`.
 - `research_policy.py` remains at root because older benchmark tests and scripts still import it.
 - Compatibility shims remain at root to avoid breaking imports that are intentionally covered by tests.
 

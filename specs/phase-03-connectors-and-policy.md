@@ -29,7 +29,7 @@
 ## Required Deliverables
 
 - `connectors/` 统一接口
-- `policies/source-profiles/`
+- `configs/source_profiles/`
 - snapshot hashing / canonicalization
 - connector health metrics
 - `LegacyConnectorAdapter` 兼容层（如需要）

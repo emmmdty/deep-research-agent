@@ -25,8 +25,6 @@ A 2026-04-25 repository cleanup reran `./scripts/check_tauri_env.sh`, the GUI `t
 - `desktop/tauri/src-tauri/src/main.rs`
 - `desktop/tauri/src-tauri/capabilities/default.json`
 - `scripts/check_tauri_env.sh`
-- `.agent/gui_app/STATUS.md`
-- `.agent/STATUS.md`
 - `apps/gui-web/package.json`
 - `apps/gui-web/vite.config.ts`
 

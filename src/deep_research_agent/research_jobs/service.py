@@ -14,7 +14,7 @@ from configs.settings import get_settings
 from deep_research_agent.common import DEFAULT_SOURCE_PROFILE, resolve_source_profile_name
 from loguru import logger
 
-from policies.models import SourcePolicyOverrides
+from deep_research_agent.policy.models import SourcePolicyOverrides
 from deep_research_agent.research_jobs.models import (
     REFINEMENT_SAFE_STAGE,
     TERMINAL_JOB_STATUSES,

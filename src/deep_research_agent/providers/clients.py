@@ -7,7 +7,7 @@ from typing import Optional
 from langchain_openai import ChatOpenAI
 
 from configs.settings import Settings, get_settings
-from evaluation.cost_tracker import get_tracker
+from deep_research_agent.observability.cost_tracker import get_tracker
 from deep_research_agent.providers.models import ProviderProfile, ProviderRouteRequest, ProviderType
 from deep_research_agent.providers.router import ProviderRouter
 

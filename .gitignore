@@ -4,6 +4,10 @@
 !.env.example
 .codex
 .codex/
+.agent
+.agent/
+.agents
+.agents/
 .venv/
 venv_gptr/
 __pycache__/
@@ -46,6 +50,11 @@ workspace/
 my-docs/
 docs/reports/
 docs/learning/
+docs/final/audits/
+docs/codex/
+docs/refactor/
+docs/专家审查意见/
+PLANS.md
 *.db
 *.sqlite
 *.sqlite3

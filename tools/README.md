@@ -1,6 +1,7 @@
 # Compatibility Tools
 
-These root tools are retained because the canonical connector layer still adapts some of them.
+These root tools are retained for older imports such as `tools.web_search`.
 
-Primary connector ownership lives under `src/deep_research_agent/connectors/`; do not treat this
-directory as the main product boundary.
+Canonical connector helper implementations live under
+`src/deep_research_agent/connectors/tools/`; do not treat this directory as the main product
+boundary.

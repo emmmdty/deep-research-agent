@@ -1,79 +1,73 @@
 # Repository Map
 
-This map is for first-time reviewers. The current implementation is not root-package-first; the
-canonical runtime lives under `src/deep_research_agent/`.
+This map is for first-time GitHub reviewers. The main implementation is not root-package-first:
+the canonical runtime lives under `src/deep_research_agent/`.
 
-## Where To Start
+## 30-Second Reading Path
 
-1. Read [`README.md`](../README.md) for the project summary and runnable commands.
-2. Read [`DOCS_INDEX.md`](./DOCS_INDEX.md) for the reviewer-facing documentation order.
-3. Inspect `src/deep_research_agent/` for canonical implementation code.
-4. Inspect `evals/reports/phase5_local_smoke/` for the merge-safe smoke gate.
-5. Inspect `docs/benchmarks/native/` and `evals/reports/native_regression/` for native regression evidence.
+1. Read [`README.md`](../README.md) for the product positioning, quick run, artifact contract, limits, and roadmap.
+2. Inspect `src/deep_research_agent/` for the canonical runtime.
+3. Inspect `evals/reports/phase5_local_smoke/` for the merge-safe smoke gate.
+4. Read [`docs/final/EXPERIMENT_SUMMARY.md`](./final/EXPERIMENT_SUMMARY.md) and [`docs/benchmarks/native/README.md`](./benchmarks/native/README.md) for evaluation evidence.
 
-## Current Root Areas
+## Root Classification
 
 | Path | Classification | Meaning |
 | --- | --- | --- |
-| `.agent/` | canonical operations record | Run specs, phase ledgers, status files, and historical automation notes. |
-| `.github/` | canonical repo metadata | CI, issue templates, and pull request template. |
-| `src/` | canonical current implementation | Main Python package: gateway, runtime, connectors, auditor, reporting, providers, evals. |
-| `main.py` | canonical current entrypoint | Thin wrapper around `deep_research_agent.gateway.cli`. |
-| `apps/` | canonical current UI surface | Local web GUI under `apps/gui-web/` for operator/reviewer workflows over the local API. |
-| `desktop/` | canonical current desktop wrapper | Tauri desktop shell under `desktop/tauri/` around the local web GUI. |
-| `configs/` | canonical current config | Runtime settings, release gate config, MCP example config. |
-| `policies/` | active policy assets | Source profiles and policy helpers used by current runtime. |
-| `schemas/` | active contract schemas | JSON schemas for bundle, audit, runtime, connector, and benchmark artifacts. |
-| `evals/` | active benchmark/eval assets | Suite configs, frozen datasets, rubrics, committed smoke and regression outputs. |
-| `scripts/` | active command wrappers | Release smoke, native regression, benchmark, scorecard, and diagnostic commands. |
-| `tests/` | canonical validation assets | Runtime, connector, auditor, public surface, benchmark, and repo-standard regressions. |
-| `docs/` | canonical current docs plus archives | Reviewer docs, final reports, ADRs, benchmark docs, migration notes, and labeled historical notes. |
-| `FINAL_CHANGE_REPORT.md` | canonical current docs | Final architecture migration and evidence summary. |
-| `README.md` | canonical current docs | Main GitHub entrypoint in English. |
-| `README.zh-CN.md` | canonical current docs | Main GitHub entrypoint in Chinese. |
-| `artifacts/` | compatibility shim | Legacy imports forwarding to canonical reporting modules. |
-| `auditor/` | compatibility shim | Legacy imports forwarding to canonical auditor modules. |
-| `connectors/` | compatibility shim | Legacy imports forwarding to canonical connector modules. |
-| `services/` | compatibility shim | Legacy imports forwarding to canonical research job modules. |
-| `llm/` | compatibility shim | Legacy provider import wrapper plus output cleaning helpers. |
-| `memory/` | compatibility and legacy | Evidence-store wrapper plus legacy file-memory helper. |
-| `tools/` | compatibility support | Search/fetch helper tools still adapted by the connector layer. |
-| `capabilities/` | legacy diagnostic support | Capability, skill, and MCP compatibility layer used by archived graph paths and tests. |
+| `src/` | canonical | Main Python package: gateway, runtime, connectors, policy, auditor, reporting, providers, evals. |
+| `main.py` | canonical | Thin CLI wrapper around `deep_research_agent.gateway.cli`. |
+| `configs/` | active | Runtime, source profile, provider, and release-gate configuration. |
+| `schemas/` | active | JSON schemas for artifacts, audit, runtime, connector, and benchmark contracts. |
+| `tests/` | active | Runtime, connector, auditor, public-surface, benchmark, and repo-standard regressions. |
+| `scripts/` | active | Release smoke, native regression, benchmark, scorecard, and diagnostic commands. |
+| `evals/` | active | Suite configs, frozen datasets, rubrics, committed smoke and regression outputs. |
+| `apps/` | active UI | Local web GUI for operator/reviewer workflows over the local API. |
+| `desktop/` | active wrapper | Tauri desktop shell around the local web GUI. |
+| `docs/` | public docs | Reviewer docs, architecture, development guide, ADRs, benchmark docs, GUI docs, final summaries, and archives. |
+| `.github/` | repo metadata | CI, issue templates, and pull request template. |
+| `.env.example` | setup | Public environment template. |
+| `.python-version` | setup | Python version pin. |
+| `pyproject.toml` | setup | Package metadata, dependencies, and setuptools `src` layout. |
+| `pytest.ini` | setup | Pytest configuration. |
+| `uv.lock` | setup | Locked dependency graph for `uv`. |
+| `README.md` / `README.zh-CN.md` | public docs | GitHub entrypoints. |
+| `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | repo metadata | Community and security files. |
+| `AGENTS.md` | automation guidance | Public, repo-safe guidance for coding agents. |
+| `artifacts/` | compatibility | Legacy imports forwarding to canonical reporting modules. |
+| `auditor/` | compatibility | Legacy imports forwarding to canonical auditor modules. |
+| `connectors/` | compatibility | Legacy imports forwarding to canonical connector modules. |
+| `services/` | compatibility | Legacy imports forwarding to canonical research job modules. |
+| `policies/` | compatibility | Legacy imports forwarding to canonical policy modules; source profiles now live in `configs/source_profiles/`. |
+| `tools/` | compatibility | Legacy imports forwarding to canonical connector helper tools. |
+| `llm/` | compatibility | Legacy provider import wrapper and output cleaning helpers. |
+| `memory/` | compatibility / legacy | Evidence-store wrapper plus legacy file-memory helper. |
+| `capabilities/` | legacy diagnostic support | Capability, skill, and MCP compatibility layer for archived graph paths and tests. |
 | `prompts/` | legacy diagnostic support | Prompt templates used by archived graph runtime. |
-| `evaluation/` | legacy benchmark diagnostics | Older comparator, judge, cost, and report-shape metric helpers. |
-| `research_policy.py` | legacy benchmark diagnostics | Deterministic benchmark-profile policy helpers retained for older tests and scripts. |
-| `legacy/` | legacy archive | Archived graph agents/workflows, old examples, skill wrappers, and placeholder MCP package. |
-| `examples/` | explicit pointer only | Current examples live in the README; old graph example is archived under `legacy/examples/`. |
-| `specs/` | historical and contract docs | Phase specs plus current API/evaluation contracts retained for link stability. |
-| `PLANS.md` | historical marker | Points to the archived old release-train plan and current reviewer entrypoints. |
-| `.env.example` | canonical setup file | Public environment template. |
-| `.gitignore` | canonical repo metadata | Protects local secrets, runtime outputs, caches, and lockfile tracking. |
-| `.python-version` | canonical setup file | Python version pin for local tooling. |
-| `pyproject.toml` | canonical setup file | Package metadata, dependencies, and setuptools layout. |
-| `pytest.ini` | canonical setup file | Pytest config. |
-| `uv.lock` | canonical setup file | Locked dependency graph for `uv`. |
-| `LICENSE` | canonical repo metadata | MIT license. |
-| `CONTRIBUTING.md` | canonical repo metadata | Contribution guidance. |
-| `CODE_OF_CONDUCT.md` | canonical repo metadata | Community conduct policy. |
-| `SECURITY.md` | canonical repo metadata | Security reporting policy. |
-| `AGENTS.md` | canonical automation instructions | Repository-specific instructions for automation agents. |
+| `evaluation/` | legacy diagnostics | Older comparator, judge, cost, and report-shape metric helpers. |
+| `research_policy.py` | legacy diagnostics | Deterministic benchmark-profile policy helpers retained for older tests and scripts. |
+| `legacy/` | archived | Archived graph agents/workflows, old examples, skill wrappers, and placeholder MCP package. |
+| `examples/` | pointer | Current runnable examples are in README; old graph example is archived under `legacy/examples/`. |
+| `specs/` | historical contracts | Phase specs plus current API/evaluation contracts retained for link stability. |
 
-## Ignored Local Areas
+## Archived Or Local-Only Material
 
-These may appear locally but are not part of the GitHub source tree:
+These were removed from the public reviewer path because they describe local agent execution rather
+than the product:
 
-- `.env`, `.venv/`, `.codex/`, `workspace/`, and `venv_gptr/`
-- cache directories such as `.pytest_cache/`, `.ruff_cache/`, `__pycache__/`, and `*.egg-info/`
-- ignored Windows metadata files such as `*:Zone.Identifier`
-- ignored legacy directory shells such as local `agents/` or `workflows/` cache remnants
+- `.agent/`
+- `.agents/`
+- `PLANS.md`
+- `docs/codex/`
+- `docs/refactor/`
+- `docs/专家审查意见/`
 
-Do not delete or commit these during repository hygiene work.
+If they exist in a local checkout, treat them as private development notes, not GitHub product docs.
 
 ## Boundary Rules
 
 - Treat `src/deep_research_agent/` as the implementation source of truth.
-- Treat `apps/gui-web/` and `desktop/tauri/` as supported local operator surfaces, not as archived experiments.
+- Treat `report_bundle.json` as the authoritative job output.
 - Treat `evals/reports/phase5_local_smoke/` as the merge-safe release smoke evidence.
 - Treat `evals/reports/native_regression/` and `docs/benchmarks/native/` as deterministic reviewer regression evidence.
 - Treat root compatibility packages as import-stability shims, not as the primary architecture.
-- Treat `legacy/`, `evaluation/`, `capabilities/`, `prompts/`, and archived material as non-primary paths unless a test or diagnostic script explicitly targets them.
+- Treat `legacy/`, `evaluation/`, `capabilities/`, `prompts/`, and archived docs as non-primary paths unless a diagnostic script or compatibility test explicitly targets them.

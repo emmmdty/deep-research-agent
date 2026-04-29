@@ -7,10 +7,10 @@ from collections.abc import Iterable
 from deep_research_agent.connectors.files import LocalFileIngestor
 from deep_research_agent.connectors.legacy import LegacyConnectorAdapter
 from deep_research_agent.connectors.utils import canonicalize_uri, fetch_uri_block_reason
-from tools.arxiv_search import search_arxiv_papers
-from tools.github_search import search_github_repositories
-from tools.web_scraper import web_scraper_tool
-from tools.web_search import search_web
+from deep_research_agent.connectors.tools.arxiv_search import search_arxiv_papers
+from deep_research_agent.connectors.tools.github_search import search_github_repositories
+from deep_research_agent.connectors.tools.web_scraper import web_scraper_tool
+from deep_research_agent.connectors.tools.web_search import search_web
 
 
 class ConnectorRegistry:

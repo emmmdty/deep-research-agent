@@ -80,14 +80,14 @@ def test_public_docs_link_value_scorecard_and_preserve_local_only_limits():
     """README and final docs should surface the measurable value pack without over-claiming SaaS readiness."""
     readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     experiment_summary = (PROJECT_ROOT / "docs" / "final" / "EXPERIMENT_SUMMARY.md").read_text(encoding="utf-8")
-    change_report = (PROJECT_ROOT / "FINAL_CHANGE_REPORT.md").read_text(encoding="utf-8")
+    change_report = (PROJECT_ROOT / "docs" / "archive" / "FINAL_CHANGE_REPORT.md").read_text(encoding="utf-8")
     scorecard = (PROJECT_ROOT / "docs" / "final" / "VALUE_SCORECARD.md").read_text(encoding="utf-8")
 
     assert "VALUE_SCORECARD.md" in readme
     assert "EXPERIMENT_SUMMARY.md" in readme
-    assert "release_manifest.json" in readme
-    assert "completion_rate=1.0" in readme
-    assert "policy_compliance_rate=1.0" in readme
+    assert "phase5_local_smoke" in readme
+    assert "completion rate: `1.0`" in readme
+    assert "policy compliance rate: `1.0`" in readme
     assert "docs/final/VALUE_SCORECARD.md" in experiment_summary
     assert "evals/reports/followup_metrics/ablation_summary.md" in experiment_summary
     assert "docs/final/VALUE_SCORECARD.md" in change_report

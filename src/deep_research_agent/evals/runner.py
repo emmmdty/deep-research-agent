@@ -27,7 +27,7 @@ from deep_research_agent.evals.contracts import (
 from deep_research_agent.research_jobs import ResearchJobOrchestrator, ResearchJobService
 from deep_research_agent.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
 from legacy.workflows.states import CriticFeedback, ReportArtifact, ResearchState, RunMetrics, SourceRecord, TaskItem
-from policies import load_source_policy
+from deep_research_agent.policy import load_source_policy
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]

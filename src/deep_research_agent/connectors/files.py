@@ -7,7 +7,7 @@ from pathlib import Path
 from deep_research_agent.connectors.models import ConnectorFetchResult
 from deep_research_agent.connectors.utils import canonicalize_uri
 
-from tools.pdf_reader import pdf_reader_tool
+from deep_research_agent.connectors.tools.pdf_reader import pdf_reader_tool
 
 
 class LocalFileIngestor:
