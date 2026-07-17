@@ -45,6 +45,7 @@ class ToolSpec(FrozenModel):
     timeout_seconds: float = Field(default=30.0, gt=0.0)
     max_retries: int = Field(default=0, ge=0)
     retry_safety: Literal["never", "read_only", "adapter_idempotent"] = "never"
+    cache_scope: Literal["none", "job"] = "none"
     cache_ttl_seconds: float = Field(default=0.0, ge=0.0)
     max_inline_result_bytes: int = Field(default=64_000, ge=1)
 
@@ -60,6 +61,10 @@ class ToolSpec(FrozenModel):
             raise ValueError("authenticated tenant scope cannot include a tenant allowlist")
         if self.max_retries > 0 and self.retry_safety == "never":
             raise ValueError("retries require an explicitly retry-safe tool")
+        if self.cache_ttl_seconds > 0 and self.cache_scope != "job":
+            raise ValueError("positive cache TTL requires an explicit job cache scope")
+        if self.cache_ttl_seconds > 0 and self.retry_safety != "read_only":
+            raise ValueError("cached tools must be read-only")
         return self
 
 
@@ -70,7 +75,20 @@ class ToolInvocation(FrozenModel):
     tool_name: Identifier
     tenant_id: Identifier
     idempotency_key: Identifier
-    arguments: dict[str, Any] = Field(default_factory=dict)
+    arguments: dict[str, JsonValue] = Field(default_factory=dict)
+
+    @field_validator("arguments", mode="before")
+    @classmethod
+    def _require_json_arguments(cls, value: Any) -> dict[str, JsonValue]:
+        if not isinstance(value, dict):
+            raise ValueError("tool arguments must be a JSON object")
+        try:
+            normalized = normalize_json_value(value)
+        except (TypeError, ValueError, RecursionError) as exc:
+            raise ValueError("tool arguments must contain only finite JSON values") from exc
+        if not isinstance(normalized, dict):
+            raise ValueError("tool arguments must be a JSON object")
+        return normalized
 
 
 class ToolExecutionContext(FrozenModel):

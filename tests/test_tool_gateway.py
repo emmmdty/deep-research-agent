@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import threading
 import time
+from typing import Literal
 
 import pytest
 from pydantic import ValidationError
@@ -18,27 +19,38 @@ from deep_research_agent.tool_gateway.registry import (
     InMemoryArtifactStore,
     InMemoryBudgetStore,
     InMemoryToolRegistry,
+    ToolCache,
 )
 
 
-def _task(*, role: str = "researcher", max_tool_calls: int = 3) -> TaskSpec:
+def _task(
+    *,
+    role: str = "researcher",
+    max_tool_calls: int = 3,
+    job_id: str = "job-1",
+) -> TaskSpec:
     return TaskSpec(
         task_id="task-1",
-        job_id="job-1",
+        job_id=job_id,
         kind="collect",
         role=role,
         objective="Collect evidence.",
         output_schema={"type": "object"},
         budget={"max_tool_calls": max_tool_calls},
-        idempotency_key="job-1:task-1",
+        idempotency_key=f"{job_id}:task-1",
     )
 
 
-def _context(*, tenant_id: str = "tenant-a", role: str = "researcher") -> ToolExecutionContext:
+def _context(
+    *,
+    tenant_id: str = "tenant-a",
+    role: str = "researcher",
+    job_id: str = "job-1",
+) -> ToolExecutionContext:
     return ToolExecutionContext(
         tenant_id=tenant_id,
         role=role,
-        job_id="job-1",
+        job_id=job_id,
     )
 
 
@@ -64,6 +76,7 @@ def _gateway(
     spec: ToolSpec | None = None,
     artifact_store: InMemoryArtifactStore | None = None,
     budget_store: InMemoryBudgetStore | None = None,
+    cache: ToolCache | None = None,
 ) -> ToolGateway:
     registry = InMemoryToolRegistry()
     registry.register(
@@ -74,6 +87,8 @@ def _gateway(
             allowed_tenant_ids=("tenant-a",),
             timeout_seconds=0.5,
             max_retries=0,
+            retry_safety="read_only",
+            cache_scope="job",
             cache_ttl_seconds=60,
         ),
         handler,
@@ -82,6 +97,7 @@ def _gateway(
         registry=registry,
         artifact_store=artifact_store,
         budget_store=budget_store,
+        cache=cache,
     )
 
 
@@ -165,6 +181,109 @@ def test_cache_hit_is_tenant_scoped_and_does_not_consume_a_second_budget_unit() 
     assert second.output == {"answer": "evidence"}
     assert calls == 1
     assert budget_store.used("tenant-a", "job-1", "task-1") == 1
+
+
+def test_cached_artifact_references_are_isolated_by_job() -> None:
+    calls = 0
+    artifact_store = InMemoryArtifactStore()
+
+    def handler(_arguments: dict[str, object], tool_context) -> dict[str, str]:
+        nonlocal calls
+        calls += 1
+        return {"content": "x" * 200, "job_id": tool_context.job_id}
+
+    gateway = _gateway(
+        handler,
+        spec=ToolSpec(
+            name="search",
+            allowed_roles=("researcher",),
+            allowed_tenant_ids=("tenant-a",),
+            retry_safety="read_only",
+            cache_scope="job",
+            cache_ttl_seconds=60,
+            max_inline_result_bytes=32,
+        ),
+        artifact_store=artifact_store,
+    )
+
+    first = gateway.invoke(_task(job_id="job-1"), _call(), _context(job_id="job-1"))
+    second = gateway.invoke(
+        _task(job_id="job-2"),
+        _call(idempotency_key="call-2"),
+        _context(job_id="job-2"),
+    )
+
+    assert first.artifact is not None
+    assert second.artifact is not None
+    assert first.artifact.metadata["job_id"] == "job-1"
+    assert second.artifact.metadata["job_id"] == "job-2"
+    assert first.artifact.artifact_id != second.artifact.artifact_id
+    assert second.from_cache is False
+    assert calls == 2
+
+
+def test_cache_get_failure_is_terminal_and_finalizes_idempotency() -> None:
+    calls = 0
+
+    class FailingGetCache:
+        def get(self, _key: str) -> ToolResultEnvelope | None:
+            raise RuntimeError("cache unavailable")
+
+        def put(
+            self,
+            _key: str,
+            _value: ToolResultEnvelope,
+            _ttl_seconds: float,
+        ) -> None:
+            raise AssertionError("cache put must not run")
+
+    def handler(_arguments: dict[str, object], _tool_context: object) -> dict[str, bool]:
+        nonlocal calls
+        calls += 1
+        return {"ok": True}
+
+    gateway = _gateway(handler, cache=FailingGetCache())
+
+    result = gateway.invoke(_task(), _call(), _context())
+    duplicate = gateway.invoke(_task(), _call(), _context())
+
+    assert result.status == "failed"
+    assert result.error_code == "cache_backend_error"
+    assert result.attempt_count == 0
+    assert duplicate.status == "failed"
+    assert duplicate.duplicate is True
+    assert calls == 0
+
+
+def test_cache_put_failure_does_not_strand_completed_idempotency() -> None:
+    calls = 0
+
+    class FailingPutCache:
+        def get(self, _key: str) -> ToolResultEnvelope | None:
+            return None
+
+        def put(
+            self,
+            _key: str,
+            _value: ToolResultEnvelope,
+            _ttl_seconds: float,
+        ) -> None:
+            raise RuntimeError("cache unavailable")
+
+    def handler(_arguments: dict[str, object], _tool_context: object) -> dict[str, bool]:
+        nonlocal calls
+        calls += 1
+        return {"ok": True}
+
+    gateway = _gateway(handler, cache=FailingPutCache())
+
+    result = gateway.invoke(_task(), _call(), _context())
+    duplicate = gateway.invoke(_task(), _call(), _context())
+
+    assert result.status == "succeeded"
+    assert duplicate.status == "succeeded"
+    assert duplicate.duplicate is True
+    assert calls == 1
 
 
 def test_duplicate_idempotency_key_returns_recorded_envelope_once() -> None:
@@ -265,6 +384,65 @@ def test_retry_requires_explicit_safe_tool_semantics() -> None:
         )
 
 
+@pytest.mark.parametrize("unsafe_retry_safety", ["never", "adapter_idempotent"])
+def test_cache_requires_explicit_job_scoped_read_only_policy(
+    unsafe_retry_safety: Literal["never", "adapter_idempotent"],
+) -> None:
+    spec = ToolSpec(
+        name="search",
+        allowed_roles=("researcher",),
+        allowed_tenant_ids=("tenant-a",),
+        retry_safety="read_only",
+        cache_scope="job",
+        cache_ttl_seconds=60,
+    )
+
+    assert spec.cache_scope == "job"
+
+    with pytest.raises(ValidationError, match="job cache scope"):
+        ToolSpec(
+            name="search",
+            allowed_roles=("researcher",),
+            allowed_tenant_ids=("tenant-a",),
+            retry_safety="read_only",
+            cache_ttl_seconds=60,
+        )
+
+    with pytest.raises(ValidationError, match="read-only"):
+        ToolSpec(
+            name="search",
+            allowed_roles=("researcher",),
+            allowed_tenant_ids=("tenant-a",),
+            retry_safety=unsafe_retry_safety,
+            cache_scope="job",
+            cache_ttl_seconds=60,
+        )
+
+
+@pytest.mark.parametrize(
+    "invalid_arguments",
+    [
+        {"value": object()},
+        {"value": float("nan")},
+        {"value": float("inf")},
+        {"value": float("-inf")},
+    ],
+)
+def test_invocation_arguments_reject_non_finite_json_before_invoke(
+    invalid_arguments: dict[str, object],
+) -> None:
+    with pytest.raises(ValidationError):
+        _call(arguments=invalid_arguments)
+
+
+def test_invocation_arguments_reject_cycles_before_invoke() -> None:
+    cyclic: dict[str, object] = {}
+    cyclic["self"] = cyclic
+
+    with pytest.raises(ValidationError):
+        _call(arguments=cyclic)
+
+
 def test_timeout_stays_pending_and_never_starts_a_retry() -> None:
     started = threading.Event()
     release = threading.Event()
@@ -314,6 +492,63 @@ def test_timeout_stays_pending_and_never_starts_a_retry() -> None:
 
     assert duplicate_after_completion.duplicate is True
     assert duplicate_after_completion.output == {"ok": True}
+    assert calls == 1
+
+
+def test_delayed_timeout_completion_survives_cache_put_failure() -> None:
+    release = threading.Event()
+    calls = 0
+
+    class FailingPutCache:
+        def get(self, _key: str) -> ToolResultEnvelope | None:
+            return None
+
+        def put(
+            self,
+            _key: str,
+            _value: ToolResultEnvelope,
+            _ttl_seconds: float,
+        ) -> None:
+            raise RuntimeError("cache unavailable")
+
+    def slow_handler(
+        _arguments: dict[str, object],
+        _tool_context: object,
+    ) -> dict[str, bool]:
+        nonlocal calls
+        calls += 1
+        release.wait(timeout=1.0)
+        return {"ok": True}
+
+    gateway = _gateway(
+        slow_handler,
+        spec=ToolSpec(
+            name="search",
+            allowed_roles=("researcher",),
+            allowed_tenant_ids=("tenant-a",),
+            timeout_seconds=0.01,
+            retry_safety="read_only",
+            cache_scope="job",
+            cache_ttl_seconds=60,
+        ),
+        cache=FailingPutCache(),
+    )
+
+    result = gateway.invoke(_task(), _call(), _context())
+    assert result.status == "execution_uncertain"
+
+    release.set()
+    deadline = time.monotonic() + 1.0
+    while time.monotonic() < deadline:
+        duplicate = gateway.invoke(_task(), _call(), _context())
+        if duplicate.status == "succeeded":
+            break
+        time.sleep(0.005)
+    else:
+        pytest.fail("cache put failure stranded delayed idempotency completion")
+
+    assert duplicate.duplicate is True
+    assert duplicate.output == {"ok": True}
     assert calls == 1
 
 

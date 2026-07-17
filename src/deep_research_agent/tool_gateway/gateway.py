@@ -107,7 +107,22 @@ class ToolGateway:
 
         cache_key = self._cache_key(call, context)
         if spec.cache_ttl_seconds > 0:
-            cached = self._cache.get(cache_key)
+            try:
+                cached = self._cache.get(cache_key)
+            except Exception:
+                result = self._failed(
+                    call,
+                    "cache_backend_error",
+                    "tool cache lookup failed",
+                    0,
+                )
+                self._complete_idempotency(
+                    idempotency_scope,
+                    call,
+                    fingerprint,
+                    result,
+                )
+                return result
             if cached is not None:
                 result = cached.model_copy(
                     update={
@@ -167,14 +182,14 @@ class ToolGateway:
                 )
             )
             return result
-        if result.status == "succeeded" and spec.cache_ttl_seconds > 0:
-            self._cache.put(cache_key, result, spec.cache_ttl_seconds)
         self._complete_idempotency(
             idempotency_scope,
             call,
             fingerprint,
             result,
         )
+        if result.status == "succeeded" and spec.cache_ttl_seconds > 0:
+            self._best_effort_cache_put(cache_key, result, spec.cache_ttl_seconds)
         return result
 
     def _execute(
@@ -268,14 +283,14 @@ class ToolGateway:
                 attempt_count=attempt_count,
                 max_inline_result_bytes=max_inline_result_bytes,
             )
-        if result.status == "succeeded" and cache_ttl_seconds > 0:
-            self._cache.put(cache_key, result, cache_ttl_seconds)
         self._complete_idempotency(
             idempotency_scope,
             call,
             fingerprint,
             result,
         )
+        if result.status == "succeeded" and cache_ttl_seconds > 0:
+            self._best_effort_cache_put(cache_key, result, cache_ttl_seconds)
 
     def _result_from_output(
         self,
@@ -346,6 +361,17 @@ class ToolGateway:
     ) -> None:
         self._idempotency.complete(scope, call.idempotency_key, fingerprint, result)
 
+    def _best_effort_cache_put(
+        self,
+        key: str,
+        result: ToolResultEnvelope,
+        ttl_seconds: float,
+    ) -> None:
+        try:
+            self._cache.put(key, result, ttl_seconds)
+        except Exception:
+            pass
+
     @staticmethod
     def _validate_context(task: TaskSpec, context: ToolExecutionContext) -> None:
         if task.role != context.role:
@@ -357,10 +383,10 @@ class ToolGateway:
     def _canonical_json(value: Any) -> str:
         return json.dumps(
             value,
+            allow_nan=False,
             ensure_ascii=True,
             separators=(",", ":"),
             sort_keys=True,
-            default=str,
         )
 
     @classmethod
@@ -384,6 +410,7 @@ class ToolGateway:
     def _cache_key(cls, call: ToolInvocation, context: ToolExecutionContext) -> str:
         payload = {
             "arguments": call.arguments,
+            "job_id": context.job_id,
             "role": context.role,
             "tenant_id": context.tenant_id,
             "tool_name": call.tool_name,
