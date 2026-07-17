@@ -21,8 +21,10 @@ the canonical runtime lives under `src/deep_research_agent/`.
 | `tests/` | active | Runtime, connector, auditor, public-surface, benchmark, and repo-standard regressions. |
 | `scripts/` | active | Release smoke, native regression, benchmark, scorecard, and diagnostic commands. |
 | `evals/` | active evidence | Suite configs, frozen datasets, rubrics, committed smoke outputs, regression outputs, and derived value packs. |
+| `apps/` | active UI root | Optional local app surfaces live here; current tracked apps are `apps/gui-web/` and `apps/desktop-tauri/`. |
 | `apps/gui-web/` | active UI | Optional local web GUI for operator/reviewer workflows over the local API. |
 | `apps/desktop-tauri/` | experimental UI wrapper | Optional Tauri desktop shell around the local web GUI; kept under `apps/` because it is not runtime code. |
+| `desktop/` | retired path | The former `desktop/tauri/` wrapper moved to `apps/desktop-tauri/`; no current code lives at this root. |
 | `docs/` | public docs | Reviewer docs, architecture, development guide, ADRs, benchmark docs, GUI docs, final summaries, and archives. |
 | `.github/` | repo metadata | CI, issue templates, and pull request template. |
 | `.env.example` | setup | Public environment template. |
@@ -60,6 +62,7 @@ than the product:
 - `docs/codex/`
 - `docs/refactor/`
 - `docs/专家审查意见/`
+- `apps/demo-video/`
 
 If they exist in a local checkout, treat them as private development notes, not GitHub product docs.
 

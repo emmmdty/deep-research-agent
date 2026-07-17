@@ -1,0 +1,46 @@
+schema_version: "1.0"
+pack_id: event-graph-agents-llms
+version: "1.0.0"
+title: Event Graphs, Agents, and Language Models
+description: Study how structured event representations interact with autonomous systems and language models.
+entity_types:
+  - research_work
+  - event_graph
+  - agent_system
+  - language_model
+  - benchmark
+  - dataset
+relations:
+  - name: uses_representation
+    description: A system uses a structured representation as research or runtime context.
+    source_types:
+      - agent_system
+      - language_model
+    target_types:
+      - event_graph
+  - name: evaluates_on
+    description: A research artifact or system is evaluated on a benchmark or dataset.
+    source_types:
+      - research_work
+      - agent_system
+      - language_model
+    target_types:
+      - benchmark
+      - dataset
+  - name: reports_on
+    description: A research work reports findings about another domain entity.
+    source_types:
+      - research_work
+    target_types:
+      - event_graph
+      - agent_system
+      - language_model
+research_questions:
+  - Which event representations measurably improve planning, memory, or tool use?
+  - Which benchmarks isolate gains from the representation rather than the base model?
+  - Where do reported interactions remain unsupported or contradictory?
+source_types:
+  - scholarly_paper
+  - benchmark_card
+  - dataset_card
+  - source_repository

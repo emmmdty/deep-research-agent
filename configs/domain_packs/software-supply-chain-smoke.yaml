@@ -1,0 +1,41 @@
+schema_version: "1.0"
+pack_id: software-supply-chain-smoke
+version: "1.0.0"
+title: Software Supply Chain Smoke
+description: Exercise the research kernel with a compact software dependency and vulnerability domain.
+entity_types:
+  - package
+  - release
+  - dependency
+  - vulnerability
+  - maintainer
+relations:
+  - name: depends_on
+    description: A package or release declares another dependency.
+    source_types:
+      - package
+      - release
+    target_types:
+      - dependency
+  - name: affected_by
+    description: A package or release is affected by a disclosed vulnerability.
+    source_types:
+      - package
+      - release
+    target_types:
+      - vulnerability
+  - name: maintained_by
+    description: A package is maintained by a named project or person.
+    source_types:
+      - package
+    target_types:
+      - maintainer
+research_questions:
+  - Which released versions are affected by the disclosed vulnerability?
+  - Which dependency path introduces the affected package?
+  - Which primary sources support the remediation guidance?
+source_types:
+  - package_registry
+  - vulnerability_advisory
+  - source_repository
+  - release_notes
