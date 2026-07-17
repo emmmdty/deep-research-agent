@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any, Callable
 
 from loguru import logger
 
 from deep_research_agent.auditor.pipeline import claim_auditor_node
+from deep_research_agent.orchestration.dag import ResearchDAG
+from deep_research_agent.orchestration.scheduler import ResearchScheduler, RunResult
 from deep_research_agent.reporting.bundle import emit_report_artifacts
 from legacy.agents.planner import planner_node
 from legacy.agents.researcher import collect_research_step
@@ -44,6 +47,7 @@ class ResearchJobOrchestrator:
         claim_auditor_fn: Callable[[dict[str, Any]], dict[str, Any]] = claim_auditor_node,
         writer_fn: Callable[[dict[str, Any]], dict[str, Any]] = writer_node,
         worker_lease_id: str | None = None,
+        scheduler: ResearchScheduler | None = None,
     ) -> None:
         self.service = service
         self.store = service.store
@@ -54,6 +58,84 @@ class ResearchJobOrchestrator:
         self.claim_auditor_fn = claim_auditor_fn
         self.writer_fn = writer_fn
         self.worker_lease_id = worker_lease_id
+        self.scheduler = scheduler
+
+    async def run_dag(
+        self,
+        job_id: str,
+        dag: ResearchDAG,
+        config_snapshot: Any,
+    ) -> RunResult:
+        """Run a new typed DAG while retaining ``run`` for legacy checkpoints."""
+
+        if self.scheduler is None:
+            raise RuntimeError("run_dag requires an injected ResearchScheduler")
+        job = self._assert_worker_lease(job_id)
+        job = self.store.update_job(
+            job_id,
+            status=JobStatus.RUNNING,
+            current_stage=RuntimeStage.COLLECTING,
+            runtime_path="scheduler-v2",
+            error=None,
+        )
+        result = await self.scheduler.run(job, dag, config_snapshot)
+        self._assert_worker_lease(job_id)
+
+        checkpoint_path = self.store.job_dir(job_id) / "scheduler_checkpoints.json"
+        checkpoint_path.write_text(
+            json.dumps(
+                [checkpoint.model_dump(mode="json") for checkpoint in result.checkpoints],
+                ensure_ascii=False,
+                sort_keys=True,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        for event in result.events:
+            payload = dict(event.payload)
+            payload.update(
+                {
+                    "scheduler_sequence": event.sequence,
+                    "task_id": event.task_id,
+                    "attempt": event.attempt,
+                }
+            )
+            self._append_event(
+                job,
+                "scheduler",
+                event.event_type,
+                event.event_type,
+                payload,
+            )
+
+        status_by_result = {
+            "completed": JobStatus.COMPLETED,
+            "failed": JobStatus.FAILED,
+            "cancelled": JobStatus.CANCELLED,
+        }
+        stage_by_result = {
+            "completed": RuntimeStage.COMPLETED,
+            "failed": RuntimeStage.FAILED,
+            "cancelled": RuntimeStage.CANCELLED,
+        }
+        metadata = dict(job.metadata)
+        metadata["scheduler_checkpoint_path"] = str(checkpoint_path)
+        metadata["scheduler_config_snapshot"] = result.config_snapshot
+        errors = [
+            task_result.error
+            for task_result in result.task_results.values()
+            if task_result.status == "failed" and task_result.error
+        ]
+        self.store.update_job(
+            job_id,
+            status=status_by_result[result.status],
+            current_stage=stage_by_result[result.status],
+            cancel_requested=result.status == "cancelled",
+            metadata=metadata,
+            error=errors[0] if errors else None,
+        )
+        return result
 
     def run(self, job_id: str) -> JobRuntimeRecord:
         """执行或恢复指定 job。"""
