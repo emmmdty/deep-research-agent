@@ -3,18 +3,26 @@
 from __future__ import annotations
 
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import yaml
 from pydantic import ValidationError
 
+from deep_research_agent.domain_packs import registry as domain_pack_registry
 from deep_research_agent.domain_packs.models import DomainPack
 from deep_research_agent.domain_packs.registry import DomainPackRegistry
-from deep_research_agent.kernel.contracts import ClaimRecord, ReportBundleV2, TaskSpec
+from deep_research_agent.kernel.contracts import (
+    ClaimRecord,
+    CorpusManifest,
+    ReportBundleV2,
+    TaskSpec,
+)
 
 
 PROJECT_ROOT = Path(__file__).parent.parent
 PACKS_DIR = PROJECT_ROOT / "configs" / "domain_packs"
+VALID_SHA256 = "a" * 64
 
 
 def _task_spec(**overrides: object) -> TaskSpec:
@@ -34,6 +42,26 @@ def _task_spec(**overrides: object) -> TaskSpec:
     return TaskSpec.model_validate(values)
 
 
+def _report_bundle(**overrides: object) -> ReportBundleV2:
+    values: dict[str, object] = {
+        "report_markdown": "# Findings",
+        "accepted_claims": [],
+        "qualified_claims": [],
+        "evidence_matrix": {},
+        "research_graph": {"nodes": [], "edges": []},
+        "sources": [],
+        "audit_summary": {},
+        "corpus_manifest": {
+            "manifest_id": "corpus-1",
+            "document_version_ids": [],
+            "content_hashes": {},
+        },
+        "run_manifest": {},
+    }
+    values.update(overrides)
+    return ReportBundleV2.model_validate(values)
+
+
 def test_registry_loads_and_lists_both_domain_packs():
     registry = DomainPackRegistry()
 
@@ -44,6 +72,33 @@ def test_registry_loads_and_lists_both_domain_packs():
     assert event_graph_pack.pack_id == "event-graph-agents-llms"
     assert smoke_pack.pack_id == "software-supply-chain-smoke"
     assert {event_graph_pack.pack_id, smoke_pack.pack_id} <= listed_ids
+
+
+def test_default_registry_loads_packaged_resource_without_repo_configs(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+):
+    package_root = tmp_path / "deep_research_agent" / "domain_packs"
+    resource_packs = package_root / "packs"
+    resource_packs.mkdir(parents=True)
+    payload = yaml.safe_load(
+        (PACKS_DIR / "software-supply-chain-smoke.yaml").read_text(encoding="utf-8")
+    )
+    payload["pack_id"] = "wheel-only-smoke"
+    (resource_packs / "wheel-only-smoke.yaml").write_text(
+        yaml.safe_dump(payload, sort_keys=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        domain_pack_registry,
+        "resources",
+        SimpleNamespace(files=lambda _package: package_root),
+        raising=False,
+    )
+
+    pack = DomainPackRegistry().load("wheel-only-smoke")
+
+    assert pack.pack_id == "wheel-only-smoke"
 
 
 @pytest.mark.parametrize(
@@ -81,6 +136,17 @@ def test_task_spec_rejects_self_dependency():
         _task_spec(depends_on=["task-1"])
 
 
+@pytest.mark.parametrize("dependency_id", ["", "   ", "../task-2", "task/2", "task 2"])
+def test_task_spec_rejects_blank_or_malformed_dependency_id(dependency_id: str):
+    with pytest.raises(ValidationError, match="depends_on"):
+        _task_spec(depends_on=[dependency_id])
+
+
+def test_task_spec_rejects_duplicate_dependencies():
+    with pytest.raises(ValidationError, match="unique"):
+        _task_spec(depends_on=["task-2", "task-2"])
+
+
 def test_critical_accepted_claim_requires_evidence():
     with pytest.raises(ValidationError, match="evidence"):
         ClaimRecord(
@@ -94,21 +160,89 @@ def test_critical_accepted_claim_requires_evidence():
         )
 
 
+@pytest.mark.parametrize(
+    ("bucket", "support_status"),
+    [("accepted_claims", "unsupported"), ("qualified_claims", "accepted")],
+)
+def test_report_bundle_rejects_claim_in_wrong_status_bucket(
+    bucket: str,
+    support_status: str,
+):
+    claim = {
+        "claim_id": "claim-1",
+        "claim": "The proposed method improves the primary metric.",
+        "claim_type": "result",
+        "critical": False,
+        "support_status": support_status,
+        "confidence": 0.2,
+        "evidence_spans": [],
+    }
+
+    with pytest.raises(ValidationError, match=bucket):
+        _report_bundle(**{bucket: [claim]})
+
+
+def test_corpus_manifest_requires_hash_for_each_document_version():
+    with pytest.raises(ValidationError, match="hash"):
+        CorpusManifest(
+            manifest_id="corpus-1",
+            document_version_ids=["document-1"],
+            content_hashes={},
+        )
+
+
+def test_corpus_manifest_rejects_malformed_sha256():
+    with pytest.raises(ValidationError, match="content_hashes"):
+        CorpusManifest(
+            manifest_id="corpus-1",
+            document_version_ids=["document-1"],
+            content_hashes={"document-1": "not-a-sha256"},
+        )
+
+
+def test_report_bundle_rejects_claim_span_outside_frozen_corpus():
+    claim = {
+        "claim_id": "claim-1",
+        "claim": "The proposed method improves the primary metric.",
+        "claim_type": "result",
+        "critical": False,
+        "support_status": "accepted",
+        "confidence": 0.9,
+        "evidence_spans": [
+            {
+                "span_id": "span-1",
+                "document_version_id": "document-outside-corpus",
+                "page": 1,
+                "quote": "The primary metric improved by five points.",
+                "extraction_method": "pdf_text",
+            }
+        ],
+    }
+    corpus_manifest = {
+        "manifest_id": "corpus-1",
+        "document_version_ids": ["document-1"],
+        "content_hashes": {"document-1": VALID_SHA256},
+    }
+
+    with pytest.raises(ValidationError, match="document version"):
+        _report_bundle(accepted_claims=[claim], corpus_manifest=corpus_manifest)
+
+
+def test_report_bundle_rejects_evidence_matrix_document_outside_frozen_corpus():
+    corpus_manifest = {
+        "manifest_id": "corpus-1",
+        "document_version_ids": ["document-1"],
+        "content_hashes": {"document-1": VALID_SHA256},
+    }
+
+    with pytest.raises(ValidationError, match="document version"):
+        _report_bundle(
+            evidence_matrix={"claim-1": ["document-outside-corpus"]},
+            corpus_manifest=corpus_manifest,
+        )
+
+
 def test_report_bundle_v2_has_fixed_schema_version():
-    bundle = ReportBundleV2(
-        report_markdown="# Findings",
-        accepted_claims=[],
-        qualified_claims=[],
-        evidence_matrix={},
-        research_graph={"nodes": [], "edges": []},
-        sources=[],
-        audit_summary={},
-        corpus_manifest={
-            "manifest_id": "corpus-1",
-            "document_version_ids": [],
-            "content_hashes": {},
-        },
-        run_manifest={},
-    )
+    bundle = _report_bundle()
 
     assert bundle.schema_version == "2.0"

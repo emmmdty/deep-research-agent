@@ -71,3 +71,6 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["deep_research_agent*"]
+
+[tool.setuptools.package-data]
+"deep_research_agent.domain_packs" = ["packs/*.yaml"]

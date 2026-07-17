@@ -2,9 +2,20 @@
 
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+
+
+Sha256Digest = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
+TaskDependencyRef = Annotated[
+    str,
+    StringConstraints(
+        strip_whitespace=True,
+        min_length=1,
+        pattern=r"^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+    ),
+]
 
 
 class StrictModel(BaseModel):
@@ -43,7 +54,7 @@ class TaskSpec(StrictModel):
     kind: str = Field(min_length=1)
     role: str = Field(min_length=1)
     objective: str = Field(min_length=1)
-    depends_on: list[str] = Field(default_factory=list)
+    depends_on: list[TaskDependencyRef] = Field(default_factory=list)
     input_artifacts: list[ArtifactRef] = Field(default_factory=list)
     output_schema: dict[str, Any]
     budget: dict[str, int | float] = Field(default_factory=dict)
@@ -156,7 +167,15 @@ class CorpusManifest(StrictModel):
 
     manifest_id: str = Field(min_length=1)
     document_version_ids: list[str] = Field(default_factory=list)
-    content_hashes: dict[str, str] = Field(default_factory=dict)
+    content_hashes: dict[str, Sha256Digest] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def _require_document_hashes(self) -> CorpusManifest:
+        missing_hashes = set(self.document_version_ids) - self.content_hashes.keys()
+        if missing_hashes:
+            missing = ", ".join(sorted(missing_hashes))
+            raise ValueError(f"content hash required for document versions: {missing}")
+        return self
 
 
 class ReportBundleV2(StrictModel):
@@ -172,3 +191,33 @@ class ReportBundleV2(StrictModel):
     audit_summary: dict[str, Any]
     corpus_manifest: CorpusManifest
     run_manifest: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _validate_claim_buckets(self) -> ReportBundleV2:
+        expected_status_by_bucket = {
+            "accepted_claims": "accepted",
+            "qualified_claims": "qualified",
+        }
+        for bucket, expected_status in expected_status_by_bucket.items():
+            claims = getattr(self, bucket)
+            if any(claim.support_status != expected_status for claim in claims):
+                raise ValueError(f"{bucket} must contain only {expected_status} claims")
+
+        manifest_document_ids = set(self.corpus_manifest.document_version_ids)
+        claim_document_ids = {
+            span.document_version_id
+            for claim in (*self.accepted_claims, *self.qualified_claims)
+            for span in claim.evidence_spans
+        }
+        matrix_document_ids = {
+            document_version_id
+            for document_version_ids in self.evidence_matrix.values()
+            for document_version_id in document_version_ids
+        }
+        unfrozen_document_ids = (
+            claim_document_ids | matrix_document_ids
+        ) - manifest_document_ids
+        if unfrozen_document_ids:
+            unfrozen = ", ".join(sorted(unfrozen_document_ids))
+            raise ValueError(f"document version references are outside the frozen corpus: {unfrozen}")
+        return self
