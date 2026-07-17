@@ -5,7 +5,10 @@ from __future__ import annotations
 import concurrent.futures
 import hashlib
 import json
+from dataclasses import dataclass
 from typing import Any
+
+from pydantic import ValidationError
 
 from deep_research_agent.kernel.contracts import TaskSpec
 from deep_research_agent.tool_gateway.models import (
@@ -13,6 +16,7 @@ from deep_research_agent.tool_gateway.models import (
     ToolHandlerContext,
     ToolInvocation,
     ToolResultEnvelope,
+    normalize_json_value,
 )
 from deep_research_agent.tool_gateway.registry import (
     ArtifactStore,
@@ -25,6 +29,12 @@ from deep_research_agent.tool_gateway.registry import (
     ToolCache,
     ToolRegistry,
 )
+
+
+@dataclass(frozen=True)
+class _ExecutionOutcome:
+    result: ToolResultEnvelope
+    pending_future: concurrent.futures.Future[Any] | None = None
 
 
 class ToolGateway:
@@ -64,7 +74,10 @@ class ToolGateway:
             return self._denied(call, "role_not_allowed", "task role cannot invoke this tool")
         if call.tenant_id != context.tenant_id:
             return self._denied(call, "tenant_mismatch", "call tenant differs from context")
-        if spec.allowed_tenant_ids and context.tenant_id not in spec.allowed_tenant_ids:
+        if (
+            spec.tenant_scope == "allowlist"
+            and context.tenant_id not in spec.allowed_tenant_ids
+        ):
             return self._denied(call, "tenant_not_allowed", "tenant cannot invoke this tool")
 
         fingerprint = self._fingerprint(task, call, context)
@@ -128,14 +141,32 @@ class ToolGateway:
             )
             return result
 
-        result = self._execute(
+        outcome = self._execute(
             task,
             call,
             context,
             registered.handler,
             spec.timeout_seconds,
             spec.max_retries,
+            spec.max_inline_result_bytes,
         )
+        result = outcome.result
+        if outcome.pending_future is not None:
+            outcome.pending_future.add_done_callback(
+                lambda future: self._finalize_uncertain_execution(
+                    future=future,
+                    task=task,
+                    call=call,
+                    context=context,
+                    attempt_count=result.attempt_count,
+                    max_inline_result_bytes=spec.max_inline_result_bytes,
+                    cache_key=cache_key,
+                    cache_ttl_seconds=spec.cache_ttl_seconds,
+                    idempotency_scope=idempotency_scope,
+                    fingerprint=fingerprint,
+                )
+            )
+            return result
         if result.status == "succeeded" and spec.cache_ttl_seconds > 0:
             self._cache.put(cache_key, result, spec.cache_ttl_seconds)
         self._complete_idempotency(
@@ -154,7 +185,8 @@ class ToolGateway:
         handler,
         timeout_seconds: float,
         max_retries: int,
-    ) -> ToolResultEnvelope:
+        max_inline_result_bytes: int,
+    ) -> _ExecutionOutcome:
         handler_context = ToolHandlerContext(
             invocation_id=call.invocation_id,
             idempotency_key=call.idempotency_key,
@@ -168,58 +200,142 @@ class ToolGateway:
             try:
                 output = future.result(timeout=timeout_seconds)
             except concurrent.futures.TimeoutError:
-                future.cancel()
-                if attempt_index < max_retries:
-                    continue
-                return self._failed(
-                    call,
-                    "timeout",
-                    "tool execution exceeded its timeout",
-                    attempt_index + 1,
+                return _ExecutionOutcome(
+                    result=ToolResultEnvelope(
+                        invocation_id=call.invocation_id,
+                        tool_name=call.tool_name,
+                        tenant_id=call.tenant_id,
+                        status="execution_uncertain",
+                        error_code="execution_uncertain",
+                        error="tool execution exceeded its timeout and may still be running",
+                        attempt_count=attempt_index + 1,
+                    ),
+                    pending_future=future,
                 )
             except Exception as exc:
                 if attempt_index < max_retries:
                     continue
-                return self._failed(
-                    call,
-                    "tool_error",
-                    str(exc) or type(exc).__name__,
-                    attempt_index + 1,
+                return _ExecutionOutcome(
+                    result=self._failed(
+                        call,
+                        "tool_error",
+                        str(exc) or type(exc).__name__,
+                        attempt_index + 1,
+                    )
                 )
 
+            return _ExecutionOutcome(
+                result=self._result_from_output(
+                    task=task,
+                    call=call,
+                    context=context,
+                    output=output,
+                    attempt_count=attempt_index + 1,
+                    max_inline_result_bytes=max_inline_result_bytes,
+                )
+            )
+        raise RuntimeError("unreachable tool execution state")
+
+    def _finalize_uncertain_execution(
+        self,
+        *,
+        future: concurrent.futures.Future[Any],
+        task: TaskSpec,
+        call: ToolInvocation,
+        context: ToolExecutionContext,
+        attempt_count: int,
+        max_inline_result_bytes: int,
+        cache_key: str,
+        cache_ttl_seconds: float,
+        idempotency_scope: str,
+        fingerprint: str,
+    ) -> None:
+        try:
+            output = future.result()
+        except Exception as exc:
+            result = self._failed(
+                call,
+                "tool_error",
+                str(exc) or type(exc).__name__,
+                attempt_count,
+            )
+        else:
+            result = self._result_from_output(
+                task=task,
+                call=call,
+                context=context,
+                output=output,
+                attempt_count=attempt_count,
+                max_inline_result_bytes=max_inline_result_bytes,
+            )
+        if result.status == "succeeded" and cache_ttl_seconds > 0:
+            self._cache.put(cache_key, result, cache_ttl_seconds)
+        self._complete_idempotency(
+            idempotency_scope,
+            call,
+            fingerprint,
+            result,
+        )
+
+    def _result_from_output(
+        self,
+        *,
+        task: TaskSpec,
+        call: ToolInvocation,
+        context: ToolExecutionContext,
+        output: Any,
+        attempt_count: int,
+        max_inline_result_bytes: int,
+    ) -> ToolResultEnvelope:
+        try:
+            normalized = normalize_json_value(output)
             serialized = json.dumps(
-                output,
+                normalized,
+                allow_nan=False,
                 ensure_ascii=True,
                 separators=(",", ":"),
                 sort_keys=True,
-                default=str,
             ).encode("utf-8")
-            registered = self._registry.get(call.tool_name)
-            if registered is None:
-                raise RuntimeError("tool registration disappeared during execution")
-            if len(serialized) > registered.spec.max_inline_result_bytes:
+        except (ValidationError, TypeError, ValueError, RecursionError):
+            return self._failed(
+                call,
+                "invalid_tool_result",
+                "tool output is not JSON-compatible",
+                attempt_count,
+            )
+
+        if len(serialized) > max_inline_result_bytes:
+            try:
                 artifact = self._artifacts.write(
                     serialized,
                     media_type="application/json",
                     task_id=task.task_id,
+                    tenant_id=context.tenant_id,
+                    job_id=context.job_id,
                 )
-                return ToolResultEnvelope(
-                    invocation_id=call.invocation_id,
-                    tool_name=call.tool_name,
-                    tenant_id=call.tenant_id,
-                    status="succeeded",
-                    artifact=artifact,
-                    attempt_count=attempt_index + 1,
+            except Exception:
+                return self._failed(
+                    call,
+                    "artifact_store_error",
+                    "tool result artifact could not be persisted",
+                    attempt_count,
                 )
             return ToolResultEnvelope(
                 invocation_id=call.invocation_id,
                 tool_name=call.tool_name,
                 tenant_id=call.tenant_id,
                 status="succeeded",
-                output=output,
-                attempt_count=attempt_index + 1,
+                artifact=artifact,
+                attempt_count=attempt_count,
             )
-        raise RuntimeError("unreachable tool execution state")
+        return ToolResultEnvelope(
+            invocation_id=call.invocation_id,
+            tool_name=call.tool_name,
+            tenant_id=call.tenant_id,
+            status="succeeded",
+            output=normalized,
+            attempt_count=attempt_count,
+        )
 
     def _complete_idempotency(
         self,

@@ -145,8 +145,11 @@ class ModelCapabilityReport(FrozenModel):
     endpoint_id: Identifier
     model: Identifier
     ok: bool
-    supports_structured_output: bool = False
-    supports_tool_use: bool = False
+    model_available: bool = False
+    declared_supports_structured_output: bool
+    declared_supports_tool_use: bool
+    verified_supports_structured_output: bool | None = None
+    verified_supports_tool_use: bool | None = None
     error: str | None = None
     checked_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -154,23 +157,31 @@ class ModelCapabilityReport(FrozenModel):
     def _validate_status(self) -> ModelCapabilityReport:
         if self.ok and self.error is not None:
             raise ValueError("successful capability reports cannot include an error")
+        if self.ok and not self.model_available:
+            raise ValueError("successful capability reports require the configured model")
         if not self.ok and not self.error:
             raise ValueError("failed capability reports require an error")
+        if not self.model_available and (
+            self.verified_supports_structured_output is not None
+            or self.verified_supports_tool_use is not None
+        ):
+            raise ValueError("capabilities cannot be verified for an unavailable model")
         return self
 
 
 class ProbeCapabilities(FrozenModel):
     """Normalized successful response from a capability probe transport."""
 
-    supports_structured_output: bool
-    supports_tool_use: bool
+    model_available: bool
+    verified_supports_structured_output: bool | None = None
+    verified_supports_tool_use: bool | None = None
 
 
 class ResolutionRecord(FrozenModel):
     """Audit record of the concrete endpoint selected for an attempt."""
 
     version_id: Identifier
-    job_id: Identifier | None = None
+    job_id: Identifier
     role: Identifier
     attempt: int = Field(ge=0)
     endpoint_id: Identifier

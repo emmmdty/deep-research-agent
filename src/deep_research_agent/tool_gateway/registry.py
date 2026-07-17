@@ -162,12 +162,24 @@ class ArtifactStore(Protocol):
         *,
         media_type: str,
         task_id: str,
+        tenant_id: str,
+        job_id: str,
     ) -> ArtifactRef: ...
+
+    def read(self, artifact_id: str, *, tenant_id: str, job_id: str) -> bytes: ...
+
+
+@dataclass(frozen=True)
+class _ArtifactRecord:
+    content: bytes
+    tenant_id: str
+    job_id: str
 
 
 class InMemoryArtifactStore:
     def __init__(self) -> None:
-        self._artifacts: dict[str, bytes] = {}
+        self._artifacts: dict[str, _ArtifactRecord] = {}
+        self._lock = threading.Lock()
 
     def write(
         self,
@@ -175,18 +187,34 @@ class InMemoryArtifactStore:
         *,
         media_type: str,
         task_id: str,
+        tenant_id: str,
+        job_id: str,
     ) -> ArtifactRef:
         digest = hashlib.sha256(content).hexdigest()
-        artifact_id = f"tool-result:{digest}"
-        self._artifacts[artifact_id] = bytes(content)
+        ownership_key = f"{tenant_id}\0{job_id}\0{digest}".encode()
+        artifact_id = f"tool-result:{hashlib.sha256(ownership_key).hexdigest()}"
+        with self._lock:
+            self._artifacts[artifact_id] = _ArtifactRecord(
+                content=bytes(content),
+                tenant_id=tenant_id,
+                job_id=job_id,
+            )
         return ArtifactRef(
             artifact_id=artifact_id,
             uri=f"memory://{artifact_id}",
             media_type=media_type,
             content_sha256=digest,
             created_by_task_id=task_id,
-            metadata={"trust": "untrusted"},
+            metadata={
+                "trust": "untrusted",
+                "tenant_id": tenant_id,
+                "job_id": job_id,
+            },
         )
 
-    def read(self, artifact_id: str) -> bytes:
-        return self._artifacts[artifact_id]
+    def read(self, artifact_id: str, *, tenant_id: str, job_id: str) -> bytes:
+        with self._lock:
+            record = self._artifacts[artifact_id]
+            if record.tenant_id != tenant_id or record.job_id != job_id:
+                raise PermissionError("artifact is outside the authorized tenant and job")
+            return record.content

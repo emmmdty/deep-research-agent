@@ -146,7 +146,7 @@ class CredentialCipher:
         return plaintext.decode("utf-8")
 
 
-CapabilityProbe = Callable[[ModelEndpoint], Mapping[str, bool] | ProbeCapabilities]
+CapabilityProbe = Callable[[ModelEndpoint], Mapping[str, bool | None] | ProbeCapabilities]
 
 
 class ModelRegistry:
@@ -221,49 +221,32 @@ class ModelRegistry:
         role: str,
         attempt: int,
         *,
-        job_id: str | None = None,
+        job_id: str,
     ) -> ResolvedModelEndpoint:
-        if attempt < 0:
-            raise ValueError("attempt must be non-negative")
-        if job_id is None:
-            version = self._active_version()
-            chain = self._chain_for_role(version, role)
-        else:
-            snapshot = self.snapshot_for_job(job_id)
-            version = snapshot.version
-            try:
-                chain = snapshot.fallback_chains[role]
-            except KeyError as exc:
-                raise KeyError(f"unknown model role: {role}") from exc
-        if attempt >= len(chain):
-            raise LookupError(f"fallback chain exhausted for role {role!r} at attempt {attempt}")
-
-        endpoint_id = chain[attempt]
-        endpoint = next(item for item in version.endpoints if item.endpoint_id == endpoint_id)
-        resolved = ResolvedModelEndpoint(
-            version_id=version.version_id,
-            role=role,
-            attempt=attempt,
-            endpoint_id=endpoint.endpoint_id,
-            base_url=endpoint.base_url,
-            model=endpoint.model,
-            credential_id=endpoint.credential_id,
-            tier=endpoint.tier,
-            timeout_seconds=endpoint.timeout_seconds,
-            supports_structured_output=endpoint.supports_structured_output,
-            supports_tool_use=endpoint.supports_tool_use,
-        )
+        snapshot = self.snapshot_for_job(job_id)
+        try:
+            chain = snapshot.fallback_chains[role]
+        except KeyError as exc:
+            raise KeyError(f"unknown model role: {role}") from exc
+        resolved = self._resolve_from_version(snapshot.version, role, attempt, chain)
         self.storage.record_resolution(
             ResolutionRecord(
-                version_id=version.version_id,
+                version_id=snapshot.version.version_id,
                 job_id=job_id,
                 role=role,
                 attempt=attempt,
-                endpoint_id=endpoint.endpoint_id,
-                model=endpoint.model,
+                endpoint_id=resolved.endpoint_id,
+                model=resolved.model,
             )
         )
         return resolved
+
+    def preview_active(self, role: str, attempt: int) -> ResolvedModelEndpoint:
+        """Preview active routing for administrators without recording execution."""
+
+        version = self._active_version()
+        chain = self._chain_for_role(version, role)
+        return self._resolve_from_version(version, role, attempt, chain)
 
     def probe(self, endpoint_id: str) -> ModelCapabilityReport:
         endpoint = self._find_endpoint(self._active_version(), endpoint_id)
@@ -274,18 +257,30 @@ class ModelRegistry:
                 else self._probe_over_http(endpoint)
             )
             normalized = ProbeCapabilities.model_validate(capabilities)
+            if not normalized.model_available:
+                raise LookupError(
+                    f"configured model {endpoint.model!r} is unavailable at endpoint"
+                )
             report = ModelCapabilityReport(
                 endpoint_id=endpoint.endpoint_id,
                 model=endpoint.model,
                 ok=True,
-                supports_structured_output=normalized.supports_structured_output,
-                supports_tool_use=normalized.supports_tool_use,
+                model_available=True,
+                declared_supports_structured_output=endpoint.supports_structured_output,
+                declared_supports_tool_use=endpoint.supports_tool_use,
+                verified_supports_structured_output=(
+                    normalized.verified_supports_structured_output
+                ),
+                verified_supports_tool_use=normalized.verified_supports_tool_use,
             )
         except Exception as exc:
             report = ModelCapabilityReport(
                 endpoint_id=endpoint.endpoint_id,
                 model=endpoint.model,
                 ok=False,
+                model_available=False,
+                declared_supports_structured_output=endpoint.supports_structured_output,
+                declared_supports_tool_use=endpoint.supports_tool_use,
                 error=str(exc) or type(exc).__name__,
             )
         self.storage.save_capability_report(report)
@@ -314,6 +309,33 @@ class ModelRegistry:
                 return endpoint
         raise KeyError(f"unknown model endpoint: {endpoint_id}")
 
+    @classmethod
+    def _resolve_from_version(
+        cls,
+        version: RuntimeConfigVersion,
+        role: str,
+        attempt: int,
+        chain: tuple[str, ...],
+    ) -> ResolvedModelEndpoint:
+        if attempt < 0:
+            raise ValueError("attempt must be non-negative")
+        if attempt >= len(chain):
+            raise LookupError(f"fallback chain exhausted for role {role!r} at attempt {attempt}")
+        endpoint = cls._find_endpoint(version, chain[attempt])
+        return ResolvedModelEndpoint(
+            version_id=version.version_id,
+            role=role,
+            attempt=attempt,
+            endpoint_id=endpoint.endpoint_id,
+            base_url=endpoint.base_url,
+            model=endpoint.model,
+            credential_id=endpoint.credential_id,
+            tier=endpoint.tier,
+            timeout_seconds=endpoint.timeout_seconds,
+            supports_structured_output=endpoint.supports_structured_output,
+            supports_tool_use=endpoint.supports_tool_use,
+        )
+
     def _api_key_for_client(self, credential_id: str) -> str:
         encrypted = self.storage.get_credential(credential_id)
         if encrypted is None:
@@ -329,7 +351,16 @@ class ModelRegistry:
             timeout=endpoint.timeout_seconds,
         )
         response.raise_for_status()
-        return ProbeCapabilities(
-            supports_structured_output=endpoint.supports_structured_output,
-            supports_tool_use=endpoint.supports_tool_use,
-        )
+        payload = response.json()
+        if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
+            raise ValueError("model capability probe returned an invalid /models payload")
+        model_ids = {
+            item.get("id")
+            for item in payload["data"]
+            if isinstance(item, dict) and isinstance(item.get("id"), str)
+        }
+        if endpoint.model not in model_ids:
+            raise LookupError(
+                f"configured model {endpoint.model!r} is absent from the /models response"
+            )
+        return ProbeCapabilities(model_available=True)

@@ -4,6 +4,7 @@ import base64
 
 import pytest
 from pydantic import ValidationError
+from pytest_httpx import HTTPXMock
 
 from deep_research_agent.model_runtime.client import OpenAICompatibleClientFactory
 from deep_research_agent.model_runtime.models import (
@@ -90,8 +91,8 @@ def registry(monkeypatch: pytest.MonkeyPatch) -> ModelRegistry:
 
 
 def test_registry_selects_independent_endpoint_and_model_per_role(registry: ModelRegistry) -> None:
-    planner = registry.resolve("planner", 0)
-    extractor = registry.resolve("extractor", 0)
+    planner = registry.resolve("planner", 0, job_id="job-roles")
+    extractor = registry.resolve("extractor", 0, job_id="job-roles")
 
     assert (planner.endpoint_id, planner.model) == ("planner-primary", "planner-large")
     assert (extractor.endpoint_id, extractor.model) == (
@@ -129,13 +130,15 @@ def test_job_snapshot_and_fallback_chain_remain_immutable_after_activation(
 
     assert registry.snapshot_for_job("job-1") == snapshot
     assert registry.resolve("planner", 0, job_id="job-1").endpoint_id == "planner-primary"
+    assert registry.resolve("planner", 1, job_id="job-1").endpoint_id == "planner-fallback"
+    assert registry.preview_active("planner", 0).endpoint_id == "planner-new"
     assert '"planner":["planner-primary","planner-fallback"]' in snapshot.model_dump_json()
     with pytest.raises(TypeError):
         snapshot.fallback_chains["planner"] = ("planner-new",)
 
 
 def test_registry_uses_only_ordered_same_tier_fallbacks(registry: ModelRegistry) -> None:
-    fallback = registry.resolve("planner", 1)
+    fallback = registry.resolve("planner", 1, job_id="job-fallback")
 
     assert (fallback.endpoint_id, fallback.model, fallback.attempt) == (
         "planner-fallback",
@@ -143,7 +146,7 @@ def test_registry_uses_only_ordered_same_tier_fallbacks(registry: ModelRegistry)
         1,
     )
     with pytest.raises(LookupError, match="fallback chain exhausted"):
-        registry.resolve("planner", 2)
+        registry.resolve("planner", 2, job_id="job-fallback")
 
     with pytest.raises(ValidationError, match="same tier"):
         RuntimeConfigVersion(
@@ -181,9 +184,77 @@ def test_failed_capability_probe_returns_a_failure_report_without_secrets(
 
     assert report.ok is False
     assert report.error == "provider did not respond"
-    assert report.supports_structured_output is False
-    assert report.supports_tool_use is False
+    assert report.model_available is False
+    assert report.declared_supports_structured_output is True
+    assert report.declared_supports_tool_use is True
+    assert report.verified_supports_structured_output is None
+    assert report.verified_supports_tool_use is None
     assert "secret" not in report.model_dump_json()
+
+
+def test_default_probe_verifies_model_without_echoing_declared_capabilities(
+    registry: ModelRegistry,
+    httpx_mock: HTTPXMock,
+) -> None:
+    httpx_mock.add_response(
+        url="https://planner-primary.example.test/v1/models",
+        match_headers={"Authorization": "Bearer planner-primary-secret"},
+        json={"data": [{"id": "planner-large"}, {"id": "another-model"}]},
+    )
+
+    report = registry.probe("planner-primary")
+
+    assert report.ok is True
+    assert report.model_available is True
+    assert report.declared_supports_structured_output is True
+    assert report.declared_supports_tool_use is True
+    assert report.verified_supports_structured_output is None
+    assert report.verified_supports_tool_use is None
+
+
+def test_default_probe_fails_when_configured_model_is_absent(
+    registry: ModelRegistry,
+    httpx_mock: HTTPXMock,
+) -> None:
+    httpx_mock.add_response(
+        url="https://planner-primary.example.test/v1/models",
+        json={"data": [{"id": "different-model"}]},
+    )
+
+    report = registry.probe("planner-primary")
+
+    assert report.ok is False
+    assert report.model_available is False
+    assert "planner-large" in (report.error or "")
+    assert report.verified_supports_structured_output is None
+    assert report.verified_supports_tool_use is None
+
+
+def test_custom_active_probe_can_report_verified_capabilities(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(MASTER_KEY_ENV, base64.urlsafe_b64encode(b"v" * 32).decode())
+
+    def active_probe(_endpoint: ModelEndpoint) -> dict[str, bool]:
+        return {
+            "model_available": True,
+            "verified_supports_structured_output": True,
+            "verified_supports_tool_use": False,
+        }
+
+    registry = ModelRegistry(
+        storage=InMemoryModelRegistryStorage(),
+        capability_probe=active_probe,
+    )
+    registry.register(_version(), credentials=_credentials())
+    registry.activate("runtime-v1")
+
+    report = registry.probe("planner-primary")
+
+    assert report.ok is True
+    assert report.model_available is True
+    assert report.verified_supports_structured_output is True
+    assert report.verified_supports_tool_use is False
 
 
 def test_credentials_are_write_only_redacted_and_encrypted_at_rest(
@@ -219,8 +290,8 @@ def test_client_factory_uses_each_resolved_endpoint_capabilities_and_secret(
         return object()
 
     factory = OpenAICompatibleClientFactory(registry=registry, model_builder=build_client)
-    planner_client = factory.create(registry.resolve("planner", 0))
-    extractor_client = factory.create(registry.resolve("extractor", 0))
+    planner_client = factory.create(registry.resolve("planner", 0, job_id="job-client"))
+    extractor_client = factory.create(registry.resolve("extractor", 0, job_id="job-client"))
 
     assert planner_client.endpoint_id == "planner-primary"
     assert planner_client.model_name == "planner-large"
@@ -254,3 +325,14 @@ def test_environment_master_key_must_decode_to_exactly_32_bytes(
 
     with pytest.raises(ValueError, match="32 bytes"):
         ModelRegistry(storage=InMemoryModelRegistryStorage())
+
+
+def test_operational_resolution_requires_job_id_and_admin_preview_is_separate(
+    registry: ModelRegistry,
+) -> None:
+    with pytest.raises(TypeError):
+        registry.resolve("planner", 0)
+
+    preview = registry.preview_active("planner", 0)
+
+    assert (preview.endpoint_id, preview.version_id) == ("planner-primary", "runtime-v1")

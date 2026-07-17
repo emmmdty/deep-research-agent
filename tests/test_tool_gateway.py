@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+import threading
 import time
 
 import pytest
+from pydantic import ValidationError
 
 from deep_research_agent.kernel.contracts import TaskSpec
 from deep_research_agent.tool_gateway.gateway import ToolGateway
 from deep_research_agent.tool_gateway.models import (
     ToolExecutionContext,
     ToolInvocation,
+    ToolResultEnvelope,
     ToolSpec,
 )
 from deep_research_agent.tool_gateway.registry import (
@@ -115,6 +118,30 @@ def test_gateway_denies_cross_tenant_invocation_without_running_tool() -> None:
     assert calls == 0
 
 
+def test_empty_tenant_allowlist_is_rejected_by_default() -> None:
+    with pytest.raises(ValidationError, match="tenant allowlist"):
+        ToolSpec(name="search", allowed_roles=("researcher",))
+
+
+def test_authenticated_tenant_scope_must_be_explicit() -> None:
+    gateway = _gateway(
+        lambda arguments, _tool_context: arguments,
+        spec=ToolSpec(
+            name="search",
+            allowed_roles=("researcher",),
+            tenant_scope="authenticated",
+        ),
+    )
+
+    result = gateway.invoke(
+        _task(),
+        _call(tenant_id="tenant-b"),
+        _context(tenant_id="tenant-b"),
+    )
+
+    assert result.status == "succeeded"
+
+
 def test_cache_hit_is_tenant_scoped_and_does_not_consume_a_second_budget_unit() -> None:
     calls = 0
     budget_store = InMemoryBudgetStore()
@@ -215,6 +242,7 @@ def test_retry_policy_is_bounded_and_records_actual_attempt_count() -> None:
             allowed_tenant_ids=("tenant-a",),
             timeout_seconds=0.5,
             max_retries=2,
+            retry_safety="read_only",
             cache_ttl_seconds=0,
         ),
     )
@@ -227,9 +255,26 @@ def test_retry_policy_is_bounded_and_records_actual_attempt_count() -> None:
     assert observed_idempotency_keys == ["call-1", "call-1", "call-1"]
 
 
-def test_timeout_is_returned_as_untrusted_failure_envelope() -> None:
+def test_retry_requires_explicit_safe_tool_semantics() -> None:
+    with pytest.raises(ValidationError, match="retry-safe"):
+        ToolSpec(
+            name="search",
+            allowed_roles=("researcher",),
+            allowed_tenant_ids=("tenant-a",),
+            max_retries=1,
+        )
+
+
+def test_timeout_stays_pending_and_never_starts_a_retry() -> None:
+    started = threading.Event()
+    release = threading.Event()
+    calls = 0
+
     def slow_handler(_arguments: dict[str, object], _tool_context: object) -> dict[str, bool]:
-        time.sleep(0.05)
+        nonlocal calls
+        calls += 1
+        started.set()
+        release.wait(timeout=1.0)
         return {"ok": True}
 
     gateway = _gateway(
@@ -238,18 +283,84 @@ def test_timeout_is_returned_as_untrusted_failure_envelope() -> None:
             name="search",
             allowed_roles=("researcher",),
             allowed_tenant_ids=("tenant-a",),
-            timeout_seconds=0.005,
-            max_retries=0,
+            timeout_seconds=0.01,
+            max_retries=2,
+            retry_safety="read_only",
             cache_ttl_seconds=0,
         ),
     )
 
     result = gateway.invoke(_task(), _call(), _context())
+    duplicate_while_running = gateway.invoke(_task(), _call(), _context())
 
-    assert result.status == "failed"
-    assert result.error_code == "timeout"
+    assert started.is_set()
+    assert result.status == "execution_uncertain"
+    assert result.error_code == "execution_uncertain"
     assert result.trust == "untrusted"
     assert result.attempt_count == 1
+    assert duplicate_while_running.status == "denied"
+    assert duplicate_while_running.error_code == "idempotency_in_progress"
+    assert calls == 1
+
+    release.set()
+    deadline = time.monotonic() + 1.0
+    while time.monotonic() < deadline:
+        duplicate_after_completion = gateway.invoke(_task(), _call(), _context())
+        if duplicate_after_completion.status == "succeeded":
+            break
+        time.sleep(0.005)
+    else:
+        pytest.fail("timed-out handler did not finalize its idempotency record")
+
+    assert duplicate_after_completion.duplicate is True
+    assert duplicate_after_completion.output == {"ok": True}
+    assert calls == 1
+
+
+@pytest.mark.parametrize("invalid_output", [object(), float("nan")])
+def test_non_json_tool_output_fails_and_finalizes_idempotency(invalid_output: object) -> None:
+    calls = 0
+
+    def handler(_arguments: dict[str, object], _tool_context: object) -> object:
+        nonlocal calls
+        calls += 1
+        return invalid_output
+
+    gateway = _gateway(handler)
+
+    result = gateway.invoke(_task(), _call(), _context())
+    duplicate = gateway.invoke(_task(), _call(), _context())
+
+    assert result.status == "failed"
+    assert result.error_code == "invalid_tool_result"
+    assert duplicate.status == "failed"
+    assert duplicate.duplicate is True
+    assert calls == 1
+
+
+def test_cyclic_tool_output_fails_without_stranding_idempotency() -> None:
+    cyclic: dict[str, object] = {}
+    cyclic["self"] = cyclic
+    gateway = _gateway(lambda _arguments, _tool_context: cyclic)
+
+    result = gateway.invoke(_task(), _call(), _context())
+    duplicate = gateway.invoke(_task(), _call(), _context())
+
+    assert result.status == "failed"
+    assert result.error_code == "invalid_tool_result"
+    assert duplicate.status == "failed"
+    assert duplicate.duplicate is True
+
+
+def test_result_envelope_rejects_non_json_inline_output() -> None:
+    with pytest.raises(ValidationError):
+        ToolResultEnvelope(
+            invocation_id="invocation-1",
+            tool_name="search",
+            tenant_id="tenant-a",
+            status="succeeded",
+            output=object(),
+        )
 
 
 def test_large_tool_output_is_stored_as_an_artifact_reference() -> None:
@@ -275,7 +386,25 @@ def test_large_tool_output_is_stored_as_an_artifact_reference() -> None:
     assert result.artifact is not None
     assert result.artifact.media_type == "application/json"
     assert result.artifact.created_by_task_id == "task-1"
-    assert artifact_store.read(result.artifact.artifact_id) == b'{"content":"' + b"x" * 200 + b'"}'
+    assert result.artifact.metadata["tenant_id"] == "tenant-a"
+    assert result.artifact.metadata["job_id"] == "job-1"
+    assert artifact_store.read(
+        result.artifact.artifact_id,
+        tenant_id="tenant-a",
+        job_id="job-1",
+    ) == b'{"content":"' + b"x" * 200 + b'"}'
+    with pytest.raises(PermissionError):
+        artifact_store.read(
+            result.artifact.artifact_id,
+            tenant_id="tenant-b",
+            job_id="job-1",
+        )
+    with pytest.raises(PermissionError):
+        artifact_store.read(
+            result.artifact.artifact_id,
+            tenant_id="tenant-a",
+            job_id="job-2",
+        )
 
 
 def test_unknown_tool_is_denied_without_consuming_budget() -> None:
