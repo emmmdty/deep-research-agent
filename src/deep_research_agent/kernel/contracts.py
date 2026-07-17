@@ -44,7 +44,7 @@ class ArtifactRef(StrictModel):
     uri: str = Field(min_length=1)
     media_type: str = Field(min_length=1)
     content_sha256: str = Field(min_length=1)
-    created_by_task_id: str | None = None
+    created_by_task_id: TaskId | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -120,7 +120,7 @@ class EvidencePacket(StrictModel):
     """Typed evidence emitted by one research task."""
 
     packet_id: str = Field(min_length=1)
-    task_id: str = Field(min_length=1)
+    task_id: TaskId
     evidence_spans: list[EvidenceSpan] = Field(default_factory=list)
     claims: list[ClaimRecord] = Field(default_factory=list)
     artifacts: list[ArtifactRef] = Field(default_factory=list)
@@ -129,7 +129,7 @@ class EvidencePacket(StrictModel):
 class TaskResult(StrictModel):
     """Validated completion envelope for one research task."""
 
-    task_id: str = Field(min_length=1)
+    task_id: TaskId
     job_id: str = Field(min_length=1)
     status: Literal["completed", "failed", "cancelled"]
     evidence_packets: list[EvidencePacket] = Field(default_factory=list)

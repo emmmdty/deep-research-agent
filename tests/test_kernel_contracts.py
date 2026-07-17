@@ -13,9 +13,12 @@ from deep_research_agent.domain_packs import registry as domain_pack_registry
 from deep_research_agent.domain_packs.models import DomainPack
 from deep_research_agent.domain_packs.registry import DomainPackRegistry
 from deep_research_agent.kernel.contracts import (
+    ArtifactRef,
     ClaimRecord,
     CorpusManifest,
+    EvidencePacket,
     ReportBundleV2,
+    TaskResult,
     TaskSpec,
 )
 
@@ -60,6 +63,28 @@ def _report_bundle(**overrides: object) -> ReportBundleV2:
     }
     values.update(overrides)
     return ReportBundleV2.model_validate(values)
+
+
+def _model_with_task_id(model_name: str, task_id: str) -> tuple[object, str]:
+    if model_name == "artifact":
+        return (
+            ArtifactRef(
+                artifact_id="artifact-1",
+                uri="artifact://artifact-1",
+                media_type="application/json",
+                content_sha256=VALID_SHA256,
+                created_by_task_id=task_id,
+            ),
+            "created_by_task_id",
+        )
+    if model_name == "evidence_packet":
+        return EvidencePacket(packet_id="packet-1", task_id=task_id), "task_id"
+    if model_name == "task_result":
+        return (
+            TaskResult(task_id=task_id, job_id="job-1", status="completed"),
+            "task_id",
+        )
+    raise AssertionError(f"unknown model: {model_name}")
 
 
 def test_registry_loads_and_lists_both_domain_packs():
@@ -158,6 +183,21 @@ def test_every_valid_task_id_is_a_valid_dependency_reference(task_id: str):
 def test_task_spec_rejects_task_id_that_cannot_be_dependency_reference():
     with pytest.raises(ValidationError, match="task_id"):
         _task_spec(task_id="task/1")
+
+
+@pytest.mark.parametrize("model_name", ["artifact", "evidence_packet", "task_result"])
+@pytest.mark.parametrize("task_id", ["task-1", "task_2", "Task.3", "task:4", "5"])
+def test_task_id_round_trips_across_kernel_models(model_name: str, task_id: str):
+    model, field_name = _model_with_task_id(model_name, task_id)
+
+    assert getattr(model, field_name) == task_id
+
+
+@pytest.mark.parametrize("model_name", ["artifact", "evidence_packet", "task_result"])
+@pytest.mark.parametrize("task_id", ["task/1", "   "])
+def test_invalid_task_id_fails_across_kernel_models(model_name: str, task_id: str):
+    with pytest.raises(ValidationError):
+        _model_with_task_id(model_name, task_id)
 
 
 def test_critical_accepted_claim_requires_evidence():
