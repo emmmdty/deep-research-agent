@@ -8,7 +8,9 @@ from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_vali
 
 
 Sha256Digest = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
-TaskDependencyRef = Annotated[
+NonBlankIdentifier = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+NonBlankText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+TaskId = Annotated[
     str,
     StringConstraints(
         strip_whitespace=True,
@@ -49,12 +51,12 @@ class ArtifactRef(StrictModel):
 class TaskSpec(StrictModel):
     """One durable task in a compiled research DAG."""
 
-    task_id: str = Field(min_length=1)
+    task_id: TaskId
     job_id: str = Field(min_length=1)
     kind: str = Field(min_length=1)
     role: str = Field(min_length=1)
     objective: str = Field(min_length=1)
-    depends_on: list[TaskDependencyRef] = Field(default_factory=list)
+    depends_on: list[TaskId] = Field(default_factory=list)
     input_artifacts: list[ArtifactRef] = Field(default_factory=list)
     output_schema: dict[str, Any]
     budget: dict[str, int | float] = Field(default_factory=dict)
@@ -72,14 +74,14 @@ class TaskSpec(StrictModel):
 class EvidenceSpan(StrictModel):
     """Exact excerpt from an immutable document version."""
 
-    span_id: str = Field(min_length=1)
-    document_version_id: str = Field(min_length=1)
+    span_id: NonBlankIdentifier
+    document_version_id: NonBlankIdentifier
     page: int | None = Field(default=None, ge=1)
-    section: str | None = None
+    section: NonBlankText | None = None
     start_offset: int | None = Field(default=None, ge=0)
     end_offset: int | None = Field(default=None, ge=0)
-    quote: str = Field(min_length=1)
-    extraction_method: str = Field(min_length=1)
+    quote: NonBlankText
+    extraction_method: NonBlankIdentifier
 
     @model_validator(mode="after")
     def _validate_offsets(self) -> EvidenceSpan:
@@ -166,8 +168,8 @@ class CorpusManifest(StrictModel):
     """Frozen set of immutable document versions used by one run."""
 
     manifest_id: str = Field(min_length=1)
-    document_version_ids: list[str] = Field(default_factory=list)
-    content_hashes: dict[str, Sha256Digest] = Field(default_factory=dict)
+    document_version_ids: list[NonBlankIdentifier] = Field(default_factory=list)
+    content_hashes: dict[NonBlankIdentifier, Sha256Digest] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def _require_document_hashes(self) -> CorpusManifest:
@@ -185,7 +187,7 @@ class ReportBundleV2(StrictModel):
     report_markdown: str
     accepted_claims: list[ClaimRecord]
     qualified_claims: list[ClaimRecord]
-    evidence_matrix: dict[str, list[str]]
+    evidence_matrix: dict[NonBlankIdentifier, list[NonBlankIdentifier]]
     research_graph: ResearchGraph
     sources: list[ArtifactRef]
     audit_summary: dict[str, Any]

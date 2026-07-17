@@ -147,6 +147,19 @@ def test_task_spec_rejects_duplicate_dependencies():
         _task_spec(depends_on=["task-2", "task-2"])
 
 
+@pytest.mark.parametrize("task_id", ["task-1", "task_2", "Task.3", "task:4", "5"])
+def test_every_valid_task_id_is_a_valid_dependency_reference(task_id: str):
+    producer = _task_spec(task_id=task_id)
+    consumer = _task_spec(task_id="consumer", depends_on=[producer.task_id])
+
+    assert consumer.depends_on == [producer.task_id]
+
+
+def test_task_spec_rejects_task_id_that_cannot_be_dependency_reference():
+    with pytest.raises(ValidationError, match="task_id"):
+        _task_spec(task_id="task/1")
+
+
 def test_critical_accepted_claim_requires_evidence():
     with pytest.raises(ValidationError, match="evidence"):
         ClaimRecord(
@@ -157,6 +170,64 @@ def test_critical_accepted_claim_requires_evidence():
             support_status="accepted",
             confidence=0.9,
             evidence_spans=[],
+        )
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["document_version_id", "section", "quote", "extraction_method"],
+)
+def test_critical_accepted_claim_rejects_whitespace_evidence_field(field: str):
+    evidence_span = {
+        "span_id": "span-1",
+        "document_version_id": "document-1",
+        "page": 1,
+        "section": "Results",
+        "quote": "The primary metric improved by five points.",
+        "extraction_method": "pdf_text",
+    }
+    evidence_span[field] = "   "
+
+    with pytest.raises(ValidationError):
+        ClaimRecord(
+            claim_id="claim-1",
+            claim="The proposed method improves the primary metric.",
+            claim_type="result",
+            critical=True,
+            support_status="accepted",
+            confidence=0.9,
+            evidence_spans=[evidence_span],
+        )
+
+
+def test_report_bundle_rejects_critical_claim_with_all_whitespace_evidence():
+    claim = {
+        "claim_id": "claim-1",
+        "claim": "The proposed method improves the primary metric.",
+        "claim_type": "result",
+        "critical": True,
+        "support_status": "accepted",
+        "confidence": 0.9,
+        "evidence_spans": [
+            {
+                "span_id": "   ",
+                "document_version_id": "   ",
+                "section": "   ",
+                "quote": "   ",
+                "extraction_method": "   ",
+            }
+        ],
+    }
+
+    with pytest.raises(ValidationError):
+        _report_bundle(
+            accepted_claims=[claim],
+            evidence_matrix={"claim-1": ["   "]},
+            corpus_manifest={
+                "manifest_id": "corpus-1",
+                "document_version_ids": ["   "],
+                "content_hashes": {"   ": VALID_SHA256},
+            },
         )
 
 
