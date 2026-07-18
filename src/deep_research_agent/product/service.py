@@ -11,6 +11,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from deep_research_agent.domain_packs.registry import DomainPackRegistry
+from deep_research_agent.kernel.contracts import ResearchBrief
+from deep_research_agent.orchestration.dag import ResearchPlanner
 from deep_research_agent.product.auth import AuthService
 from deep_research_agent.product.db import ProductDatabase
 from deep_research_agent.product.repositories import ProductRepository
@@ -100,6 +103,21 @@ def redact_secrets(value: Any) -> Any:
     if isinstance(value, list):
         return [redact_secrets(item) for item in value]
     return value
+
+
+def _contains_secret_key(value: Any) -> bool:
+    if isinstance(value, dict):
+        for key, item in value.items():
+            normalized = re.sub(r"[^a-z0-9]", "", str(key).casefold())
+            if normalized in _SECRET_KEY_MARKERS or normalized.endswith(
+                ("apikey", "secret", "password", "credential", "authorization", "privatekey", "accesskey")
+            ):
+                return True
+            if _contains_secret_key(item):
+                return True
+    elif isinstance(value, (list, tuple)):
+        return any(_contains_secret_key(item) for item in value)
+    return False
 
 
 class ProductService:
@@ -201,18 +219,29 @@ class ProductService:
         config = self.repository.get_active_runtime_config()
         version_id = config.version_id if config is not None else "default"
         config_snapshot = deepcopy(config.config) if config is not None else {}
+        domain_pack_id = str(config_snapshot.get("domain_pack_id", "event-graph-agents-llms"))
+        domain_pack = DomainPackRegistry().load(domain_pack_id)
+        brief = ResearchBrief(
+            brief_id=_id("brief"),
+            job_id="pending",
+            question=question,
+            domain_pack_id=domain_pack_id,
+            objectives=list(config_snapshot.get("objectives") or [question]),
+            constraints={"topic_id": topic_id, "config_version_id": version_id},
+        )
+        dag = ResearchPlanner().plan(brief, domain_pack)
         resolved_start_worker = self._resolve_start_worker(start_worker)
-        runtime_job = self.runtime_service.submit(
-            topic=question,
+        runtime_job = self.runtime_service.submit_scheduler_v2(
+            brief=brief,
+            dag=dag,
+            config_snapshot=config_snapshot,
             max_loops=int(config_snapshot.get("max_loops", 3)),
-            research_profile=str(config_snapshot.get("research_profile", "default")),
             source_profile=config_snapshot.get("source_profile"),
             start_worker=resolved_start_worker,
             runtime_metadata={
                 "product_topic_id": topic_id,
                 "product_tenant_id": tenant_id,
                 "product_config_version_id": version_id,
-                "product_config_snapshot": deepcopy(config_snapshot),
             },
         )
         runtime_status = self._status_value(runtime_job.status)
@@ -734,6 +763,8 @@ class ProductService:
         return {"tool_id": tool.tool_id, "config": redact_secrets(tool.config), "enabled": tool.enabled}
 
     def create_runtime_config(self, *, version_id: str, config: dict[str, Any]) -> dict[str, Any]:
+        if _contains_secret_key(config):
+            raise ValueError("runtime config must reference stored credentials, not contain secrets")
         record = self.repository.save_runtime_config(
             RuntimeConfigTable(version_id=version_id, config=deepcopy(config), active=False)
         )

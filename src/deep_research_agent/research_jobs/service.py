@@ -216,6 +216,7 @@ class ResearchJobService:
         start_worker: bool = True,
         source_profile: str | None = None,
         max_loops: int = 1,
+        runtime_metadata: dict | None = None,
     ) -> JobRuntimeRecord:
         """Persist a frozen scheduler-v2 contract before any worker starts."""
         job_id = _run_id()
@@ -236,12 +237,13 @@ class ResearchJobService:
             frozen_config = config_snapshot.model_dump(mode="json")
         else:
             frozen_config = json.loads(json.dumps(config_snapshot, ensure_ascii=False))
-        runtime_metadata = {
+        frozen_metadata = dict(runtime_metadata or {})
+        frozen_metadata.update({
             "research_brief": frozen_brief.model_dump(mode="json"),
             "research_dag": frozen_dag.model_dump(mode="json"),
             "config_snapshot": frozen_config,
             "runtime_mode": "scheduler-v2",
-        }
+        })
         return self.submit(
             topic=frozen_brief.question,
             max_loops=max_loops,
@@ -249,7 +251,7 @@ class ResearchJobService:
             start_worker=start_worker,
             source_profile=source_profile,
             runtime_path="scheduler-v2",
-            runtime_metadata=runtime_metadata,
+            runtime_metadata=frozen_metadata,
             _job_id=job_id,
         )
 

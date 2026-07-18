@@ -198,10 +198,15 @@ async def run_events(
                 if events is None:
                     return
                 if events:
+                    saw_terminal = False
                     for event in events:
                         cursor = max(cursor, int(event["sequence"]))
                         yield _sse_frame(event)
                         if event["payload"].get("terminal"):
+                            saw_terminal = True
+                    if saw_terminal:
+                        current = service.get_run(run_id, tenant_id=identity.tenant_id)
+                        if current is None or current["status"] in {"completed", "failed", "cancelled"}:
                             return
                 now = time.monotonic()
                 if now >= heartbeat_at:

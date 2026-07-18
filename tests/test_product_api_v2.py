@@ -340,6 +340,21 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
     assert model.json()["api_key"] == "[redacted]"
     assert "top-secret-model-key" not in client.get("/v1/admin/models").text
 
+    unsafe = client.post(
+        "/v1/admin/configs",
+        headers=headers,
+        json={
+            "version_id": "unsafe-runtime",
+            "config": {
+                "Authorization": "Bearer hidden-auth",
+                "privateKey": "hidden-private-key",
+                "access-key": "hidden-access-key",
+                "bearer": "hidden-bearer",
+            },
+        },
+    )
+    assert unsafe.status_code == 409
+
     for version in ("runtime-v1", "runtime-v2"):
         created = client.post(
             "/v1/admin/configs",
@@ -348,10 +363,8 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
                 "version_id": version,
                 "config": {
                     "planner_endpoint_id": "planner-primary",
-                    "Authorization": "Bearer hidden-auth",
-                    "privateKey": "hidden-private-key",
-                    "access-key": "hidden-access-key",
-                    "bearer": "hidden-bearer",
+                    "domain_pack_id": "event-graph-agents-llms",
+                    "max_loops": 2,
                 },
             },
         )
@@ -366,6 +379,10 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
     ).json()
     assert run["config_version_id"] == "runtime-v1"
     assert "config_snapshot" not in run
+    runtime_job = client.app.state.runtime_service.get(run["research_job_id"])
+    assert runtime_job.runtime_path == "scheduler-v2"
+    assert runtime_job.metadata["config_snapshot"]["planner_endpoint_id"] == "planner-primary"
+    assert "product_config_snapshot" not in runtime_job.metadata
 
     assert client.post("/v1/admin/configs/runtime-v2:activate", headers=headers).status_code == 200
     loaded = client.get(f"/v1/runs/{run['run_id']}")

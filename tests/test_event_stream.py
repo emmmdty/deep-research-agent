@@ -111,6 +111,26 @@ def test_sse_terminal_event_closes_snapshot_stream(product):
     assert "\"terminal\":true" in response.text
 
 
+def test_sse_does_not_stop_at_historical_terminal_event_after_resume(product):
+    _, client, csrf, run = product
+    assert client.post(
+        f"/v1/runs/{run['run_id']}:cancel",
+        headers={"X-CSRF-Token": csrf},
+    ).status_code == 200
+    resumed = client.post(
+        f"/v1/runs/{run['run_id']}:resume",
+        headers={"X-CSRF-Token": csrf},
+        json={"start_worker": False},
+    )
+    assert resumed.status_code == 200
+
+    response = client.get(f"/v1/runs/{run['run_id']}/events")
+
+    assert response.status_code == 200
+    assert "event: run.cancelled" in response.text
+    assert "event: run.resumed" in response.text
+
+
 def test_sse_denies_cross_tenant_access(product):
     app, owner, csrf, run = product
     invited = owner.post(
