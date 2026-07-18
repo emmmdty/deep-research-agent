@@ -79,7 +79,7 @@ class CorpusService:
         self._validate_storage_policy(source, tenant_id=tenant_id, content=content, license=effective_license)
         self.repository.save_source(source)
         content_hash = _digest(content)
-        private = tenant_id is not None or source.storage_policy == "user_supplied"
+        private = tenant_id is not None or source.storage_policy in {"user_supplied", "internal_processing"}
         # A public cache entry is deliberately never used for private documents.
         cache_key = self.cache_key(content_hash, source.parser_name, source.parser_version)
         cached = None if private else self.repository.find_cached(cache_key)
@@ -307,21 +307,20 @@ class CorpusService:
 
         content_hash = _digest(content)
         errors: list[str] = []
-        for index, parser in enumerate(self.parsers):
-            if index > 0:
-                cached = self.repository.find_cached(self.cache_key(content_hash, parser.name, parser.version))
-                if cached is not None:
-                    return (
-                        ParsedDocument(
-                            text=cached.text,
-                            # Document titles can include caller-provided metadata; do not
-                            # leak that source-specific value through the shared content cache.
-                            title="",
-                            abstract=cached.abstract,
-                            metadata=cached.metadata,
-                        ),
-                        parser,
-                    )
+        for parser in self.parsers:
+            cached = self.repository.find_cached(self.cache_key(content_hash, parser.name, parser.version))
+            if cached is not None:
+                return (
+                    ParsedDocument(
+                        text=cached.text,
+                        # Document titles can include caller-provided metadata; do not
+                        # leak that source-specific value through the shared content cache.
+                        title="",
+                        abstract=cached.abstract,
+                        metadata=cached.metadata,
+                    ),
+                    parser,
+                )
             try:
                 return parser.parse(content, media_type=media_type), parser
             except Exception as exc:
@@ -342,8 +341,10 @@ class CorpusService:
             raise PermissionError("a license is required before storing scholarly content")
         if source.storage_policy == "mirror_allowed" and not CorpusService._redistributable_license(license):
             raise PermissionError("mirror_allowed requires a known redistributable full-text license")
-        if source.storage_policy == "user_supplied" and tenant_id is None:
-            raise PermissionError("user-supplied content requires tenant isolation")
+        if source.storage_policy in {"user_supplied", "internal_processing"} and (
+            tenant_id is None or not tenant_id.strip()
+        ):
+            raise PermissionError("private processing sources require tenant isolation")
 
     @staticmethod
     def _redistributable_license(license: str | None) -> bool:

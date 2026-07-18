@@ -164,6 +164,38 @@ def test_shared_parser_cache_does_not_leak_titles_or_derived_only_redaction():
     assert mirrored.title == "Mirror title"
 
 
+def test_shared_parser_cache_reuses_primary_parse_across_public_sources():
+    from deep_research_agent.corpus.models import ParsedDocument
+    from deep_research_agent.corpus.parsers import GrobidParser
+    from deep_research_agent.corpus.service import CorpusService
+    from deep_research_agent.corpus.storage import InMemoryCorpusRepository
+
+    calls = 0
+
+    def parse_primary(content, **_):
+        nonlocal calls
+        calls += 1
+        return ParsedDocument(text="shared primary parse")
+
+    repository = InMemoryCorpusRepository()
+    first = CorpusService(repository=repository, parsers=[GrobidParser(parse_fn=parse_primary)]).ingest(
+        source=_source(source_id="source-a"),
+        content=b"shared bytes",
+        title="Source A",
+        source_native_id="a:1",
+    )
+    second = CorpusService(repository=repository, parsers=[GrobidParser(parse_fn=parse_primary)]).ingest(
+        source=_source(source_id="source-b"),
+        content=b"shared bytes",
+        title="Source B",
+        source_native_id="b:1",
+    )
+    assert calls == 1
+    assert first.document_version_id != second.document_version_id
+    assert second.title == "Source B"
+    assert second.text == "shared primary parse"
+
+
 def test_repository_returns_defensive_document_copies_and_freeze_is_idempotent():
     from deep_research_agent.corpus.service import CorpusService
     from deep_research_agent.corpus.storage import InMemoryCorpusRepository
@@ -288,6 +320,35 @@ def test_private_tenant_and_critical_claim_boundaries_fail_closed():
     assert discovery.source_role == "discovery"
     with pytest.raises(PermissionError, match="critical"):
         service.require_critical_claim_support(discovery.document_version_id, tenant_id="tenant-a")
+
+    with pytest.raises(PermissionError, match="tenant isolation"):
+        service.ingest(
+            source=_source(
+                source_id="internal",
+                source_role="licensed_internal",
+                storage_policy="internal_processing",
+                license="publisher terms",
+            ),
+            content=b"private internal text",
+            title="Internal",
+            source_native_id="internal:anonymous",
+        )
+
+    internal = service.ingest(
+        source=_source(
+            source_id="internal",
+            source_role="licensed_internal",
+            storage_policy="internal_processing",
+            license="publisher terms",
+        ),
+        content=b"private internal text",
+        title="Internal",
+        source_native_id="internal:private",
+        tenant_id="tenant-a",
+    )
+    assert service.search("private", tenant_id="tenant-b") == []
+    with pytest.raises(PermissionError):
+        service.get_document(internal.document_version_id, tenant_id=None)
 
 
 def test_private_grant_requires_owner_or_admin_actor():
