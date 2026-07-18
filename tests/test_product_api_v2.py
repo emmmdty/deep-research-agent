@@ -434,6 +434,32 @@ def test_product_run_delegates_to_canonical_runtime_and_syncs_artifacts(admin, a
     assert client.get(f"/v1/runs/{body['run_id']}/bundle").json() == bundle
 
 
+def test_completed_scheduler_run_emits_an_honest_report_bundle(admin, app):
+    from configs.settings import Settings
+    from deep_research_agent.research_jobs.worker import build_scheduler_factory
+
+    client, csrf = admin
+    app.state.runtime_service.configure_scheduler_factory(
+        build_scheduler_factory(Settings(scheduler_runtime_mode="offline"), offline=True)
+    )
+    topic = _create_topic(client, csrf)
+    run = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={"question": "Trace event graph and agent interactions", "start_worker": False},
+    ).json()
+
+    app.state.runtime_service.run_job(run["research_job_id"])
+
+    synced = client.get(f"/v1/runs/{run['run_id']}")
+    bundle = client.get(f"/v1/runs/{run['run_id']}/bundle")
+    assert synced.json()["status"] == "completed"
+    assert bundle.status_code == 200
+    assert bundle.json()["schema_version"] == "2.0"
+    assert "No evidence-backed conclusion" in bundle.json()["report_markdown"]
+    assert bundle.json()["accepted_claims"] == []
+
+
 def test_product_cancel_and_resume_delegate_to_canonical_runtime(admin, app):
     client, csrf = admin
     topic = _create_topic(client, csrf)

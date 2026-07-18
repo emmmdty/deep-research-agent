@@ -8,9 +8,15 @@ from typing import Any, Callable
 from loguru import logger
 
 from deep_research_agent.auditor.pipeline import claim_auditor_node
+from deep_research_agent.kernel.contracts import (
+    CorpusManifest,
+    ResearchGraph,
+    ResearchGraphNode,
+)
 from deep_research_agent.orchestration.dag import ResearchDAG
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, RunResult
 from deep_research_agent.reporting.bundle import emit_report_artifacts
+from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2
 from legacy.agents.planner import planner_node
 from legacy.agents.researcher import collect_research_step
 from legacy.agents.verifier import verifier_node
@@ -116,12 +122,14 @@ class ResearchJobOrchestrator:
         metadata = dict(job.metadata)
         metadata["scheduler_checkpoint_path"] = str(checkpoint_path)
         metadata["scheduler_config_snapshot"] = result.config_snapshot
+        if result.status == "completed":
+            self._emit_scheduler_bundle(job, dag, result)
         errors = [
             task_result.error
             for task_result in result.task_results.values()
             if task_result.status == "failed" and task_result.error
         ]
-        self.store.update_job(
+        updated = self.store.update_job(
             job_id,
             lease_id=self.worker_lease_id,
             status=status_by_result[result.status],
@@ -130,7 +138,147 @@ class ResearchJobOrchestrator:
             metadata=metadata,
             error=errors[0] if errors else None,
         )
+        self._append_event(
+            updated,
+            stage_by_result[result.status],
+            f"job.{result.status}",
+            f"job entered {result.status}",
+            {"terminal": True},
+        )
         return result
+
+    def _emit_scheduler_bundle(
+        self,
+        job: JobRuntimeRecord,
+        dag: ResearchDAG,
+        result: RunResult,
+    ) -> None:
+        packets = [
+            packet
+            for task_result in result.task_results.values()
+            for packet in task_result.evidence_packets
+        ]
+        output_artifacts = [
+            artifact
+            for task_result in result.task_results.values()
+            for artifact in task_result.output_artifacts
+        ]
+        packet_artifacts = [artifact for packet in packets for artifact in packet.artifacts]
+        all_artifacts = [*packet_artifacts, *output_artifacts]
+        hashes: dict[str, str] = {}
+        critical_claims_allowed: dict[str, bool] = {}
+        for artifact in all_artifacts:
+            document_version_id = artifact.metadata.get("document_version_id")
+            if not isinstance(document_version_id, str):
+                continue
+            existing = hashes.get(document_version_id)
+            if existing is not None and existing != artifact.content_sha256:
+                raise ValueError(
+                    f"conflicting source hashes for document {document_version_id!r}"
+                )
+            hashes[document_version_id] = artifact.content_sha256
+            critical_claims_allowed[document_version_id] = bool(
+                artifact.metadata.get("critical_claims_allowed", False)
+            )
+
+        manifest = CorpusManifest(
+            manifest_id=f"{job.job_id}:corpus",
+            document_version_ids=tuple(sorted(hashes)),
+            content_hashes=hashes,
+            critical_claims_allowed=critical_claims_allowed,
+        )
+        claims = [claim for packet in packets for claim in packet.claims]
+        graph = self._scheduler_graph(result, claims)
+        report_markdown = self._scheduler_report_markdown(job, result)
+        task_by_id = dag.task_by_id
+        tasks = []
+        for task_id, task_result in sorted(result.task_results.items()):
+            task = task_by_id[task_id]
+            tasks.append(
+                {
+                    "task_id": task_id,
+                    "task": task.objective,
+                    "role": task.role,
+                    "model": self._task_model(result.config_snapshot, task.role),
+                    "state": task_result.status,
+                    "retry": max(result.attempts.get(task_id, 1) - 1, 0),
+                    "source_count": len(
+                        {
+                            span.document_version_id
+                            for packet in task_result.evidence_packets
+                            for span in packet.evidence_spans
+                        }
+                    ),
+                }
+            )
+        bundle = ReportBundleCompilerV2().compile(
+            report_markdown=report_markdown,
+            claims=claims,
+            evidence_packets=packets,
+            critic_decisions=result.critic_decisions,
+            research_graph=graph,
+            sources=output_artifacts,
+            corpus_manifest=manifest,
+            run_manifest={
+                "job_id": job.job_id,
+                "runtime_path": "scheduler-v2",
+                "config_version_id": job.metadata.get("product_config_version_id"),
+                "tasks": tasks,
+            },
+        )
+        bundle_path = Path(job.report_bundle_path)
+        bundle_path.parent.mkdir(parents=True, exist_ok=True)
+        bundle_path.write_text(
+            ReportBundleCompilerV2.to_canonical_json(bundle),
+            encoding="utf-8",
+        )
+        report_path = Path(job.report_path)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(bundle.report_markdown, encoding="utf-8")
+
+    @staticmethod
+    def _scheduler_report_markdown(job: JobRuntimeRecord, result: RunResult) -> str:
+        for task_id in sorted(result.task_outputs, reverse=True):
+            candidate = result.task_outputs[task_id].get("report_markdown")
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip() + "\n"
+        return (
+            f"# {job.topic}\n\n"
+            "## Executive Summary\n\n"
+            "## Evidence Status\n\n"
+            "No evidence-backed conclusion could be produced from the frozen corpus. "
+            "No unsupported critical claim was published.\n"
+        )
+
+    @staticmethod
+    def _scheduler_graph(result: RunResult, claims: list) -> ResearchGraph:
+        for task_id in sorted(result.task_outputs, reverse=True):
+            candidate = result.task_outputs[task_id].get("research_graph")
+            if isinstance(candidate, dict):
+                return ResearchGraph.model_validate(candidate)
+        return ResearchGraph(
+            nodes=[
+                ResearchGraphNode(
+                    node_id=claim.claim_id,
+                    kind="claim",
+                    label=claim.claim,
+                    properties={"support_status": claim.support_status},
+                )
+                for claim in sorted(claims, key=lambda item: item.claim_id)
+            ],
+            edges=[],
+        )
+
+    @staticmethod
+    def _task_model(config_snapshot: Any, role: str) -> str:
+        if not isinstance(config_snapshot, dict):
+            return "configured"
+        return str(
+            config_snapshot.get(f"{role}_endpoint_id")
+            or config_snapshot.get("planner_endpoint_id")
+            or config_snapshot.get("model")
+            or "configured"
+        )
 
     def run(self, job_id: str) -> JobRuntimeRecord:
         """执行或恢复指定 job。"""
