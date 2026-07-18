@@ -28,6 +28,7 @@ node_modules/
 .pyright/
 .pyre/
 .hypothesis/
+.playwright-artifacts/
 .coverage
 .coverage.*
 htmlcov/

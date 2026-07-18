@@ -48,7 +48,9 @@ uv run python main.py --help
 ## V2 Web Demo
 
 支持的产品路径是带认证的 V2 workspace。复制 `.env.example` 并替换所有占位密钥；想运行
-无需 provider 凭据的确定性 demo 时使用 `SCHEDULER_RUNTIME_MODE=offline`，然后执行：
+无需 provider 凭据的确定性 demo 时使用 `SCHEDULER_RUNTIME_MODE=offline`，然后执行。offline 模式
+只验证认证、意图路由、任务持久化、SSE、报告渲染、语料冻结和记忆生命周期，不访问网络，也不会
+伪造有证据的结论：
 
 ```bash
 docker compose up --build
@@ -141,8 +143,10 @@ Compose 使用同源代理，因此浏览器凭据和 SSE 重连不需要 wildca
 澄清；未刷新前的追问使用冻结报告快照。
 
 关键 claim 仅能使用受治理且已冻结的来源：arXiv、ACL Anthology、OpenAlex、Crossref、DataCite、
-DBLP、PMLR、NeurIPS proceedings 以及有许可证的上传文档。开放 Web 搜索只能用于发现，不能支撑
-关键 claim；来源故障会生成 freshness warning。
+DBLP、PMLR、NeurIPS proceedings 以及有许可证的上传文档。这是来源策略目标，不代表这些连接器
+已经全部接入产品。当前产品 API 支持显式选择租户上传文档并在运行前冻结路径和哈希；内置 connector
+substrate 提供 arXiv、GitHub、开放 Web 和本地文件适配器，ACL Anthology、OpenAlex、Crossref、
+DataCite、DBLP、PMLR、NeurIPS 仍是后续集成项。开放 Web 搜索只能用于发现，不能支撑关键 claim。
 
 可选 desktop packaging 实验位于 `apps/desktop-tauri/`。详见 [GUI docs](./docs/gui/README.md)。
 
@@ -150,7 +154,8 @@ DBLP、PMLR、NeurIPS proceedings 以及有许可证的上传文档。开放 Web
 
 - Docker profile 面向小团队，不是横向扩展的 SaaS control plane。
 - Runtime 仍使用 job-local subprocess 和 recovery worker，没有 Redis queue。
-- Live web research 依赖 provider/search credentials 和外部网络稳定性。
+- Live research 需要显式配置 `SCHEDULER_FACTORY_PATH`；仓库不会把 offline demo 静默变成实时爬虫。
+- 记忆当前是显式 CRUD 加按主题/会话的运行时召回；对话不会自动写入长期记忆，Web 页面暂时只有查看和删除。
 - Legacy comparator 与 report-shape diagnostics 仍可用于诊断，但 release story 是 claim-centric bundle/eval 输出。
 - 这不是多租户 SaaS，也不是“agent 越多越好”的展示项目。
 

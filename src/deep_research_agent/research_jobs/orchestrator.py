@@ -165,8 +165,11 @@ class ResearchJobOrchestrator:
         ]
         packet_artifacts = [artifact for packet in packets for artifact in packet.artifacts]
         all_artifacts = [*packet_artifacts, *output_artifacts]
-        hashes: dict[str, str] = {}
-        critical_claims_allowed: dict[str, bool] = {}
+        frozen_manifest = job.metadata.get("corpus_manifest") or {}
+        hashes: dict[str, str] = dict(frozen_manifest.get("content_hashes") or {})
+        critical_claims_allowed: dict[str, bool] = dict(
+            frozen_manifest.get("critical_claims_allowed") or {}
+        )
         for artifact in all_artifacts:
             document_version_id = artifact.metadata.get("document_version_id")
             if not isinstance(document_version_id, str):
@@ -177,9 +180,13 @@ class ResearchJobOrchestrator:
                     f"conflicting source hashes for document {document_version_id!r}"
                 )
             hashes[document_version_id] = artifact.content_sha256
-            critical_claims_allowed[document_version_id] = bool(
-                artifact.metadata.get("critical_claims_allowed", False)
-            )
+            artifact_allowed = bool(artifact.metadata.get("critical_claims_allowed", False))
+            if document_version_id in critical_claims_allowed:
+                critical_claims_allowed[document_version_id] = (
+                    critical_claims_allowed[document_version_id] and artifact_allowed
+                )
+            else:
+                critical_claims_allowed[document_version_id] = artifact_allowed
 
         manifest = CorpusManifest(
             manifest_id=f"{job.job_id}:corpus",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 import os
 import subprocess
@@ -217,6 +218,7 @@ class ResearchJobService:
         source_profile: str | None = None,
         max_loops: int = 1,
         runtime_metadata: dict | None = None,
+        corpus_inputs: list[dict] | None = None,
     ) -> JobRuntimeRecord:
         """Persist a frozen scheduler-v2 contract before any worker starts."""
         job_id = _run_id()
@@ -237,23 +239,68 @@ class ResearchJobService:
             frozen_config = config_snapshot.model_dump(mode="json")
         else:
             frozen_config = json.loads(json.dumps(config_snapshot, ensure_ascii=False))
+        file_inputs, corpus_manifest = self._stage_corpus_inputs(job_id, corpus_inputs or [])
+        if file_inputs:
+            frozen_config["file_inputs"] = file_inputs
         frozen_metadata = dict(runtime_metadata or {})
-        frozen_metadata.update({
-            "research_brief": frozen_brief.model_dump(mode="json"),
-            "research_dag": frozen_dag.model_dump(mode="json"),
-            "config_snapshot": frozen_config,
-            "runtime_mode": "scheduler-v2",
-        })
+        frozen_metadata.update(
+            {
+                "research_brief": frozen_brief.model_dump(mode="json"),
+                "research_dag": frozen_dag.model_dump(mode="json"),
+                "config_snapshot": frozen_config,
+                "runtime_mode": "scheduler-v2",
+                "corpus_manifest": corpus_manifest,
+            }
+        )
         return self.submit(
             topic=frozen_brief.question,
             max_loops=max_loops,
             research_profile="typed",
             start_worker=start_worker,
             source_profile=source_profile,
+            file_inputs=file_inputs,
             runtime_path="scheduler-v2",
             runtime_metadata=frozen_metadata,
             _job_id=job_id,
         )
+
+    def _stage_corpus_inputs(
+        self, job_id: str, corpus_inputs: list[dict]
+    ) -> tuple[list[str], dict[str, dict]]:
+        """Freeze private uploads into a job-owned directory before worker start."""
+
+        if not corpus_inputs:
+            return [], {"document_version_ids": [], "content_hashes": {}, "critical_claims_allowed": {}}
+        corpus_dir = self.store.job_dir(job_id) / "corpus"
+        corpus_dir.mkdir(parents=True, exist_ok=True)
+        corpus_dir.chmod(0o700)
+        file_inputs: list[str] = []
+        hashes: dict[str, str] = {}
+        policies: dict[str, bool] = {}
+        for item in corpus_inputs:
+            document_id = str(item.get("document_id", "")).strip()
+            if not document_id or "/" in document_id or "\\" in document_id:
+                raise ValueError("corpus document_id must be a safe non-blank identifier")
+            content = item.get("content")
+            if not isinstance(content, bytes) or not content:
+                raise ValueError(f"corpus document {document_id!r} has no content")
+            digest = hashlib.sha256(content).hexdigest()
+            declared_digest = str(item.get("content_sha256", "")).strip()
+            if declared_digest and declared_digest != digest:
+                raise ValueError(f"corpus hash mismatch for document {document_id!r}")
+            filename = Path(str(item.get("filename") or "upload.bin")).name
+            suffix = Path(filename).suffix[:16]
+            path = corpus_dir / f"{document_id}{suffix}"
+            path.write_bytes(content)
+            path.chmod(0o600)
+            file_inputs.append(str(path))
+            hashes[document_id] = digest
+            policies[document_id] = bool(item.get("critical_claims_allowed", False))
+        return file_inputs, {
+            "document_version_ids": sorted(hashes),
+            "content_hashes": hashes,
+            "critical_claims_allowed": policies,
+        }
 
     def get(self, job_id: str) -> JobRuntimeRecord | None:
         return self.store.get_job(job_id)

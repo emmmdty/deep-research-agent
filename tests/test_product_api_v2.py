@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -83,6 +85,20 @@ def test_database_rejects_sqlite_without_explicit_offline_mode():
 
     with pytest.raises(ValueError, match="PostgreSQL"):
         create_database("sqlite+pysqlite:///:memory:", offline_mode=False)
+
+
+def test_fresh_alembic_upgrade_handles_dynamic_legacy_schema(tmp_path, monkeypatch):
+    from alembic import command
+    from alembic.config import Config
+    from sqlalchemy import create_engine, inspect
+
+    database_url = f"sqlite+pysqlite:///{tmp_path / 'migration.db'}"
+    monkeypatch.setenv("DATABASE_URL", database_url)
+    config = Config("alembic.ini")
+    command.upgrade(config, "head")
+    inspector = inspect(create_engine(database_url))
+    columns = {column["name"] for column in inspector.get_columns("product_memories")}
+    assert {"subject_id", "key", "provenance", "sensitivity", "expires_at", "confirmed"} <= columns
 
 
 def test_invitation_login_logout_and_cookie_security(app):
@@ -184,6 +200,14 @@ def test_message_decisions_are_exact_and_include_structured_briefs(admin):
     assert ambiguous.status_code == 200
     assert ambiguous.json()["response_type"] == "clarification_required"
 
+    complex_definition = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "什么是事件图谱、Agent与LLM如何相互作用？"},
+    )
+    assert complex_definition.status_code == 202
+    assert complex_definition.json()["response_type"] == "research_job_started"
+
     expensive = client.post(
         f"/v1/conversations/{conversation_id}/messages",
         headers={"X-CSRF-Token": csrf},
@@ -220,6 +244,59 @@ def test_message_decisions_are_exact_and_include_structured_briefs(admin):
             "constraints",
             "snapshot_cutoff",
         }
+
+
+def test_message_router_handles_chinese_intent_without_whitespace(admin, app):
+    client, csrf = admin
+    topic = _create_topic(client, csrf, "事件图谱 Agent LLM")
+    conversation_id = topic["conversation_id"]
+
+    research = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "分析事件图谱、Agent与LLM如何相互作用，聚焦论文证据"},
+    )
+    assert research.status_code == 202
+    assert research.json()["response_type"] == "research_job_started"
+
+    ambiguous = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "研究一下"},
+    )
+    assert ambiguous.status_code == 200
+    assert ambiguous.json()["response_type"] == "clarification_required"
+
+    app.state.product_service.complete_run(
+        research.json()["run_id"],
+        tenant_id="system",
+        bundle={"report_markdown": "事件图谱证据快照", "schema_version": "2.0"},
+        snapshot_cutoff="2026-07-18T00:00:00+00:00",
+    )
+    follow_up = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "总结事件图谱的证据"},
+    )
+    assert follow_up.status_code == 200
+    assert follow_up.json()["answer"] == "事件图谱证据快照"
+    assert follow_up.json()["brief"]["snapshot_cutoff"] == "2026-07-18T00:00:00+00:00"
+
+    direct = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "什么是事件图谱？"},
+    )
+    assert direct.status_code == 200
+    assert direct.json()["response_type"] == "direct_answer"
+
+    greeting = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "你好"},
+    )
+    assert greeting.status_code == 200
+    assert greeting.json()["response_type"] == "direct_answer"
 
 
 def test_follow_up_uses_frozen_snapshot_until_refresh(admin, app):
@@ -320,6 +397,106 @@ def test_private_corpus_memory_crud_and_export_are_tenant_scoped(admin):
     assert owner.delete(
         f"/v1/memory/{memory_id}", headers={"X-CSRF-Token": owner_csrf}
     ).status_code == 204
+
+
+def test_private_corpus_is_frozen_into_scheduler_job_and_bundle(admin):
+    from configs.settings import Settings
+    from deep_research_agent.research_jobs.worker import build_scheduler_factory
+
+    client, csrf = admin
+    uploaded = client.post(
+        "/v1/corpus/upload",
+        headers={"X-CSRF-Token": csrf},
+        files={"file": ("notes.txt", b"trusted private notes", "text/plain")},
+    )
+    assert uploaded.status_code == 201
+    document_id = uploaded.json()["document_id"]
+    topic = _create_topic(client, csrf)
+    created = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={
+            "question": "Use the uploaded evidence",
+            "corpus_document_ids": [document_id],
+            "start_worker": False,
+        },
+    )
+    assert created.status_code == 202
+    runtime_job = client.app.state.runtime_service.get(created.json()["research_job_id"])
+    assert runtime_job.metadata["corpus_manifest"]["document_version_ids"] == [document_id]
+    assert runtime_job.metadata["config_snapshot"]["file_inputs"]
+    staged = Path(runtime_job.metadata["config_snapshot"]["file_inputs"][0])
+    assert staged.read_bytes() == b"trusted private notes"
+
+    client.app.state.runtime_service.configure_scheduler_factory(
+        build_scheduler_factory(Settings(scheduler_runtime_mode="offline"), offline=True)
+    )
+    client.app.state.runtime_service.run_job(runtime_job.job_id)
+    bundle = client.get(f"/v1/runs/{created.json()['run_id']}/bundle")
+    assert bundle.status_code == 200
+    assert bundle.json()["corpus_manifest"]["document_version_ids"] == [document_id]
+
+
+def test_memory_requires_sensitive_confirmation_and_expires_or_supersedes(admin, app):
+    client, csrf = admin
+    rejected = client.post(
+        "/v1/memory",
+        headers={"X-CSRF-Token": csrf},
+        json={"scope": "user_memory", "key": "profile", "content": "private", "sensitivity": "sensitive"},
+    )
+    assert rejected.status_code == 422
+    first = client.post(
+        "/v1/memory",
+        headers={"X-CSRF-Token": csrf},
+        json={
+            "scope": "user_memory",
+            "key": "profile",
+            "content": "prefers primary papers",
+            "provenance": {"source": "user"},
+            "sensitivity": "sensitive",
+            "confirm_sensitive": True,
+        },
+    )
+    assert first.status_code == 201
+    second = client.post(
+        "/v1/memory",
+        headers={"X-CSRF-Token": csrf},
+        json={"scope": "user_memory", "key": "profile", "content": "prefers ACL papers"},
+    )
+    assert second.status_code == 201
+    assert client.get(f"/v1/memory/{first.json()['memory_id']}").json()["status"] == "superseded"
+    assert second.json()["supersedes_memory_id"] == first.json()["memory_id"]
+    topic = _create_topic(client, csrf)
+    run = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={"question": "Use remembered preferences", "start_worker": False},
+    ).json()
+    runtime_job = app.state.runtime_service.get(run["research_job_id"])
+    memory_context = runtime_job.metadata["research_brief"]["constraints"]["memory_context"]
+    assert memory_context[0]["key"] == "profile"
+    assert memory_context[0]["content"] == "prefers ACL papers"
+    expiring = client.post(
+        "/v1/memory",
+        headers={"X-CSRF-Token": csrf},
+        json={
+            "scope": "conversation_focus",
+            "subject_id": topic["conversation_id"],
+            "content": "temporary focus",
+            "ttl_seconds": 1,
+        },
+    )
+    assert expiring.status_code == 201
+    memory_id = expiring.json()["memory_id"]
+    identity = app.state.product_service.auth.authenticate(client.cookies.get("dra_session"))
+    assert identity is not None
+    app.state.product_service.repository.update_memory(
+        memory_id,
+        tenant_id=identity.tenant_id,
+        user_id=identity.user_id,
+        values={"expires_at": datetime.now(timezone.utc) - timedelta(seconds=1)},
+    )
+    assert not any(item["memory_id"] == memory_id for item in client.get("/v1/memory").json()["memories"])
 
 
 def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
@@ -432,6 +609,34 @@ def test_product_run_delegates_to_canonical_runtime_and_syncs_artifacts(admin, a
     assert synced.status_code == 200
     assert synced.json()["status"] == "completed"
     assert client.get(f"/v1/runs/{body['run_id']}/bundle").json() == bundle
+
+
+def test_run_event_dedupe_is_safe_under_concurrent_sync(admin, app):
+    client, csrf = admin
+    topic = _create_topic(client, csrf)
+    run = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={"question": "Concurrent event sync", "start_worker": False},
+    ).json()
+
+    def append_once(_: int) -> dict[str, Any]:
+        return app.state.product_service.append_run_event(
+            run["run_id"],
+            tenant_id=run["tenant_id"],
+            event_type="runtime.task.started",
+            payload={"task_id": "research-01"},
+            dedupe_key="runtime-event:event-0001",
+        )
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        results = list(executor.map(append_once, range(16)))
+
+    assert len({result["sequence"] for result in results}) == 1
+    events = app.state.product_service.list_run_events(
+        run["run_id"], tenant_id=run["tenant_id"]
+    )
+    assert [event["event_type"] for event in events].count("runtime.task.started") == 1
 
 
 def test_completed_scheduler_run_emits_an_honest_report_bundle(admin, app):

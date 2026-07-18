@@ -29,7 +29,7 @@ WORKDIR /web
 COPY apps/gui-web/package.json apps/gui-web/package-lock.json ./
 RUN npm ci
 COPY apps/gui-web/ ./
-ARG VITE_DRA_API_BASE_URL=http://127.0.0.1:8000
+ARG VITE_DRA_API_BASE_URL=
 ENV VITE_DRA_API_BASE_URL=$VITE_DRA_API_BASE_URL
 RUN npm run build
 

@@ -127,8 +127,15 @@ export type RunEvent = {
 export type MemoryRecord = {
   memory_id: string;
   scope: string;
+  subject_id?: string | null;
+  key?: string;
   content: string;
   confidence: number;
+  provenance?: Record<string, unknown>;
+  sensitivity?: "normal" | "sensitive";
+  expires_at?: string | null;
+  supersedes_memory_id?: string | null;
+  confirmed?: boolean;
   status: string;
   created_at?: string;
   updated_at: string;

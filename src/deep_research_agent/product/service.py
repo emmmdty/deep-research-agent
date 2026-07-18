@@ -7,7 +7,7 @@ import json
 import re
 import secrets
 from copy import deepcopy
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -43,6 +43,23 @@ _HIGH_COST_MARKERS = (
     "ever published",
     "the entire internet",
     "everything about",
+    "每一篇论文",
+    "所有论文",
+    "穷尽",
+    "全部研究",
+    "整个互联网",
+)
+_AMBIGUOUS_PROMPTS = frozenset(
+    {
+        "research it",
+        "look into it",
+        "compare them",
+        "研究一下",
+        "查一下",
+        "比较一下",
+        "看看这个",
+        "帮我看看",
+    }
 )
 _SECRET_KEY_MARKERS = (
     "apikey",
@@ -125,6 +142,14 @@ def _contains_secret_key(value: Any) -> bool:
     elif isinstance(value, (list, tuple)):
         return any(_contains_secret_key(item) for item in value)
     return False
+
+
+def _semantic_unit_count(value: str) -> int:
+    """Count words and CJK characters so whitespace-free prompts are not misclassified."""
+
+    latin_words = re.findall(r"[a-z0-9]+", value.casefold())
+    cjk_chars = re.findall(r"[\u3400-\u9fff]", value)
+    return len(latin_words) + len(cjk_chars)
 
 
 class ProductService:
@@ -210,6 +235,7 @@ class ProductService:
         question: str,
         conversation_id: str | None = None,
         start_worker: bool | None = None,
+        corpus_document_ids: list[str] | None = None,
     ) -> dict[str, Any]:
         topic = self.repository.get_topic(topic_id, tenant_id=tenant_id)
         if topic is None:
@@ -226,6 +252,16 @@ class ProductService:
         config = self.repository.get_active_runtime_config()
         version_id = config.version_id if config is not None else "default"
         config_snapshot = deepcopy(config.config) if config is not None else {}
+        corpus_documents = self._selected_corpus_documents(
+            tenant_id=tenant_id,
+            document_ids=corpus_document_ids,
+        )
+        memory_context = self._memory_context(
+            tenant_id=tenant_id,
+            user_id=user_id,
+            topic_id=topic_id,
+            conversation_id=conversation_id,
+        )
         domain_pack_id = str(config_snapshot.get("domain_pack_id", "event-graph-agents-llms"))
         domain_pack = DomainPackRegistry().load(domain_pack_id)
         brief = ResearchBrief(
@@ -234,7 +270,11 @@ class ProductService:
             question=question,
             domain_pack_id=domain_pack_id,
             objectives=list(config_snapshot.get("objectives") or [question]),
-            constraints={"topic_id": topic_id, "config_version_id": version_id},
+            constraints={
+                "topic_id": topic_id,
+                "config_version_id": version_id,
+                "memory_context": memory_context,
+            },
         )
         dag = ResearchPlanner().plan(brief, domain_pack)
         resolved_start_worker = self._resolve_start_worker(start_worker)
@@ -250,6 +290,17 @@ class ProductService:
                 "product_tenant_id": tenant_id,
                 "product_config_version_id": version_id,
             },
+            corpus_inputs=[
+                {
+                    "document_id": document.document_id,
+                    "filename": document.filename,
+                    "media_type": document.media_type,
+                    "content_sha256": document.content_sha256,
+                    "content": document.content,
+                    "critical_claims_allowed": False,
+                }
+                for document in corpus_documents
+            ],
         )
         runtime_status = self._status_value(runtime_job.status)
         run = RunTable(
@@ -278,6 +329,51 @@ class ProductService:
         )
         self._sync_runtime_events(run)
         return self.run_dict(run)
+
+    def _selected_corpus_documents(
+        self, *, tenant_id: str, document_ids: list[str] | None
+    ) -> list[CorpusDocumentTable]:
+        if document_ids is None:
+            return []
+        documents = self.repository.list_corpus_documents(tenant_id=tenant_id)
+        if document_ids is None:
+            return documents
+        by_id = {document.document_id: document for document in documents}
+        missing = [document_id for document_id in document_ids if document_id not in by_id]
+        if missing:
+            raise KeyError(missing[0])
+        return [by_id[document_id] for document_id in document_ids]
+
+    def _memory_context(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        topic_id: str,
+        conversation_id: str | None,
+    ) -> list[dict[str, Any]]:
+        scopes_and_subjects = [
+            ("user_memory", user_id),
+            ("agent_experience", user_id),
+            ("topic_memory", topic_id),
+        ]
+        if conversation_id is not None:
+            scopes_and_subjects.append(("conversation_focus", conversation_id))
+        return [
+            {
+                "scope": memory.scope,
+                "subject_id": memory.subject_id,
+                "key": memory.key,
+                "content": memory.content,
+                "confidence": memory.confidence,
+                "provenance": memory.provenance,
+            }
+            for memory in self.repository.list_memories(
+                tenant_id=tenant_id,
+                user_id=user_id,
+                scopes_and_subjects=scopes_and_subjects,
+            )
+        ]
 
     def _resolve_start_worker(self, requested: bool | None) -> bool:
         if not self.database.offline_mode:
@@ -532,9 +628,13 @@ class ProductService:
             self._sync_runtime_run(candidate)
         latest = self.repository.latest_completed_run(conversation.topic_id, tenant_id=tenant_id)
         topic = self.repository.get_topic(conversation.topic_id, tenant_id=tenant_id)
-        words = content.casefold().split()
-        high_cost = any(marker in content.casefold() for marker in _HIGH_COST_MARKERS)
-        ambiguous = len(words) <= 2 or content.casefold() in {"research it", "look into it", "compare them"}
+        normalized_content = content.casefold()
+        high_cost = any(marker in normalized_content for marker in _HIGH_COST_MARKERS)
+        simple_question = self._is_simple_question(content)
+        ambiguous = (
+            (_semantic_unit_count(content) <= 3 and not simple_question)
+            or normalized_content in _AMBIGUOUS_PROMPTS
+        )
         run: dict[str, Any] | None = None
         answer: str | None = None
         questions: list[str] = []
@@ -554,7 +654,7 @@ class ProductService:
                 "What decision should this research support?",
                 "Which scope and evidence cutoff should be used?",
             ]
-        elif self._is_simple_question(content):
+        elif simple_question:
             response_type = "direct_answer"
             answer = self._direct_answer(content)
         elif latest is not None and self._is_relevant_follow_up(
@@ -603,8 +703,18 @@ class ProductService:
     @staticmethod
     def _is_simple_question(content: str) -> bool:
         lowered = content.casefold()
-        return bool(re.fullmatch(r"what is\s+\d+\s*\+\s*\d+\??", lowered)) or (
-            len(content.split()) <= 12
+        short_definition = (
+            re.fullmatch(r"\s*什么是.{1,24}[?？]?\s*", content)
+            and not re.search(r"[，,、；;：:]", content)
+            and _semantic_unit_count(content) <= 10
+        )
+        return bool(
+            re.fullmatch(r"what is\s+\d+\s*\+\s*\d+\??", lowered)
+            or re.fullmatch(r"\s*\d+\s*\+\s*\d+\s*[?？]?", content)
+            or short_definition
+            or re.fullmatch(r"\s*(你好|您好|嗨)[！!。．.]?\s*", content)
+        ) or (
+            _semantic_unit_count(content) <= 12
             and lowered.startswith(("what is ", "who is ", "define ", "hello", "hi "))
         )
 
@@ -613,16 +723,25 @@ class ProductService:
         match = re.fullmatch(r"what is\s+(\d+)\s*\+\s*(\d+)\??", content.casefold())
         if match:
             return str(int(match.group(1)) + int(match.group(2)))
+        match = re.fullmatch(r"\s*(\d+)\s*\+\s*(\d+)\s*[?？]?\s*", content)
+        if match:
+            return str(int(match.group(1)) + int(match.group(2)))
+        if re.fullmatch(r"\s*(你好|您好|嗨)[！!。．.]?\s*", content):
+            return "你好，我可以帮你组织证据、运行研究任务并生成可追溯报告。"
         return "This question can be answered directly without starting a research run."
 
     @staticmethod
     def _is_relevant_follow_up(content: str, *, topic_title: str, prior_question: str) -> bool:
         def terms(value: str) -> set[str]:
-            return {
+            result = {
                 token
                 for token in re.findall(r"[a-z0-9]+", value.casefold())
                 if len(token) > 2 and token not in _FOLLOW_UP_STOP_WORDS
             }
+            for sequence in re.findall(r"[\u3400-\u9fff]{2,}", value):
+                result.add(sequence)
+                result.update(sequence[index : index + 2] for index in range(len(sequence) - 1))
+            return result
 
         return bool(terms(content) & terms(f"{topic_title} {prior_question}"))
 
@@ -676,19 +795,61 @@ class ProductService:
         scope: str,
         content: str,
         confidence: float,
+        subject_id: str | None = None,
+        key: str | None = None,
+        provenance: dict[str, Any] | None = None,
+        sensitivity: str = "normal",
+        ttl_seconds: int | None = None,
+        confirm_sensitive: bool = False,
     ) -> dict[str, Any]:
         if scope not in MEMORY_SCOPES:
             raise ValueError(f"unsupported memory scope: {scope}")
+        if sensitivity not in {"normal", "sensitive"}:
+            raise ValueError("sensitivity must be normal or sensitive")
+        if sensitivity == "sensitive" and not confirm_sensitive:
+            raise ValueError("sensitive memories require explicit confirmation")
+        resolved_subject = (subject_id or "").strip() or None
+        if scope in {"user_memory", "agent_experience"}:
+            resolved_subject = user_id
+        elif scope in {"topic_memory", "conversation_focus", "run_state"} and resolved_subject is None:
+            raise ValueError(f"{scope} requires a subject_id")
+        cleaned_content = content.strip()
+        if not cleaned_content:
+            raise ValueError("memory content cannot be blank")
+        resolved_key = (key or "").strip() or f"{scope}:{hashlib.sha256(cleaned_content.encode()).hexdigest()[:16]}"
+        ttl_defaults = {
+            "run_state": 7 * 24 * 3600,
+            "conversation_focus": 30 * 24 * 3600,
+            "agent_experience": 90 * 24 * 3600,
+        }
+        resolved_ttl = ttl_seconds if ttl_seconds is not None else ttl_defaults.get(scope)
+        if resolved_ttl is not None and resolved_ttl <= 0:
+            raise ValueError("ttl_seconds must be positive")
         memory = MemoryTable(
             memory_id=_id("mem"),
             tenant_id=tenant_id,
             user_id=user_id,
             scope=scope,
-            content=content.strip(),
+            subject_id=resolved_subject,
+            key=resolved_key,
+            content=cleaned_content,
             confidence=confidence,
+            provenance=deepcopy(provenance or {"source": "user"}),
+            sensitivity=sensitivity,
+            expires_at=(datetime.now(timezone.utc) + timedelta(seconds=resolved_ttl))
+            if resolved_ttl is not None
+            else None,
+            confirmed=confirm_sensitive,
         )
-        if not memory.content:
-            raise ValueError("memory content cannot be blank")
+        previous = self.repository.supersede_memory_key(
+            tenant_id=tenant_id,
+            user_id=user_id,
+            subject_id=resolved_subject,
+            key=resolved_key,
+        )
+        if previous is not None:
+            memory.supersedes_memory_id = previous.memory_id
+            memory.provenance = {**memory.provenance, "supersedes": previous.memory_id}
         self.repository.create_memory(memory)
         return self.memory_dict(memory)
 
@@ -730,8 +891,15 @@ class ProductService:
             "tenant_id": memory.tenant_id,
             "user_id": memory.user_id,
             "scope": memory.scope,
+            "subject_id": memory.subject_id,
+            "key": memory.key,
             "content": memory.content,
             "confidence": memory.confidence,
+            "provenance": memory.provenance,
+            "sensitivity": memory.sensitivity,
+            "expires_at": _iso(memory.expires_at) if memory.expires_at is not None else None,
+            "supersedes_memory_id": memory.supersedes_memory_id,
+            "confirmed": memory.confirmed,
             "status": memory.status,
             "created_at": _iso(memory.created_at),
             "updated_at": _iso(memory.updated_at),

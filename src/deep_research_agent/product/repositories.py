@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import Any
 
 from sqlalchemy import func, select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
 from deep_research_agent.product.tables import (
@@ -195,35 +196,50 @@ class ProductRepository:
         payload: dict[str, Any],
         dedupe_key: str,
     ) -> RunEventTable:
-        with self._session() as session:
-            run = session.scalar(
-                select(RunTable)
-                .where(RunTable.run_id == run_id, RunTable.tenant_id == tenant_id)
-                .with_for_update()
-            )
-            if run is None:
-                raise KeyError(run_id)
-            existing = session.scalar(
-                select(RunEventTable).where(
-                    RunEventTable.run_id == run_id,
-                    RunEventTable.dedupe_key == dedupe_key,
-                )
-            )
-            if existing is not None:
-                return existing
-            last_sequence = session.scalar(
-                select(func.max(RunEventTable.sequence)).where(RunEventTable.run_id == run_id)
-            )
-            event = RunEventTable(
-                run_id=run_id,
-                tenant_id=tenant_id,
-                sequence=int(last_sequence or 0) + 1,
-                event_type=event_type,
-                dedupe_key=dedupe_key,
-                payload=dict(payload),
-            )
-            session.add(event)
-        return event
+        for _ in range(5):
+            try:
+                with self._session() as session:
+                    run = session.scalar(
+                        select(RunTable)
+                        .where(RunTable.run_id == run_id, RunTable.tenant_id == tenant_id)
+                        .with_for_update()
+                    )
+                    if run is None:
+                        raise KeyError(run_id)
+                    existing = session.scalar(
+                        select(RunEventTable).where(
+                            RunEventTable.run_id == run_id,
+                            RunEventTable.dedupe_key == dedupe_key,
+                        )
+                    )
+                    if existing is not None:
+                        return existing
+                    last_sequence = session.scalar(
+                        select(func.max(RunEventTable.sequence)).where(
+                            RunEventTable.run_id == run_id
+                        )
+                    )
+                    event = RunEventTable(
+                        run_id=run_id,
+                        tenant_id=tenant_id,
+                        sequence=int(last_sequence or 0) + 1,
+                        event_type=event_type,
+                        dedupe_key=dedupe_key,
+                        payload=dict(payload),
+                    )
+                    session.add(event)
+                return event
+            except IntegrityError:
+                with self.sessions() as session:
+                    existing = session.scalar(
+                        select(RunEventTable).where(
+                            RunEventTable.run_id == run_id,
+                            RunEventTable.dedupe_key == dedupe_key,
+                        )
+                    )
+                    if existing is not None:
+                        return existing
+        raise RuntimeError(f"could not append event after concurrent updates: {dedupe_key}")
 
     def list_events(
         self, run_id: str, *, tenant_id: str, after_sequence: int = 0
@@ -274,27 +290,84 @@ class ProductRepository:
 
     def get_memory(self, memory_id: str, *, tenant_id: str, user_id: str) -> MemoryTable | None:
         with self.sessions() as session:
-            return session.scalar(
+            memory = session.scalar(
                 select(MemoryTable).where(
                     MemoryTable.memory_id == memory_id,
                     MemoryTable.tenant_id == tenant_id,
                     MemoryTable.user_id == user_id,
                 )
             )
+            if memory is not None and memory.expires_at is not None:
+                now = utc_now()
+                expires_at = memory.expires_at
+                if expires_at.tzinfo is None:
+                    now = now.replace(tzinfo=None)
+                if expires_at <= now:
+                    return None
+            return memory
 
-    def list_memories(self, *, tenant_id: str, user_id: str) -> list[MemoryTable]:
-        with self.sessions() as session:
-            return list(
-                session.scalars(
-                    select(MemoryTable)
-                    .where(
-                        MemoryTable.tenant_id == tenant_id,
-                        MemoryTable.user_id == user_id,
-                        MemoryTable.status == "active",
+    def list_memories(
+        self,
+        *,
+        tenant_id: str,
+        user_id: str,
+        scopes_and_subjects: list[tuple[str, str | None]] | None = None,
+    ) -> list[MemoryTable]:
+        with self._session() as session:
+            statement = select(MemoryTable).where(
+                MemoryTable.tenant_id == tenant_id,
+                MemoryTable.user_id == user_id,
+                MemoryTable.status == "active",
+            )
+            if scopes_and_subjects is not None:
+                from sqlalchemy import or_
+
+                statement = statement.where(
+                    or_(
+                        *(
+                            (MemoryTable.scope == scope) & (MemoryTable.subject_id == subject_id)
+                            for scope, subject_id in scopes_and_subjects
+                        )
                     )
-                    .order_by(MemoryTable.created_at, MemoryTable.memory_id)
+                )
+            memories = list(
+                session.scalars(
+                    statement.order_by(MemoryTable.created_at, MemoryTable.memory_id)
                 )
             )
+            now = utc_now()
+            active: list[MemoryTable] = []
+            for memory in memories:
+                if memory.expires_at is not None:
+                    expires_at = memory.expires_at
+                    comparison_now = now.replace(tzinfo=None) if expires_at.tzinfo is None else now
+                    if expires_at <= comparison_now:
+                        memory.status = "expired"
+                        memory.updated_at = now
+                        continue
+                active.append(memory)
+            return active
+
+    def supersede_memory_key(
+        self, *, tenant_id: str, user_id: str, subject_id: str | None, key: str
+    ) -> MemoryTable | None:
+        with self._session() as session:
+            memory = session.scalar(
+                select(MemoryTable)
+                .where(
+                    MemoryTable.tenant_id == tenant_id,
+                    MemoryTable.user_id == user_id,
+                    MemoryTable.subject_id == subject_id,
+                    MemoryTable.key == key,
+                    MemoryTable.status == "active",
+                )
+                .order_by(MemoryTable.updated_at.desc())
+            )
+            if memory is None:
+                return None
+            memory.status = "superseded"
+            memory.updated_at = utc_now()
+            return memory
 
     def update_memory(
         self, memory_id: str, *, tenant_id: str, user_id: str, values: dict[str, Any]

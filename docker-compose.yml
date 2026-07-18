@@ -56,7 +56,7 @@ services:
       context: .
       target: web
       args:
-        VITE_DRA_API_BASE_URL: http://127.0.0.1:8000
+        VITE_DRA_API_BASE_URL: ${VITE_DRA_API_BASE_URL:-}
     ports:
       - "127.0.0.1:8000:8080"
     depends_on:

@@ -5,11 +5,11 @@ import { productApi } from "../../api/client";
 import { AsyncState } from "../../components/AsyncState";
 
 const scopeLabels: Record<string, string> = {
-  user_preference: "用户偏好",
-  long_term: "长期记忆",
-  project: "项目记忆",
-  temporary: "临时记忆",
-  session: "会话记忆",
+  user_memory: "用户偏好",
+  topic_memory: "主题记忆",
+  conversation_focus: "会话焦点",
+  run_state: "运行状态",
+  agent_experience: "Agent 经验",
 };
 
 export function MemoryPage() {
@@ -36,7 +36,7 @@ export function MemoryPage() {
           {memories.data?.memories.length ? memories.data.memories.map((memory) => (
             <article className="memory-row" key={memory.memory_id}>
               <div className="memory-scope"><ShieldCheck size={16} /><span>{scopeLabels[memory.scope] ?? memory.scope}</span></div>
-              <div className="memory-content"><p>{memory.content}</p><small><Clock3 size={12} />更新于 {new Date(memory.updated_at).toLocaleString("zh-CN")} · 置信度 {Math.round(memory.confidence * 100)}%</small></div>
+              <div className="memory-content"><p>{memory.content}</p><small><Clock3 size={12} />更新于 {new Date(memory.updated_at).toLocaleString("zh-CN")} · 置信度 {Math.round(memory.confidence * 100)}%{memory.expires_at ? ` · 到期 ${new Date(memory.expires_at).toLocaleString("zh-CN")}` : ""}{memory.sensitivity === "sensitive" ? " · 敏感" : ""}</small></div>
               <button className="icon-button danger" aria-label="删除记忆" onClick={() => deleteMemory(memory.memory_id)} type="button"><Trash2 size={17} /></button>
             </article>
           )) : <div className="view-empty">当前没有可用记忆。偏好只有在确认后才会进入长期存储。</div>}

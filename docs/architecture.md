@@ -9,7 +9,7 @@ The supported system is a tenant-aware, evidence-first research product with the
 - React research workspace and admin views
 - authenticated FastAPI product API
 - durable multi-agent scheduler and reconnectable SSE events
-- scholarly corpus, parser fallback, shared public cache, and scoped memory
+- tenant-upload corpus freezing, reusable scholarly corpus/parser services, and scoped memory
 - deterministic evaluation and release manifests
 
 The V2 product uses PostgreSQL/pgvector as its production source of truth and MinIO-compatible
@@ -92,9 +92,14 @@ Own the V2 contracts and execution path:
 Own product persistence and user boundaries:
 
 - Argon2id invite-only authentication, same-site sessions, CSRF, and tenant checks
-- PostgreSQL repositories for topics, conversations, runs, events, corpus grants, and memories
-- GROBID primary parsing with Docling fallback; public cache keyed by content and parser version
-- run-state TTL, conversation focus TTL, and explicit sensitive-memory confirmation
+- PostgreSQL repositories for topics, conversations, runs, events, tenant uploads, and memories
+- run-owned copies and hash manifests for selected private uploads before worker start
+- product memory provenance, TTL cleanup, conflict supersession, recall into research briefs, and
+  explicit sensitive-memory confirmation
+- the current product contract is explicit memory CRUD plus subject-scoped recall; automatic
+  conversation-to-long-term promotion is intentionally deferred
+- reusable GROBID/Docling and shared-cache services; a production scheduler must compose these into
+  live public-source retrieval
 
 ### `src/deep_research_agent/observability/` and `src/deep_research_agent/evals/`
 
@@ -206,7 +211,7 @@ V2 product endpoints include:
 - `POST /v1/conversations/{id}/messages` returning `direct_answer`,
   `clarification_required`, or `research_job_started`
 - `GET/POST /v1/topics/{topic_id}/runs`, run status/cancel/resume/bundle, and reconnectable SSE
-- private corpus upload/search and scoped memory CRUD/export
+- private corpus upload/list/get and scoped memory CRUD/export
 - administrator-only model, tool, and frozen runtime-config endpoints
 
 The legacy compatibility endpoints remain available for historical local jobs:
@@ -267,12 +272,13 @@ Phase 4 does not fully recompile `report_bundle.json` after manual review.
 
 ## Current Limits
 
-- local API only
-- no auth or tenant isolation
-- no external queue
-- no object storage indirection
+- the bundled offline scheduler exercises the product workflow but performs no external retrieval
+- live research requires an explicitly configured external `SCHEDULER_FACTORY_PATH`
+- the connector substrate currently includes arXiv, GitHub, open-web, and local files; ACL
+  Anthology, OpenAlex, Crossref, DataCite, DBLP, PMLR, and NeurIPS are source-design targets
+- no external queue; worker recovery remains job-local
 - no full bundle recompilation after manual review
-- heavy benchmark/comparator tooling remains as diagnostics and historical comparison, not the primary release contract
+- heavy benchmark/comparator tooling remains diagnostic, not the primary release contract
 
 These are deliberate follow-on items for later phases, not hidden assumptions.
 
@@ -286,7 +292,8 @@ bootstrap admin, and scheduler mode, then runs `alembic upgrade head` before ser
 
 Production mode requires `SCHEDULER_FACTORY_PATH` to resolve a real provider-neutral scheduler
 factory. The only credential-free mode is the explicit `SCHEDULER_RUNTIME_MODE=offline` demo mode.
-Missing production secrets or a missing factory fail closed.
+Missing production secrets or a missing factory fail closed. Offline reports state that no
+evidence-backed conclusion was produced rather than fabricating a result.
 
 ## Supported Questions And Source Limits
 
@@ -296,7 +303,9 @@ contradictions, or request an explicit corpus refresh. Ambiguous or high-cost re
 clarification brief before any worker starts.
 
 The product does not promise unrestricted current-web coverage. Critical claims require frozen
-document versions and exact spans from governed sources. The initial reliable corpus is scholarly
-metadata/full text from arXiv, ACL Anthology, OpenAlex, Crossref, DataCite, DBLP, PMLR, NeurIPS,
-and licensed user uploads; arbitrary web search is discovery-only and cannot support critical
-claims. Source outages produce freshness warnings, not fabricated or silently stale conclusions.
+document versions and exact spans from governed sources. Today, the product API freezes selected
+tenant uploads and makes their paths and hashes available to the scheduler. The bundled connector
+substrate includes arXiv, GitHub, open-web, and local files, but only an explicitly configured
+production scheduler performs live retrieval. ACL Anthology, OpenAlex, Crossref, DataCite, DBLP,
+PMLR, and NeurIPS are documented source-design targets and are not yet product connectors.
+Arbitrary web search remains discovery-only and cannot support critical claims.

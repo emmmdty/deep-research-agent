@@ -41,12 +41,12 @@
 - `TaskSpec` carries `task_id`, `job_id`, `kind`, `role`, `objective`, `depends_on`, `input_artifacts`, `output_schema`, `budget`, and `idempotency_key`.
 - `ReportBundleV2` carries report Markdown, accepted/qualified claims, evidence matrix, generic research graph, sources, audit summary, corpus manifest, and run manifest.
 
-- [ ] Add failing tests proving both packs load, their schemas validate, the smoke pack contains no event-graph vocabulary, invalid dependencies are rejected, critical accepted claims require evidence, and `ReportBundleV2.schema_version == "2.0"`.
-- [ ] Run `uv run pytest -q tests/test_kernel_contracts.py` and confirm failure because the kernel/domain-pack modules do not exist.
-- [ ] Implement the minimal typed models and YAML registry. Keep domain relations declarative and reject unknown top-level fields.
-- [ ] Copy the already-reviewed `apps/` rows from the user's dirty `docs/REPO_MAP.md` into the isolated worktree so the pre-existing repository-standard test passes.
-- [ ] Run `uv run pytest -q tests/test_kernel_contracts.py tests/test_public_repo_standards.py` and `uv run ruff check .`.
-- [ ] Commit as `feat: add research kernel and domain packs`.
+- [x] Add failing tests proving both packs load, their schemas validate, the smoke pack contains no event-graph vocabulary, invalid dependencies are rejected, critical accepted claims require evidence, and `ReportBundleV2.schema_version == "2.0"`.
+- [x] Run `uv run pytest -q tests/test_kernel_contracts.py` and confirm failure because the kernel/domain-pack modules do not exist.
+- [x] Implement the minimal typed models and YAML registry. Keep domain relations declarative and reject unknown top-level fields.
+- [x] Copy the already-reviewed `apps/` rows from the user's dirty `docs/REPO_MAP.md` into the isolated worktree so the pre-existing repository-standard test passes.
+- [x] Run `uv run pytest -q tests/test_kernel_contracts.py tests/test_public_repo_standards.py` and `uv run ruff check .`.
+- [x] Commit as `feat: add research kernel and domain packs`.
 
 ### Task 2: Versioned Model Registry And Governed Tool Gateway
 
@@ -63,13 +63,13 @@
 - Produce `ToolSpec`, `ToolInvocation`, `ToolResultEnvelope`, and `ToolGateway.invoke(task, call, context)` with allowlists, tenant checks, timeout, retry, budget, cache, and idempotency enforcement.
 - Credential persistence uses AES-GCM with a 32-byte environment master key; serializers never return plaintext credentials.
 
-- [ ] Add failing tests for per-role endpoint selection, immutable snapshots, same-tier fallback, failed capability probes, secret redaction, role/tool denial, tenant denial, cache hits, and duplicate idempotency keys.
-- [ ] Run the two focused test files and confirm missing-module failures.
-- [ ] Add only the required dependencies: `cryptography`, `pydantic-ai-slim[openai]`, and test-time HTTP support. Regenerate the uv lock.
-- [ ] Implement registry storage protocols with in-memory adapters for tests and production-facing interfaces for Task 5.
-- [ ] Implement the OpenAI-compatible client factory using independent base URL, model, key, timeout, structured-output, and tool-use capabilities per endpoint.
-- [ ] Implement the gateway. Treat tool output as untrusted data and return artifact references for large results.
-- [ ] Run focused tests, `uv run ruff check .`, and commit as `feat: add model registry and tool gateway`.
+- [x] Add failing tests for per-role endpoint selection, immutable snapshots, same-tier fallback, failed capability probes, secret redaction, role/tool denial, tenant denial, cache hits, and duplicate idempotency keys.
+- [x] Run the two focused test files and confirm missing-module failures.
+- [x] Add only the required dependencies: `cryptography`, `pydantic-ai-slim[openai]`, and test-time HTTP support. Regenerate the uv lock.
+- [x] Implement registry storage protocols with in-memory adapters for tests and production-facing interfaces for Task 5.
+- [x] Implement the OpenAI-compatible client factory using independent base URL, model, key, timeout, structured-output, and tool-use capabilities per endpoint.
+- [x] Implement the gateway. Treat tool output as untrusted data and return artifact references for large results.
+- [x] Run focused tests, `uv run ruff check .`, and commit as `feat: add model registry and tool gateway`.
 
 ### Task 3: Dynamic Multi-Agent DAG, Evidence Audit, And Bundle Compiler
 
@@ -87,13 +87,13 @@
 - Worker outputs always validate against the declared output schema. Deterministic merge owns document/claim deduplication; an explicit critic task owns semantic disagreements.
 - `EvidenceAuditor.audit(claims, corpus_manifest)` classifies accepted, qualified, contradicted, or unsupported and prevents unsupported critical claims from entering the executive summary.
 
-- [ ] Add failing async tests with deterministic fake workers for 1/4/8 concurrency, dependency ordering, max-worker enforcement, cancellation, retry of only the failed branch, event ordering, schema rejection, and no duplicate idempotent tool side effects.
-- [ ] Add failing bundle tests for exact evidence locators, contradictory claims, generic graph edge provenance, audit degradation, and deterministic regeneration from a frozen manifest.
-- [ ] Run focused tests and confirm failures before runtime changes.
-- [ ] Implement the framework-independent DAG and asyncio scheduler first; wrap model calls through the Task 2 interfaces rather than importing a provider SDK in orchestration.
-- [ ] Bridge the canonical `ResearchJobService` to the new scheduler while retaining legacy artifact reads for old bundles.
-- [ ] Implement semantic audit hooks with deterministic evidence requirements; LLM judging is optional enrichment and never the only acceptance signal.
-- [ ] Run focused runtime/auditor/report tests plus existing job/auditor regressions, then commit as `feat: add durable multi-agent research runtime`.
+- [x] Add failing async tests with deterministic fake workers for 1/4/8 concurrency, dependency ordering, max-worker enforcement, cancellation, retry of only the failed branch, event ordering, schema rejection, and no duplicate idempotent tool side effects.
+- [x] Add failing bundle tests for exact evidence locators, contradictory claims, generic graph edge provenance, audit degradation, and deterministic regeneration from a frozen manifest.
+- [x] Run focused tests and confirm failures before runtime changes.
+- [x] Implement the framework-independent DAG and asyncio scheduler first; wrap model calls through the Task 2 interfaces rather than importing a provider SDK in orchestration.
+- [x] Bridge the canonical `ResearchJobService` to the new scheduler while retaining legacy artifact reads for old bundles.
+- [x] Implement semantic audit hooks with deterministic evidence requirements; LLM judging is optional enrichment and never the only acceptance signal.
+- [x] Run focused runtime/auditor/report tests plus existing job/auditor regressions, then commit as `feat: add durable multi-agent research runtime`.
 
 ### Task 4: Corpus, Parsing, Shared Cache, And Tenant-Isolated Memory
 
@@ -110,11 +110,11 @@
 - Define `ScholarlyParser` protocol with `GrobidParser` primary and `DoclingParser` fallback adapters; external services remain optional in unit tests.
 - Produce memory scopes `run_state`, `conversation_focus`, `user_memory`, `topic_memory`, `agent_experience`; memory records include provenance, confidence, sensitivity, expiry, status, and supersession.
 
-- [ ] Add failing tests for public cache reuse, private isolation, version preservation, license/storage-policy enforcement, parser fallback, frozen manifests, memory TTLs, sensitive-write confirmation, conflict supersession, user delete/export, and cross-tenant search denial.
-- [ ] Run focused tests and confirm missing behavior.
-- [ ] Implement in-memory repositories and service behavior; define SQL repository protocols for Task 5.
-- [ ] Wire approved scholarly connectors through typed corpus records; arbitrary-web connector remains discovery-only and cannot support critical claims.
-- [ ] Run focused tests plus connector regressions and commit as `feat: add corpus and governed memory services`.
+- [x] Add failing tests for public cache reuse, private isolation, version preservation, license/storage-policy enforcement, parser fallback, frozen manifests, memory TTLs, sensitive-write confirmation, conflict supersession, user delete/export, and cross-tenant search denial.
+- [x] Run focused tests and confirm missing behavior.
+- [x] Implement in-memory repositories and service behavior; define SQL repository protocols for Task 5.
+- [x] Wire approved scholarly connectors through typed corpus records; arbitrary-web connector remains discovery-only and cannot support critical claims.
+- [x] Run focused tests plus connector regressions and commit as `feat: add corpus and governed memory services`.
 
 ### Task 5: PostgreSQL Product Context, Auth, APIs, And Reconnectable Events
 
@@ -133,12 +133,12 @@
 - `GET /v1/runs/{id}/events` is SSE with monotonic IDs, heartbeat, `Last-Event-ID` resume, and deduplication.
 - Production database URL must be PostgreSQL; SQLite is accepted only under explicit test/offline mode.
 
-- [ ] Add failing API tests for invitations, login/logout, role checks, CSRF, tenant isolation, simple-message direct answers, ambiguous/high-cost clarification, snapshot quick answers, explicit refresh, model secret redaction, and running-job config freeze.
-- [ ] Add failing SSE tests for ordered delivery, reconnect from event ID, heartbeat, terminal completion, and cross-tenant denial.
-- [ ] Add SQLAlchemy, Alembic, psycopg, pgvector, argon2, and multipart dependencies; regenerate the lock.
-- [ ] Implement repository-backed services and route modules. Use SQLite in tests through the explicit offline adapter, not as the production default.
-- [ ] Keep old `/v1/research/jobs` reads functional for legacy artifacts while new product writes use run/topic APIs.
-- [ ] Run focused API tests and the existing gateway/CLI suite, then commit as `feat: add multi-user research product api`.
+- [x] Add failing API tests for invitations, login/logout, role checks, CSRF, tenant isolation, simple-message direct answers, ambiguous/high-cost clarification, snapshot quick answers, explicit refresh, model secret redaction, and running-job config freeze.
+- [x] Add failing SSE tests for ordered delivery, reconnect from event ID, heartbeat, terminal completion, and cross-tenant denial.
+- [x] Add SQLAlchemy, Alembic, psycopg, pgvector, argon2, and multipart dependencies; regenerate the lock.
+- [x] Implement repository-backed services and route modules. Use SQLite in tests through the explicit offline adapter, not as the production default.
+- [x] Keep old `/v1/research/jobs` reads functional for legacy artifacts while new product writes use run/topic APIs.
+- [x] Run focused API tests and the existing gateway/CLI suite, then commit as `feat: add multi-user research product api`.
 
 ### Task 6: Research Workspace And Admin Web Application
 
@@ -159,12 +159,12 @@
 - Routes: `/topics`, `/topics/:topicId`, `/topics/:topicId/runs/:runId`, `/memory`, `/admin/models`, `/admin/runtime`.
 - Workspace views: Report, Changes, Evidence, Relationship graph, Papers, Runs. Worker display includes task, role, model, state, retry, source count, elapsed time; no reasoning text.
 
-- [ ] Add failing component tests for simple prompt submission, clarification brief editing, refresh, SSE reconnect, report Markdown rendering, citation-to-evidence drawer, graph evidence selection, memory deletion, admin secret redaction, and mobile navigation.
-- [ ] Run `npm test` and confirm expected failures.
-- [ ] Add React Router, TanStack Query, `react-markdown`, Cytoscape.js wrapper, and Lucide React; update the lock without using unsafe automatic audit fixes.
-- [ ] Implement feature modules and API hooks. Replace raw `<pre>` reports with accessible semantic Markdown and a stable reading layout.
-- [ ] Implement responsive CSS, visible focus, reduced motion, loading/empty/error states, and stable dimensions for tabs, task rows, graph, and evidence drawer.
-- [ ] Run `npm test`, `npm run lint`, and `npm run build`; commit as `feat: build scientific research workspace`.
+- [x] Add failing component tests for simple prompt submission, clarification brief editing, refresh, SSE reconnect, report Markdown rendering, citation-to-evidence drawer, graph evidence selection, memory deletion, admin secret redaction, and mobile navigation.
+- [x] Run `npm test` and confirm expected failures.
+- [x] Add React Router, TanStack Query, `react-markdown`, Cytoscape.js wrapper, and Lucide React; update the lock without using unsafe automatic audit fixes.
+- [x] Implement feature modules and API hooks. Replace raw `<pre>` reports with accessible semantic Markdown and a stable reading layout.
+- [x] Implement responsive CSS, visible focus, reduced motion, loading/empty/error states, and stable dimensions for tabs, task rows, graph, and evidence drawer.
+- [x] Run `npm test`, `npm run lint`, and `npm run build`; commit as `feat: build scientific research workspace`.
 
 ### Task 7: Deployment, Observability, Evaluation, And Cutover Documentation
 
@@ -181,14 +181,14 @@
 - Framework bake-off has adapters for PydanticAI+DBOS, LangGraph, and Google ADK; hard gates are duplicate-side-effect prevention, branch-only recovery, per-role endpoints, config snapshot, structured artifacts, cancel, and resume. If all pass and performance is within 10%, select PydanticAI+DBOS.
 - Agent scaling reports quality, elapsed time, token use, tool calls, and errors for 1/2/4/8 workers over the same frozen inputs.
 
-- [ ] Add failing tests for Compose service/config contracts, trace redaction, deterministic framework scoring/selection, acceptance threshold evaluation, and agent-scaling result schemas.
-- [ ] Run focused tests and confirm failures.
-- [ ] Implement Compose health checks, non-root containers, persistent volumes, environment validation, migration startup, and CPU-safe parser configuration.
-- [ ] Implement OpenTelemetry integration with Phoenix OTLP export optional by environment.
-- [ ] Implement deterministic/offline bake-off and scaling harnesses plus optional live-model execution; never require provider credentials for unit tests.
-- [ ] Update architecture and runbooks to make V2 the canonical product, mark the old serial runtime compatibility-only, and document supported user questions and source limitations.
-- [ ] Run all Python tests, Ruff, all Web tests/lint/build, Docker Compose config validation, CLI help, and targeted API smoke.
-- [ ] Commit as `feat: ship trusted scientific research v1`.
+- [x] Add failing tests for Compose service/config contracts, trace redaction, deterministic framework scoring/selection, acceptance threshold evaluation, and agent-scaling result schemas.
+- [x] Run focused tests and confirm failures.
+- [x] Implement Compose health checks, non-root containers, persistent volumes, environment validation, migration startup, and CPU-safe parser configuration.
+- [x] Implement OpenTelemetry integration with Phoenix OTLP export optional by environment.
+- [x] Implement deterministic/offline bake-off and scaling harnesses plus optional live-model execution; never require provider credentials for unit tests.
+- [x] Update architecture and runbooks to make V2 the canonical product, mark the old serial runtime compatibility-only, and document supported user questions and source limitations.
+- [x] Run all Python tests, Ruff, all Web tests/lint/build, Docker Compose config validation, CLI help, and targeted API smoke.
+- [x] Commit as `feat: ship trusted scientific research v1`.
 
 ### Task 8: Whole-Branch Review And Release Evidence
 
@@ -196,9 +196,9 @@
 - Create: `docs/reports/trusted-scientific-research-v1-verification.md` only if `docs/reports/` is intended to remain tracked; otherwise keep verification output in the task report.
 - Modify only files required by final review findings.
 
-- [ ] Generate a full review package from the branch merge base and dispatch the final code reviewer.
-- [ ] Fix every Critical and Important finding with focused failing tests first, then re-run the reviewer.
-- [ ] Run the complete verification suite fresh and record exact commands, counts, and known external-service skips.
-- [ ] Inspect desktop and mobile Playwright screenshots and verify report, graph, and evidence drawer have no overlap or blank states.
-- [ ] Start the local development server on available ports and report the URL, without exposing credentials.
-- [ ] Use the finishing-a-development-branch workflow; do not merge, push, or delete the branch without the user's final choice.
+- [x] Generate a full review package from the branch merge base and dispatch the final code reviewer.
+- [x] Fix every Critical and Important finding with focused failing tests first, then re-run the reviewer.
+- [x] Run the complete verification suite fresh and record exact commands, counts, and known external-service skips.
+- [x] Inspect desktop and mobile Playwright screenshots and verify report, graph, and evidence drawer have no overlap or blank states.
+- [x] Start the local development server on available ports and report the URL, without exposing credentials.
+- [x] Use the finishing-a-development-branch workflow; do not merge, push, or delete the branch without the user's final choice.

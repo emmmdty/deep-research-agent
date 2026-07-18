@@ -49,7 +49,9 @@ uv run python main.py --help
 
 The supported product path is the authenticated V2 workspace. Copy `.env.example`, replace every
 placeholder secret, choose `SCHEDULER_RUNTIME_MODE=offline` for a credential-free deterministic
-demo, and run:
+demo, and run. Offline mode exercises authentication, intent routing, durable jobs, SSE, report
+rendering, corpus freezing, and memory lifecycle; it deliberately performs no network retrieval
+and publishes no evidence-backed claim:
 
 ```bash
 docker compose up --build
@@ -147,16 +149,26 @@ reviews, and explicit refreshes. The API asks for clarification before expensive
 jobs and keeps follow-ups on the frozen report snapshot until a refresh is requested.
 
 Critical claims are limited to governed, frozen sources: arXiv, ACL Anthology, OpenAlex, Crossref,
-DataCite, DBLP, PMLR, NeurIPS proceedings, and licensed uploads. Open-web search is discovery-only
-and cannot support a critical claim. A source outage creates a freshness warning.
+DataCite, DBLP, PMLR, NeurIPS proceedings, and licensed uploads. This is the source-policy target,
+not the current connector list. The product path currently freezes selected tenant uploads into a
+run, while the built-in connector substrate provides arXiv, GitHub, open-web, and local-file
+adapters for a configured production scheduler. ACL Anthology, OpenAlex, Crossref, DataCite, DBLP,
+PMLR, and NeurIPS ingestion remain roadmap integrations. Open-web search is discovery-only and
+cannot support a critical claim.
 
 ## Current Limits
 
 - The Docker profile is a small-team deployment, not a horizontally scaled SaaS control plane.
 - Runtime execution still uses job-local subprocesses and a recovery worker; there is no Redis queue.
-- Live web research depends on configured provider/search credentials and external network availability.
+- Live scholarly research requires a configured `SCHEDULER_FACTORY_PATH`; the repository does not
+  silently turn the offline demo into a live crawler.
+- ACL Anthology, OpenAlex, Crossref, DataCite, DBLP, PMLR, and NeurIPS connectors are not yet wired
+  into product runs.
+- Memory is currently explicit CRUD plus subject-scoped recall at run creation; conversation
+  messages are not automatically promoted to long-term memory, and the Web memory page supports
+  review/deletion rather than authoring.
 - Legacy comparator and report-shape diagnostics remain available, but claim-centric bundle/eval outputs are the release story.
-- The project is not a multi-tenant SaaS and not a "more agents = better" demo.
+- The API enforces tenant boundaries, but the deployment profile is not yet a horizontally scaled SaaS.
 
 ## Roadmap
 

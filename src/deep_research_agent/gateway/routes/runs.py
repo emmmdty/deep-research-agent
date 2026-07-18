@@ -27,6 +27,7 @@ class CreateRunRequest(StrictRequest):
     topic_id: str | None = None
     conversation_id: str | None = None
     start_worker: bool | None = None
+    corpus_document_ids: list[str] | None = None
 
 
 class ResumeRunRequest(StrictRequest):
@@ -55,6 +56,7 @@ def create_topic_run(
             question=payload.question,
             conversation_id=payload.conversation_id,
             start_worker=payload.start_worker,
+            corpus_document_ids=payload.corpus_document_ids,
         )
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="topic or conversation not found") from exc
@@ -86,6 +88,7 @@ def create_run(
             question=payload.question,
             conversation_id=payload.conversation_id,
             start_worker=payload.start_worker,
+            corpus_document_ids=payload.corpus_document_ids,
         )
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="topic or conversation not found") from exc
