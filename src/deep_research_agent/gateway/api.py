@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+import os
 
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, Response
@@ -24,12 +25,24 @@ from deep_research_agent.gateway.contracts import (
     public_job_response,
 )
 from deep_research_agent.research_jobs import ResearchJobService
+from deep_research_agent.product.db import create_database
+from deep_research_agent.product.service import ProductService
+from deep_research_agent.gateway.routes import PRODUCT_ROUTERS
 
 
 ServiceFactory = Callable[[], ResearchJobService]
 
 
-def create_app(*, service_factory: ServiceFactory | None = None) -> FastAPI:
+def create_app(
+    *,
+    service_factory: ServiceFactory | None = None,
+    database_url: str | None = None,
+    offline_mode: bool = False,
+    product_database_url: str | None = None,
+    product_offline_mode: bool | None = None,
+    bootstrap_admin_email: str | None = None,
+    bootstrap_admin_password: str | None = None,
+) -> FastAPI:
     """Create the local Phase 4 HTTP API."""
 
     factory = service_factory or ResearchJobService
@@ -38,6 +51,22 @@ def create_app(*, service_factory: ServiceFactory | None = None) -> FastAPI:
         version="0.1.0",
         summary="Deterministic HTTP surface for async research jobs and report bundles.",
     )
+
+    resolved_database_url = product_database_url or database_url or os.environ.get("DATABASE_URL")
+    resolved_offline_mode = offline_mode if product_offline_mode is None else product_offline_mode
+    product_service: ProductService | None = None
+    if resolved_database_url is None and resolved_offline_mode:
+        resolved_database_url = "sqlite+pysqlite:///:memory:"
+    if resolved_database_url is not None:
+        product_database = create_database(resolved_database_url, offline_mode=resolved_offline_mode)
+        product_database.create_schema()
+        product_service = ProductService(product_database)
+        if bootstrap_admin_email and bootstrap_admin_password:
+            product_service.bootstrap_admin(
+                email=bootstrap_admin_email,
+                password=bootstrap_admin_password,
+            )
+    app.state.product_service = product_service
 
     def get_service() -> ResearchJobService:
         return factory()
@@ -201,6 +230,9 @@ def create_app(*, service_factory: ServiceFactory | None = None) -> FastAPI:
         service: ResearchJobService = Depends(get_service),
     ) -> BatchResearchResponse:
         return submit_batch_jobs(service, request.jobs)
+
+    for router in PRODUCT_ROUTERS:
+        app.include_router(router)
 
     return app
 

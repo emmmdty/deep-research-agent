@@ -25,6 +25,8 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
+    "alembic>=1.13.0",
+    "argon2-cffi>=23.1.0",
     "arxiv>=2.4.1",
     "beautifulsoup4>=4.14.3",
     "ddgs>=9.11.2",
@@ -39,10 +41,14 @@ dependencies = [
     "mcp>=1.18.0",
     "pydantic>=2.7.0",
     "pydantic-settings>=2.0.0",
+    "pgvector>=0.3.0",
+    "psycopg[binary]>=3.2.0",
     "pypdf2>=3.0.1",
+    "python-multipart>=0.0.20",
     "pyyaml>=6.0.3",
     "python-dotenv>=1.2.2",
     "rich>=14.3.3",
+    "sqlalchemy>=2.0.0",
     "tavily-python>=0.7.22",
     "uvicorn>=0.30.0,<1.0.0",
     "langchain-anthropic>=0.1.0,<0.4.0",
