@@ -123,8 +123,16 @@ class EvidenceAuditor:
             valid_ids = span_document_ids & frozen_ids - invalid_reasons.keys()
             outside_ids = span_document_ids - frozen_ids
             invalid_ids = span_document_ids & invalid_reasons.keys()
+            discovery_only_ids = {
+                document_id
+                for document_id in valid_ids
+                if corpus_manifest.critical_claims_allowed.get(document_id) is False
+            }
 
-            if not valid_ids:
+            if claim.critical and discovery_only_ids:
+                status: AuditStatus = "unsupported"
+                degradations[claim.claim_id] = "critical_claim_source_not_allowed"
+            elif not valid_ids:
                 status: AuditStatus = "unsupported"
                 if invalid_ids:
                     reason = sorted(invalid_reasons[document_id] for document_id in invalid_ids)[0]

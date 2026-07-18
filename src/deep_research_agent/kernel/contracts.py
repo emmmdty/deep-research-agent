@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
@@ -18,6 +19,22 @@ TaskId = Annotated[
         pattern=r"^[A-Za-z0-9][A-Za-z0-9._:-]*$",
     ),
 ]
+
+
+class FrozenDict(dict[str, Any]):
+    """Dict-compatible mapping that rejects mutation after model validation."""
+
+    def _immutable(self, *args: Any, **kwargs: Any) -> None:
+        raise TypeError("mapping is immutable")
+
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = _immutable
+
+    def __ior__(self, other: Any):
+        self._immutable(other)
+        return self
+
+    def __deepcopy__(self, memo: dict[int, Any]) -> FrozenDict:
+        return type(self)(deepcopy(dict(self), memo))
 
 
 class StrictModel(BaseModel):
@@ -167,9 +184,12 @@ class ResearchGraph(StrictModel):
 class CorpusManifest(StrictModel):
     """Frozen set of immutable document versions used by one run."""
 
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     manifest_id: str = Field(min_length=1)
-    document_version_ids: list[NonBlankIdentifier] = Field(default_factory=list)
+    document_version_ids: tuple[NonBlankIdentifier, ...] = ()
     content_hashes: dict[NonBlankIdentifier, Sha256Digest] = Field(default_factory=dict)
+    critical_claims_allowed: dict[NonBlankIdentifier, bool] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def _require_document_hashes(self) -> CorpusManifest:
@@ -177,6 +197,8 @@ class CorpusManifest(StrictModel):
         if missing_hashes:
             missing = ", ".join(sorted(missing_hashes))
             raise ValueError(f"content hash required for document versions: {missing}")
+        object.__setattr__(self, "content_hashes", FrozenDict(self.content_hashes))
+        object.__setattr__(self, "critical_claims_allowed", FrozenDict(self.critical_claims_allowed))
         return self
 
 

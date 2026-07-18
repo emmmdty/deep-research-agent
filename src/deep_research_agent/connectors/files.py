@@ -38,6 +38,8 @@ class LocalFileIngestor:
             snippet=text[:300].replace("\n", " "),
             mime_type=mime_type,
             auth_scope="private",
+            supports_critical_claims=False,
+            source_role="user_corpus",
             freshness_metadata={"file_name": file_path.name, "file_path": str(file_path)},
             metadata={"file_path": str(file_path)},
             url=file_path.as_uri(),

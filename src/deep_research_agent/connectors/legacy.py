@@ -87,6 +87,8 @@ class LegacyConnectorAdapter:
             snippet=candidate.snippet,
             mime_type=mime_type,
             auth_scope=candidate.auth_scope,
+            supports_critical_claims=self.supports_critical_claims,
+            source_role=self.source_role,
             freshness_metadata=freshness_metadata,
             metadata=metadata,
             url=candidate.canonical_uri,

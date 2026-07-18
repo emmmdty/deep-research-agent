@@ -39,6 +39,8 @@ class ConnectorFetchResult(BaseModel):
     snippet: str = Field(default="", description="摘要")
     mime_type: str = Field(default="text/plain", description="文档 MIME 类型")
     auth_scope: str = Field(default="public", description="鉴权范围")
+    supports_critical_claims: bool = Field(default=False, description="是否可支持关键 claim")
+    source_role: str = Field(default="discovery", description="来源角色")
     freshness_metadata: dict[str, Any] = Field(default_factory=dict, description="新鲜度元数据")
     metadata: dict[str, Any] = Field(default_factory=dict, description="扩展元数据")
     url: str = Field(default="", description="原始 URL")

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 from collections.abc import Callable
+from copy import deepcopy
 from datetime import datetime
 from typing import Protocol
 
@@ -48,18 +49,19 @@ class InMemoryMemoryRepository:
             )
             if any(getattr(existing, field) != getattr(record, field) for field in immutable_fields):
                 raise ValueError(f"memory record {record.memory_id!r} is immutable")
-        self.records[record.memory_id] = record
+        self.records[record.memory_id] = deepcopy(record)
 
     def get(self, memory_id: str) -> MemoryRecord | None:
-        return self.records.get(memory_id)
+        record = self.records.get(memory_id)
+        return deepcopy(record) if record is not None else None
 
     def list(self, *, tenant_id: str | None = None, subject_id: str | None = None) -> list[MemoryRecord]:
-        return [
+        return deepcopy([
             record
             for record in self.records.values()
             if (tenant_id is None or record.tenant_id == tenant_id)
             and (subject_id is None or record.subject_id == subject_id)
-        ]
+        ])
 
 
 class MemoryService:
@@ -92,9 +94,9 @@ class MemoryService:
         metadata: dict[str, object] | None = None,
     ) -> MemoryRecord:
         subject = subject_id or user_id
-        if not subject:
+        if not subject or not subject.strip():
             raise ValueError("subject_id is required")
-        if not tenant_id:
+        if not tenant_id or not tenant_id.strip():
             raise ValueError("tenant_id is required")
         normalized_scope = MemoryScope(scope)
         normalized_sensitivity = Sensitivity(sensitivity)
@@ -103,6 +105,21 @@ class MemoryService:
         expiry_delta = self.policy.ttl(normalized_scope, ttl_seconds)
         expires_at = now + expiry_delta if expiry_delta is not None else None
         existing = self._active_for_key(tenant_id, subject, normalized_scope, key, now)
+        explicit_target = None
+        if supersedes is not None:
+            explicit_target = self.repository.get(supersedes)
+            if explicit_target is None:
+                raise KeyError(f"unknown superseded memory record {supersedes!r}")
+            if (
+                explicit_target.tenant_id != tenant_id
+                or explicit_target.subject_id != subject
+                or explicit_target.scope != normalized_scope
+                or explicit_target.key != key
+            ):
+                raise PermissionError("a memory may only supersede the same key in the same tenant scope")
+            explicit_target = self._fresh(explicit_target)
+            if explicit_target.status != MemoryStatus.ACTIVE:
+                raise ValueError("only an active memory record can be superseded")
         memory_id = self._memory_id(tenant_id, subject, normalized_scope, key, content, now)
         record = MemoryRecord(
             memory_id=memory_id,
@@ -117,15 +134,21 @@ class MemoryService:
             created_at=now,
             updated_at=now,
             expires_at=expires_at,
-            supersedes=supersedes or (existing.memory_id if existing else None),
+            supersedes=(explicit_target.memory_id if explicit_target is not None else existing.memory_id if existing else None),
             metadata=dict(metadata or {}),
         )
         if existing is not None and existing.content == content:
             return existing
         if existing is not None:
             self.repository.save(existing.model_copy(update={"status": MemoryStatus.SUPERSEDED, "superseded_by": memory_id, "updated_at": now}))
+        if explicit_target is not None and (existing is None or explicit_target.memory_id != existing.memory_id):
+            self.repository.save(
+                explicit_target.model_copy(
+                    update={"status": MemoryStatus.SUPERSEDED, "superseded_by": memory_id, "updated_at": now}
+                )
+            )
         self.repository.save(record)
-        return record
+        return self.repository.get(record.memory_id) or record
 
     def get(self, memory_id: str, *, tenant_id: str) -> MemoryRecord:
         record = self.repository.get(memory_id)

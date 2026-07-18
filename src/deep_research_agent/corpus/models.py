@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 StoragePolicy = Literal[
@@ -29,6 +30,22 @@ def utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+class FrozenDict(dict[str, Any]):
+    """Dict-compatible mapping that rejects mutation after validation."""
+
+    def _immutable(self, *args: Any, **kwargs: Any) -> None:
+        raise TypeError("mapping is immutable")
+
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = _immutable
+
+    def __ior__(self, other: Any):
+        self._immutable(other)
+        return self
+
+    def __deepcopy__(self, memo: dict[int, Any]) -> FrozenDict:
+        return type(self)(deepcopy(dict(self), memo))
+
+
 class CorpusModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -48,6 +65,7 @@ class SourceDescriptor(CorpusModel):
     canonical_identifiers: list[str] = Field(default_factory=list)
     metadata_license: str | None = None
     license: str | None = None
+    fulltext_license: str | None = None
     fulltext_license_strategy: str = "item-level"
     storage_policy: StoragePolicy = "link_only"
     redistribution_policy: str = "link-only"
@@ -75,6 +93,7 @@ class WorkRecord(CorpusModel):
     locations: list[str] = Field(default_factory=list)
     citation_edges: list[str] = Field(default_factory=list)
     artifact_links: list[str] = Field(default_factory=list)
+    tenant_id: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -94,6 +113,8 @@ class DocumentVersion(CorpusModel):
     media_type: str = "text/plain"
     license: str | None = None
     storage_policy: StoragePolicy = "link_only"
+    source_role: str = "discovery"
+    supports_critical_claims: bool = False
     parser_name: str = "docling"
     parser_version: str = "1"
     supersedes: str | None = None
@@ -127,11 +148,18 @@ class CorpusSnapshot(CorpusModel):
 class CorpusManifest(CorpusModel):
     """Immutable corpus manifest returned before a report run starts."""
 
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     manifest_id: str = Field(min_length=1)
     document_version_ids: tuple[str, ...] = ()
     content_hashes: dict[str, str] = Field(default_factory=dict)
     tenant_id: str | None = None
     frozen: bool = True
+
+    @model_validator(mode="after")
+    def _freeze_content_hashes(self) -> CorpusManifest:
+        object.__setattr__(self, "content_hashes", FrozenDict(self.content_hashes))
+        return self
 
 
 class ParsedDocument(CorpusModel):

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from datetime import datetime
 
 from .models import (
@@ -15,7 +15,7 @@ from .models import (
     WorkRecord,
     utc_now,
 )
-from .parsers import DoclingParser, GrobidParser, ScholarlyParser, parse_with_fallback
+from .parsers import DoclingParser, GrobidParser, ScholarlyParser
 from .storage import CorpusRepository, InMemoryCorpusRepository
 from deep_research_agent.kernel.contracts import CorpusManifest
 
@@ -34,13 +34,14 @@ class CorpusService:
         repository: CorpusRepository | None = None,
         parsers: Iterable[ScholarlyParser] | None = None,
         clock=utc_now,
+        grant_authorizer: Callable[[str | None, str, bool], bool] | None = None,
     ) -> None:
         self.repository = repository or InMemoryCorpusRepository()
         self.parsers = list(parsers or (GrobidParser(), DoclingParser()))
         if not self.parsers:
             raise ValueError("at least one scholarly parser is required")
         self.clock = clock
-        self._parsed_cache: dict[str, tuple[ParsedDocument, ScholarlyParser]] = {}
+        self.grant_authorizer = grant_authorizer
 
     @staticmethod
     def cache_key(content_sha256: str, parser_name: str, parser_version: str) -> str:
@@ -64,10 +65,17 @@ class CorpusService:
         source_updated_at: datetime | None = None,
         license: str | None = None,
         supersedes: str | None = None,
+        critical_claim: bool | None = None,
     ) -> DocumentVersion:
         """Validate policy, parse content, and persist an immutable version."""
 
-        effective_license = license or source.license or source.metadata_license
+        effective_license = license or source.license or source.fulltext_license
+        if not source.supports_critical_claims and critical_claim is None:
+            raise PermissionError("discovery-only sources require an explicit non-critical ingestion")
+        if critical_claim and not source.supports_critical_claims:
+            raise PermissionError("discovery-only sources cannot support critical claims")
+        if tenant_id is not None and not tenant_id.strip():
+            raise ValueError("tenant_id cannot be blank")
         self._validate_storage_policy(source, tenant_id=tenant_id, content=content, license=effective_license)
         self.repository.save_source(source)
         content_hash = _digest(content)
@@ -83,25 +91,26 @@ class CorpusService:
         ):
             return cached
 
-        work = self.repository.find_work(source_id=source.source_id, source_native_id=source_native_id)
+        work = self.repository.find_work(
+            source_id=source.source_id,
+            source_native_id=source_native_id,
+            tenant_id=tenant_id,
+        )
         if work is None:
-            resolved_work_id = work_id or f"work:{_digest(source.source_id + ':' + source_native_id)[:24]}"
+            work_identity = "\0".join((source.source_id, source_native_id, tenant_id or "public"))
+            resolved_work_id = work_id or f"work:{_digest(work_identity)[:24]}"
             work = WorkRecord(
                 work_id=resolved_work_id,
                 title=title or source_native_id,
                 external_ids={source.source_id: source_native_id},
                 license=effective_license,
+                tenant_id=tenant_id,
             )
             self.repository.save_work(work)
         elif work_id is not None and work.work_id != work_id:
             raise ValueError("work_id conflicts with the existing source identity")
 
-        if not private and cache_key in self._parsed_cache:
-            parsed, parser = self._parsed_cache[cache_key]
-        else:
-            parsed, parser = parse_with_fallback(content, media_type=media_type, parsers=self.parsers)
-            if not private:
-                self._parsed_cache[cache_key] = (parsed, parser)
+        parsed, parser = self._parse_with_cached_fallback(content, media_type=media_type)
         document_id = self._document_id(
             work.work_id,
             source.source_id,
@@ -109,7 +118,22 @@ class CorpusService:
             version_label,
             content_hash,
             tenant_id,
+            parser.name,
+            parser.version,
         )
+        derived_only = source.storage_policy == "derived_only"
+        stored_metadata = {
+            "authors": parsed.authors,
+            "storage_policy": source.storage_policy,
+            "content_sha256": content_hash,
+            "content_length": len(content),
+        }
+        if derived_only:
+            stored_metadata["section_names"] = list(parsed.sections)
+            stored_metadata["derived_fields"] = {"title": parsed.title, "abstract": parsed.abstract}
+        else:
+            stored_metadata["sections"] = parsed.sections
+            stored_metadata.update(parsed.metadata)
         document = DocumentVersion(
             document_version_id=document_id,
             work_id=work.work_id,
@@ -124,29 +148,47 @@ class CorpusService:
             media_type=media_type,
             license=effective_license,
             storage_policy=source.storage_policy,
+            source_role=source.source_role,
+            supports_critical_claims=source.supports_critical_claims,
             parser_name=parser.name,
             parser_version=parser.version,
             supersedes=supersedes,
             tenant_id=tenant_id,
             title=parsed.title or title or work.title,
-            text=parsed.text,
+            text="" if derived_only else parsed.text,
             abstract=parsed.abstract,
-            metadata={"authors": parsed.authors, "sections": parsed.sections, **parsed.metadata},
+            metadata=stored_metadata,
         )
         self.repository.save_document(document)
         if private:
             if tenant_id is None:
                 raise ValueError("private content requires a tenant_id")
-            self.repository.grant(document.document_version_id, tenant_id)
+            self.repository.grant(
+                document.document_version_id,
+                tenant_id,
+                actor_tenant_id=tenant_id,
+            )
         else:
             self.repository.save_cache(self.cache_key(content_hash, parser.name, parser.version), document)
-            # Keep the source-declared primary key as an index when fallback parsing was used.
-            self.repository.save_cache(
-                self.cache_key(content_hash, source.parser_name, source.parser_version), document
-            )
+        return self.repository.get_document(document.document_version_id) or document
+
+    def require_critical_claim_support(self, document_version_id: str, *, tenant_id: str | None) -> DocumentVersion:
+        """Return a document only when its persisted source policy permits critical claims."""
+
+        document = self.get_document(document_version_id, tenant_id=tenant_id)
+        if not document.supports_critical_claims:
+            raise PermissionError("document source cannot support critical claims")
         return document
 
-    def grant_access(self, document_version_id: str, *, tenant_id: str) -> None:
+    def grant_access(
+        self,
+        document_version_id: str,
+        *,
+        tenant_id: str,
+        actor_tenant_id: str | None = None,
+        actor_is_admin: bool = False,
+        actor_role: str | None = None,
+    ) -> None:
         """Grant a tenant access to one private document without changing its owner."""
 
         document = self.repository.get_document(document_version_id)
@@ -154,7 +196,19 @@ class CorpusService:
             raise KeyError(f"unknown document version {document_version_id!r}")
         if document.tenant_id is None:
             raise ValueError("public documents do not need tenant grants")
-        self.repository.grant(document_version_id, tenant_id)
+        is_admin = actor_is_admin or actor_role == "admin"
+        if actor_tenant_id != document.tenant_id:
+            if self.grant_authorizer is None or not self.grant_authorizer(
+                actor_tenant_id, document.tenant_id, is_admin
+            ):
+                raise PermissionError("only the owning tenant or an authorized admin may grant access")
+            actor_tenant_id = document.tenant_id
+        self.repository.grant(
+            document_version_id,
+            tenant_id,
+            actor_tenant_id=actor_tenant_id,
+            actor_is_admin=False,
+        )
 
     def get_document(self, document_version_id: str, *, tenant_id: str | None) -> DocumentVersion:
         document = self.repository.get_document(document_version_id)
@@ -192,13 +246,20 @@ class CorpusService:
         candidates = sorted({document.document_version_id: document for document in candidates}.values(), key=lambda d: d.document_version_id)
         ids = tuple(document.document_version_id for document in candidates)
         hashes = {document.document_version_id: document.content_sha256 for document in candidates}
+        critical_claims_allowed = {
+            document.document_version_id: document.supports_critical_claims for document in candidates
+        }
         identity = json.dumps({"tenant_id": tenant_id, "ids": ids, "hashes": hashes}, sort_keys=True, default=str)
         manifest_id = f"manifest:{hashlib.sha256(identity.encode()).hexdigest()[:24]}"
         manifest = CorpusManifest(
             manifest_id=manifest_id,
             document_version_ids=list(ids),
             content_hashes=hashes,
+            critical_claims_allowed=critical_claims_allowed,
         )
+        existing_snapshot = getattr(self.repository, "get_snapshot", lambda _id: None)(manifest_id)
+        if existing_snapshot is not None:
+            return manifest
         snapshot = CorpusSnapshot(
             snapshot_id=manifest_id,
             tenant_id=tenant_id,
@@ -218,9 +279,48 @@ class CorpusService:
         version_label: str,
         content_hash: str,
         tenant_id: str | None,
+        parser_name: str,
+        parser_version: str,
     ) -> str:
-        value = "\0".join((work_id, source_id, native_id, version_label, content_hash, tenant_id or "public"))
+        value = "\0".join(
+            (
+                work_id,
+                source_id,
+                native_id,
+                version_label,
+                content_hash,
+                tenant_id or "public",
+                parser_name,
+                parser_version,
+            )
+        )
         return f"document:{hashlib.sha256(value.encode()).hexdigest()[:32]}"
+
+    def _parse_with_cached_fallback(
+        self, content: bytes | str, *, media_type: str
+    ) -> tuple[ParsedDocument, ScholarlyParser]:
+        """Try parsers in priority order, reusing only a cache entry for a parser that failed."""
+
+        content_hash = _digest(content)
+        errors: list[str] = []
+        for index, parser in enumerate(self.parsers):
+            if index > 0:
+                cached = self.repository.find_cached(self.cache_key(content_hash, parser.name, parser.version))
+                if cached is not None:
+                    return (
+                        ParsedDocument(
+                            text=cached.text,
+                            title=cached.title,
+                            abstract=cached.abstract,
+                            metadata=cached.metadata,
+                        ),
+                        parser,
+                    )
+            try:
+                return parser.parse(content, media_type=media_type), parser
+            except Exception as exc:
+                errors.append(f"{parser.name}: {exc}")
+        raise RuntimeError("all scholarly parsers failed: " + "; ".join(errors))
 
     @staticmethod
     def _validate_storage_policy(
@@ -234,5 +334,29 @@ class CorpusService:
             raise PermissionError("link_only sources cannot store full text")
         if source.storage_policy != "user_supplied" and not license:
             raise PermissionError("a license is required before storing scholarly content")
+        if source.storage_policy == "mirror_allowed" and not CorpusService._redistributable_license(license):
+            raise PermissionError("mirror_allowed requires a known redistributable full-text license")
         if source.storage_policy == "user_supplied" and tenant_id is None:
             raise PermissionError("user-supplied content requires tenant isolation")
+
+    @staticmethod
+    def _redistributable_license(license: str | None) -> bool:
+        if not license:
+            return False
+        normalized = " ".join(license.casefold().replace("_", "-").split())
+        return normalized in {
+            "cc0",
+            "cc0-1.0",
+            "cc-by",
+            "cc-by-3.0",
+            "cc-by-4.0",
+            "cc by 3.0",
+            "cc by 4.0",
+            "public domain",
+            "mit",
+            "apache-2.0",
+            "apache license 2.0",
+            "bsd-2-clause",
+            "bsd-3-clause",
+            "isc",
+        }
