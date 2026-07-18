@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 import secrets
 from copy import deepcopy
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from deep_research_agent.product.auth import AuthService
@@ -24,6 +26,7 @@ from deep_research_agent.product.tables import (
     ToolConfigTable,
     TopicTable,
 )
+from deep_research_agent.research_jobs import ResearchJobService
 
 
 TERMINAL_RUN_STATUSES = frozenset({"completed", "failed", "cancelled"})
@@ -37,6 +40,40 @@ _HIGH_COST_MARKERS = (
     "ever published",
     "the entire internet",
     "everything about",
+)
+_SECRET_KEY_MARKERS = (
+    "apikey",
+    "secret",
+    "password",
+    "token",
+    "credential",
+    "authorization",
+    "privatekey",
+    "accesskey",
+    "bearer",
+    "clientkey",
+    "signingkey",
+    "sshkey",
+)
+_FOLLOW_UP_STOP_WORDS = frozenset(
+    {
+        "a",
+        "an",
+        "and",
+        "analyze",
+        "compare",
+        "for",
+        "in",
+        "of",
+        "on",
+        "research",
+        "summarize",
+        "the",
+        "this",
+        "to",
+        "update",
+        "with",
+    }
 )
 
 
@@ -54,8 +91,8 @@ def redact_secrets(value: Any) -> Any:
     if isinstance(value, dict):
         redacted: dict[str, Any] = {}
         for key, item in value.items():
-            normalized = key.casefold()
-            if any(marker in normalized for marker in ("api_key", "secret", "password", "token", "credential")):
+            normalized = re.sub(r"[^a-z0-9]", "", key.casefold())
+            if any(marker in normalized for marker in _SECRET_KEY_MARKERS):
                 redacted[key] = "[redacted]"
             else:
                 redacted[key] = redact_secrets(item)
@@ -68,10 +105,22 @@ def redact_secrets(value: Any) -> Any:
 class ProductService:
     """Repository-backed product behavior independent of HTTP concerns."""
 
-    def __init__(self, database: ProductDatabase) -> None:
+    def __init__(
+        self,
+        database: ProductDatabase,
+        *,
+        runtime_service: ResearchJobService,
+        start_worker_by_default: bool | None = None,
+    ) -> None:
         self.database = database
         self.repository = ProductRepository(database.sessions)
         self.auth = AuthService(self.repository)
+        self.runtime_service = runtime_service
+        self.start_worker_by_default = (
+            not database.offline_mode
+            if start_worker_by_default is None
+            else bool(start_worker_by_default)
+        )
 
     def bootstrap_admin(self, *, email: str, password: str) -> dict[str, Any]:
         return self.user_dict(self.auth.bootstrap_admin(email=email, password=password))
@@ -135,6 +184,7 @@ class ProductService:
         user_id: str,
         question: str,
         conversation_id: str | None = None,
+        start_worker: bool | None = None,
     ) -> dict[str, Any]:
         topic = self.repository.get_topic(topic_id, tenant_id=tenant_id)
         if topic is None:
@@ -142,20 +192,38 @@ class ProductService:
         question = question.strip()
         if not question:
             raise ValueError("question cannot be blank")
-        if conversation_id is not None and self.repository.get_conversation(
-            conversation_id, tenant_id=tenant_id
-        ) is None:
-            raise KeyError(conversation_id)
+        if conversation_id is not None:
+            conversation = self.repository.get_conversation(conversation_id, tenant_id=tenant_id)
+            if conversation is None:
+                raise KeyError(conversation_id)
+            if conversation.topic_id != topic_id:
+                raise ValueError("conversation does not belong to the requested topic")
         config = self.repository.get_active_runtime_config()
         version_id = config.version_id if config is not None else "default"
         config_snapshot = deepcopy(config.config) if config is not None else {}
+        resolved_start_worker = self._resolve_start_worker(start_worker)
+        runtime_job = self.runtime_service.submit(
+            topic=question,
+            max_loops=int(config_snapshot.get("max_loops", 3)),
+            research_profile=str(config_snapshot.get("research_profile", "default")),
+            source_profile=config_snapshot.get("source_profile"),
+            start_worker=resolved_start_worker,
+            runtime_metadata={
+                "product_topic_id": topic_id,
+                "product_tenant_id": tenant_id,
+                "product_config_version_id": version_id,
+                "product_config_snapshot": deepcopy(config_snapshot),
+            },
+        )
+        runtime_status = self._status_value(runtime_job.status)
         run = RunTable(
             run_id=_id("run"),
+            research_job_id=runtime_job.job_id,
             tenant_id=tenant_id,
             topic_id=topic_id,
             conversation_id=conversation_id,
             question=question,
-            status="running",
+            status=runtime_status,
             config_version_id=version_id,
             config_snapshot=config_snapshot,
             created_by=user_id,
@@ -165,31 +233,52 @@ class ProductService:
             run.run_id,
             tenant_id=tenant_id,
             event_type="run.created",
-            payload={"status": "running", "config_version_id": version_id},
+            payload={
+                "status": runtime_status,
+                "config_version_id": version_id,
+                "research_job_id": runtime_job.job_id,
+            },
             dedupe_key="run.created",
         )
+        self._sync_runtime_events(run)
         return self.run_dict(run)
+
+    def _resolve_start_worker(self, requested: bool | None) -> bool:
+        if not self.database.offline_mode:
+            return True
+        if requested is None:
+            return self.start_worker_by_default
+        return bool(requested)
+
+    @staticmethod
+    def _status_value(value: Any) -> str:
+        return str(value.value if hasattr(value, "value") else value)
 
     def get_run(self, run_id: str, *, tenant_id: str) -> dict[str, Any] | None:
         run = self.repository.get_run(run_id, tenant_id=tenant_id)
+        if run is not None:
+            run = self._sync_runtime_run(run)
         return self.run_dict(run) if run is not None else None
 
     def list_runs(self, *, tenant_id: str, topic_id: str | None = None) -> list[dict[str, Any]]:
         if topic_id is not None and self.repository.get_topic(topic_id, tenant_id=tenant_id) is None:
             raise KeyError(topic_id)
-        return [self.run_dict(run) for run in self.repository.list_runs(tenant_id=tenant_id, topic_id=topic_id)]
+        return [
+            self.run_dict(self._sync_runtime_run(run))
+            for run in self.repository.list_runs(tenant_id=tenant_id, topic_id=topic_id)
+        ]
 
     @staticmethod
     def run_dict(run: RunTable) -> dict[str, Any]:
         return {
             "run_id": run.run_id,
+            "research_job_id": run.research_job_id,
             "tenant_id": run.tenant_id,
             "topic_id": run.topic_id,
             "conversation_id": run.conversation_id,
             "question": run.question,
             "status": run.status,
             "config_version_id": run.config_version_id,
-            "config_snapshot": redact_secrets(deepcopy(run.config_snapshot)),
             "snapshot_cutoff": run.snapshot_cutoff,
             "cancel_requested": run.cancel_requested,
             "created_at": _iso(run.created_at),
@@ -218,6 +307,10 @@ class ProductService:
     def list_run_events(
         self, run_id: str, *, tenant_id: str, after_sequence: int = 0
     ) -> list[dict[str, Any]] | None:
+        run = self.repository.get_run(run_id, tenant_id=tenant_id)
+        if run is None:
+            return None
+        self._sync_runtime_run(run)
         events = self.repository.list_events(
             run_id, tenant_id=tenant_id, after_sequence=after_sequence
         )
@@ -238,37 +331,27 @@ class ProductService:
         run = self.repository.get_run(run_id, tenant_id=tenant_id)
         if run is None:
             return None
-        if run.status in TERMINAL_RUN_STATUSES:
-            raise ValueError(f"cannot cancel a {run.status} run")
-        updated = self.repository.update_run(
-            run_id, tenant_id=tenant_id, status="cancelled", cancel_requested=True
-        )
-        self.append_run_event(
-            run_id,
-            tenant_id=tenant_id,
-            event_type="run.cancelled",
-            payload={"terminal": True, "status": "cancelled"},
-            dedupe_key="run.cancelled",
-        )
-        return self.run_dict(updated) if updated is not None else None
+        self.runtime_service.cancel(run.research_job_id)
+        return self.run_dict(self._sync_runtime_run(run, allow_terminal_downgrade=True))
 
-    def resume_run(self, run_id: str, *, tenant_id: str) -> dict[str, Any] | None:
+    def resume_run(
+        self,
+        run_id: str,
+        *,
+        tenant_id: str,
+        start_worker: bool | None = None,
+    ) -> dict[str, Any] | None:
         run = self.repository.get_run(run_id, tenant_id=tenant_id)
         if run is None:
             return None
+        run = self._sync_runtime_run(run)
         if run.status not in {"cancelled", "failed"}:
             raise ValueError(f"cannot resume a {run.status} run")
-        updated = self.repository.update_run(
-            run_id, tenant_id=tenant_id, status="running", cancel_requested=False
+        self.runtime_service.resume(
+            run.research_job_id,
+            start_worker=self._resolve_start_worker(start_worker),
         )
-        self.append_run_event(
-            run_id,
-            tenant_id=tenant_id,
-            event_type="run.resumed",
-            payload={"status": "running"},
-            dedupe_key=f"run.resumed:{secrets.token_hex(8)}",
-        )
-        return self.run_dict(updated) if updated is not None else None
+        return self.run_dict(self._sync_runtime_run(run, allow_terminal_downgrade=True))
 
     def complete_run(
         self,
@@ -300,7 +383,90 @@ class ProductService:
         run = self.repository.get_run(run_id, tenant_id=tenant_id)
         if run is None:
             raise KeyError(run_id)
+        run = self._sync_runtime_run(run)
         return deepcopy(run.bundle)
+
+    def _sync_runtime_run(
+        self,
+        run: RunTable,
+        *,
+        allow_terminal_downgrade: bool = False,
+    ) -> RunTable:
+        runtime_job = self.runtime_service.get(run.research_job_id)
+        if runtime_job is None:
+            return run
+        runtime_status = self._status_value(runtime_job.status)
+        if (
+            not allow_terminal_downgrade
+            and run.status in TERMINAL_RUN_STATUSES
+            and runtime_status not in TERMINAL_RUN_STATUSES
+        ):
+            return run
+
+        runtime_event_types = self._sync_runtime_events(run)
+        updates: dict[str, Any] = {
+            "status": runtime_status,
+            "cancel_requested": bool(runtime_job.cancel_requested),
+        }
+        bundle_path = Path(runtime_job.report_bundle_path)
+        if runtime_status == "completed" and bundle_path.is_file():
+            updates["bundle"] = json.loads(bundle_path.read_text(encoding="utf-8"))
+            updates["snapshot_cutoff"] = runtime_job.updated_at
+        status_changed = run.status != runtime_status
+        updated = self.repository.update_run(
+            run.run_id,
+            tenant_id=run.tenant_id,
+            **updates,
+        )
+        if updated is None:
+            return run
+        matching_runtime_events = {
+            "cancelled": "job.cancelled",
+            "completed": "job.completed",
+            "created": "job.resumed",
+            "failed": "job.failed",
+        }
+        if status_changed and matching_runtime_events.get(runtime_status) not in runtime_event_types:
+            terminal = runtime_status in TERMINAL_RUN_STATUSES
+            self.append_run_event(
+                run.run_id,
+                tenant_id=run.tenant_id,
+                event_type=f"run.{runtime_status}",
+                payload={"status": runtime_status, "terminal": terminal},
+                dedupe_key=f"runtime-status:{runtime_status}:{runtime_job.updated_at}",
+            )
+        return updated
+
+    def _sync_runtime_events(self, run: RunTable) -> set[str]:
+        event_types: set[str] = set()
+        for event in self.runtime_service.list_events(run.research_job_id, after_sequence=0):
+            event_types.add(event.event_type)
+            if event.event_type == "job.created":
+                continue
+            event_type = event.event_type
+            if event_type.startswith("job."):
+                event_type = f"run.{event_type.removeprefix('job.')}"
+            else:
+                event_type = f"runtime.{event_type}"
+            terminal = event.event_type in {"job.completed", "job.failed", "job.cancelled"}
+            payload = dict(event.payload)
+            payload.update(
+                {
+                    "runtime_event_id": event.event_id,
+                    "runtime_sequence": event.sequence,
+                    "stage": event.stage,
+                    "message": event.message,
+                    "terminal": terminal,
+                }
+            )
+            self.append_run_event(
+                run.run_id,
+                tenant_id=run.tenant_id,
+                event_type=event_type,
+                payload=payload,
+                dedupe_key=f"runtime-event:{event.event_id}",
+            )
+        return event_types
 
     def respond_to_message(
         self,
@@ -326,13 +492,17 @@ class ProductService:
                 content=content,
             )
         )
+        for candidate in self.repository.list_runs(tenant_id=tenant_id, topic_id=conversation.topic_id):
+            self._sync_runtime_run(candidate)
         latest = self.repository.latest_completed_run(conversation.topic_id, tenant_id=tenant_id)
+        topic = self.repository.get_topic(conversation.topic_id, tenant_id=tenant_id)
         words = content.casefold().split()
         high_cost = any(marker in content.casefold() for marker in _HIGH_COST_MARKERS)
         ambiguous = len(words) <= 2 or content.casefold() in {"research it", "look into it", "compare them"}
         run: dict[str, Any] | None = None
         answer: str | None = None
         questions: list[str] = []
+        used_snapshot = False
         if refresh:
             response_type = "research_job_started"
             run = self.create_run(
@@ -348,12 +518,17 @@ class ProductService:
                 "What decision should this research support?",
                 "Which scope and evidence cutoff should be used?",
             ]
-        elif latest is not None:
-            response_type = "direct_answer"
-            answer = str((latest.bundle or {}).get("report_markdown") or "The frozen snapshot has no report text.")
         elif self._is_simple_question(content):
             response_type = "direct_answer"
             answer = self._direct_answer(content)
+        elif latest is not None and self._is_relevant_follow_up(
+            content,
+            topic_title=topic.title if topic is not None else "",
+            prior_question=latest.question,
+        ):
+            response_type = "direct_answer"
+            answer = str((latest.bundle or {}).get("report_markdown") or "The frozen snapshot has no report text.")
+            used_snapshot = True
         else:
             response_type = "research_job_started"
             run = self.create_run(
@@ -369,7 +544,7 @@ class ProductService:
             "question": content,
             "objectives": [content] if response_type != "clarification_required" else [],
             "constraints": {"refresh": refresh, "high_cost": high_cost},
-            "snapshot_cutoff": latest.snapshot_cutoff if latest is not None and not refresh else None,
+            "snapshot_cutoff": latest.snapshot_cutoff if used_snapshot else None,
         }
         self.repository.add_message(
             MessageTable(
@@ -403,6 +578,17 @@ class ProductService:
         if match:
             return str(int(match.group(1)) + int(match.group(2)))
         return "This question can be answered directly without starting a research run."
+
+    @staticmethod
+    def _is_relevant_follow_up(content: str, *, topic_title: str, prior_question: str) -> bool:
+        def terms(value: str) -> set[str]:
+            return {
+                token
+                for token in re.findall(r"[a-z0-9]+", value.casefold())
+                if len(token) > 2 and token not in _FOLLOW_UP_STOP_WORDS
+            }
+
+        return bool(terms(content) & terms(f"{topic_title} {prior_question}"))
 
     def upload_corpus(
         self,

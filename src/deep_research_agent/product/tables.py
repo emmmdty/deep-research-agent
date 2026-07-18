@@ -101,6 +101,7 @@ class RunTable(Base):
     __tablename__ = "product_runs"
 
     run_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    research_job_id: Mapped[str] = mapped_column(String(64), unique=True, index=True)
     tenant_id: Mapped[str] = mapped_column(String(128), index=True)
     topic_id: Mapped[str] = mapped_column(ForeignKey("product_topics.topic_id"), index=True)
     conversation_id: Mapped[str | None] = mapped_column(

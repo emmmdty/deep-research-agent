@@ -9,6 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from deep_research_agent.gateway.api import create_app
+from deep_research_agent.research_jobs import ResearchJobService
 
 
 ADMIN_EMAIL = "admin@example.test"
@@ -17,7 +18,9 @@ ADMIN_PASSWORD = "correct horse battery staple"
 
 @pytest.fixture
 def app(tmp_path: Path):
+    runtime_service = ResearchJobService(workspace_dir=str(tmp_path / "runtime"))
     return create_app(
+        service_factory=lambda: runtime_service,
         database_url=f"sqlite+pysqlite:///{tmp_path / 'product.db'}",
         offline_mode=True,
         bootstrap_admin_email=ADMIN_EMAIL,
@@ -244,6 +247,25 @@ def test_follow_up_uses_frozen_snapshot_until_refresh(admin, app):
     assert quick.json()["response_type"] == "direct_answer"
     assert quick.json()["brief"]["snapshot_cutoff"] == "2026-07-17T12:00:00+00:00"
 
+    simple = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "What is 3 + 4?"},
+    )
+    assert simple.status_code == 200
+    assert simple.json()["response_type"] == "direct_answer"
+    assert simple.json()["answer"] == "7"
+    assert simple.json()["brief"]["snapshot_cutoff"] is None
+
+    unrelated = client.post(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"X-CSRF-Token": csrf},
+        json={"content": "Analyze quantum error correction benchmarks in 2026"},
+    )
+    assert unrelated.status_code == 202
+    assert unrelated.json()["response_type"] == "research_job_started"
+    assert unrelated.json()["brief"]["snapshot_cutoff"] is None
+
     refresh = client.post(
         f"/v1/conversations/{conversation_id}/messages",
         headers={"X-CSRF-Token": csrf},
@@ -322,7 +344,16 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
         created = client.post(
             "/v1/admin/configs",
             headers=headers,
-            json={"version_id": version, "config": {"planner_endpoint_id": "planner-primary"}},
+            json={
+                "version_id": version,
+                "config": {
+                    "planner_endpoint_id": "planner-primary",
+                    "Authorization": "Bearer hidden-auth",
+                    "privateKey": "hidden-private-key",
+                    "access-key": "hidden-access-key",
+                    "bearer": "hidden-bearer",
+                },
+            },
         )
         assert created.status_code == 201
     assert client.post("/v1/admin/configs/runtime-v1:activate", headers=headers).status_code == 200
@@ -334,8 +365,147 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
         json={"question": "Freeze this configuration"},
     ).json()
     assert run["config_version_id"] == "runtime-v1"
+    assert "config_snapshot" not in run
 
     assert client.post("/v1/admin/configs/runtime-v2:activate", headers=headers).status_code == 200
     loaded = client.get(f"/v1/runs/{run['run_id']}")
     assert loaded.status_code == 200
     assert loaded.json()["config_version_id"] == "runtime-v1"
+    assert "config_snapshot" not in loaded.json()
+    config_response = client.get("/v1/admin/configs")
+    assert not any(
+        secret in config_response.text
+        for secret in ("hidden-auth", "hidden-private-key", "hidden-access-key", "hidden-bearer")
+    )
+
+
+def test_product_run_delegates_to_canonical_runtime_and_syncs_artifacts(admin, app):
+    from deep_research_agent.research_jobs.models import JobStatus, RuntimeStage
+
+    client, csrf = admin
+    topic = _create_topic(client, csrf)
+    created = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={"question": "Run the canonical research planner", "start_worker": False},
+    )
+    assert created.status_code == 202
+    body = created.json()
+    runtime_service = app.state.runtime_service
+    runtime_job = runtime_service.get(body["research_job_id"])
+    assert runtime_job is not None
+    assert runtime_job.topic == "Run the canonical research planner"
+
+    bundle = {"schema_version": "2.0", "report_markdown": "Canonical runtime bundle"}
+    bundle_path = Path(runtime_job.report_bundle_path)
+    bundle_path.parent.mkdir(parents=True, exist_ok=True)
+    bundle_path.write_text(__import__("json").dumps(bundle), encoding="utf-8")
+    runtime_service.store.update_job_status(
+        runtime_job.job_id,
+        status=JobStatus.COMPLETED,
+        current_stage=RuntimeStage.COMPLETED,
+    )
+
+    synced = client.get(f"/v1/runs/{body['run_id']}")
+    assert synced.status_code == 200
+    assert synced.json()["status"] == "completed"
+    assert client.get(f"/v1/runs/{body['run_id']}/bundle").json() == bundle
+
+
+def test_product_cancel_and_resume_delegate_to_canonical_runtime(admin, app):
+    client, csrf = admin
+    topic = _create_topic(client, csrf)
+    run = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={"question": "Delegated lifecycle", "start_worker": False},
+    ).json()
+
+    cancelled = client.post(
+        f"/v1/runs/{run['run_id']}:cancel", headers={"X-CSRF-Token": csrf}
+    )
+    assert cancelled.status_code == 200
+    assert cancelled.json()["status"] == "cancelled"
+    assert app.state.runtime_service.get(run["research_job_id"]).status.value == "cancelled"
+    events = app.state.product_service.list_run_events(
+        run["run_id"], tenant_id=run["tenant_id"]
+    )
+    assert [event["event_type"] for event in events].count("run.cancelled") == 1
+
+    resumed = client.post(
+        f"/v1/runs/{run['run_id']}:resume",
+        headers={"X-CSRF-Token": csrf},
+        json={"start_worker": False},
+    )
+    assert resumed.status_code == 200
+    assert resumed.json()["status"] == "created"
+    assert app.state.runtime_service.get(run["research_job_id"]).status.value == "created"
+
+
+def test_run_rejects_conversation_from_another_topic(admin):
+    client, csrf = admin
+    first = _create_topic(client, csrf, "First topic")
+    second = _create_topic(client, csrf, "Second topic")
+
+    response = client.post(
+        "/v1/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={
+            "topic_id": first["topic_id"],
+            "conversation_id": second["conversation_id"],
+            "question": "Invalid cross-topic conversation",
+            "start_worker": False,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_whitespace_only_product_inputs_are_validation_errors(app):
+    client = TestClient(app, raise_server_exceptions=False)
+    login = client.post(
+        "/v1/auth/login", json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD}
+    )
+    headers = {"X-CSRF-Token": login.json()["csrf_token"]}
+
+    assert client.post("/v1/topics", headers=headers, json={"title": "   "}).status_code == 422
+    topic = client.post("/v1/topics", headers=headers, json={"title": "Valid"}).json()
+    assert client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers=headers,
+        json={"question": "  ", "start_worker": False},
+    ).status_code == 422
+    assert client.post(
+        f"/v1/conversations/{topic['conversation_id']}/messages",
+        headers=headers,
+        json={"content": "  "},
+    ).status_code == 422
+
+
+def test_bootstrap_admin_can_be_configured_by_environment(tmp_path, monkeypatch):
+    monkeypatch.setenv("DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL", "env-admin@example.test")
+    monkeypatch.setenv("DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_PASSWORD", "environment admin password")
+    app = create_app(
+        database_url=f"sqlite+pysqlite:///{tmp_path / 'env-product.db'}",
+        offline_mode=True,
+        service_factory=lambda: ResearchJobService(workspace_dir=str(tmp_path / "env-runtime")),
+    )
+
+    login = TestClient(app).post(
+        "/v1/auth/login",
+        json={"email": "env-admin@example.test", "password": "environment admin password"},
+    )
+    assert login.status_code == 200
+    assert login.json()["user"]["role"] == "admin"
+
+
+def test_bootstrap_admin_environment_requires_both_values(tmp_path, monkeypatch):
+    monkeypatch.setenv("DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL", "env-admin@example.test")
+    monkeypatch.delenv("DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_PASSWORD", raising=False)
+
+    with pytest.raises(ValueError, match="both"):
+        create_app(
+            database_url=f"sqlite+pysqlite:///{tmp_path / 'invalid-env-product.db'}",
+            offline_mode=True,
+            service_factory=lambda: ResearchJobService(workspace_dir=str(tmp_path / "invalid-runtime")),
+        )

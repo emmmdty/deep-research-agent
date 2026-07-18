@@ -3,18 +3,26 @@
 from __future__ import annotations
 
 from pathlib import Path
+import threading
+import time
 
 import pytest
 from fastapi.testclient import TestClient
 
 from deep_research_agent.gateway.api import create_app
+from deep_research_agent.research_jobs import ResearchJobService
 
 
 @pytest.fixture
 def product(tmp_path: Path):
+    runtime_service = ResearchJobService(workspace_dir=str(tmp_path / "runtime"))
     app = create_app(
+        service_factory=lambda: runtime_service,
         database_url=f"sqlite+pysqlite:///{tmp_path / 'events.db'}",
         offline_mode=True,
+        event_poll_interval_seconds=0.01,
+        event_heartbeat_interval_seconds=0.02,
+        event_stream_timeout_seconds=0.25,
         bootstrap_admin_email="admin@example.test",
         bootstrap_admin_password="correct horse battery staple",
     )
@@ -124,3 +132,41 @@ def test_sse_denies_cross_tenant_access(product):
 
     assert denied.status_code == 404
 
+
+def test_sse_waits_for_events_appended_after_connection(product):
+    app, client, _, run = product
+    service = app.state.product_service
+    initial = service.list_run_events(run["run_id"], tenant_id=run["tenant_id"])
+    assert initial
+    output: dict[str, object] = {}
+
+    def consume() -> None:
+        response = client.get(
+            f"/v1/runs/{run['run_id']}/events",
+            headers={"Last-Event-ID": str(initial[-1]["sequence"])},
+        )
+        output["status"] = response.status_code
+        output["text"] = response.text
+
+    reader = threading.Thread(target=consume)
+    reader.start()
+    time.sleep(0.05)
+    service.append_run_event(
+        run["run_id"],
+        tenant_id=run["tenant_id"],
+        event_type="task.completed",
+        payload={"task_id": "late"},
+    )
+    service.complete_run(
+        run["run_id"],
+        tenant_id=run["tenant_id"],
+        bundle={"schema_version": "2.0", "report_markdown": "done"},
+        snapshot_cutoff="2026-07-18T00:00:00+00:00",
+    )
+    reader.join(timeout=1)
+
+    assert not reader.is_alive()
+    assert output["status"] == 200
+    assert ": heartbeat" in str(output["text"])
+    assert "event: task.completed" in str(output["text"])
+    assert "event: run.completed" in str(output["text"])

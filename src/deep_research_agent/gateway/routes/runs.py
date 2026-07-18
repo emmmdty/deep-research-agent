@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
-from collections.abc import Iterator
+import time
+from collections.abc import AsyncIterator
 
-from fastapi import APIRouter, Header, HTTPException, status
+from fastapi import APIRouter, Body, Header, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
-from pydantic import Field
 
 from deep_research_agent.gateway.routes.auth import (
     CsrfIdentityDependency,
     IdentityDependency,
+    NonBlankText,
     ProductServiceDependency,
     StrictRequest,
 )
@@ -21,9 +23,14 @@ router = APIRouter(tags=["runs"])
 
 
 class CreateRunRequest(StrictRequest):
-    question: str = Field(min_length=1)
+    question: NonBlankText
     topic_id: str | None = None
     conversation_id: str | None = None
+    start_worker: bool | None = None
+
+
+class ResumeRunRequest(StrictRequest):
+    start_worker: bool | None = None
 
 
 def _require_run(service, run_id: str, tenant_id: str) -> dict:
@@ -47,9 +54,12 @@ def create_topic_run(
             user_id=identity.user_id,
             question=payload.question,
             conversation_id=payload.conversation_id,
+            start_worker=payload.start_worker,
         )
     except KeyError as exc:
         raise HTTPException(status_code=404, detail="topic or conversation not found") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @router.post("/v1/runs", status_code=status.HTTP_202_ACCEPTED)
@@ -68,13 +78,19 @@ def create_run(
         topic_id = conversation.topic_id
     if topic_id is None:
         raise HTTPException(status_code=422, detail="topic_id or conversation_id is required")
-    return service.create_run(
-        topic_id=topic_id,
-        tenant_id=identity.tenant_id,
-        user_id=identity.user_id,
-        question=payload.question,
-        conversation_id=payload.conversation_id,
-    )
+    try:
+        return service.create_run(
+            topic_id=topic_id,
+            tenant_id=identity.tenant_id,
+            user_id=identity.user_id,
+            question=payload.question,
+            conversation_id=payload.conversation_id,
+            start_worker=payload.start_worker,
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="topic or conversation not found") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @router.get("/v1/topics/{topic_id}/runs")
@@ -114,9 +130,14 @@ def resume_run(
     run_id: str,
     identity: CsrfIdentityDependency,
     service: ProductServiceDependency,
+    payload: ResumeRunRequest | None = Body(default=None),
 ) -> dict:
     try:
-        run = service.resume_run(run_id, tenant_id=identity.tenant_id)
+        run = service.resume_run(
+            run_id,
+            tenant_id=identity.tenant_id,
+            start_worker=payload.start_worker if payload is not None else None,
+        )
     except ValueError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
     if run is None:
@@ -145,8 +166,9 @@ def _sse_frame(event: dict) -> str:
 
 
 @router.get("/v1/runs/{run_id}/events")
-def run_events(
+async def run_events(
     run_id: str,
+    request: Request,
     identity: IdentityDependency,
     service: ProductServiceDependency,
     last_event_id: str | None = Header(default=None, alias="Last-Event-ID"),
@@ -157,22 +179,37 @@ def run_events(
             after_sequence = int(last_event_id.rsplit(":", 1)[-1])
         except ValueError as exc:
             raise HTTPException(status_code=400, detail="Last-Event-ID must be numeric") from exc
-    events = service.list_run_events(
-        run_id,
-        tenant_id=identity.tenant_id,
-        after_sequence=after_sequence,
-    )
-    if events is None:
+    if service.get_run(run_id, tenant_id=identity.tenant_id) is None:
         raise HTTPException(status_code=404, detail="run not found")
 
-    def stream() -> Iterator[str]:
-        if not events:
-            yield ": heartbeat\n\n"
-            return
-        for event in events:
-            yield _sse_frame(event)
-            if event["payload"].get("terminal"):
-                return
+    async def stream() -> AsyncIterator[str]:
+        cursor = after_sequence
+        started_at = time.monotonic()
+        heartbeat_at = started_at + request.app.state.event_heartbeat_interval_seconds
+        try:
+            while time.monotonic() - started_at < request.app.state.event_stream_timeout_seconds:
+                if await request.is_disconnected():
+                    return
+                events = service.list_run_events(
+                    run_id,
+                    tenant_id=identity.tenant_id,
+                    after_sequence=cursor,
+                )
+                if events is None:
+                    return
+                if events:
+                    for event in events:
+                        cursor = max(cursor, int(event["sequence"]))
+                        yield _sse_frame(event)
+                        if event["payload"].get("terminal"):
+                            return
+                now = time.monotonic()
+                if now >= heartbeat_at:
+                    yield ": heartbeat\n\n"
+                    heartbeat_at = now + request.app.state.event_heartbeat_interval_seconds
+                await asyncio.sleep(request.app.state.event_poll_interval_seconds)
+        except asyncio.CancelledError:
+            raise
 
     return StreamingResponse(
         stream(),

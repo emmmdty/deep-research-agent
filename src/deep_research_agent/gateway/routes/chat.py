@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
-from pydantic import Field
-
 from deep_research_agent.gateway.routes.auth import (
     CsrfIdentityDependency,
+    NonBlankText,
     ProductServiceDependency,
     StrictRequest,
 )
@@ -17,7 +16,7 @@ router = APIRouter(prefix="/v1/conversations", tags=["conversations"])
 
 
 class MessageRequest(StrictRequest):
-    content: str = Field(min_length=1)
+    content: NonBlankText
     refresh: bool = False
 
 

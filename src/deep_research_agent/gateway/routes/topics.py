@@ -8,6 +8,7 @@ from pydantic import Field
 from deep_research_agent.gateway.routes.auth import (
     CsrfIdentityDependency,
     IdentityDependency,
+    NonBlankText,
     ProductServiceDependency,
     StrictRequest,
 )
@@ -17,7 +18,7 @@ router = APIRouter(prefix="/v1/topics", tags=["topics"])
 
 
 class CreateTopicRequest(StrictRequest):
-    title: str = Field(min_length=1, max_length=500)
+    title: NonBlankText = Field(max_length=500)
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
@@ -43,4 +44,3 @@ def get_topic(topic_id: str, identity: IdentityDependency, service: ProductServi
 
 
 __all__ = ["router"]
-

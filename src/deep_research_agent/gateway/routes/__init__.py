@@ -13,4 +13,3 @@ PRODUCT_ROUTERS = (
 )
 
 __all__ = ["PRODUCT_ROUTERS"]
-

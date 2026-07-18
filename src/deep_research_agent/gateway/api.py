@@ -42,10 +42,14 @@ def create_app(
     product_offline_mode: bool | None = None,
     bootstrap_admin_email: str | None = None,
     bootstrap_admin_password: str | None = None,
+    event_poll_interval_seconds: float | None = None,
+    event_heartbeat_interval_seconds: float | None = None,
+    event_stream_timeout_seconds: float | None = None,
 ) -> FastAPI:
     """Create the local Phase 4 HTTP API."""
 
     factory = service_factory or ResearchJobService
+    runtime_service = factory()
     app = FastAPI(
         title="Deep Research Agent API",
         version="0.1.0",
@@ -54,22 +58,50 @@ def create_app(
 
     resolved_database_url = product_database_url or database_url or os.environ.get("DATABASE_URL")
     resolved_offline_mode = offline_mode if product_offline_mode is None else product_offline_mode
+    resolved_bootstrap_email = bootstrap_admin_email or os.environ.get(
+        "DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL"
+    )
+    resolved_bootstrap_password = bootstrap_admin_password or os.environ.get(
+        "DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_PASSWORD"
+    )
+    if bool(resolved_bootstrap_email) != bool(resolved_bootstrap_password):
+        raise ValueError("bootstrap admin email and password must both be configured")
+    resolved_event_poll = (
+        0.05 if resolved_offline_mode else 0.25
+    ) if event_poll_interval_seconds is None else event_poll_interval_seconds
+    resolved_event_heartbeat = (
+        0.1 if resolved_offline_mode else 15.0
+    ) if event_heartbeat_interval_seconds is None else event_heartbeat_interval_seconds
+    resolved_event_timeout = (
+        0.5 if resolved_offline_mode else 300.0
+    ) if event_stream_timeout_seconds is None else event_stream_timeout_seconds
+    if min(resolved_event_poll, resolved_event_heartbeat, resolved_event_timeout) <= 0:
+        raise ValueError("event stream timing values must be positive")
     product_service: ProductService | None = None
     if resolved_database_url is None and resolved_offline_mode:
         resolved_database_url = "sqlite+pysqlite:///:memory:"
     if resolved_database_url is not None:
         product_database = create_database(resolved_database_url, offline_mode=resolved_offline_mode)
         product_database.create_schema()
-        product_service = ProductService(product_database)
-        if bootstrap_admin_email and bootstrap_admin_password:
+        product_service = ProductService(
+            product_database,
+            runtime_service=runtime_service,
+        )
+        if resolved_bootstrap_email and resolved_bootstrap_password:
             product_service.bootstrap_admin(
-                email=bootstrap_admin_email,
-                password=bootstrap_admin_password,
+                email=resolved_bootstrap_email,
+                password=resolved_bootstrap_password,
             )
+    elif resolved_bootstrap_email or resolved_bootstrap_password:
+        raise ValueError("bootstrap admin requires a configured product database")
     app.state.product_service = product_service
+    app.state.runtime_service = runtime_service
+    app.state.event_poll_interval_seconds = resolved_event_poll
+    app.state.event_heartbeat_interval_seconds = resolved_event_heartbeat
+    app.state.event_stream_timeout_seconds = resolved_event_timeout
 
     def get_service() -> ResearchJobService:
-        return factory()
+        return runtime_service
 
     def require_job(service: ResearchJobService, job_id: str):
         job = service.get(job_id)

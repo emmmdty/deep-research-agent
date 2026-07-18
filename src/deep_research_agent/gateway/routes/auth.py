@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response, status
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 
 from deep_research_agent.product.auth import SESSION_COOKIE_NAME, SESSION_TTL, SessionIdentity
 from deep_research_agent.product.service import ProductService
@@ -16,6 +16,9 @@ router = APIRouter(tags=["authentication"])
 
 class StrictRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
+
+NonBlankText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 
 
 class LoginRequest(StrictRequest):
@@ -183,8 +186,8 @@ __all__ = [
     "AdminIdentityDependency",
     "CsrfIdentityDependency",
     "IdentityDependency",
+    "NonBlankText",
     "ProductServiceDependency",
     "get_product_service",
     "router",
 ]
-
