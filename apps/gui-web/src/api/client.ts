@@ -155,6 +155,17 @@ export function createApiClient(config: ApiClientConfig = {}) {
       window.sessionStorage.setItem("dra.csrf", result.csrf_token);
       return result;
     },
+    async register(email: string, password: string) {
+      const result = await requestJson<{ user: { email: string; role: string }; csrf_token: string }>("/v1/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      window.sessionStorage.setItem("dra.csrf", result.csrf_token);
+      return result;
+    },
+    registrationStatus(): Promise<{ enabled: boolean }> {
+      return requestJson("/v1/auth/registration-status", { method: "GET" });
+    },
     getSession(): Promise<{ user: { user_id: string; tenant_id?: string; email?: string; role: string } }> {
       return requestJson("/v1/auth/session", { method: "GET" });
     },

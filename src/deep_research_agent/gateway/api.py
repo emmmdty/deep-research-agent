@@ -40,6 +40,7 @@ def create_app(
     offline_mode: bool = False,
     product_database_url: str | None = None,
     product_offline_mode: bool | None = None,
+    allow_public_registration: bool | None = None,
     bootstrap_admin_email: str | None = None,
     bootstrap_admin_password: str | None = None,
     event_poll_interval_seconds: float | None = None,
@@ -56,8 +57,20 @@ def create_app(
         summary="Deterministic HTTP surface for async research jobs and report bundles.",
     )
 
-    resolved_database_url = product_database_url or database_url or os.environ.get("DATABASE_URL")
-    resolved_offline_mode = offline_mode if product_offline_mode is None else product_offline_mode
+    resolved_database_url = (
+        product_database_url
+        or database_url
+        or os.environ.get("PRODUCT_DATABASE_URL")
+        or os.environ.get("DATABASE_URL")
+    )
+    configured_offline_mode = os.environ.get("PRODUCT_OFFLINE_MODE")
+    if product_offline_mode is None and configured_offline_mode is not None:
+        resolved_offline_mode = configured_offline_mode.strip().casefold() in {"1", "true", "yes", "on"}
+    else:
+        resolved_offline_mode = offline_mode if product_offline_mode is None else product_offline_mode
+    resolved_public_registration = (
+        resolved_offline_mode if allow_public_registration is None else bool(allow_public_registration)
+    )
     resolved_bootstrap_email = bootstrap_admin_email or os.environ.get(
         "DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL"
     )
@@ -95,6 +108,7 @@ def create_app(
     elif resolved_bootstrap_email or resolved_bootstrap_password:
         raise ValueError("bootstrap admin requires a configured product database")
     app.state.product_service = product_service
+    app.state.allow_public_registration = resolved_public_registration
     app.state.runtime_service = runtime_service
     app.state.event_poll_interval_seconds = resolved_event_poll
     app.state.event_heartbeat_interval_seconds = resolved_event_heartbeat

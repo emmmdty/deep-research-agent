@@ -87,6 +87,47 @@ def test_database_rejects_sqlite_without_explicit_offline_mode():
         create_database("sqlite+pysqlite:///:memory:", offline_mode=False)
 
 
+def test_offline_registration_persists_in_local_database_and_production_stays_invite_only(
+    tmp_path: Path, monkeypatch
+):
+    database_url = f"sqlite+pysqlite:///{tmp_path / 'persistent-product.db'}"
+    monkeypatch.setenv("PRODUCT_DATABASE_URL", database_url)
+    monkeypatch.setenv("PRODUCT_OFFLINE_MODE", "true")
+    first_runtime = ResearchJobService(workspace_dir=str(tmp_path / "runtime-one"))
+    first_app = create_app(service_factory=lambda: first_runtime)
+    first_client = TestClient(first_app)
+    assert first_client.get("/v1/auth/registration-status").json() == {"enabled": True}
+    registered = first_client.post(
+        "/v1/auth/register",
+        json={"email": "local-user@example.test", "password": "local demo password 123"},
+    )
+    assert registered.status_code == 201
+    assert registered.json()["user"]["role"] == "admin"
+    assert (tmp_path / "persistent-product.db").exists()
+
+    second_runtime = ResearchJobService(workspace_dir=str(tmp_path / "runtime-two"))
+    second_app = create_app(service_factory=lambda: second_runtime)
+    second_client = TestClient(second_app)
+    logged_in = second_client.post(
+        "/v1/auth/login",
+        json={"email": "local-user@example.test", "password": "local demo password 123"},
+    )
+    assert logged_in.status_code == 200
+
+    invite_only_app = create_app(
+        service_factory=lambda: ResearchJobService(workspace_dir=str(tmp_path / "runtime-three")),
+        database_url=database_url,
+        offline_mode=True,
+        allow_public_registration=False,
+    )
+    invite_only_client = TestClient(invite_only_app)
+    assert invite_only_client.get("/v1/auth/registration-status").json() == {"enabled": False}
+    assert invite_only_client.post(
+        "/v1/auth/register",
+        json={"email": "blocked@example.test", "password": "local demo password 123"},
+    ).status_code == 404
+
+
 def test_fresh_alembic_upgrade_handles_dynamic_legacy_schema(tmp_path, monkeypatch):
     from alembic import command
     from alembic.config import Config

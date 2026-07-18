@@ -101,6 +101,22 @@ class AuthService:
             )
         )
 
+    def register(self, *, email: str, password: str) -> UserTable:
+        """Create a new tenant owner for the explicitly enabled local demo mode."""
+
+        normalized = _normalize_email(email)
+        if self.repository.get_user_by_email(normalized) is not None:
+            raise ValueError("a user with this email already exists")
+        return self.repository.create_user(
+            UserTable(
+                user_id=_id("usr"),
+                tenant_id=_id("tenant"),
+                email=normalized,
+                role="admin",
+                password_hash=self.hash_password(password),
+            )
+        )
+
     def create_invitation(
         self,
         *,

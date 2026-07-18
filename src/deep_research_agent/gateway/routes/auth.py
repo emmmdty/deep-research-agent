@@ -26,6 +26,11 @@ class LoginRequest(StrictRequest):
     password: str = Field(min_length=1)
 
 
+class RegisterRequest(StrictRequest):
+    email: str = Field(min_length=3, max_length=320)
+    password: str = Field(min_length=12)
+
+
 class AcceptInvitationRequest(StrictRequest):
     password: str = Field(min_length=12)
 
@@ -112,6 +117,42 @@ def login(payload: LoginRequest, response: Response, service: ProductServiceDepe
             "email": login_session.identity.email,
             "role": login_session.identity.role,
         },
+        "csrf_token": login_session.csrf_token,
+    }
+
+
+@router.get("/v1/auth/registration-status")
+def registration_status(request: Request) -> dict[str, bool]:
+    return {"enabled": bool(getattr(request.app.state, "allow_public_registration", False))}
+
+
+@router.post("/v1/auth/register", status_code=status.HTTP_201_CREATED)
+def register(
+    payload: RegisterRequest,
+    request: Request,
+    response: Response,
+    service: ProductServiceDependency,
+) -> dict:
+    if not getattr(request.app.state, "allow_public_registration", False):
+        raise HTTPException(status_code=404, detail="public registration is disabled")
+    try:
+        service.auth.register(email=payload.email, password=payload.password)
+        login_session = service.auth.login(email=payload.email, password=payload.password)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except PermissionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    response.set_cookie(
+        SESSION_COOKIE_NAME,
+        login_session.session_token,
+        max_age=int(SESSION_TTL.total_seconds()),
+        httponly=True,
+        secure=not service.database.offline_mode,
+        samesite="strict",
+        path="/",
+    )
+    return {
+        "user": service.user_dict(login_session.identity),
         "csrf_token": login_session.csrf_token,
     }
 

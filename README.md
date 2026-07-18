@@ -61,6 +61,20 @@ Open `http://127.0.0.1:8000`. The Web container is the same-origin entrypoint an
 SSE traffic to the internal service. Production mode requires a real
 `SCHEDULER_FACTORY_PATH`; it never silently falls back to offline execution.
 
+For a single-machine persistent Demo without Docker/PostgreSQL, use a file-backed SQLite product
+database and the local registration flow:
+
+```bash
+PRODUCT_DATABASE_URL=sqlite+pysqlite:///./workspace/product.db \\
+PRODUCT_OFFLINE_MODE=true \\
+uv run uvicorn deep_research_agent.gateway.api:app --reload
+```
+
+The product database file stores accounts, sessions, topics, runs, memories, and corpus metadata;
+the `workspace/` directory stores durable runtime jobs and report artifacts. Both survive a server
+restart. Public registration is enabled only when `PRODUCT_OFFLINE_MODE=true`; the PostgreSQL
+Compose profile remains invite-only.
+
 Submit a local job without starting a worker:
 
 ```bash

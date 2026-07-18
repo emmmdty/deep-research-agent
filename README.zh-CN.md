@@ -59,6 +59,18 @@ docker compose up --build
 打开 `http://127.0.0.1:8000`。Web 容器是同源入口，并把 API 与 SSE 代理到内部服务。生产模式
 必须配置真实的 `SCHEDULER_FACTORY_PATH`，不会静默降级到 offline。
 
+如果只在单机上运行持久化 Demo，可以不启动 Docker/PostgreSQL，使用文件型 SQLite 和 Web 注册：
+
+```bash
+PRODUCT_DATABASE_URL=sqlite+pysqlite:///./workspace/product.db \\
+PRODUCT_OFFLINE_MODE=true \\
+uv run uvicorn deep_research_agent.gateway.api:app --reload
+```
+
+产品数据库文件会保存账号、会话、主题、运行记录、记忆和语料元数据；`workspace/` 会保存持久化
+任务与报告工件，重启服务后仍然保留。公开注册只在 `PRODUCT_OFFLINE_MODE=true` 时开启，PostgreSQL
+Compose profile 仍然使用邀请制。
+
 提交一个不启动 worker 的本地 job：
 
 ```bash
