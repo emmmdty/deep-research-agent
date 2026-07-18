@@ -58,6 +58,8 @@ _SECRET_KEY_MARKERS = (
     "signingkey",
     "sshkey",
 )
+_SAFE_CREDENTIAL_REFERENCE_SUFFIXES = ("credentialid", "credentialids")
+_SAFE_TOKEN_BUDGET_SUFFIXES = ("tokenbudget", "tokenlimit", "tokencount", "tokenusage", "maxtokens")
 _FOLLOW_UP_STOP_WORDS = frozenset(
     {
         "a",
@@ -88,14 +90,22 @@ def _iso(value: datetime) -> str:
     return value.isoformat()
 
 
+def _is_secret_key(key: Any, value: Any) -> bool:
+    normalized = re.sub(r"[^a-z0-9]", "", str(key).casefold())
+    if normalized.endswith(_SAFE_CREDENTIAL_REFERENCE_SUFFIXES):
+        return False
+    if normalized.endswith(_SAFE_TOKEN_BUDGET_SUFFIXES) and isinstance(value, (int, float)):
+        return False
+    return any(marker in normalized for marker in _SECRET_KEY_MARKERS)
+
+
 def redact_secrets(value: Any) -> Any:
     """Recursively redact common secret-bearing configuration fields."""
 
     if isinstance(value, dict):
         redacted: dict[str, Any] = {}
         for key, item in value.items():
-            normalized = re.sub(r"[^a-z0-9]", "", key.casefold())
-            if any(marker in normalized for marker in _SECRET_KEY_MARKERS):
+            if _is_secret_key(key, item):
                 redacted[key] = "[redacted]"
             else:
                 redacted[key] = redact_secrets(item)
@@ -108,10 +118,7 @@ def redact_secrets(value: Any) -> Any:
 def _contains_secret_key(value: Any) -> bool:
     if isinstance(value, dict):
         for key, item in value.items():
-            normalized = re.sub(r"[^a-z0-9]", "", str(key).casefold())
-            if normalized in _SECRET_KEY_MARKERS or normalized.endswith(
-                ("apikey", "secret", "password", "credential", "authorization", "privatekey", "accesskey")
-            ):
+            if _is_secret_key(key, item):
                 return True
             if _contains_secret_key(item):
                 return True

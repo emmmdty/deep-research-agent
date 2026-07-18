@@ -350,6 +350,9 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
                 "privateKey": "hidden-private-key",
                 "access-key": "hidden-access-key",
                 "bearer": "hidden-bearer",
+                "refresh_token": "hidden-refresh-token",
+                "model_token": "hidden-model-token",
+                "client_secret_key": "hidden-client-secret",
             },
         },
     )
@@ -365,6 +368,8 @@ def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
                     "planner_endpoint_id": "planner-primary",
                     "domain_pack_id": "event-graph-agents-llms",
                     "max_loops": 2,
+                    "planner_credential_id": "planner-credential-ref",
+                    "token_budget": 10_000,
                 },
             },
         )
