@@ -78,6 +78,10 @@ class ResearchJobService:
         self._spawn_worker_fn = spawn_worker_fn or self._spawn_worker
         self._scheduler_factory = scheduler_factory
 
+    def configure_scheduler_factory(self, scheduler_factory) -> None:
+        """Attach the scheduler composition root after inspecting a persisted job."""
+        self._scheduler_factory = scheduler_factory
+
     def build_initial_state(
         self,
         *,

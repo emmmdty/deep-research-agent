@@ -7,7 +7,13 @@ from typing import Literal
 
 from pydantic import ConfigDict, Field
 
-from deep_research_agent.kernel.contracts import ClaimRecord, CorpusManifest, StrictModel
+from deep_research_agent.kernel.contracts import (
+    ArtifactRef,
+    ClaimRecord,
+    CorpusManifest,
+    EvidenceSpan,
+    StrictModel,
+)
 from deep_research_agent.orchestration.reducer import CriticDecision
 
 
@@ -42,6 +48,8 @@ class EvidenceAuditor:
         critic_decisions: Iterable[CriticDecision] = (),
         semantic_disagreements: Iterable[tuple[str, str]] = (),
         evidence_span_ids: Iterable[str] = (),
+        evidence_spans: Iterable[EvidenceSpan] = (),
+        source_artifacts: Iterable[ArtifactRef] = (),
     ) -> EvidenceAuditResult:
         invalid_reasons = dict(invalid_document_reasons or {})
         frozen_ids = set(corpus_manifest.document_version_ids)
@@ -58,7 +66,27 @@ class EvidenceAuditor:
             span.span_id for claim in claim_list for span in claim.evidence_spans
         }
         known_evidence_ids.update(evidence_span_ids)
-        critic_by_claim: dict[str, CriticDecision] = {}
+        span_by_id = {
+            span.span_id: span
+            for span in (
+                *evidence_spans,
+                *(span for claim in claim_list for span in claim.evidence_spans),
+            )
+        }
+        source_by_document: dict[str, ArtifactRef] = {}
+        for source in source_artifacts:
+            document_id = source.metadata.get("document_version_id")
+            if not isinstance(document_id, str):
+                continue
+            expected = corpus_manifest.content_hashes.get(document_id)
+            current = source_by_document.get(document_id)
+            if current is None or (
+                expected is not None
+                and source.content_sha256 == expected
+                and current.content_sha256 != expected
+            ):
+                source_by_document[document_id] = source
+        decisions_by_claim: dict[str, list[CriticDecision]] = {}
         unresolved_claim_ids = {
             claim_id for pair in semantic_disagreements for claim_id in pair
         }
@@ -67,6 +95,13 @@ class EvidenceAuditor:
             valid_rationale = bool(decision.rationale_evidence_ids) and set(
                 decision.rationale_evidence_ids
             ) <= known_evidence_ids
+            valid_rationale = valid_rationale and all(
+                (span := span_by_id.get(span_id)) is not None
+                and span.document_version_id in frozen_ids
+                and (source := source_by_document.get(span.document_version_id)) is not None
+                and source.content_sha256 == corpus_manifest.content_hashes[span.document_version_id]
+                for span_id in decision.rationale_evidence_ids
+            )
             if not valid_group or not valid_rationale:
                 unresolved_claim_ids.update(decision.claim_ids)
                 continue
@@ -74,7 +109,14 @@ class EvidenceAuditor:
                 unresolved_claim_ids.update(decision.claim_ids)
                 continue
             for claim_id in decision.claim_ids:
-                critic_by_claim[claim_id] = decision
+                decisions_by_claim.setdefault(claim_id, []).append(decision)
+
+        critic_by_claim: dict[str, CriticDecision] = {}
+        for claim_id, decisions in decisions_by_claim.items():
+            if len(decisions) > 1:
+                unresolved_claim_ids.add(claim_id)
+                continue
+            critic_by_claim[claim_id] = decisions[0]
 
         for claim in claim_list:
             span_document_ids = {span.document_version_id for span in claim.evidence_spans}

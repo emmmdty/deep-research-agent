@@ -6,7 +6,7 @@ import json
 import os
 from enum import Enum
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
@@ -246,6 +246,14 @@ class Settings(BaseSettings):
     job_stale_timeout_seconds: int = Field(
         default=15,
         description="phase2 stale job 判定阈值（秒）",
+    )
+    scheduler_runtime_mode: Literal["production", "offline"] = Field(
+        default="production",
+        description="scheduler-v2 composition mode; offline is deterministic and explicit",
+    )
+    scheduler_factory_path: Optional[str] = Field(
+        default=None,
+        description="dotted import path for the configured provider-neutral scheduler factory",
     )
     legacy_cli_enabled: bool = Field(
         default=True,

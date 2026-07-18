@@ -65,6 +65,11 @@ class ReportBundleCompilerV2:
             critic_decisions=reduced.critic_decisions,
             semantic_disagreements=reduced.semantic_disagreements,
             evidence_span_ids=(span.span_id for span in reduced.evidence_spans),
+            evidence_spans=(
+                *reduced.evidence_spans,
+                *(span for claim in claim_by_id.values() for span in claim.evidence_spans),
+            ),
+            source_artifacts=ordered_sources,
         )
         span_by_id: dict[str, EvidenceSpan] = {}
         for span in (
@@ -257,14 +262,22 @@ class ReportBundleCompilerV2:
         summary_matches = [
             (line_index, match)
             for line_index, line in enumerate(lines)
-            if (match := re.match(r"^(#{1,6})\s+executive summary\s*:?\s*$", line.strip(), re.IGNORECASE))
+            if (match := re.match(
+                r"^(#{1,6})\s+executive summary\s*:?(?:\s+#+)?\s*$",
+                line.strip(),
+                re.IGNORECASE,
+            ))
         ]
         if len(summary_matches) > 1:
             raise ValueError("ambiguous executive summary headings")
         found_summary = bool(summary_matches)
         while index < len(lines):
             line = lines[index]
-            match = re.match(r"^(#{1,6})\s+executive summary\s*:?\s*$", line.strip(), re.IGNORECASE)
+            match = re.match(
+                r"^(#{1,6})\s+executive summary\s*:?(?:\s+#+)?\s*$",
+                line.strip(),
+                re.IGNORECASE,
+            )
             if match is None:
                 rebuilt.append(line)
                 index += 1

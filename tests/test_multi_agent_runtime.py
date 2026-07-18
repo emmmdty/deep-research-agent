@@ -707,3 +707,56 @@ def test_store_fences_each_mutation_at_the_sqlite_boundary(tmp_path) -> None:
         )
     with pytest.raises(WorkerLeaseConflict):
         service.store.save_scheduler_checkpoints(job.job_id, [], lease_id="lease-a")
+
+
+def test_store_heartbeat_cannot_clobber_a_new_lease(tmp_path) -> None:
+    from deep_research_agent.research_jobs.service import ResearchJobService
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="heartbeat boundary", max_loops=1, research_profile="default", start_worker=False)
+    service.store.acquire_worker_lease(job.job_id, worker_pid=1, lease_id="lease-a")
+    service.store.clear_worker(job.job_id, lease_id="lease-a")
+    replacement = service.store.acquire_worker_lease(job.job_id, worker_pid=2, lease_id="lease-b")
+
+    observed = service.store.heartbeat(job.job_id, lease_id="lease-a")
+
+    assert observed.worker_lease_id == "lease-b"
+    assert service.get(job.job_id).last_heartbeat_at == replacement.last_heartbeat_at
+
+
+def test_worker_composition_requires_production_factory_and_supports_explicit_offline_mode(
+    monkeypatch,
+) -> None:
+    from configs.settings import Settings
+    from deep_research_agent.research_jobs.worker import build_scheduler_factory
+    import types
+    import sys
+
+    with pytest.raises(RuntimeError, match="scheduler factory"):
+        build_scheduler_factory(Settings(scheduler_runtime_mode="production"))
+
+    offline_factory = build_scheduler_factory(Settings(scheduler_runtime_mode="offline"))
+    scheduler = offline_factory(cancellation_check=lambda: False)
+    assert scheduler.__class__.__name__ == "ResearchScheduler"
+
+    captured = {}
+    module = types.ModuleType("scheduler_factory_test")
+
+    def configured_factory(*, settings, **kwargs):
+        captured["mode"] = settings.scheduler_runtime_mode
+        from deep_research_agent.research_jobs.worker import _OfflineTaskWorker
+
+        from deep_research_agent.orchestration.scheduler import ResearchScheduler
+
+        return ResearchScheduler(worker=_OfflineTaskWorker(), **kwargs)
+
+    module.configured_factory = configured_factory
+    monkeypatch.setitem(sys.modules, "scheduler_factory_test", module)
+    production_factory = build_scheduler_factory(
+        Settings(
+            scheduler_runtime_mode="production",
+            scheduler_factory_path="scheduler_factory_test.configured_factory",
+        )
+    )
+    assert production_factory(cancellation_check=lambda: False).__class__.__name__ == "ResearchScheduler"
+    assert captured["mode"] == "production"

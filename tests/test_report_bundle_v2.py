@@ -204,6 +204,27 @@ def test_bundle_canonicalizes_summary_heading_variants(heading: str) -> None:
     assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
 
 
+def test_bundle_strips_atx_closing_hash_summary_heading() -> None:
+    span = _span()
+    claim = _claim("claim-closing-hash", "accepted", spans=[span])
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=(
+            "# Report\n\n## Executive Summary ##\n\nUntrusted prose.\n\n"
+            "## Detail\nBody."
+        ),
+        claims=[claim],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert "## Executive Summary ##" not in bundle.report_markdown
+    assert "Untrusted prose." not in bundle.report_markdown
+    assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
+
+
 def test_bundle_rejects_ambiguous_duplicate_summary_headings() -> None:
     with pytest.raises(ValueError, match="ambiguous executive summary"):
         ReportBundleCompilerV2().compile(
@@ -363,6 +384,69 @@ def test_bundle_consumes_unresolved_critic_decision_for_critical_claim() -> None
         claims=[claim],
         evidence_packets=[],
         critic_decisions=[decision],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.accepted_claims == []
+    assert bundle.audit_summary["unresolved_claim_ids"] == [claim.claim_id]
+
+
+def test_bundle_rejects_critic_rationale_with_source_hash_mismatch() -> None:
+    from deep_research_agent.orchestration.reducer import CriticDecision
+
+    span = _span()
+    claim = _claim("claim-critic-source", "accepted", critical=True, spans=[span])
+    decision = CriticDecision(
+        decision_id="critic-source-1",
+        claim_ids=[claim.claim_id],
+        decision="accepted",
+        rationale_evidence_ids=[span.span_id],
+        rationale="The source supports the claim.",
+    )
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[claim],
+        evidence_packets=[],
+        critic_decisions=[decision],
+        research_graph=ResearchGraph(),
+        sources=[_source().model_copy(update={"content_sha256": "b" * 64})],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.accepted_claims == []
+    assert bundle.audit_summary["unresolved_claim_ids"] == [claim.claim_id]
+
+
+def test_bundle_fails_closed_when_critic_decisions_overlap_one_claim() -> None:
+    from deep_research_agent.orchestration.reducer import CriticDecision
+
+    span = _span()
+    claim = _claim("claim-overlap", "accepted", critical=True, spans=[span])
+    decisions = [
+        CriticDecision(
+            decision_id="critic-overlap-a",
+            claim_ids=[claim.claim_id],
+            decision="accepted",
+            rationale_evidence_ids=[span.span_id],
+            rationale="First resolution.",
+        ),
+        CriticDecision(
+            decision_id="critic-overlap-b",
+            claim_ids=[claim.claim_id],
+            decision="contradicted",
+            rationale_evidence_ids=[span.span_id],
+            rationale="Conflicting resolution.",
+        ),
+    ]
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[claim],
+        evidence_packets=[],
+        critic_decisions=decisions,
         research_graph=ResearchGraph(),
         sources=[_source()],
         corpus_manifest=_manifest(),

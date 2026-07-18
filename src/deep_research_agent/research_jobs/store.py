@@ -369,12 +369,26 @@ class ResearchJobStore:
         return job
 
     def heartbeat(self, job_id: str, *, lease_id: str | None = None) -> JobRuntimeRecord:
-        job = self.get_job(job_id)
-        if job is None:
-            raise KeyError(f"未知 job: {job_id}")
-        if lease_id is not None and job.worker_lease_id != lease_id:
-            return job
-        return self.update_job(job_id, last_heartbeat_at=utc_now_iso())
+        if lease_id is None:
+            return self.update_job(job_id, last_heartbeat_at=utc_now_iso())
+        now = utc_now_iso()
+        with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            cursor = conn.execute(
+                """
+                UPDATE jobs
+                SET last_heartbeat_at = ?, updated_at = ?
+                WHERE job_id = ? AND worker_lease_id = ?
+                """,
+                (now, now, job_id, lease_id),
+            )
+            if cursor.rowcount != 1:
+                row = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+                if row is None:
+                    raise KeyError(f"未知 job: {job_id}")
+                return self._row_to_job(row)
+            updated = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+        return self._row_to_job(updated)
 
     def next_event_sequence(self, job_id: str) -> int:
         with self._connect() as conn:
