@@ -189,6 +189,91 @@ async def test_scheduler_accepts_dynamic_fan_out_without_rerunning_parent() -> N
 
 
 @pytest.mark.asyncio
+async def test_scheduler_ignores_duplicate_dynamic_task_declarations_globally() -> None:
+    class DuplicateFanOutWorker(DeterministicWorker):
+        async def execute(self, task: TaskSpec, context) -> WorkerOutput:
+            if task.task_id in {"left", "right"}:
+                child = _task("shared")
+                return _completed(task, {"task_id": task.task_id}, spawned=[child])
+            return await super().execute(task, context)
+
+    worker = DuplicateFanOutWorker(delay=0)
+    result = await ResearchScheduler(worker=worker, max_workers=4).run(
+        SchedulerJob(job_id="job-1", tenant_id="tenant-1"),
+        ResearchDAG(job_id="job-1", tasks=[_task("left"), _task("right")]),
+        {"version_id": "config-v1"},
+    )
+
+    assert result.status == "completed"
+    assert worker.calls["shared"] <= 1
+
+
+@pytest.mark.asyncio
+async def test_scheduler_fails_closed_on_conflicting_dynamic_task_definition() -> None:
+    class ConflictingFanOutWorker(DeterministicWorker):
+        async def execute(self, task: TaskSpec, context) -> WorkerOutput:
+            if task.task_id == "left":
+                return _completed(task, {"task_id": task.task_id}, spawned=[_task("shared")])
+            if task.task_id == "right":
+                conflict = _task("shared").model_copy(update={"objective": "different"})
+                return _completed(task, {"task_id": task.task_id}, spawned=[conflict])
+            return await super().execute(task, context)
+
+    result = await ResearchScheduler(worker=ConflictingFanOutWorker(delay=0), max_workers=4).run(
+        SchedulerJob(job_id="job-1", tenant_id="tenant-1"),
+        ResearchDAG(job_id="job-1", tasks=[_task("left"), _task("right")]),
+        {"version_id": "config-v1"},
+    )
+
+    assert result.status == "failed"
+    assert result.task_results["left"].status == "completed"
+    assert result.task_results["right"].status == "failed"
+
+
+def test_scheduler_job_service_dispatches_persisted_scheduler_runtime(tmp_path) -> None:
+    from deep_research_agent.research_jobs.service import ResearchJobService
+
+    executed: list[str] = []
+
+    class FakeScheduler:
+        async def run(self, job, dag, config_snapshot):
+            executed.append(f"{job.job_id}:{dag.tasks[0].task_id}:{config_snapshot['version']}")
+            from deep_research_agent.orchestration.scheduler import RunResult
+            return RunResult(
+                job_id=job.job_id,
+                status="completed",
+                task_results={},
+                task_outputs={},
+                attempts={},
+                events=[],
+                checkpoints=[],
+                config_snapshot=config_snapshot,
+            )
+
+    service = ResearchJobService(
+        workspace_dir=str(tmp_path),
+        scheduler_factory=lambda **kwargs: FakeScheduler(),
+    )
+    brief = ResearchBrief(
+        brief_id="brief-1", job_id="pending", question="Q", domain_pack_id="pack-1"
+    )
+    job = service.submit_scheduler_v2(
+        brief=brief,
+        dag=ResearchDAG(
+            job_id="pending",
+            tasks=[_task("typed").model_copy(update={"job_id": "pending"})],
+        ),
+        config_snapshot={"version": "config-v2"},
+        start_worker=False,
+    )
+    # The service assigns the durable job id and rewrites the frozen DAG/brief to it.
+    result = service.run_job(job.job_id)
+    assert result.status == "completed"
+    assert executed == [f"{job.job_id}:typed:config-v2"]
+    assert service.get(job.job_id).runtime_path == "scheduler-v2"
+
+
+@pytest.mark.asyncio
 async def test_scheduler_cancellation_stops_running_and_pending_tasks() -> None:
     entered = asyncio.Event()
     release = asyncio.Event()
@@ -588,3 +673,37 @@ async def test_job_orchestrator_fences_scheduler_writes_after_losing_lease(tmp_p
     loaded = service.get(job.job_id)
     assert loaded is not None
     assert loaded.worker_lease_id == "lease-b"
+
+
+def test_store_fences_each_mutation_at_the_sqlite_boundary(tmp_path) -> None:
+    from deep_research_agent.research_jobs.models import JobCheckpoint, JobProgressEvent, RuntimeStage
+    from deep_research_agent.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.store import WorkerLeaseConflict
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="lease boundary", max_loops=1, research_profile="default", start_worker=False)
+    service.store.acquire_worker_lease(job.job_id, worker_pid=1, lease_id="lease-a")
+
+    service.store.clear_worker(job.job_id, lease_id="lease-a")
+    service.store.acquire_worker_lease(job.job_id, worker_pid=2, lease_id="lease-b")
+    with pytest.raises(WorkerLeaseConflict):
+        service.store.update_job(job.job_id, lease_id="lease-a", error="stale")
+    with pytest.raises(WorkerLeaseConflict):
+        service.store.append_event(
+            JobProgressEvent(
+                event_id="pending", job_id=job.job_id, sequence=0, stage="scheduler",
+                event_type="stale", message="stale",
+            ),
+            lease_id="lease-a",
+        )
+    with pytest.raises(WorkerLeaseConflict):
+        service.store.save_checkpoint(
+            JobCheckpoint(
+                checkpoint_id="pending", job_id=job.job_id, stage=RuntimeStage.CREATED,
+                sequence=0, loop_count=0, next_stage=RuntimeStage.CLARIFYING,
+                state_payload={},
+            ),
+            lease_id="lease-a",
+        )
+    with pytest.raises(WorkerLeaseConflict):
+        service.store.save_scheduler_checkpoints(job.job_id, [], lease_id="lease-a")

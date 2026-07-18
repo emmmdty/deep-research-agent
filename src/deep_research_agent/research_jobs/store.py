@@ -220,15 +220,58 @@ class ResearchJobStore:
             return None
         return self._row_to_job(row)
 
-    def update_job(self, job_id: str, **fields) -> JobRuntimeRecord:
-        current = self.get_job(job_id)
-        if current is None:
-            raise KeyError(f"未知 job: {job_id}")
-        payload = current.model_dump(mode="json")
-        payload.update(fields)
-        payload["updated_at"] = utc_now_iso()
-        job = JobRuntimeRecord.model_validate(payload)
-        return self.upsert_job(job)
+    def update_job(self, job_id: str, *, lease_id: str | None = None, **fields) -> JobRuntimeRecord:
+        if lease_id is None:
+            current = self.get_job(job_id)
+            if current is None:
+                raise KeyError(f"未知 job: {job_id}")
+            payload = current.model_dump(mode="json")
+            payload.update(fields)
+            payload["updated_at"] = utc_now_iso()
+            job = JobRuntimeRecord.model_validate(payload)
+            return self.upsert_job(job)
+
+        with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            row = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+            if row is None:
+                raise KeyError(f"未知 job: {job_id}")
+            if row["worker_lease_id"] != lease_id:
+                raise WorkerLeaseConflict(f"job {job_id} 当前 lease 不是 {lease_id}")
+            payload = self._row_to_job(row).model_dump(mode="json")
+            payload.update(fields)
+            payload["updated_at"] = utc_now_iso()
+            job = JobRuntimeRecord.model_validate(payload)
+            dumped = job.model_dump(mode="json")
+            cursor = conn.execute(
+                """
+                UPDATE jobs SET topic=?, status=?, current_stage=?, created_at=?, updated_at=?,
+                    attempt_index=?, retry_of=?, cancel_requested=?, worker_pid=?, worker_lease_id=?,
+                    last_heartbeat_at=?, active_checkpoint_id=?, report_path=?, report_bundle_path=?,
+                    trace_path=?, runtime_path=?, source_profile=?, budget_json=?, policy_overrides_json=?,
+                    connector_health_json=?, audit_gate_status=?, critical_claim_count=?,
+                    blocked_critical_claim_count=?, audit_graph_path=?, review_queue_path=?, error=?, metadata_json=?
+                WHERE job_id=? AND worker_lease_id=?
+                """,
+                (
+                    dumped["topic"], dumped["status"], dumped["current_stage"], dumped["created_at"],
+                    dumped["updated_at"], dumped["attempt_index"], dumped.get("retry_of"),
+                    int(dumped["cancel_requested"]), dumped.get("worker_pid"), dumped.get("worker_lease_id"),
+                    dumped.get("last_heartbeat_at"), dumped.get("active_checkpoint_id"), dumped["report_path"],
+                    dumped["report_bundle_path"], dumped["trace_path"], dumped["runtime_path"],
+                    dumped["source_profile"], json.dumps(dumped.get("budget") or {}, ensure_ascii=False),
+                    json.dumps(dumped.get("policy_overrides") or {}, ensure_ascii=False),
+                    json.dumps(dumped.get("connector_health") or {}, ensure_ascii=False),
+                    dumped.get("audit_gate_status", "unchecked"), int(dumped.get("critical_claim_count", 0)),
+                    int(dumped.get("blocked_critical_claim_count", 0)), dumped.get("audit_graph_path", ""),
+                    dumped.get("review_queue_path", ""), dumped.get("error"),
+                    json.dumps(dumped.get("metadata") or {}, ensure_ascii=False), job_id, lease_id,
+                ),
+            )
+            if cursor.rowcount != 1:
+                raise WorkerLeaseConflict(f"job {job_id} lease changed during mutation")
+            updated = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+        return self._row_to_job(updated)
 
     def update_job_status(
         self,
@@ -239,6 +282,7 @@ class ResearchJobStore:
         error: str | None = None,
         cancel_requested: bool | None = None,
         active_checkpoint_id: str | None = None,
+        lease_id: str | None = None,
     ) -> JobRuntimeRecord:
         updates = {"status": status}
         if current_stage is not None:
@@ -249,7 +293,7 @@ class ResearchJobStore:
             updates["cancel_requested"] = cancel_requested
         if active_checkpoint_id is not None:
             updates["active_checkpoint_id"] = active_checkpoint_id
-        return self.update_job(job_id, **updates)
+        return self.update_job(job_id, lease_id=lease_id, **updates)
 
     def acquire_worker_lease(
         self,
@@ -336,9 +380,17 @@ class ResearchJobStore:
         with self._connect() as conn:
             return self._next_event_sequence(conn, job_id)
 
-    def append_event(self, event: JobProgressEvent) -> JobProgressEvent:
+    def append_event(self, event: JobProgressEvent, *, lease_id: str | None = None) -> JobProgressEvent:
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
+            if lease_id is not None:
+                row = conn.execute(
+                    "SELECT worker_lease_id FROM jobs WHERE job_id = ?", (event.job_id,)
+                ).fetchone()
+                if row is None:
+                    raise KeyError(f"未知 job: {event.job_id}")
+                if row["worker_lease_id"] != lease_id:
+                    raise WorkerLeaseConflict(f"job {event.job_id} 当前 lease 不是 {lease_id}")
             sequence = self._next_event_sequence(conn, event.job_id)
             stored = event.model_copy(
                 update={
@@ -397,9 +449,17 @@ class ResearchJobStore:
         with self._connect() as conn:
             return self._next_checkpoint_sequence(conn, job_id)
 
-    def save_checkpoint(self, checkpoint: JobCheckpoint) -> JobCheckpoint:
+    def save_checkpoint(self, checkpoint: JobCheckpoint, *, lease_id: str | None = None) -> JobCheckpoint:
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
+            if lease_id is not None:
+                row = conn.execute(
+                    "SELECT worker_lease_id FROM jobs WHERE job_id = ?", (checkpoint.job_id,)
+                ).fetchone()
+                if row is None:
+                    raise KeyError(f"未知 job: {checkpoint.job_id}")
+                if row["worker_lease_id"] != lease_id:
+                    raise WorkerLeaseConflict(f"job {checkpoint.job_id} 当前 lease 不是 {lease_id}")
             sequence = self._next_checkpoint_sequence(conn, checkpoint.job_id)
             stored = checkpoint.model_copy(
                 update={
@@ -429,6 +489,31 @@ class ResearchJobStore:
                 ),
             )
         return stored
+
+    def save_scheduler_checkpoints(self, job_id: str, payload: list[dict], *, lease_id: str | None = None) -> Path:
+        """Write the scheduler sidecar while holding the lease-fenced DB lock."""
+        with self._connect() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            if lease_id is not None:
+                row = conn.execute(
+                    "SELECT worker_lease_id FROM jobs WHERE job_id = ?", (job_id,)
+                ).fetchone()
+                if row is None:
+                    raise KeyError(f"未知 job: {job_id}")
+                if row["worker_lease_id"] != lease_id:
+                    raise WorkerLeaseConflict(f"job {job_id} 当前 lease 不是 {lease_id}")
+            checkpoint_path = self.job_dir(job_id) / "scheduler_checkpoints.json"
+            checkpoint_path.write_text(
+                json.dumps(payload, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            if lease_id is not None:
+                row = conn.execute(
+                    "SELECT worker_lease_id FROM jobs WHERE job_id = ?", (job_id,)
+                ).fetchone()
+                if row["worker_lease_id"] != lease_id:
+                    raise WorkerLeaseConflict(f"job {job_id} lease changed during checkpoint mutation")
+        return checkpoint_path
 
     def _next_checkpoint_sequence(self, conn: sqlite3.Connection, job_id: str) -> int:
         row = conn.execute(

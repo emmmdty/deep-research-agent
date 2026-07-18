@@ -4,12 +4,13 @@ from __future__ import annotations
 
 from .dag import ResearchDAG, ResearchPlanner
 from .events import CancellationToken, InMemoryRunJournal, RunEvent, TaskCheckpoint
-from .reducer import EvidenceReducer, ReducedEvidence
+from .reducer import CriticDecision, EvidenceReducer, ReducedEvidence
 from .scheduler import ResearchScheduler, RunResult, SchedulerJob
 from .workers import TaskExecutionContext, TaskWorker, WorkerOutput
 
 __all__ = [
     "CancellationToken",
+    "CriticDecision",
     "EvidenceReducer",
     "InMemoryRunJournal",
     "ReducedEvidence",

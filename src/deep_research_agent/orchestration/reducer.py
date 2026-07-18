@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from typing import Literal
 
-from pydantic import ConfigDict, Field
+from pydantic import ConfigDict, Field, model_validator
 
 from deep_research_agent.kernel.contracts import (
     ArtifactRef,
@@ -15,6 +16,25 @@ from deep_research_agent.kernel.contracts import (
 )
 
 
+class CriticDecision(StrictModel):
+    """Typed semantic resolution for a group of related claims."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    decision_id: str = Field(min_length=1)
+    claim_ids: tuple[str, ...] = Field(min_length=1)
+    decision: Literal["accepted", "qualified", "contradicted", "unresolved"]
+    rationale_evidence_ids: tuple[str, ...] = ()
+    rationale: str = Field(min_length=1)
+    unresolved: bool = False
+
+    @model_validator(mode="after")
+    def _validate_unresolved(self) -> CriticDecision:
+        if self.unresolved != (self.decision == "unresolved"):
+            raise ValueError("critic unresolved must match the decision status")
+        return self
+
+
 class ReducedEvidence(StrictModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -23,16 +43,23 @@ class ReducedEvidence(StrictModel):
     claims: tuple[ClaimRecord, ...] = ()
     artifacts: tuple[ArtifactRef, ...] = ()
     semantic_disagreements: list[tuple[str, str]] = Field(default_factory=list)
+    critic_decisions: tuple[CriticDecision, ...] = ()
 
 
 class EvidenceReducer:
     """Deduplicate exact records while leaving semantic judgment to a critic."""
 
-    def reduce(self, packets: list[EvidencePacket] | tuple[EvidencePacket, ...]) -> ReducedEvidence:
+    def reduce(
+        self,
+        packets: list[EvidencePacket] | tuple[EvidencePacket, ...],
+        *,
+        critic_decisions: list[CriticDecision] | tuple[CriticDecision, ...] = (),
+    ) -> ReducedEvidence:
         packet_by_id: dict[str, EvidencePacket] = {}
         span_by_id: dict[str, EvidenceSpan] = {}
         claim_by_id: dict[str, ClaimRecord] = {}
         artifact_by_content: dict[str, ArtifactRef] = {}
+        decision_by_id: dict[str, CriticDecision] = {}
 
         for packet in sorted(packets, key=lambda item: item.packet_id):
             self._add_exact(packet_by_id, packet.packet_id, packet, "packet")
@@ -46,18 +73,32 @@ class EvidenceReducer:
                 current = artifact_by_content.get(artifact.content_sha256)
                 if current is None or artifact.artifact_id < current.artifact_id:
                     artifact_by_content[artifact.content_sha256] = artifact
+        for decision in sorted(critic_decisions, key=lambda item: item.decision_id):
+            self._add_exact(decision_by_id, decision.decision_id, decision, "critic decision")
 
         claim_by_id = self._merge_semantic_duplicates(claim_by_id.values())
         disagreements: set[tuple[str, str]] = set()
-        claims_by_text: dict[str, list[ClaimRecord]] = defaultdict(list)
-        for claim in claim_by_id.values():
-            claims_by_text[" ".join(claim.claim.casefold().split())].append(claim)
-        for related in claims_by_text.values():
-            ordered = sorted(related, key=lambda item: item.claim_id)
-            for index, left in enumerate(ordered):
-                for right in ordered[index + 1 :]:
-                    if left.support_status != right.support_status:
-                        disagreements.add((left.claim_id, right.claim_id))
+        ordered_claims = sorted(claim_by_id.values(), key=lambda item: item.claim_id)
+        resolved_pairs = {
+            tuple(sorted((left, right)))
+            for decision in decision_by_id.values()
+            for index, left in enumerate(decision.claim_ids)
+            for right in decision.claim_ids[index + 1 :]
+        }
+        for index, left in enumerate(ordered_claims):
+            left_tokens = set(" ".join(left.claim.casefold().split()).split())
+            for right in ordered_claims[index + 1 :]:
+                right_tokens = set(" ".join(right.claim.casefold().split()).split())
+                overlap = len(left_tokens & right_tokens) / max(len(left_tokens | right_tokens), 1)
+                related = overlap >= 0.5 or (
+                    left.claim.casefold() == right.claim.casefold()
+                    and left.claim_type == right.claim_type
+                )
+                if related and (
+                    left.support_status != right.support_status
+                    or left.claim.casefold() != right.claim.casefold()
+                ) and (left.claim_id, right.claim_id) not in resolved_pairs:
+                    disagreements.add((left.claim_id, right.claim_id))
 
         return ReducedEvidence(
             packet_ids=tuple(sorted(packet_by_id)),
@@ -65,6 +106,7 @@ class EvidenceReducer:
             claims=tuple(claim_by_id[key] for key in sorted(claim_by_id)),
             artifacts=tuple(sorted(artifact_by_content.values(), key=lambda item: item.artifact_id)),
             semantic_disagreements=sorted(disagreements),
+            critic_decisions=tuple(decision_by_id[key] for key in sorted(decision_by_id)),
         )
 
     @staticmethod

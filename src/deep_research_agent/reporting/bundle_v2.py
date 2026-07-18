@@ -19,6 +19,7 @@ from deep_research_agent.kernel.contracts import (
     ResearchGraph,
 )
 from deep_research_agent.orchestration.reducer import EvidenceReducer
+from deep_research_agent.orchestration.reducer import CriticDecision
 
 
 class ReportBundleCompilerV2:
@@ -39,13 +40,15 @@ class ReportBundleCompilerV2:
         report_markdown: str,
         claims: Iterable[ClaimRecord],
         evidence_packets: Iterable[EvidencePacket],
+        critic_decisions: Iterable[CriticDecision] = (),
         research_graph: ResearchGraph,
         sources: Iterable[ArtifactRef],
         corpus_manifest: CorpusManifest,
         run_manifest: Mapping[str, Any],
     ) -> ReportBundleV2:
         packets = list(evidence_packets)
-        reduced = self._reducer.reduce(packets)
+        critic_decisions = list(critic_decisions)
+        reduced = self._reducer.reduce(packets, critic_decisions=critic_decisions)
         claim_by_id = {claim.claim_id: claim for claim in reduced.claims}
         for claim in claims:
             existing = claim_by_id.get(claim.claim_id)
@@ -59,6 +62,8 @@ class ReportBundleCompilerV2:
             claim_by_id.values(),
             corpus_manifest,
             invalid_document_reasons=invalid_documents,
+            critic_decisions=reduced.critic_decisions,
+            semantic_disagreements=reduced.semantic_disagreements,
         )
         span_by_id: dict[str, EvidenceSpan] = {}
         for span in (
@@ -73,6 +78,7 @@ class ReportBundleCompilerV2:
             research_graph,
             evidence_spans=span_by_id,
             corpus_manifest=corpus_manifest,
+            sources=ordered_sources,
         )
 
         supported = [*audit.accepted, *audit.qualified]
@@ -94,6 +100,7 @@ class ReportBundleCompilerV2:
             ],
             "degradations": audit.degradations,
             "semantic_disagreements": reduced.semantic_disagreements,
+            "unresolved_claim_ids": audit.unresolved_claim_ids,
         }
         return ReportBundleV2(
             report_markdown=sanitized_report,
@@ -127,7 +134,13 @@ class ReportBundleCompilerV2:
         source_by_content: dict[str, ArtifactRef] = {}
         for source in source_by_id.values():
             current = source_by_content.get(source.content_sha256)
-            if current is None or source.artifact_id < current.artifact_id:
+            source_has_document = isinstance(source.metadata.get("document_version_id"), str)
+            current_has_document = current is not None and isinstance(
+                current.metadata.get("document_version_id"), str
+            )
+            if current is None or (source_has_document and not current_has_document) or (
+                source_has_document == current_has_document and source.artifact_id < current.artifact_id
+            ):
                 source_by_content[source.content_sha256] = source
         return sorted(source_by_content.values(), key=lambda item: item.artifact_id)
 
@@ -136,13 +149,29 @@ class ReportBundleCompilerV2:
         sources: Iterable[ArtifactRef],
         manifest: CorpusManifest,
     ) -> dict[str, str]:
+        source_list = list(sources)
         invalid: dict[str, str] = {}
-        for source in sources:
+        supplied_documents: set[str] = set()
+        for source in source_list:
             document_version_id = source.metadata.get("document_version_id")
             if not isinstance(document_version_id, str):
                 continue
+            supplied_documents.add(document_version_id)
             expected = manifest.content_hashes.get(document_version_id)
             if expected is not None and source.content_sha256 != expected:
+                invalid[document_version_id] = "source_hash_mismatch"
+        for document_version_id in manifest.document_version_ids:
+            matching = [
+                source
+                for source in source_list
+                if source.metadata.get("document_version_id") == document_version_id
+                and source.content_sha256 == manifest.content_hashes[document_version_id]
+            ]
+            if matching:
+                invalid.pop(document_version_id, None)
+            elif document_version_id not in supplied_documents:
+                invalid[document_version_id] = "missing_source_artifact"
+            else:
                 invalid[document_version_id] = "source_hash_mismatch"
         return invalid
 
@@ -152,6 +181,7 @@ class ReportBundleCompilerV2:
         *,
         evidence_spans: Mapping[str, EvidenceSpan],
         corpus_manifest: CorpusManifest,
+        sources: Iterable[ArtifactRef],
     ) -> None:
         node_ids = [node.node_id for node in graph.nodes]
         if len(node_ids) != len(set(node_ids)):
@@ -160,6 +190,19 @@ class ReportBundleCompilerV2:
         if len(edge_ids) != len(set(edge_ids)):
             raise ValueError("research graph edge ids must be unique")
         known_nodes = set(node_ids)
+        source_by_document: dict[str, ArtifactRef] = {}
+        for source in sources:
+            document_id = source.metadata.get("document_version_id")
+            if not isinstance(document_id, str):
+                continue
+            current = source_by_document.get(document_id)
+            expected = corpus_manifest.content_hashes.get(document_id)
+            if current is None or (
+                expected is not None
+                and source.content_sha256 == expected
+                and current.content_sha256 != expected
+            ):
+                source_by_document[document_id] = source
         for edge in graph.edges:
             if edge.source_node_id not in known_nodes or edge.target_node_id not in known_nodes:
                 raise ValueError(f"graph edge {edge.edge_id} references an unknown node")
@@ -174,6 +217,25 @@ class ReportBundleCompilerV2:
             } - set(corpus_manifest.document_version_ids)
             if outside:
                 raise ValueError(f"graph edge {edge.edge_id} references evidence outside frozen corpus")
+            missing_artifacts = {
+                evidence_spans[span_id].document_version_id
+                for span_id in edge.evidence_span_ids
+                if evidence_spans[span_id].document_version_id not in source_by_document
+            }
+            if missing_artifacts:
+                raise ValueError(
+                    f"graph edge {edge.edge_id} references evidence without a source artifact"
+                )
+            mismatched_artifacts = {
+                document_id
+                for document_id in {
+                    evidence_spans[span_id].document_version_id for span_id in edge.evidence_span_ids
+                }
+                if source_by_document[document_id].content_sha256
+                != corpus_manifest.content_hashes[document_id]
+            }
+            if mismatched_artifacts:
+                raise ValueError(f"graph edge {edge.edge_id} references a source hash mismatch")
 
     @staticmethod
     def _sorted_graph(graph: ResearchGraph) -> ResearchGraph:
@@ -191,10 +253,17 @@ class ReportBundleCompilerV2:
         claims = [" ".join(claim.claim.split()) for claim in allowed_claims]
         rebuilt: list[str] = []
         index = 0
-        found_summary = False
+        summary_matches = [
+            (line_index, match)
+            for line_index, line in enumerate(lines)
+            if (match := re.match(r"^(#{1,6})\s+executive summary\s*:?\s*$", line.strip(), re.IGNORECASE))
+        ]
+        if len(summary_matches) > 1:
+            raise ValueError("ambiguous executive summary headings")
+        found_summary = bool(summary_matches)
         while index < len(lines):
             line = lines[index]
-            match = re.match(r"^(#{1,6})\s+executive summary\s*$", line.strip(), re.IGNORECASE)
+            match = re.match(r"^(#{1,6})\s+executive summary\s*:?\s*$", line.strip(), re.IGNORECASE)
             if match is None:
                 rebuilt.append(line)
                 index += 1
@@ -202,7 +271,7 @@ class ReportBundleCompilerV2:
 
             found_summary = True
             summary_level = len(match.group(1))
-            rebuilt.extend([line, ""])
+            rebuilt.extend(["## Executive Summary", ""])
             rebuilt.extend(f"- {claim}" for claim in claims)
             if claims:
                 rebuilt.append("")
@@ -214,7 +283,13 @@ class ReportBundleCompilerV2:
                 index += 1
 
         if not found_summary:
-            return report_markdown
+            prefix = ["## Executive Summary", ""]
+            prefix.extend(f"- {claim}" for claim in claims)
+            if claims:
+                prefix.append("")
+            prefix.extend(lines)
+            suffix = "\n" if report_markdown.endswith("\n") else ""
+            return "\n".join(prefix) + suffix
         suffix = "\n" if report_markdown.endswith("\n") else ""
         return "\n".join(rebuilt) + suffix
 

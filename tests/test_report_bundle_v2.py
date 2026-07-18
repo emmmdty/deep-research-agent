@@ -185,6 +185,52 @@ def test_bundle_rebuilds_executive_summary_only_from_audited_claims() -> None:
     assert bundle.audit_summary["executive_summary_claim_ids"] == []
 
 
+@pytest.mark.parametrize("heading", ["## Executive Summary:", "### EXECUTIVE SUMMARY"])
+def test_bundle_canonicalizes_summary_heading_variants(heading: str) -> None:
+    span = _span()
+    claim = _claim("claim-1", "accepted", spans=[span])
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=f"# Report\n\n{heading}\n\nold text\n\n## Detail\nBody.",
+        claims=[claim],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert "## Executive Summary\n" in bundle.report_markdown
+    assert "Executive Summary:" not in bundle.report_markdown
+    assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
+
+
+def test_bundle_rejects_ambiguous_duplicate_summary_headings() -> None:
+    with pytest.raises(ValueError, match="ambiguous executive summary"):
+        ReportBundleCompilerV2().compile(
+            report_markdown="# Report\n\n## Executive Summary\nA\n\n### executive summary:\nB",
+            claims=[],
+            evidence_packets=[],
+            research_graph=ResearchGraph(),
+            sources=[],
+            corpus_manifest=_manifest(),
+            run_manifest={"job_id": "job-1"},
+        )
+
+
+def test_bundle_owns_summary_when_source_report_has_no_summary_heading() -> None:
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings\n\nBody.",
+        claims=[],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.report_markdown.startswith("## Executive Summary\n")
+
+
 @pytest.mark.parametrize("span_ids", [[], ["missing-span"]])
 def test_bundle_rejects_graph_edges_without_exact_provenance(span_ids: list[str]) -> None:
     span = _span()
@@ -271,7 +317,7 @@ def test_bundle_degrades_source_hash_mismatch() -> None:
         report_markdown="# Findings",
         claims=[accepted],
         evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[accepted])],
-        research_graph=_graph(),
+        research_graph=ResearchGraph(),
         sources=[mismatched],
         corpus_manifest=_manifest(),
         run_manifest={"job_id": "job-1"},
@@ -280,6 +326,51 @@ def test_bundle_degrades_source_hash_mismatch() -> None:
     assert bundle.accepted_claims == []
     assert bundle.audit_summary["unsupported_claim_ids"] == ["claim-1"]
     assert bundle.audit_summary["degradations"]["claim-1"] == "source_hash_mismatch"
+
+
+def test_bundle_degrades_claim_when_manifest_source_artifact_is_missing() -> None:
+    span = _span()
+    accepted = _claim("claim-missing-source", "accepted", critical=True, spans=[span])
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[accepted],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.accepted_claims == []
+    assert bundle.audit_summary["degradations"]["claim-missing-source"] == "missing_source_artifact"
+
+
+def test_bundle_consumes_unresolved_critic_decision_for_critical_claim() -> None:
+    from deep_research_agent.orchestration.reducer import CriticDecision
+
+    span = _span()
+    claim = _claim("claim-unresolved", "accepted", critical=True, spans=[span])
+    decision = CriticDecision(
+        decision_id="critic-1",
+        claim_ids=[claim.claim_id],
+        decision="unresolved",
+        rationale_evidence_ids=[span.span_id],
+        rationale="The semantic disagreement remains unresolved.",
+        unresolved=True,
+    )
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[claim],
+        evidence_packets=[],
+        critic_decisions=[decision],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.accepted_claims == []
+    assert bundle.audit_summary["unresolved_claim_ids"] == [claim.claim_id]
 
 
 def test_bundle_rejects_graph_provenance_outside_frozen_manifest() -> None:

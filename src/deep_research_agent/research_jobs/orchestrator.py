@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any, Callable
 
@@ -73,6 +72,7 @@ class ResearchJobOrchestrator:
         job = self._assert_worker_lease(job_id)
         job = self.store.update_job(
             job_id,
+            lease_id=self.worker_lease_id,
             status=JobStatus.RUNNING,
             current_stage=RuntimeStage.COLLECTING,
             runtime_path="scheduler-v2",
@@ -81,16 +81,10 @@ class ResearchJobOrchestrator:
         result = await self.scheduler.run(job, dag, config_snapshot)
         self._assert_worker_lease(job_id)
 
-        checkpoint_path = self.store.job_dir(job_id) / "scheduler_checkpoints.json"
-        checkpoint_path.write_text(
-            json.dumps(
-                [checkpoint.model_dump(mode="json") for checkpoint in result.checkpoints],
-                ensure_ascii=False,
-                sort_keys=True,
-                indent=2,
-            )
-            + "\n",
-            encoding="utf-8",
+        checkpoint_path = self.store.save_scheduler_checkpoints(
+            job_id,
+            [checkpoint.model_dump(mode="json") for checkpoint in result.checkpoints],
+            lease_id=self.worker_lease_id,
         )
         for event in result.events:
             payload = dict(event.payload)
@@ -129,6 +123,7 @@ class ResearchJobOrchestrator:
         ]
         self.store.update_job(
             job_id,
+            lease_id=self.worker_lease_id,
             status=status_by_result[result.status],
             current_stage=stage_by_result[result.status],
             cancel_requested=result.status == "cancelled",
@@ -333,7 +328,7 @@ class ResearchJobOrchestrator:
             next_stage=next_stage,
             state_payload=state,
         )
-        return self.store.save_checkpoint(checkpoint)
+        return self.store.save_checkpoint(checkpoint, lease_id=self.worker_lease_id)
 
     def _append_event(
         self,
@@ -353,7 +348,7 @@ class ResearchJobOrchestrator:
             message=message,
             payload=payload or {},
         )
-        return self.store.append_event(event)
+        return self.store.append_event(event, lease_id=self.worker_lease_id)
 
     def _mark_cancelled(self, job: JobRuntimeRecord, *, stage: RuntimeStage | str) -> JobRuntimeRecord:
         self._assert_worker_lease(job.job_id)

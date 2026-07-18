@@ -12,6 +12,7 @@ from typing import Any, Protocol, runtime_checkable
 from pydantic import ConfigDict, Field, model_validator
 
 from deep_research_agent.kernel.contracts import StrictModel, TaskResult, TaskSpec
+from deep_research_agent.orchestration.reducer import CriticDecision
 from deep_research_agent.tool_gateway.models import ToolExecutionContext, ToolInvocation, ToolResultEnvelope
 
 
@@ -23,6 +24,7 @@ class WorkerOutput(StrictModel):
     result: TaskResult
     output: dict[str, Any] = Field(default_factory=dict)
     spawned_tasks: tuple[TaskSpec, ...] = ()
+    critic_decisions: tuple[CriticDecision, ...] = ()
 
     @model_validator(mode="after")
     def _require_completed_spawn_source(self) -> WorkerOutput:

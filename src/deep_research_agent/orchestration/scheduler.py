@@ -25,6 +25,11 @@ from deep_research_agent.orchestration.workers import (
     WorkerOutput,
     normalize_worker_output,
 )
+from deep_research_agent.orchestration.reducer import CriticDecision
+
+
+class DynamicTaskConflict(ValueError):
+    """A dynamic task id was redeclared with a different immutable definition."""
 
 
 class SchedulerJob(StrictModel):
@@ -46,6 +51,7 @@ class RunResult(StrictModel):
     events: list[RunEvent]
     checkpoints: list[TaskCheckpoint]
     config_snapshot: Any
+    critic_decisions: list[CriticDecision] = Field(default_factory=list)
 
 
 class ResearchScheduler:
@@ -91,6 +97,7 @@ class ResearchScheduler:
         events: list[RunEvent] = []
         checkpoints: list[TaskCheckpoint] = []
         task_by_id = dag.task_by_id
+        declared_tasks = dict(task_by_id)
         pending = set(task_by_id)
         running: dict[asyncio.Task[WorkerOutput], str] = {}
         outputs: dict[str, WorkerOutput] = {}
@@ -195,9 +202,26 @@ class ResearchScheduler:
                         raise RuntimeError(output.result.error or f"worker returned {output.result.status}")
                     self._validate_output_schema(task, output.output)
                     if output.spawned_tasks:
-                        dag = dag.with_tasks(output.spawned_tasks)
-                        task_by_id = dag.task_by_id
+                        new_tasks: list[TaskSpec] = []
+                        candidate_by_id: dict[str, TaskSpec] = {}
                         for spawned in output.spawned_tasks:
+                            existing = declared_tasks.get(spawned.task_id)
+                            candidate = candidate_by_id.get(spawned.task_id)
+                            if candidate is not None:
+                                existing = candidate
+                            if existing is not None:
+                                if existing != spawned:
+                                    raise DynamicTaskConflict(
+                                        f"conflicting dynamic task definition for {spawned.task_id!r}"
+                                    )
+                                continue
+                            candidate_by_id[spawned.task_id] = spawned
+                            new_tasks.append(spawned)
+                        if new_tasks:
+                            dag = dag.with_tasks(new_tasks)
+                            task_by_id = dag.task_by_id
+                            declared_tasks.update(candidate_by_id)
+                        for spawned in new_tasks:
                             if spawned.task_id not in results and spawned.task_id not in outputs:
                                 pending.add(spawned.task_id)
                                 attempts.setdefault(spawned.task_id, 0)
@@ -211,7 +235,7 @@ class ResearchScheduler:
                         )
                 except Exception as exc:
                     error = self._error_message(exc)
-                    if attempt < self._max_attempts:
+                    if attempt < self._max_attempts and not isinstance(exc, DynamicTaskConflict):
                         pending.add(task_id)
                         self._emit(
                             events,
@@ -369,6 +393,13 @@ class ResearchScheduler:
         checkpoints: list[TaskCheckpoint],
         config_snapshot: Any,
     ) -> RunResult:
+        decisions: dict[str, CriticDecision] = {}
+        for output in outputs.values():
+            for decision in output.critic_decisions:
+                existing = decisions.get(decision.decision_id)
+                if existing is not None and existing != decision:
+                    raise ValueError(f"conflicting critic decision definition for {decision.decision_id!r}")
+                decisions[decision.decision_id] = decision
         return RunResult(
             job_id=job_id,
             status=status,
@@ -377,5 +408,6 @@ class ResearchScheduler:
             attempts={key: attempts[key] for key in sorted(attempts)},
             events=events,
             checkpoints=checkpoints,
+            critic_decisions=[decisions[key] for key in sorted(decisions)],
             config_snapshot=config_snapshot,
         )

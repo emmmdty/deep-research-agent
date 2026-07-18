@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import subprocess
@@ -14,6 +15,8 @@ from configs.settings import get_settings
 from deep_research_agent.common import DEFAULT_SOURCE_PROFILE, resolve_source_profile_name
 from loguru import logger
 
+from deep_research_agent.kernel.contracts import ResearchBrief
+from deep_research_agent.orchestration.dag import ResearchDAG
 from deep_research_agent.policy.models import SourcePolicyOverrides
 from deep_research_agent.research_jobs.models import (
     REFINEMENT_SAFE_STAGE,
@@ -57,6 +60,7 @@ class ResearchJobService:
         stale_timeout_seconds: int | None = None,
         settings=None,
         spawn_worker_fn=None,
+        scheduler_factory=None,
     ) -> None:
         self.settings = settings or get_settings()
         self.workspace_dir = workspace_dir or getattr(self.settings, "workspace_dir", "workspace")
@@ -72,6 +76,7 @@ class ResearchJobService:
             runtime_dirname=self.runtime_dirname,
         )
         self._spawn_worker_fn = spawn_worker_fn or self._spawn_worker
+        self._scheduler_factory = scheduler_factory
 
     def build_initial_state(
         self,
@@ -119,9 +124,12 @@ class ResearchJobService:
         attempt_index: int = 1,
         initial_state: dict | None = None,
         current_stage: str = RuntimeStage.CLARIFYING.value,
+        runtime_path: str = "orchestrator-v1",
+        runtime_metadata: dict | None = None,
+        _job_id: str | None = None,
     ) -> JobRuntimeRecord:
         """Create a new job and optionally spawn a worker for it."""
-        job_id = _run_id()
+        job_id = _job_id or _run_id()
         job_dir = self.store.job_dir(job_id)
         bundle_dir = self.store.bundle_dir(job_id)
         audit_dir = self.store.job_dir(job_id) / "audit"
@@ -140,6 +148,7 @@ class ResearchJobService:
             "source_profile": resolved_source_profile,
             "input_prompt": topic,
         }
+        metadata.update(runtime_metadata or {})
         job = JobRuntimeRecord(
             job_id=job_id,
             topic=topic,
@@ -160,6 +169,7 @@ class ResearchJobService:
             audit_graph_path=str(audit_dir / "claim_graph.json"),
             review_queue_path=str(audit_dir / "review_queue.json"),
             metadata=metadata,
+            runtime_path=runtime_path,
         )
         self.store.upsert_job(job)
         self._append_event(job, "job", "job.created", "job 已创建", {"topic": topic, "research_profile": research_profile})
@@ -192,6 +202,52 @@ class ResearchJobService:
         if start_worker:
             self._spawn_worker_fn(job_id)
         return job
+
+    def submit_scheduler_v2(
+        self,
+        *,
+        brief: ResearchBrief,
+        dag: ResearchDAG,
+        config_snapshot,
+        start_worker: bool = True,
+        source_profile: str | None = None,
+        max_loops: int = 1,
+    ) -> JobRuntimeRecord:
+        """Persist a frozen scheduler-v2 contract before any worker starts."""
+        job_id = _run_id()
+        frozen_brief = brief.model_copy(update={"job_id": job_id})
+        frozen_dag = ResearchDAG(
+            job_id=job_id,
+            tasks=[
+                task.model_copy(
+                    update={
+                        "job_id": job_id,
+                        "idempotency_key": f"{job_id}:{task.task_id}",
+                    }
+                )
+                for task in dag.tasks
+            ],
+        )
+        if hasattr(config_snapshot, "model_dump"):
+            frozen_config = config_snapshot.model_dump(mode="json")
+        else:
+            frozen_config = json.loads(json.dumps(config_snapshot, ensure_ascii=False))
+        runtime_metadata = {
+            "research_brief": frozen_brief.model_dump(mode="json"),
+            "research_dag": frozen_dag.model_dump(mode="json"),
+            "config_snapshot": frozen_config,
+            "runtime_mode": "scheduler-v2",
+        }
+        return self.submit(
+            topic=frozen_brief.question,
+            max_loops=max_loops,
+            research_profile="typed",
+            start_worker=start_worker,
+            source_profile=source_profile,
+            runtime_path="scheduler-v2",
+            runtime_metadata=runtime_metadata,
+            _job_id=job_id,
+        )
 
     def get(self, job_id: str) -> JobRuntimeRecord | None:
         return self.store.get_job(job_id)
@@ -427,6 +483,23 @@ class ResearchJobService:
         """在当前进程执行 job。"""
         from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
 
+        job = self._require_job(job_id)
+        if job.runtime_path == "scheduler-v2":
+            if self._scheduler_factory is None:
+                raise RuntimeError("scheduler-v2 job requires an injected scheduler_factory")
+            def cancellation_check() -> bool:
+                return bool(self._require_job(job_id).cancel_requested)
+
+            scheduler = self._scheduler_factory(cancellation_check=cancellation_check)
+            dag = ResearchDAG.model_validate(job.metadata["research_dag"])
+            config_snapshot = job.metadata["config_snapshot"]
+            return asyncio.run(
+                ResearchJobOrchestrator(
+                    service=self,
+                    worker_lease_id=worker_lease_id,
+                    scheduler=scheduler,
+                ).run_dag(job_id, dag, config_snapshot)
+            )
         orchestrator = ResearchJobOrchestrator(service=self, worker_lease_id=worker_lease_id)
         return orchestrator.run(job_id)
 
