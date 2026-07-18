@@ -5,7 +5,7 @@
 
 [English](./README.md) | 简体中文
 
-面向公司/行业分析的 evidence-first 研究运行时：用可审计 job 和 artifact bundle 交付结论，而不是只输出一次性聊天答案。
+面向科研与行业分析的 evidence-first 多 agent 研究产品：用可审计报告 bundle 交付结论，而不是只输出一次性聊天答案。
 
 ## 核心架构
 
@@ -15,6 +15,9 @@
 - `src/deep_research_agent/auditor/`：claim graph、support edge、conflict set、audit decision、review queue。
 - `src/deep_research_agent/reporting/`：report bundle 编译和 sidecar artifact 输出。
 - `src/deep_research_agent/providers/`：OpenAI、Anthropic 和 compatible provider routing。
+- `src/deep_research_agent/product/`：PostgreSQL-backed topic、conversation、run、memory 与租户边界。
+- `src/deep_research_agent/corpus/`：受治理的论文接入、不可变 manifest、解析器 fallback 与公共内容缓存。
+- `src/deep_research_agent/observability/`：不含凭据的 OpenTelemetry span 和 Phoenix 导出。
 
 `src/deep_research_agent/` 是唯一 canonical runtime。根目录下 `services/`、`connectors/`、`artifacts/`、`policies/`、`tools/`、`evaluation/` 等目录是 compatibility 或 diagnostic layer。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
 
@@ -23,6 +26,7 @@
 ```text
 src/deep_research_agent/  canonical runtime
 apps/gui-web/             可选本地 reviewer UI
+docker-compose.yml        V2 API、Web、worker、PostgreSQL/pgvector、MinIO、GROBID、Phoenix
 apps/desktop-tauri/       实验性 desktop wrapper
 configs/                  runtime 与 source profile 配置
 schemas/                  JSON artifact 与 runtime contract
@@ -40,6 +44,18 @@ uv sync --group dev
 cp .env.example .env
 uv run python main.py --help
 ```
+
+## V2 Web Demo
+
+支持的产品路径是带认证的 V2 workspace。复制 `.env.example` 并替换所有占位密钥；想运行
+无需 provider 凭据的确定性 demo 时使用 `SCHEDULER_RUNTIME_MODE=offline`，然后执行：
+
+```bash
+docker compose up --build
+```
+
+打开 `http://127.0.0.1:8000`。Web 容器是同源入口，并把 API 与 SSE 代理到内部服务。生产模式
+必须配置真实的 `SCHEDULER_FACTORY_PATH`，不会静默降级到 offline。
 
 提交一个不启动 worker 的本地 job：
 
@@ -115,19 +131,32 @@ npm install
 npm run dev
 ```
 
+本地 Vite 开发时设置 `VITE_DRA_API_BASE_URL` 指向 API，并为跨端口开发配置明确的 API origin。
+Compose 使用同源代理，因此浏览器凭据和 SSE 重连不需要 wildcard CORS。
+
+## 支持的问题与数据源边界
+
+第一版领域包聚焦事件图谱、agent、LLM 如何相互作用。用户可以请求有来源的综述、方法或论文
+比较、精确 claim-to-span 证据、矛盾审查和显式刷新。对于昂贵或信息不足的任务，API 会先要求
+澄清；未刷新前的追问使用冻结报告快照。
+
+关键 claim 仅能使用受治理且已冻结的来源：arXiv、ACL Anthology、OpenAlex、Crossref、DataCite、
+DBLP、PMLR、NeurIPS proceedings 以及有许可证的上传文档。开放 Web 搜索只能用于发现，不能支撑
+关键 claim；来源故障会生成 freshness warning。
+
 可选 desktop packaging 实验位于 `apps/desktop-tauri/`。详见 [GUI docs](./docs/gui/README.md)。
 
 ## 当前限制
 
-- HTTP API 仍是本地 API：没有 auth、tenant isolation、external queue 或 object storage。
-- Runtime storage 是 SQLite + filesystem artifacts。
+- Docker profile 面向小团队，不是横向扩展的 SaaS control plane。
+- Runtime 仍使用 job-local subprocess 和 recovery worker，没有 Redis queue。
 - Live web research 依赖 provider/search credentials 和外部网络稳定性。
 - Legacy comparator 与 report-shape diagnostics 仍可用于诊断，但 release story 是 claim-centric bundle/eval 输出。
 - 这不是多租户 SaaS，也不是“agent 越多越好”的展示项目。
 
 ## Roadmap
 
-- 推进 server profile：PostgreSQL、Redis Streams、S3-compatible object storage。
+- 先运行并测量当前 PostgreSQL/MinIO profile，再决定是否引入外部 queue/object-storage adapter。
 - 扩展 claim-support evaluation，超过 deterministic smoke/regression 套件。
 - 用 capability、health、cost、rate limit 信号强化 provider routing。
 - 改进 human review flow，使 review decision 能重新编译或显式标注 bundle。

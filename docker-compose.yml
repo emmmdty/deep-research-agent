@@ -1,0 +1,170 @@
+name: trusted-scientific-research
+
+x-runtime-environment: &runtime-environment
+  DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL to a PostgreSQL psycopg URL}
+  DEEP_RESEARCH_AGENT_MASTER_KEY: ${DEEP_RESEARCH_AGENT_MASTER_KEY:?set a base64-encoded 32-byte key}
+  DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL: ${DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL:?set the first administrator email}
+  DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_PASSWORD: ${DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_PASSWORD:?set a strong first administrator password}
+  SCHEDULER_RUNTIME_MODE: ${SCHEDULER_RUNTIME_MODE:?set production or offline explicitly}
+  SCHEDULER_FACTORY_PATH: ${SCHEDULER_FACTORY_PATH:-}
+  WORKSPACE_DIR: /app/workspace
+  GROBID_URL: http://grobid:8070
+  S3_ENDPOINT_URL: http://minio:9000
+  S3_ACCESS_KEY: ${MINIO_ROOT_USER:-research}
+  S3_SECRET_KEY: ${MINIO_ROOT_PASSWORD:?set a strong MinIO password}
+  S3_BUCKET: ${S3_BUCKET:-research-artifacts}
+  OTEL_SERVICE_NAME: deep-research-agent
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://phoenix:6006/v1/traces
+
+services:
+  api:
+    build:
+      context: .
+      target: runtime
+    command: >-
+      /bin/sh -c "python -m deep_research_agent.deployment.worker --check
+      && alembic upgrade head
+      && exec uvicorn deep_research_agent.gateway.api:app --host 0.0.0.0 --port 8000"
+    environment: *runtime-environment
+    expose:
+      - "8000"
+    volumes:
+      - workspace_data:/app/workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      grobid:
+        condition: service_healthy
+      phoenix:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/openapi.json', timeout=2)"
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      target: web
+      args:
+        VITE_DRA_API_BASE_URL: http://127.0.0.1:8000
+    ports:
+      - "127.0.0.1:8000:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      target: runtime
+    command:
+      - python
+      - -m
+      - deep_research_agent.deployment.worker
+      - --heartbeat-file
+      - /tmp/research-worker-health
+      - --interval-seconds
+      - "5"
+    environment: *runtime-environment
+    volumes:
+      - workspace_data:/app/workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /tmp/research-worker-health && find /tmp/research-worker-health -mmin -1 | grep -q ."]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+
+  postgres:
+    image: pgvector/pgvector:pg16-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-deep_research}
+      POSTGRES_USER: ${POSTGRES_USER:-deep_research}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set a strong PostgreSQL password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-research}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?set a strong MinIO password}
+    volumes:
+      - minio_data:/data
+    ports:
+      - "127.0.0.1:9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  grobid:
+    image: lfoppiano/grobid:0.8.2
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx1024m -XX:ActiveProcessorCount=2"
+    expose:
+      - "8070"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8070/api/isalive | grep -qi true"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+  phoenix:
+    image: arizephoenix/phoenix:version-8.31.0
+    environment:
+      PHOENIX_WORKING_DIR: /phoenix
+    volumes:
+      - phoenix_data:/phoenix
+    ports:
+      - "127.0.0.1:6006:6006"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:6006/healthz', timeout=2)"
+      interval: 10s
+      timeout: 3s
+      retries: 20
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  minio_data:
+  phoenix_data:
+  workspace_data:
