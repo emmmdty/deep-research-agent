@@ -132,6 +132,38 @@ def test_parser_falls_back_and_manifest_is_frozen():
     assert manifest.document_version_ids == (record.document_version_id,)
 
 
+def test_shared_parser_cache_does_not_leak_titles_or_derived_only_redaction():
+    from deep_research_agent.corpus.models import ParsedDocument
+    from deep_research_agent.corpus.parsers import DoclingParser, GrobidParser
+    from deep_research_agent.corpus.service import CorpusService
+    from deep_research_agent.corpus.storage import InMemoryCorpusRepository
+
+    class BrokenGrobid(GrobidParser):
+        def parse(self, content, *, media_type="application/pdf"):
+            raise RuntimeError("grobid unavailable")
+
+    repository = InMemoryCorpusRepository()
+    parser = DoclingParser(parse_fn=lambda content, **_: ParsedDocument(text="full parsed text"))
+    fallback_parsers = [BrokenGrobid(), parser]
+    derived = CorpusService(repository=repository, parsers=fallback_parsers).ingest(
+        source=_source(source_id="web-derived", storage_policy="derived_only", license="All rights reserved"),
+        content=b"same bytes",
+        title="Derived title",
+        source_native_id="web-derived:1",
+        critical_claim=False,
+    )
+    assert derived.text == ""
+
+    mirrored = CorpusService(repository=repository, parsers=[BrokenGrobid(), parser]).ingest(
+        source=_source(source_id="arxiv-mirror"),
+        content=b"same bytes",
+        title="Mirror title",
+        source_native_id="arxiv-mirror:1",
+    )
+    assert mirrored.text == "full parsed text"
+    assert mirrored.title == "Mirror title"
+
+
 def test_repository_returns_defensive_document_copies_and_freeze_is_idempotent():
     from deep_research_agent.corpus.service import CorpusService
     from deep_research_agent.corpus.storage import InMemoryCorpusRepository

@@ -137,7 +137,16 @@ class MemoryService:
             supersedes=(explicit_target.memory_id if explicit_target is not None else existing.memory_id if existing else None),
             metadata=dict(metadata or {}),
         )
-        if existing is not None and existing.content == content:
+        if existing is not None and all(
+            (
+                existing.content == record.content,
+                existing.provenance == record.provenance,
+                existing.confidence == record.confidence,
+                existing.sensitivity == record.sensitivity,
+                existing.expires_at == record.expires_at,
+                existing.metadata == record.metadata,
+            )
+        ):
             return existing
         if existing is not None:
             self.repository.save(existing.model_copy(update={"status": MemoryStatus.SUPERSEDED, "superseded_by": memory_id, "updated_at": now}))

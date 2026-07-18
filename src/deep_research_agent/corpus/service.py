@@ -168,7 +168,7 @@ class CorpusService:
                 tenant_id,
                 actor_tenant_id=tenant_id,
             )
-        else:
+        elif source.storage_policy == "mirror_allowed":
             self.repository.save_cache(self.cache_key(content_hash, parser.name, parser.version), document)
         return self.repository.get_document(document.document_version_id) or document
 
@@ -314,7 +314,9 @@ class CorpusService:
                     return (
                         ParsedDocument(
                             text=cached.text,
-                            title=cached.title,
+                            # Document titles can include caller-provided metadata; do not
+                            # leak that source-specific value through the shared content cache.
+                            title="",
                             abstract=cached.abstract,
                             metadata=cached.metadata,
                         ),

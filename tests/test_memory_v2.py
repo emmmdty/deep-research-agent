@@ -52,6 +52,20 @@ def test_memory_ttl_sensitive_confirmation_and_conflict_supersession():
     assert confirmed.expires_at is not None
     assert confirmed.provenance == {}
 
+    shortened = service.write(
+        tenant_id="tenant-a",
+        subject_id="user-a",
+        scope="user_memory",
+        key="email",
+        content="a@example.com",
+        sensitivity="sensitive",
+        confirmed=True,
+        ttl_seconds=1,
+    )
+    assert shortened.memory_id != confirmed.memory_id
+    assert shortened.expires_at is not None
+    assert service.get(confirmed.memory_id, tenant_id="tenant-a").status == "superseded"
+
 
 def test_memory_expiry_cross_tenant_denial_and_user_export_delete():
     from deep_research_agent.memory_v2.service import MemoryService
