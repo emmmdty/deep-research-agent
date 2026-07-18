@@ -46,7 +46,7 @@ desktop.ini
 *:Zone.Identifier
 
 # 研究输出（可选保留）
-workspace/
+/workspace/
 my-docs/
 docs/reports/
 docs/learning/

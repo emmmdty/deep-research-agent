@@ -7,12 +7,16 @@ afterEach(() => vi.restoreAllMocks());
 
 test("renders the evidence research product navigation", async () => {
   window.history.pushState({}, "", "/topics");
-  vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ topics: [] }), { status: 200, headers: { "content-type": "application/json" } }));
+  vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
+    const pathname = new URL(String(input), window.location.origin).pathname;
+    if (pathname === "/v1/auth/session") return new Response(JSON.stringify({ user: { user_id: "usr-1", role: "user" } }), { status: 200, headers: { "content-type": "application/json" } });
+    return new Response(JSON.stringify({ topics: [] }), { status: 200, headers: { "content-type": "application/json" } });
+  });
   render(<App />);
 
-  expect(screen.getByRole("link", { name: "研究" })).toBeInTheDocument();
+  expect(await screen.findByRole("link", { name: "研究" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "记忆" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "管理" })).toBeInTheDocument();
-  expect(screen.getByRole("heading", { name: /从问题开始/ })).toBeInTheDocument();
+  expect(await screen.findByRole("heading", { name: /从问题开始/ })).toBeInTheDocument();
   expect(await screen.findByText("从一个研究问题开始")).toBeInTheDocument();
 });

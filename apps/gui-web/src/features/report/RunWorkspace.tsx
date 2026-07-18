@@ -9,7 +9,7 @@ import type { Claim, EvidenceSpan, GraphNode } from "../../types";
 import { EvidenceDrawer } from "../evidence/EvidenceDrawer";
 import { EvidenceList } from "../evidence/EvidenceList";
 import { RelationshipGraph } from "../graph/RelationshipGraph";
-import { RunConnectionBadge, RunTelemetry } from "../runs/RunTelemetry";
+import { RunConnectionState, RunTelemetry, useRunEventStream } from "../runs/RunTelemetry";
 import { ReportView } from "./ReportView";
 
 type ViewId = "report" | "changes" | "evidence" | "graph" | "papers" | "runs";
@@ -33,6 +33,7 @@ export function RunWorkspace() {
   const { runId = "" } = useParams();
   const [view, setView] = useState<ViewId>("report");
   const [selectedEvidence, setSelectedEvidence] = useState<EvidenceSpan[]>([]);
+  const connection = useRunEventStream(runId);
   const run = useQuery({ queryKey: ["run", runId], queryFn: () => productApi.getRun(runId), enabled: Boolean(runId) });
   const bundle = useQuery({ queryKey: ["bundle", runId], queryFn: () => productApi.getProductBundle(runId), enabled: run.data?.status === "completed" });
   const allClaims = useMemo(() => bundle.data ? [...bundle.data.accepted_claims, ...(bundle.data.qualified_claims ?? [])] : [], [bundle.data]);
@@ -45,8 +46,17 @@ export function RunWorkspace() {
 
   function selectNode(node: GraphNode) {
     const ids = new Set(nodeEvidenceIds(node));
+    const selectedNodeId = node.node_id ?? node.id;
+    for (const edge of graph.edges) {
+      const sourceId = edge.source_node_id ?? edge.source;
+      const targetId = edge.target_node_id ?? edge.target;
+      if (sourceId === selectedNodeId || targetId === selectedNodeId) {
+        for (const evidenceId of edge.evidence_span_ids ?? edge.evidence_ids ?? []) ids.add(evidenceId);
+      }
+    }
     const directClaim = allClaims.find((claim) => claim.claim_id === (node.node_id ?? node.id));
-    setSelectedEvidence(directClaim?.evidence_spans ?? allSpans.filter((span) => ids.has(span.span_id)));
+    const directSpans = directClaim?.evidence_spans ?? [];
+    setSelectedEvidence([...directSpans, ...allSpans.filter((span) => ids.has(span.span_id) && !directSpans.some((direct) => direct.span_id === span.span_id))]);
   }
 
   return (
@@ -55,7 +65,7 @@ export function RunWorkspace() {
         <div className={`report-workspace ${selectedEvidence.length ? "drawer-open" : ""}`}>
           <header className="report-toolbar">
             <div><span className="section-label">研究运行</span><strong>{run.data.question}</strong></div>
-            <div className="run-summary"><RunConnectionBadge runId={run.data.run_id} /><span className={`run-status ${run.data.status}`}>{run.data.status}</span><code>{run.data.run_id}</code><span>快照 {run.data.snapshot_cutoff ? new Date(run.data.snapshot_cutoff).toLocaleDateString("zh-CN") : "进行中"}</span></div>
+            <div className="run-summary"><RunConnectionState connection={connection} /><span className={`run-status ${run.data.status}`}>{run.data.status}</span><code>{run.data.run_id}</code><span>快照 {run.data.snapshot_cutoff ? new Date(run.data.snapshot_cutoff).toLocaleDateString("zh-CN") : "进行中"}</span></div>
           </header>
           <div className="view-tabs" role="tablist" aria-label="研究结果视图">
             {views.map(({ id, label, icon: Icon }) => <button aria-selected={view === id} key={id} onClick={() => setView(id)} role="tab" type="button"><Icon size={15} />{label}</button>)}
@@ -70,18 +80,18 @@ export function RunWorkspace() {
           </div>
           {selectedEvidence.length ? <EvidenceDrawer onClose={() => setSelectedEvidence([])} spans={selectedEvidence} /> : null}
         </div>
-      ) : run.data ? <PendingRun status={run.data.status} /> : null}
+      ) : run.data ? <PendingRun connection={connection} status={run.data.status} /> : null}
     </AsyncState>
   );
 }
 
-function PendingRun({ status }: { status: string }) {
-  return <div className="topic-overview"><Network size={24} /><h2>Agent 集群正在执行</h2><p>当前状态：{status}。报告将在证据审计完成后显示。</p></div>;
+function PendingRun({ connection, status }: { connection: import("../runs/RunTelemetry").ConnectionState; status: string }) {
+  return <div className="topic-overview"><RunConnectionState connection={connection} /><Network size={24} /><h2>Agent 集群正在执行</h2><p>当前状态：{status}。报告将在证据审计完成后显示。</p></div>;
 }
 
 function ChangesView({ audit }: { audit?: Record<string, unknown> }) {
   const entries = Object.entries(audit ?? {});
-  return <div className="changes-view"><header><span className="section-label">与上一快照比较</span><h2>论断审计变化</h2></header>{entries.length ? entries.map(([key, value]) => <div className="change-row" key={key}><code>{key}</code><span>{Array.isArray(value) ? value.join(", ") || "无" : JSON.stringify(value)}</span></div>) : <div className="view-empty">这是该主题的第一个可用快照。</div>}</div>;
+  return <div className="changes-view"><header><span className="section-label">当前运行</span><h2>当前审计摘要</h2><p className="view-caption">V1 仅展示本次冻结快照的审计结果，尚未计算跨快照差异。</p></header>{entries.length ? entries.map(([key, value]) => <div className="change-row" key={key}><code>{key}</code><span>{Array.isArray(value) ? value.join(", ") || "无" : JSON.stringify(value)}</span></div>) : <div className="view-empty">这份运行没有附带审计摘要。</div>}</div>;
 }
 
 function PapersView({ bundle }: { bundle: import("../../types").ReportBundle }) {

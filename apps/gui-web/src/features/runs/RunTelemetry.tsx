@@ -1,10 +1,11 @@
 import { Radio } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 
 import { productApi } from "../../api/client";
 import type { ProductRun, ReportBundle, RunEvent } from "../../types";
 
-type ConnectionState = "live" | "reconnecting" | "recovered";
+export type ConnectionState = "live" | "reconnecting" | "recovered";
 
 function workerRows(bundle: ReportBundle) {
   const manifest = bundle.run_manifest ?? {};
@@ -13,37 +14,51 @@ function workerRows(bundle: ReportBundle) {
 }
 
 export function RunConnectionBadge({ runId }: { runId: string }) {
+  return <RunConnectionState connection={useRunEventStream(runId)} />;
+}
+
+export function RunConnectionState({ connection }: { connection: ConnectionState }) {
+  const connectionLabel = connection === "live" ? "实时连接" : connection === "reconnecting" ? "正在重新连接" : "已恢复连接";
+  return <div className={`connection-state ${connection}`}><Radio size={14} />{connectionLabel}</div>;
+}
+
+const EVENT_TYPES = [
+  "run.created", "run.started", "run.running", "run.completed", "run.failed", "run.cancelled", "run.resumed",
+  "runtime.stage.started", "runtime.stage.completed", "runtime.bundle.emitted",
+  "runtime.task.started", "runtime.task.completed", "runtime.task.failed", "runtime.task.cancelled", "runtime.task.blocked", "runtime.task.retry_scheduled", "runtime.task.fan_out",
+];
+
+export function useRunEventStream(runId: string): ConnectionState {
+  const queryClient = useQueryClient();
   const [connection, setConnection] = useState<ConnectionState>("live");
 
   useEffect(() => {
-    const onTestError = () => setConnection("reconnecting");
-    const onTestEvent = (event: Event) => {
-      setConnection("recovered");
-      void (event as CustomEvent<RunEvent>).detail;
-    };
-    window.addEventListener("dra:test-stream-error", onTestError);
-    window.addEventListener("dra:test-stream-event", onTestEvent);
     let source: EventSource | null = null;
     if (typeof EventSource !== "undefined") {
       source = new EventSource(productApi.productEventUrl(runId), { withCredentials: true });
       source.onopen = () => setConnection((current) => current === "reconnecting" ? "recovered" : "live");
       source.onerror = () => setConnection("reconnecting");
-      source.onmessage = (event) => {
+      const handleEvent = (event: Event) => {
         try {
-          JSON.parse(event.data) as RunEvent;
+          const message = event as MessageEvent<string>;
+          const payload = JSON.parse(message.data) as RunEvent["payload"];
           setConnection("recovered");
+          void queryClient.invalidateQueries({ queryKey: ["run", runId] });
+          void queryClient.invalidateQueries({ queryKey: ["runs"] });
+          const terminal = Boolean(payload.terminal) || ["run.completed", "run.failed", "run.cancelled"].includes(message.type);
+          if (terminal) {
+            void queryClient.invalidateQueries({ queryKey: ["bundle", runId] });
+            source?.close();
+          }
         } catch { /* malformed progress events are ignored */ }
       };
+      for (const eventType of EVENT_TYPES) source.addEventListener(eventType, handleEvent);
     }
     return () => {
       source?.close();
-      window.removeEventListener("dra:test-stream-error", onTestError);
-      window.removeEventListener("dra:test-stream-event", onTestEvent);
     };
-  }, [runId]);
-
-  const connectionLabel = connection === "live" ? "实时连接" : connection === "reconnecting" ? "正在重新连接" : "已恢复连接";
-  return <div className={`connection-state ${connection}`}><Radio size={14} />{connectionLabel}</div>;
+  }, [queryClient, runId]);
+  return connection;
 }
 
 export function RunTelemetry({ run, bundle }: { run: ProductRun; bundle: ReportBundle }) {

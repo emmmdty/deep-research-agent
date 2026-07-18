@@ -1,4 +1,4 @@
-export const DEFAULT_API_BASE_URL = "http://127.0.0.1:8000";
+export const DEFAULT_API_BASE_URL = "";
 
 import type {
   MemoryRecord,
@@ -26,6 +26,16 @@ export type ArtifactName =
 export type ApiClientConfig = {
   baseUrl?: string;
 };
+
+export class ApiRequestError extends Error {
+  readonly status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "ApiRequestError";
+    this.status = status;
+  }
+}
 
 export type SubmitJobRequest = {
   topic: string;
@@ -106,7 +116,7 @@ export function createApiClient(config: ApiClientConfig = {}) {
     });
     if (!response.ok) {
       const detail = await response.json().catch(() => null) as { detail?: string } | null;
-      throw new Error(detail?.detail ?? `API request failed: ${response.status} ${response.statusText}`);
+      throw new ApiRequestError(detail?.detail ?? `API request failed: ${response.status} ${response.statusText}`, response.status);
     }
     if (response.status === 204) return undefined as T;
     return (await response.json()) as T;
@@ -144,6 +154,9 @@ export function createApiClient(config: ApiClientConfig = {}) {
       });
       window.sessionStorage.setItem("dra.csrf", result.csrf_token);
       return result;
+    },
+    getSession(): Promise<{ user: { user_id: string; tenant_id?: string; email?: string; role: string } }> {
+      return requestJson("/v1/auth/session", { method: "GET" });
     },
     listTopics(): Promise<{ topics: Topic[] }> {
       return requestJson("/v1/topics", { method: "GET" });

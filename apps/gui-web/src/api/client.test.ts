@@ -2,8 +2,9 @@ import { expect, test } from "vitest";
 
 import { buildApiUrl, getDefaultApiBaseUrl } from "./client";
 
-test("uses the local FastAPI base URL by default", () => {
-  expect(getDefaultApiBaseUrl()).toBe("http://127.0.0.1:8000");
+test("uses the same origin by default so the Vite and deployment proxies carry auth cookies", () => {
+  expect(getDefaultApiBaseUrl()).toBe("");
+  expect(buildApiUrl(getDefaultApiBaseUrl(), "/v1/topics")).toBe("/v1/topics");
 });
 
 test("builds stable local API URLs without duplicate slashes", () => {
