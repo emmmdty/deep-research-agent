@@ -197,6 +197,11 @@ class CorpusManifest(StrictModel):
         if missing_hashes:
             missing = ", ".join(sorted(missing_hashes))
             raise ValueError(f"content hash required for document versions: {missing}")
+        if self.critical_claims_allowed:
+            missing_policy = set(self.document_version_ids) - self.critical_claims_allowed.keys()
+            if missing_policy:
+                missing = ", ".join(sorted(missing_policy))
+                raise ValueError(f"critical-claim source policy required for document versions: {missing}")
         object.__setattr__(self, "content_hashes", FrozenDict(self.content_hashes))
         object.__setattr__(self, "critical_claims_allowed", FrozenDict(self.critical_claims_allowed))
         return self

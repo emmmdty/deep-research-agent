@@ -126,7 +126,7 @@ class EvidenceAuditor:
             discovery_only_ids = {
                 document_id
                 for document_id in valid_ids
-                if corpus_manifest.critical_claims_allowed.get(document_id) is False
+                if corpus_manifest.critical_claims_allowed.get(document_id) is not True
             }
 
             if claim.critical and discovery_only_ids:

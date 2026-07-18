@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from collections.abc import Callable
 from copy import deepcopy
 from datetime import datetime
@@ -120,7 +121,19 @@ class MemoryService:
             explicit_target = self._fresh(explicit_target)
             if explicit_target.status != MemoryStatus.ACTIVE:
                 raise ValueError("only an active memory record can be superseded")
-        memory_id = self._memory_id(tenant_id, subject, normalized_scope, key, content, now)
+        memory_id = self._memory_id(
+            tenant_id,
+            subject,
+            normalized_scope,
+            key,
+            content,
+            now,
+            provenance=provenance or {},
+            confidence=confidence,
+            sensitivity=normalized_sensitivity,
+            expires_at=expires_at,
+            metadata=metadata or {},
+        )
         record = MemoryRecord(
             memory_id=memory_id,
             tenant_id=tenant_id,
@@ -254,6 +267,22 @@ class MemoryService:
         key: str,
         content: str,
         now: datetime,
+        provenance: dict[str, object],
+        confidence: float,
+        sensitivity: Sensitivity,
+        expires_at: datetime | None,
+        metadata: dict[str, object],
     ) -> str:
-        value = "\0".join((tenant_id, subject_id, scope.value, key, content, now.isoformat()))
+        governed = json.dumps(
+            {
+                "provenance": provenance,
+                "confidence": confidence,
+                "sensitivity": sensitivity.value,
+                "expires_at": expires_at.isoformat() if expires_at else None,
+                "metadata": metadata,
+            },
+            sort_keys=True,
+            default=str,
+        )
+        value = "\0".join((tenant_id, subject_id, scope.value, key, content, now.isoformat(), governed))
         return f"memory:{hashlib.sha256(value.encode()).hexdigest()[:32]}"

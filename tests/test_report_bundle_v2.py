@@ -28,6 +28,7 @@ def _manifest() -> CorpusManifest:
         manifest_id="manifest-1",
         document_version_ids=["doc-v1"],
         content_hashes={"doc-v1": DOC_HASH},
+        critical_claims_allowed={"doc-v1": True},
     )
 
 
