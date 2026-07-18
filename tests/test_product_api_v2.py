@@ -442,6 +442,25 @@ def test_product_cancel_and_resume_delegate_to_canonical_runtime(admin, app):
     assert app.state.runtime_service.get(run["research_job_id"]).status.value == "created"
 
 
+def test_product_runtime_jobs_are_not_exposed_through_legacy_gateway(admin):
+    client, csrf = admin
+    topic = _create_topic(client, csrf)
+    run = client.post(
+        f"/v1/topics/{topic['topic_id']}/runs",
+        headers={"X-CSRF-Token": csrf},
+        json={"question": "Tenant-scoped runtime job", "start_worker": False},
+    ).json()
+    runtime_job_id = run["research_job_id"]
+
+    assert client.get(f"/v1/research/jobs/{runtime_job_id}").status_code == 404
+    assert client.get(f"/v1/research/jobs/{runtime_job_id}/events").status_code == 404
+    assert client.get(f"/v1/research/jobs/{runtime_job_id}/bundle").status_code == 404
+    assert client.post(
+        f"/v1/research/jobs/{runtime_job_id}:cancel",
+        json={},
+    ).status_code == 404
+
+
 def test_run_rejects_conversation_from_another_topic(admin):
     client, csrf = admin
     first = _create_topic(client, csrf, "First topic")

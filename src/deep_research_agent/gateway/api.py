@@ -109,6 +109,13 @@ def create_app(
             raise HTTPException(status_code=404, detail=f"unknown job: {job_id}")
         return job
 
+    def require_legacy_job(service: ResearchJobService, job_id: str):
+        """Keep tenant-scoped product jobs out of the unauthenticated legacy API."""
+        job = require_job(service, job_id)
+        if job.metadata.get("product_tenant_id") is not None:
+            raise HTTPException(status_code=404, detail=f"unknown job: {job_id}")
+        return job
+
     def _conflict(error: Exception) -> HTTPException:
         return HTTPException(status_code=409, detail=str(error))
 
@@ -134,7 +141,7 @@ def create_app(
         job_id: str,
         service: ResearchJobService = Depends(get_service),
     ) -> PublicJobResponse:
-        return public_job_response(require_job(service, job_id))
+        return public_job_response(require_legacy_job(service, job_id))
 
     @app.get("/v1/research/jobs/{job_id}/events", response_model=JobEventsResponse)
     def get_research_job_events(
@@ -142,7 +149,7 @@ def create_app(
         after_sequence: int = Query(default=0, ge=0),
         service: ResearchJobService = Depends(get_service),
     ) -> JobEventsResponse:
-        require_job(service, job_id)
+        require_legacy_job(service, job_id)
         events = [public_job_event(item) for item in service.list_events(job_id, after_sequence=after_sequence)]
         return JobEventsResponse(job_id=job_id, events=events)
 
@@ -153,6 +160,7 @@ def create_app(
         service: ResearchJobService = Depends(get_service),
     ) -> PublicJobResponse:
         try:
+            require_legacy_job(service, job_id)
             return public_job_response(service.cancel(job_id))
         except KeyError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -164,6 +172,7 @@ def create_app(
         service: ResearchJobService = Depends(get_service),
     ) -> PublicJobResponse:
         try:
+            require_legacy_job(service, job_id)
             return public_job_response(service.retry(job_id, start_worker=request.start_worker))
         except KeyError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -177,6 +186,7 @@ def create_app(
         service: ResearchJobService = Depends(get_service),
     ) -> PublicJobResponse:
         try:
+            require_legacy_job(service, job_id)
             return public_job_response(service.resume(job_id, start_worker=request.start_worker))
         except KeyError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -190,6 +200,7 @@ def create_app(
         service: ResearchJobService = Depends(get_service),
     ) -> PublicJobResponse:
         try:
+            require_legacy_job(service, job_id)
             return public_job_response(
                 service.refine(
                     job_id,
@@ -209,6 +220,7 @@ def create_app(
         service: ResearchJobService = Depends(get_service),
     ) -> PublicJobResponse:
         try:
+            require_legacy_job(service, job_id)
             return public_job_response(
                 service.record_review(
                     job_id,
@@ -229,7 +241,7 @@ def create_app(
         job_id: str,
         service: ResearchJobService = Depends(get_service),
     ) -> JSONResponse:
-        job = require_job(service, job_id)
+        job = require_legacy_job(service, job_id)
         bundle_path = artifact_path_for_job(job, "report_bundle.json")
         if not bundle_path.exists():
             raise HTTPException(status_code=404, detail=f"missing artifact: {bundle_path.name}")
@@ -243,7 +255,7 @@ def create_app(
     ) -> Response:
         if artifact_name not in ARTIFACT_NAME_CHOICES:
             raise HTTPException(status_code=404, detail=f"unsupported artifact: {artifact_name}")
-        job = require_job(service, job_id)
+        job = require_legacy_job(service, job_id)
         path = artifact_path_for_job(job, artifact_name)
         if not path.exists():
             raise HTTPException(status_code=404, detail=f"missing artifact: {artifact_name}")
