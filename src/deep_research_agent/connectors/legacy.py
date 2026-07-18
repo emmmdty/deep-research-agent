@@ -17,10 +17,20 @@ class LegacyConnectorAdapter:
         source_name: str,
         search_fn: Callable[..., list[dict[str, Any]]],
         fetch_fn: Callable[[str], dict[str, Any]] | Callable[[str], str] | None = None,
+        supports_critical_claims: bool | None = None,
+        source_role: str | None = None,
     ) -> None:
         self.source_name = source_name
         self.search_fn = search_fn
         self.fetch_fn = fetch_fn
+        self.supports_critical_claims = (
+            source_name in {"arxiv", "acl", "pmlr", "jmlr", "tmlr"}
+            if supports_critical_claims is None
+            else supports_critical_claims
+        )
+        self.source_role = source_role or (
+            "primary_publication" if self.supports_critical_claims else "discovery"
+        )
 
     @property
     def connector_name(self) -> str:
@@ -81,3 +91,42 @@ class LegacyConnectorAdapter:
             metadata=metadata,
             url=candidate.canonical_uri,
         )
+
+    @property
+    def critical_claims_allowed(self) -> bool:
+        """Whether this connector can supply evidence for a critical claim."""
+
+        return self.supports_critical_claims
+
+    def source_descriptor(self):
+        """Build the typed corpus policy declaration for this connector."""
+
+        from deep_research_agent.corpus.models import SourceDescriptor
+
+        return SourceDescriptor(
+            source_id=self.source_name,
+            source_role=self.source_role,
+            trust_tier=1 if self.supports_critical_claims else 4,
+            official_base_uri={
+                "arxiv": "https://arxiv.org",
+                "acl": "https://aclanthology.org",
+                "pmlr": "https://proceedings.mlr.press",
+                "jmlr": "https://jmlr.org",
+                "tmlr": "https://jmlr.org/tmlr",
+            }.get(self.source_name, ""),
+            access_method="connector",
+            storage_policy="internal_processing" if self.supports_critical_claims else "link_only",
+            redistribution_policy="item-license",
+            parser_name="grobid",
+            parser_version="1",
+            supports_critical_claims=self.supports_critical_claims,
+        )
+
+    def fetch_corpus(self, candidate: ConnectorCandidate) -> ConnectorFetchResult:
+        """Explicit typed-corpus entrypoint; discovery connectors remain typed candidates only."""
+
+        if not self.supports_critical_claims:
+            raise PermissionError(
+                f"connector {self.connector_name!r} is discovery-only and cannot support critical claims"
+            )
+        return self.fetch(candidate)

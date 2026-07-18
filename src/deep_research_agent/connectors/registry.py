@@ -47,9 +47,25 @@ def build_connector_registry(_settings=None) -> ConnectorRegistry:
     """构建 phase03 connector registry。"""
     return ConnectorRegistry(
         connectors={
-            "open_web": LegacyConnectorAdapter(source_name="web", search_fn=search_web, fetch_fn=_web_fetch),
-            "github": LegacyConnectorAdapter(source_name="github", search_fn=search_github_repositories),
-            "arxiv": LegacyConnectorAdapter(source_name="arxiv", search_fn=search_arxiv_papers),
+            "open_web": LegacyConnectorAdapter(
+                source_name="web",
+                search_fn=search_web,
+                fetch_fn=_web_fetch,
+                supports_critical_claims=False,
+                source_role="discovery",
+            ),
+            "github": LegacyConnectorAdapter(
+                source_name="github",
+                search_fn=search_github_repositories,
+                supports_critical_claims=False,
+                source_role="research_artifact",
+            ),
+            "arxiv": LegacyConnectorAdapter(
+                source_name="arxiv",
+                search_fn=search_arxiv_papers,
+                supports_critical_claims=True,
+                source_role="primary_publication",
+            ),
             "files": LocalFileIngestor(),
         }
     )
