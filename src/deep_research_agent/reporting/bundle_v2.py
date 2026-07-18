@@ -64,6 +64,7 @@ class ReportBundleCompilerV2:
             invalid_document_reasons=invalid_documents,
             critic_decisions=reduced.critic_decisions,
             semantic_disagreements=reduced.semantic_disagreements,
+            evidence_span_ids=(span.span_id for span in reduced.evidence_spans),
         )
         span_by_id: dict[str, EvidenceSpan] = {}
         for span in (

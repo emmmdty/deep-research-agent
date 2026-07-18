@@ -41,6 +41,7 @@ class EvidenceAuditor:
         invalid_document_reasons: Mapping[str, str] | None = None,
         critic_decisions: Iterable[CriticDecision] = (),
         semantic_disagreements: Iterable[tuple[str, str]] = (),
+        evidence_span_ids: Iterable[str] = (),
     ) -> EvidenceAuditResult:
         invalid_reasons = dict(invalid_document_reasons or {})
         frozen_ids = set(corpus_manifest.document_version_ids)
@@ -56,6 +57,7 @@ class EvidenceAuditor:
         known_evidence_ids = {
             span.span_id for claim in claim_list for span in claim.evidence_spans
         }
+        known_evidence_ids.update(evidence_span_ids)
         critic_by_claim: dict[str, CriticDecision] = {}
         unresolved_claim_ids = {
             claim_id for pair in semantic_disagreements for claim_id in pair
