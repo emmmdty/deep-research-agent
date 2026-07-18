@@ -1,5 +1,15 @@
 export const DEFAULT_API_BASE_URL = "http://127.0.0.1:8000";
 
+import type {
+  MemoryRecord,
+  MessageDecision,
+  ModelEndpoint,
+  ProductRun,
+  ReportBundle,
+  RuntimeConfig,
+  Topic,
+} from "../types";
+
 export type ArtifactName =
   | "report.md"
   | "report.html"
@@ -78,17 +88,27 @@ export function buildApiUrl(baseUrl: string, path: string): string {
 export function createApiClient(config: ApiClientConfig = {}) {
   const baseUrl = config.baseUrl ?? getDefaultApiBaseUrl();
 
+  function csrfToken(): string | null {
+    return window.sessionStorage.getItem("dra.csrf");
+  }
+
   async function requestJson<T>(path: string, init: RequestInit = {}): Promise<T> {
+    const headers = new Headers(init.headers);
+    if (init.body && !headers.has("content-type")) headers.set("content-type", "application/json");
+    const token = csrfToken();
+    if (token && init.method && !["GET", "HEAD", "OPTIONS"].includes(init.method)) {
+      headers.set("X-CSRF-Token", token);
+    }
     const response = await fetch(buildApiUrl(baseUrl, path), {
-      headers: {
-        "content-type": "application/json",
-        ...init.headers,
-      },
       ...init,
+      credentials: "include",
+      headers,
     });
     if (!response.ok) {
-      throw new Error(`Local API request failed: ${response.status} ${response.statusText}`);
+      const detail = await response.json().catch(() => null) as { detail?: string } | null;
+      throw new Error(detail?.detail ?? `API request failed: ${response.status} ${response.statusText}`);
     }
+    if (response.status === 204) return undefined as T;
     return (await response.json()) as T;
   }
 
@@ -117,5 +137,60 @@ export function createApiClient(config: ApiClientConfig = {}) {
     getBundle(jobId: string): Promise<unknown> {
       return requestJson<unknown>(`/v1/research/jobs/${encodeURIComponent(jobId)}/bundle`, { method: "GET" });
     },
+    async login(email: string, password: string) {
+      const result = await requestJson<{ user: { email: string; role: string }; csrf_token: string }>("/v1/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      window.sessionStorage.setItem("dra.csrf", result.csrf_token);
+      return result;
+    },
+    listTopics(): Promise<{ topics: Topic[] }> {
+      return requestJson("/v1/topics", { method: "GET" });
+    },
+    getTopic(topicId: string): Promise<Topic> {
+      return requestJson(`/v1/topics/${encodeURIComponent(topicId)}`, { method: "GET" });
+    },
+    createTopic(title: string): Promise<Topic> {
+      return requestJson("/v1/topics", { method: "POST", body: JSON.stringify({ title }) });
+    },
+    sendMessage(conversationId: string, content: string, refresh: boolean): Promise<MessageDecision> {
+      return requestJson(`/v1/conversations/${encodeURIComponent(conversationId)}/messages`, {
+        method: "POST",
+        body: JSON.stringify({ content, refresh }),
+      });
+    },
+    listRuns(topicId: string): Promise<{ runs: ProductRun[] }> {
+      return requestJson(`/v1/topics/${encodeURIComponent(topicId)}/runs`, { method: "GET" });
+    },
+    getRun(runId: string): Promise<ProductRun> {
+      return requestJson(`/v1/runs/${encodeURIComponent(runId)}`, { method: "GET" });
+    },
+    createRun(topicId: string, question: string, conversationId?: string | null): Promise<ProductRun> {
+      return requestJson(`/v1/topics/${encodeURIComponent(topicId)}/runs`, {
+        method: "POST",
+        body: JSON.stringify({ question, conversation_id: conversationId || undefined }),
+      });
+    },
+    getProductBundle(runId: string): Promise<ReportBundle> {
+      return requestJson(`/v1/runs/${encodeURIComponent(runId)}/bundle`, { method: "GET" });
+    },
+    productEventUrl(runId: string): string {
+      return buildApiUrl(baseUrl, `/v1/runs/${encodeURIComponent(runId)}/events`);
+    },
+    listMemory(): Promise<{ memories: MemoryRecord[] }> {
+      return requestJson("/v1/memory", { method: "GET" });
+    },
+    deleteMemory(memoryId: string): Promise<void> {
+      return requestJson(`/v1/memory/${encodeURIComponent(memoryId)}`, { method: "DELETE" });
+    },
+    listModels(): Promise<{ models: ModelEndpoint[] }> {
+      return requestJson("/v1/admin/models", { method: "GET" });
+    },
+    listRuntimeConfigs(): Promise<{ configs: RuntimeConfig[] }> {
+      return requestJson("/v1/admin/configs", { method: "GET" });
+    },
   };
 }
+
+export const productApi = createApiClient();

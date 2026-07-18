@@ -1,15 +1,18 @@
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "vitest";
+import { afterEach, expect, test, vi } from "vitest";
 
 import { App } from "./App";
 
-test("renders the operator navigation and local API boundary", () => {
+afterEach(() => vi.restoreAllMocks());
+
+test("renders the evidence research product navigation", async () => {
+  window.history.pushState({}, "", "/topics");
+  vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ topics: [] }), { status: 200, headers: { "content-type": "application/json" } }));
   render(<App />);
 
-  expect(screen.getByRole("link", { name: /jobs/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /artifacts/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /benchmarks/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /docs/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /settings/i })).toBeInTheDocument();
-  expect(screen.getByText(/local fastapi/i)).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "研究" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "记忆" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "管理" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /从问题开始/ })).toBeInTheDocument();
+  expect(await screen.findByText("从一个研究问题开始")).toBeInTheDocument();
 });
