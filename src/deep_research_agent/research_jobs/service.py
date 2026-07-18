@@ -523,6 +523,13 @@ class ResearchJobService:
             "--stale-timeout-seconds",
             str(self.stale_timeout_seconds),
         ]
+        scheduler_mode = getattr(self.settings, "scheduler_runtime_mode", "production")
+        if scheduler_mode == "offline":
+            command.append("--offline")
+        else:
+            scheduler_factory_path = getattr(self.settings, "scheduler_factory_path", None)
+            if scheduler_factory_path:
+                command.extend(["--scheduler-factory-path", scheduler_factory_path])
         logger.info("启动 phase2 worker: {}", " ".join(command))
         return subprocess.Popen(
             command,

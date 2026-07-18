@@ -225,6 +225,46 @@ def test_bundle_strips_atx_closing_hash_summary_heading() -> None:
     assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
 
 
+@pytest.mark.parametrize(
+    "heading",
+    [
+        "##  Executive\tSummary  :  ##",
+        "Executive   Summary\n=================",
+    ],
+)
+def test_bundle_strips_whitespace_and_setext_summary_variants(heading: str) -> None:
+    span = _span()
+    claim = _claim("claim-heading-variant", "accepted", spans=[span])
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=f"# Report\n\n{heading}\n\nUntrusted prose.\n\n## Detail\nBody.",
+        claims=[claim],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert "Untrusted prose." not in bundle.report_markdown
+    assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
+
+
+def test_bundle_rejects_mixed_atx_and_setext_summary_duplicates() -> None:
+    with pytest.raises(ValueError, match="ambiguous executive summary"):
+        ReportBundleCompilerV2().compile(
+            report_markdown=(
+                "# Report\n\n## Executive Summary\nA\n\n"
+                "Executive\tSummary\n------------------\nB"
+            ),
+            claims=[],
+            evidence_packets=[],
+            research_graph=ResearchGraph(),
+            sources=[],
+            corpus_manifest=_manifest(),
+            run_manifest={"job_id": "job-1"},
+        )
+
+
 def test_bundle_rejects_ambiguous_duplicate_summary_headings() -> None:
     with pytest.raises(ValueError, match="ambiguous executive summary"):
         ReportBundleCompilerV2().compile(

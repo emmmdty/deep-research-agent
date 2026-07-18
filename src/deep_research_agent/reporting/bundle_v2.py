@@ -251,6 +251,40 @@ class ReportBundleCompilerV2:
         )
 
     @staticmethod
+    def _summary_heading_at(lines: list[str], index: int) -> tuple[int, int] | None:
+        line = lines[index].strip()
+        atx = re.fullmatch(
+            r"(#{1,6})[ \t]+executive[ \t]+summary(?:[ \t]*:[ \t]*)?(?:[ \t]+#+[ \t]*)?",
+            line,
+            re.IGNORECASE,
+        )
+        if atx is not None:
+            return len(atx.group(1)), 1
+        if index + 1 >= len(lines):
+            return None
+        setext = re.fullmatch(
+            r"executive[ \t]+summary(?:[ \t]*:[ \t]*)?(?:[ \t]+#+[ \t]*)?",
+            line,
+            re.IGNORECASE,
+        )
+        underline = re.fullmatch(r"[=-]{3,}", lines[index + 1].strip())
+        if setext is not None and underline is not None:
+            return (1 if underline.group(0)[0] == "=" else 2), 2
+        return None
+
+    @staticmethod
+    def _markdown_heading_level(lines: list[str], index: int) -> int | None:
+        line = lines[index].strip()
+        atx = re.match(r"^(#{1,6})[ \t]+", line)
+        if atx is not None:
+            return len(atx.group(1))
+        if index + 1 < len(lines) and line:
+            underline = re.fullmatch(r"[=-]{3,}", lines[index + 1].strip())
+            if underline is not None:
+                return 1 if underline.group(0)[0] == "=" else 2
+        return None
+
+    @staticmethod
     def _rebuild_executive_summary(
         report_markdown: str,
         allowed_claims: Iterable[ClaimRecord],
@@ -260,39 +294,31 @@ class ReportBundleCompilerV2:
         rebuilt: list[str] = []
         index = 0
         summary_matches = [
-            (line_index, match)
-            for line_index, line in enumerate(lines)
-            if (match := re.match(
-                r"^(#{1,6})\s+executive summary\s*:?(?:\s+#+)?\s*$",
-                line.strip(),
-                re.IGNORECASE,
-            ))
+            (line_index, heading)
+            for line_index in range(len(lines))
+            if (heading := ReportBundleCompilerV2._summary_heading_at(lines, line_index)) is not None
         ]
         if len(summary_matches) > 1:
             raise ValueError("ambiguous executive summary headings")
         found_summary = bool(summary_matches)
         while index < len(lines):
-            line = lines[index]
-            match = re.match(
-                r"^(#{1,6})\s+executive summary\s*:?(?:\s+#+)?\s*$",
-                line.strip(),
-                re.IGNORECASE,
-            )
-            if match is None:
+            heading = ReportBundleCompilerV2._summary_heading_at(lines, index)
+            if heading is None:
+                line = lines[index]
                 rebuilt.append(line)
                 index += 1
                 continue
 
             found_summary = True
-            summary_level = len(match.group(1))
+            summary_level, consumed_lines = heading
             rebuilt.extend(["## Executive Summary", ""])
             rebuilt.extend(f"- {claim}" for claim in claims)
             if claims:
                 rebuilt.append("")
-            index += 1
+            index += consumed_lines
             while index < len(lines):
-                next_heading = re.match(r"^(#{1,6})\s+", lines[index].strip())
-                if next_heading is not None and len(next_heading.group(1)) <= summary_level:
+                next_heading_level = ReportBundleCompilerV2._markdown_heading_level(lines, index)
+                if next_heading_level is not None and next_heading_level <= summary_level:
                     break
                 index += 1
 

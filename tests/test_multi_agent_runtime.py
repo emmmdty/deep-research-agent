@@ -760,3 +760,31 @@ def test_worker_composition_requires_production_factory_and_supports_explicit_of
     )
     assert production_factory(cancellation_check=lambda: False).__class__.__name__ == "ResearchScheduler"
     assert captured["mode"] == "production"
+
+
+def test_worker_spawn_propagates_scheduler_composition_settings(tmp_path, monkeypatch) -> None:
+    from configs.settings import Settings
+    from deep_research_agent.research_jobs.service import ResearchJobService
+
+    commands: list[list[str]] = []
+    monkeypatch.setattr(
+        "deep_research_agent.research_jobs.service.subprocess.Popen",
+        lambda command, **kwargs: commands.append(command) or object(),
+    )
+    offline_service = ResearchJobService(
+        workspace_dir=str(tmp_path / "offline"),
+        settings=Settings(scheduler_runtime_mode="offline"),
+    )
+    offline_service._spawn_worker("job-offline")
+    assert "--offline" in commands[-1]
+    assert "--scheduler-factory-path" not in commands[-1]
+
+    production_service = ResearchJobService(
+        workspace_dir=str(tmp_path / "production"),
+        settings=Settings(
+            scheduler_runtime_mode="production",
+            scheduler_factory_path="factory.module.build",
+        ),
+    )
+    production_service._spawn_worker("job-production")
+    assert commands[-1][-2:] == ["--scheduler-factory-path", "factory.module.build"]

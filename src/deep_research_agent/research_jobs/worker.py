@@ -30,6 +30,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="use the deterministic scheduler fallback explicitly",
     )
+    parser.add_argument("--scheduler-factory-path", default=None)
     return parser
 
 
@@ -56,7 +57,10 @@ def build_scheduler_factory(settings, *, offline: bool = False):
     factory_path = getattr(settings, "scheduler_factory_path", None)
     if not factory_path:
         raise RuntimeError("scheduler factory must be configured for production mode")
-    module_name, separator, attribute = factory_path.rpartition(".")
+    if ":" in factory_path:
+        module_name, separator, attribute = factory_path.rpartition(":")
+    else:
+        module_name, separator, attribute = factory_path.rpartition(".")
     if not separator:
         raise RuntimeError("scheduler factory path must be a dotted import path")
     configured_factory = getattr(importlib.import_module(module_name), attribute, None)
@@ -72,6 +76,8 @@ def build_scheduler_factory(settings, *, offline: bool = False):
 def main() -> None:
     args = build_parser().parse_args()
     settings = get_settings()
+    if args.scheduler_factory_path is not None:
+        settings = settings.model_copy(update={"scheduler_factory_path": args.scheduler_factory_path})
     service = ResearchJobService(
         workspace_dir=args.workspace_dir,
         runtime_dirname=args.runtime_dirname,
