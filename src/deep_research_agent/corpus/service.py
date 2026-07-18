@@ -191,6 +191,10 @@ class CorpusService:
     ) -> None:
         """Grant a tenant access to one private document without changing its owner."""
 
+        if not tenant_id or not tenant_id.strip():
+            raise ValueError("tenant_id cannot be blank")
+        if actor_tenant_id is not None and not actor_tenant_id.strip():
+            raise ValueError("actor_tenant_id cannot be blank")
         document = self.repository.get_document(document_version_id)
         if document is None:
             raise KeyError(f"unknown document version {document_version_id!r}")

@@ -272,6 +272,8 @@ def test_private_grant_requires_owner_or_admin_actor():
     )
     with pytest.raises(PermissionError):
         service.grant_access(private.document_version_id, tenant_id="reader", actor_tenant_id="reader")
+    with pytest.raises(ValueError, match="tenant_id"):
+        service.grant_access(private.document_version_id, tenant_id="   ", actor_tenant_id="owner")
     with pytest.raises(PermissionError):
         service.grant_access(
             private.document_version_id,
