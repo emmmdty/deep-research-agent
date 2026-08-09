@@ -71,6 +71,7 @@ The release gate is deterministic and reproducible locally — no API keys, no n
 | Ablations (multi-agent value) | `evals/reports/followup_metrics/ablation_summary.md` | see table below |
 | External benchmark adapters | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
 | Value scorecard | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | full metric definitions and results |
+| Experiment summary | [docs/final/EXPERIMENT_SUMMARY.md](./docs/final/EXPERIMENT_SUMMARY.md) | release smoke, native regression, external portfolio, follow-up metrics |
 
 ### Ablation Evidence: Why The Components Matter
 

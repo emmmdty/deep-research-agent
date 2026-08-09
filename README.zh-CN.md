@@ -64,6 +64,7 @@ bundle 中每条关键 claim 必须解析到冻结 corpus manifest 内的证据�
 | 消融实验（多 agent 价值） | `evals/reports/followup_metrics/ablation_summary.md` | 见下表 |
 | 外部 benchmark 适配器 | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
 | 价值计分卡 | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | 完整指标定义与结果 |
+| 实验总结 | [docs/final/EXPERIMENT_SUMMARY.md](./docs/final/EXPERIMENT_SUMMARY.md) | release smoke、native regression、外部组合、后续指标 |
 
 ### 消融证据：每个组件为什么存在
 
