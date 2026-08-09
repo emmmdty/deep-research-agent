@@ -88,7 +88,7 @@ def main() -> None:
     shutil.rmtree(DEMO_DATA, ignore_errors=True)
     DEMO_DATA.mkdir(parents=True)
 
-    for run_id in ("ths-20260522", "dsv4-20260425"):
+    for run_id in ("demo-anthropic", "ths-20260522", "dsv4-20260425"):
         run_dir = fixtures / run_id
         if not run_dir.exists():
             raise SystemExit(f"missing fixture run: {run_dir}")

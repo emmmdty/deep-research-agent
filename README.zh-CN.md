@@ -18,6 +18,14 @@
 
 [在线 Demo](https://emmmdty.github.io/deep-research-agent/) · [竞品分析](./docs/final/COMPETITIVE_LANDSCAPE.md) · [仓库地图](./docs/REPO_MAP.md)
 
+### 60 秒参观动线
+
+1. **首页** —— 这是什么：一支会分工协作、逐条取证的研究小组
+2. **端到端演示** —— 看一个研究任务如何完成：规划器生成 3 个并行研究任务（由真实 trace 驱动的动画）→ 审稿人逐条审计 → 交付可审计报告，每条结论可展开看证据
+3. **报告与证据** —— 案例库（演示案例 + 真实离线运行 + 评测样本），含结论、证据片段、来源与审计记录
+4. **评测证据** —— "多 agent 有价值吗"的直接答案（确定性消融实验）+ 有来源的行业对比
+5. **技术实现** —— 任务 DAG、有界调度器、治理网关、证据库、产品 API
+
 ## 架构总览
 
 ![Deep Research Agent user-facing architecture](./docs/assets/architecture-overview.png)

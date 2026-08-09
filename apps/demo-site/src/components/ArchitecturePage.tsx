@@ -1,66 +1,72 @@
 const LAYERS = [
   {
-    layer: "Agent orchestration",
-    modules: ["orchestration/dag.py", "orchestration/scheduler.py", "orchestration/workers.py", "orchestration/reducer.py"],
-    role: "ResearchPlanner compiles a brief into an immutable task DAG; a bounded asyncio scheduler runs ready tasks in parallel (≤8 workers) with typed TaskSpec/WorkerOutput message passing; workers may fan out new tasks; a critic task audits all research outputs.",
+    layer: "Agent 编排",
+    modules: ["orchestration/dag.py", "scheduler.py", "workers.py", "reducer.py"],
+    role: "规划器把研究需求编译成不可变任务 DAG；有界 asyncio 调度器并行执行就绪任务（最多 8 个 worker），类型化消息（TaskSpec/WorkerOutput）传递，支持任务动态扩展。",
   },
   {
-    layer: "Agent roles",
-    modules: ["orchestration/dag.py (researcher tasks)", "critic tasks → CriticDecision"],
-    role: "One researcher task per objective (parallel); critic dependencies emit accepted / qualified / contradicted / unresolved decisions.",
+    layer: "Agent 角色",
+    modules: ["researcher 任务", "critic 任务（CriticDecision）"],
+    role: "每个研究目标对应一个可并行的 researcher 任务；critic 依赖全部研究产出，给出 accepted / qualified / contradicted / unresolved 审计决策。",
   },
   {
-    layer: "Governance",
+    layer: "治理层",
     modules: ["tool_gateway/gateway.py", "model_runtime/registry.py", "policy/"],
-    role: "Role allow-lists, tenant checks, idempotency, caching, budget caps, timeout/retry; per-role model fallback chains with AES-GCM encrypted credentials.",
+    role: "工具调用按角色白名单、租户、幂等、缓存、预算上限、超时重试治理；模型按角色走 fallback 链，凭据 AES-GCM 加密存储。",
   },
   {
-    layer: "Evidence & audit",
+    layer: "证据与审计",
     modules: ["auditor/semantic.py", "evidence_store/", "corpus/"],
-    role: "Claim graph with support edges, conflict sets and review queues; frozen corpus manifests with content hashes; provenance snapshots.",
+    role: "结论图（claim graph）+ 支持边 + 冲突集 + 人工复核队列；冻结语料 manifest（内容哈希）；来源快照。",
   },
   {
-    layer: "Deliverable",
+    layer: "交付物",
     modules: ["reporting/bundle_v2.py"],
-    role: "Deterministic reduction → audit → report_bundle.json (+ report.md/html) with sidecar artifacts (claims, sources, audit decision, review queue, claim graph, trace).",
+    role: "确定性归并 → 审计 → report_bundle.json（+ report.md/html），附 claims/sources/audit/review/claim_graph/trace 等 sidecar。",
   },
   {
-    layer: "Reliability",
+    layer: "可靠性",
     modules: ["research_jobs/", "observability/"],
-    role: "Checkpoints, event journals, leases, heartbeats, resume/retry/refine/cancel; credential-safe OpenTelemetry spans exported to Phoenix.",
+    role: "checkpoint、事件日志、lease、心跳、resume/retry/refine/cancel；脱敏 OpenTelemetry 链路导出。",
   },
   {
-    layer: "Product surface",
+    layer: "产品面",
     modules: ["gateway/cli.py", "gateway/api.py", "product/", "apps/gui-web/"],
-    role: "CLI, local HTTP API with SSE event streams, PostgreSQL-backed multi-tenant product API, React workspace UI.",
+    role: "CLI、本地 HTTP API（SSE 事件流）、PostgreSQL 多租户产品 API、React 工作台 UI。",
   },
 ];
 
-const LIFE_CYCLE = [
-  ["user topic", "intent routing (direct / clarify / refresh)"],
-  ["ResearchPlanner.plan()", "brief → ResearchDAG"],
-  ["ResearchScheduler.run()", "bounded asyncio, ≤8 workers, typed messages"],
-  ["ToolGateway / ModelRegistry", "governed retrieval, role model chains"],
-  ["EvidenceReducer.reduce()", "dedupe + merge evidence"],
-  ["EvidenceAuditor.audit()", "claim graph, support edges, gate decision"],
+const LIFECYCLE = [
+  ["用户提问", "意图路由（直接回答 / 澄清 / 发起研究）"],
+  ["ResearchPlanner.plan()", "需求 → 任务 DAG"],
+  ["ResearchScheduler.run()", "有界 asyncio，≤8 worker 并行"],
+  ["ToolGateway / ModelRegistry", "受治理检索与模型回退链"],
+  ["EvidenceReducer.reduce()", "证据去重与归并"],
+  ["EvidenceAuditor.audit()", "结论图 + 支持边 + 门禁决策"],
   ["ReportBundleCompilerV2.compile()", "report_bundle.json + report.md/html"],
-  ["job artifacts", "workspace/research_jobs/<job_id>/"],
+  ["产物落盘", "workspace/research_jobs/<job_id>/"],
+];
+
+const RELIABILITY = [
+  ["Checkpoint 与事件日志", "每个任务写类型化事件日志（trace.jsonl），可从最近 checkpoint 断点续跑。"],
+  ["Lease 与心跳", "worker 租约持有任务，僵尸任务由恢复 worker 接管（确定性 stale_recovery 套件覆盖）。"],
+  ["生产模式 fail-closed", "生产必须显式配置 SCHEDULER_FACTORY_PATH；运行时永不静默降级为离线演示。"],
+  ["凭据安全可观测", "OpenTelemetry 链路导出前脱敏。"],
 ];
 
 export function ArchitecturePage() {
   return (
     <div className="page">
-      <h2>Architecture</h2>
+      <h2>技术实现：系统是怎么做到的</h2>
       <p className="page-note">
-        Two runtime generations exist: the V2 product path (<code>scheduler-v2</code>, the story
-        below) and an archived graph-first path (<code>orchestrator-v1</code>) kept for
-        compatibility. Everything on this page is <code>src/deep_research_agent/</code>.
+        所有代码在 <code>src/deep_research_agent/</code>。仓库保留了旧的 graph-first 运行时
+        （<code>orchestrator-v1</code>）作为兼容路径，本页介绍现行 V2 产品路径（<code>scheduler-v2</code>）。
       </p>
 
       <section className="bench-section">
-        <h3>Execution pipeline</h3>
+        <h3>一次任务的执行流水线</h3>
         <div className="pipeline">
-          {LIFE_CYCLE.map(([name, desc], i) => (
+          {LIFECYCLE.map(([name, desc], i) => (
             <div className="pipeline-step" key={name}>
               <div className="step-index">{i + 1}</div>
               <code>{name}</code>
@@ -71,7 +77,7 @@ export function ArchitecturePage() {
       </section>
 
       <section className="bench-section">
-        <h3>Runtime layers</h3>
+        <h3>运行时分层</h3>
         <div className="layer-list">
           {LAYERS.map((l) => (
             <div className="layer-card" key={l.layer}>
@@ -88,34 +94,22 @@ export function ArchitecturePage() {
       </section>
 
       <section className="bench-section">
-        <h3>Reliability contracts</h3>
-        <ul className="contract-list">
-          <li>
-            <strong>Checkpoints &amp; events</strong> — every job writes a typed event journal
-            (<code>trace.jsonl</code>) and can resume from the latest checkpoint.
-          </li>
-          <li>
-            <strong>Leases &amp; heartbeats</strong> — workers hold leased jobs; stale jobs are
-            recovered by the recovery worker (deterministic <code>stale_recovery</code> suites
-            cover this).
-          </li>
-          <li>
-            <strong>Fail-closed production mode</strong> — production requires an explicit{" "}
-            <code>SCHEDULER_FACTORY_PATH</code>; the runtime never silently degrades to the offline
-            demo.
-          </li>
-          <li>
-            <strong>Credential-safe observability</strong> — OTel spans redact secrets before
-            export.
-          </li>
-        </ul>
+        <h3>可靠性契约</h3>
+        <div className="contract-list">
+          {RELIABILITY.map(([name, desc]) => (
+            <div className="contract-item" key={name}>
+              <strong>{name}</strong>
+              <span className="muted">{desc}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="bench-section">
-        <h3>User-facing architecture</h3>
+        <h3>用户视角架构图</h3>
         <img
           src="assets/architecture-overview.png"
-          alt="Deep Research Agent architecture overview"
+          alt="Deep Research Agent 架构总览"
           className="arch-img"
         />
       </section>

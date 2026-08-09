@@ -25,6 +25,20 @@ This project asks a different question: *when the answer is wrong, can you prove
 
 [Live demo](https://emmmdty.github.io/deep-research-agent/) · [Competitive landscape](./docs/final/COMPETITIVE_LANDSCAPE.md) · [Repository map](./docs/REPO_MAP.md)
 
+### 60-Second Tour
+
+1. **Overview** — what this system is: a research team that plans, researches in parallel,
+   audits evidence, and delivers a report where every conclusion can be traced to its evidence.
+2. **End-to-end demo** — watch one research task complete: planner spawns 3 parallel researchers
+   (animated from the real trace journal), critic audits every claim, and the audited report is
+   delivered with per-claim evidence panels.
+3. **Reports** — browse the case library (demo case + real offline runs + eval fixture), each
+   with claims, evidence excerpts, sources, and audit records.
+4. **Benchmark** — direct answers to "is multi-agent worth it" backed by deterministic ablations,
+   plus the sourced industry comparison.
+5. **Architecture** — how it is implemented (task DAG, bounded scheduler, governed gateways,
+   evidence store, product API).
+
 ## Architecture At A Glance
 
 ![Deep Research Agent user-facing architecture](./docs/assets/architecture-overview.png)

@@ -1,0 +1,666 @@
+{
+  "bundle_version": "1.0.0",
+  "demo_notice": "DEMO case. Deterministically generated from authored demo material based on public 2025 information; not a live research result.",
+  "job": {
+    "job_id": "demo-anthropic-20260809",
+    "created_at": "2026-08-09T00:00:00+00:00",
+    "input_prompt": "研究 Anthropic 公司：核心产品（Claude 模型家族、Claude Code、MCP 协议）、商业模式与融资历程、多 agent 研发实践及其行业影响。",
+    "status": "demo",
+    "current_stage": "completed",
+    "source_profile": "company_trusted",
+    "budget": {
+      "max_loops": 3,
+      "research_profile": "default",
+      "llm_calls": 24,
+      "search_calls": 18
+    },
+    "runtime_path": "scheduler-v2",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-0001",
+      "title": "Anthropic — About (official company page)"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-0002",
+      "title": "Anthropic — Announcing our $3.5B Series E (2025-03)"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0003",
+      "title": "Anthropic — Introducing Claude Code (2025-02)"
+    },
+    {
+      "citation_id": 4,
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-0004",
+      "title": "Anthropic — Model Context Protocol announcement (2024-11)"
+    },
+    {
+      "citation_id": 5,
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-0005",
+      "title": "Anthropic — How we built our multi-agent research system (2025-06)"
+    },
+    {
+      "citation_id": 6,
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-0006",
+      "title": "Amazon — Amazon invests additional $4B in Anthropic (2024-11)"
+    },
+    {
+      "citation_id": 7,
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-0007",
+      "title": "Reuters — Anthropic in talks to raise at $300 billion valuation (2025-09)"
+    },
+    {
+      "citation_id": 8,
+      "source_id": "source-8",
+      "snapshot_id": "snapshot-0008",
+      "title": "The Information — Anthropic approaches $30 billion annualized revenue run rate (2025-09)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-1",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "Anthropic — About (official company page)",
+      "canonical_uri": "https://www.anthropic.com/about",
+      "query": "Anthropic company founded Dario Amodei OpenAI",
+      "selected": true,
+      "snapshot_ref": "snapshot-0001",
+      "metadata": {
+        "auth_required": false,
+        "fetched_at": "2026-08-09T00:00:00Z"
+      }
+    },
+    {
+      "source_id": "source-2",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "Anthropic — Announcing our $3.5B Series E (2025-03)",
+      "canonical_uri": "https://www.anthropic.com/news/series-e",
+      "query": "Anthropic Series E $3.5 billion valuation 61.5 billion",
+      "selected": true,
+      "snapshot_ref": "snapshot-0002",
+      "metadata": {
+        "auth_required": false
+      }
+    },
+    {
+      "source_id": "source-3",
+      "citation_id": 3,
+      "source_type": "web",
+      "title": "Anthropic — Introducing Claude Code (2025-02)",
+      "canonical_uri": "https://www.anthropic.com/news/claude-code",
+      "query": "Claude Code CLI coding agent launch",
+      "selected": true,
+      "snapshot_ref": "snapshot-0003",
+      "metadata": {
+        "auth_required": false
+      }
+    },
+    {
+      "source_id": "source-4",
+      "citation_id": 4,
+      "source_type": "web",
+      "title": "Anthropic — Model Context Protocol announcement (2024-11)",
+      "canonical_uri": "https://www.anthropic.com/news/model-context-protocol",
+      "query": "Model Context Protocol open standard tool interoperability",
+      "selected": true,
+      "snapshot_ref": "snapshot-0004",
+      "metadata": {
+        "auth_required": false
+      }
+    },
+    {
+      "source_id": "source-5",
+      "citation_id": 5,
+      "source_type": "web",
+      "title": "Anthropic — How we built our multi-agent research system (2025-06)",
+      "canonical_uri": "https://www.anthropic.com/engineering/built-multi-agent-research-system",
+      "query": "Anthropic multi-agent research system orchestrator workers 90 percent",
+      "selected": true,
+      "snapshot_ref": "snapshot-0005",
+      "metadata": {
+        "auth_required": false
+      }
+    },
+    {
+      "source_id": "source-6",
+      "citation_id": 6,
+      "source_type": "web",
+      "title": "Amazon — Amazon invests additional $4B in Anthropic (2024-11)",
+      "canonical_uri": "https://www.aboutamazon.com/news/company-news/amazon-anthropic-4-billion-investment",
+      "query": "Amazon Anthropic 4 billion investment Bedrock",
+      "selected": true,
+      "snapshot_ref": "snapshot-0006",
+      "metadata": {
+        "auth_required": false
+      }
+    },
+    {
+      "source_id": "source-7",
+      "citation_id": 7,
+      "source_type": "web",
+      "title": "Reuters — Anthropic in talks to raise at $300 billion valuation (2025-09)",
+      "canonical_uri": "https://www.reuters.com/technology/artificial-intelligence/anthropic-talks-raise-300-billion-valuation-2025-09-16/",
+      "query": "Anthropic funding round valuation 300 billion Reuters",
+      "selected": true,
+      "snapshot_ref": "snapshot-0007",
+      "metadata": {
+        "auth_required": true
+      }
+    },
+    {
+      "source_id": "source-8",
+      "citation_id": 8,
+      "source_type": "web",
+      "title": "The Information — Anthropic approaches $30 billion annualized revenue run rate (2025-09)",
+      "canonical_uri": "https://www.theinformation.com/articles/anthropic-approaches-30-billion-annualized-revenue",
+      "query": "Anthropic annualized revenue run rate 30 billion",
+      "selected": true,
+      "snapshot_ref": "snapshot-0008",
+      "metadata": {
+        "auth_required": true
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-0001",
+      "source_id": "source-1",
+      "content_sha256": "deadbeef0001",
+      "size_bytes": 2185
+    },
+    {
+      "snapshot_id": "snapshot-0002",
+      "source_id": "source-2",
+      "content_sha256": "deadbeef0002",
+      "size_bytes": 2322
+    },
+    {
+      "snapshot_id": "snapshot-0003",
+      "source_id": "source-3",
+      "content_sha256": "deadbeef0003",
+      "size_bytes": 2459
+    },
+    {
+      "snapshot_id": "snapshot-0004",
+      "source_id": "source-4",
+      "content_sha256": "deadbeef0004",
+      "size_bytes": 2596
+    },
+    {
+      "snapshot_id": "snapshot-0005",
+      "source_id": "source-5",
+      "content_sha256": "deadbeef0005",
+      "size_bytes": 2733
+    },
+    {
+      "snapshot_id": "snapshot-0006",
+      "source_id": "source-6",
+      "content_sha256": "deadbeef0006",
+      "size_bytes": 2870
+    },
+    {
+      "snapshot_id": "snapshot-0007",
+      "source_id": "source-7",
+      "content_sha256": "deadbeef0007",
+      "size_bytes": 3007
+    },
+    {
+      "snapshot_id": "snapshot-0008",
+      "source_id": "source-8",
+      "content_sha256": "deadbeef0008",
+      "size_bytes": 3144
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "evidence-1",
+      "snapshot_id": "snapshot-0001",
+      "source_id": "source-1",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "excerpt": "Anthropic is an AI safety and research company founded in 2021 by Dario Amodei and Daniela Amodei, with core members coming from OpenAI.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-2",
+      "snapshot_id": "snapshot-0002",
+      "source_id": "source-2",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 2
+      },
+      "excerpt": "We are announcing a $3.5B Series E round, which values the company at $61.5 billion post-money.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-3",
+      "snapshot_id": "snapshot-0003",
+      "source_id": "source-3",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 3
+      },
+      "excerpt": "Claude Code is our agentic coding tool, available today in research preview, that operates directly in a terminal.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-4",
+      "snapshot_id": "snapshot-0004",
+      "source_id": "source-4",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 4
+      },
+      "excerpt": "Today we are open-sourcing the Model Context Protocol, an open standard that connects AI assistants to data and tools.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-5",
+      "snapshot_id": "snapshot-0005",
+      "source_id": "source-5",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "excerpt": "The multi-agent system scored 90.2% higher than a single Opus 4 agent on our internal research evaluation.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-6",
+      "snapshot_id": "snapshot-0006",
+      "source_id": "source-6",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 6
+      },
+      "excerpt": "Amazon has invested an additional $4 billion in Anthropic, bringing Amazon's total investment to $8 billion.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-7",
+      "snapshot_id": "snapshot-0005",
+      "source_id": "source-5",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "excerpt": "Lead agent delegates research topics to parallel sub-agents; sub-agents write findings to the filesystem to avoid context loss.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-8",
+      "snapshot_id": "snapshot-0007",
+      "source_id": "source-7",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 7
+      },
+      "excerpt": "Anthropic is in talks to raise funding at a $300 billion valuation, sources told Reuters.",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-9",
+      "snapshot_id": "snapshot-0008",
+      "source_id": "source-8",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 8
+      },
+      "excerpt": "Anthropic is approaching a $30 billion annualized revenue run rate, according to a person familiar with the matter.",
+      "extraction_method": "source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "event_count": 56,
+    "tool_event_count": 18,
+    "stage_event_count": 21,
+    "stages": [
+      "job",
+      "clarifying",
+      "planned",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering",
+      "completed"
+    ]
+  },
+  "audit_events": [
+    {
+      "event": "gate.decision",
+      "decision": "passed",
+      "critical_claims": 8,
+      "supported": 7,
+      "qualified": 1,
+      "unsupported": 1
+    },
+    {
+      "event": "review_queue.push",
+      "claim_id": "claim-11",
+      "reason": "无可用证据，需人工复核"
+    },
+    {
+      "event": "conflict_set.registered",
+      "conflict_id": "conflict-1",
+      "claim_ids": [
+        "claim-2",
+        "claim-8"
+      ]
+    }
+  ],
+  "report_text": "# Anthropic 公司研究：Claude 产品线、商业模式与多 agent 研发实践\n\n> 演示案例（demo）：本报告由确定性演示数据生成，用于展示系统的完整产品流程。内容基于 2025 年公开信息整理，不作为投资或商业决策依据。\n\n## 摘要\n\nAnthropic 是 2021 年由前 OpenAI 核心成员创立的 AI 前沿实验室，以\"可解释性与安全优先\"为立身之本。截至 2025 年底，公司凭借 Claude 模型家族、Claude Code 编程 agent 与 Model Context Protocol（MCP）开放标准，形成了\"模型 + 工具 + 生态\"的三层商业模式，融资估值从 2025 年 3 月的 615 亿美元一路攀升至年底媒体口径的 1800 亿美元以上。其 2025 年 6 月公开的多 agent 研究系统（比单 agent 高 90.2%）更是把\"多 agent 协作\"从口号变成了可复现的工程证据。\n\n## 一、公司概况与融资历程\n\nAnthropic 由 Dario Amodei 与 Daniela Amodei 于 2021 年创立，核心成员多来自 OpenAI[1]。公司明确以 AI 安全为使命，优先投入对齐研究，这也成为其在企业客户中建立信任的核心资产。\n\n融资时间线[2][7]：\n\n- 2025-03：E 轮 35 亿美元，投后估值 **615 亿美元**\n- 2025-06：60 亿美元融资，估值 **1370 亿美元**\n- 2025-09：多家媒体报道正洽谈以 **3000 亿美元** 估值融资（未证实）\n- 2025-11：Coatue 领投 20 亿美元，估值 **1800 亿美元**（媒体口径，未证实）\n\n其中 3000 亿美元估值报道与官方口径存在时间差与口径差异，系统在冲突集（conflict set）中标记了该不一致。\n\n## 二、核心产品与商业模式\n\n### Claude 模型家族\nClaude 系列从 2023 年的 2.1 迭代至 2025 年的 4.x 家族（Sonnet / Opus / Haiku 分级），覆盖从端侧到旗舰的全价格带。3.5 Sonnet 在 2024 年中期即凭借编码能力获得开发者口碑，Claude 4 进一步强化了工具调用与长上下文能力。\n\n### Claude Code\n2025 年 2 月发布的 Claude Code 是面向终端的 agent 化编程工具[3]，可在命令行中理解代码库、执行修改并运行测试。它在开发者社区迅速成为事实标准之一，并成为公司企业收入的重要引擎。\n\n### MCP 协议\n2024 年 11 月，Anthropic 开源 Model Context Protocol[4]，为 AI 助手连接外部数据与工具定义了统一标准。MCP 被多家模型厂商与开发框架采纳（包括本项目使用的生态），事实上确立了 agent 工具互操作层。\n\n### 商业模式\n三层结构：模型 API（按 token 计费）→ 企业订阅（Claude Pro/Max + 私有部署）→ 生态收入（Claude Code、MCP 生态与 AWS Bedrock 分发）。Amazon 总投资达 80 亿美元并深度集成 Claude[6]。\n\n## 三、多 agent 研发实践（2025 行业标杆）\n\n2025 年 6 月，Anthropic 公开了其多 agent 研究系统[5]，核心发现与设计：\n\n- 架构为 **orchestrator-workers**：主 agent（Opus 4）制定策略并派生并行子 agent（Sonnet 4），子 agent 独立上下文并行检索、压缩汇报\n- 量化收益：比单 agent 高 **90.2%**（内部研究评测）；并行化使研究耗时最多下降 **90%**\n- 代价透明：多 agent token 成本约为普通 agent 的 15 倍——\"更强的能力有明确的价格标签\"\n- 工程细节：子 agent 直接写文件系统而非层层传话，规避上下文丢失与\"电话游戏\"失真\n\n这套实践与本项目的设计哲学高度一致：**多 agent 的价值需要被测量，而不是被宣称**。\n\n## 四、市场地位与竞争\n\n- 与 OpenAI（ChatGPT/Deep Research）、Google（Gemini Deep Research）、xAI 正面竞争；Claude 在安全合规、长上下文与企业私有化部署上形成差异化\n- 企业客户覆盖金融、医疗、法律等强监管行业\n- 2025 年 4 月公司首次确认年化收入超过 10 亿美元；9 月媒体口径接近 300 亿美元运行率[8]（非官方，已标注不确定性）\n\n## 五、风险与不确定性\n\n- 估值与收入口径依赖媒体信源，存在较大不确定性（见冲突集）\n- 与政府部门的合作传闻无法核实（对应 claim 未通过审计，已进入人工复核队列）\n- 高研发投入与基础设施成本带来的盈利压力\n\n## 参考来源\n\n1. Anthropic — About · 2. Series E 公告 · 3. Claude Code 发布 · 4. MCP 公告 · 5. 多 agent 研究系统工程博客 · 6. Amazon 投资新闻稿 · 7. Reuters 估值报道 · 8. The Information 收入报道\n",
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "text": "Anthropic 由 Dario Amodei 与 Daniela Amodei 于 2021 年创立，核心成员多来自 OpenAI，公司定位为 AI 安全与前沿研究机构。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "一、公司概况与融资历程",
+      "evidence_ids": [
+        "evidence-1"
+      ]
+    },
+    {
+      "claim_id": "claim-2",
+      "text": "2025 年 3 月，Anthropic 完成 35 亿美元 E 轮融资，投后估值 615 亿美元。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "一、公司概况与融资历程",
+      "evidence_ids": [
+        "evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-3",
+      "text": "Claude Code 于 2025 年 2 月发布，是 Anthropic 面向终端场景的 agent 化编程工具，可直接在命令行中理解并修改代码库。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "二、核心产品与商业模式",
+      "evidence_ids": [
+        "evidence-3"
+      ]
+    },
+    {
+      "claim_id": "claim-4",
+      "text": "Anthropic 于 2024 年 11 月开源 Model Context Protocol（MCP），作为连接 AI 助手与外部数据、工具的统一开放标准。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "二、核心产品与商业模式",
+      "evidence_ids": [
+        "evidence-4"
+      ]
+    },
+    {
+      "claim_id": "claim-5",
+      "text": "Anthropic 于 2025 年 6 月公开其多 agent 研究系统：以 Opus 4 作为主 agent 调度并行子 agent，在内部研究评测上比单 agent 高出 90.2%。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "三、多 agent 研发实践",
+      "evidence_ids": [
+        "evidence-5"
+      ]
+    },
+    {
+      "claim_id": "claim-6",
+      "text": "Amazon 对 Anthropic 的总投资达到 80 亿美元，并基于 Bedrock 平台深度集成 Claude 模型。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "四、市场地位与竞争",
+      "evidence_ids": [
+        "evidence-6"
+      ]
+    },
+    {
+      "claim_id": "claim-7",
+      "text": "Anthropic 多 agent 系统采用 orchestrator-workers 模式：主 agent 将研究主题拆分为并行子任务，子 agent 独立上下文并行检索，并将结果写入文件系统以规避上下文丢失。",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "三、多 agent 研发实践",
+      "evidence_ids": [
+        "evidence-7"
+      ]
+    },
+    {
+      "claim_id": "claim-8",
+      "text": "2025 年 9 月，多家媒体报道 Anthropic 正洽谈以 3000 亿美元估值融资，该轮估值显著高于此前 1370 亿美元的 60 亿美元融资。",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "qualified",
+      "placeholder": false,
+      "section_ref": "一、公司概况与融资历程",
+      "evidence_ids": [
+        "evidence-8"
+      ]
+    },
+    {
+      "claim_id": "claim-9",
+      "text": "截至 2025 年 9 月，Anthropic 的年化收入运行率接近 300 亿美元（媒体引述知情人士，非官方披露）。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "qualified",
+      "placeholder": false,
+      "section_ref": "四、市场地位与竞争",
+      "evidence_ids": [
+        "evidence-9"
+      ]
+    },
+    {
+      "claim_id": "claim-10",
+      "text": "Anthropic 已将 Claude Code 等产品推广至金融、医疗等强监管行业，并以此构建企业级 agent 业务的基本盘。",
+      "criticality": "medium",
+      "uncertainty": "medium",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "二、核心产品与商业模式",
+      "evidence_ids": [
+        "evidence-1",
+        "evidence-3"
+      ]
+    },
+    {
+      "claim_id": "claim-11",
+      "text": "Anthropic 2025 年上半年确认与政府部门在国防与情报领域的合作传闻（具体合同细节无法核实）。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "五、风险与不确定性",
+      "evidence_ids": []
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "edge-1",
+      "claim_id": "claim-1",
+      "evidence_id": "evidence-1",
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-0001",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "relation": "supported",
+      "confidence": 0.95,
+      "grounding_status": "grounded",
+      "notes": "官方公司页面直接陈述"
+    },
+    {
+      "edge_id": "edge-2",
+      "claim_id": "claim-2",
+      "evidence_id": "evidence-2",
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-0002",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 2
+      },
+      "relation": "supported",
+      "confidence": 0.97,
+      "grounding_status": "grounded",
+      "notes": "官方融资公告"
+    },
+    {
+      "edge_id": "edge-3",
+      "claim_id": "claim-3",
+      "evidence_id": "evidence-3",
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0003",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 3
+      },
+      "relation": "supported",
+      "confidence": 0.96,
+      "grounding_status": "grounded",
+      "notes": "官方发布博客"
+    },
+    {
+      "edge_id": "edge-4",
+      "claim_id": "claim-4",
+      "evidence_id": "evidence-4",
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-0004",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 4
+      },
+      "relation": "supported",
+      "confidence": 0.96,
+      "grounding_status": "grounded",
+      "notes": "官方发布博客"
+    },
+    {
+      "edge_id": "edge-5",
+      "claim_id": "claim-5",
+      "evidence_id": "evidence-5",
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-0005",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "relation": "supported",
+      "confidence": 0.93,
+      "grounding_status": "grounded",
+      "notes": "官方工程博客明确给出 90.2% 数字"
+    },
+    {
+      "edge_id": "edge-6",
+      "claim_id": "claim-6",
+      "evidence_id": "evidence-6",
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-0006",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 6
+      },
+      "relation": "supported",
+      "confidence": 0.94,
+      "grounding_status": "grounded",
+      "notes": "Amazon 官方新闻稿"
+    },
+    {
+      "edge_id": "edge-7",
+      "claim_id": "claim-7",
+      "evidence_id": "evidence-7",
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-0005",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "relation": "supported",
+      "confidence": 0.9,
+      "grounding_status": "grounded",
+      "notes": "官方工程博客架构描述"
+    },
+    {
+      "edge_id": "edge-8",
+      "claim_id": "claim-8",
+      "evidence_id": "evidence-8",
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-0007",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 7
+      },
+      "relation": "context_only",
+      "confidence": 0.55,
+      "grounding_status": "grounded",
+      "notes": "单一媒体来源，估值未获公司证实"
+    },
+    {
+      "edge_id": "edge-9",
+      "claim_id": "claim-9",
+      "evidence_id": "evidence-9",
+      "source_id": "source-8",
+      "snapshot_id": "snapshot-0008",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 8
+      },
+      "relation": "context_only",
+      "confidence": 0.45,
+      "grounding_status": "grounded",
+      "notes": "非官方口径，匿名信源"
+    },
+    {
+      "edge_id": "edge-10",
+      "claim_id": "claim-10",
+      "evidence_id": "evidence-1",
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-0001",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "relation": "context_only",
+      "confidence": 0.6,
+      "grounding_status": "grounded",
+      "notes": "企业客户信息来自官网概述与产品文档的间接支持"
+    }
+  ],
+  "conflict_sets": [
+    {
+      "conflict_id": "conflict-1",
+      "claim_ids": [
+        "claim-2",
+        "claim-8"
+      ],
+      "description": "融资估值口径存在时间演进：2025-03 E 轮 615 亿美元 → 2025-06 后 1370 亿美元 → 2025-09 报道洽谈 3000 亿美元。前两项为官方公告，第三项为媒体传闻，报告中以时间线呈现并标注不确定性。"
+    }
+  ]
+}

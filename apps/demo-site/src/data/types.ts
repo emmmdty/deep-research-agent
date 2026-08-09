@@ -106,27 +106,29 @@ export interface RunCase {
   bundlePath: string;
   tracePath?: string;
   markdownPath?: string;
-  tag: "real" | "fixture" | "sample";
-  lang: "en" | "zh";
+  tag: "demo" | "real" | "fixture" | "sample";
+  lang: "zh" | "en";
+  highlight?: boolean;
 }
 
 export const RUN_CASES: RunCase[] = [
   {
-    id: "dsv4-20260425",
-    label: "DeepSeek-V4 架构科普（真实运行）",
+    id: "demo-anthropic",
+    label: "演示案例：Anthropic 公司研究",
     description:
-      "面向小白的 DeepSeek-V4 中文科普报告。审计门禁拦截了无法证实的 claim（gate_status=blocked），演示 evidence-first 如何阻止幻觉进入最终报告。",
-    bundlePath: "data/runs/dsv4-20260425/report_bundle.json",
-    tracePath: "data/runs/dsv4-20260425/trace.jsonl",
-    markdownPath: "data/runs/dsv4-20260425/report.md",
-    tag: "real",
+      "端到端演示：3 个 researcher 并行检索 + critic 审计 + 报告交付。演示数据基于 2025 年公开信息确定性生成，用于无 API key 时完整体验产品流程。",
+    bundlePath: "data/runs/demo-anthropic/report_bundle.json",
+    tracePath: "data/runs/demo-anthropic/trace.jsonl",
+    markdownPath: "data/runs/demo-anthropic/report.md",
+    tag: "demo",
     lang: "zh",
+    highlight: true,
   },
   {
     id: "ths-20260522",
-    label: "同花顺公司研究（真实运行）",
+    label: "真实运行：同花顺公司研究",
     description:
-      "真实检索的公司研究案例（中文）。演示多来源检索、引用快照与 claim 支持边。",
+      "一次真实调度运行（离线确定性模式）的产物：检索受限时，审计门禁正确拦截了 5 条无法证实的关键 claim，并将它们送入人工复核队列——展示了系统的诚实性。",
     bundlePath: "data/runs/ths-20260522/report_bundle.json",
     tracePath: "data/runs/ths-20260522/trace.jsonl",
     markdownPath: "data/runs/ths-20260522/report.md",
@@ -134,8 +136,19 @@ export const RUN_CASES: RunCase[] = [
     lang: "zh",
   },
   {
+    id: "dsv4-20260425",
+    label: "真实运行：DeepSeek-V4 科普报告",
+    description:
+      "真实调度的离线产物：因检索源不足，20 条关键 claim 未通过审计。该案例展示审计机制如何在信息不充分时阻止不可验证内容进入最终报告。",
+    bundlePath: "data/runs/dsv4-20260425/report_bundle.json",
+    tracePath: "data/runs/dsv4-20260425/trace.jsonl",
+    markdownPath: "data/runs/dsv4-20260425/report.md",
+    tag: "real",
+    lang: "zh",
+  },
+  {
     id: "company-openai-surface",
-    label: "OpenAI company profile（评测 fixture）",
+    label: "评测样本：OpenAI company profile",
     description:
       "company12 确定性评测套件产物，用于回归门禁与消融实验的英文案例。",
     bundlePath: "data/runs/company-openai-surface/report_bundle.json",
@@ -144,9 +157,9 @@ export const RUN_CASES: RunCase[] = [
   },
   {
     id: "sample-bundle",
-    label: "Sample bundle（无凭据演示）",
+    label: "合成样本：Sample bundle",
     description:
-      "无 API key 时加载的合成示例，用于演示报告形态与审计结构。",
+      "无凭据时的形态演示（合成数据，非研究结果）。",
     bundlePath: "data/runs/sample-bundle/report_bundle.json",
     tag: "sample",
     lang: "en",
