@@ -21,8 +21,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from evaluation.metrics import evaluate_report
-from evaluation.llm_judge import LLMJudge
+from legacy.evaluation.metrics import evaluate_report
+from legacy.evaluation.llm_judge import LLMJudge
 
 console = Console()
 

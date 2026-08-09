@@ -129,8 +129,8 @@ Owns source governance:
 - fetch budgets
 - policy overrides
 
-The root `policies/` package is a compatibility shim for older imports and tests. It is not the
-canonical source-governance implementation.
+The archived `legacy/policies/` package is retained for the graph-first runtime only. It is not
+the canonical source-governance implementation.
 
 ### `src/deep_research_agent/auditor/`
 

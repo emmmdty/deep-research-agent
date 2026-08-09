@@ -12,17 +12,17 @@ import type {
 export type ReportTab = "report" | "claims" | "sources" | "audit";
 
 const STATUS_LABEL: Record<string, string> = {
-  supported: "有证据支持",
-  unsupported: "无证据（拦截）",
-  qualified: "有条件支持",
-  unverifiable: "无法验证",
-  partially_supported: "部分支持",
+  supported: "有出处",
+  unsupported: "无出处（已拦下）",
+  qualified: "部分有出处",
+  unverifiable: "无法核实",
+  partially_supported: "部分有出处",
 };
 
 const CRITICALITY_LABEL: Record<string, string> = {
-  high: "关键",
-  medium: "重要",
-  low: "一般",
+  high: "关键结论",
+  medium: "重要结论",
+  low: "一般结论",
 };
 
 export function ReportViewer({
@@ -73,25 +73,25 @@ export function ReportViewer({
           结论 <strong>{bundle.claims.length}</strong>
         </span>
         <span className="stat ok">
-          有证据 <strong>{supported}</strong>
+          有出处 <strong>{supported}</strong>
         </span>
         {qualified > 0 && (
           <span className="stat warn">
-            有条件 <strong>{qualified}</strong>
+            部分有出处 <strong>{qualified}</strong>
           </span>
         )}
         {unsupported > 0 && (
           <span className="stat bad">
-            被拦截 <strong>{unsupported}</strong>
+            已拦下 <strong>{unsupported}</strong>
           </span>
         )}
         <span className="stat">
-          来源 <strong>{bundle.sources.length}</strong>
+          引用来源 <strong>{bundle.sources.length}</strong>
         </span>
         <span
           className={`gate-pill ${gate === "passed" ? "ok" : gate === "blocked" ? "blocked" : "warn"}`}
         >
-          审计门禁：{gate === "passed" ? "通过" : gate === "blocked" ? "拦截（需人工复核）" : gate ?? "未知"}
+          {gate === "passed" ? "审核通过" : gate === "blocked" ? "部分内容待人工复核" : gate ?? "未知"}
         </span>
       </div>
 
@@ -100,13 +100,13 @@ export function ReportViewer({
           研究报告
         </button>
         <button className={`tab-btn${activeTab === "claims" ? " active" : ""}`} onClick={() => onTab("claims")}>
-          结论与证据（{bundle.claims.length}）
+          结论与出处（{bundle.claims.length}）
         </button>
         <button className={`tab-btn${activeTab === "sources" ? " active" : ""}`} onClick={() => onTab("sources")}>
           引用来源（{bundle.sources.length}）
         </button>
         <button className={`tab-btn${activeTab === "audit" ? " active" : ""}`} onClick={() => onTab("audit")}>
-          审计记录
+          审核记录
         </button>
       </div>
 
@@ -214,7 +214,7 @@ function ClaimRow({
         <span className="muted">{claim.section_ref}</span>
         {edges.length > 0 && (
           <button className="btn-small" onClick={() => setExpanded(!expanded)}>
-            {expanded ? "收起证据" : `查看证据（${edges.length}）`}
+            {expanded ? "收起出处" : `查看出处（${edges.length}）`}
           </button>
         )}
       </div>
@@ -225,11 +225,11 @@ function ClaimRow({
             const frag = evidence.get(edge.evidence_id ?? "");
             const src = sources.get(edge.source_id ?? "");
             const relLabel =
-              edge.relation === "supported" ? "支持" : edge.relation === "context_only" ? "仅有背景" : edge.relation;
+              edge.relation === "supported" ? "有出处" : edge.relation === "context_only" ? "仅有背景" : edge.relation;
             return (
               <div className="edge" key={edge.edge_id}>
                 <span className={`relation ${edge.relation}`}>
-                  {relLabel} · 置信度 {(edge.confidence ?? 0).toFixed(2)}
+                  {relLabel} · 可信度 {(edge.confidence ?? 0).toFixed(2)}
                 </span>
                 <blockquote className="edge-excerpt">"{(frag?.excerpt ?? "").slice(0, 260)}"</blockquote>
                 <span className="muted">
@@ -242,7 +242,7 @@ function ClaimRow({
         </div>
       )}
       {edges.length === 0 && (
-        <p className="muted">该结论没有可用证据——已进入人工复核队列，不会出现在正式报告结论中。</p>
+        <p className="muted">该结论没有可用出处——已进入人工复核流程，不会出现在正式报告中。</p>
       )}
     </div>
   );
@@ -257,11 +257,11 @@ function AuditSummary({ bundle }: { bundle: ReportBundle }) {
       {icon}
       <div>
         <h3>
-          审计门禁：<span className={gate}>{gate === "passed" ? "通过" : "拦截"}</span>
+          审核结论：<span className={gate}>{gate === "passed" ? "通过" : "部分内容待复核"}</span>
         </h3>
         <p className="muted">
-          系统将每条结论与冻结证据库中的证据片段逐条比对（claim graph + 支持边），无法验证的关键结论
-          进入人工复核队列。下方为本次运行的审计事件记录。
+          系统将报告中的每条结论与原始资料逐条核对，无法找到出处的内容会被拦下并转交人工复核，
+          不会直接出现在正式报告中。下方为本次研究的审核记录。
         </p>
       </div>
     </div>

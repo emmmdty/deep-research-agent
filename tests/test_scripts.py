@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from evaluation.comparators import BenchmarkTopic, ComparatorResult
+from legacy.evaluation.comparators import BenchmarkTopic, ComparatorResult
 
 
 class _FakeJudge:

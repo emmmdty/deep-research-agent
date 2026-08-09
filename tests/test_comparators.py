@@ -10,7 +10,7 @@ from configs.settings import Settings
 
 def test_load_topics_returns_structured_topics():
     """标准 benchmark 主题应解析为结构化对象。"""
-    from evaluation.comparators import BenchmarkTopic, load_topics
+    from legacy.evaluation.comparators import BenchmarkTopic, load_topics
 
     topics = load_topics(max_topics=2)
 
@@ -21,7 +21,7 @@ def test_load_topics_returns_structured_topics():
 
 def test_resolve_comparators_merges_optional_entries():
     """显式传入的可选 comparator 应拼接到启用列表末尾。"""
-    from evaluation.comparators import resolve_comparators
+    from legacy.evaluation.comparators import resolve_comparators
 
     settings = Settings(enabled_comparators="ours,gptr")
 
@@ -34,7 +34,7 @@ def test_resolve_comparators_merges_optional_entries():
 
 def test_import_report_comparator_reads_markdown_and_meta(tmp_path: Path):
     """报告导入 comparator 应能读取 Markdown 和元数据。"""
-    from evaluation.comparators import BenchmarkTopic, run_import_report_comparator
+    from legacy.evaluation.comparators import BenchmarkTopic, run_import_report_comparator
 
     report_dir = tmp_path / "alibaba"
     report_dir.mkdir()
@@ -66,7 +66,7 @@ def test_import_report_comparator_reads_markdown_and_meta(tmp_path: Path):
 
 def test_run_comparator_skips_when_optional_comparator_not_configured(monkeypatch, tmp_path: Path):
     """缺少配置的可选 comparator 应返回 skipped，而不是抛异常。"""
-    from evaluation.comparators import BenchmarkTopic, run_comparator
+    from legacy.evaluation.comparators import BenchmarkTopic, run_comparator
 
     topic = BenchmarkTopic(
         id="T02",
@@ -81,7 +81,7 @@ def test_run_comparator_skips_when_optional_comparator_not_configured(monkeypatc
         gemini_report_dir=None,
         workspace_dir=str(tmp_path / "workspace"),
     )
-    monkeypatch.setattr("evaluation.comparators.get_settings", lambda: settings)
+    monkeypatch.setattr("legacy.evaluation.comparators.get_settings", lambda: settings)
 
     result = run_comparator(
         name="gemini",
@@ -96,7 +96,7 @@ def test_run_comparator_skips_when_optional_comparator_not_configured(monkeypatc
 
 def test_run_ours_comparator_marks_failed_quality_gate_as_failed(monkeypatch, tmp_path: Path):
     """严格 quality gate 失败时，ours comparator 不应再伪装成 completed。"""
-    from evaluation.comparators import BenchmarkTopic, run_ours_comparator
+    from legacy.evaluation.comparators import BenchmarkTopic, run_ours_comparator
     from legacy.workflows.states import RunMetrics
 
     topic = BenchmarkTopic(

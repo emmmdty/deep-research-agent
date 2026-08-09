@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable
 
-from capabilities.mcp import build_mcp_capabilities
-from capabilities.skills import load_skill_definitions
+from ..capabilities.mcp import build_mcp_capabilities
+from ..capabilities.skills import load_skill_definitions
 from legacy.workflows.states import TaskItem, ToolCapability
 
 

@@ -10,7 +10,7 @@ from legacy.workflows.states import TaskItem
 
 def test_load_skill_definitions_parses_skill_md_frontmatter(tmp_path: Path):
     """应能从 Claude Code 风格的 SKILL.md 读取 skill 元数据。"""
-    from capabilities.skills import load_skill_definitions
+    from legacy.capabilities.skills import load_skill_definitions
 
     skill_dir = tmp_path / "install-guide"
     skill_dir.mkdir()
@@ -37,7 +37,7 @@ Use this skill for installation, setup, requirements, and troubleshooting tasks.
 
 def test_capability_registry_combines_builtin_skill_and_mcp_capabilities(tmp_path: Path):
     """registry 应统一暴露 builtin / skill / mcp 三类能力。"""
-    from capabilities.registry import build_capability_registry
+    from legacy.capabilities.registry import build_capability_registry
 
     skill_dir = tmp_path / "skills" / "install-guide"
     skill_dir.mkdir(parents=True)
@@ -83,7 +83,7 @@ def test_capability_registry_prefers_skill_and_source_matched_tools_for_tutorial
     tmp_path: Path,
 ):
     """教程类任务应优先路由到教程 skill 与 web/github 能力，而非 arxiv。"""
-    from capabilities.registry import build_capability_registry
+    from legacy.capabilities.registry import build_capability_registry
 
     skill_dir = tmp_path / "skills" / "install-guide"
     skill_dir.mkdir(parents=True)

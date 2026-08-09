@@ -124,7 +124,7 @@ def _build_checkpoint() -> dict:
 @pytest.mark.parametrize("schema_name", PHASE2_SCHEMA_NAMES)
 def test_phase2_runtime_schemas_are_loadable(schema_name: str):
     """Phase 02 runtime schema 应存在且可加载。"""
-    from artifacts.schemas import load_schema
+    from deep_research_agent.reporting.schemas import load_schema
 
     schema = load_schema(schema_name)
 
@@ -134,7 +134,7 @@ def test_phase2_runtime_schemas_are_loadable(schema_name: str):
 
 def test_phase2_runtime_schema_validation():
     """Phase 02 runtime fixtures 应通过 schema 校验。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     validate_instance("job-runtime-record", _build_runtime_record())
     validate_instance("job-progress-event", _build_progress_event())
@@ -145,7 +145,7 @@ def test_job_runtime_record_rejects_legacy_needs_review_status():
     """needs_review 不应再作为生命周期终态存在。"""
     from pydantic import ValidationError
 
-    from services.research_jobs.models import JobRuntimeRecord
+    from deep_research_agent.research_jobs.models import JobRuntimeRecord
 
     payload = _build_runtime_record()
     payload["status"] = "needs_review"
@@ -156,7 +156,7 @@ def test_job_runtime_record_rejects_legacy_needs_review_status():
 
 def test_phase2_checkpoint_schema_rejects_missing_state_payload():
     """job checkpoint 缺少 state_payload 时应校验失败。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     payload = _build_checkpoint()
     payload.pop("state_payload")
@@ -167,8 +167,8 @@ def test_phase2_checkpoint_schema_rejects_missing_state_payload():
 
 def test_job_store_persists_jobs_events_and_checkpoints(tmp_path: Path):
     """job store 应持久化 runtime record、event 与 checkpoint。"""
-    from services.research_jobs.models import JobCheckpoint, JobProgressEvent, JobRuntimeRecord
-    from services.research_jobs.store import ResearchJobStore
+    from deep_research_agent.research_jobs.models import JobCheckpoint, JobProgressEvent, JobRuntimeRecord
+    from deep_research_agent.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
     job = JobRuntimeRecord.model_validate(_build_runtime_record())
@@ -194,8 +194,8 @@ def test_job_store_persists_jobs_events_and_checkpoints(tmp_path: Path):
 
 def test_job_store_rejects_second_active_worker_lease(tmp_path: Path):
     """已有活跃 lease 时，第二个 worker 不应覆盖当前 lease。"""
-    from services.research_jobs.models import JobRuntimeRecord
-    from services.research_jobs.store import ResearchJobStore, WorkerLeaseConflict
+    from deep_research_agent.research_jobs.models import JobRuntimeRecord
+    from deep_research_agent.research_jobs.store import ResearchJobStore, WorkerLeaseConflict
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
     payload = _build_runtime_record()
@@ -218,8 +218,8 @@ def test_job_store_rejects_second_active_worker_lease(tmp_path: Path):
 
 def test_job_store_only_matching_lease_can_clear_worker(tmp_path: Path):
     """旧 worker 退出时不能清理新 worker 的 lease。"""
-    from services.research_jobs.models import JobRuntimeRecord
-    from services.research_jobs.store import ResearchJobStore
+    from deep_research_agent.research_jobs.models import JobRuntimeRecord
+    from deep_research_agent.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
     payload = _build_runtime_record()
@@ -239,9 +239,9 @@ def test_job_store_only_matching_lease_can_clear_worker(tmp_path: Path):
 
 def test_orchestrator_rejects_mismatched_worker_lease(tmp_path: Path):
     """lease 不匹配的 worker 不应推进 job 阶段。"""
-    from services.research_jobs.orchestrator import ResearchJobOrchestrator
-    from services.research_jobs.service import ResearchJobService
-    from services.research_jobs.store import WorkerLeaseConflict
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.store import WorkerLeaseConflict
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="lease fencing", max_loops=1, research_profile="default", start_worker=False)
@@ -259,9 +259,9 @@ def test_orchestrator_rejects_mismatched_worker_lease(tmp_path: Path):
 
 def test_orchestrator_fences_writes_after_worker_loses_lease(tmp_path: Path):
     """worker 阶段执行中丢失 lease 后，不能继续写 checkpoint / completed event。"""
-    from services.research_jobs.orchestrator import ResearchJobOrchestrator
-    from services.research_jobs.service import ResearchJobService
-    from services.research_jobs.store import WorkerLeaseConflict
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.store import WorkerLeaseConflict
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="lease lost during stage", max_loops=1, research_profile="default", start_worker=False)
@@ -294,8 +294,8 @@ def test_orchestrator_fences_writes_after_worker_loses_lease(tmp_path: Path):
 
 def test_job_events_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
     """event 写入应由 store 分配单调序号，不能覆盖同一 sequence。"""
-    from services.research_jobs.models import JobProgressEvent, JobRuntimeRecord
-    from services.research_jobs.store import ResearchJobStore
+    from deep_research_agent.research_jobs.models import JobProgressEvent, JobRuntimeRecord
+    from deep_research_agent.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
     job = JobRuntimeRecord.model_validate(_build_runtime_record())
@@ -315,8 +315,8 @@ def test_job_events_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
 
 def test_job_checkpoints_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
     """checkpoint 写入应由 store 分配单调序号，不能覆盖同一 sequence。"""
-    from services.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
-    from services.research_jobs.store import ResearchJobStore
+    from deep_research_agent.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
+    from deep_research_agent.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
     job = JobRuntimeRecord.model_validate(_build_runtime_record())
@@ -339,8 +339,8 @@ def test_job_checkpoints_are_append_only_when_caller_reuses_sequence(tmp_path: P
 
 def test_orchestrator_runs_happy_path_and_emits_bundle(tmp_path: Path):
     """orchestrator 应能跑完整 happy path，并输出 report/bundle/trace。"""
-    from services.research_jobs.orchestrator import ResearchJobOrchestrator
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 happy path", max_loops=2, research_profile="default", start_worker=False)
@@ -422,7 +422,7 @@ def test_orchestrator_runs_happy_path_and_emits_bundle(tmp_path: Path):
     assert Path(final_job.trace_path).exists()
 
     bundle = json.loads(Path(final_job.report_bundle_path).read_text(encoding="utf-8"))
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     validate_instance("report-bundle", bundle)
     assert bundle["job"]["runtime_path"] == "orchestrator-v1"
@@ -430,7 +430,7 @@ def test_orchestrator_runs_happy_path_and_emits_bundle(tmp_path: Path):
 
 def test_job_service_cancel_and_retry_flow(tmp_path: Path):
     """service 应支持 cancel 请求与基于失败 job 的 retry。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 retry", max_loops=2, research_profile="default", start_worker=False)
@@ -446,7 +446,7 @@ def test_job_service_cancel_and_retry_flow(tmp_path: Path):
 
 def test_job_service_resume_reuses_latest_checkpoint(tmp_path: Path):
     """resume 应复用同一 job，并从最新 checkpoint 的 next_stage 恢复。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 resume", max_loops=2, research_profile="default", start_worker=False)
@@ -463,7 +463,7 @@ def test_job_service_resume_reuses_latest_checkpoint(tmp_path: Path):
 
 def test_job_service_refine_restarts_from_safe_boundary(tmp_path: Path):
     """refine 应记录 refinement event，并从安全边界恢复。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 refine", max_loops=2, research_profile="default", start_worker=False)
@@ -487,7 +487,7 @@ def test_job_service_refine_restarts_from_safe_boundary(tmp_path: Path):
 
 def test_job_service_cancel_is_idempotent(tmp_path: Path):
     """重复 cancel 不应重复追加 cancel_requested event。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 cancel idempotency", max_loops=2, research_profile="default", start_worker=False)
@@ -503,7 +503,7 @@ def test_job_service_cancel_is_idempotent(tmp_path: Path):
 
 def test_job_service_cancel_terminal_job_is_noop(tmp_path: Path):
     """terminal job 收到 cancel 时不应改写终态。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 terminal cancel", max_loops=2, research_profile="default", start_worker=False)
@@ -520,7 +520,7 @@ def test_job_service_cancel_terminal_job_is_noop(tmp_path: Path):
 
 def test_job_service_retry_is_idempotent_for_same_source_job(tmp_path: Path):
     """重复 retry 同一个原 job 时，应返回已有直接 retry job。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 retry idempotency", max_loops=2, research_profile="default", start_worker=False)
@@ -537,7 +537,7 @@ def test_job_service_retry_is_idempotent_for_same_source_job(tmp_path: Path):
 def test_recover_stale_jobs_skips_live_worker(tmp_path: Path, monkeypatch):
     """心跳新且 pid 存活时，不应触发 stale recovery。"""
     from deep_research_agent.research_jobs import service as service_module
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     spawned: list[str] = []
     service = ResearchJobService(
@@ -560,7 +560,7 @@ def test_recover_stale_jobs_skips_live_worker(tmp_path: Path, monkeypatch):
 def test_recover_stale_jobs_skips_intentionally_idle_created_job(tmp_path: Path, monkeypatch):
     """显式 no-worker 的 created job 不应在下一条 CLI 命令里被自动拉起。"""
     from deep_research_agent.research_jobs import service as service_module
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     spawned: list[str] = []
     service = ResearchJobService(
@@ -589,7 +589,7 @@ def test_recover_stale_jobs_clears_stale_lease_and_spawns_once(tmp_path: Path, m
     from datetime import datetime, timedelta, timezone
 
     from deep_research_agent.research_jobs import service as service_module
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     spawned: list[str] = []
     service = ResearchJobService(
@@ -616,8 +616,8 @@ def test_recover_stale_jobs_clears_stale_lease_and_spawns_once(tmp_path: Path, m
 
 def test_completed_job_projection_keeps_active_checkpoint_explainable(tmp_path: Path):
     """完成后的 job row 应能对应 active checkpoint 的 terminal next_stage。"""
-    from services.research_jobs.orchestrator import ResearchJobOrchestrator
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase2 projection", max_loops=1, research_profile="default", start_worker=False)
@@ -761,7 +761,7 @@ def test_phase2_nodes_accept_checkpoint_serialized_payloads(tmp_path: Path, monk
 
 def test_submit_uses_deterministic_benchmark_profile_in_offline_mode(tmp_path: Path, monkeypatch):
     """offline 模式下默认 profile 必须切换到确定性 benchmark，避免触碰 live LLM。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     monkeypatch.setenv("PRODUCT_OFFLINE_MODE", "true")
     monkeypatch.delenv("SCHEDULER_RUNTIME_MODE", raising=False)
@@ -780,7 +780,7 @@ def test_submit_uses_deterministic_benchmark_profile_in_offline_mode(tmp_path: P
 
 def test_submit_keeps_explicit_profile_in_offline_mode(tmp_path: Path, monkeypatch):
     """offline 模式下显式指定的 profile 必须保留（不覆盖用户意图）。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     monkeypatch.setenv("PRODUCT_OFFLINE_MODE", "true")
 

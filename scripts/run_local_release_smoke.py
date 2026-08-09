@@ -15,7 +15,7 @@ from deep_research_agent.gateway.api import create_app
 from deep_research_agent.gateway.cli import build_parser
 from scripts.release_gate import build_release_gate_evidence, evaluate_release_gate, load_release_gate_config
 from scripts.run_benchmark import build_benchmark_summary
-from evaluation.comparators import load_topics
+from legacy.evaluation.comparators import load_topics
 
 FROZEN_RELEASE_TIMESTAMP = "2026-04-21T00:00:00+00:00"
 

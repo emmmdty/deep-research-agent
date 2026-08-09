@@ -8,7 +8,7 @@ __all__ = ["LLMProvider", "get_llm"]
 
 def __getattr__(name: str):
     if name in {"LLMProvider", "get_llm"}:
-        from llm.provider import LLMProvider, get_llm
+        from ..llm.provider import LLMProvider, get_llm
 
         return {"LLMProvider": LLMProvider, "get_llm": get_llm}[name]
     raise AttributeError(name)

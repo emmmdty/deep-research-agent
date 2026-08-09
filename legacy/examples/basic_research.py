@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv(PROJECT_ROOT / ".env")
 
 from legacy.workflows.graph import run_research
-from evaluation.metrics import evaluate_report
+from ..evaluation.metrics import evaluate_report
 from rich.console import Console
 from rich.markdown import Markdown
 

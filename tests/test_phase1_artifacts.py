@@ -90,7 +90,7 @@ def _build_legacy_result() -> dict:
 @pytest.mark.parametrize("schema_name", SCHEMA_NAMES)
 def test_phase1_schema_files_exist_and_are_loadable(schema_name: str):
     """Phase 01 必需 schema 应存在且可加载。"""
-    from artifacts.schemas import load_schema
+    from deep_research_agent.reporting.schemas import load_schema
 
     schema = load_schema(schema_name)
 
@@ -100,7 +100,7 @@ def test_phase1_schema_files_exist_and_are_loadable(schema_name: str):
 
 def test_golden_report_bundle_fixture_validates():
     """golden report bundle fixture 应通过 schema 校验。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     fixture = json.loads(_fixture_path().read_text(encoding="utf-8"))
     validate_instance("report-bundle", fixture)
@@ -108,7 +108,7 @@ def test_golden_report_bundle_fixture_validates():
 
 def test_report_bundle_schema_rejects_missing_report_text():
     """report bundle 缺少 report_text 时应校验失败。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     fixture = json.loads(_fixture_path().read_text(encoding="utf-8"))
     fixture.pop("report_text")
@@ -119,7 +119,7 @@ def test_report_bundle_schema_rejects_missing_report_text():
 
 def test_build_phase1_bundle_generates_snapshots_claims_and_audit_events():
     """Phase 01 bundle 构建器应从 legacy 结果生成最小可信对象。"""
-    from artifacts.bundle import build_report_bundle, build_trace_events
+    from deep_research_agent.reporting.bundle.compiler import build_report_bundle, build_trace_events
 
     result = _build_legacy_result()
     trace_events = build_trace_events(result, job_id="job-test-001")
@@ -169,7 +169,7 @@ def test_run_cli_emits_bundle_and_trace_when_report_artifact_present(tmp_path, m
     assert len(bundle_files) == 1
     assert len(trace_files) == 1
 
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     bundle = json.loads(bundle_files[0].read_text(encoding="utf-8"))
     validate_instance("report-bundle", bundle)

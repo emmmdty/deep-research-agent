@@ -20,7 +20,7 @@ PHASE4_SCHEMA_NAMES = [
 @pytest.mark.parametrize("schema_name", PHASE4_SCHEMA_NAMES)
 def test_phase4_schema_files_exist_and_are_loadable(schema_name: str):
     """Phase 04 新增 schema 应存在且可加载。"""
-    from artifacts.schemas import load_schema
+    from deep_research_agent.reporting.schemas import load_schema
 
     schema = load_schema(schema_name)
 
@@ -30,7 +30,7 @@ def test_phase4_schema_files_exist_and_are_loadable(schema_name: str):
 
 def test_claim_review_queue_schema_requires_items():
     """review queue schema 缺少 items 时应失败。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     payload = {
         "job_id": "job-phase4-001",
@@ -43,7 +43,7 @@ def test_claim_review_queue_schema_requires_items():
 
 def test_claim_auditor_builds_blocked_review_queue_for_critical_claim():
     """critical claim 无法被证据支撑时，应进入 blocked review queue。"""
-    from auditor.pipeline import claim_auditor_node
+    from legacy.auditor.pipeline import claim_auditor_node
 
     result = claim_auditor_node(
         {
@@ -114,7 +114,7 @@ def test_claim_auditor_builds_blocked_review_queue_for_critical_claim():
 
 def test_claim_auditor_blocks_supported_critical_claim_without_snapshot_grounding():
     """看似 supported 但缺少 snapshot grounding 的 critical claim 必须 blocked。"""
-    from auditor.pipeline import claim_auditor_node
+    from legacy.auditor.pipeline import claim_auditor_node
 
     result = claim_auditor_node(
         {
@@ -181,7 +181,7 @@ def test_claim_auditor_blocks_supported_critical_claim_without_snapshot_groundin
 
 def test_claim_auditor_seeds_follow_up_for_unsupported_critical_gap():
     """critical claim 缺少证据时，应生成补采查询并把对应任务重置为 pending。"""
-    from auditor.pipeline import claim_auditor_node
+    from legacy.auditor.pipeline import claim_auditor_node
 
     result = claim_auditor_node(
         {
@@ -224,9 +224,9 @@ def test_claim_auditor_seeds_follow_up_for_unsupported_critical_gap():
 
 def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_path: Path):
     """orchestrator 应经过 claim_auditing 阶段，并保留 completed+blocked 语义。"""
-    from artifacts.schemas import validate_instance
-    from services.research_jobs.orchestrator import ResearchJobOrchestrator
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.reporting.schemas import validate_instance
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     job = service.submit(topic="phase4 blocked path", max_loops=1, research_profile="default", start_worker=False)
@@ -383,7 +383,7 @@ def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_pat
 
 def test_build_report_bundle_preserves_audited_claim_graph():
     """bundle 构建器应优先输出 phase04 的真实 claim graph。"""
-    from artifacts.bundle import build_report_bundle
+    from deep_research_agent.reporting.bundle.compiler import build_report_bundle
 
     result = {
         "research_topic": "LangGraph",
@@ -483,14 +483,14 @@ def test_build_report_bundle_preserves_audited_claim_graph():
     assert bundle["claim_support_edges"][0]["snapshot_id"] == "snapshot-real-1"
     assert bundle["conflict_sets"][0]["conflict_id"] == "conflict-1"
 
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     validate_instance("report-bundle", bundle)
 
 
 def test_phase4_metrics_helpers_use_claim_graph():
     """phase04 指标 helper 应读取 claim graph，而不是回退到 report-shape 指标。"""
-    from evaluation.metrics import (
+    from legacy.evaluation.metrics import (
         conflict_detection_recall,
         critical_claim_support_precision,
         provenance_completeness,

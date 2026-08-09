@@ -14,7 +14,7 @@ from loguru import logger
 from pydantic import BaseModel, Field
 
 from configs.settings import PROJECT_ROOT, Settings, get_settings
-from evaluation.metrics import evaluate_report
+from ..evaluation.metrics import evaluate_report
 from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TopicSpec
 
 
@@ -60,7 +60,7 @@ def load_topics(
     topic_set: str = "default",
 ) -> list[BenchmarkTopic]:
     """加载标准 benchmark 主题。"""
-    path = topics_path or PROJECT_ROOT / "evaluation" / "benchmarks" / "topics.json"
+    path = topics_path or PROJECT_ROOT / "legacy" / "evaluation" / "benchmarks" / "topics.json"
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     topics = [BenchmarkTopic.model_validate(item) for item in payload["topics"]]
     if topic_set == "local3":

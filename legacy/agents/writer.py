@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from loguru import logger
 
-from llm.provider import get_llm
-from prompts.templates import WRITER_SYSTEM_PROMPT, WRITER_USER_PROMPT
-from research_policy import build_benchmark_report
-from auditor.models import ClaimRecord, ClaimSupportEdgeRecord, ConflictSetRecord, CriticalClaimReviewItem, EvidenceFragmentRecord
+from ..llm.provider import get_llm
+from ..prompts.templates import WRITER_SYSTEM_PROMPT, WRITER_USER_PROMPT
+from ..research_policy import build_benchmark_report
+from ..auditor.models import ClaimRecord, ClaimSupportEdgeRecord, ConflictSetRecord, CriticalClaimReviewItem, EvidenceFragmentRecord
 from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
 
@@ -96,7 +96,7 @@ def writer_node(state: dict) -> dict:
         report = response.content
 
         # 清理模型思维链泄露（<think>标签等）
-        from llm.clean import clean_llm_output
+        from ..llm.clean import clean_llm_output
 
         report = clean_llm_output(report)
 

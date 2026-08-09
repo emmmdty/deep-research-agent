@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from loguru import logger
 
 from configs.settings import PROJECT_ROOT, SearchBackend, get_settings
-from evaluation.llm_judge import LLMJudge
+from legacy.evaluation.llm_judge import LLMJudge
 from scripts.run_ablation import run_ablation
 from scripts.run_benchmark import (
     build_benchmark_summary,
@@ -175,7 +175,7 @@ def _run_benchmark_release(
 ) -> dict[str, Any]:
     """运行正式 benchmark 并写出结果。"""
     load_runtime_env(env_file)
-    from evaluation.comparators import load_topics
+    from legacy.evaluation.comparators import load_topics
 
     topics = load_topics(topic_set=topic_set, max_topics=topics_limit or 0)
     if topic_ids:

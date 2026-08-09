@@ -352,7 +352,7 @@ def test_graph_routes_failed_quality_gate_to_terminal_failure():
 def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
     """benchmark profile 下，Writer 应走确定性报告生成。"""
     from legacy.agents import writer
-    from evaluation.metrics import citation_accuracy
+    from legacy.evaluation.metrics import citation_accuracy
 
     monkeypatch.setattr(writer, "get_llm", lambda: _FailIfCalledLLM())
     sources = [

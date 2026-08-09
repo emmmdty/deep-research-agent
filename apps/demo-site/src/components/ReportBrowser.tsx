@@ -18,9 +18,10 @@ export function ReportBrowser() {
 
   return (
     <div className="page">
-      <h2>报告与证据</h2>
+      <h2>示例报告</h2>
       <p className="page-note">
-        案例库中的每一份报告都保留了完整的执行轨迹、结论清单、证据链与审计记录。选择案例查看。
+        以下是几份不同主题的研究产物，可以完整查看报告正文、结论出处与审核记录。你也可以在
+        "发起研究"页输入自己的问题体验研究流程。
       </p>
 
       <div className="run-selector">

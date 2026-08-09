@@ -4,10 +4,15 @@ This is the public automation guide for the Deep Research Agent repository.
 
 ## Project Boundary
 
-- `src/deep_research_agent/` is the canonical Python implementation.
+- `src/deep_research_agent/` is the canonical Python implementation — the only source of truth.
 - `main.py` is a thin CLI wrapper around `deep_research_agent.gateway.cli`.
-- Root packages such as `artifacts/`, `connectors/`, `services/`, `policies/`, `tools/`, and `evaluation/` are compatibility or diagnostic surfaces unless `docs/REPO_MAP.md` says otherwise.
+- `legacy/` is the archived graph-first runtime and owns its full dependency closure
+  (`legacy/auditor/`, `legacy/connectors/`, `legacy/llm/`, `legacy/prompts/`, `legacy/policies/`,
+  `legacy/capabilities/`, `legacy/memory/`, `legacy/tools/`, `legacy/evaluation/`,
+  `legacy/research_policy.py`). It is non-product code.
 - Do not make the legacy multi-agent graph the product story.
+- Do not reintroduce root-level compatibility shims; tests and scripts import
+  `deep_research_agent.*` or `legacy.*` directly.
 
 ## Local Workflow
 

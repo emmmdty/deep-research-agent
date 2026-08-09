@@ -6,7 +6,7 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
-from auditor.models import (
+from ..auditor.models import (
     ClaimRecord,
     ClaimSupportEdgeRecord,
     ConflictSetRecord,

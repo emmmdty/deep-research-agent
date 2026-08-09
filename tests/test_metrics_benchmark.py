@@ -7,7 +7,7 @@ from legacy.workflows.states import SourceRecord
 
 def test_aspect_coverage_supports_partial_keyword_hits():
     """方面覆盖应支持 aspect 中关键字的部分命中，而非全文原样匹配。"""
-    from evaluation.metrics import aspect_coverage
+    from legacy.evaluation.metrics import aspect_coverage
 
     report = """
     # RAG 报告
@@ -30,7 +30,7 @@ def test_aspect_coverage_supports_partial_keyword_hits():
 
 def test_evaluate_report_emits_benchmark_source_metrics():
     """综合评估应输出 benchmark 需要的来源与质量门控指标。"""
-    from evaluation.metrics import evaluate_report
+    from legacy.evaluation.metrics import evaluate_report
 
     report = (
         "# 报告\n\n"
@@ -75,7 +75,7 @@ def test_evaluate_report_emits_benchmark_source_metrics():
 
 def test_unsupported_core_claim_count_skips_weak_claims_with_limit_markers():
     """弱结论即便没有高可信引用，也不应被记成 unsupported core claim。"""
-    from evaluation.metrics import unsupported_core_claim_count
+    from legacy.evaluation.metrics import unsupported_core_claim_count
 
     report = (
         "# 报告\n\n"
@@ -92,7 +92,7 @@ def test_unsupported_core_claim_count_skips_weak_claims_with_limit_markers():
 
 def test_build_report_metrics_merges_memory_and_tooling_signals():
     """报告指标应吸收 verifier/memory 与工具调用信号。"""
-    from evaluation.comparators import BenchmarkTopic, build_report_metrics
+    from legacy.evaluation.comparators import BenchmarkTopic, build_report_metrics
     from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
 
     metrics = build_report_metrics(
@@ -191,7 +191,7 @@ def test_build_report_metrics_merges_memory_and_tooling_signals():
 
 def test_evaluate_report_emits_case_study_reliability_metrics():
     """case-study 评估应输出连续值强度指标，而不是只保留数量计数。"""
-    from evaluation.metrics import evaluate_report
+    from legacy.evaluation.metrics import evaluate_report
     from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
 
     report = (
@@ -287,7 +287,7 @@ def test_evaluate_report_emits_case_study_reliability_metrics():
 
 def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs():
     """没有冲突或 judge 时，应返回可解释的空值，而不是 0 分。"""
-    from evaluation.comparators import BenchmarkTopic, build_report_metrics
+    from legacy.evaluation.comparators import BenchmarkTopic, build_report_metrics
     from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
 
     report = (
@@ -357,7 +357,7 @@ def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs()
 
 def test_scorecard_penalizes_missing_verifier_and_gate_signals():
     """缺少 verifier / gate 的变体不应因为缺字段而在主分数上占优。"""
-    from evaluation.comparators import _build_scorecard_metrics
+    from legacy.evaluation.comparators import _build_scorecard_metrics
 
     base_metrics = _build_scorecard_metrics(
         {
@@ -401,7 +401,7 @@ def test_scorecard_penalizes_missing_verifier_and_gate_signals():
 
 def test_recovery_resilience_score_reflects_fallback_and_gate_failures():
     """恢复韧性分应受 fallback、工具成功率和质量门控影响。"""
-    from evaluation.comparators import BenchmarkTopic, build_report_metrics
+    from legacy.evaluation.comparators import BenchmarkTopic, build_report_metrics
 
     metrics = build_report_metrics(
         report_text="# 报告\n\n正文 [1]",

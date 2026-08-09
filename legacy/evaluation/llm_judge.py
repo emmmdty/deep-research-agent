@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 
 from configs.settings import Settings, get_settings
-from llm.provider import get_llm
+from ..llm.provider import get_llm
 from loguru import logger
 
 

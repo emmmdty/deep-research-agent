@@ -6,7 +6,7 @@ from pathlib import Path
 
 def test_load_topics_local3_replaces_default_t06():
     """local3 主题集应包含 T06C，并保留 T01/T02。"""
-    from evaluation.comparators import load_topics
+    from legacy.evaluation.comparators import load_topics
 
     topics = load_topics(topic_set="local3")
 
@@ -16,7 +16,7 @@ def test_load_topics_local3_replaces_default_t06():
 
 def test_load_topics_portfolio12_returns_12_topics_with_tutorial_and_comparison_mix():
     """portfolio12 应返回更完整的 12 题研究集。"""
-    from evaluation.comparators import load_topics
+    from legacy.evaluation.comparators import load_topics
 
     topics = load_topics(topic_set="portfolio12")
 

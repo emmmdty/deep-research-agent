@@ -17,8 +17,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from loguru import logger
 
 from configs.settings import PROJECT_ROOT, get_settings
-from evaluation.comparators import build_report_metrics, load_topics, run_comparator
-from evaluation.llm_judge import LLMJudge
+from legacy.evaluation.comparators import build_report_metrics, load_topics, run_comparator
+from legacy.evaluation.llm_judge import LLMJudge
 from scripts.runtime_env import load_runtime_env
 
 ABLATION_VARIANTS = ["ours_base", "ours_verifier", "ours_gate", "ours_full"]

@@ -1,6 +1,6 @@
 """提示词模板管理模块。"""
 
-from prompts.templates import (
+from ..prompts.templates import (
     PLANNER_SYSTEM_PROMPT,
     PLANNER_USER_PROMPT,
     SUMMARIZER_SYSTEM_PROMPT,

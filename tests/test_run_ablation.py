@@ -5,13 +5,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from evaluation.comparators import BenchmarkTopic, ComparatorResult
+from legacy.evaluation.comparators import BenchmarkTopic, ComparatorResult
 
 
 def test_resolve_comparators_supports_internal_ablation_variants():
     """内部 ablation variants 应能被 comparator resolver 识别。"""
     from configs.settings import get_settings
-    from evaluation.comparators import resolve_comparators
+    from legacy.evaluation.comparators import resolve_comparators
 
     settings = get_settings()
     resolved = resolve_comparators(settings, requested=["ours_base", "ours_verifier", "ours_gate", "ours_full"])

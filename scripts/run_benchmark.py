@@ -19,14 +19,14 @@ from rich.panel import Panel
 from rich.table import Table
 
 from configs.settings import PROJECT_ROOT, get_settings
-from evaluation.comparators import (
+from legacy.evaluation.comparators import (
     BenchmarkTopic,
     build_report_metrics,
     load_topics,
     resolve_comparators,
     run_comparator,
 )
-from evaluation.llm_judge import LLMJudge
+from legacy.evaluation.llm_judge import LLMJudge
 from scripts.runtime_env import load_runtime_env
 
 console = Console()

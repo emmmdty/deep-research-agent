@@ -1,35 +1,45 @@
 import { useState } from "react";
-import { Home as HomeIcon, PlayCircle, BookOpen, Scale, Boxes } from "lucide-react";
+import { Sparkles, BookOpen, Info } from "lucide-react";
 import { HomePage } from "./components/HomePage";
-import { DemoPage } from "./components/DemoPage";
+import { ResearchPage } from "./components/ResearchPage";
 import { ReportBrowser } from "./components/ReportBrowser";
-import { BenchmarkPage } from "./components/BenchmarkPage";
-import { ArchitecturePage } from "./components/ArchitecturePage";
+import { AboutPage } from "./components/AboutPage";
 
-export type Tab = "home" | "demo" | "reports" | "benchmark" | "architecture";
+export type Tab = "home" | "research" | "reports" | "about";
 
-const TABS: Array<{ id: Tab; label: string; hint: string; icon: React.ReactNode }> = [
-  { id: "home", label: "首页", hint: "这是什么", icon: <HomeIcon size={15} /> },
-  { id: "demo", label: "端到端演示", hint: "一个研究任务如何完成", icon: <PlayCircle size={15} /> },
-  { id: "reports", label: "报告与证据", hint: "案例库", icon: <BookOpen size={15} /> },
-  { id: "benchmark", label: "评测证据", hint: "它可信吗", icon: <Scale size={15} /> },
-  { id: "architecture", label: "技术实现", hint: "怎么做到的", icon: <Boxes size={15} /> },
+const TABS: Array<{ id: Tab; label: string; icon: React.ReactNode }> = [
+  { id: "home", label: "首页", icon: <Sparkles size={15} /> },
+  { id: "research", label: "发起研究", icon: <Sparkles size={15} /> },
+  { id: "reports", label: "示例报告", icon: <BookOpen size={15} /> },
+  { id: "about", label: "关于本项目", icon: <Info size={15} /> },
 ];
 
 export function App() {
+  const parseHash = () => {
+    const raw = window.location.hash.replace(/^#\/?/, "");
+    const [path, query = ""] = raw.split("?");
+    const params = new URLSearchParams(query);
+    return { path, q: params.get("q") ?? "" };
+  };
+  const initial = parseHash();
   const initialTab = (): Tab => {
-    const hash = window.location.hash.replace(/^#\/?/, "");
-    return (["home", "demo", "reports", "benchmark", "architecture"] as Tab[]).includes(
-      hash as Tab
-    )
-      ? (hash as Tab)
+    return (["home", "research", "reports", "about"] as Tab[]).includes(initial.path as Tab)
+      ? (initial.path as Tab)
       : "home";
   };
   const [tab, setTab] = useState<Tab>(initialTab);
+  const [question, setQuestion] = useState<string>(initial.q);
 
   const navigate = (next: Tab) => {
     setTab(next);
     window.location.hash = `#/${next}`;
+    window.scrollTo({ top: 0 });
+  };
+
+  const startResearch = (questionText: string) => {
+    setQuestion(questionText);
+    setTab("research");
+    window.location.hash = `#/research?q=${encodeURIComponent(questionText)}`;
     window.scrollTo({ top: 0 });
   };
 
@@ -40,7 +50,7 @@ export function App() {
           <span className="logo">DRA</span>
           <div>
             <div className="app-name">Deep Research Agent</div>
-            <div className="app-sub">多 agent 深度研究系统 · 在线演示</div>
+            <div className="app-sub">深度研究助手 · 在线体验</div>
           </div>
         </div>
         <nav className="app-nav">
@@ -49,7 +59,6 @@ export function App() {
               key={t.id}
               className={`nav-btn${tab === t.id ? " active" : ""}`}
               onClick={() => navigate(t.id)}
-              title={t.hint}
             >
               {t.icon}
               <span>{t.label}</span>
@@ -67,16 +76,15 @@ export function App() {
       </header>
 
       <main className="app-main">
-        {tab === "home" && <HomePage navigate={navigate} />}
-        {tab === "demo" && <DemoPage />}
+        {tab === "home" && <HomePage startResearch={startResearch} navigate={navigate} />}
+        {tab === "research" && <ResearchPage question={question} />}
         {tab === "reports" && <ReportBrowser />}
-        {tab === "benchmark" && <BenchmarkPage />}
-        {tab === "architecture" && <ArchitecturePage />}
+        {tab === "about" && <AboutPage />}
       </main>
 
       <footer className="app-footer">
         <span>
-          开源（MIT）· 确定性评测本地可复现，无需 API key ·{" "}
+          开源（MIT）· 本地可一键运行 ·{" "}
           <a href="https://github.com/emmmdty/deep-research-agent" target="_blank" rel="noreferrer">
             源码仓库
           </a>

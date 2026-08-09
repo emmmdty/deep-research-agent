@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from loguru import logger
 
-from research_policy import aspect_hits_in_text, normalize_text
+from ..research_policy import aspect_hits_in_text, normalize_text
 from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, RunMetrics, SourceRecord, VerificationRecord
 
 

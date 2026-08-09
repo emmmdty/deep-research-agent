@@ -6,9 +6,9 @@ import json
 
 from loguru import logger
 
-from llm.provider import get_llm
-from prompts.templates import CRITIC_SYSTEM_PROMPT, CRITIC_USER_PROMPT
-from research_policy import evaluate_quality_gate
+from ..llm.provider import get_llm
+from ..prompts.templates import CRITIC_SYSTEM_PROMPT, CRITIC_USER_PROMPT
+from ..research_policy import evaluate_quality_gate
 from legacy.workflows.states import CriticFeedback, RunMetrics, SourceRecord, TaskItem
 
 
@@ -142,7 +142,7 @@ def critic_node(state: dict) -> dict:
     raw_text = response.content
 
     # 清理模型思维链泄露
-    from llm.clean import extract_json_from_output
+    from ..llm.clean import extract_json_from_output
     raw_text = extract_json_from_output(raw_text)
 
     # 解析反馈

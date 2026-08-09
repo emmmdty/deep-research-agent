@@ -42,8 +42,8 @@ canonical runtime 位于 `src/deep_research_agent/`：
 | 可靠性 | `research_jobs/`、`observability/` | checkpoint、事件、lease、心跳、resume/retry/refine；不含凭据的 OpenTelemetry span |
 | 产品面 | `gateway/`、`product/`、`apps/gui-web/` | CLI、本地 HTTP API（SSE 事件流）、PostgreSQL 多租户产品 API、React workspace UI |
 
-根目录下 `services/`、`connectors/`、`artifacts/`、`policies/`、`tools/`、`evaluation/` 等是
-compatibility 或 diagnostic layer。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
+canonical runtime 是 `src/deep_research_agent/`，是唯一的实现真相源。
+`legacy/` 是已归档的 graph-first 运行时及其完整依赖（agents/workflows/auditor/connectors/llm/policies/evaluation/research_policy）。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
 
 ## 一次研究任务的运行流程
 
@@ -156,14 +156,14 @@ curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/bundle
 
 ```text
 src/deep_research_agent/  canonical runtime（orchestration、auditor、reporting、product...）
-apps/gui-web/             React workspace UI（报告、证据、claim graph、记忆、admin）
-apps/demo-site/           静态 GitHub Pages demo（报告浏览器、claim graph、trace 回放）
+apps/gui-web/             React 产品工作台（主题、运行、报告、记忆、admin）
+apps/demo-site/           静态 GitHub Pages demo（输入问题，看它被研究）
 configs/                  runtime 与 source profile 配置
 evals/                    确定性评测资产、报告与 fixtures
 docs/                     reviewer 文档（索引、架构、benchmark、final）
 tests/                    回归测试
-scripts/                  smoke、eval、diagnostic 命令
-legacy/                   已归档 graph-first runtime（orchestrator-v1 兼容路径）
+scripts/                  smoke、eval、demo 数据与 diagnostic 命令
+legacy/                   已归档 graph-first runtime（orchestrator-v1 兼容路径，含完整依赖闭包）
 ```
 
 ## 当前限制

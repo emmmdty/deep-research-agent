@@ -22,7 +22,7 @@ PHASE3_SCHEMA_NAMES = [
 @pytest.mark.parametrize("schema_name", PHASE3_SCHEMA_NAMES)
 def test_phase3_schema_files_exist_and_are_loadable(schema_name: str):
     """Phase 03 新增 schema 应存在且可加载。"""
-    from artifacts.schemas import load_schema
+    from deep_research_agent.reporting.schemas import load_schema
 
     schema = load_schema(schema_name)
 
@@ -32,7 +32,7 @@ def test_phase3_schema_files_exist_and_are_loadable(schema_name: str):
 
 def test_source_policy_profile_schema_validation():
     """source policy profile fixture 应通过 schema 校验。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     payload = {
         "profile_name": "trusted-web",
@@ -54,7 +54,7 @@ def test_source_policy_profile_schema_validation():
 
 def test_source_policy_overrides_schema_rejects_negative_budget():
     """policy overrides 不允许负预算。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
 
     payload = {
         "allow_domains": ["docs.langchain.com"],
@@ -67,7 +67,7 @@ def test_source_policy_overrides_schema_rejects_negative_budget():
 
 def test_snapshot_store_persists_manifest_and_text(tmp_path: Path):
     """snapshot store 应持久化文本与 manifest。"""
-    from connectors.snapshot_store import SnapshotInput, SnapshotStore
+    from legacy.connectors.snapshot_store import SnapshotInput, SnapshotStore
 
     store = SnapshotStore(root=tmp_path / "snapshots")
     snapshot = store.persist(
@@ -98,7 +98,7 @@ def test_snapshot_store_persists_manifest_and_text(tmp_path: Path):
 
 def test_legacy_connectors_search_and_fetch_return_snapshot_ready_payloads():
     """legacy adapter 应把旧工具结果归一成统一 contract。"""
-    from connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.legacy import LegacyConnectorAdapter
 
     adapter = LegacyConnectorAdapter(
         source_name="web",
@@ -128,9 +128,9 @@ def test_legacy_connectors_search_and_fetch_return_snapshot_ready_payloads():
 
 def test_source_policy_enforces_allow_deny_and_budget():
     """source policy 应在域名与 budget 两侧生效。"""
-    from connectors.models import ConnectorCandidate
-    from policies.models import ConnectorBudget, SourcePolicyOverrides
-    from policies.source_policy import SourcePolicy
+    from legacy.connectors.models import ConnectorCandidate
+    from legacy.policies.models import ConnectorBudget, SourcePolicyOverrides
+    from legacy.policies.source_policy import SourcePolicy
 
     policy = SourcePolicy(
         profile_name="trusted-web",
@@ -177,7 +177,7 @@ def test_source_policy_enforces_allow_deny_and_budget():
 
 def test_source_policy_blocks_unsafe_fetch_uris():
     """fetch policy 应拒绝非 http(s)、localhost 与私网地址。"""
-    from policies.source_policy import SourcePolicy
+    from legacy.policies.source_policy import SourcePolicy
 
     policy = SourcePolicy(profile_name="open-web", connectors=["open_web"], connector_order=["open_web"])
 
@@ -192,7 +192,7 @@ def test_source_policy_blocks_unsafe_fetch_uris():
 
 def test_web_fetch_rejects_unsafe_url_before_scraper():
     """web fetch adapter 自身应拒绝不安全 URL，避免绕过 researcher policy。"""
-    from connectors import registry
+    from legacy.connectors import registry
 
     with pytest.raises(ValueError, match="private_or_local_host"):
         registry._web_fetch("http://127.0.0.1:8000")
@@ -201,8 +201,8 @@ def test_web_fetch_rejects_unsafe_url_before_scraper():
 def test_researcher_does_not_fetch_policy_blocked_private_url(tmp_path: Path, monkeypatch):
     """collecting 遇到 fetch policy 拦截的 URL 时，不应调用 connector fetch。"""
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
     from legacy.workflows.states import TaskItem
 
     settings = type(
@@ -321,7 +321,7 @@ def test_phase3_source_record_and_verifier_preserve_snapshot_ref(tmp_path: Path,
 
 def test_phase3_bundle_prefers_real_snapshots_over_synthetic():
     """bundle 构建器在 state 已有真实 snapshot 时应直接使用。"""
-    from artifacts.bundle import build_report_bundle
+    from deep_research_agent.reporting.bundle.compiler import build_report_bundle
 
     result = {
         "research_topic": "LangGraph",
@@ -379,8 +379,8 @@ def test_phase3_bundle_prefers_real_snapshots_over_synthetic():
 def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Path, monkeypatch):
     """collecting 应把 fetched source 转成带 snapshot_ref 的 SourceRecord。"""
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
     from legacy.workflows.states import TaskItem
 
     settings = type(
@@ -461,8 +461,8 @@ def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Pat
 def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path, monkeypatch):
     """collecting 应跟随官方页面中的技术报告 PDF，并把 PDF 作为可审计 snapshot。"""
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
     from legacy.workflows.states import RunMetrics, TaskItem
 
     settings = type(
@@ -564,8 +564,8 @@ def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path,
 def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monkeypatch):
     """页面内子链接必须继续受 allow_domains 约束，不能绕过 source policy。"""
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
     from legacy.workflows.states import RunMetrics, TaskItem
 
     settings = type(
@@ -657,8 +657,8 @@ def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monk
 def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(tmp_path: Path, monkeypatch):
     """补采集遇到已抓取过的官方 PDF 时，应复用现有 source，而不是追加“暂无可用信息”。"""
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
     from legacy.workflows.states import EvidenceNote, RunMetrics, TaskItem
 
     pdf_url = "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
@@ -791,8 +791,8 @@ def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(tm
 def test_researcher_uses_query_aware_snippet_for_fetched_web_text(tmp_path: Path, monkeypatch):
     """官方页面正文里较靠后的 API 信息应进入 source snippet，而不是只保留导航摘要。"""
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
     from legacy.workflows.states import RunMetrics, TaskItem
 
     settings = type(
@@ -883,12 +883,12 @@ def test_researcher_uses_query_aware_snippet_for_fetched_web_text(tmp_path: Path
 
 def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, monkeypatch):
     """公开 orchestrator 路径应把 snapshot 和 bundle sidecars 写入 job 目录。"""
-    from artifacts.schemas import validate_instance
+    from deep_research_agent.reporting.schemas import validate_instance
     from legacy.agents import researcher
-    from connectors.legacy import LegacyConnectorAdapter
-    from connectors.registry import ConnectorRegistry
-    from services.research_jobs.orchestrator import ResearchJobOrchestrator
-    from services.research_jobs.service import ResearchJobService
+    from legacy.connectors.legacy import LegacyConnectorAdapter
+    from legacy.connectors.registry import ConnectorRegistry
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
     from legacy.workflows.states import CriticFeedback, ReportArtifact, TaskItem
 
     settings = type(
@@ -1017,7 +1017,7 @@ def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, mo
 
 def test_service_build_initial_state_preserves_file_inputs(tmp_path: Path):
     """service/internal path 应能把 file_inputs 放入初始 state。"""
-    from services.research_jobs.service import ResearchJobService
+    from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
     state = service.build_initial_state(

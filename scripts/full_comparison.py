@@ -18,8 +18,8 @@ from rich.panel import Panel
 from rich.table import Table
 
 from configs.settings import PROJECT_ROOT, get_settings
-from evaluation.comparators import load_topics, resolve_comparators
-from evaluation.llm_judge import LLMJudge
+from legacy.evaluation.comparators import load_topics, resolve_comparators
+from legacy.evaluation.llm_judge import LLMJudge
 from scripts.run_benchmark import run_benchmark_suite
 
 load_dotenv(PROJECT_ROOT / ".env")

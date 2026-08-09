@@ -136,7 +136,7 @@ def test_repo_map_mentions_current_gui_and_desktop_roots():
 def test_canonical_runtime_modules_do_not_depend_on_root_compatibility_shims():
     """主实现路径应直接依赖 canonical 包，而不是反向引用 root shim。"""
     disallowed_imports = {
-        "policies/source_policy.py": [
+        "legacy/policies/source_policy.py": [
             "from artifacts.schemas import validate_instance",
             "from connectors.models import ConnectorCandidate",
             "from connectors.utils import canonicalize_uri, domain_from_uri, fetch_uri_block_reason",

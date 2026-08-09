@@ -57,7 +57,7 @@ class TestLLMClean:
 
     def test_clean_think_tags(self):
         """验证 <think> 标签清理。"""
-        from llm.clean import clean_llm_output
+        from legacy.llm.clean import clean_llm_output
 
         text = "<think>\n这是思维链\n</think>\n\n# 标题\n正文内容"
         result = clean_llm_output(text)
@@ -67,14 +67,14 @@ class TestLLMClean:
 
     def test_clean_empty_input(self):
         """验证空输入处理。"""
-        from llm.clean import clean_llm_output
+        from legacy.llm.clean import clean_llm_output
 
         assert clean_llm_output("") == ""
         assert clean_llm_output("   ") == ""
 
     def test_extract_json(self):
         """验证 JSON 提取。"""
-        from llm.clean import extract_json_from_output
+        from legacy.llm.clean import extract_json_from_output
 
         text = '<think>思考中</think>\n```json\n{"key": "value"}\n```'
         result = extract_json_from_output(text)
@@ -87,7 +87,7 @@ class TestEvaluationMetrics:
 
     def test_citation_accuracy(self):
         """验证引用准确率计算。"""
-        from evaluation.metrics import citation_accuracy
+        from legacy.evaluation.metrics import citation_accuracy
 
         report = "这是第一段 [1]。\n\n这是第二段 [2]。\n\n这是无引用段。"
         score = citation_accuracy(report)
@@ -96,7 +96,7 @@ class TestEvaluationMetrics:
 
     def test_source_coverage(self):
         """验证来源覆盖率计算。"""
-        from evaluation.metrics import source_coverage
+        from legacy.evaluation.metrics import source_coverage
 
         report = "引用 [1] 和 [2] 和 [3]。另外 [1] 再次出现。"
         count = source_coverage(report)
@@ -104,7 +104,7 @@ class TestEvaluationMetrics:
 
     def test_report_depth(self):
         """验证报告深度评估。"""
-        from evaluation.metrics import report_depth
+        from legacy.evaluation.metrics import report_depth
 
         report = "# 标题\n\n## 第一章\n\n段落1\n\n## 第二章\n\n段落2"
         result = report_depth(report)
@@ -113,7 +113,7 @@ class TestEvaluationMetrics:
 
     def test_evaluate_report(self):
         """验证综合评估。"""
-        from evaluation.metrics import evaluate_report
+        from legacy.evaluation.metrics import evaluate_report
 
         report = "# 报告\n\n内容 [1]\n\n## 章节\n\n更多内容 [2]"
         result = evaluate_report(report)
@@ -154,7 +154,7 @@ class TestMemoryStore:
 
     def test_memory_init(self, tmp_path):
         """验证 MemoryStore 目录初始化。"""
-        from memory.store import MemoryStore
+        from legacy.memory.store import MemoryStore
 
         store = MemoryStore(workspace_dir=str(tmp_path / "test_workspace"))
         assert store.notes_dir.exists()
@@ -163,7 +163,7 @@ class TestMemoryStore:
 
     def test_save_note(self, tmp_path):
         """验证笔记保存。"""
-        from memory.store import MemoryStore
+        from legacy.memory.store import MemoryStore
 
         store = MemoryStore(workspace_dir=str(tmp_path / "test_workspace"))
         path = store.save_note("测试笔记", "这是内容", "测试主题")

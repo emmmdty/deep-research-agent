@@ -9,7 +9,7 @@ from legacy.workflows.states import MCPServerConfig
 
 def test_load_mcp_server_configs_supports_yaml_and_env_fallback(tmp_path: Path):
     """应支持从 YAML 读取 MCP server，并在缺失时回退到原始配置。"""
-    from capabilities.mcp import load_mcp_server_configs
+    from legacy.capabilities.mcp import load_mcp_server_configs
 
     config_path = tmp_path / "mcp_servers.yaml"
     config_path.write_text(
@@ -52,7 +52,7 @@ servers:
 
 def test_mcp_runtime_discovers_tools_and_writes_cache(monkeypatch, tmp_path: Path):
     """发现到的 tools 应写入 cache。"""
-    from capabilities import mcp as mcp_module
+    from legacy.capabilities import mcp as mcp_module
 
     async def _fake_discover(self, server):
         return [
@@ -76,7 +76,7 @@ def test_mcp_runtime_discovers_tools_and_writes_cache(monkeypatch, tmp_path: Pat
 
 def test_mcp_runtime_falls_back_to_cache_after_discovery_failure(monkeypatch, tmp_path: Path):
     """discover 失败时应回退到已写入的 cache。"""
-    from capabilities import mcp as mcp_module
+    from legacy.capabilities import mcp as mcp_module
 
     async def _success(self, server):
         return [
@@ -105,7 +105,7 @@ def test_mcp_runtime_falls_back_to_cache_after_discovery_failure(monkeypatch, tm
 
 def test_build_mcp_capabilities_discovers_runtime_tools(monkeypatch, tmp_path: Path):
     """能力构建应优先使用 runtime 发现的工具定义。"""
-    from capabilities import mcp as mcp_module
+    from legacy.capabilities import mcp as mcp_module
 
     class _FakeRuntime:
         cache_dir = tmp_path / "cache"

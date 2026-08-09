@@ -55,8 +55,9 @@ The canonical runtime is `src/deep_research_agent/`:
 | Reliability | `research_jobs/`, `observability/` | Checkpoints, events, leases, heartbeats, resume/retry/refine; credential-safe OpenTelemetry spans |
 | Product surface | `gateway/`, `product/`, `apps/gui-web/` | CLI, local HTTP API (SSE event streams), authenticated multi-tenant product API on PostgreSQL, React workspace UI |
 
-Root packages such as `services/`, `connectors/`, `artifacts/`, `policies/`, `tools/` and
-`evaluation/` are compatibility or diagnostic layers. See [Repository Map](./docs/REPO_MAP.md).
+The canonical runtime is `src/deep_research_agent/` — the only implementation source of truth.
+`legacy/` is the archived graph-first runtime with its full dependency closure (agents, workflows,
+auditor, connectors, llm, policies, evaluation, research_policy). See [Repository Map](./docs/REPO_MAP.md).
 
 ## How A Research Job Runs
 
@@ -177,13 +178,15 @@ curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/bundle
 
 ```text
 src/deep_research_agent/  canonical runtime (orchestration, auditor, reporting, product...)
-apps/gui-web/             React workspace UI (reports, evidence, claim graph, memory, admin)
-apps/demo-site/           static GitHub Pages demo (report browser, claim graph, trace replay)
+apps/gui-web/             React product workspace (topics, runs, reports, memory, admin)
+apps/demo-site/           static GitHub Pages demo (ask a question, watch it researched)
 configs/                  runtime and source-profile config
 evals/                    deterministic eval assets, reports, and fixtures
 docs/                     reviewer docs (index, architecture, benchmarks, final)
 tests/                    regression tests
-scripts/                  smoke, eval, and diagnostic commands
+scripts/                  smoke, eval, demo-data, and diagnostic commands
+migrations/               product database migrations
+deploy/                   deployment fragments (nginx, GROBID notes)
 legacy/                   archived graph-first runtime (orchestrator-v1 compatibility path)
 ```
 

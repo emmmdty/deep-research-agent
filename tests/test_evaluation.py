@@ -20,7 +20,7 @@ class _FakeLLM:
 
 def test_pairwise_judge_maps_x_y_back_to_a_b():
     """pairwise 盲评结果应映射回 A/B 标签。"""
-    from evaluation.llm_judge import LLMJudge
+    from legacy.evaluation.llm_judge import LLMJudge
 
     judge = LLMJudge(
         llm=_FakeLLM(
@@ -44,7 +44,7 @@ def test_pairwise_judge_maps_x_y_back_to_a_b():
 
 def test_evaluate_report_prefers_structured_sources_and_aspects():
     """综合评估应优先使用结构化来源与方面覆盖。"""
-    from evaluation.metrics import evaluate_report
+    from legacy.evaluation.metrics import evaluate_report
 
     report = "# 报告\n\n性能分析 [1]\n\n成本分析 [2]"
     sources = [
@@ -79,7 +79,7 @@ def test_gptr_runner_builds_environment_from_existing_env(monkeypatch):
 
 def test_llm_judge_uses_explicit_judge_model(monkeypatch):
     """显式配置 judge_model 时，Judge 应使用独立模型。"""
-    from evaluation import llm_judge
+    from legacy.evaluation import llm_judge
 
     captured = {}
     settings = Settings(llm_model_name="main-model", judge_model="judge-model")
@@ -99,7 +99,7 @@ def test_llm_judge_uses_explicit_judge_model(monkeypatch):
 
 def test_llm_judge_follows_primary_model_without_override(monkeypatch):
     """未配置 judge_model 时，Judge 应沿用主模型。"""
-    from evaluation import llm_judge
+    from legacy.evaluation import llm_judge
 
     captured = {}
     settings = Settings(llm_model_name="main-model", judge_model=None)

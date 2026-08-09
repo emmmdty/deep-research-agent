@@ -7,9 +7,9 @@ import re
 
 from loguru import logger
 
-from auditor.models import EvidenceFragmentRecord
+from ..auditor.models import EvidenceFragmentRecord
 from configs.settings import get_settings
-from memory.evidence_store import EvidenceStore
+from ..memory.evidence_store import EvidenceStore
 from legacy.workflows.states import (
     EvidenceCluster,
     EvidenceNote,

@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from loguru import logger
 
 from configs.settings import PROJECT_ROOT, get_settings
-from evaluation.comparators import load_topics
+from legacy.evaluation.comparators import load_topics
 from scripts.run_benchmark import (
     build_benchmark_summary,
     run_benchmark_suite,

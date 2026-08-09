@@ -10,20 +10,20 @@ from urllib.parse import unquote, urljoin
 
 from loguru import logger
 
-from capabilities.mcp import invoke_mcp_capability
-from capabilities.registry import build_capability_registry
-from connectors.files import LocalFileIngestor
-from connectors.legacy import LegacyConnectorAdapter
-from connectors.models import ConnectorCandidate, ConnectorFetchResult, ConnectorHealthRecord
-from connectors.utils import canonicalize_uri
-from connectors.registry import ConnectorRegistry
-from connectors.snapshot_store import SnapshotInput, SnapshotStore
+from ..capabilities.mcp import invoke_mcp_capability
+from ..capabilities.registry import build_capability_registry
+from ..connectors.files import LocalFileIngestor
+from ..connectors.legacy import LegacyConnectorAdapter
+from ..connectors.models import ConnectorCandidate, ConnectorFetchResult, ConnectorHealthRecord
+from ..connectors.utils import canonicalize_uri
+from ..connectors.registry import ConnectorRegistry
+from ..connectors.snapshot_store import SnapshotInput, SnapshotStore
 from configs.settings import get_settings
-from llm.provider import get_llm
-from policies.budget_guardrails import BudgetGuard, BudgetUsage
-from policies.source_policy import load_source_policy
-from prompts.templates import SUMMARIZER_SYSTEM_PROMPT, SUMMARIZER_USER_PROMPT
-from research_policy import (
+from ..llm.provider import get_llm
+from ..policies.budget_guardrails import BudgetGuard, BudgetUsage
+from ..policies.source_policy import load_source_policy
+from ..prompts.templates import SUMMARIZER_SYSTEM_PROMPT, SUMMARIZER_USER_PROMPT
+from ..research_policy import (
     aspect_hits_in_text,
     build_source_queries,
     extract_aspect_keywords,
@@ -32,10 +32,10 @@ from research_policy import (
     select_sources_for_task,
     should_use_source,
 )
-from tools.arxiv_search import search_arxiv_papers
-from tools.github_search import search_github_repositories
-from tools.web_scraper import web_scraper_tool
-from tools.web_search import search_web
+from ..tools.arxiv_search import search_arxiv_papers
+from ..tools.github_search import search_github_repositories
+from ..tools.web_scraper import web_scraper_tool
+from ..tools.web_search import search_web
 from legacy.workflows.states import (
     EvidenceNote,
     RunMetrics,
@@ -492,7 +492,7 @@ def _execute_single_search(
             logger.info("  ✅ 总结完成: '{}'", task_title)
             return
 
-        from llm.clean import clean_llm_output
+        from ..llm.clean import clean_llm_output
 
         summary = clean_llm_output(summary)
         if research_profile == "benchmark":

@@ -14,19 +14,21 @@ the canonical runtime lives under `src/deep_research_agent/`.
 
 | Path | Classification | Meaning |
 | --- | --- | --- |
-| `src/` | canonical | Main Python package: gateway, runtime, connectors, policy, auditor, reporting, providers, evals. |
+| `src/deep_research_agent/` | canonical | The one implementation source of truth: gateway, orchestration, kernel, auditor, reporting, product, corpus, providers, evals. |
 | `main.py` | canonical | Thin CLI wrapper around `deep_research_agent.gateway.cli`. |
-| `configs/` | active | Runtime, source profile, provider, and release-gate configuration. |
-| `schemas/` | active | JSON schemas for artifacts, audit, runtime, connector, and benchmark contracts. |
-| `tests/` | active | Runtime, connector, auditor, public-surface, benchmark, and repo-standard regressions. |
-| `scripts/` | active | Release smoke, native regression, benchmark, scorecard, and diagnostic commands. |
-| `evals/` | active evidence | Suite configs, frozen datasets, rubrics, committed smoke outputs, regression outputs, and derived value packs. |
-| `apps/` | active UI root | Optional local app surfaces live here; current tracked apps are `apps/gui-web/` and `apps/desktop-tauri/`. |
-| `apps/gui-web/` | active UI | Optional local web GUI for operator/reviewer workflows over the local API. |
-| `apps/desktop-tauri/` | experimental UI wrapper | Optional Tauri desktop shell around the local web GUI; kept under `apps/` because it is not runtime code. |
+| `apps/` | UI roots | `apps/gui-web/` (React product workspace), `apps/demo-site/` (static GitHub Pages demo), `apps/desktop-tauri/` (experimental desktop shell). |
 | `desktop/` | retired path | The former `desktop/tauri/` wrapper moved to `apps/desktop-tauri/`; no current code lives at this root. |
+| `configs/` | active | Runtime, source profile, provider, domain-pack, and release-gate configuration. |
+| `schemas/` | active | JSON schemas for artifact, audit, runtime, connector, and benchmark contracts. |
+| `tests/` | active | Runtime, connector, auditor, public-surface, benchmark, and repo-standard regressions. |
+| `scripts/` | active | Release smoke, native regression, benchmark, scorecard, demo-data, and diagnostic commands. |
+| `evals/` | active evidence | Suite configs, frozen datasets, rubrics, committed smoke outputs, regression outputs, and derived value packs. |
+| `examples/` | pointer | `sample_bundle/` demo bundle; runnable CLI examples are in the README. |
+| `migrations/` + `alembic.ini` | active | Alembic migrations for the product database schema. |
+| `deploy/` | active | Deployment fragments (web nginx config, GROBID notes); Compose lives at the root. |
 | `docs/` | public docs | Reviewer docs, architecture, development guide, ADRs, benchmark docs, GUI docs, final summaries, and archives. |
-| `.github/` | repo metadata | CI, issue templates, and pull request template. |
+| `legacy/` | archived | Archived graph-first runtime. It owns its full dependency closure: agents/workflows, `legacy/auditor/`, `legacy/connectors/`, `legacy/llm/`, `legacy/prompts/`, `legacy/policies/`, `legacy/capabilities/`, `legacy/memory/`, `legacy/tools/`, `legacy/evaluation/`, and `legacy/research_policy.py`. Nothing under `legacy/` is product architecture. |
+| `.github/` | repo metadata | CI, Pages deployment, issue and PR templates. |
 | `.env.example` | setup | Public environment template. |
 | `.python-version` | setup | Python version pin. |
 | `pyproject.toml` | setup | Package metadata, dependencies, and setuptools `src` layout. |
@@ -35,21 +37,20 @@ the canonical runtime lives under `src/deep_research_agent/`.
 | `README.md` / `README.zh-CN.md` | public docs | GitHub entrypoints. |
 | `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | repo metadata | Community and security files. |
 | `AGENTS.md` | automation guidance | Public, repo-safe guidance for coding agents. |
-| `artifacts/` | compatibility shim | Remains at root because tests and older imports still use `artifacts.*`; canonical reporting lives in `src/deep_research_agent/reporting/`. |
-| `auditor/` | compatibility shim | Remains at root for `auditor.*` imports; canonical audit code lives in `src/deep_research_agent/auditor/`. |
-| `connectors/` | compatibility shim | Remains at root for older connector imports; canonical connector code lives in `src/deep_research_agent/connectors/`. |
-| `services/` | compatibility shim | Remains at root for `services.research_jobs.*`; canonical runtime lives in `src/deep_research_agent/research_jobs/`. |
-| `policies/` | compatibility shim | Remains at root for older policy imports; canonical policy code lives in `src/deep_research_agent/policy/`, and source profiles live in `configs/source_profiles/`. |
-| `tools/` | compatibility shim | Remains at root for older tool imports; canonical connector helpers live under `src/deep_research_agent/connectors/tools/`. |
-| `llm/` | compatibility shim | Remains at root for legacy provider imports and output-cleaning helpers; canonical provider routing lives in `src/deep_research_agent/providers/`. |
-| `memory/` | compatibility / legacy shim | Remains at root for older memory/evidence imports; canonical evidence store lives in `src/deep_research_agent/evidence_store/`. |
-| `capabilities/` | legacy diagnostics | Remains at root for archived graph/MCP compatibility tests; not current architecture. |
-| `prompts/` | legacy diagnostics | Remains at root for archived graph prompt templates; not current architecture. |
-| `evaluation/` | legacy diagnostics | Remains at root because diagnostic scripts and tests import it; current release evidence is under `evals/`. |
-| `research_policy.py` | legacy diagnostics | Deterministic benchmark-profile policy helpers retained for older tests and scripts. |
-| `legacy/` | archived | Archived graph agents/workflows, old examples, skill wrappers, and placeholder MCP package. |
-| `examples/` | pointer | Current runnable examples are in README; old graph example is archived under `legacy/examples/`. |
-| `specs/` | historical contracts | Phase specs plus current API/evaluation contracts retained for link stability. |
+
+## Legacy Boundary
+
+`legacy/` is the archived graph-first runtime and its dependencies. It is still imported by two
+compatibility consumers, both out of the product path:
+
+- `src/deep_research_agent/research_jobs/orchestrator.py` uses `legacy.agents.*` stage functions
+  for the `orchestrator-v1` runtime path (default for CLI/API submissions; deterministic
+  benchmark profile in offline mode).
+- Diagnostic scripts under `scripts/` and a few regression tests import `legacy.evaluation.*`
+  and `legacy.research_policy`.
+
+The canonical V2 runtime (`orchestration/`, `kernel/`, `reporting/bundle_v2.py`) never imports
+`legacy/`. Future work should retire `orchestrator-v1` once the V2 path covers all CLI/API flows.
 
 ## Archived Or Local-Only Material
 
@@ -81,5 +82,5 @@ If they exist in a local checkout, treat them as private development notes, not 
 - Treat `report_bundle.json` as the authoritative job output.
 - Treat `evals/reports/phase5_local_smoke/` as the merge-safe release smoke evidence.
 - Treat `evals/reports/native_regression/` and `docs/benchmarks/native/` as deterministic reviewer regression evidence.
-- Treat root compatibility packages as import-stability shims, not as the primary architecture.
-- Treat `legacy/`, `evaluation/`, `capabilities/`, `prompts/`, and archived docs as non-primary paths unless a diagnostic script or compatibility test explicitly targets them.
+- Treat `legacy/` (including its dependency closure) as archived, non-product code.
+- Do not reintroduce root-level compatibility shims; tests and scripts import `deep_research_agent.*` or `legacy.*` directly.

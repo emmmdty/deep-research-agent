@@ -7,7 +7,7 @@ from legacy.workflows.states import EvidenceNote, SourceRecord, TaskItem, TopicS
 
 def test_build_benchmark_tasks_covers_all_expected_aspects():
     """benchmark profile 应按 expected_aspects 生成稳定任务。"""
-    from research_policy import build_benchmark_tasks
+    from legacy.research_policy import build_benchmark_tasks
 
     topic = TopicSpec(
         id="T02",
@@ -32,7 +32,7 @@ def test_build_benchmark_tasks_covers_all_expected_aspects():
 
 def test_tutorial_tasks_include_bilingual_required_terms():
     """教程类任务的 must_include_terms 应包含中英混合关键词，避免英文文档被误杀。"""
-    from research_policy import build_benchmark_tasks
+    from legacy.research_policy import build_benchmark_tasks
 
     topic = TopicSpec(
         id="T06C",
@@ -50,7 +50,7 @@ def test_tutorial_tasks_include_bilingual_required_terms():
 
 def test_infer_task_type_and_source_policy_for_tutorial_topics():
     """教程类主题应优先使用 web + github，禁用 arxiv。"""
-    from research_policy import infer_task_type, preferred_sources_for_task, should_use_source
+    from legacy.research_policy import infer_task_type, preferred_sources_for_task, should_use_source
 
     task_type = infer_task_type("openclaw安装教程")
 
@@ -61,7 +61,7 @@ def test_infer_task_type_and_source_policy_for_tutorial_topics():
 
 def test_select_sources_for_task_rejects_off_topic_and_duplicates():
     """来源筛选应保留与锚点一致的结果，并过滤重复/偏题结果。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T06C",
@@ -111,7 +111,7 @@ def test_select_sources_for_task_rejects_off_topic_and_duplicates():
 
 def test_evaluate_quality_gate_requires_aspect_coverage_and_sources():
     """质量门控应在方面覆盖缺失时拒绝通过，并生成定向补检索。"""
-    from research_policy import evaluate_quality_gate
+    from legacy.research_policy import evaluate_quality_gate
 
     tasks = [
         TaskItem(
@@ -170,7 +170,7 @@ def test_evaluate_quality_gate_requires_aspect_coverage_and_sources():
 
 def test_evaluate_quality_gate_generates_official_first_follow_up_queries():
     """缺失方面时，应生成更强的官方优先补检索查询。"""
-    from research_policy import evaluate_quality_gate
+    from legacy.research_policy import evaluate_quality_gate
 
     tasks = [
         TaskItem(
@@ -209,7 +209,7 @@ def test_evaluate_quality_gate_generates_official_first_follow_up_queries():
 
 def test_case_study_tasks_prefer_web_and_github_with_official_queries():
     """真实案例类方面应优先 web/github，并使用官方案例导向查询。"""
-    from research_policy import build_benchmark_tasks, build_source_query
+    from legacy.research_policy import build_benchmark_tasks, build_source_query
 
     topic = TopicSpec(
         id="T01",
@@ -237,7 +237,7 @@ def test_case_study_tasks_prefer_web_and_github_with_official_queries():
 
 def test_case_study_query_bundle_prefers_official_domains_and_repo_search():
     """case-study 任务应生成官方域名优先的 query bundle，而不是只用单条泛查询。"""
-    from research_policy import build_benchmark_tasks, build_source_queries
+    from legacy.research_policy import build_benchmark_tasks, build_source_queries
 
     topic = TopicSpec(
         id="T01",
@@ -262,7 +262,7 @@ def test_case_study_query_bundle_prefers_official_domains_and_repo_search():
 
 def test_finance_case_study_query_bundle_is_topic_aware():
     """金融类 case-study 应优先使用金融/云厂商官方域名与金融 family terms。"""
-    from research_policy import build_benchmark_tasks, build_source_queries
+    from legacy.research_policy import build_benchmark_tasks, build_source_queries
 
     topic = TopicSpec(
         id="T04",
@@ -283,7 +283,7 @@ def test_finance_case_study_query_bundle_is_topic_aware():
 
 def test_select_sources_for_case_study_rejects_survey_like_evidence():
     """行业案例方面只接受真实落地案例证据，survey/review/benchmark 不应通过。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T01",
@@ -324,7 +324,7 @@ def test_select_sources_for_case_study_rejects_survey_like_evidence():
 
 def test_select_sources_for_case_study_marks_official_and_first_party_strength():
     """case-study 来源应写入结构化类型、强度分和主题贴合标记。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T01",
@@ -364,7 +364,7 @@ def test_select_sources_for_case_study_marks_official_and_first_party_strength()
 
 def test_finance_case_study_accepts_official_english_compliance_evidence():
     """金融案例应接受英文官方合规案例，不要求逐字命中中文方面短语。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T04",
@@ -403,7 +403,7 @@ def test_finance_case_study_accepts_official_english_compliance_evidence():
 
 def test_mcp_official_docs_are_not_rejected_as_weak_support_for_generic_aspects():
     """MCP 主题下的通用方面应把 MCP/tool discovery/security 词汇纳入支撑判定。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T11",
@@ -432,7 +432,7 @@ def test_mcp_official_docs_are_not_rejected_as_weak_support_for_generic_aspects(
 
 def test_mcp_integration_pattern_accepts_transport_specific_docs():
     """MCP 实际接入模式应识别 stdio/SSE/streamable-http 这类运输层接法。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T11",
@@ -461,7 +461,7 @@ def test_mcp_integration_pattern_accepts_transport_specific_docs():
 
 def test_select_sources_for_task_keeps_high_trust_mix_for_research_topics():
     """研究类主题应尽量保留高可信 github/arxiv 结果，避免被普通 web 结果挤掉。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T01",
@@ -508,7 +508,7 @@ def test_select_sources_for_task_keeps_high_trust_mix_for_research_topics():
 
 def test_select_sources_for_task_rejects_withdrawn_and_topic_guard_miss():
     """现代 LLM 主题下，撤稿/明显偏题的高可信来源也必须被拒绝。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T01",
@@ -553,7 +553,7 @@ def test_select_sources_for_task_rejects_withdrawn_and_topic_guard_miss():
 
 def test_build_source_query_uses_topic_aliases_for_research_sources():
     """研究类 github/arxiv 查询应注入英文别名，但避免把平台噪声词塞进检索语句。"""
-    from research_policy import build_benchmark_tasks, build_source_query
+    from legacy.research_policy import build_benchmark_tasks, build_source_query
 
     topic = TopicSpec(
         id="T02",
@@ -577,7 +577,7 @@ def test_build_source_query_uses_topic_aliases_for_research_sources():
 
 def test_build_benchmark_tasks_prefers_practical_sources_for_concrete_stack_aspects():
     """具体技术栈方面应优先走 web/github，避免泛 arXiv 结果主导。"""
-    from research_policy import build_benchmark_tasks
+    from legacy.research_policy import build_benchmark_tasks
 
     topic = TopicSpec(
         id="T02",
@@ -594,7 +594,7 @@ def test_build_benchmark_tasks_prefers_practical_sources_for_concrete_stack_aspe
 
 def test_build_benchmark_tasks_prefers_academic_sources_for_architecture_aspects():
     """抽象架构类方面应优先走 web/arxiv，避免随机 GitHub repo 污染结论。"""
-    from research_policy import build_benchmark_tasks
+    from legacy.research_policy import build_benchmark_tasks
 
     topic = TopicSpec(
         id="T01",
@@ -611,7 +611,7 @@ def test_build_benchmark_tasks_prefers_academic_sources_for_architecture_aspects
 
 def test_select_sources_for_task_rejects_generic_rag_papers_for_vector_db_aspect():
     """具体组件方面不应再把泛 RAG 论文当成直接证据。"""
-    from research_policy import build_benchmark_tasks, select_sources_for_task
+    from legacy.research_policy import build_benchmark_tasks, select_sources_for_task
 
     topic = TopicSpec(
         id="T02",
@@ -657,7 +657,7 @@ def test_select_sources_for_task_rejects_generic_rag_papers_for_vector_db_aspect
 
 def test_build_source_query_prefers_react_for_architecture_arxiv_queries():
     """ReAct 方面的 arXiv 查询应显式包含 ReAct，减少泛 multi-agent 论文污染。"""
-    from research_policy import build_benchmark_tasks, build_source_query
+    from legacy.research_policy import build_benchmark_tasks, build_source_query
 
     topic = TopicSpec(
         id="T01",
@@ -677,7 +677,7 @@ def test_build_source_query_prefers_react_for_architecture_arxiv_queries():
 
 def test_framework_comparison_query_bundle_prefers_official_docs_and_orgs():
     """框架对比任务应优先生成官方 docs 与官方 org 查询。"""
-    from research_policy import build_benchmark_tasks, build_source_queries
+    from legacy.research_policy import build_benchmark_tasks, build_source_queries
 
     topic = TopicSpec(
         id="T01",
@@ -742,7 +742,7 @@ def test_framework_official_docs_have_high_trust_and_video_is_low_trust():
 
 def test_case_study_follow_up_queries_keep_aspect_phrase_for_site_searches():
     """case-study 的 site: rescue query 也应保留方面短语，避免被别的 task 抢走。"""
-    from research_policy import _build_follow_up_queries
+    from legacy.research_policy import _build_follow_up_queries
 
     task = TaskItem(
         id=5,
@@ -767,8 +767,8 @@ def test_case_study_follow_up_queries_keep_aspect_phrase_for_site_searches():
 
 def test_build_benchmark_report_keeps_only_used_references():
     """benchmark writer 应只保留正文实际引用过的来源。"""
-    from research_policy import build_benchmark_report
-    from evaluation.metrics import citation_accuracy
+    from legacy.research_policy import build_benchmark_report
+    from legacy.evaluation.metrics import citation_accuracy
 
     tasks = [
         TaskItem(
@@ -813,7 +813,7 @@ def test_build_benchmark_report_keeps_only_used_references():
 
 def test_build_benchmark_report_core_claim_prefers_direct_high_trust_sources():
     """核心结论引用应优先使用 direct-support 的高可信来源，而不是泛背景来源。"""
-    from research_policy import build_benchmark_report
+    from legacy.research_policy import build_benchmark_report
 
     tasks = [
         TaskItem(
