@@ -27,3 +27,27 @@ jobs:
 
       - name: Pytest
         run: uv run pytest -q
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/gui-web/package-lock.json
+
+      - name: Install GUI dependencies
+        run: npm ci --prefix apps/gui-web
+
+      - name: Build GUI
+        run: npm run build --prefix apps/gui-web
+
+      - name: Install demo-site dependencies
+        run: npm ci --prefix apps/demo-site
+
+      - name: Build demo-site
+        run: npm run build --prefix apps/demo-site

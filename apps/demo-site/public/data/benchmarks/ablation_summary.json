@@ -1,0 +1,47 @@
+{
+  "source": "evals/reports/followup_metrics/ablation_summary.md",
+  "ablations": [
+    {
+      "id": "audit_on_vs_off",
+      "name": "Audit gate",
+      "scope": "company12/company-openai-surface",
+      "key_delta": "unsupported claim leakage -> 1.0",
+      "interpretation": "Without audit-grounded support edges, unsupported claim leakage rises while the fixture still completes."
+    },
+    {
+      "id": "strict_source_policy_vs_relaxed",
+      "name": "Strict source policy",
+      "scope": "trusted8/trusted-langgraph-brief",
+      "key_delta": "policy compliance 1.0 -> 0.333",
+      "interpretation": "Relaxing trusted-only enforcement keeps the bundle flowing but admits a source the strict policy would block."
+    },
+    {
+      "id": "evidence_first_vs_baseline_synthesis",
+      "name": "Evidence-first synthesis",
+      "scope": "company12/company-openai-surface",
+      "key_delta": "citation error rate -> 1.0",
+      "interpretation": "Removing evidence-first grounding erodes provenance and support quality immediately in the emitted bundle."
+    },
+    {
+      "id": "rerank_on_vs_off",
+      "name": "Rerank / edge selection",
+      "scope": "industry12/industry-agent-stack",
+      "key_delta": "critical claim support precision 1.0 -> 0.5",
+      "interpretation": "Disabling the rerank-like edge selection leaves a critical claim with only context-only evidence."
+    },
+    {
+      "id": "provider_auto_vs_manual",
+      "name": "Provider auto-routing",
+      "scope": "provider_router",
+      "key_delta": "deterministic inspection only",
+      "interpretation": "Auto-routing can be inspected deterministically, but this local follow-up run does not include live quality or billing comparisons."
+    },
+    {
+      "id": "new_runtime_vs_legacy",
+      "name": "V2 runtime vs legacy",
+      "scope": "runtime_control_plane",
+      "key_delta": "not comparable",
+      "interpretation": "No like-for-like legacy runtime fixture remains that matches the current deterministic job contracts and bundle outputs."
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-0ec18d31378d",
+      "title": "abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc...",
+      "canonical_uri": "https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-9ac0b2b371db",
+      "title": "pinterest.com/pin/863002347360977471",
+      "canonical_uri": "https://www.pinterest.com/pin/863002347360977471/"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0f4bed718d3b",
+      "title": "xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "canonical_uri": "https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97"
+    },
+    {
+      "citation_id": 4,
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-b1f30553aca9",
+      "title": "同花顺(300033) 经营分析_F10_同花顺金融服务网",
+      "canonical_uri": "https://basic.10jqka.com.cn/300033/operate.html"
+    },
+    {
+      "citation_id": 5,
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-e35027a42a95",
+      "title": "同花顺出“王炸”？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 - 21经济网",
+      "canonical_uri": "https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html"
+    },
+    {
+      "citation_id": 6,
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-cc0710dd82ec",
+      "title": "同花顺研究报告：乘AI东风，金融信息服务扬帆起航",
+      "canonical_uri": "https://zhuanlan.zhihu.com/p/619748441"
+    },
+    {
+      "citation_id": 7,
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "title": "[PDF] 浙江核新同花顺网络信息股份有限公司2024 年年度报告摘要",
+      "canonical_uri": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-1",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc...",
+      "canonical_uri": "https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11",
+      "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-0ec18d31378d",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "source_id": "source-2",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "pinterest.com/pin/863002347360977471",
+      "canonical_uri": "https://www.pinterest.com/pin/863002347360977471/",
+      "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-9ac0b2b371db",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "source_id": "source-3",
+      "citation_id": 3,
+      "source_type": "web",
+      "title": "xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "canonical_uri": "https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-0f4bed718d3b",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "source_id": "source-4",
+      "citation_id": 4,
+      "source_type": "web",
+      "title": "同花顺(300033) 经营分析_F10_同花顺金融服务网",
+      "canonical_uri": "https://basic.10jqka.com.cn/300033/operate.html",
+      "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-b1f30553aca9",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-5",
+      "citation_id": 5,
+      "source_type": "web",
+      "title": "同花顺出“王炸”？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 - 21经济网",
+      "canonical_uri": "https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html",
+      "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-e35027a42a95",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-6",
+      "citation_id": 6,
+      "source_type": "web",
+      "title": "同花顺研究报告：乘AI东风，金融信息服务扬帆起航",
+      "canonical_uri": "https://zhuanlan.zhihu.com/p/619748441",
+      "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-cc0710dd82ec",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-7",
+      "citation_id": 7,
+      "source_type": "pdf",
+      "title": "[PDF] 浙江核新同花顺网络信息股份有限公司2024 年年度报告摘要",
+      "canonical_uri": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+      "query": "同花顺2024年报 财务数据 营收利润 业绩表现 市值估值 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-65760df8a3b9",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-0ec18d31378d",
+      "canonical_uri": "https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11",
+      "fetched_at": "2026-05-22T18:10:41.486303+00:00",
+      "content_hash": "5071d6808991ac6498261daa3df03e938492c22222db942444f1dabd6f012afc",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-9ac0b2b371db",
+      "canonical_uri": "https://www.pinterest.com/pin/863002347360977471/",
+      "fetched_at": "2026-05-22T18:10:43.371179+00:00",
+      "content_hash": "152123e2c3ca19568c8c3440863e52a00ea57c60d4344264fef0274f95d5865d",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-0f4bed718d3b",
+      "canonical_uri": "https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "fetched_at": "2026-05-22T18:10:43.955263+00:00",
+      "content_hash": "744fdad186d957402a726402659a0dcab395b5c800bf0b52a1721f2bcb17d456",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-b1f30553aca9",
+      "canonical_uri": "https://basic.10jqka.com.cn/300033/operate.html",
+      "fetched_at": "2026-05-22T18:10:53.531632+00:00",
+      "content_hash": "f82400d10810255bb10734dcd85a108a58774d0c61dd7f705476249c6b883865",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-e35027a42a95",
+      "canonical_uri": "https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html",
+      "fetched_at": "2026-05-22T18:10:54.143318+00:00",
+      "content_hash": "f50ba66d276eac00137b90fc59181a2a259a451615458612a6d8219939aca2e9",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-cc0710dd82ec",
+      "canonical_uri": "https://zhuanlan.zhihu.com/p/619748441",
+      "fetched_at": "2026-05-22T18:10:54.491665+00:00",
+      "content_hash": "6e39d89d56a14418a5dfa9d8885f4d5cb92d0264fb0c079f3d3520f383ef2e1f",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "canonical_uri": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+      "fetched_at": "2026-05-22T18:11:02.012724+00:00",
+      "content_hash": "674d33bf3d1815d40807ea36c0c66b96e52ad8f3bc2c85e7a359b95a1f820dd8",
+      "mime_type": "application/pdf",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺2024年报 财务数据 营收利润 业绩表现 市值估值 official documentation survey docs",
+        "published_at": null,
+        "source_type": "pdf",
+        "connector_name": "open_web",
+        "task_title": "同花顺财务状况与经营业绩研究",
+        "content_kind": "remote_pdf",
+        "metadata": {
+          "backend": "tavily"
+        },
+        "download_url": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+        "local_pdf_path": "workspace/research_jobs/20260522T181016Z-baa9b27a/_remote_docs/1523c7e0b00415f9.pdf",
+        "page_count": 7,
+        "content_length": 551269
+      }
+    }
+  ]
+}

@@ -1,0 +1,834 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "20260522T181016Z-baa9b27a",
+    "created_at": "2026-05-22T18:10:16.104418+00:00",
+    "input_prompt": "我想研究一下同花顺这个公司。",
+    "status": "completed",
+    "source_profile": "company_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "default",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-0ec18d31378d",
+      "title": "abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc...",
+      "canonical_uri": "https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-9ac0b2b371db",
+      "title": "pinterest.com/pin/863002347360977471",
+      "canonical_uri": "https://www.pinterest.com/pin/863002347360977471/"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0f4bed718d3b",
+      "title": "xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "canonical_uri": "https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97"
+    },
+    {
+      "citation_id": 4,
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-b1f30553aca9",
+      "title": "同花顺(300033) 经营分析_F10_同花顺金融服务网",
+      "canonical_uri": "https://basic.10jqka.com.cn/300033/operate.html"
+    },
+    {
+      "citation_id": 5,
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-e35027a42a95",
+      "title": "同花顺出“王炸”？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 - 21经济网",
+      "canonical_uri": "https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html"
+    },
+    {
+      "citation_id": 6,
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-cc0710dd82ec",
+      "title": "同花顺研究报告：乘AI东风，金融信息服务扬帆起航",
+      "canonical_uri": "https://zhuanlan.zhihu.com/p/619748441"
+    },
+    {
+      "citation_id": 7,
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "title": "[PDF] 浙江核新同花顺网络信息股份有限公司2024 年年度报告摘要",
+      "canonical_uri": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-1",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc...",
+      "canonical_uri": "https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11",
+      "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-0ec18d31378d",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "source_id": "source-2",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "pinterest.com/pin/863002347360977471",
+      "canonical_uri": "https://www.pinterest.com/pin/863002347360977471/",
+      "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-9ac0b2b371db",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "source_id": "source-3",
+      "citation_id": 3,
+      "source_type": "web",
+      "title": "xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "canonical_uri": "https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-0f4bed718d3b",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "source_id": "source-4",
+      "citation_id": 4,
+      "source_type": "web",
+      "title": "同花顺(300033) 经营分析_F10_同花顺金融服务网",
+      "canonical_uri": "https://basic.10jqka.com.cn/300033/operate.html",
+      "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-b1f30553aca9",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-5",
+      "citation_id": 5,
+      "source_type": "web",
+      "title": "同花顺出“王炸”？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 - 21经济网",
+      "canonical_uri": "https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html",
+      "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-e35027a42a95",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-6",
+      "citation_id": 6,
+      "source_type": "web",
+      "title": "同花顺研究报告：乘AI东风，金融信息服务扬帆起航",
+      "canonical_uri": "https://zhuanlan.zhihu.com/p/619748441",
+      "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-cc0710dd82ec",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-7",
+      "citation_id": 7,
+      "source_type": "pdf",
+      "title": "[PDF] 浙江核新同花顺网络信息股份有限公司2024 年年度报告摘要",
+      "canonical_uri": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+      "query": "同花顺2024年报 财务数据 营收利润 业绩表现 市值估值 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-65760df8a3b9",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-0ec18d31378d",
+      "canonical_uri": "https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11",
+      "fetched_at": "2026-05-22T18:10:41.486303+00:00",
+      "content_hash": "5071d6808991ac6498261daa3df03e938492c22222db942444f1dabd6f012afc",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-9ac0b2b371db",
+      "canonical_uri": "https://www.pinterest.com/pin/863002347360977471/",
+      "fetched_at": "2026-05-22T18:10:43.371179+00:00",
+      "content_hash": "152123e2c3ca19568c8c3440863e52a00ea57c60d4344264fef0274f95d5865d",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-0f4bed718d3b",
+      "canonical_uri": "https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97",
+      "fetched_at": "2026-05-22T18:10:43.955263+00:00",
+      "content_hash": "744fdad186d957402a726402659a0dcab395b5c800bf0b52a1721f2bcb17d456",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "duckduckgo"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-b1f30553aca9",
+      "canonical_uri": "https://basic.10jqka.com.cn/300033/operate.html",
+      "fetched_at": "2026-05-22T18:10:53.531632+00:00",
+      "content_hash": "f82400d10810255bb10734dcd85a108a58774d0c61dd7f705476249c6b883865",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-e35027a42a95",
+      "canonical_uri": "https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html",
+      "fetched_at": "2026-05-22T18:10:54.143318+00:00",
+      "content_hash": "f50ba66d276eac00137b90fc59181a2a259a451615458612a6d8219939aca2e9",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-cc0710dd82ec",
+      "canonical_uri": "https://zhuanlan.zhihu.com/p/619748441",
+      "fetched_at": "2026-05-22T18:10:54.491665+00:00",
+      "content_hash": "6e39d89d56a14418a5dfa9d8885f4d5cb92d0264fb0c079f3d3520f383ef2e1f",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺主营业务 盈利模式 行情软件 金融数据 AI技术 iFind official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "canonical_uri": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+      "fetched_at": "2026-05-22T18:11:02.012724+00:00",
+      "content_hash": "674d33bf3d1815d40807ea36c0c66b96e52ad8f3bc2c85e7a359b95a1f820dd8",
+      "mime_type": "application/pdf",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "同花顺2024年报 财务数据 营收利润 业绩表现 市值估值 official documentation survey docs",
+        "published_at": null,
+        "source_type": "pdf",
+        "connector_name": "open_web",
+        "task_title": "同花顺财务状况与经营业绩研究",
+        "content_kind": "remote_pdf",
+        "metadata": {
+          "backend": "tavily"
+        },
+        "download_url": "https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+        "local_pdf_path": "workspace/research_jobs/20260522T181016Z-baa9b27a/_remote_docs/1523c7e0b00415f9.pdf",
+        "page_count": 7,
+        "content_length": 551269
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "evidence-1",
+      "snapshot_id": "snapshot-0ec18d31378d",
+      "source_id": "source-1",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "excerpt": "网页抓取失败: Client error '403 Forbidden' for url 'https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11' For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-2",
+      "snapshot_id": "snapshot-9ac0b2b371db",
+      "source_id": "source-2",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 2
+      },
+      "excerpt": "众图网 大气企业发展历程公司发展历程企业文化墙模板下载-编号769093-众图网 | Zeitstrahl, Ausstellung Explore When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures. Log in Sign up 10 Visit Save ztupic.com 众图网 大气企业发展历程公司发展历程企业文化墙素材下载-众图网 本作品是张发展历程设计素材，素材编号为769093，众图网 大气企业发展历程公司发展历程企业文化墙格式为CDR,3D，使用CorelDRAW、3d Max创作，欢迎下载更多发展历程设计模板、发展历程图片、本发展历程设计作品上的文字图片均可编辑修改。 1 Comment More about this Pin Explore Design Board containing this Pin PP",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-3",
+      "snapshot_id": "snapshot-0f4bed718d3b",
+      "source_id": "source-3",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 3
+      },
+      "excerpt": "过程，以及可能遇到的各种问题和坑。通过这次分享，我们希望你能够学习到有效的方式来注册与管理你的公司。我们将分步骤为你讲解如何开始注册你的公司、如何设计一个有效的股权结构，并告诉你如何避免在出资过程中遇到不必要的麻烦。同时，我们也会向你介绍关于注册资本选择的建议，以及在融资过程中可能遇到的风险和坑。 除此之外，我们还将分享该如何授予股份激励，以及如何有效利用股权激励等方面的经验。无论你现在处于什么阶段，我们都希望你能从这期节目中收获到有价值的信息。 希望我们的经验，能够在你创业路上提供指导。 【节目福利】 津津乐道播客网络与美国心脏协会携手，展开“一万个放心”急救培训课程，目标是在一年内，让10000名听友掌握正规的急救技能，当意外来临，不再手足无措 课程将以公益课程和认证考核结合的方式进行，除了获得急救知识，你还可以得到美国心脏协会颁发的急救资格证书，这是服务行业、马拉松急救跑者等很多领域必备的证书，在188个国家都可以获得承认。 活动详情和报名链接： daofm.cn 本期嘉宾 朱峰：「津津乐道播客网络」创始人，产品及技术专家。（微博：@zhufengme） 某高老师：「科技乱炖」主",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-4",
+      "snapshot_id": "snapshot-b1f30553aca9",
+      "source_id": "source-4",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 4
+      },
+      "excerpt": "���롰��һ���Ƿ�����30%�Ĺ�Ʊ���Ͻ��ж��ɣ� ��һ�� ��� ��Ӫ���� ��Ӫҵ�� Ϊ��������ͻ��ṩ�������AI��������Ʒ��ϵͳά�����񡢽������ݷ��������ƹ����Ϊ����Ͷ�����ṩ�������AI�Ľ�����Ѷ��Ͷ�����Ʒ������ߡ����Ʋ�ƷͶ�ʽ��׷���ȡ� ��Ʒ���ͣ� ������������Ϣ���� ��Ʒ���ƣ� ��ֵ���ŷ��� �� �������ۼ�ά�� �� ��漰������ҵ���ƹ���� �� �������ۼ��������������ѵ�����ҵ�� ��Ӫ��Χ�� �ڶ�����ֵ����ҵ���е���Ϣ����ҵ��ƾ��Ч���л����񹲺͹���ֵ����ҵ��Ӫ����֤����Ӫ��������������Ӳ�Ʒ�ļ����������������񡢳ɹ�ת�ã��������Ӳ�������ۣ���ơ��������������������ڸ����档 ��Ӫҵ������ �ۼ�ֵ ��ĩֵ ����ֵ ���¹�",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-5",
+      "snapshot_id": "snapshot-e35027a42a95",
+      "source_id": "source-5",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "excerpt": "同花顺出“王炸”？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 - 21经济网 21财经APP 南财号 数字报 爆料通 首页 宏观 证券 金融 商业 全球市场 观点 地产 科技 汽车 新健康 创投 智库 更多 大湾区 一带一路 文旅 数读 理财 投资通 21视频 直播 品牌活动 地方金融（苏州） 首页 > 正文 同花顺出“王炸”？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 2023年03月05日 09:13 21世纪经济报道 21财经APP 王媛媛 21世纪经济报道记者王媛媛 上海报道 截至3月3日收盘，同花顺（300033.SZ）的股价为124.45元/股，几乎回到了2022年初的股价水平。而券商ETF的价格想要回到2022年初的水平，还需要再涨20%多。 股价长期“依赖”于证券行情的同花顺，这次要比整个券商板块走得更快。 有基金投研人士称，这是因为近期同花顺“沾上了”ChatGPT概念。 翻开近期的券商研报，分析师们的研报标题几乎清一色地在突出同花顺的AI投入、AI产业生态、AI技术应用等。 “不过，都是在说同花顺有场景和数据基础，以及有一些AI应用落",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-6",
+      "snapshot_id": "snapshot-cc0710dd82ec",
+      "source_id": "source-6",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 6
+      },
+      "excerpt": "网页抓取失败: Client error '403 Forbidden' for url 'https://zhuanlan.zhihu.com/p/619748441' For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-7",
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "source_id": "source-7",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 7
+      },
+      "excerpt": "浙江核新同花顺网络信息股份有限公司 2024年年度报告摘要 1 证券代码： 300033 证券简称：同花顺 公告编号： 2025-002 浙江核新同花顺网络信息股份有限公司 2024年年度报告摘要 一、重要提示 本年度报告摘要来自年度报告全文，为全面了解本公司的经营成果、财务状况及未来发展规划，投资者应当到证监会指定 媒体仔细阅读年度报告全文。 所有董事均已出席了审议本报告的董事会会议。 天健会计师事务所（特殊普通合伙）对本年度公司财务报告的审计意见为：标准的无保留意见。 非标准审计意见提示 □适用 不适用 公司上市时未盈利且目前未实现盈利 □适用 不适用 董事会审议的报告期利润分配预案或公积金转增股本预案 适用 □不适用 公司经本次董事会审议通过的利润分配预案为：以 537,600,000 为基数，向全体股东每 10股派发现金红利 30.00元（含 税） ，送红股 0股（含税） ，以资本公积金向全体股东每 10股转增 0股。 董事会决议通过的本报告期优先股利润分配预案 □适用 不适用 二、公司基本情况 1、公司简介 股票简称 同花顺 股票代码 300033 股票上市交易所 深",
+      "extraction_method": "source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "blocked",
+    "event_count": 27,
+    "tool_event_count": 0,
+    "stage_event_count": 12,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 5,
+    "blocked_critical_claim_count": 5,
+    "manual_review_required": true
+  },
+  "audit_events": [
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0001",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-05-22T18:10:16.104418+00:00",
+      "payload": {
+        "topic": "我想研究一下同花顺这个公司。",
+        "research_profile": "default"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0002",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:10:16.660942+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0003",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:10:16.672154+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0002",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0004",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:10:16.678349+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0005",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:10:21.909650+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0003",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0006",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:10:21.915140+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0007",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:10:47.584971+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0004",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0008",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:10:47.591381+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0009",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:10:58.946727+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0005",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0010",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:10:58.952548+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0011",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:07.034388+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0006",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0012",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:07.040444+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0013",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:09.106785+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0007",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0014",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:09.113012+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0015",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:11.603448+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0008",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0016",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:11.612337+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0017",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:11.620462+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0009",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0018",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:11.626475+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0019",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:11.650635+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0010",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0020",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:11.657931+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0021",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:11.679277+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0011",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0022",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:11.685512+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0023",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:11.695615+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0012",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0024",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-05-22T18:11:11.702215+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0025",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-05-22T18:11:40.921339+00:00",
+      "payload": {
+        "checkpoint_id": "20260522T181016Z-baa9b27a-checkpoint-0013",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0026",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-05-22T18:11:40.926120+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260522T181016Z-baa9b27a-event-0027",
+      "job_id": "20260522T181016Z-baa9b27a",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-05-22T18:11:40.928693+00:00",
+      "payload": {
+        "report_path": "workspace/research_jobs/20260522T181016Z-baa9b27a/report.md",
+        "report_bundle_path": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/report_bundle.json",
+        "trace_path": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "> 审计门禁：存在未通过审核的关键 claim，以下内容不可视为已完全验证的研究结论。\n> 阻塞原因：5 条关键 claim 未通过审计门禁\n\n## 待复核关键 Claim\n- 本次检索未能获取关于同花顺公司的有效信息。（critical_claim_unsupported）\n- 根据同花顺经营分析数据，其主营业务可分为**两大客户群体**： - **机构客户**：提供金融科技AI整体解决方案、系统维护服务、金融数据推广等 - **个人投资者**：提供基于AI的金融资讯和投资理财产品 产品类型涵盖金融资讯信息、**iFinD数据终端**及维护等金融数据业务。（critical_claim_unsupported）\n- **公司全称**：浙江核新同花顺网络信息股份有限公司 - **股票代码**：300033 - **上市交易所**：深圳证券交易所 --- **1.（critical_claim_contradicted）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n\n## 冲突与不确定性\n- 关键 claim 与直接证据冲突：**公司全称**：浙江核新同花顺网络信息股份有限公司 - **股票代码**：300033 - **上市交易所**：深圳证券交易所 --- **1.\n- 关键 claim 与直接证据冲突：盈利能力与股东回报** 公司向全体股东每 10 股派发现金红利 30.00 元（含税），以 537,600,000 股为基数计算，现金分红总额达 **16.128 亿元**，显示出较强的盈利能力与对股东的回报力度。\n# 同花顺公司研究报告\n\n**研究主体**：浙江核新同花顺网络信息股份有限公司（股票代码：300033）\n\n**研究日期**：2025年\n\n---\n\n## 概述\n\n同花顺是中国领先的金融信息服务提供商之一，主营业务涵盖面向机构客户的金融科技AI整体解决方案及数据终端服务，以及面向个人投资者的AI驱动金融资讯与投资理财产品。公司旗下iFinD/iFind数据终端产品已在投研数据领域对行业龙头Wind（万得）形成有力竞争，标志着同花顺从面向个人投资者的传统行情软件服务商向多元化金融数据与科技服务商转型。财务方面，公司财务报告经审计为标准无保留意见，已进入稳定盈利期，2024年度现金分红总额高达16.128亿元，显示较强的盈利能力与股东回报力度。AI技术已成为公司核心战略方向，在金融数据服务场景中具备应用基础，市场对其AI产业生态商业化前景保持关注。然而，本报告同时指出，由于部分研究子任务未能获取有效信息，公司发展历程、股权结构、管理层信息、行业竞争格局详细数据及未来战略布局等内容在现有研究框架下存在明显缺口，建议后续通过多渠道补充检索以形成更为完整的公司画像。\n\n---\n\n## 一、公司概况与发展历程\n\n### 1.1 基本信息\n\n同花顺全称为**浙江核新同花顺网络信息股份有限公司**，股票代码为300033，在深圳证券交易所上市交易[7]。公司定位为金融信息服务商，业务版图覆盖个人投资者市场与机构投资者市场两大领域。\n\n从现有研究检索结果来看，同花顺公司概况与发展历程方面的信息获取并不充分。通过针对“同花顺公司介绍 发展历程 创始人 股权结构 管理层 300033”等关键词的检索，多个信息来源呈现访问受限或内容不相关的情况——部分目标页面返回403 Forbidden错误[1]，部分检索结果指向设计素材网站或与公司介绍无直接关联的创业类播客内容[2][3]。这表明公开渠道中关于同花顺公司历史沿革、股权结构及管理团队的详细信息存在较高的信息获取门槛。\n\n### 1.2 发展阶段的间接推断\n\n尽管直接资料有限，但从现有可获取的业务信息可间接推断公司发展的若干阶段特征。同花顺早期以面向个人投资者的行情软件和金融资讯信息服务起家，逐步建立用户基础和市场认知；随后通过产品线扩展，推出面向机构客户的iFind数据终端产品，实现从C端（个人用户）向B端（机构用户）的业务延伸；近年来，公司将AI技术提升至核心战略地位，试图以人工智能技术赋能现有产品矩阵，推动金融信息服务场景的智能化升级[4][5]。\n\n这一发展路径在国内金融信息服务行业中具有代表性，体现了行业从基础行情数据服务向综合金融科技解决方案供应商转型的整体趋势。\n\n### 1.3 信息缺口说明\n\n需要指出的是，关于同花顺的以下关键信息在本次研究中未能有效获取：\n\n- 公司创立时间、创始团队背景及股权结构详情\n- 公司管理层的构成与变动情况\n- 历次重大战略转型的时间节点与决策背景\n- 上市以来的重要事件与资本运作记录\n\n上述信息的缺失制约了对公司发展脉络的完整理解，建议通过公司官方年度报告、招股说明书、交易所公告及企业信用信息平台等渠道进行补充查证。\n\n---\n\n## 二、主营业务与商业模式分析\n\n### 2.1 主营业务架构\n\n同花顺的主营业务按客户群体可划分为**两大板块**[4]：\n\n**（1）机构客户业务**\n\n面向证券公司、基金公司、资产管理公司、保险机构等金融机构客户，同花顺提供以下产品与服务：\n\n- **金融科技AI整体解决方案**：涵盖智能投研、智能风控、智能客服等应用场景的系统集成服务；\n- **系统维护服务**：为机构客户的技术系统提供持续运维支持；\n- **金融数据推广服务**：iFinD/iFind数据终端的订阅与推广服务；\n- **iFinD数据终端**：同花顺的核心机构产品，定位为专业投研数据平台，提供宏观经济数据、行业数据、公司财务数据、实时行情等综合金融数据服务。\n\n**（2）个人投资者业务**\n\n面向个人投资者，同花顺依托其长期积累的用户基础，提供基于AI技术的金融资讯、投资理财工具及增值电信服务。具体产品形态包括：\n\n- 同花顺炒股软件（面向个人投资者的主要流量入口与服务平台）；\n- AI驱动的投资辅助工具与智能投顾服务；\n- 付费增值服务（如Level-2行情、实时资讯包等）。\n\n### 2.2 iFind产品对Wind核心投研市场的冲击\n\n同花顺iFind产品已成为投研数据领域的重要竞争力量，正在蚕食行业龙头Wind（万得信息）的核心市场份额[5]。这一趋势具有重要的行业意义：\n\n| 对比维度 | Wind（万得） | 同花顺iFind |\n|---------|-------------|-------------|\n| 市场定位 | 高端机构投研数据龙头 | 专业投研数据有力竞争者 |\n| 价格策略 | 定价较高 | 性价比策略 |\n| 核心优势 | 数据覆盖广度与深度 | AI技术赋能 + 价格竞争力 |\n| 用户群体 | 头部机构为主 | 中小型机构及券商逐步渗透 |\n\niFind产品在投研数据市场的突破，标志着同花顺已不仅仅是一家面向个人投资者的行情软件公司，而是具备了为机构客户提供高专业度金融数据服务的能力。这一转型拓展了公司的市场空间和收入来源的多元化程度。\n\n### 2.3 AI技术战略\n\n同花顺将**AI技术**确立为公司的核心战略方向[5]。公司在AI领域的布局具备两大基础优势：\n\n**场景基础**：同花顺拥有海量的金融数据应用场景，涵盖股票行情分析、投资决策辅助、资讯推送、用户交互等多元场景，为AI技术落地提供了天然的试验田和数据积累基础。\n\n**数据基础**：多年深耕金融信息服务领域，使同花顺积累了丰富的金融数据资产，包括行情数据、财务数据、新闻资讯、用户行为数据等，这些数据是训练和优化AI模型的核心资源。\n\n近期ChatGPT等大语言模型技术的突破，进一步提升了市场对同花顺AI技术商业化潜力的关注度[5]。同花顺已将AI能力逐步嵌入其产品矩阵，包括智能选股、智能问答、个性化资讯推送等功能，试图以AI技术提升用户体验和产品竞争力。\n\n### 2.4 盈利模式\n\n同花顺的盈利模式可归纳为以下几类：\n\n| 收入来源 | 客户类型 | 商业模式特征 |\n|---------|---------|-------------|\n| **增值电信服务** | 个人投资者 | 付费订阅/增值功能收费，估计占营业收入30%以上[4] |\n| **iFinD/iFind数据终端** | 机构客户 | 年度订阅制，按席位/用户数收费 |\n| **金融数据推广服务** | 机构客户（B端） | 数据授权与合作推广分成 |\n| **AI解决方案服务** | 机构客户 | 项目制或长期服务合同 |\n\n值得注意的是，同花顺已形成**“C端流量积累→B端数据服务→AI技术赋能”**的协同商业模式：个人投资者的使用产生数据和用户基础，进而支撑机构业务的专业数据产品开发；AI技术的投入则同时服务于两类客户，提升整体产品价值。\n\n---\n\n## 三、财务状况与经营业绩\n\n### 3.1 财务报告审计情况\n\n根据同花顺2024年度报告摘要，天健会计师事务所（特殊普通合伙）对公司2024年度财务报告出具了**标准无保留意见**的审计结论[1]。标准无保留意见是财务审计中最为理想的审计结论类型，意味着审计师认为公司财务报表真实、准确、完整地反映了财务状况，不存在重大错报风险。这一审计结论为评估公司财务信息的可靠性提供了积极信号。\n\n### 3.2 盈利状态评估\n\n同花顺已实现盈利，财务报告中的\"公司上市时未盈利且目前未实现盈利\"标注为\"不适用\"[1]，表明公司已跨越初创期亏损阶段，进入稳定盈利期。这一特征对于判断公司的发展阶段和经营质量具有重要意义——稳定盈利意味着公司主营业务具备自我造血能力，不依赖外部融资维持运营。\n\n### 3.3 股东回报表现\n\n在股东回报方面，公司向全体股东每10股派发现金红利**30.00元（含税）**，以537,600,000股为基数计算，现金分红总额达**16.128亿元**[1]。该分红力度在A股市场中处于较高水平，体现出以下几个层面的积极信号：\n\n- **盈利能力扎实**：高额现金分红的前提是具备充沛的经营性现金流和可分配利润；\n- **股东回报意识**：公司将经营成果回馈股东的意愿较为强烈；\n- **财务稳健**：分红行为本身也表明公司流动性状况良好，不存在短期资金压力。\n\n### 3.4 财务信息缺口说明\n\n尽管现有研究获取了分红数据和审计结论等关键信息，但完整的财务数据仍存在显著缺口，包括：\n\n- **营业收入与净利润**：缺乏具体的营收和利润数值，无法判断同比增长率和毛利率水平；\n- **资产负债情况**：资产总额、负债率、资产负债结构等指标未获取；\n- **现金流状况**：经营性现金流、投资性现金流、筹资性现金流的详细数据缺失；\n- **营收结构**：各业务板块（增值电信服务、iFind终端、金融数据推广服务等）的收入贡献比例未能量化；\n- **市值与估值**：当前市值、市盈率、市净率等估值指标未获得。\n\n上述财务指标的缺失制约了对公司财务健康度、成长性和估值水平的全面评估。建议通过公司2024年度报告全文、季报、交易所公告等权威渠道获取完整财务数据，以进行系统性的财务分析。\n\n---\n\n## 四、行业竞争地位与市场分析\n\n### 4.1 金融信息服务行业概述\n\n金融信息服务行业是连接金融市场数据、投资者决策与金融产品交易的关键中间环节。行业上游依托于证券交易所、监管机构、上市公司等数据源，下游服务于机构投资者（券商、基金、保险、银行等）和个人投资者。行业核心价值在于数据的采集、清洗、整合、分析与分发，以及基于数据的工具化、智能化服务输出。\n\n### 4.2 同花顺的市场定位\n\n同花顺的市场定位可概括为**\"个人投资者流量入口+机构数据服务提供商\"**的双轮驱动模式。在个人投资者端，同花顺通过免费行情软件积累庞大的用户基础，构建了显著的用户流量优势；在机构客户端，通过iFind产品切入专业投研数据市场，与Wind形成正面竞争[5]。\n\n这一双轮驱动模式的核心优势在于：C端用户基础为B端业务提供了品牌认知度和数据验证场景，而B端业务的专业化能力又反过来提升了C端产品的技术含量和可信度。\n\n### 4.3 行业竞争格局\n\n中国金融信息服务行业的主要参与者包括：\n\n- **Wind（万得信息）**：行业龙头，垄断地位最强，主要服务于机构客户，数据覆盖广度和深度领先；\n- **东方财富**：以财经资讯和社区运营见长，用户流量庞大，也在向数据服务领域扩展；\n- **大智慧**：老牌行情软件厂商，在个人投资者市场有一定份额；\n- **同花顺**：兼具C端流量优势和B端数据服务能力的综合型竞争者[4][5]。\n\n同花顺在竞争格局中的独特位置在于：它是在个人端和机构端同时具备较强竞争力的少数玩家之一。iFind产品的崛起使其在机构市场的份额逐步扩大，对Wind形成竞争压力[5]；同时，其个人用户基础为AI技术的应用提供了丰富的数据和场景支撑。\n\n### 4.4 竞争壁垒分析\n\n从现有研究线索来看，同花顺的竞争壁垒主要体现在以下几个方面：\n\n**数据资产壁垒**：多年积累的金融数据资产覆盖行情、财务、资讯、用户行为等多维度信息，构成竞争对手难以快速复制的基础。\n\n**AI技术壁垒**：同花顺在AI+金融场景的融合应用上已有产品落地，AI技术的嵌入提升了产品的差异化程度和用户粘性[5]。\n\n**用户规模壁垒**：面向个人投资者的产品拥有庞大的用户基数，用户迁移成本高，形成天然的市场护城河。\n\n**品牌认知壁垒**：作为国内较早进入金融信息服务领域的企业之一，同花顺已在投资者群体中建立了较为深入的品牌认知。\n\n然而，需要指出的是，由于本次研究在行业竞争地位与市场分析方向的信息获取不充分，以上竞争壁垒分析主要基于现有业务信息的推断性结论，尚缺乏详实的市场份额数据和竞争对手对比分析的支撑。\n\n---\n\n## 五、发展战略与未来前景\n\n### 5.1 AI战略：核心发展方向\n\nAI技术是同花顺当前及未来战略布局的主轴。公司已将AI能力建设提升至战略核心位置，主要推进方向包括[5]：\n\n**产品智能化**：将AI能力嵌入现有产品矩阵，典型应用包括智能选股、量化策略生成、智能客服、个性化资讯推送等。AI技术的引入旨在提升用户体验和产品使用效率，增强用户粘性。\n\n**数据智能化**：利用AI技术提升金融数据的采集、处理和分析效率，实现更高质量的数据产品输出，包括自动化的财务分析、舆情监控、事件驱动研究等。\n\n**服务智能化**：为机构客户和B端用户提供AI驱动的智能投研解决方案，涵盖智能风控、智能投顾、智能研报生成等应用场景。\n\n### 5.2 B端业务扩张战略\n\n同花顺正在加大力度推进B端业务的扩张。核心战略意图在于：通过iFind等数据终端产品持续扩大在机构市场的份额，提升对Wind的竞争压力，同时探索AI+金融数据的整体解决方案服务[4][5]。\n\nB端业务的战略价值在于：第一，机构客户的付费能力和付费意愿显著高于个人投资者，有利于提升整体收入质量和盈利水平；第二，B端业务具有较高的客户粘性和续约率，有助于平滑收入波动；第三，能够与C端业务形成协同，共享数据和基础设施资源。\n\n### 5.3 市场认可与估值前景\n\n截至2023年3月，同花顺股价约124.45元/股，表现显著优于券商板块整体走势[5]。分析师指出，这一强劲表现主要受益于市场对同花顺AI产业生态和技术应用前景的认可。资本市场对AI概念的热衷为同花顺提供了估值提升的窗口期。\n\n### 5.4 战略不确定性因素\n\n尽管同花顺的发展战略方向较为清晰，但也面临若干不确定性因素：\n\n**AI商业化落地的不确定性**：尽管AI技术应用前景广阔，但从技术原型到稳定商业化输出的路径仍存在较大不确定性，包括技术成熟度、客户接受度、商业模式验证等因素[5]。\n\n**Wind的竞争反制**：作为行业龙头，Wind在数据深度和专业度方面仍有显著优势，其可能的竞争反制措施将对同花顺B端业务的扩张速度形成制约。\n\n**监管政策风险**：金融信息服务行业受监管政策影响较大，数据合规、AI应用规范等领域的政策变化可能对公司业务产生影响。\n\n**市场周期性风险**：公司盈利与资本市场活跃度高度相关，市场行情波动可能对个人投资者的付费意愿和机构客户的预算安排产生影响。\n\n---\n\n## 总结\n\n本报告对同花顺（300033）进行了多维度的研究分析，主要结论如下：\n\n**第一，公司已建立相对完整的\"个人投资者+机构投资者\"双轮驱动业务架构。** 个人端以行情软件和增值电信服务为核心，机构端以iFind/iFinD数据终端和AI金融科技解决方案为增长引擎。两大业务板块在数据资源、技术能力和用户基础上形成了有效协同。\n\n**第二，iFind产品的崛起标志着同花顺在机构数据服务市场已具备实质性竞争力。** 对Wind核心投研市场的冲击不仅是收入增长的重要来源，也是公司专业化和高端化转型的重要标志。iFind在性价比和服务智能化方面形成差异化优势，有望在中长期内持续扩大市场份额。\n\n**第三，AI技术战略是公司最重要的未来增长引擎。** 同花顺在AI领域的场景基础和数据资产优势，为其在金融科技领域的持续创新提供了支撑。ChatGPT等大语言模型技术的突破进一步打开了AI商业化的想象空间。但AI技术的商业化落地仍面临技术成熟度、市场接受度和商业模式验证等多重挑战[5]。\n\n**第四，财务层面表现积极但信息透明度有待提升。** 公司已实现盈利，2024年度现金分红高达16.128亿元，财务报告经标准无保留意见审计[1]，整体财务状况稳健。但完整财务数据（营收、利润、资产负债等）的缺失制约了更深入的分析，建议通过年度报告全文补充获取。\n\n**第五，研究中存在较为明显的信息缺口。** 公司发展历程、股权结构、管理团队、行业竞争格局详细数据及战略规划等维度的信息在本次研究中未能有效获取，建议通过年报全文、招股说明书、企业信用信息平台、交易所公告等渠道进行补充研究。\n\n展望未来，同花顺的核心价值将取决于三个关键变量：一是AI技术能否在其产品矩阵中实现实质性商业化突破并形成可持续的收入贡献；二是iFind在机构市场的份额扩张能否突破Wind的垄断格局；三是公司的创新能力能否应对东方财富等竞争对手的赶超压力。在金融信息服务行业数字化和智能化转型的大趋势下，同花顺具备成为行业领军者的潜力，但具体发展路径仍需持续跟踪和评估。\n\n---\n\n## 参考来源\n\n[1] 浙江核新同花顺网络信息股份有限公司2024年年度审计报告摘要 - https://abg.baidu.com/tags/xhomb3oru7eoxq6fwxnln7v5wkr3voo4ydw4b3oc3o32fvnzzk35h25vwg2pvnoexhomb3oozlgofu7lzt2nlpi11\n\n[2] Pinterest设计素材 - https://www.pinterest.com/pin/863002347360977471/\n\n[3] 小宇宙播客频道（创业与公司管理相关） - https://www.xiaoyuzhoufm.com/episode/656f62a9157b5b7bf357bf97\n\n[4] 同花顺(300033) 经营分析_F10_同花顺金融服务网 - https://basic.10jqka.com.cn/300033/operate.html\n\n[5] 同花顺出\"王炸\"？iFind蚕食Wind核心投研市场 AI应用商业化却仍待考 - 21经济网 - https://www.21jingji.com/article/20230305/herald/252e1beb01cd08900fd751c7d7b51a2b.html\n\n[6] 同花顺研究报告：乘AI东风，金融信息服务扬帆起航 - https://zhuanlan.zhihu.com/p/619748441\n\n[7] 浙江核新同花顺网络信息股份有限公司2024年年度报告摘要 - https://static.cninfo.com.cn/finalpage/2025-02-25/1222627621.PDF",
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "text": "本次检索未能获取关于同花顺公司的有效信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺公司概况与发展历程",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-2",
+      "text": "**暂无可用信息** 本次检索返回的搜索结果均未包含同花顺公司的实质性信息： - **** 相关页面访问被拒绝（403 Forbidden），未能获取内容 - **** 为设计素材网站内容，与同花顺公司无关 - **** 为创业类播客节目，讨论公司注册与股权管理，与同花顺公司介绍无直接关联 --- **建议**：可更换检索词或使用其他信息渠道获取同花顺公司资料。",
+      "criticality": "medium",
+      "uncertainty": "medium",
+      "status": "partially_supported",
+      "placeholder": false,
+      "section_ref": "同花顺公司概况与发展历程",
+      "evidence_ids": [
+        "evidence-1"
+      ]
+    },
+    {
+      "claim_id": "claim-3",
+      "text": "根据同花顺经营分析数据，其主营业务可分为**两大客户群体**： - **机构客户**：提供金融科技AI整体解决方案、系统维护服务、金融数据推广等 - **个人投资者**：提供基于AI的金融资讯和投资理财产品 产品类型涵盖金融资讯信息、**iFinD数据终端**及维护等金融数据业务。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺主营业务与商业模式分析",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-4",
+      "text": "同花顺推出的**iFind产品正在蚕食Wind（万得）**的核心投研市场，成为投研数据领域的有力竞争者。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "同花顺主营业务与商业模式分析",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-5",
+      "text": "**公司全称**：浙江核新同花顺网络信息股份有限公司 - **股票代码**：300033 - **上市交易所**：深圳证券交易所 --- **1.",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "contradicted",
+      "placeholder": false,
+      "section_ref": "同花顺财务状况与经营业绩研究",
+      "evidence_ids": [
+        "evidence-7"
+      ]
+    },
+    {
+      "claim_id": "claim-6",
+      "text": "盈利能力与股东回报** 公司向全体股东每 10 股派发现金红利 30.00 元（含税），以 537,600,000 股为基数计算，现金分红总额达 **16.128 亿元**，显示出较强的盈利能力与对股东的回报力度。",
+      "criticality": "medium",
+      "uncertainty": "low",
+      "status": "contradicted",
+      "placeholder": false,
+      "section_ref": "同花顺财务状况与经营业绩研究",
+      "evidence_ids": [
+        "evidence-7"
+      ]
+    },
+    {
+      "claim_id": "claim-7",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺行业竞争地位与市场分析",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-8",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺发展战略与未来前景展望",
+      "evidence_ids": []
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "edge-1",
+      "claim_id": "claim-2",
+      "evidence_id": "evidence-1",
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-0ec18d31378d",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "relation": "partially_supports",
+      "confidence": 0.55,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据存在部分重合。"
+    },
+    {
+      "edge_id": "edge-2",
+      "claim_id": "claim-5",
+      "evidence_id": "evidence-7",
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 7
+      },
+      "relation": "contradicts",
+      "confidence": 0.95,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据存在明确方向冲突。"
+    },
+    {
+      "edge_id": "edge-3",
+      "claim_id": "claim-6",
+      "evidence_id": "evidence-7",
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-65760df8a3b9",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 7
+      },
+      "relation": "contradicts",
+      "confidence": 0.95,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据存在明确方向冲突。"
+    }
+  ],
+  "conflict_sets": [
+    {
+      "conflict_id": "conflict-1",
+      "claim_ids": [
+        "claim-5"
+      ],
+      "evidence_ids": [
+        "evidence-7"
+      ],
+      "status": "open",
+      "summary": "关键 claim 与直接证据冲突：**公司全称**：浙江核新同花顺网络信息股份有限公司 - **股票代码**：300033 - **上市交易所**：深圳证券交易所 --- **1."
+    },
+    {
+      "conflict_id": "conflict-2",
+      "claim_ids": [
+        "claim-6"
+      ],
+      "evidence_ids": [
+        "evidence-7"
+      ],
+      "status": "open",
+      "summary": "关键 claim 与直接证据冲突：盈利能力与股东回报** 公司向全体股东每 10 股派发现金红利 30.00 元（含税），以 537,600,000 股为基数计算，现金分红总额达 **16.128 亿元**，显示出较强的盈利能力与对股东的回报力度。"
+    }
+  ]
+}

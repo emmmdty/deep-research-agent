@@ -1,0 +1,29 @@
+{
+  "name": "@deep-research-agent/demo-site",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174",
+    "build": "tsc -b && vite build",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "preview": "vite preview --host 127.0.0.1 --port 5174"
+  },
+  "dependencies": {
+    "cytoscape": "^3.34.0",
+    "lucide-react": "^1.25.0",
+    "react": "^19.0.0",
+    "react-cytoscapejs": "^2.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "^3.21.9",
+    "@types/react": "^19.0.8",
+    "@types/react-cytoscapejs": "^1.2.6",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.4.3"
+  }
+}

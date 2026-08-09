@@ -26,6 +26,14 @@ UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .
 UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q tests/test_cli_runtime.py tests/test_phase4_surfaces.py
 ```
 
+For demo-site changes, also rebuild the static demo and verify the generated data matches the
+committed assets:
+
+```bash
+UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_demo_site_data.py
+npm run build --prefix apps/demo-site
+```
+
 For broader runtime changes, also run the focused runtime regressions:
 
 ```bash
