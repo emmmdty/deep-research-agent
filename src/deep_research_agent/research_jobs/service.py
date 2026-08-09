@@ -83,6 +83,22 @@ class ResearchJobService:
         """Attach the scheduler composition root after inspecting a persisted job."""
         self._scheduler_factory = scheduler_factory
 
+    def _scheduler_offline(self) -> bool:
+        """Whether the scheduler must run in deterministic offline composition.
+
+        Offline is explicit via SCHEDULER_RUNTIME_MODE, and additionally implied by the
+        product offline demo mode (PRODUCT_OFFLINE_MODE=true) so the credential-free demo
+        path can never accidentally reach a live provider.
+        """
+        configured = getattr(self.settings, "scheduler_runtime_mode", "production")
+        if configured == "offline":
+            return True
+        env_mode = os.environ.get("SCHEDULER_RUNTIME_MODE", "")
+        if env_mode.strip().casefold() in {"offline", "1", "true", "yes", "on"}:
+            return True
+        product_offline = os.environ.get("PRODUCT_OFFLINE_MODE", "")
+        return product_offline.strip().casefold() in {"1", "true", "yes", "on"}
+
     def build_initial_state(
         self,
         *,
@@ -134,6 +150,15 @@ class ResearchJobService:
         _job_id: str | None = None,
     ) -> JobRuntimeRecord:
         """Create a new job and optionally spawn a worker for it."""
+        # Offline mode must not depend on live LLM credentials. The deterministic
+        # benchmark research profile exercises the full orchestration pipeline
+        # (planning -> parallel retrieval -> verification -> audit -> report)
+        # with rule-based planner/researcher/writer stages instead of provider calls.
+        if research_profile == "default" and self._scheduler_offline():
+            research_profile = "benchmark"
+            logger.info(
+                "offline scheduler mode: using deterministic benchmark research profile"
+            )
         job_id = _job_id or _run_id()
         job_dir = self.store.job_dir(job_id)
         bundle_dir = self.store.bundle_dir(job_id)
@@ -572,8 +597,7 @@ class ResearchJobService:
             "--stale-timeout-seconds",
             str(self.stale_timeout_seconds),
         ]
-        scheduler_mode = getattr(self.settings, "scheduler_runtime_mode", "production")
-        if scheduler_mode == "offline":
+        if self._scheduler_offline():
             command.append("--offline")
         else:
             scheduler_factory_path = getattr(self.settings, "scheduler_factory_path", None)

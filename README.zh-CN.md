@@ -106,15 +106,21 @@ checkpoint/恢复）完全对应。完整有据可查的对比见 [docs/final/CO
 uv sync --group dev
 cp .env.example .env        # 离线 demo 不需要任何密钥
 uv run python main.py --help
+```
 
-uv run python main.py submit \
+以确定性离线模式提交任务（无需 API key、无需网络；调度器自动切换到规则化 benchmark 研究管线）：
+
+```bash
+SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
   --topic "Anthropic company profile" \
   --source-profile company_trusted \
   --allow-domain anthropic.com \
   --json
 ```
 
-本地 Web demo（无 Docker、文件型 SQLite、离线确定性模式）：
+不加 `SCHEDULER_RUNTIME_MODE=offline` 前缀时 CLI 按生产模式运行，需要 `.env` 中有效的 LLM 凭据。
+
+本地 Web demo（无 Docker、文件型 SQLite、离线确定性模式；产品离线模式会自动联动离线调度器）：
 
 ```bash
 PRODUCT_DATABASE_URL=sqlite+pysqlite:///./workspace/product.db \

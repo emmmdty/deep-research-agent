@@ -122,15 +122,24 @@ evidence-backed comparison.
 uv sync --group dev
 cp .env.example .env        # offline demo needs no secrets
 uv run python main.py --help
+```
 
-uv run python main.py submit \
+Submit a job in deterministic offline mode (no API keys, no network; the scheduler
+automatically switches the research profile to the rule-based benchmark pipeline):
+
+```bash
+SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
   --topic "Anthropic company profile" \
   --source-profile company_trusted \
   --allow-domain anthropic.com \
   --json
 ```
 
-Local web demo (no Docker, file-backed SQLite, offline deterministic mode):
+Without the `SCHEDULER_RUNTIME_MODE=offline` prefix the CLI runs in production mode and
+requires working LLM credentials in `.env`.
+
+Local web demo (no Docker, file-backed SQLite, offline deterministic mode; the product
+offline mode implies the offline scheduler):
 
 ```bash
 PRODUCT_DATABASE_URL=sqlite+pysqlite:///./workspace/product.db \

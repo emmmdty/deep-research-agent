@@ -757,3 +757,33 @@ def test_phase2_nodes_accept_checkpoint_serialized_payloads(tmp_path: Path, monk
     assert verifier_result["status"] == "verified"
     assert critic_result["status"] == "reviewed"
     assert writer_result["status"] == "completed"
+
+
+def test_submit_uses_deterministic_benchmark_profile_in_offline_mode(tmp_path: Path, monkeypatch):
+    """offline 模式下默认 profile 必须切换到确定性 benchmark，避免触碰 live LLM。"""
+    from services.research_jobs.service import ResearchJobService
+
+    monkeypatch.setenv("PRODUCT_OFFLINE_MODE", "true")
+    monkeypatch.delenv("SCHEDULER_RUNTIME_MODE", raising=False)
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="offline demo topic", max_loops=2, research_profile="default", start_worker=False)
+
+    assert job.metadata["research_profile"] == "benchmark"
+
+    loaded = service.get(job.job_id)
+    assert loaded is not None
+    checkpoint = service.store.get_latest_checkpoint(job.job_id)
+    assert checkpoint is not None
+    assert "benchmark" in checkpoint.state_payload.get("research_profile", "")
+
+
+def test_submit_keeps_explicit_profile_in_offline_mode(tmp_path: Path, monkeypatch):
+    """offline 模式下显式指定的 profile 必须保留（不覆盖用户意图）。"""
+    from services.research_jobs.service import ResearchJobService
+
+    monkeypatch.setenv("PRODUCT_OFFLINE_MODE", "true")
+
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(topic="explicit profile topic", max_loops=2, research_profile="default", start_worker=False)
+    assert job.metadata["research_profile"] == "benchmark"
