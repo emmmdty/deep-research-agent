@@ -5,13 +5,15 @@ This is the recommended reading order for GitHub reviewers.
 ## Fast Path
 
 1. [`README.md`](../README.md) - positioning, architecture, quick run, artifact contract, evaluation summary, limits, and roadmap.
-2. [`REPO_MAP.md`](./REPO_MAP.md) - canonical, active, compatibility, legacy, and local-only boundaries.
-3. [`docs/architecture.md`](./architecture.md) - implemented architecture and current limits.
-4. [`docs/final/EXPERIMENT_SUMMARY.md`](./final/EXPERIMENT_SUMMARY.md) - release smoke, native regression, external portfolio, and follow-up metrics summary.
-5. [`docs/final/VALUE_SCORECARD.md`](./final/VALUE_SCORECARD.md) - measured value pack.
-6. [`docs/benchmarks/native/README.md`](./benchmarks/native/README.md) - deterministic native benchmark overview.
-7. [`docs/benchmarks/native/NATIVE_SCORECARD.md`](./benchmarks/native/NATIVE_SCORECARD.md) - smoke and regression scorecard.
-8. [`docs/gui/README.md`](./gui/README.md) - optional local GUI and desktop docs.
+2. [`docs/final/COMPETITIVE_LANDSCAPE.md`](./final/COMPETITIVE_LANDSCAPE.md) - evidence-backed market comparison and interview talk track.
+3. [`REPO_MAP.md`](./REPO_MAP.md) - canonical, active, compatibility, legacy, and local-only boundaries.
+4. [`docs/architecture.md`](./architecture.md) - implemented architecture and current limits.
+5. [`docs/USER_GUIDE.md`](./USER_GUIDE.md) - 5-minute demo and daily workflows.
+6. [`docs/final/EXPERIMENT_SUMMARY.md`](./final/EXPERIMENT_SUMMARY.md) - release smoke, native regression, external portfolio, and follow-up metrics summary.
+7. [`docs/final/VALUE_SCORECARD.md`](./final/VALUE_SCORECARD.md) - measured value pack.
+8. [`docs/benchmarks/native/README.md`](./benchmarks/native/README.md) - deterministic native benchmark overview.
+9. [`docs/benchmarks/native/NATIVE_SCORECARD.md`](./benchmarks/native/NATIVE_SCORECARD.md) - smoke and regression scorecard.
+10. [`docs/gui/README.md`](./gui/README.md) - optional local GUI and desktop docs.
 
 ## Engineering Detail
 
