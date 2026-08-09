@@ -1,0 +1,119 @@
+{
+  "sample_notice": "DEMO/SAMPLE bundle only. This is not a live research result and must not be treated as current factual analysis.",
+  "bundle_version": "sample-1.0.0",
+  "job": {
+    "job_id": "sample-deepseek-v4",
+    "created_at": "2026-04-29T00:00:00Z",
+    "input_prompt": "deepseek v4 DEMO/SAMPLE",
+    "status": "sample",
+    "current_stage": "demo",
+    "source_profile": "company_trusted",
+    "budget": {
+      "max_loops": 3,
+      "research_profile": "default",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "sample-bundle",
+    "report_bundle_ref": "examples/sample_bundle/report_bundle.json"
+  },
+  "report_markdown": "# deepseek v4 DEMO/SAMPLE report\n\nThis sample bundle is intentionally synthetic. It demonstrates how the local Deep Research Agent workbench presents a report, sources, claims, audit gate status, and raw JSON when API keys or network access are unavailable.\n\n## Demo summary\n\n- DEMO/SAMPLE: The requested topic is `deepseek v4`.\n- DEMO/SAMPLE: The report text below is a product demo placeholder, not current market research.\n- DEMO/SAMPLE: Claims are linked to sample source records so the UI can show auditability.\n\n## Demo interpretation\n\nA live run would collect sources, extract claims, attach evidence, and mark unresolved critical claims for manual review. This sample shows the intended artifact shape without making factual assertions about any real model release.",
+  "report_text": "deepseek v4 DEMO/SAMPLE report\n\nThis sample bundle is synthetic and not a live research result. It exists so a reviewer can inspect the local-first product UI without API keys or reliable network access.\n\nA real run would replace this text with generated research output, source-backed claims, trace events, and audit gate decisions.",
+  "sources": [
+    {
+      "source_id": "sample-source-1",
+      "title": "DEMO/SAMPLE official product page placeholder",
+      "url": "https://example.com/demo/deepseek-v4/product",
+      "canonical_uri": "https://example.com/demo/deepseek-v4/product",
+      "domain": "example.com",
+      "snippet": "DEMO/SAMPLE snippet only. Placeholder for an official product or model page in a live run.",
+      "credibility": "sample-high",
+      "relevance": "sample-topic-match"
+    },
+    {
+      "source_id": "sample-source-2",
+      "title": "DEMO/SAMPLE technical documentation placeholder",
+      "url": "https://example.com/demo/deepseek-v4/docs",
+      "canonical_uri": "https://example.com/demo/deepseek-v4/docs",
+      "domain": "example.com",
+      "snippet": "DEMO/SAMPLE snippet only. Placeholder for technical documentation evidence.",
+      "credibility": "sample-medium",
+      "relevance": "sample-capability-context"
+    },
+    {
+      "source_id": "sample-source-3",
+      "title": "DEMO/SAMPLE third-party analysis placeholder",
+      "url": "https://example.com/demo/deepseek-v4/analysis",
+      "canonical_uri": "https://example.com/demo/deepseek-v4/analysis",
+      "domain": "example.com",
+      "snippet": "DEMO/SAMPLE snippet only. Placeholder for an external analysis source.",
+      "credibility": "sample-medium",
+      "relevance": "sample-market-context"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "sample-claim-1",
+      "text": "DEMO/SAMPLE claim: a live run should distinguish confirmed product details from rumors.",
+      "support_status": "sample-supported",
+      "status": "supported",
+      "risk": "low-demo-risk",
+      "source_ids": ["sample-source-1"]
+    },
+    {
+      "claim_id": "sample-claim-2",
+      "text": "DEMO/SAMPLE claim: source quality should be visible before trusting a generated report.",
+      "support_status": "sample-supported",
+      "status": "supported",
+      "risk": "low-demo-risk",
+      "source_ids": ["sample-source-1", "sample-source-2"]
+    },
+    {
+      "claim_id": "sample-claim-3",
+      "text": "DEMO/SAMPLE claim: unresolved critical claims should block the audit gate.",
+      "support_status": "sample-needs-review",
+      "status": "unverifiable",
+      "risk": "manual-review-demo",
+      "block_reason": "DEMO/SAMPLE blocked claim for UI demonstration.",
+      "source_ids": ["sample-source-3"]
+    },
+    {
+      "claim_id": "sample-claim-4",
+      "text": "DEMO/SAMPLE claim: the bundle should preserve enough metadata for local inspection.",
+      "support_status": "sample-supported",
+      "status": "supported",
+      "risk": "low-demo-risk",
+      "source_ids": ["sample-source-2"]
+    },
+    {
+      "claim_id": "sample-claim-5",
+      "text": "DEMO/SAMPLE claim: raw JSON remains available after user-readable panels.",
+      "support_status": "sample-supported",
+      "status": "supported",
+      "risk": "low-demo-risk",
+      "source_ids": ["sample-source-1", "sample-source-2", "sample-source-3"]
+    }
+  ],
+  "audit_decision": {
+    "gate_status": "pending_manual_review",
+    "critical_claim_count": 2,
+    "blocked_critical_claim_count": 1,
+    "blocking_claim_ids": ["sample-claim-3"],
+    "summary": "DEMO/SAMPLE audit decision: one synthetic blocked claim is shown to demonstrate the gate.",
+    "manual_review": "DEMO/SAMPLE manual review required."
+  },
+  "audit_summary": {
+    "status": "sample",
+    "gate_status": "pending_manual_review",
+    "critical_claim_count": 2,
+    "blocked_critical_claim_count": 1,
+    "manual_review_required": true
+  },
+  "run_metrics": {
+    "llm_calls": 0,
+    "search_calls": 0,
+    "sources_loaded": 3,
+    "claims_loaded": 5,
+    "sample_mode": true
+  }
+}

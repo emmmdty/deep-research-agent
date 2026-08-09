@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-05-22T18:11:40.931906+00:00",
+  "job": {
+    "job_id": "20260522T181016Z-baa9b27a",
+    "created_at": "2026-05-22T18:10:16.104418+00:00",
+    "input_prompt": "我想研究一下同花顺这个公司。",
+    "status": "completed",
+    "source_profile": "company_broad",
+    "budget": {
+      "max_loops": 1,
+      "research_profile": "default",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "blocked",
+    "event_count": 27,
+    "tool_event_count": 0,
+    "stage_event_count": 12,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 5,
+    "blocked_critical_claim_count": 5,
+    "manual_review_required": true
+  },
+  "artifacts": {
+    "report_markdown": "report.md",
+    "report_html": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/report.html",
+    "report_bundle": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/report_bundle.json",
+    "claims": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/claims.json",
+    "sources": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/sources.json",
+    "audit_decision": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/audit_decision.json",
+    "trace": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/trace.jsonl",
+    "manifest": "workspace/research_jobs/20260522T181016Z-baa9b27a/bundle/manifest.json",
+    "review_queue": "audit/review_queue.json",
+    "claim_graph": "audit/claim_graph.json"
+  },
+  "counts": {
+    "sources": 7,
+    "snapshots": 7,
+    "evidence_fragments": 7,
+    "claims": 8,
+    "claim_support_edges": 3,
+    "conflict_sets": 2
+  }
+}

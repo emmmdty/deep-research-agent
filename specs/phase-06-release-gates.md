@@ -2,7 +2,7 @@
 
 ## Status
 
-- Planned
+- Implemented (2026-04) — see `evals/reports/phase5_local_smoke/` (authoritative release gate) and `configs/release_gate.yaml`. This file is retained as the phase history record.
 
 ## Objective
 

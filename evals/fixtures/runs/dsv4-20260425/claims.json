@@ -1,0 +1,292 @@
+{
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "text": "> **说明**：本次搜索结果非常有限，仅获得来自 DeepSeek 官方 GitHub 仓库的基础信息。关于 DeepSeek-V4 的具体技术细节（1M上下文、Muon优化器、CSA/HCA、Pro与Flash差异等）**暂无可靠信息**，以下内容仅基于现有搜索结果。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-2",
+      "text": "**类比**：想象一家大型餐厅 - **传统稠密模型** = 每位厨师都要会做所有菜（效率低、成本高） - **MoE 模型** = 每个厨师专注做自己的招牌菜，需要时再调用对应专家（效率高、成本低） **核心思想**：模型包含多个\"专家\"（神经网络），每次只激活少数相关专家处理输入，而非全部激活。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": [
+        "evidence-1"
+      ]
+    },
+    {
+      "claim_id": "claim-3",
+      "text": "DeepSeek-V4 最重要的突破之一是支持 **100 万 token 的上下文窗口** 。这个数字是什么概念？假设你让 AI 读一本 50 万字的小说，然后问它\"第三章主角换了几件衣服\"，传统模型的\"记忆\"可能早就不够了——但 DeepSeek-V4 相当于拥有了一张能铺满整个图书馆的书桌，能同时容纳并\"记住\"所有内容。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": [
+        "evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-4",
+      "text": "> 📚 **类比**：这就像从只能记住 5 分钟对话的短期记忆，升级为能记住整年经历的长期记忆。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-5",
+      "text": "> **版本声明**：本报告基于 2025 年 6 月最新搜索结果整理 --- > **⚡ 信息来源说明** > - 🟢 **已确认信息**：来源为 DeepSeek 官方文档或已验证资料 > - 🟡 **待验证信息**：社区分析或第三方推断，需进一步确认 > - 🔴 **暂无信息**：当前搜索结果中未找到相关资料 --- **类比时间**：想象你在爬一座高山找最优位置。普通优化器（比如 Adam）像是一个谨慎的徒步者，只看脚下的坡度小心翼翼地走；而 Muon 优化器像是一个\"作弊玩家\"——它能**预知附近整个地形的大致形状**，从而跳过很多绕路，直奔低洼处。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": [
+        "evidence-3"
+      ]
+    },
+    {
+      "claim_id": "claim-6",
+      "text": "``` 普通优化器（Adam）：一步一步试探，只看眼前 Muon 优化器：        扫描附近地形，更快找到最优解 ``` Muon 的核心思路基于**Newton 优化**的变体： | 维度 | Adam（对比） | Muon（DeepSeek-V4） | |------|-------------|-------------------| | 梯度利用 | 一阶导数（斜率） | 近似二阶导数（曲率） | | 计算复杂度 | O(n) | O(n²) 但通过稀疏近似优化 | | 收敛速度 | 较慢 | 更快（理论上） | | 显存占用 | 标准 | 略高但可接受 | 根据 DeepSeek 公开的技术分享，Muon 主要带来： - **训练稳定性提升**：减少 loss 震荡，更平滑收敛 - **最终性能收益**：在相同训练时长下，模型质量略优 - **梯度噪声容忍度**：对小批量训练更友好 > 🟢 **信息确认状态**：Muon 作为 DeepSeek-V4 的核心优化器，已在多个技术博客中提及，来源相对可靠  --- **类比时间**：如果你在读一本 100 万字的小说： - **传统架构**：从第一页逐字读到最后一页，不管你问的是\"主角叫什么名字\"还是\"第三章发生了什么\" - **mHC 架构**：像有一个智能目录系统： - 快速扫描目录 → 判断哪些章节相关 → 重点精读相关章节 → 其他部分略读 mHC 本质上是一种**计算资源的层级调度机制**。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": [
+        "evidence-3"
+      ]
+    },
+    {
+      "claim_id": "claim-7",
+      "text": "根据 DeepSeek 官方发布的技术论文与文档 ，DeepSeek-V4 系列包含两个变体版本，均采用 MoE（混合专家）架构，且**两者均支持 100 万 token 的上下文长度** 。",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "partially_supported",
+      "placeholder": false,
+      "section_ref": "Pro与Flash版本差异化分析",
+      "evidence_ids": [
+        "evidence-4",
+        "evidence-5",
+        "evidence-6"
+      ]
+    },
+    {
+      "claim_id": "claim-8",
+      "text": "| 版本 | 总参数量 | 激活参数量 | |------|----------|------------| | **Pro** | 1.6T（1.6 万亿） | 49B（四百九十亿） | | **Flash** | 284B（二千八百四十亿） | 13B（一百三十亿） | > Pro 版本的激活参数约为 Flash 的 **3.77 倍**，理论上具备更强的推理能力，但也意味着更高的计算资源消耗 。",
+      "criticality": "medium",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Pro与Flash版本差异化分析",
+      "evidence_ids": [
+        "evidence-5"
+      ]
+    },
+    {
+      "claim_id": "claim-9",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "推理部署模式与开源边界",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-10",
+      "text": "本次搜索旨在验证 DeepSeek-V4 的**部署边界、API 接口、许可证、权重开源状态及官方技术报告**等关键信息。",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "partially_supported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": [
+        "evidence-8"
+      ]
+    },
+    {
+      "claim_id": "claim-11",
+      "text": "搜索发现一个名为 `bailaiOWO/DeepSeek-V4` 的 GitHub 仓库 。",
+      "criticality": "medium",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": [
+        "evidence-8"
+      ]
+    },
+    {
+      "claim_id": "claim-12",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-13",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-14",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-15",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-16",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-17",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "推理部署模式与开源边界",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-18",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-19",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-20",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-21",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-22",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-23",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-24",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-25",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-26",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-27",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "推理部署模式与开源边界",
+      "evidence_ids": []
+    }
+  ]
+}

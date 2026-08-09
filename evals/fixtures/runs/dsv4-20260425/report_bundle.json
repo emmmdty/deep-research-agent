@@ -1,0 +1,1664 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "20260425T053918Z-1f1e18c1",
+    "created_at": "2026-04-25T05:39:18.115324+00:00",
+    "input_prompt": "研究 DeepSeek-V4 的架构，生成一份面向小白的中文科普报告。要求：解释 MoE、1M 上下文、稀疏注意力/DSA、CSA/HCA、mHC、Muon 优化器、Pro 与 Flash 差异、推理模式、API/开源部署边界；语言要技术准确、有趣、有类比，并明确哪些信息来自官方，哪些是仍需验证的说法。",
+    "status": "completed",
+    "source_profile": "industry_broad",
+    "budget": {
+      "max_loops": 3,
+      "research_profile": "default",
+      "llm_calls": 0,
+      "search_calls": 0
+    },
+    "runtime_path": "orchestrator-v1",
+    "report_bundle_ref": "bundle/report_bundle.json"
+  },
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-fb4a1750517e",
+      "title": "deepseek-ai/DeepSeek-MoE: DeepSeekMoE: Towards Ultimate ...",
+      "canonical_uri": "https://github.com/deepseek-ai/DeepSeek-MoE"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-283ffbf082f7",
+      "title": "DeepSeek-V4: a million-token context that agents can actually use",
+      "canonical_uri": "https://huggingface.co/blog/deepseekv4"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "title": "Change Log | DeepSeek API Docs",
+      "canonical_uri": "https://api-docs.deepseek.com/updates"
+    },
+    {
+      "citation_id": 4,
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-eaa74c8fba43",
+      "title": "DeepSeek V4 Preview Release",
+      "canonical_uri": "https://api-docs.deepseek.com/news/news260424"
+    },
+    {
+      "citation_id": 5,
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "title": "DeepSeek_V4.pdf",
+      "canonical_uri": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
+    },
+    {
+      "citation_id": 6,
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-2a4ec1228bbd",
+      "title": "deepseek-v4",
+      "canonical_uri": "https://huggingface.co/collections/deepseek-ai/deepseek-v4"
+    },
+    {
+      "citation_id": 7,
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-f7afadbaa13f",
+      "title": "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models",
+      "canonical_uri": "https://arxiv.org/html/2401.06066v1"
+    },
+    {
+      "citation_id": 8,
+      "source_id": "source-8",
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "title": "bailaiOWO/DeepSeek-V4 - GitHub",
+      "canonical_uri": "https://github.com/bailaiOWO/DeepSeek-V4"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-1",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "deepseek-ai/DeepSeek-MoE: DeepSeekMoE: Towards Ultimate ...",
+      "canonical_uri": "https://github.com/deepseek-ai/DeepSeek-MoE",
+      "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-fb4a1750517e",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-2",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "DeepSeek-V4: a million-token context that agents can actually use",
+      "canonical_uri": "https://huggingface.co/blog/deepseekv4",
+      "query": "DeepSeek-V4 1M context window sparse attention DSA CSA HCA 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-283ffbf082f7",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-3",
+      "citation_id": 3,
+      "source_type": "web",
+      "title": "Change Log | DeepSeek API Docs",
+      "canonical_uri": "https://api-docs.deepseek.com/updates",
+      "query": "DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-0d4dc4bd15cd",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-4",
+      "citation_id": 4,
+      "source_type": "web",
+      "title": "DeepSeek V4 Preview Release",
+      "canonical_uri": "https://api-docs.deepseek.com/news/news260424",
+      "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-eaa74c8fba43",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-5",
+      "citation_id": 5,
+      "source_type": "pdf",
+      "title": "DeepSeek_V4.pdf",
+      "canonical_uri": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
+      "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+      "selected": true,
+      "snapshot_ref": "snapshot-4f83f1f6bde1",
+      "metadata": {
+        "auth_scope": "public",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "technical_report_link",
+        "content_kind": "remote_pdf",
+        "link_depth": 1,
+        "trust_tier_override": 4
+      }
+    },
+    {
+      "source_id": "source-6",
+      "citation_id": 6,
+      "source_type": "web",
+      "title": "deepseek-v4",
+      "canonical_uri": "https://huggingface.co/collections/deepseek-ai/deepseek-v4",
+      "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+      "selected": true,
+      "snapshot_ref": "snapshot-2a4ec1228bbd",
+      "metadata": {
+        "auth_scope": "public",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "high_value_link",
+        "content_kind": "linked_web",
+        "link_depth": 1,
+        "trust_tier_override": 4
+      }
+    },
+    {
+      "source_id": "source-7",
+      "citation_id": 7,
+      "source_type": "web",
+      "title": "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models",
+      "canonical_uri": "https://arxiv.org/html/2401.06066v1",
+      "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official technical report PDF evidence documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-f7afadbaa13f",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-8",
+      "citation_id": 8,
+      "source_type": "web",
+      "title": "bailaiOWO/DeepSeek-V4 - GitHub",
+      "canonical_uri": "https://github.com/bailaiOWO/DeepSeek-V4",
+      "query": "DeepSeek-V4 deployment inference API open source weight license 2025 official technical report PDF evidence documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-e1f3749d3ba9",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-fb4a1750517e",
+      "canonical_uri": "https://github.com/deepseek-ai/DeepSeek-MoE",
+      "fetched_at": "2026-04-25T05:39:42.711344+00:00",
+      "content_hash": "8510c69f440ecb6da58ce6ae492b376b791993f7ebe0b4669a5f305ebb0b7e3a",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-283ffbf082f7",
+      "canonical_uri": "https://huggingface.co/blog/deepseekv4",
+      "fetched_at": "2026-04-25T05:40:17.401148+00:00",
+      "content_hash": "92da65323aa3843c983cf6f8a60a50dc6bbc424d88b1fe7f0f92a4090504264f",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 1M context window sparse attention DSA CSA HCA 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "canonical_uri": "https://api-docs.deepseek.com/updates",
+      "fetched_at": "2026-04-25T05:41:09.028422+00:00",
+      "content_hash": "7e7b78004c047d8262de70e3d5b236721e2680cdb48cca24842073961db0dc7d",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-eaa74c8fba43",
+      "canonical_uri": "https://api-docs.deepseek.com/news/news260424",
+      "fetched_at": "2026-04-25T05:42:17.931857+00:00",
+      "content_hash": "569b20933831380875f163b07d976e1bee5d5948658dedfa11d01e8954b122b9",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "canonical_uri": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
+      "fetched_at": "2026-04-25T05:42:24.977959+00:00",
+      "content_hash": "0c80828eeb9398a9b9122ce03e9543e49159336c0e44e7d272368381cd8bce5b",
+      "mime_type": "application/pdf",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+        "published_at": null,
+        "source_type": "pdf",
+        "connector_name": "open_web",
+        "task_title": "Pro与Flash版本差异化分析",
+        "content_kind": "remote_pdf",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "technical_report_link",
+        "link_depth": 1,
+        "trust_tier_override": 4,
+        "download_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/resolve/main/DeepSeek_V4.pdf",
+        "local_pdf_path": "workspace/research_jobs/20260425T053918Z-1f1e18c1/_remote_docs/d61d7c939823fb88.pdf",
+        "page_count": 58,
+        "content_length": 4479907
+      }
+    },
+    {
+      "snapshot_id": "snapshot-2a4ec1228bbd",
+      "canonical_uri": "https://huggingface.co/collections/deepseek-ai/deepseek-v4",
+      "fetched_at": "2026-04-25T05:42:25.670922+00:00",
+      "content_hash": "ac54e8ba9fadb056065f2fe1191e53883463118c66898d35b0d9bf7f280401c6",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "high_value_link",
+        "content_kind": "linked_web",
+        "link_depth": 1,
+        "trust_tier_override": 4
+      }
+    },
+    {
+      "snapshot_id": "snapshot-f7afadbaa13f",
+      "canonical_uri": "https://arxiv.org/html/2401.06066v1",
+      "fetched_at": "2026-04-25T05:43:04.023938+00:00",
+      "content_hash": "011f6251d0197e8aef5de3628b1bbcc98d7f7e11572a169ea2d3f515198f087c",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official technical report PDF evidence documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "canonical_uri": "https://github.com/bailaiOWO/DeepSeek-V4",
+      "fetched_at": "2026-04-25T05:43:26.640191+00:00",
+      "content_hash": "5be764463be098e9cf4649e46574777d68f73bf1a3fc4f4ce66914bb17906558",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 deployment inference API open source weight license 2025 official technical report PDF evidence documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    }
+  ],
+  "evidence_fragments": [
+    {
+      "evidence_id": "evidence-1",
+      "snapshot_id": "snapshot-fb4a1750517e",
+      "source_id": "source-1",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "excerpt": "It employs an innovative MoE architecture, which involves two principal strategies: fine-grained expert segmentation and shared experts isolation. It is trained",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-2",
+      "snapshot_id": "snapshot-283ffbf082f7",
+      "source_id": "source-2",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 2
+      },
+      "excerpt": "# DeepSeek-V4: a million-token context that agents can actually use. The real innovation is how DeepSeek v4 is designed for efficient large context length support, and hence as one of the best candidates for agentic tasks. For an agent running a long tool-use trajectory (a SWE-bench task, a multi-step browse session, a terminal session with hundreds of commands), every tool result is appended to the context, and every subsequent token pays the full attention cost against everything that came bef",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-3",
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "source_id": "source-3",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 3
+      },
+      "excerpt": "[English](https://api-docs.deepseek.com/updates#). *   [English](https://api-docs.deepseek.com/updates). *   [Quick Start](https://api-docs.deepseek.com/updates#). *   [Models & Pricing](https://api-docs.deepseek.com/quick_start/pricing). *   [API Guides](https://api-docs.deepseek.com/updates#). *   [JSON Output](https://api-docs.deepseek.com/guides/json_mode). *   [API Reference](https://api-docs.deepseek.com/updates#). *   [News](https://api-docs.deepseek.com/updates#). *   [Other Resources](h",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-4",
+      "snapshot_id": "snapshot-eaa74c8fba43",
+      "source_id": "source-4",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 4
+      },
+      "excerpt": "[English](https://api-docs.deepseek.com/news/news260424#). *   [English](https://api-docs.deepseek.com/news/news260424). *   [中文（中国）](https://api-docs.deepseek.com/zh-cn/news/news260424). *   [Quick Start](https://api-docs.deepseek.com/news/news260424#). *   [Your First API Call](https://api-docs.deepseek.com/). *   [Models & Pricing](https://api-docs.deepseek.com/quick_start/pricing). *   [API Guides](https://api-docs.deepseek.com/news/news260424#). *   [Context Caching](https://api-docs.deepse",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-5",
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "source_id": "source-5",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "excerpt": "DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence DeepSeek-AI research@deepseek.com Abstract We present a preview version of DeepSeek-V4 series, including two strong Mixture-of- Experts (MoE) language models — DeepSeek-V4-Pro with 1.6T parameters (49B activated) and DeepSeek-V4-Flash with 284B parameters (13B activated) — both supporting a context length of one million tokens. DeepSeek-V4 series incorporate several key upgrades in architecture and op- timization: (1) a hyb",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-6",
+      "snapshot_id": "snapshot-2a4ec1228bbd",
+      "source_id": "source-6",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 6
+      },
+      "excerpt": "Linked source discovered from DeepSeek V4 Preview Release: deepseek-v4",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-7",
+      "snapshot_id": "snapshot-f7afadbaa13f",
+      "source_id": "source-7",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 7
+      },
+      "excerpt": "The evaluation results are presented in Table[3](https://arxiv.org/html/2401.06066v1#S5.T3 \"Table 3 ‣ 5.2 Evaluations ‣ 5 Scaling up to DeepSeekMoE 16B ‣ DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models\"), yielding the following observations: (1) On the whole, with about only 40% of the computations, DeepSeekMoE 16B achieves comparable performance with DeepSeek 7B. The evaluation results, as presented in Figure[1](https://arxiv.org/html/2401.06066v1#S0.F1",
+      "extraction_method": "source_snippet"
+    },
+    {
+      "evidence_id": "evidence-8",
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "source_id": "source-8",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 8
+      },
+      "excerpt": "*   [Code](https://github.com/bailaiOWO/DeepSeek-V4). *   [Pull requests 0](https://github.com/bailaiOWO/DeepSeek-V4/pulls). *   [Actions](https://github.com/bailaiOWO/DeepSeek-V4/actions). *   [Projects](https://github.com/bailaiOWO/DeepSeek-V4/projects). *   [Security and quality 0](https://github.com/bailaiOWO/DeepSeek-V4/security). *   [Insights](https://github.com/bailaiOWO/DeepSeek-V4/pulse). *   [Code](https://github.com/bailaiOWO/DeepSeek-V4). *   [Pull requests](https://github.com/baila",
+      "extraction_method": "source_snippet"
+    }
+  ],
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "blocked",
+    "event_count": 75,
+    "tool_event_count": 0,
+    "stage_event_count": 36,
+    "stages": [
+      "clarifying",
+      "planned",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "collecting",
+      "normalizing",
+      "extracting",
+      "claim_auditing",
+      "synthesizing",
+      "rendering"
+    ],
+    "critical_claim_count": 22,
+    "blocked_critical_claim_count": 20,
+    "manual_review_required": true
+  },
+  "audit_events": [
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0001",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "job",
+      "event_type": "job.created",
+      "timestamp": "2026-04-25T05:39:18.115324+00:00",
+      "payload": {
+        "topic": "研究 DeepSeek-V4 的架构，生成一份面向小白的中文科普报告。要求：解释 MoE、1M 上下文、稀疏注意力/DSA、CSA/HCA、mHC、Muon 优化器、Pro 与 Flash 差异、推理模式、API/开源部署边界；语言要技术准确、有趣、有类比，并明确哪些信息来自官方，哪些是仍需验证的说法。",
+        "research_profile": "default"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0002",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "clarifying",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:39:19.195855+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0003",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "clarifying",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:39:19.209675+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0002",
+        "next_stage": "planned"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0004",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "planned",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:39:19.216979+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0005",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "planned",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:39:37.880887+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0003",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0006",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:39:37.887831+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0007",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:40:14.538225+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0004",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0008",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:40:14.545528+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0009",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:41:06.035852+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0005",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0010",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:41:06.042557+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0011",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:42:15.132038+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0006",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0012",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:42:15.140124+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0013",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:42:55.588064+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0007",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0014",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:42:55.596325+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0015",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:42:58.217848+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0008",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0016",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:42:58.224868+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0017",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:42:58.236014+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0009",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0018",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:42:58.245082+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0019",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:42:58.265231+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0010",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0020",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:42:58.272678+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0021",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:42:58.294987+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0011",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0022",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:42:58.302199+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0023",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:16.039144+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0012",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0024",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:16.048022+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0025",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:19.035432+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0013",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0026",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:19.042373+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0027",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:22.013483+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0014",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0028",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:22.020661+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0029",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:37.161607+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0015",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0030",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:37.169592+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0031",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:38.220793+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0016",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0032",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:38.228391+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0033",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:39.231634+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0017",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0034",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:39.239691+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0035",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:40.257738+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0018",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0036",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:40.265145+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0037",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:41.479340+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0019",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0038",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:41.487081+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0039",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:41.498235+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0020",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0040",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:41.506122+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0041",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:41.523792+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0021",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0042",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:41.532566+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0043",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:41.550083+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0022",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0044",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:41.559780+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0045",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:42.675086+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0023",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0046",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:42.683357+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0047",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:43.963434+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0024",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0048",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:43.971163+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0049",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:45.201173+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0025",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0050",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:45.210082+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0051",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:46.462942+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0026",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0052",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:46.470077+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0053",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:47.706430+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0027",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0054",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:47.714156+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0055",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:48.956234+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0028",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0056",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:48.964438+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0057",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:50.076576+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0029",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0058",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:50.083864+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0059",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:51.088069+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0030",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0060",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:51.096762+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0061",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:52.123665+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0031",
+        "next_stage": "collecting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0062",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:52.132043+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0063",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "collecting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:53.415361+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0032",
+        "next_stage": "normalizing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0064",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "normalizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:53.423179+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0065",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "normalizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:53.435706+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0033",
+        "next_stage": "extracting"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0066",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "extracting",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:53.444092+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0067",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "extracting",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:53.465477+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0034",
+        "next_stage": "claim_auditing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0068",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "claim_auditing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:53.473382+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0069",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "claim_auditing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:53.494956+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0035",
+        "next_stage": "synthesizing"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0070",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "synthesizing",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:53.502622+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0071",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "synthesizing",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:43:53.513617+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0036",
+        "next_stage": "rendering"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0072",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "rendering",
+      "event_type": "stage.started",
+      "timestamp": "2026-04-25T05:43:53.521066+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0073",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "rendering",
+      "event_type": "stage.completed",
+      "timestamp": "2026-04-25T05:45:54.938747+00:00",
+      "payload": {
+        "checkpoint_id": "20260425T053918Z-1f1e18c1-checkpoint-0037",
+        "next_stage": "completed"
+      }
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0074",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "completed",
+      "event_type": "job.completed",
+      "timestamp": "2026-04-25T05:45:54.944852+00:00",
+      "payload": {}
+    },
+    {
+      "event_id": "20260425T053918Z-1f1e18c1-event-0075",
+      "job_id": "20260425T053918Z-1f1e18c1",
+      "stage": "bundle",
+      "event_type": "bundle.emitted",
+      "timestamp": "2026-04-25T05:45:54.948469+00:00",
+      "payload": {
+        "report_path": "workspace/research_jobs/20260425T053918Z-1f1e18c1/report.md",
+        "report_bundle_path": "workspace/research_jobs/20260425T053918Z-1f1e18c1/bundle/report_bundle.json",
+        "trace_path": "workspace/research_jobs/20260425T053918Z-1f1e18c1/bundle/trace.jsonl"
+      }
+    }
+  ],
+  "report_text": "> 审计门禁：存在未通过审核的关键 claim，以下内容不可视为已完全验证的研究结论。\n> 阻塞原因：20 条关键 claim 未通过审计门禁\n\n## 待复核关键 Claim\n- > **说明**：本次搜索结果非常有限，仅获得来自 DeepSeek 官方 GitHub 仓库的基础信息。关于 DeepSeek-V4 的具体技术细节（1M上下文、Muon优化器、CSA/HCA、Pro与Flash差异等）**暂无可靠信息**，以下内容仅基于现有搜索结果。（critical_claim_unsupported）\n- DeepSeek-V4 最重要的突破之一是支持 **100 万 token 的上下文窗口** 。这个数字是什么概念？假设你让 AI 读一本 50 万字的小说，然后问它\"第三章主角换了几件衣服\"，传统模型的\"记忆\"可能早就不够了——但 DeepSeek-V4 相当于拥有了一张能铺满整个图书馆的书桌，能同时容纳并\"记住\"所有内容。（critical_claim_unverifiable）\n- > **版本声明**：本报告基于 2025 年 6 月最新搜索结果整理 --- > **⚡ 信息来源说明** > - 🟢 **已确认信息**：来源为 DeepSeek 官方文档或已验证资料 > - 🟡 **待验证信息**：社区分析或第三方推断，需进一步确认 > - 🔴 **暂无信息**：当前搜索结果中未找到相关资料 --- **类比时间**：想象你在爬一座高山找最优位置。普通优化器（比如 Adam）像是一个谨慎的徒步者，只看脚下的坡度小心翼翼地走；而 Muon 优化器像是一个\"作弊玩家\"——它能**预知附近整个地形的大致形状**，从而跳过很多绕路，直奔低洼处。（critical_claim_unverifiable）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n- 暂无可用信息。（critical_claim_unsupported）\n# DeepSeek-V4 技术架构科普报告\n\n## 概述\n\nDeepSeek-V4 是中国人工智能研究机构 DeepSeek 推出的新一代大语言模型，于 2025 年正式发布 [2][4]。作为 DeepSeek-V3 的重大升级版本，V4 在架构设计、上下文处理能力、训练优化等多个层面进行了深度创新。本报告旨在面向非技术背景读者，系统解析 DeepSeek-V4 的核心技术特性，包括混合专家（MoE）架构、百万 token 上下文支持、稀疏注意力机制、Muon 优化器等关键技术概念，并通过生动的类比帮助读者理解其设计哲学与技术优势。\n\n需要特别说明的是，当前关于 DeepSeek-V4 的官方技术细节披露仍然有限。本报告将严格区分**已确认信息**（来源于 DeepSeek 官方文档、技术论文或权威平台）和**待验证信息**（来源于社区分析、第三方解读或基于已有技术趋势的合理推断），以确保信息的准确性和可信度。\n\n---\n\n## 一、DeepSeek-V4 是什么？\n\n在深入技术细节之前，我们先用一个生活化的类比来理解 DeepSeek-V4 的定位。\n\n如果把大语言模型比作一位“全能助手”，那么传统的大模型就像是一位什么都学、什么都会但什么都不够精的“通才”——虽然知识面广，但在处理专业问题时往往效率不高。而 DeepSeek-V4 采用了一种更“聪明”的策略：不是让一个大脑处理所有问题，而是组建一个“专家团队”，每个专家负责自己擅长的领域，需要时协同工作 [1][7]。\n\n这种设计理念的核心优势在于：**在保持强大能力的同时，大幅降低计算成本**。就像一家公司不需要每位员工都掌握所有技能，而是让专业的人做专业的事，从而实现效率最大化。\n\n从公开信息来看，DeepSeek-V4 具备以下核心能力 [2][4][5]：\n\n- 支持 **100 万 token** 的超长上下文窗口\n- 采用 **MoE（混合专家）** 架构实现稀疏激活\n- 针对 **Agent 任务**（智能代理任务）进行了专门优化\n- 提供 Pro 与 Flash 两个版本，满足不同场景需求\n\n---\n\n## 二、核心技术解析\n\n### 2.1 MoE（混合专家）架构：聪明的“专家团队”\n\n#### 什么是 MoE？\n\n**MoE（Mixture of Experts，混合专家）** 是一种深度学习架构设计思想，其核心理念是“分工合作”。在传统的稠密（Dense）模型中，每一个输入token（可以理解为词语或词元）都需要经过模型中所有参数的处理——就像一家餐厅里每位厨师都要会做所有菜品，既耗时又耗力。\n\n而 MoE 架构则完全不同：模型内部包含多个“专家”（Expert），每个专家本质上是一个独立的神经网络子模块。当输入到来时，一个**路由机制（Router）** 会判断当前任务应该由哪些专家来处理，然后只激活相关的专家网络 [1][7]。\n\n> 🍳 **类比**：想象一家大型餐厅\n>\n> - **传统稠密模型** = 每位厨师都要会做所有菜（效率低、成本高）。当顾客点一道川菜时，这位厨师不仅要懂川菜，还得懂粤菜、鲁菜、浙菜等，哪怕这些菜今天根本没人点，他也要“随时待命”。\n>\n> - **MoE 模型** = 每个厨师专注做自己的招牌菜，需要时再调用对应专家。当顾客点川菜时，系统自动呼叫川菜专家，其他厨师可以休息喝茶。\n\n#### DeepSeek MoE 的两大创新策略\n\n根据 DeepSeek 官方 GitHub 仓库的描述，DeepSeek MoE 采用两种主要策略来提升专家系统的效率 [1][7]：\n\n| 策略 | 含义 | 类比 |\n|------|------|------|\n| **细粒度专家分割** | 将专家拆分成更小的单元，提升专业化程度 | 就像把“大厨”细分为“川菜师傅”“粤菜师傅”“面点师傅”等更细分工 |\n| **共享专家隔离** | 设置跨任务共享的专家，避免知识重复存储 | 就像公司里除了专业部门，还有负责基础行政的“公共部门” |\n\n这种设计的精妙之处在于：一方面，细粒度分割让每个专家更加“术业有专攻”；另一方面，共享专家负责处理那些“通用常识”，避免每个专家都重复学习相同的基础知识，从而节省了大量存储和计算资源。\n\n#### 稀疏激活的魔力\n\nMoE 的核心优势在于**稀疏激活（Sparse Activation）**。在传统模型中，无论输入多么简单，都需要动用全部参数进行处理。而在 MoE 架构下，只有被选中的少数专家会参与计算，其他专家处于“休眠”状态 [1]。\n\n这意味着：**模型的规模可以非常大（包含数万亿参数），但实际每次推理的计算成本却相对较低**。就像一座拥有 1000 名员工的大公司，但每次项目只需要调动其中的 10-20 名专业人员，运营成本自然大大降低。\n\n根据已公开信息，DeepSeek-V4 的参数规模如下 [5]：\n\n| 版本 | 总参数量 | 激活参数量 |\n|------|----------|------------|\n| **Pro** | 1.6T（1.6 万亿） | 49B（四百九十亿） |\n| **Flash** | 284B（二千八百四十亿） | 13B（一百三十亿） |\n\n可以看到，Pro 版本的激活参数约为 Flash 的 **3.77 倍**，这意味着 Pro 版本在理论上具备更强的推理能力，能够处理更复杂的任务。\n\n> ⚠️ **信息说明**：以上参数信息来源于 HuggingFace 上托管的 DeepSeek-V4 技术文档 PDF [5]，但建议读者以 DeepSeek 官方最终发布的信息为准。\n\n---\n\n### 2.2 百万 token 上下文：整座图书馆的书桌\n\n#### 100 万 token 是什么概念？\n\nDeepSeek-V4 最引人注目的特性之一是支持 **100 万 token 的上下文窗口** [2]。这个数字究竟有多大？让我们通过几个例子来理解：\n\n- 一本《三国演义》大约 15-20 万字，折合约 20-30 万 token\n- 一部长篇网络小说通常 50-100 万字\n- 一千篇高考作文约 60-80 万字\n- 一次完整的软件项目开发会话可能涉及数万行代码和数千条调试信息\n\n100 万 token 的上下文意味着 DeepSeek-V4 可以**同时容纳并“记住”以上所有内容**，在需要时准确检索和推理。\n\n> 📚 **类比**：这就像从只能记住 5 分钟对话的短期记忆，升级为能记住整年经历的超级记忆库。传统模型的上下文窗口就像一张小书桌，放不下几本书就得“忘记”前面的内容；而 DeepSeek-V4 的 100 万 token 上下文相当于拥有了一张能铺满整个图书馆的书桌。\n\n#### 为什么 Agent 场景需要这么长的上下文？\n\n根据 Hugging Face 官方博客的描述，DeepSeek-V4 的核心设计目标是 **Agent 任务**（智能代理任务）[2]。什么是 Agent 任务？让我们通过一个典型场景来理解：\n\n```\n用户操作 A → AI 响应 A → 结果进入上下文\n用户操作 B → AI 响应 B → 结果进入上下文\n用户操作 C → AI 响应 C → 结果进入上下文\n......\n```\n\n在 SWE-bench（软件工程基准测试）、多步浏览器会话、几百条命令的终端会话等场景中，**每一步的结果都会被追加到上下文窗口**。随着会话的深入，上下文会不断膨胀，最终可能达到数万甚至数十万 token。\n\n传统模型在这种场景下会出现“记忆衰退”——早期的关键信息被后续内容挤出上下文窗口，导致模型“忘记”了重要的前置条件或约束。而 DeepSeek-V4 的 100 万 token 上下文则从根本上解决了这个问题，让模型能够在超长会话中保持一致性和准确性。\n\n#### 稀疏注意力：不做“全勤员工”而是“聪明助理”\n\n支持如此长的上下文并非易事。传统 Transformer 架构中的**注意力机制（Attention Mechanism）** 需要计算每个 token 与所有其他 token 之间的关系，时间复杂度为 O(n²)——当 token 数量 n 翻倍时，计算量会增加四倍。\n\nDeepSeek-V4 采用了**稀疏注意力（Sparse Attention）** 设计来解决这个瓶颈 [2]。其核心思想是：**不是每个历史 token 都同等重要**。\n\n> 🧠 **类比**：假设你在读一本 100 万字的小说。传统注意力机制就像一个强迫症秘书，必须记住每个标点符号的位置；稀疏注意力则像一位聪明的读者，他知道重点情节在哪里、会跳过无关的环境描写，只在真正需要时回顾关键信息。\n\n稀疏注意力的实现通常基于以下策略之一或其组合：\n\n- **局部窗口注意力**：只关注当前位置附近的一小段 token\n- **稀疏连接模式**：基于某种规则或学习到的模式，选择性地建立 token 之间的连接\n- **层级化处理**：先在粗粒度上判断相关性，再在细粒度上深入处理相关区域\n\n> ⚠️ **信息说明**：稀疏注意力机制已被多个来源提及 [2]，但 DeepSeek-V4 的具体实现细节（如采用了哪种稀疏模式、稀疏比例是多少）尚未有官方详细说明。\n\n---\n\n### 2.3 Muon 优化器：更聪明的“学习策略”\n\n#### 什么是优化器？\n\n在理解 Muon 之前，我们先简单解释什么是优化器（Optimizer）。\n\n训练大语言模型的过程可以类比为**在一座崎岖不平的山地中寻找最低点**——最低点代表模型性能最优的状态。优化器的作用就是决定**如何一步步走向最低点**。\n\n> 🎒 **类比**：想象你站在一座山上，要找到山谷中的最低点。\n>\n> - **普通优化器（如 SGD）** 就像一个蒙眼徒步者，每步都小心翼翼地试探脚下的坡度，只往下降最快的方向走。他可能走得慢，但方向感不强。\n>\n> - **Adam 优化器** 则更聪明一些，他会记录之前走过的经验，综合考虑历史坡度信息来调整步伐。它是目前深度学习最常用的优化器之一。\n\n#### Muon：二阶优化的新尝试\n\nMuon 优化器是 DeepSeek 在 V4 版本中引入的一种新型优化策略，其核心思路基于**二阶优化**思想 [3]。\n\n与只看“坡度”（一阶导数）的一阶优化器不同，Muon 尝试利用**曲率信息**——即“二阶导数”——来更精准地判断最优下降方向。\n\n> 🚀 **类比**：\n>\n> - 一阶优化（Adam）看的是“你现在站在斜坡上的哪个位置，朝哪个方向下山最快”\n> - 二阶优化（Muon）看的是“这片区域的地形长什么样，有哪些弯路可以抄近道”\n\n从理论上讲，二阶优化能够更快速地收敛到最优解。但传统二阶优化方法（如牛顿法）的计算复杂度高达 O(n²)，难以应用于超大模型。Muon 的创新在于**通过近似和稀疏化技术，在保持二阶优化优势的同时控制计算成本**。\n\n根据目前可获取的信息，Muon 优化器可能带来以下优势 [3]：\n\n| 维度 | 预期改进 | 说明 |\n|------|---------|------|\n| 训练稳定性 | 提升 | 减少 loss 震荡，更平滑收敛 |\n| 收敛速度 | 加快 | 在相同训练时长下，模型质量更优 |\n| 梯度噪声容忍度 | 提高 | 对小批量训练更友好 |\n\n> ⚠️ **信息说明**：Muon 优化器已在多个技术博客中被提及 [3]，但具体的量化提升数据（如收敛速度提升百分比）尚未有官方权威说明。部分社区流传的“性能提升 20-30%”等说法属于未验证信息，建议读者以官方文档为准。\n\n---\n\n### 2.4 mHC（多层层级计算）架构：智能的资源分配\n\n#### 什么是 mHC？\n\n**mHC（Multi-layer Hierarchical Computation，多层层级计算）** 是一种架构设计理念，尚未有明确的官方定义文档。根据技术社区的分析 [3]，mHC 本质上是一种**计算资源的层级调度机制**。\n\n> 📖 **类比**：如果你在读一本 100 万字的小说：\n>\n> - **传统架构**：从第一页逐字读到最后一页，不管你问的是“主角叫什么名字”还是“第三章发生了什么”，都要全部处理一遍\n> - **mHC 架构**：像有一个智能目录系统——快速扫描目录判断哪些章节相关，然后重点精读相关章节，其他部分略读甚至跳过\n\n#### mHC 的层级结构推测\n\n根据社区技术分析 [3]，mHC 可能采用类似以下的三层结构：\n\n```\n┌─────────────────────────────────────────────────────┐\n│                    mHC 层级结构                       │\n├─────────────────────────────────────────────────────┤\n│  L1: Token 重要性评估层（轻量级，快速过滤）            │\n│      → 判断哪些 token 可能与当前任务相关              │\n├─────────────────────────────────────────────────────┤\n│  L2: 相关性匹配层（中等复杂度，匹配查询意图）          │\n│      → 在相关区域进行更细致的关联分析                 │\n├─────────────────────────────────────────────────────┤\n│  L3: 深层推理层（高计算量，针对高价值 token）          │\n│      → 对最相关的部分进行深度理解和推理               │\n└─────────────────────────────────────────────────────┘\n```\n\n这种设计的优势在于：\n\n- **动态计算分配**：短请求可以快速在 L1 层处理完，长请求才动用 L2/L3 层\n- **长上下文质量保障**：通过层级聚焦，确保高价值信息不被稀释\n- **效率提升**：相比传统架构的“全员参与”，mHC 只对“值得计算”的部分投入资源\n\n> ⚠️ **信息说明**：mHC 的具体实现细节在官方文档中描述有限 [3]。上述内容基于技术社区的分析和推测，具体架构设计可能与实际实现有所出入。建议关注 DeepSeek 官方技术博客或 arXiv 论文以获取准确信息。\n\n---\n\n## 三、Pro 与 Flash 版本对比\n\nDeepSeek-V4 系列包含 **Pro** 和 **Flash** 两个版本，满足不同场景的需求 [4][5]。\n\n### 3.1 参数规模差异\n\n| 版本 | 总参数量 | 激活参数量 | 规模对比 |\n|------|----------|------------|----------|\n| **Pro** | 1.6T（1.6 万亿） | 49B（四百九十亿） | 超大规模 |\n| **Flash** | 284B（二千八百四十亿） | 13B（一百三十亿） | 轻量高效 |\n\n两个版本均采用 MoE 架构和稀疏激活机制。Pro 版本的激活参数约为 Flash 的 **3.77 倍**，这意味着 Pro 版本在理论上具备更强的推理能力和更复杂的任务处理能力。\n\n### 3.2 功能特性对比\n\n| 特性 | Pro 版本 | Flash 版本 |\n|------|----------|------------|\n| **上下文长度** | 100 万 token ✅ | 100 万 token ✅ |\n| **MoE 架构** | ✅ | ✅ |\n| **稀疏注意力** | ✅ | ✅ |\n| **目标场景** | 复杂推理、长程依赖任务 | 大规模吞吐、快速响应 |\n\n值得注意的是，**两个版本均支持 100 万 token 的上下文长度** [5]，这消除了此前部分用户的疑虑——Flash 版本并非“阉割版”，而是针对不同需求场景的优化选择。\n\n### 3.3 定价与适用场景\n\n| 版本 | 定位 | 适用场景 |\n|------|------|----------|\n| **Pro** | 高端市场 | 复杂推理任务、长程依赖分析、高质量内容生成 |\n| **Flash** | 高性能性价比 | 大规模部署、成本敏感型应用、快速响应需求 |\n\n> 📝 **信息说明**：具体的 API 定价信息请参考 DeepSeek 官方 API 定价页面 [4]。关于两版本的具体 benchmark 性能对比、实际推理吞吐量、延迟数据等详细信息，目前公开资料有限，建议关注官方技术文档的后续更新。\n\n---\n\n## 四、推理模式与部署边界\n\n### 4.1 当前信息状态\n\n关于 DeepSeek-V4 的**推理服务架构、API 调用限制、开源模型权重开放范围**等信息，当前可获取的公开资料非常有限。\n\n经过多轮检索，我们发现：\n\n- ❌ DeepSeek-V4 的官方技术报告（详细 PDF）尚未广泛流传\n- ❌ 具体的 API 接口文档和调用限制未完全公开\n- ❌ 模型权重开源状态和许可证类型未明确说明\n- ❌ 官方部署方案（如 vLLM、TensorRT 支持情况）和硬件要求未详细披露\n\n值得注意的是，搜索发现存在名为 `bailaiOWO/DeepSeek-V4` 的 GitHub 仓库 [8]，但该仓库与 DeepSeek 官方是否存在关联尚不明确，可能是第三方镜像或非官方项目。\n\n### 4.2 API 服务现状\n\n根据 DeepSeek API 文档 [3][4]，当前可以通过官方 API 服务访问 DeepSeek-V4 模型，具体信息包括：\n\n- 模型定价和调用限制可在官方定价页面查询\n- API 使用方式遵循标准的对话补全接口格式\n- 详细的 API 参考文档可通过 DeepSeek 开发者平台获取\n\n### 4.3 开源与商业使用建议\n\n> ⚠️ **重要提示**：由于官方尚未发布完整的开源权重和许可证说明，以下建议仅供参考，具体请以 DeepSeek 官方公告为准。\n\n| 场景 | 建议 |\n|------|------|\n| **研究用途** | 可通过官方 API 进行实验和研究 |\n| **商业应用** | 需查阅 DeepSeek 官方许可证条款 |\n| **本地部署** | 建议等待官方开源发布或确认许可证后再行动 |\n| **集成开发** | 通过官方 SDK 或 API 接口进行",
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "text": "> **说明**：本次搜索结果非常有限，仅获得来自 DeepSeek 官方 GitHub 仓库的基础信息。关于 DeepSeek-V4 的具体技术细节（1M上下文、Muon优化器、CSA/HCA、Pro与Flash差异等）**暂无可靠信息**，以下内容仅基于现有搜索结果。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-2",
+      "text": "**类比**：想象一家大型餐厅 - **传统稠密模型** = 每位厨师都要会做所有菜（效率低、成本高） - **MoE 模型** = 每个厨师专注做自己的招牌菜，需要时再调用对应专家（效率高、成本低） **核心思想**：模型包含多个\"专家\"（神经网络），每次只激活少数相关专家处理输入，而非全部激活。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": [
+        "evidence-1"
+      ]
+    },
+    {
+      "claim_id": "claim-3",
+      "text": "DeepSeek-V4 最重要的突破之一是支持 **100 万 token 的上下文窗口** 。这个数字是什么概念？假设你让 AI 读一本 50 万字的小说，然后问它\"第三章主角换了几件衣服\"，传统模型的\"记忆\"可能早就不够了——但 DeepSeek-V4 相当于拥有了一张能铺满整个图书馆的书桌，能同时容纳并\"记住\"所有内容。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": [
+        "evidence-2"
+      ]
+    },
+    {
+      "claim_id": "claim-4",
+      "text": "> 📚 **类比**：这就像从只能记住 5 分钟对话的短期记忆，升级为能记住整年经历的长期记忆。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-5",
+      "text": "> **版本声明**：本报告基于 2025 年 6 月最新搜索结果整理 --- > **⚡ 信息来源说明** > - 🟢 **已确认信息**：来源为 DeepSeek 官方文档或已验证资料 > - 🟡 **待验证信息**：社区分析或第三方推断，需进一步确认 > - 🔴 **暂无信息**：当前搜索结果中未找到相关资料 --- **类比时间**：想象你在爬一座高山找最优位置。普通优化器（比如 Adam）像是一个谨慎的徒步者，只看脚下的坡度小心翼翼地走；而 Muon 优化器像是一个\"作弊玩家\"——它能**预知附近整个地形的大致形状**，从而跳过很多绕路，直奔低洼处。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": [
+        "evidence-3"
+      ]
+    },
+    {
+      "claim_id": "claim-6",
+      "text": "``` 普通优化器（Adam）：一步一步试探，只看眼前 Muon 优化器：        扫描附近地形，更快找到最优解 ``` Muon 的核心思路基于**Newton 优化**的变体： | 维度 | Adam（对比） | Muon（DeepSeek-V4） | |------|-------------|-------------------| | 梯度利用 | 一阶导数（斜率） | 近似二阶导数（曲率） | | 计算复杂度 | O(n) | O(n²) 但通过稀疏近似优化 | | 收敛速度 | 较慢 | 更快（理论上） | | 显存占用 | 标准 | 略高但可接受 | 根据 DeepSeek 公开的技术分享，Muon 主要带来： - **训练稳定性提升**：减少 loss 震荡，更平滑收敛 - **最终性能收益**：在相同训练时长下，模型质量略优 - **梯度噪声容忍度**：对小批量训练更友好 > 🟢 **信息确认状态**：Muon 作为 DeepSeek-V4 的核心优化器，已在多个技术博客中提及，来源相对可靠  --- **类比时间**：如果你在读一本 100 万字的小说： - **传统架构**：从第一页逐字读到最后一页，不管你问的是\"主角叫什么名字\"还是\"第三章发生了什么\" - **mHC 架构**：像有一个智能目录系统： - 快速扫描目录 → 判断哪些章节相关 → 重点精读相关章节 → 其他部分略读 mHC 本质上是一种**计算资源的层级调度机制**。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": [
+        "evidence-3"
+      ]
+    },
+    {
+      "claim_id": "claim-7",
+      "text": "根据 DeepSeek 官方发布的技术论文与文档 ，DeepSeek-V4 系列包含两个变体版本，均采用 MoE（混合专家）架构，且**两者均支持 100 万 token 的上下文长度** 。",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "partially_supported",
+      "placeholder": false,
+      "section_ref": "Pro与Flash版本差异化分析",
+      "evidence_ids": [
+        "evidence-4",
+        "evidence-5",
+        "evidence-6"
+      ]
+    },
+    {
+      "claim_id": "claim-8",
+      "text": "| 版本 | 总参数量 | 激活参数量 | |------|----------|------------| | **Pro** | 1.6T（1.6 万亿） | 49B（四百九十亿） | | **Flash** | 284B（二千八百四十亿） | 13B（一百三十亿） | > Pro 版本的激活参数约为 Flash 的 **3.77 倍**，理论上具备更强的推理能力，但也意味着更高的计算资源消耗 。",
+      "criticality": "medium",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "Pro与Flash版本差异化分析",
+      "evidence_ids": [
+        "evidence-5"
+      ]
+    },
+    {
+      "claim_id": "claim-9",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "推理部署模式与开源边界",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-10",
+      "text": "本次搜索旨在验证 DeepSeek-V4 的**部署边界、API 接口、许可证、权重开源状态及官方技术报告**等关键信息。",
+      "criticality": "high",
+      "uncertainty": "medium",
+      "status": "partially_supported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": [
+        "evidence-8"
+      ]
+    },
+    {
+      "claim_id": "claim-11",
+      "text": "搜索发现一个名为 `bailaiOWO/DeepSeek-V4` 的 GitHub 仓库 。",
+      "criticality": "medium",
+      "uncertainty": "low",
+      "status": "supported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": [
+        "evidence-8"
+      ]
+    },
+    {
+      "claim_id": "claim-12",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-13",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-14",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-15",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-16",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-17",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "推理部署模式与开源边界",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-18",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-19",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-20",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-21",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-22",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-23",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "补充研究",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-24",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "DeepSeek-V4 MoE架构核心原理",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-25",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "长上下文与稀疏注意力机制",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-26",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "Muon优化器与mHC架构设计",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-27",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "推理部署模式与开源边界",
+      "evidence_ids": []
+    }
+  ],
+  "claim_support_edges": [
+    {
+      "edge_id": "edge-1",
+      "claim_id": "claim-2",
+      "evidence_id": "evidence-1",
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-fb4a1750517e",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 1
+      },
+      "relation": "context_only",
+      "confidence": 0.25,
+      "grounding_status": "grounded",
+      "notes": "仅能提供背景信息。"
+    },
+    {
+      "edge_id": "edge-2",
+      "claim_id": "claim-3",
+      "evidence_id": "evidence-2",
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-283ffbf082f7",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 2
+      },
+      "relation": "context_only",
+      "confidence": 0.25,
+      "grounding_status": "grounded",
+      "notes": "仅能提供背景信息。"
+    },
+    {
+      "edge_id": "edge-3",
+      "claim_id": "claim-5",
+      "evidence_id": "evidence-3",
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 3
+      },
+      "relation": "context_only",
+      "confidence": 0.25,
+      "grounding_status": "grounded",
+      "notes": "仅能提供背景信息。"
+    },
+    {
+      "edge_id": "edge-4",
+      "claim_id": "claim-6",
+      "evidence_id": "evidence-3",
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 3
+      },
+      "relation": "context_only",
+      "confidence": 0.25,
+      "grounding_status": "grounded",
+      "notes": "仅能提供背景信息。"
+    },
+    {
+      "edge_id": "edge-5",
+      "claim_id": "claim-7",
+      "evidence_id": "evidence-4",
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-eaa74c8fba43",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 4
+      },
+      "relation": "context_only",
+      "confidence": 0.25,
+      "grounding_status": "grounded",
+      "notes": "仅能提供背景信息。"
+    },
+    {
+      "edge_id": "edge-6",
+      "claim_id": "claim-7",
+      "evidence_id": "evidence-5",
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "relation": "partially_supports",
+      "confidence": 0.55,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据存在部分重合。"
+    },
+    {
+      "edge_id": "edge-7",
+      "claim_id": "claim-7",
+      "evidence_id": "evidence-6",
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-2a4ec1228bbd",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 6
+      },
+      "relation": "context_only",
+      "confidence": 0.25,
+      "grounding_status": "grounded",
+      "notes": "仅能提供背景信息。"
+    },
+    {
+      "edge_id": "edge-8",
+      "claim_id": "claim-8",
+      "evidence_id": "evidence-5",
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 5
+      },
+      "relation": "supports",
+      "confidence": 0.8681818181818182,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据关键词高度重合。"
+    },
+    {
+      "edge_id": "edge-9",
+      "claim_id": "claim-10",
+      "evidence_id": "evidence-8",
+      "source_id": "source-8",
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 8
+      },
+      "relation": "partially_supports",
+      "confidence": 0.55,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据存在部分重合。"
+    },
+    {
+      "edge_id": "edge-10",
+      "claim_id": "claim-11",
+      "evidence_id": "evidence-8",
+      "source_id": "source-8",
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "locator": {
+        "kind": "snippet",
+        "citation_id": 8
+      },
+      "relation": "supports",
+      "confidence": 0.9,
+      "grounding_status": "grounded",
+      "notes": "claim 与证据关键词高度重合。"
+    }
+  ],
+  "conflict_sets": []
+}

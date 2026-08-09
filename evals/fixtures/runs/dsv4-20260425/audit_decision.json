@@ -1,0 +1,30 @@
+{
+  "gate_status": "blocked",
+  "critical_claim_count": 22,
+  "blocked_critical_claim_count": 20,
+  "blocking_claim_ids": [
+    "claim-1",
+    "claim-3",
+    "claim-5",
+    "claim-9",
+    "claim-12",
+    "claim-13",
+    "claim-14",
+    "claim-15",
+    "claim-16",
+    "claim-17",
+    "claim-18",
+    "claim-19",
+    "claim-20",
+    "claim-21",
+    "claim-22",
+    "claim-23",
+    "claim-24",
+    "claim-25",
+    "claim-26",
+    "claim-27"
+  ],
+  "summary": "20 blocking critical claims require review",
+  "review_queue_ref": "audit/review_queue.json",
+  "claim_graph_ref": "audit/claim_graph.json"
+}

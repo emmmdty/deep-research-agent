@@ -1,0 +1,349 @@
+{
+  "citations": [
+    {
+      "citation_id": 1,
+      "source_id": "source-1",
+      "snapshot_id": "snapshot-fb4a1750517e",
+      "title": "deepseek-ai/DeepSeek-MoE: DeepSeekMoE: Towards Ultimate ...",
+      "canonical_uri": "https://github.com/deepseek-ai/DeepSeek-MoE"
+    },
+    {
+      "citation_id": 2,
+      "source_id": "source-2",
+      "snapshot_id": "snapshot-283ffbf082f7",
+      "title": "DeepSeek-V4: a million-token context that agents can actually use",
+      "canonical_uri": "https://huggingface.co/blog/deepseekv4"
+    },
+    {
+      "citation_id": 3,
+      "source_id": "source-3",
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "title": "Change Log | DeepSeek API Docs",
+      "canonical_uri": "https://api-docs.deepseek.com/updates"
+    },
+    {
+      "citation_id": 4,
+      "source_id": "source-4",
+      "snapshot_id": "snapshot-eaa74c8fba43",
+      "title": "DeepSeek V4 Preview Release",
+      "canonical_uri": "https://api-docs.deepseek.com/news/news260424"
+    },
+    {
+      "citation_id": 5,
+      "source_id": "source-5",
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "title": "DeepSeek_V4.pdf",
+      "canonical_uri": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
+    },
+    {
+      "citation_id": 6,
+      "source_id": "source-6",
+      "snapshot_id": "snapshot-2a4ec1228bbd",
+      "title": "deepseek-v4",
+      "canonical_uri": "https://huggingface.co/collections/deepseek-ai/deepseek-v4"
+    },
+    {
+      "citation_id": 7,
+      "source_id": "source-7",
+      "snapshot_id": "snapshot-f7afadbaa13f",
+      "title": "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models",
+      "canonical_uri": "https://arxiv.org/html/2401.06066v1"
+    },
+    {
+      "citation_id": 8,
+      "source_id": "source-8",
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "title": "bailaiOWO/DeepSeek-V4 - GitHub",
+      "canonical_uri": "https://github.com/bailaiOWO/DeepSeek-V4"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "source-1",
+      "citation_id": 1,
+      "source_type": "web",
+      "title": "deepseek-ai/DeepSeek-MoE: DeepSeekMoE: Towards Ultimate ...",
+      "canonical_uri": "https://github.com/deepseek-ai/DeepSeek-MoE",
+      "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-fb4a1750517e",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-2",
+      "citation_id": 2,
+      "source_type": "web",
+      "title": "DeepSeek-V4: a million-token context that agents can actually use",
+      "canonical_uri": "https://huggingface.co/blog/deepseekv4",
+      "query": "DeepSeek-V4 1M context window sparse attention DSA CSA HCA 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-283ffbf082f7",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-3",
+      "citation_id": 3,
+      "source_type": "web",
+      "title": "Change Log | DeepSeek API Docs",
+      "canonical_uri": "https://api-docs.deepseek.com/updates",
+      "query": "DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-0d4dc4bd15cd",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-4",
+      "citation_id": 4,
+      "source_type": "web",
+      "title": "DeepSeek V4 Preview Release",
+      "canonical_uri": "https://api-docs.deepseek.com/news/news260424",
+      "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025 official documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-eaa74c8fba43",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-5",
+      "citation_id": 5,
+      "source_type": "pdf",
+      "title": "DeepSeek_V4.pdf",
+      "canonical_uri": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
+      "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+      "selected": true,
+      "snapshot_ref": "snapshot-4f83f1f6bde1",
+      "metadata": {
+        "auth_scope": "public",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "technical_report_link",
+        "content_kind": "remote_pdf",
+        "link_depth": 1,
+        "trust_tier_override": 4
+      }
+    },
+    {
+      "source_id": "source-6",
+      "citation_id": 6,
+      "source_type": "web",
+      "title": "deepseek-v4",
+      "canonical_uri": "https://huggingface.co/collections/deepseek-ai/deepseek-v4",
+      "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+      "selected": true,
+      "snapshot_ref": "snapshot-2a4ec1228bbd",
+      "metadata": {
+        "auth_scope": "public",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "high_value_link",
+        "content_kind": "linked_web",
+        "link_depth": 1,
+        "trust_tier_override": 4
+      }
+    },
+    {
+      "source_id": "source-7",
+      "citation_id": 7,
+      "source_type": "web",
+      "title": "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models",
+      "canonical_uri": "https://arxiv.org/html/2401.06066v1",
+      "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official technical report PDF evidence documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-f7afadbaa13f",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "source_id": "source-8",
+      "citation_id": 8,
+      "source_type": "web",
+      "title": "bailaiOWO/DeepSeek-V4 - GitHub",
+      "canonical_uri": "https://github.com/bailaiOWO/DeepSeek-V4",
+      "query": "DeepSeek-V4 deployment inference API open source weight license 2025 official technical report PDF evidence documentation survey docs",
+      "selected": true,
+      "snapshot_ref": "snapshot-e1f3749d3ba9",
+      "metadata": {
+        "auth_scope": "public",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot_id": "snapshot-fb4a1750517e",
+      "canonical_uri": "https://github.com/deepseek-ai/DeepSeek-MoE",
+      "fetched_at": "2026-04-25T05:39:42.711344+00:00",
+      "content_hash": "8510c69f440ecb6da58ce6ae492b376b791993f7ebe0b4669a5f305ebb0b7e3a",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-283ffbf082f7",
+      "canonical_uri": "https://huggingface.co/blog/deepseekv4",
+      "fetched_at": "2026-04-25T05:40:17.401148+00:00",
+      "content_hash": "92da65323aa3843c983cf6f8a60a50dc6bbc424d88b1fe7f0f92a4090504264f",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 1M context window sparse attention DSA CSA HCA 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-0d4dc4bd15cd",
+      "canonical_uri": "https://api-docs.deepseek.com/updates",
+      "fetched_at": "2026-04-25T05:41:09.028422+00:00",
+      "content_hash": "7e7b78004c047d8262de70e3d5b236721e2680cdb48cca24842073961db0dc7d",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Muon optimizer mHC hierarchical computation 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-eaa74c8fba43",
+      "canonical_uri": "https://api-docs.deepseek.com/news/news260424",
+      "fetched_at": "2026-04-25T05:42:17.931857+00:00",
+      "content_hash": "569b20933831380875f163b07d976e1bee5d5948658dedfa11d01e8954b122b9",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025 official documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-4f83f1f6bde1",
+      "canonical_uri": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
+      "fetched_at": "2026-04-25T05:42:24.977959+00:00",
+      "content_hash": "0c80828eeb9398a9b9122ce03e9543e49159336c0e44e7d272368381cd8bce5b",
+      "mime_type": "application/pdf",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+        "published_at": null,
+        "source_type": "pdf",
+        "connector_name": "open_web",
+        "task_title": "Pro与Flash版本差异化分析",
+        "content_kind": "remote_pdf",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "technical_report_link",
+        "link_depth": 1,
+        "trust_tier_override": 4,
+        "download_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/resolve/main/DeepSeek_V4.pdf",
+        "local_pdf_path": "workspace/research_jobs/20260425T053918Z-1f1e18c1/_remote_docs/d61d7c939823fb88.pdf",
+        "page_count": 58,
+        "content_length": 4479907
+      }
+    },
+    {
+      "snapshot_id": "snapshot-2a4ec1228bbd",
+      "canonical_uri": "https://huggingface.co/collections/deepseek-ai/deepseek-v4",
+      "fetched_at": "2026-04-25T05:42:25.670922+00:00",
+      "content_hash": "ac54e8ba9fadb056065f2fe1191e53883463118c66898d35b0d9bf7f280401c6",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 Pro vs Flash version comparison benchmark 2025",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "parent_source_id": "source-4",
+        "parent_citation_id": 4,
+        "discovered_from_url": "https://api-docs.deepseek.com/news/news260424",
+        "discovery_reason": "high_value_link",
+        "content_kind": "linked_web",
+        "link_depth": 1,
+        "trust_tier_override": 4
+      }
+    },
+    {
+      "snapshot_id": "snapshot-f7afadbaa13f",
+      "canonical_uri": "https://arxiv.org/html/2401.06066v1",
+      "fetched_at": "2026-04-25T05:43:04.023938+00:00",
+      "content_hash": "011f6251d0197e8aef5de3628b1bbcc98d7f7e11572a169ea2d3f515198f087c",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 MoE architecture mixture of experts sparse activation 2025 official technical report PDF evidence documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    },
+    {
+      "snapshot_id": "snapshot-e1f3749d3ba9",
+      "canonical_uri": "https://github.com/bailaiOWO/DeepSeek-V4",
+      "fetched_at": "2026-04-25T05:43:26.640191+00:00",
+      "content_hash": "5be764463be098e9cf4649e46574777d68f73bf1a3fc4f4ce66914bb17906558",
+      "mime_type": "text/html",
+      "auth_scope": "public",
+      "freshness_metadata": {
+        "query": "DeepSeek-V4 deployment inference API open source weight license 2025 official technical report PDF evidence documentation survey docs",
+        "published_at": null,
+        "source_type": "web",
+        "connector_name": "open_web",
+        "metadata": {
+          "backend": "tavily"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "text": "本次检索未能获取关于同花顺公司的有效信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺公司概况与发展历程",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-2",
+      "text": "**暂无可用信息** 本次检索返回的搜索结果均未包含同花顺公司的实质性信息： - **** 相关页面访问被拒绝（403 Forbidden），未能获取内容 - **** 为设计素材网站内容，与同花顺公司无关 - **** 为创业类播客节目，讨论公司注册与股权管理，与同花顺公司介绍无直接关联 --- **建议**：可更换检索词或使用其他信息渠道获取同花顺公司资料。",
+      "criticality": "medium",
+      "uncertainty": "medium",
+      "status": "partially_supported",
+      "placeholder": false,
+      "section_ref": "同花顺公司概况与发展历程",
+      "evidence_ids": [
+        "evidence-1"
+      ]
+    },
+    {
+      "claim_id": "claim-3",
+      "text": "根据同花顺经营分析数据，其主营业务可分为**两大客户群体**： - **机构客户**：提供金融科技AI整体解决方案、系统维护服务、金融数据推广等 - **个人投资者**：提供基于AI的金融资讯和投资理财产品 产品类型涵盖金融资讯信息、**iFinD数据终端**及维护等金融数据业务。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺主营业务与商业模式分析",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-4",
+      "text": "同花顺推出的**iFind产品正在蚕食Wind（万得）**的核心投研市场，成为投研数据领域的有力竞争者。",
+      "criticality": "medium",
+      "uncertainty": "high",
+      "status": "unverifiable",
+      "placeholder": false,
+      "section_ref": "同花顺主营业务与商业模式分析",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-5",
+      "text": "**公司全称**：浙江核新同花顺网络信息股份有限公司 - **股票代码**：300033 - **上市交易所**：深圳证券交易所 --- **1.",
+      "criticality": "high",
+      "uncertainty": "low",
+      "status": "contradicted",
+      "placeholder": false,
+      "section_ref": "同花顺财务状况与经营业绩研究",
+      "evidence_ids": [
+        "evidence-7"
+      ]
+    },
+    {
+      "claim_id": "claim-6",
+      "text": "盈利能力与股东回报** 公司向全体股东每 10 股派发现金红利 30.00 元（含税），以 537,600,000 股为基数计算，现金分红总额达 **16.128 亿元**，显示出较强的盈利能力与对股东的回报力度。",
+      "criticality": "medium",
+      "uncertainty": "low",
+      "status": "contradicted",
+      "placeholder": false,
+      "section_ref": "同花顺财务状况与经营业绩研究",
+      "evidence_ids": [
+        "evidence-7"
+      ]
+    },
+    {
+      "claim_id": "claim-7",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺行业竞争地位与市场分析",
+      "evidence_ids": []
+    },
+    {
+      "claim_id": "claim-8",
+      "text": "暂无可用信息。",
+      "criticality": "high",
+      "uncertainty": "high",
+      "status": "unsupported",
+      "placeholder": false,
+      "section_ref": "同花顺发展战略与未来前景展望",
+      "evidence_ids": []
+    }
+  ]
+}

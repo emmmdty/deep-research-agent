@@ -133,6 +133,14 @@ def create_app(
     def _conflict(error: Exception) -> HTTPException:
         return HTTPException(status_code=409, detail=str(error))
 
+    @app.get("/v1/health")
+    def health() -> dict[str, str]:
+        return {
+            "status": "ok",
+            "service": "deep-research-agent",
+            "version": "0.1.0",
+        }
+
     @app.post("/v1/research/jobs", response_model=PublicJobResponse, status_code=202)
     def submit_research_job(
         request: SubmitJobRequest,
