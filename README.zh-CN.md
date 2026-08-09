@@ -60,7 +60,7 @@ bundle 中每条关键 claim 必须解析到冻结 corpus manifest 内的证据�
 | --- | --- | --- |
 | 权威 smoke gate | `evals/reports/phase5_local_smoke/` | 5 个 suite × smoke_local，全部 passed |
 | 原生回归 | `evals/reports/native_regression/` | company12/industry12/trusted8/file8/recovery6 passed |
-| 核心指标 | `evals/reports/followup_metrics/headline_metrics.json` | completion rate 1.0、critical claim support precision 1.0、citation error rate 0.0 |
+| 核心指标 | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`、critical claim support precision: `1.0`、citation error rate: `0.0`、policy compliance rate: `1.0` |
 | 消融实验（多 agent 价值） | `evals/reports/followup_metrics/ablation_summary.md` | 见下表 |
 | 外部 benchmark 适配器 | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
 | 价值计分卡 | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | 完整指标定义与结果 |

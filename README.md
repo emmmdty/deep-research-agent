@@ -67,7 +67,7 @@ The release gate is deterministic and reproducible locally — no API keys, no n
 | --- | --- | --- |
 | Authoritative smoke gate | `evals/reports/phase5_local_smoke/` | 5 suites × smoke_local, all passed |
 | Native regression | `evals/reports/native_regression/` | company12/industry12/trusted8/file8/recovery6 passed |
-| Headline metrics | `evals/reports/followup_metrics/headline_metrics.json` | completion rate 1.0, critical claim support precision 1.0, citation error rate 0.0 |
+| Headline metrics | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`, critical claim support precision: `1.0`, citation error rate: `0.0`, policy compliance rate: `1.0` |
 | Ablations (multi-agent value) | `evals/reports/followup_metrics/ablation_summary.md` | see table below |
 | External benchmark adapters | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
 | Value scorecard | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | full metric definitions and results |
