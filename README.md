@@ -27,15 +27,16 @@ This project asks a different question: *when the answer is wrong, can you prove
 
 ### 60-Second Tour
 
-1. **Overview** — what this system is: a research team that plans, researches in parallel,
-   audits evidence, and delivers a report where every conclusion can be traced to its evidence.
-2. **End-to-end demo** — watch one research task complete: planner spawns 3 parallel researchers
-   (animated from the real trace journal), critic audits every claim, and the audited report is
-   delivered with per-claim evidence panels.
-3. **Reports** — browse the case library (demo case + real offline runs + eval fixture), each
-   with claims, evidence excerpts, sources, and audit records.
-4. **Benchmark** — direct answers to "is multi-agent worth it" backed by deterministic ablations,
-   plus the sourced industry comparison.
+1. **Ask** — type any research question on the landing page.
+2. **Live research** — the demo actually executes: the planner splits the question into
+   subtopics, researchers run real parallel searches against Wikipedia / OpenAlex / Crossref
+   (no key needed), and results are compiled with every claim linked to its source. Optionally
+   bring your own OpenAI-compatible model (base URL + key, kept in your browser only) for a
+   full generated report.
+3. **Reports** — every conclusion shows its source excerpts; browse the built-in demo case
+   library as a replay.
+4. **Benchmark** — direct answers to "is multi-agent worth it" backed by deterministic
+   ablations, plus the sourced industry comparison.
 5. **Architecture** — how it is implemented (task DAG, bounded scheduler, governed gateways,
    evidence store, product API).
 
