@@ -28,11 +28,11 @@ This project asks a different question: *when the answer is wrong, can you prove
 ### 60-Second Tour
 
 1. **Ask** — type any research question on the landing page.
-2. **Live research** — the demo actually executes: the planner splits the question into
-   subtopics, researchers run real parallel searches against Wikipedia / OpenAlex / Crossref
-   (no key needed), and results are compiled with every claim linked to its source. Optionally
-   bring your own OpenAI-compatible model (base URL + key, kept in your browser only) for a
-   full generated report.
+2. **Online retrieval** — the demo actually executes a real multi-source retrieval against
+   Wikipedia / OpenAlex / Crossref (no key, no agent): queries are organized by fixed rules and
+   every excerpt links to its live source. The page states clearly that an agent requires an
+   LLM; the full multi-agent system (planning, parallel research, evidence audit, report
+   delivery) runs in this repository and needs configured model credentials (see Quick Start).
 3. **Reports** — every conclusion shows its source excerpts; browse the built-in demo case
    library as a replay.
 4. **Benchmark** — direct answers to "is multi-agent worth it" backed by deterministic

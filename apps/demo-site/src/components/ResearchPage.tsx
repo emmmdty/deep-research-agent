@@ -84,16 +84,14 @@ export function ResearchPage({ question }: { question: string }) {
 
       <div className="mode-tabs">
         <button className={`mode-tab${mode === "live" ? " active" : ""}`} onClick={() => setMode("live")}>
-          <Radio size={14} /> 实时研究（真实执行）
+          <Radio size={14} /> 在线执行
         </button>
         <button className={`mode-tab${mode === "replay" ? " active" : ""}`} onClick={() => setMode("replay")}>
           <PlayCircle size={14} /> 演示回放（内建案例）
         </button>
       </div>
 
-      {mode === "live" && (
-        <LiveResearch key={activeQuestion} question={activeQuestion} />
-      )}
+      {mode === "live" && <LiveResearch key={activeQuestion} question={activeQuestion} />}
 
       {mode === "replay" && (
         <div className="step-panel">
