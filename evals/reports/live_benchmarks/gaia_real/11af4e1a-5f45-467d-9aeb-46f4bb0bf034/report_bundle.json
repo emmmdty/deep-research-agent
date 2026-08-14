@@ -1,0 +1,2072 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- In the original Transformer from 'Attention is All You Need', the number of encoder blocks N is equal to 6.\n- The Transformer encoder from Attention is All You Need consists of N-stacked encoder blocks where N = 6.\n- The Transformer architecture suggested in the original paper contains 512 hidden units and 8 attention heads.\n- BERT architectures (BASE and LARGE) have larger feedforward networks and more attention heads than the Transformer architecture suggested in the original paper.\n- Bert Base had 12 layers, whereas Bert Large had 24 layers.\n- BERT's Transformer encoder architecture captures context across all tokens in parallel.\n- BERT Large has 340M parameters.\n- BERT Base can be fine-tuned efficiently on a single GPU.\n- BERT's training process learns from both sides of a word simultaneously rather than in one direction.\n- During BERT training, about 15% of tokens are selected for prediction using a strategy where 80% are replaced with the [MASK] token, 10% are replaced with a random word, and 10% remain unchanged.\n- BERT uses WordPiece tokenization which breaks text into sub-word units.\n- BERT adds [CLS] (Classification Token) at the beginning of every input, whose output representation is used for classification tasks.\n- BERT adds [SEP] (Separator Token) which marks the end of a sentence or separates pairs of sentences.\n- BERT represents each token using a combination of three learned embeddings: Token Embeddings, Segment Embeddings, and Position Embeddings.\n- BERT's pre-training is performed on massive text corpora like Wikipedia and BooksCorpus.\n- In BERT's Next Sentence Prediction task, the model is fed two sentences where 50% of the time the second sentence follows the first and 50% of the time it's a random sentence.\n- BERT Large was trained on Google TPU with hundreds of cores running in parallel.\n- The NVIDIA RTX PRO 6000 Blackwell features 96GB GDDR7.\n- The NVIDIA RTX PRO 5000 Blackwell features 48GB GDDR7 and 72GB GDDR7 variants.\n- BERT LARGE has 24 layers in the Encoder stack.\n- BERT BASE contains 110M parameters while BERT LARGE has 340M parameters.\n- BERT BASE and BERT LARGE have larger feedforward networks (768 and 1024 hidden units respectively) and more attention heads (12 and 16 respectively) than the Transformer architecture suggested in the original paper.\n- The Transformer architecture suggested in the original paper contains 512 hidden units and 8 attention heads.\n- BERT uses only the encoder for language understanding tasks, unlike the original Transformer which has both encoder and decoder.\n\n## Findings\n\n### BERT Base and Large Layer Counts\nBERT Base has 12 encoder layers (L=12), confirmed by multiple accepted claims (01, 02, 06, 08, 12, 27). BERT Large has 24 encoder layers (L=24), confirmed by claims 07, 09, 12, and 28. These layer counts are consistently reported across all accepted evidence.\n\n### Original Transformer Architecture\nThe original Transformer from \"Attention is All You Need\" uses N=6 stacked encoder blocks (claims 03, 04). It contains 512 hidden units and 8 attention heads (claims 10, 31).\n\n### BERT vs. Original Transformer Comparison\nBERT Base and BERT Large have larger feedforward networks (768 and 1024 hidden units respectively) and more attention heads (12 and 16 respectively) than the original Transformer's 512 hidden units and 8 attention heads (claims 11, 30). BERT uses only the encoder for language understanding tasks, unlike the original Transformer which has both encoder and decoder (claim 32).\n\n### BERT Parameter Counts\nBERT Base contains 110M parameters while BERT Large has 340M parameters (claims 14, 29). BERT Large was trained on Google TPU with hundreds of cores running in parallel (claim 24), and BERT Base can be fine-tuned efficiently on a single GPU (claim 15).\n\n### BERT Architecture and Tokenization\nBERT's Transformer encoder architecture captures context across all tokens in parallel (claim 13). BERT uses WordPiece tokenization which breaks text into sub-word units (claim 18). BERT adds [CLS] (Classification Token) at the beginning of every input, whose output representation is used for classification tasks (claim 19), and [SEP] (Separator Token) which marks the end of a sentence or separates pairs of sentences (claim 20). BERT represents each token using a combination of three learned embeddings: Token Embeddings, Segment Embeddings, and Position Embeddings (claim 21).\n\n### BERT Training Process\nBERT's training process learns from both sides of a word simultaneously rather than in one direction (claim 16). During training, about 15% of tokens are selected for prediction using a strategy where 80% are replaced with the [MASK] token, 10% are replaced with a random word, and 10% remain unchanged (claim 17). In BERT's Next Sentence Prediction task, the model is fed two sentences where 50% of the time the second sentence follows the first and 50% of the time it's a random sentence (claim 23). BERT's pre-training is performed on massive text corpora like Wikipedia and BooksCorpus (claim 22).\n\n### NVIDIA GPU Specifications\nThe NVIDIA RTX PRO 6000 Blackwell features 96GB GDDR7 (claim 25). The NVIDIA RTX PRO 5000 Blackwell features 48GB GDDR7 and 72GB GDDR7 variants (claim 26).\n\n## Evidence Status\n\nAll claims listed in this report were accepted by the critic, with the exception of claim 05 (\"BERT base encoder has 12 blocks/layers\"), which was marked as unsupported. However, the critic's decision for claim 05 states the evidence supports it, creating a semantic disagreement: the claim was labeled \"unsupported\" but the critic's reasoning indicates the evidence does support it. This claim is excluded from the findings above due to its unsupported status, despite the apparent contradiction in the critic's decision. All other claims (01-04, 06-32) are accepted and included in this report.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:03",
+      "claim": "In the original Transformer from 'Attention is All You Need', the number of encoder blocks N is equal to 6.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:03",
+          "document_version_id": "web_search-f79b36d5e92107d7",
+          "page": null,
+          "section": "A Complete Guide to BERT with Code",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "In the original Transformer, `N` is equal to 6 for the encoder and 6 for the decoder",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:04",
+      "claim": "The Transformer encoder from Attention is All You Need consists of N-stacked encoder blocks where N = 6.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:04",
+          "document_version_id": "web_search-c1949a68f29d3db2",
+          "page": null,
+          "section": "Attention is All You Need: What makes the transformer so revolutionary? | by Dong-Keon Kim | Medium",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "It consists of N-stacked encoder blocks (N = 6, based on experimental findings).",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:10",
+      "claim": "The Transformer architecture suggested in the original paper contains 512 hidden units and 8 attention heads.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:10",
+          "document_version_id": "web_search-9c6833e3dc714f37",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "It contains 512 hidden units and 8 attention heads.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:12",
+      "claim": "Bert Base had 12 layers, whereas Bert Large had 24 layers.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:12",
+          "document_version_id": "web_search-a9dece2813637549",
+          "page": null,
+          "section": "Transformer models and BERT model: Overview",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "One is Bert Base, which had 12 layers, whereas Bert Large had 24 layers.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:13",
+      "claim": "BERT's Transformer encoder architecture captures context across all tokens in parallel.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:13",
+          "document_version_id": "fetch_page-55b2178713121782",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 9000,
+          "end_offset": 11000,
+          "quote": "Its Transformer encoder architecture captures context across all tokens in parallel.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:15",
+      "claim": "BERT Base can be fine-tuned efficiently on a single GPU.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:15",
+          "document_version_id": "fetch_page-55b2178713121782",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 9000,
+          "end_offset": 11000,
+          "quote": "BERT Base can be fine-tuned efficiently on a single GPU.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:16",
+      "claim": "BERT's training process learns from both sides of a word simultaneously rather than in one direction.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:16",
+          "document_version_id": "fetch_page-a40a16710f5d4a2b",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "Instead of learning language patterns in one direction, it learns from both sides of a word simultaneously.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:17",
+      "claim": "During BERT training, about 15% of tokens are selected for prediction using a strategy where 80% are replaced with the [MASK] token, 10% are replaced with a random word, and 10% remain unchanged.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:17",
+          "document_version_id": "fetch_page-a40a16710f5d4a2b",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "During training, about 15% of the tokens are selected for prediction using the following strategy: 80% of selected tokens are replaced with the [MASK] token. 10% are replaced with a random word . 10% remain unchanged.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:18",
+      "claim": "BERT uses WordPiece tokenization which breaks text into sub-word units.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:18",
+          "document_version_id": "fetch_page-d9d6c8fff68ffcef",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "The first step is WordPiece tokenization , which breaks text into sub-word units.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:19",
+      "claim": "BERT adds [CLS] (Classification Token) at the beginning of every input, whose output representation is used for classification tasks.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:19",
+          "document_version_id": "fetch_page-d9d6c8fff68ffcef",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "[CLS] (Classification Token): Added at the beginning of every input. Its output representation is used for classification tasks.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:20",
+      "claim": "BERT adds [SEP] (Separator Token) which marks the end of a sentence or separates pairs of sentences.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:20",
+          "document_version_id": "fetch_page-d9d6c8fff68ffcef",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "[SEP] (Separator Token): Marks the end of a sentence or separates pairs of sentences for tasks like question answering or next sentence prediction.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:21",
+      "claim": "BERT represents each token using a combination of three learned embeddings: Token Embeddings, Segment Embeddings, and Position Embeddings.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:21",
+          "document_version_id": "fetch_page-a40a16710f5d4a2b",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "earned embeddings represents each token: Token Embeddings: Capture the meaning of individual words or subwords. Segment Embeddings: Distinguish between Sentence A and Sentence B for paired tasks. Position Embeddings: Preserve word order, since Transformers don",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:22",
+      "claim": "BERT's pre-training is performed on massive text corpora like Wikipedia and BooksCorpus.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:22",
+          "document_version_id": "fetch_page-a40a16710f5d4a2b",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "This pre-training is performed on massive text corpora like Wikipedia and BooksCorpus, creating a deeply contextual understanding of language before fine-tuning for specific tasks.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:23",
+      "claim": "In BERT's Next Sentence Prediction task, the model is fed two sentences where 50% of the time the second sentence follows the first and 50% of the time it's a random sentence.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:23",
+          "document_version_id": "fetch_page-a40a16710f5d4a2b",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "In this task, the model is fed two sentences: 50% of the time, the second sentence follows the first. 50% of the time, it",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:24",
+      "claim": "BERT Large was trained on Google TPU with hundreds of cores running in parallel.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:24",
+          "document_version_id": "fetch_page-a891a196df7a4e42",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 7200,
+          "end_offset": 9200,
+          "quote": "BERT Large, for instance, was trained on Google TPU with hundreds of cores running in parallel.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:25",
+      "claim": "The NVIDIA RTX PRO 6000 Blackwell features 96GB GDDR7.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:25",
+          "document_version_id": "fetch_page-a891a196df7a4e42",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 7200,
+          "end_offset": 9200,
+          "quote": "The NVIDIA RTX PRO 6000 Blackwell features 96GB GDDR7",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:26",
+      "claim": "The NVIDIA RTX PRO 5000 Blackwell features 48GB GDDR7 and 72GB GDDR7 variants.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:26",
+          "document_version_id": "fetch_page-a891a196df7a4e42",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 7200,
+          "end_offset": 9200,
+          "quote": "The NVIDIA RTX PRO 5000 Blackwell features a 48GB GDDR7 and 72GB GDDR7 variants.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:31",
+      "claim": "The Transformer architecture suggested in the original paper contains 512 hidden units and 8 attention heads.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:31",
+          "document_version_id": "fetch_page-83ba974afa0aa1db",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "It contains 512 hidden units and 8 attention heads",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:32",
+      "claim": "BERT uses only the encoder for language understanding tasks, unlike the original Transformer which has both encoder and decoder.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:32",
+          "document_version_id": "fetch_page-83ba974afa0aa1db",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "Unlike the original Transformer, which has both encoder and decoder, BERT uses only the encoder for language understanding tasks",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11",
+      "claim": "BERT architectures (BASE and LARGE) have larger feedforward networks and more attention heads than the Transformer architecture suggested in the original paper.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:11",
+          "document_version_id": "web_search-9c6833e3dc714f37",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "BERT architectures (BASE and LARGE) also have larger feedforward networks (768 and 1024 hidden units respectively), and more attention heads (12 and 16 respectively) than the Transformer architecture suggested in the original paper.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14",
+      "claim": "BERT Large has 340M parameters.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:14",
+          "document_version_id": "fetch_page-55b2178713121782",
+          "page": null,
+          "section": "BERT Transformers – How Do They Work? | Exxact Blog",
+          "start_offset": 9000,
+          "end_offset": 11000,
+          "quote": "BERT Large benefits from multi-GPU parallelism due to its 340M parameters.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28",
+      "claim": "BERT LARGE has 24 layers in the Encoder stack.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:28",
+          "document_version_id": "fetch_page-83ba974afa0aa1db",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "BERT LARGE has 24 layers in the Encoder stack",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29",
+      "claim": "BERT BASE contains 110M parameters while BERT LARGE has 340M parameters.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:29",
+          "document_version_id": "fetch_page-83ba974afa0aa1db",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "BERT BASE contains 110M parameters while BERT LARGE has 340M parameters",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30",
+      "claim": "BERT BASE and BERT LARGE have larger feedforward networks (768 and 1024 hidden units respectively) and more attention heads (12 and 16 respectively) than the Transformer architecture suggested in the original paper.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:30",
+          "document_version_id": "fetch_page-83ba974afa0aa1db",
+          "page": null,
+          "section": "BERT Model - NLP - GeeksforGeeks",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "BERT architectures (BASE and LARGE) also have larger feedforward networks (768 and 1024 hidden units respectively), and more attention heads (12 and 16 respectively) than the Transformer architecture suggested in the original paper",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:03": [
+      "web_search-f79b36d5e92107d7"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:04": [
+      "web_search-c1949a68f29d3db2"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:10": [
+      "web_search-9c6833e3dc714f37"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11": [
+      "web_search-9c6833e3dc714f37"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:12": [
+      "web_search-a9dece2813637549"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:13": [
+      "fetch_page-55b2178713121782"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14": [
+      "fetch_page-55b2178713121782"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:15": [
+      "fetch_page-55b2178713121782"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:16": [
+      "fetch_page-a40a16710f5d4a2b"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:17": [
+      "fetch_page-a40a16710f5d4a2b"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:18": [
+      "fetch_page-d9d6c8fff68ffcef"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:19": [
+      "fetch_page-d9d6c8fff68ffcef"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:20": [
+      "fetch_page-d9d6c8fff68ffcef"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:21": [
+      "fetch_page-a40a16710f5d4a2b"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:22": [
+      "fetch_page-a40a16710f5d4a2b"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:23": [
+      "fetch_page-a40a16710f5d4a2b"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:24": [
+      "fetch_page-a891a196df7a4e42"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:25": [
+      "fetch_page-a891a196df7a4e42"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:26": [
+      "fetch_page-a891a196df7a4e42"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28": [
+      "fetch_page-83ba974afa0aa1db"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29": [
+      "fetch_page-83ba974afa0aa1db"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30": [
+      "fetch_page-83ba974afa0aa1db"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:31": [
+      "fetch_page-83ba974afa0aa1db"
+    ],
+    "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:32": [
+      "fetch_page-83ba974afa0aa1db"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "BERT Base has 12 encoder layers.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "The Transformer architecture suggested in the original paper contains 512 hidden units and 8 attention heads.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "BERT architectures (BASE and LARGE) have larger feedforward networks and more attention heads than the Transformer architecture suggested in the original paper.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "Bert Base had 12 layers, whereas Bert Large had 24 layers.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "BERT's Transformer encoder architecture captures context across all tokens in parallel.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "BERT Large has 340M parameters.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "BERT Base can be fine-tuned efficiently on a single GPU.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "BERT's training process learns from both sides of a word simultaneously rather than in one direction.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "During BERT training, about 15% of tokens are selected for prediction using a strategy where 80% are replaced with the [MASK] token, 10% are replaced with a random word, and 10% remain unchanged.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-18",
+        "kind": "claim",
+        "label": "BERT uses WordPiece tokenization which breaks text into sub-word units.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-19",
+        "kind": "claim",
+        "label": "BERT adds [CLS] (Classification Token) at the beginning of every input, whose output representation is used for classification tasks.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "BERT Base has 12 encoder layers (L=12).",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-20",
+        "kind": "claim",
+        "label": "BERT adds [SEP] (Separator Token) which marks the end of a sentence or separates pairs of sentences.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-21",
+        "kind": "claim",
+        "label": "BERT represents each token using a combination of three learned embeddings: Token Embeddings, Segment Embeddings, and Position Embeddings.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-22",
+        "kind": "claim",
+        "label": "BERT's pre-training is performed on massive text corpora like Wikipedia and BooksCorpus.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-23",
+        "kind": "claim",
+        "label": "In BERT's Next Sentence Prediction task, the model is fed two sentences where 50% of the time the second sentence follows the first and 50% of the time it's a random sentence.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-24",
+        "kind": "claim",
+        "label": "BERT Large was trained on Google TPU with hundreds of cores running in parallel.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-25",
+        "kind": "claim",
+        "label": "The NVIDIA RTX PRO 6000 Blackwell features 96GB GDDR7.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-26",
+        "kind": "claim",
+        "label": "The NVIDIA RTX PRO 5000 Blackwell features 48GB GDDR7 and 72GB GDDR7 variants.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-27",
+        "kind": "claim",
+        "label": "BERT BASE has 12 layers in the Encoder stack.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-28",
+        "kind": "claim",
+        "label": "BERT LARGE has 24 layers in the Encoder stack.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-29",
+        "kind": "claim",
+        "label": "BERT BASE contains 110M parameters while BERT LARGE has 340M parameters.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "In the original Transformer from 'Attention is All You Need', the number of encoder blocks N is equal to 6.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-30",
+        "kind": "claim",
+        "label": "BERT BASE and BERT LARGE have larger feedforward networks (768 and 1024 hidden units respectively) and more attention heads (12 and 16 respectively) than the Transformer architecture suggested in the original paper.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-31",
+        "kind": "claim",
+        "label": "The Transformer architecture suggested in the original paper contains 512 hidden units and 8 attention heads.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-32",
+        "kind": "claim",
+        "label": "BERT uses only the encoder for language understanding tasks, unlike the original Transformer which has both encoder and decoder.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The Transformer encoder from Attention is All You Need consists of N-stacked encoder blocks where N = 6.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "BERT base encoder has 12 blocks/layers.",
+        "properties": {
+          "support_status": "unsupported",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "BERTBASE has 12 layers in the Encoder stack.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "BERTLARGE has 24 layers in the Encoder stack.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "BERT Base has 12 layers (L=12).",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "BERT Large has 24 layers (L=24).",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "BERT: In-depth exploration of Architecture, Workflow, Code, and Mathematical Foundations",
+        "properties": {
+          "document_version_id": "web_search-10c3f92d945ad088"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "web_search-9c6833e3dc714f37"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "web_search-9c6833e3dc714f37"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "Transformer models and BERT model: Overview",
+        "properties": {
+          "document_version_id": "web_search-a9dece2813637549"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-55b2178713121782"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-55b2178713121782"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-55b2178713121782"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a40a16710f5d4a2b"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a40a16710f5d4a2b"
+        }
+      },
+      {
+        "node_id": "source-18-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-d9d6c8fff68ffcef"
+        }
+      },
+      {
+        "node_id": "source-19-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-d9d6c8fff68ffcef"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "web_search-23d6db7353fcd394"
+        }
+      },
+      {
+        "node_id": "source-20-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-d9d6c8fff68ffcef"
+        }
+      },
+      {
+        "node_id": "source-21-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a40a16710f5d4a2b"
+        }
+      },
+      {
+        "node_id": "source-22-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a40a16710f5d4a2b"
+        }
+      },
+      {
+        "node_id": "source-23-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a40a16710f5d4a2b"
+        }
+      },
+      {
+        "node_id": "source-24-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a891a196df7a4e42"
+        }
+      },
+      {
+        "node_id": "source-25-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a891a196df7a4e42"
+        }
+      },
+      {
+        "node_id": "source-26-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-a891a196df7a4e42"
+        }
+      },
+      {
+        "node_id": "source-27-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "fetch_page-83ba974afa0aa1db"
+        }
+      },
+      {
+        "node_id": "source-28-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "fetch_page-83ba974afa0aa1db"
+        }
+      },
+      {
+        "node_id": "source-29-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "fetch_page-83ba974afa0aa1db"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "A Complete Guide to BERT with Code",
+        "properties": {
+          "document_version_id": "web_search-f79b36d5e92107d7"
+        }
+      },
+      {
+        "node_id": "source-30-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "fetch_page-83ba974afa0aa1db"
+        }
+      },
+      {
+        "node_id": "source-31-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "fetch_page-83ba974afa0aa1db"
+        }
+      },
+      {
+        "node_id": "source-32-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "fetch_page-83ba974afa0aa1db"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "Attention is All You Need: What makes the transformer so revolutionary? | by Dong-Keon Kim | Medium",
+        "properties": {
+          "document_version_id": "web_search-c1949a68f29d3db2"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "Attention is All You Need: What makes the transformer so revolutionary? | by Dong-Keon Kim | Medium",
+        "properties": {
+          "document_version_id": "web_search-c1949a68f29d3db2"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "web_search-9c6833e3dc714f37"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "BERT Model - NLP - GeeksforGeeks",
+        "properties": {
+          "document_version_id": "web_search-9c6833e3dc714f37"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-1e906fa56789bb77"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "properties": {
+          "document_version_id": "fetch_page-1e906fa56789bb77"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-18-1",
+        "source_node_id": "claim-18",
+        "target_node_id": "source-18-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:18"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-19-1",
+        "source_node_id": "claim-19",
+        "target_node_id": "source-19-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:19"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-20-1",
+        "source_node_id": "claim-20",
+        "target_node_id": "source-20-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:20"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-21-1",
+        "source_node_id": "claim-21",
+        "target_node_id": "source-21-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:21"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-22-1",
+        "source_node_id": "claim-22",
+        "target_node_id": "source-22-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:22"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-23-1",
+        "source_node_id": "claim-23",
+        "target_node_id": "source-23-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:23"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-24-1",
+        "source_node_id": "claim-24",
+        "target_node_id": "source-24-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:24"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-25-1",
+        "source_node_id": "claim-25",
+        "target_node_id": "source-25-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:25"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-26-1",
+        "source_node_id": "claim-26",
+        "target_node_id": "source-26-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:26"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-27-1",
+        "source_node_id": "claim-27",
+        "target_node_id": "source-27-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:27"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-28-1",
+        "source_node_id": "claim-28",
+        "target_node_id": "source-28-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:28"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-29-1",
+        "source_node_id": "claim-29",
+        "target_node_id": "source-29-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:29"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-30-1",
+        "source_node_id": "claim-30",
+        "target_node_id": "source-30-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:30"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-31-1",
+        "source_node_id": "claim-31",
+        "target_node_id": "source-31-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:31"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-32-1",
+        "source_node_id": "claim-32",
+        "target_node_id": "source-32-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:32"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095450Z-612c0d3b:span:research-01-how-many-more-blocks-also-denoted-as:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:01",
+      "uri": "https://pub.towardsai.net/bert-in-depth-exploration-of-architecture-workflow-code-and-mathematical-foundations-0c67ad24725b",
+      "media_type": "text/markdown",
+      "content_sha256": "10c3f92d945ad0889c6bf2818ab1af236768ff9b3a88837b57feb4d4a034f813",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-10c3f92d945ad088",
+        "critical_claims_allowed": true,
+        "source_title": "BERT: In-depth exploration of Architecture, Workflow, Code, and Mathematical Foundations",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:02",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "23d6db7353fcd3945567034947bfe083a008179b6abac1e8f6137fbcf9ed9920",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-23d6db7353fcd394",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:03",
+      "uri": "https://www.youtube.com/watch?v=t45S_MwAcOw",
+      "media_type": "text/markdown",
+      "content_sha256": "8dbb3636b6140181847ee3333a6ed179f90e6228c83f303a67b694a5cfff2b2e",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-8dbb3636b6140181",
+        "critical_claims_allowed": true,
+        "source_title": "Transformer models and BERT model: Overview",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:04",
+      "uri": "https://towardsdatascience.com/a-complete-guide-to-bert-with-code-9f87602e4a11",
+      "media_type": "text/markdown",
+      "content_sha256": "f79b36d5e92107d7e6bae047999d85d0d5ced8393369362611383a8f8034c2a1",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-f79b36d5e92107d7",
+        "critical_claims_allowed": true,
+        "source_title": "A Complete Guide to BERT with Code",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:05",
+      "uri": "https://medium.com/@kdk199604/kdks-review-attention-is-all-you-need-what-makes-the-transformer-so-revolutionary-c91f135583b0",
+      "media_type": "text/markdown",
+      "content_sha256": "c1949a68f29d3db2b60880b7c38c9884e9de87c3820b51f5c2865866e45094eb",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-c1949a68f29d3db2",
+        "critical_claims_allowed": true,
+        "source_title": "Attention is All You Need: What makes the transformer so revolutionary? | by Dong-Keon Kim | Medium",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:06",
+      "uri": "https://towardsdatascience.com/paper-walkthrough-attention-is-all-you-need-80399cdc59e1",
+      "media_type": "text/markdown",
+      "content_sha256": "853fd9646eb6013d9c65f0b0d567f1c8d84ec6373c1abee65fac8a1a1d1ca7a1",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-853fd9646eb6013d",
+        "critical_claims_allowed": true,
+        "source_title": "Paper Walkthrough: Attention Is All You Need | Towards Data Science",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:07",
+      "uri": "https://community.deeplearning.ai/t/attention-is-all-you-need-paper-discussions-transformers/654588",
+      "media_type": "text/markdown",
+      "content_sha256": "071e007b01afb1da563399bf95dae74bfa5a4e986f7958dd14c30aad9b49230e",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-071e007b01afb1da",
+        "critical_claims_allowed": true,
+        "source_title": "Attention is all you need paper discussions - Transformers - Generative AI with Large Language Models - DeepLearning.AI",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:08",
+      "uri": "https://newsletter.theaiedge.io/p/attention-is-all-you-need-the-original",
+      "media_type": "text/markdown",
+      "content_sha256": "5309877c8e81669a4c94de97d72419873c58460dd78efc99e0c02507117dfe28",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-5309877c8e81669a",
+        "critical_claims_allowed": true,
+        "source_title": "Attention Is All You Need: The Original Transformer Architecture",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:09",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp",
+      "media_type": "text/markdown",
+      "content_sha256": "9c6833e3dc714f37a9e8711a908caf96ecd0484a31476a078f2e22661dc3dbaf",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-9c6833e3dc714f37",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:10",
+      "uri": "https://www.youtube.com/watch?v=t45S_MwAcOw",
+      "media_type": "text/markdown",
+      "content_sha256": "a9dece28136375497d61127f74c54ace94dc75fcea2bf8c79c74d6a9fe60a440",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "web_search-a9dece2813637549",
+        "critical_claims_allowed": true,
+        "source_title": "Transformer models and BERT model: Overview",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:11",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "1e906fa56789bb776feed489524666aa17f4741ad768680ec7b7a1b21a92fb83",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-1e906fa56789bb77",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:12",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "b252cd0af43c87e6ac91f7b5fd5b0e65a3bf4de12e42f64e5d7f1925c9120c39",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-b252cd0af43c87e6",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 3800
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:13",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "d9d6c8fff68ffcef5ee0cce9bd36f1afa036bb25b9394a1f2636ae2697a2353a",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-d9d6c8fff68ffcef",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 2,
+        "char_start": 3600,
+        "char_end": 5600
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:14",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "a40a16710f5d4a2bd56fea8de133334a7921b5cedfc7fce3ece030f3f7bb5605",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-a40a16710f5d4a2b",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 3,
+        "char_start": 5400,
+        "char_end": 7400
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:15",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "a891a196df7a4e425e7718e45c568dc1e3541eaba7044193fe0e504572f675fe",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-a891a196df7a4e42",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 4,
+        "char_start": 7200,
+        "char_end": 9200
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:16",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "55b217871312178229c0afa3280163a7312afb12029535ce9c735a0cc306c2c0",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-55b2178713121782",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 5,
+        "char_start": 9000,
+        "char_end": 11000
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:17",
+      "uri": "https://www.exxactcorp.com/blog/Deep-Learning/how-do-bert-transformers-work",
+      "media_type": "text/markdown",
+      "content_sha256": "18561d971727e19f41de4991fa965c77310f3dcef0afe9d384205faa8d1ab351",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-18561d971727e19f",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Transformers – How Do They Work? | Exxact Blog",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 6,
+        "char_start": 10800,
+        "char_end": 12000
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:18",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "8120dc7f0e095de4a1d474ab3a6cdbdac8c57eb2cd8fb87f296e12f831667023",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-8120dc7f0e095de4",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:19",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "49840f985f372f24922907ee132ddb97cb9ed3aab82aa0819a94bf8b16673feb",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-49840f985f372f24",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 3800
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:20",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "83ba974afa0aa1db716ba13bc4e0a5234e27a8eb12719698fe62d4df4163a83b",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-83ba974afa0aa1db",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 2,
+        "char_start": 3600,
+        "char_end": 5600
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:21",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "81396642058693342be99ac544cd8ce095736a338badb32c6b16c7e87ddd5741",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-8139664205869334",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 3,
+        "char_start": 5400,
+        "char_end": 7400
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:22",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "bafebadb9cdab6a1df7a150b3e4eb583760d85b0e9e15132e277544665800288",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-bafebadb9cdab6a1",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 4,
+        "char_start": 7200,
+        "char_end": 9200
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:23",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "462ff3eb7c71ae4763cef2943c34318d66acd79c6a7e4cd3ca1fcd2429b17fa3",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-462ff3eb7c71ae47",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 5,
+        "char_start": 9000,
+        "char_end": 11000
+      }
+    },
+    {
+      "artifact_id": "20260814T095450Z-612c0d3b:research-01-how-many-more-blocks-also-denoted-as:src:24",
+      "uri": "https://www.geeksforgeeks.org/nlp/explanation-of-bert-model-nlp/",
+      "media_type": "text/markdown",
+      "content_sha256": "3b7bdb3b3ea07f6b6ea0dd64fcae68f8202b45fcb4516f955e8c26ca241537b1",
+      "created_by_task_id": "research-01-how-many-more-blocks-also-denoted-as",
+      "metadata": {
+        "document_version_id": "fetch_page-3b7bdb3b3ea07f6b",
+        "critical_claims_allowed": true,
+        "source_title": "BERT Model - NLP - GeeksforGeeks",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 6,
+        "char_start": 10800,
+        "char_end": 11495
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:03",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:04",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:10",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:12",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:13",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:15",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:16",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:17",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:18",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:19",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:20",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:21",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:22",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:23",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:24",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:25",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:26",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:31",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:32"
+    ],
+    "qualified_claim_ids": [
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:06",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:07",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:09",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:03",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:04",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:10",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:12",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:13",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:15",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:16",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:17",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:18",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:19",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:20",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:21",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:22",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:23",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:24",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:25",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:26",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:31",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:32"
+    ],
+    "degradations": {
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:06": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:07": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:09": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29": "critic_unresolved",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:06",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:07"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:06",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:06",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:07",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:07",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:09",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29"
+      ],
+      [
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27",
+        "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:01",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:02",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:05",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:06",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:07",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:08",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:09",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:11",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:14",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:27",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:28",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:29",
+      "20260814T095450Z-612c0d3b:claim:research-01-how-many-more-blocks-also-denoted-as:30"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T095450Z-612c0d3b",
+    "document_version_ids": [
+      "fetch_page-18561d971727e19f",
+      "fetch_page-1e906fa56789bb77",
+      "fetch_page-3b7bdb3b3ea07f6b",
+      "fetch_page-462ff3eb7c71ae47",
+      "fetch_page-49840f985f372f24",
+      "fetch_page-55b2178713121782",
+      "fetch_page-8120dc7f0e095de4",
+      "fetch_page-8139664205869334",
+      "fetch_page-83ba974afa0aa1db",
+      "fetch_page-a40a16710f5d4a2b",
+      "fetch_page-a891a196df7a4e42",
+      "fetch_page-b252cd0af43c87e6",
+      "fetch_page-bafebadb9cdab6a1",
+      "fetch_page-d9d6c8fff68ffcef",
+      "web_search-071e007b01afb1da",
+      "web_search-10c3f92d945ad088",
+      "web_search-23d6db7353fcd394",
+      "web_search-5309877c8e81669a",
+      "web_search-853fd9646eb6013d",
+      "web_search-8dbb3636b6140181",
+      "web_search-9c6833e3dc714f37",
+      "web_search-a9dece2813637549",
+      "web_search-c1949a68f29d3db2",
+      "web_search-f79b36d5e92107d7"
+    ],
+    "content_hashes": {
+      "web_search-10c3f92d945ad088": "10c3f92d945ad0889c6bf2818ab1af236768ff9b3a88837b57feb4d4a034f813",
+      "web_search-23d6db7353fcd394": "23d6db7353fcd3945567034947bfe083a008179b6abac1e8f6137fbcf9ed9920",
+      "web_search-8dbb3636b6140181": "8dbb3636b6140181847ee3333a6ed179f90e6228c83f303a67b694a5cfff2b2e",
+      "web_search-f79b36d5e92107d7": "f79b36d5e92107d7e6bae047999d85d0d5ced8393369362611383a8f8034c2a1",
+      "web_search-c1949a68f29d3db2": "c1949a68f29d3db2b60880b7c38c9884e9de87c3820b51f5c2865866e45094eb",
+      "web_search-853fd9646eb6013d": "853fd9646eb6013d9c65f0b0d567f1c8d84ec6373c1abee65fac8a1a1d1ca7a1",
+      "web_search-071e007b01afb1da": "071e007b01afb1da563399bf95dae74bfa5a4e986f7958dd14c30aad9b49230e",
+      "web_search-5309877c8e81669a": "5309877c8e81669a4c94de97d72419873c58460dd78efc99e0c02507117dfe28",
+      "web_search-9c6833e3dc714f37": "9c6833e3dc714f37a9e8711a908caf96ecd0484a31476a078f2e22661dc3dbaf",
+      "web_search-a9dece2813637549": "a9dece28136375497d61127f74c54ace94dc75fcea2bf8c79c74d6a9fe60a440",
+      "fetch_page-1e906fa56789bb77": "1e906fa56789bb776feed489524666aa17f4741ad768680ec7b7a1b21a92fb83",
+      "fetch_page-b252cd0af43c87e6": "b252cd0af43c87e6ac91f7b5fd5b0e65a3bf4de12e42f64e5d7f1925c9120c39",
+      "fetch_page-d9d6c8fff68ffcef": "d9d6c8fff68ffcef5ee0cce9bd36f1afa036bb25b9394a1f2636ae2697a2353a",
+      "fetch_page-a40a16710f5d4a2b": "a40a16710f5d4a2bd56fea8de133334a7921b5cedfc7fce3ece030f3f7bb5605",
+      "fetch_page-a891a196df7a4e42": "a891a196df7a4e425e7718e45c568dc1e3541eaba7044193fe0e504572f675fe",
+      "fetch_page-55b2178713121782": "55b217871312178229c0afa3280163a7312afb12029535ce9c735a0cc306c2c0",
+      "fetch_page-18561d971727e19f": "18561d971727e19f41de4991fa965c77310f3dcef0afe9d384205faa8d1ab351",
+      "fetch_page-8120dc7f0e095de4": "8120dc7f0e095de4a1d474ab3a6cdbdac8c57eb2cd8fb87f296e12f831667023",
+      "fetch_page-49840f985f372f24": "49840f985f372f24922907ee132ddb97cb9ed3aab82aa0819a94bf8b16673feb",
+      "fetch_page-83ba974afa0aa1db": "83ba974afa0aa1db716ba13bc4e0a5234e27a8eb12719698fe62d4df4163a83b",
+      "fetch_page-8139664205869334": "81396642058693342be99ac544cd8ce095736a338badb32c6b16c7e87ddd5741",
+      "fetch_page-bafebadb9cdab6a1": "bafebadb9cdab6a1df7a150b3e4eb583760d85b0e9e15132e277544665800288",
+      "fetch_page-462ff3eb7c71ae47": "462ff3eb7c71ae4763cef2943c34318d66acd79c6a7e4cd3ca1fcd2429b17fa3",
+      "fetch_page-3b7bdb3b3ea07f6b": "3b7bdb3b3ea07f6b6ea0dd64fcae68f8202b45fcb4516f955e8c26ca241537b1"
+    },
+    "critical_claims_allowed": {
+      "web_search-10c3f92d945ad088": true,
+      "web_search-23d6db7353fcd394": true,
+      "web_search-8dbb3636b6140181": true,
+      "web_search-f79b36d5e92107d7": true,
+      "web_search-c1949a68f29d3db2": true,
+      "web_search-853fd9646eb6013d": true,
+      "web_search-071e007b01afb1da": true,
+      "web_search-5309877c8e81669a": true,
+      "web_search-9c6833e3dc714f37": true,
+      "web_search-a9dece2813637549": true,
+      "fetch_page-1e906fa56789bb77": true,
+      "fetch_page-b252cd0af43c87e6": true,
+      "fetch_page-d9d6c8fff68ffcef": true,
+      "fetch_page-a40a16710f5d4a2b": true,
+      "fetch_page-a891a196df7a4e42": true,
+      "fetch_page-55b2178713121782": true,
+      "fetch_page-18561d971727e19f": true,
+      "fetch_page-8120dc7f0e095de4": true,
+      "fetch_page-49840f985f372f24": true,
+      "fetch_page-83ba974afa0aa1db": true,
+      "fetch_page-8139664205869334": true,
+      "fetch_page-bafebadb9cdab6a1": true,
+      "fetch_page-462ff3eb7c71ae47": true,
+      "fetch_page-3b7bdb3b3ea07f6b": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T095450Z-612c0d3b",
+    "status": "completed"
+  }
+}

@@ -327,7 +327,10 @@ async def test_agentic_researcher_rejects_ungrounded_quotes_via_function_calls()
     packet = output.result.evidence_packets[0]
     claims = {claim.claim: claim for claim in packet.claims}
     assert "Grounded claim." in claims
-    assert "Fabricated claim." in claims
+    # the fabricated quote shares no meaningful verbatim span with the snippet
+    # (min span length 8), so the claim is dropped instead of grounded on a
+    # meaningless 2-character fragment
+    assert "Fabricated claim." not in claims
     for claim in packet.claims:
         quote = claim.evidence_spans[0].quote
         assert quote in snippet["snippet"], "every quote must be verbatim source text"

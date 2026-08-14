@@ -1,0 +1,1266 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- The BBC Earth video 'Top 5 Silliest Animal Moments' features rockhopper penguins scaling a steep island cliff to reach their colony and chicks.\n- The rockhopper penguin is a bird that can't fly.\n- The video also features polar bears and a sloth among its silly animal moments.\n- The BBC Earth video 'Top 5 Silliest Animal Moments' features the mighty polar bear.\n- The BBC Earth video 'Top 5 Silliest Animal Moments' features the majestic lion.\n- The BBC Earth video 'Top 5 Silliest Animal Moments' features a sloth surprised by David Attenborough.\n- The BBC Earth video 'Top 5 Silliest Animal Moments' features a baby panda being taught to use the toilet.\n- The BBC Earth video 'Top 5 Silliest Animal Moments' features lion cubs interacting with a spy camera.\n- The BBC Earth Top 5 Silliest Animal Moments video features rockhopper penguins, which are described as 'a bird that can't fly, standing less than half a meter tall' that climb mountains using their toenails and beak.\n- The video transcript describes rockhopper penguins using 'Incredibly strong toenails' to grip rock and 'The beak makes a good climbing tool.'\n- The BBC Earth video 'Top 5 Silliest Animal Moments!' features the polar bear, penguin, and lion among the animals shown.\n- The video 'Top 5 Silliest Animal Moments!' was posted on 11 Jan 2020.\n- The video 'Top 5 Silliest Animal Moments!' has 2,547,709 views.\n- The video 'Top 5 Silliest Animal Moments!' has 33,709 likes.\n- The BBC Earth YouTube channel has 14,500,000 subscribers.\n\n## Findings\n\n### Rockhopper Penguins Climbing a Cliff\nThe BBC Earth video 'Top 5 Silliest Animal Moments' features rockhopper penguins scaling a steep island cliff to reach their colony and chicks. The video includes a segment described as \"penguins learning to climb\" and refers to \"the tenacious penguin.\"\n\n### Rockhopper Penguin Description and Climbing Mechanism\nThe video describes rockhopper penguins as \"a bird that can't fly, standing less than half a meter tall\" that climb mountains using their toenails and beak. The transcript specifically mentions \"Incredibly strong toenails\" used to grip rock and states \"The beak makes a good climbing tool.\"\n\n### Other Animals Featured in the Video\nThe video features polar bears and a sloth among its silly animal moments. Specific segments include \"the mighty polar bear,\" \"the majestic lion,\" a sloth surprised by David Attenborough, a baby panda being taught to use the toilet, and lion cubs interacting with a spy camera. The video's featured animals are summarized as \"The mighty polar bear, the tenacious penguin and majestic lion.\"\n\n### Video Metadata\nThe video 'Top 5 Silliest Animal Moments!' was posted on 11 Jan 2020. It has 2,547,709 views and 33,709 likes. The BBC Earth YouTube channel has 14,500,000 subscribers.\n\n## Evidence Status\n\nAll claims are accepted based on direct evidence spans from the video transcript and metadata. No claims were rejected or qualified. The evidence directly supports each claim, with specific quotes and figures cited for descriptions, animal features, and video statistics.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:01",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments' features rockhopper penguins scaling a steep island cliff to reach their colony and chicks.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:01",
+          "document_version_id": "web_search-277c8a177254620e",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "We start with rockhopper penguins scaling a steep island cliff to reach their colony and chicks",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:02",
+      "claim": "The rockhopper penguin is a bird that can't fly.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:02",
+          "document_version_id": "web_search-277c8a177254620e",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "a tiny but impressive climb that looks almost impossible for a bird that can",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:03",
+      "claim": "The video also features polar bears and a sloth among its silly animal moments.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:03",
+          "document_version_id": "web_search-277c8a177254620e",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Then polar bears turn courtship into a playful fitness test on the ice, with a female sizing up a possible mate by making him chase and climb. A sloth then steals the",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:11",
+      "claim": "The BBC Earth Top 5 Silliest Animal Moments video features rockhopper penguins, which are described as 'a bird that can't fly, standing less than half a meter tall' that climb mountains using their toenails and beak.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:11",
+          "document_version_id": "web_search-f30f10f2c616eb5c",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "fly, standing less than half a meter tall. But it's now that rockhoppers live up to",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:12",
+      "claim": "The video transcript describes rockhopper penguins using 'Incredibly strong toenails' to grip rock and 'The beak makes a good climbing tool.'",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:12",
+          "document_version_id": "web_search-f30f10f2c616eb5c",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "rock. The beak makes a good climbing tool.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:13",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments!' features the polar bear, penguin, and lion among the animals shown.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:13",
+          "document_version_id": "web_search-f4f5d0a1143479b8",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The mighty polar bear, the tenacious penguin and majestic lion. Some of the most impressive creatures in the natural world",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:14",
+      "claim": "The video 'Top 5 Silliest Animal Moments!' was posted on 11 Jan 2020.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:14",
+          "document_version_id": "web_search-f4f5d0a1143479b8",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Posted: 11 Jan 2020",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:17",
+      "claim": "The BBC Earth YouTube channel has 14,500,000 subscribers.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:17",
+          "document_version_id": "web_search-f4f5d0a1143479b8",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "14500000 subscribers",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments' features the mighty polar bear.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+          "document_version_id": "web_search-734baf66ecbf5f6f",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The mighty polar bear, the tenacious penguin and majestic lion.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments' features the majestic lion.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+          "document_version_id": "web_search-734baf66ecbf5f6f",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The mighty polar bear, the tenacious penguin and majestic lion.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments' features a sloth surprised by David Attenborough.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:08",
+          "document_version_id": "web_search-bf1ab83cb5116a3f",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments | PDF",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "David Attenborough surprising a sloth",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments' features a baby panda being taught to use the toilet.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:09",
+          "document_version_id": "web_search-bf1ab83cb5116a3f",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments | PDF",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "a baby panda being taught to use the toilet",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10",
+      "claim": "The BBC Earth video 'Top 5 Silliest Animal Moments' features lion cubs interacting with a spy camera.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:10",
+          "document_version_id": "web_search-bf1ab83cb5116a3f",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments | PDF",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "lion cubs interacting with a spy camera",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15",
+      "claim": "The video 'Top 5 Silliest Animal Moments!' has 2,547,709 views.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:15",
+          "document_version_id": "web_search-f4f5d0a1143479b8",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "2547709 views",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16",
+      "claim": "The video 'Top 5 Silliest Animal Moments!' has 33,709 likes.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:16",
+          "document_version_id": "web_search-f4f5d0a1143479b8",
+          "page": null,
+          "section": "Top 5 Silliest Animal Moments! | BBC Earth",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "33709 likes",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:01": [
+      "web_search-277c8a177254620e"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:02": [
+      "web_search-277c8a177254620e"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:03": [
+      "web_search-277c8a177254620e"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06": [
+      "web_search-734baf66ecbf5f6f"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07": [
+      "web_search-734baf66ecbf5f6f"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08": [
+      "web_search-bf1ab83cb5116a3f"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09": [
+      "web_search-bf1ab83cb5116a3f"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10": [
+      "web_search-bf1ab83cb5116a3f"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:11": [
+      "web_search-f30f10f2c616eb5c"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:12": [
+      "web_search-f30f10f2c616eb5c"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:13": [
+      "web_search-f4f5d0a1143479b8"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:14": [
+      "web_search-f4f5d0a1143479b8"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15": [
+      "web_search-f4f5d0a1143479b8"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16": [
+      "web_search-f4f5d0a1143479b8"
+    ],
+    "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:17": [
+      "web_search-f4f5d0a1143479b8"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features rockhopper penguins scaling a steep island cliff to reach their colony and chicks.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features lion cubs interacting with a spy camera.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "The BBC Earth Top 5 Silliest Animal Moments video features rockhopper penguins, which are described as 'a bird that can't fly, standing less than half a meter tall' that climb mountains using their toenails and beak.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "The video transcript describes rockhopper penguins using 'Incredibly strong toenails' to grip rock and 'The beak makes a good climbing tool.'",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments!' features the polar bear, penguin, and lion among the animals shown.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "The video 'Top 5 Silliest Animal Moments!' was posted on 11 Jan 2020.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "The video 'Top 5 Silliest Animal Moments!' has 2,547,709 views.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "The video 'Top 5 Silliest Animal Moments!' has 33,709 likes.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "The BBC Earth YouTube channel has 14,500,000 subscribers.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "The rockhopper penguin is a bird that can't fly.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "The video also features polar bears and a sloth among its silly animal moments.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features penguins learning to climb.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features the tenacious penguin.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features the mighty polar bear.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features the majestic lion.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features a sloth surprised by David Attenborough.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "The BBC Earth video 'Top 5 Silliest Animal Moments' features a baby panda being taught to use the toilet.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-277c8a177254620e"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments | PDF",
+        "properties": {
+          "document_version_id": "web_search-bf1ab83cb5116a3f"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f30f10f2c616eb5c"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f30f10f2c616eb5c"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f4f5d0a1143479b8"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f4f5d0a1143479b8"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f4f5d0a1143479b8"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f4f5d0a1143479b8"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-f4f5d0a1143479b8"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-277c8a177254620e"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-277c8a177254620e"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments | PDF",
+        "properties": {
+          "document_version_id": "web_search-bf1ab83cb5116a3f"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-734baf66ecbf5f6f"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-734baf66ecbf5f6f"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "properties": {
+          "document_version_id": "web_search-734baf66ecbf5f6f"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments | PDF",
+        "properties": {
+          "document_version_id": "web_search-bf1ab83cb5116a3f"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "Top 5 Silliest Animal Moments | PDF",
+        "properties": {
+          "document_version_id": "web_search-bf1ab83cb5116a3f"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095211Z-5e7efa7c:span:research-01-on-the-bbc-earth-youtube-video-of-th:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:01",
+      "uri": "https://opentools.ai/youtube-summary/top-5-silliest-animal-moments-or-bbc-earth",
+      "media_type": "text/markdown",
+      "content_sha256": "277c8a177254620efd8fd2122f3b81fe9ceb1a663c98a3c3c7d78cd674e0b81e",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-277c8a177254620e",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:02",
+      "uri": "https://www.youtube.com/watch?v=2Njmx-UuU3M",
+      "media_type": "text/markdown",
+      "content_sha256": "b69263dbede0b6a174cdc37f283914230156f0c7867e6d48421755ee2700c70a",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-b69263dbede0b6a1",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:03",
+      "uri": "https://www.instagram.com/popular/bbc-earth-top-5-silliest-animal-moments-bird-species",
+      "media_type": "text/markdown",
+      "content_sha256": "c0e5a26fb3ac369c3a120e9834cf015c275502e2e69942a4c3c82443945f1a3b",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-c0e5a26fb3ac369c",
+        "critical_claims_allowed": true,
+        "source_title": "Bbc Earth Top 5 Silliest Animal Moments Bird Species",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:04",
+      "uri": "https://www.youtube.com/watch?v=GLPjP3hjhMM",
+      "media_type": "text/markdown",
+      "content_sha256": "4cd9cd5b5aba1ccb0f1e715266ad021024d2cfaa68caf1ba1b7d97958fae3d95",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-4cd9cd5b5aba1ccb",
+        "critical_claims_allowed": true,
+        "source_title": "Nature's Oddest Looking Animals | Top 5 | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:05",
+      "uri": "https://www.scribd.com/document/888073303/Top-5-Silliest-Animal-Moments",
+      "media_type": "text/markdown",
+      "content_sha256": "bf1ab83cb5116a3fe8d71aba7e7ad0dea2011d757d1ed1a157a738cd68af5e18",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-bf1ab83cb5116a3f",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments | PDF",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:06",
+      "uri": "https://www.youtube.com/watch?v=2Njmx-UuU3M",
+      "media_type": "text/markdown",
+      "content_sha256": "734baf66ecbf5f6f06ac644d86bccbf17da4edf25f22536e0d07222255d7d941",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-734baf66ecbf5f6f",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:07",
+      "uri": "https://www.youtube.com/watch?v=tPdxDQKHxYA",
+      "media_type": "text/markdown",
+      "content_sha256": "8f597d8ddd3933240040ed1d727a124741f9f8fd46bff3b1930764bd5e473905",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-8f597d8ddd393324",
+        "critical_claims_allowed": true,
+        "source_title": "10 Incredible Otter Moments | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:08",
+      "uri": "https://www.youtube.com/watch?v=NbHRKRrpyy8",
+      "media_type": "text/markdown",
+      "content_sha256": "a3915679a5b2b3a6cf98d0da6d4094392f0b3364cedd8919d6e711e0819dffa6",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-a3915679a5b2b3a6",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Funniest Animal Outtakes | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:09",
+      "uri": "https://www.instagram.com/popular/bbc-earth-top-5-silliest-animal-moments-penguin-species",
+      "media_type": "text/markdown",
+      "content_sha256": "4f7842b256b09086db9a34dc15e531f53546b9cb02fe8e42a21daa81ac9ee26f",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-4f7842b256b09086",
+        "critical_claims_allowed": true,
+        "source_title": "Bbc Earth Top 5 Silliest Animal Moments Penguin Species",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:10",
+      "uri": "https://www.youtube.com/playlist?list=PLC60CF7550FDFB5D9",
+      "media_type": "text/markdown",
+      "content_sha256": "7ad24c5b669a63b6ac04362108f0811b475cb8e8c93bdbf533c8828397e87632",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-7ad24c5b669a63b6",
+        "critical_claims_allowed": true,
+        "source_title": "Animals - Birds BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:11",
+      "uri": "https://www.bbcearth.com/news/sir-david-attenboroughs-10-most-memorable-wildlife-encounters",
+      "media_type": "text/markdown",
+      "content_sha256": "bddf785efbd2ab570cf93113b8d2d64113a8b603b658d3245eeeb000ecefdf68",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-bddf785efbd2ab57",
+        "critical_claims_allowed": true,
+        "source_title": "Sir David Attenborough's 10 Most Memorable Wildlife ...",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:12",
+      "uri": "https://www.youtube.com/watch?v=2Njmx-UuU3M",
+      "media_type": "text/markdown",
+      "content_sha256": "f30f10f2c616eb5c9fb6e51294c124937f0ad894e6e0ca868d685b6bc32f5ef7",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-f30f10f2c616eb5c",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:13",
+      "uri": "https://www.instagram.com/popular/bbc-earth-top-5-silliest-animal-moments-bird-species",
+      "media_type": "text/markdown",
+      "content_sha256": "ca85733316ec95783c0245b71aa3ac23a7186833a2790c4b9fd3dda7cf9cb930",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-ca85733316ec9578",
+        "critical_claims_allowed": true,
+        "source_title": "Bbc Earth Top 5 Silliest Animal Moments Bird Species",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:14",
+      "uri": "https://www.instagram.com/reel/DbvZkPiDqi4",
+      "media_type": "text/markdown",
+      "content_sha256": "b3c9cb445e8753cb0574b61272848bda1456ec7861b56ba8bcdd29526e9e4912",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-b3c9cb445e8753cb",
+        "critical_claims_allowed": true,
+        "source_title": "Instagram",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:15",
+      "uri": "https://www.youtube.com/watch?v=2Njmx-UuU3M",
+      "media_type": "text/markdown",
+      "content_sha256": "f4f5d0a1143479b8606dd097b0c1086655488cec6d59782dca589ec4d904b62c",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-f4f5d0a1143479b8",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments! | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:16",
+      "uri": "https://www.youtube.com/watch?v=s9KvEg102Tc",
+      "media_type": "text/markdown",
+      "content_sha256": "770350fefa78b1132ca4947a90ec44ad0d0e03dd32c985fb16ab2353bcf97f04",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "web_search-770350fefa78b113",
+        "critical_claims_allowed": true,
+        "source_title": "Weirdest Animal Relationships | Top 5 | BBC Earth",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095211Z-5e7efa7c:research-01-on-the-bbc-earth-youtube-video-of-th:src:17",
+      "uri": "https://www.youtube.com/watch?v=2Njmx-UuU3M",
+      "media_type": "text/markdown",
+      "content_sha256": "26d9029ebb1355543eec3b3e51263780dff89ac65e5b314f950d3fedf694c27f",
+      "created_by_task_id": "research-01-on-the-bbc-earth-youtube-video-of-th",
+      "metadata": {
+        "document_version_id": "fetch_page-26d9029ebb135554",
+        "critical_claims_allowed": true,
+        "source_title": "Top 5 Silliest Animal Moments! | BBC Earth - YouTube",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 78
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:01",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:02",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:03",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:11",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:12",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:13",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:14",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:17"
+    ],
+    "qualified_claim_ids": [
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:01",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:02",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:03",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:11",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:12",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:13",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:14",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:17"
+    ],
+    "degradations": {
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15": "critic_unresolved",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10"
+      ],
+      [
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15",
+        "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:04",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:05",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:06",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:07",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:08",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:09",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:10",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:15",
+      "20260814T095211Z-5e7efa7c:claim:research-01-on-the-bbc-earth-youtube-video-of-th:16"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T095211Z-5e7efa7c",
+    "document_version_ids": [
+      "fetch_page-26d9029ebb135554",
+      "web_search-277c8a177254620e",
+      "web_search-4cd9cd5b5aba1ccb",
+      "web_search-4f7842b256b09086",
+      "web_search-734baf66ecbf5f6f",
+      "web_search-770350fefa78b113",
+      "web_search-7ad24c5b669a63b6",
+      "web_search-8f597d8ddd393324",
+      "web_search-a3915679a5b2b3a6",
+      "web_search-b3c9cb445e8753cb",
+      "web_search-b69263dbede0b6a1",
+      "web_search-bddf785efbd2ab57",
+      "web_search-bf1ab83cb5116a3f",
+      "web_search-c0e5a26fb3ac369c",
+      "web_search-ca85733316ec9578",
+      "web_search-f30f10f2c616eb5c",
+      "web_search-f4f5d0a1143479b8"
+    ],
+    "content_hashes": {
+      "web_search-277c8a177254620e": "277c8a177254620efd8fd2122f3b81fe9ceb1a663c98a3c3c7d78cd674e0b81e",
+      "web_search-b69263dbede0b6a1": "b69263dbede0b6a174cdc37f283914230156f0c7867e6d48421755ee2700c70a",
+      "web_search-c0e5a26fb3ac369c": "c0e5a26fb3ac369c3a120e9834cf015c275502e2e69942a4c3c82443945f1a3b",
+      "web_search-4cd9cd5b5aba1ccb": "4cd9cd5b5aba1ccb0f1e715266ad021024d2cfaa68caf1ba1b7d97958fae3d95",
+      "web_search-bf1ab83cb5116a3f": "bf1ab83cb5116a3fe8d71aba7e7ad0dea2011d757d1ed1a157a738cd68af5e18",
+      "web_search-734baf66ecbf5f6f": "734baf66ecbf5f6f06ac644d86bccbf17da4edf25f22536e0d07222255d7d941",
+      "web_search-8f597d8ddd393324": "8f597d8ddd3933240040ed1d727a124741f9f8fd46bff3b1930764bd5e473905",
+      "web_search-a3915679a5b2b3a6": "a3915679a5b2b3a6cf98d0da6d4094392f0b3364cedd8919d6e711e0819dffa6",
+      "web_search-4f7842b256b09086": "4f7842b256b09086db9a34dc15e531f53546b9cb02fe8e42a21daa81ac9ee26f",
+      "web_search-7ad24c5b669a63b6": "7ad24c5b669a63b6ac04362108f0811b475cb8e8c93bdbf533c8828397e87632",
+      "web_search-bddf785efbd2ab57": "bddf785efbd2ab570cf93113b8d2d64113a8b603b658d3245eeeb000ecefdf68",
+      "web_search-f30f10f2c616eb5c": "f30f10f2c616eb5c9fb6e51294c124937f0ad894e6e0ca868d685b6bc32f5ef7",
+      "web_search-ca85733316ec9578": "ca85733316ec95783c0245b71aa3ac23a7186833a2790c4b9fd3dda7cf9cb930",
+      "web_search-b3c9cb445e8753cb": "b3c9cb445e8753cb0574b61272848bda1456ec7861b56ba8bcdd29526e9e4912",
+      "web_search-f4f5d0a1143479b8": "f4f5d0a1143479b8606dd097b0c1086655488cec6d59782dca589ec4d904b62c",
+      "web_search-770350fefa78b113": "770350fefa78b1132ca4947a90ec44ad0d0e03dd32c985fb16ab2353bcf97f04",
+      "fetch_page-26d9029ebb135554": "26d9029ebb1355543eec3b3e51263780dff89ac65e5b314f950d3fedf694c27f"
+    },
+    "critical_claims_allowed": {
+      "web_search-277c8a177254620e": true,
+      "web_search-b69263dbede0b6a1": true,
+      "web_search-c0e5a26fb3ac369c": true,
+      "web_search-4cd9cd5b5aba1ccb": true,
+      "web_search-bf1ab83cb5116a3f": true,
+      "web_search-734baf66ecbf5f6f": true,
+      "web_search-8f597d8ddd393324": true,
+      "web_search-a3915679a5b2b3a6": true,
+      "web_search-4f7842b256b09086": true,
+      "web_search-7ad24c5b669a63b6": true,
+      "web_search-bddf785efbd2ab57": true,
+      "web_search-f30f10f2c616eb5c": true,
+      "web_search-ca85733316ec9578": true,
+      "web_search-b3c9cb445e8753cb": true,
+      "web_search-f4f5d0a1143479b8": true,
+      "web_search-770350fefa78b113": true,
+      "fetch_page-26d9029ebb135554": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T095211Z-5e7efa7c",
+    "status": "completed"
+  }
+}

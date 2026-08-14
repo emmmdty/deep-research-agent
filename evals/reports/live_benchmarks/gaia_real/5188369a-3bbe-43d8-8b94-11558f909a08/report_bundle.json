@@ -1,0 +1,1007 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- The quote from Annie Levin appeared in The New York Observer on 7 Mar. 2022.\n- Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.\n- Jingoism originated during the Russo-Turkish War.\n- Jingoism originated during the Russo-Turkish War of 1877-1878.\n\n## Findings\n\n### Finding 1: Word of the Day\nThe Merriam-Webster Word of the Day for June 27, 2022, was \"jingoism.\" This is confirmed by multiple accepted claims (01, 02, 05, 09, 13) that consistently identify the word.\n\n### Finding 2: Quoted Writer\nThe writer quoted by Merriam-Webster for the Word of the Day entry from June 27, 2022, was Annie Levin. This is supported by accepted claims (03, 04, 06, 10, 14) that attribute the quote to her.\n\n### Finding 3: Source of the Quote\nThe quote from Annie Levin appeared in *The New York Observer* on March 7, 2022. This is stated in accepted claim 07.\n\n### Finding 4: Definition of Jingoism\nJingoism is defined as excessive patriotism or nationalism, especially when marked by a belligerent foreign policy. This definition is provided in accepted claims (08, 11, 15).\n\n### Finding 5: Origin of Jingoism\nJingoism originated during the Russo-Turkish War of 1877–1878. This is stated in accepted claims (12, 16). Note that claim 12 specifies only \"the Russo-Turkish War,\" while claim 16 provides the fuller date range \"1877–1878.\"\n\n## Evidence Status\n\nAll claims in this report are accepted. The critical claims (01–06, 09–10, 13–14) establish the core facts of the Word of the Day and the quoted writer. The non-critical claims (07–08, 11–12, 15–16) provide supporting details about the quote's source, the definition, and the origin of the term. No claims were rejected or qualified.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:07",
+      "claim": "The quote from Annie Levin appeared in The New York Observer on 7 Mar. 2022.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:07",
+          "document_version_id": "web_search-164f3cc10f373940",
+          "page": null,
+          "section": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "— Annie Levin, The New York Observer, 7 Mar. 2022",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:08",
+      "claim": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:08",
+          "document_version_id": "web_search-164f3cc10f373940",
+          "page": null,
+          "section": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+          "extraction_method": "agent_grounding"
+        },
+        {
+          "span_id": "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:11",
+          "document_version_id": "web_search-fc728a0beca24673",
+          "page": null,
+          "section": "Word of the Day: Jingoism | Merriam-Webster",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+          "extraction_method": "agent_grounding"
+        },
+        {
+          "span_id": "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:15",
+          "document_version_id": "fetch_page-43ada9dd2473589e",
+          "page": null,
+          "section": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+          "start_offset": 0,
+          "end_offset": 1896,
+          "quote": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12",
+      "claim": "Jingoism originated during the Russo-Turkish War.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:12",
+          "document_version_id": "web_search-fc728a0beca24673",
+          "page": null,
+          "section": "Word of the Day: Jingoism | Merriam-Webster",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Jingoism originated during the Russo-Turkis",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16",
+      "claim": "Jingoism originated during the Russo-Turkish War of 1877-1878.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:16",
+          "document_version_id": "fetch_page-43ada9dd2473589e",
+          "page": null,
+          "section": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+          "start_offset": 0,
+          "end_offset": 1896,
+          "quote": "originated during the Russo-T",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:07": [
+      "web_search-164f3cc10f373940"
+    ],
+    "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:08": [
+      "fetch_page-43ada9dd2473589e",
+      "web_search-164f3cc10f373940",
+      "web_search-fc728a0beca24673"
+    ],
+    "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12": [
+      "web_search-fc728a0beca24673"
+    ],
+    "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16": [
+      "fetch_page-43ada9dd2473589e"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "The Merriam-Webster Word of the Day for June 27, 2022 was jingoism.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "The writer quoted by Merriam-Webster for the Word of the Day from June 27, 2022 was Annie Levin.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "Jingoism originated during the Russo-Turkish War.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "The Merriam-Webster Word of the Day for June 27, 2022 is jingoism.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "The writer quoted by Merriam-Webster for the Word of the Day from June 27, 2022 is Annie Levin.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "Jingoism originated during the Russo-Turkish War of 1877-1878.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "The Merriam-Webster Word of the Day for June 27, 2022 was 'jingoism'.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "The Merriam-Webster Word of the Day for June 27, 2022 quotes Annie Levin.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The writer quoted by Merriam-Webster for the Word of the Day from June 27, 2022 is Annie Levin.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "The Merriam-Webster Word of the Day for June 27, 2022 is 'jingoism'.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "The writer quoted by Merriam-Webster for the Word of the Day from June 27, 2022 is Annie Levin.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "The quote from Annie Levin appeared in The New York Observer on 7 Mar. 2022.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "Jingoism is excessive patriotism or nationalism, especially when marked by a belligerent foreign policy.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "The Merriam-Webster Word of the Day for June 27, 2022 was 'jingoism'.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "Merriam-WebsterWordoftheDay: Jingoism — Michael Cavacini",
+        "properties": {
+          "document_version_id": "web_search-785682ef3fe92253"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-fc728a0beca24673"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-fc728a0beca24673"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-fc728a0beca24673"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+        "properties": {
+          "document_version_id": "fetch_page-43ada9dd2473589e"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+        "properties": {
+          "document_version_id": "fetch_page-43ada9dd2473589e"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+        "properties": {
+          "document_version_id": "fetch_page-43ada9dd2473589e"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+        "properties": {
+          "document_version_id": "fetch_page-43ada9dd2473589e"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-88a3b8f2e3ab818d"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-88a3b8f2e3ab818d"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-88a3b8f2e3ab818d"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+        "properties": {
+          "document_version_id": "web_search-164f3cc10f373940"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+        "properties": {
+          "document_version_id": "web_search-164f3cc10f373940"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+        "properties": {
+          "document_version_id": "web_search-164f3cc10f373940"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+        "properties": {
+          "document_version_id": "web_search-164f3cc10f373940"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "Word of the Day: Jingoism | Merriam-Webster",
+        "properties": {
+          "document_version_id": "web_search-fc728a0beca24673"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T104213Z-8df8c2eb:span:research-01-what-writer-is-quoted-by-merriam-web:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:01",
+      "uri": "https://en.wikipedia.org/wiki/Lists_of_Merriam-Webster's_Words_of_the_Year",
+      "media_type": "text/markdown",
+      "content_sha256": "fdb91df4ff8d00b3331e5315b3bc0f7c9235c491aab35571548831119c9cf6a6",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-fdb91df4ff8d00b3",
+        "critical_claims_allowed": true,
+        "source_title": "Lists ofMerriam-Webster'sWordsoftheYear - Wikipedia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:02",
+      "uri": "https://michaelcavacini.com/2022/06/27/merriam-webster-word-of-the-day-jingoism/",
+      "media_type": "text/markdown",
+      "content_sha256": "785682ef3fe9225380cbecec242dd250132a65510d3851f2495d1dc7c4442499",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-785682ef3fe92253",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam-WebsterWordoftheDay: Jingoism — Michael Cavacini",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:03",
+      "uri": "https://www.merriam-webster.com/word-of-the-day/kiki-2026-05-16",
+      "media_type": "text/markdown",
+      "content_sha256": "f119a035db7aa4d05985d397f5e425d49b31ff1131ff7c01cdf628562bdc919e",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-f119a035db7aa4d0",
+        "critical_claims_allowed": true,
+        "source_title": "WordoftheDay: Kiki |Merriam-Webster",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:04",
+      "uri": "https://www.tiktok.com/discover/merium-webster-word-of-the-day",
+      "media_type": "text/markdown",
+      "content_sha256": "4511054545ca394b6446650827a066f1603399dc3cd4b60a4b3cd76fab9030d2",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-4511054545ca394b",
+        "critical_claims_allowed": true,
+        "source_title": "MeriumWebsterWordofTheDay| TikTok",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:05",
+      "uri": "https://www.instagram.com/popular/merriam-webster-word-of-the-day-june-27-2022-writer",
+      "media_type": "text/markdown",
+      "content_sha256": "041b1ad9bc6f0992e31a8a659fc666f98e75583e004f55cc0992e21c5f3c55df",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-041b1ad9bc6f0992",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam Webster Word Of The Day June 27 2022 Writer",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:06",
+      "uri": "https://www.thrillist.com/news/nation/merriam-webster-2022-word-of-the-year",
+      "media_type": "text/markdown",
+      "content_sha256": "a0145e51fc6bfce80664d823429688b7ce3bfd83bf579c1264cb780e2edd5060",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-a0145e51fc6bfce8",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam-Webster's 2022 Word of the Year, Explained - Thrillist",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:07",
+      "uri": "https://www.merriam-webster.com/word-of-the-day/calendar",
+      "media_type": "text/markdown",
+      "content_sha256": "c07246d9d7a0c561f97ad286280dacd99bade3ead62a472b949c16ddeb9c0800",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-c07246d9d7a0c561",
+        "critical_claims_allowed": true,
+        "source_title": "Word of the Day Calendar | Merriam-Webster",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:08",
+      "uri": "https://www.merriam-webster.com/word-of-the-day/jingoism-2022-06-27",
+      "media_type": "text/markdown",
+      "content_sha256": "88a3b8f2e3ab818d1a1d508b940b00744640377c0583e73f43d68aa76cba500e",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-88a3b8f2e3ab818d",
+        "critical_claims_allowed": true,
+        "source_title": "Word of the Day: Jingoism | Merriam-Webster",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:09",
+      "uri": "https://www.mixcloud.com/merriam-websterswordoftheday2/jingoism",
+      "media_type": "text/markdown",
+      "content_sha256": "164f3cc10f3739406fd8d3cc55e2a32f0129ce0a22f1f6f0d4ad1f05ee2c0a71",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-164f3cc10f373940",
+        "critical_claims_allowed": true,
+        "source_title": "jingoism by Merriam-Webster's Word of the | Mixcloud",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:10",
+      "uri": "https://michaelcavacini.com/2022/06/27/merriam-webster-word-of-the-day-jingoism",
+      "media_type": "text/markdown",
+      "content_sha256": "9b9c02d4530d543d129cc44ed11d7c553630406403ad4d897c456162b8fc7878",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-9b9c02d4530d543d",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam-Webster Word of the Day: Jingoism — Michael Cavacini",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:11",
+      "uri": "https://quizlet.com/718375852/merriam-webster-word-of-the-day-june-2022-flash-cards",
+      "media_type": "text/markdown",
+      "content_sha256": "67e4e3a70f053579b2c54cb511b477cc4193a60f3fb7109a907c2193fddb27dd",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-67e4e3a70f053579",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam-Webster Word of the Day (June 2022) Flashcards",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:12",
+      "uri": "https://www.merriam-webster.com/word-of-the-day/jingoism-2022-06-27",
+      "media_type": "text/markdown",
+      "content_sha256": "f553d4f26f6723f554a0c7d849fc6efac56ed17302bd0edc893adf541f70274f",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-f553d4f26f6723f5",
+        "critical_claims_allowed": true,
+        "source_title": "Word of the Day: Jingoism | Merriam-Webster",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:13",
+      "uri": "https://www.merriam-webster.com/word-of-the-day/jingoism-2022-06-27",
+      "media_type": "text/markdown",
+      "content_sha256": "fc728a0beca2467376760ad025bbcef7ad375766f98f75a00cbb8222bd68ac70",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-fc728a0beca24673",
+        "critical_claims_allowed": true,
+        "source_title": "Word of the Day: Jingoism | Merriam-Webster",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:14",
+      "uri": "https://www.merriam-webster.com/dictionary/jingoism",
+      "media_type": "text/markdown",
+      "content_sha256": "af01239fc52f9750c362558b973ba159e8914e0467e11c86e0f2535e97ffd49d",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-af01239fc52f9750",
+        "critical_claims_allowed": true,
+        "source_title": "JINGOISM Definition & Meaning",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:15",
+      "uri": "https://www.merriam-webster.com/thesaurus/jingoism",
+      "media_type": "text/markdown",
+      "content_sha256": "822110301c1942fe3e89681d2eb0c5bf127fb64c61648f63a5f6db90fe6c92f1",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-822110301c1942fe",
+        "critical_claims_allowed": true,
+        "source_title": "JINGOISM Synonyms: 10 Similar and Opposite Words | Merriam-Webster Thesaurus",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:16",
+      "uri": "https://michaelcavacini.com/2022/06/27/merriam-webster-word-of-the-day-jingoism",
+      "media_type": "text/markdown",
+      "content_sha256": "19913a0d871eac497af444516dec43236f3fbf8275aec717f21675ac4c973865",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "web_search-19913a0d871eac49",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam-Webster Word of the Day: Jingoism",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T104213Z-8df8c2eb:research-01-what-writer-is-quoted-by-merriam-web:src:17",
+      "uri": "https://michaelcavacini.com/2022/06/27/merriam-webster-word-of-the-day-jingoism/",
+      "media_type": "text/markdown",
+      "content_sha256": "43ada9dd2473589efc35553729b65ff979840de70036a0357e8153f744a96fa0",
+      "created_by_task_id": "research-01-what-writer-is-quoted-by-merriam-web",
+      "metadata": {
+        "document_version_id": "fetch_page-43ada9dd2473589e",
+        "critical_claims_allowed": true,
+        "source_title": "Merriam-Webster Word of the Day: Jingoism — Michael CavaciniMichael Cavacini",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 1896
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:07",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:08"
+    ],
+    "qualified_claim_ids": [
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:07",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:08",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16"
+    ],
+    "degradations": {
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13": "critic_unresolved",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13"
+      ],
+      [
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12",
+        "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:01",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:02",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:03",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:04",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:05",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:10",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:12",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:13",
+      "20260814T104213Z-8df8c2eb:claim:research-01-what-writer-is-quoted-by-merriam-web:16"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T104213Z-8df8c2eb",
+    "document_version_ids": [
+      "fetch_page-43ada9dd2473589e",
+      "web_search-041b1ad9bc6f0992",
+      "web_search-164f3cc10f373940",
+      "web_search-19913a0d871eac49",
+      "web_search-4511054545ca394b",
+      "web_search-67e4e3a70f053579",
+      "web_search-785682ef3fe92253",
+      "web_search-822110301c1942fe",
+      "web_search-88a3b8f2e3ab818d",
+      "web_search-9b9c02d4530d543d",
+      "web_search-a0145e51fc6bfce8",
+      "web_search-af01239fc52f9750",
+      "web_search-c07246d9d7a0c561",
+      "web_search-f119a035db7aa4d0",
+      "web_search-f553d4f26f6723f5",
+      "web_search-fc728a0beca24673",
+      "web_search-fdb91df4ff8d00b3"
+    ],
+    "content_hashes": {
+      "web_search-fdb91df4ff8d00b3": "fdb91df4ff8d00b3331e5315b3bc0f7c9235c491aab35571548831119c9cf6a6",
+      "web_search-785682ef3fe92253": "785682ef3fe9225380cbecec242dd250132a65510d3851f2495d1dc7c4442499",
+      "web_search-f119a035db7aa4d0": "f119a035db7aa4d05985d397f5e425d49b31ff1131ff7c01cdf628562bdc919e",
+      "web_search-4511054545ca394b": "4511054545ca394b6446650827a066f1603399dc3cd4b60a4b3cd76fab9030d2",
+      "web_search-041b1ad9bc6f0992": "041b1ad9bc6f0992e31a8a659fc666f98e75583e004f55cc0992e21c5f3c55df",
+      "web_search-a0145e51fc6bfce8": "a0145e51fc6bfce80664d823429688b7ce3bfd83bf579c1264cb780e2edd5060",
+      "web_search-c07246d9d7a0c561": "c07246d9d7a0c561f97ad286280dacd99bade3ead62a472b949c16ddeb9c0800",
+      "web_search-88a3b8f2e3ab818d": "88a3b8f2e3ab818d1a1d508b940b00744640377c0583e73f43d68aa76cba500e",
+      "web_search-164f3cc10f373940": "164f3cc10f3739406fd8d3cc55e2a32f0129ce0a22f1f6f0d4ad1f05ee2c0a71",
+      "web_search-9b9c02d4530d543d": "9b9c02d4530d543d129cc44ed11d7c553630406403ad4d897c456162b8fc7878",
+      "web_search-67e4e3a70f053579": "67e4e3a70f053579b2c54cb511b477cc4193a60f3fb7109a907c2193fddb27dd",
+      "web_search-f553d4f26f6723f5": "f553d4f26f6723f554a0c7d849fc6efac56ed17302bd0edc893adf541f70274f",
+      "web_search-fc728a0beca24673": "fc728a0beca2467376760ad025bbcef7ad375766f98f75a00cbb8222bd68ac70",
+      "web_search-af01239fc52f9750": "af01239fc52f9750c362558b973ba159e8914e0467e11c86e0f2535e97ffd49d",
+      "web_search-822110301c1942fe": "822110301c1942fe3e89681d2eb0c5bf127fb64c61648f63a5f6db90fe6c92f1",
+      "web_search-19913a0d871eac49": "19913a0d871eac497af444516dec43236f3fbf8275aec717f21675ac4c973865",
+      "fetch_page-43ada9dd2473589e": "43ada9dd2473589efc35553729b65ff979840de70036a0357e8153f744a96fa0"
+    },
+    "critical_claims_allowed": {
+      "web_search-fdb91df4ff8d00b3": true,
+      "web_search-785682ef3fe92253": true,
+      "web_search-f119a035db7aa4d0": true,
+      "web_search-4511054545ca394b": true,
+      "web_search-041b1ad9bc6f0992": true,
+      "web_search-a0145e51fc6bfce8": true,
+      "web_search-c07246d9d7a0c561": true,
+      "web_search-88a3b8f2e3ab818d": true,
+      "web_search-164f3cc10f373940": true,
+      "web_search-9b9c02d4530d543d": true,
+      "web_search-67e4e3a70f053579": true,
+      "web_search-f553d4f26f6723f5": true,
+      "web_search-fc728a0beca24673": true,
+      "web_search-af01239fc52f9750": true,
+      "web_search-822110301c1942fe": true,
+      "web_search-19913a0d871eac49": true,
+      "fetch_page-43ada9dd2473589e": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T104213Z-8df8c2eb",
+    "status": "completed"
+  }
+}

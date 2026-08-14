@@ -1,0 +1,3201 @@
+[
+  {
+    "checkpoint_id": "20260814T095003Z-3253173a:task-checkpoint:000001",
+    "job_id": "20260814T095003Z-3253173a",
+    "task_id": "research-01-assuming-scientists-in-the-famous-yo",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-assuming-scientists-in-the-famous-yo",
+      "job_id": "20260814T095003Z-3253173a",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T095003Z-3253173a:packet:research-01-assuming-scientists-in-the-famous-yo",
+          "task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:01",
+              "document_version_id": "web_search-ec1b2a4a7e79ee4e",
+              "page": null,
+              "section": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Here is a series of interviews to some of the AI pioneers, Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:02",
+              "document_version_id": "web_search-6a9c718fc31f162b",
+              "page": null,
+              "section": "The Thinking Machine 1961 Documentary (full)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "s 100th anniversary (1861–1961)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:03",
+              "document_version_id": "web_search-e7af86a4ff27c7e4",
+              "page": null,
+              "section": "The Thinking Machine (1961) - MIT Centennial Film",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The Thinking Machine (1961) - MIT Centennial Film",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:04",
+              "document_version_id": "web_search-6a9c718fc31f162b",
+              "page": null,
+              "section": "The Thinking Machine 1961 Documentary (full)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "This rare episode of CBS",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:05",
+              "document_version_id": "web_search-6a9c718fc31f162b",
+              "page": null,
+              "section": "The Thinking Machine 1961 Documentary (full)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Hosted by actor David Wayne",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:06",
+              "document_version_id": "web_search-6a9c718fc31f162b",
+              "page": null,
+              "section": "The Thinking Machine 1961 Documentary (full)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "AI visionary Oliver G. Selfridge of MIT Lincoln Laboratory",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:07",
+              "document_version_id": "web_search-6a9c718fc31f162b",
+              "page": null,
+              "section": "The Thinking Machine 1961 Documentary (full)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "MIT President Jerome B. Wiesner",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:08",
+              "document_version_id": "web_search-452b2d90caa7d8a3",
+              "page": null,
+              "section": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Wiesner was science advisor to JFK, co-founder of the MIT Media Lab, and eventually President of MIT",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:09",
+              "document_version_id": "web_search-452b2d90caa7d8a3",
+              "page": null,
+              "section": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Selfridge and Shannon need little introduction being part of the legendary Dartmouth Summer Research Project on Artificial Intelligence in 1956 which gave the field its name",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:10",
+              "document_version_id": "web_search-6e621eb71fcf2796",
+              "page": null,
+              "section": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "This episode of \"Tomorrow\" was produced to commemorate the centennial of the Massachusetts Institute of Technology (MIT), 1861 - 1961",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:11",
+              "document_version_id": "web_search-6e621eb71fcf2796",
+              "page": null,
+              "section": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Actor David Wayne hosts the episode and conducts interviews with leading computer scientists, including Jerome B. Wiesner (MIT president, director) and Oliver G. Selfridge (MIT Lincoln Laboratory)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:12",
+              "document_version_id": "web_search-e1f35c885c6897f4",
+              "page": null,
+              "section": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "I found the full documentary, \"The Thinking Machine\" (1961), featuring Claude Shannon and others",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:13",
+              "document_version_id": "web_search-c22251477b79ae86",
+              "page": null,
+              "section": "To understand artificial intelligence in 2019, watch this ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "a documentary about artificial intelligence aired as part of a CBS series called _Tomorrow_, which the network produced in conjunction",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:14",
+              "document_version_id": "web_search-c22251477b79ae86",
+              "page": null,
+              "section": "To understand artificial intelligence in 2019, watch this ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "s Research Laboratory of Electronics and later the university",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:15",
+              "document_version_id": "web_search-8735e38ed6d2d8d9",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "\"I confidently expect,\" Shannon says, his voice steady, \"that within 10 or 15 years, we will find emerging from the laboratories something not too far from the robot of science fiction fame.\"",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:16",
+              "document_version_id": "web_search-8735e38ed6d2d8d9",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Claude Shannon in The Thinking Machine (Screenshot: YouTube)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:17",
+              "document_version_id": "web_search-5b502d3cdf342664",
+              "page": null,
+              "section": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the 1961 CBS program The Thinking Machine",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:18",
+              "document_version_id": "web_search-5b502d3cdf342664",
+              "page": null,
+              "section": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "includes interviews with Claude Shannon, Jerome Y. Lettvin, Douglas T. Ross, Ronald Melzack, Arthur L. Samuel, and Bärbel Inhelder",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:19",
+              "document_version_id": "web_search-6743e67a61b9d8ae",
+              "page": null,
+              "section": "The Thinking Machine (1961) - MIT Centennial Film",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Featuring Claude Shannon, Oliver Selfridge and Jerome Wiesner.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:20",
+              "document_version_id": "web_search-f11be828d7c09ac9",
+              "page": null,
+              "section": "tsukiema on X: \"The Thinking Machine (Artificial Intelligence in the 1961): \"Can machines really think?\" This short film from 1961 is one of the first public discussions of AI. Straight interviews at",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "They predicted within 10 to 15 years machines would handle tasks once reserved for human intelligence",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:21",
+              "document_version_id": "web_search-246e3713b07768f7",
+              "page": null,
+              "section": "GAIA Benchmark - Coral Protocol",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Claude Shannon is the scientist from that set who predicted the sooner advent of thinking machines or robots.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:22",
+              "document_version_id": "web_search-246e3713b07768f7",
+              "page": null,
+              "section": "GAIA Benchmark - Coral Protocol",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "s context or secondary sources that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:23",
+              "document_version_id": "fetch_page-f09cbf59d8f1afc6",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "This week we zoom in on an episode of a CBS documentary series called",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:24",
+              "document_version_id": "fetch_page-e3f4210eef8a9a35",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Beside him, Professor Jerome Wiesner , scientist and future presidential advisor, leans forward",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:25",
+              "document_version_id": "fetch_page-e3f4210eef8a9a35",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "I suspect if you come back in four or five years, I’ll say,",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:26",
+              "document_version_id": "fetch_page-e3f4210eef8a9a35",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "If you'd asked me that question just a few years ago, I'd have said it was very far-fetched.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:27",
+              "document_version_id": "fetch_page-f09cbf59d8f1afc6",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "David Wayne , the actor with a face known to millions, stands facing a camera",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:28",
+              "document_version_id": "fetch_page-aabd326901e43709",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "\"I confidently expect,\" Shannon says, his voice steady, \"that within 10 or 15 years, we will find emerging from the laboratories something not too far from the robot of science fiction fame.\"",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:29",
+              "document_version_id": "fetch_page-cff266f1534bea27",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "Claude Shannon appears on screen, the father of information theory, his eyes bright with the fervor of a prophet who has glimpsed the promised land",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:30",
+              "document_version_id": "fetch_page-cff266f1534bea27",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "In discussing a problem of simulating the human brain on a computing machine we must carefully distinguish between the accomplishments of the past and what we hope to do in the future.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:31",
+              "document_version_id": "fetch_page-aabd326901e43709",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "we have machines that will translate to some extent from one language to another, machines that will prove mathematical theorems, machines that will play chess or checkers sometimes even better than the men who designed them.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:32",
+              "document_version_id": "fetch_page-aabd326901e43709",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "Inside these hallowed halls of MIT, you can almost here the whir of machines learning to think",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:33",
+              "document_version_id": "fetch_page-aabd326901e43709",
+              "page": null,
+              "section": "The Year Was 1961 - by David Williams",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "Well sure it worries me, but you know the problems posed by the computer are really no different than the problems we have with other products of technology.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:34",
+              "document_version_id": "fetch_page-ca00837288fb3f59",
+              "page": null,
+              "section": "https://gaia.coralprotocol.org",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Correct answer Claude Shannon",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:35",
+              "document_version_id": "fetch_page-ca00837288fb3f59",
+              "page": null,
+              "section": "https://gaia.coralprotocol.org",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "The video “The Thinking Machine (Artificial Intelligence in the 1960s)” features interviews with three AI pioneers: Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:36",
+              "document_version_id": "fetch_page-ca00837288fb3f59",
+              "page": null,
+              "section": "https://gaia.coralprotocol.org",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "finding again that Claude Shannon predicted AI in 5-10 years, which is the soonest",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:37",
+              "document_version_id": "fetch_page-ca00837288fb3f59",
+              "page": null,
+              "section": "https://gaia.coralprotocol.org",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Claude Shannon, who famously stated in his 1950 paper: “Within about ten years, machines should be capable of translating languages and performing certain intellectual tasks.”",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:38",
+              "document_version_id": "fetch_page-ca00837288fb3f59",
+              "page": null,
+              "section": "https://gaia.coralprotocol.org",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "No evidence was found in the video’s context or secondary sources that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:39",
+              "document_version_id": "fetch_page-ca00837288fb3f59",
+              "page": null,
+              "section": "https://gaia.coralprotocol.org",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Claude Shannon is the scientist from that s",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:01",
+              "claim": "The Thinking Machine documentary features interviews with Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:01",
+                  "document_version_id": "web_search-ec1b2a4a7e79ee4e",
+                  "page": null,
+                  "section": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Here is a series of interviews to some of the AI pioneers, Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:02",
+              "claim": "The Thinking Machine was produced to commemorate MIT's 100th anniversary (1861-1961).",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:02",
+                  "document_version_id": "web_search-6a9c718fc31f162b",
+                  "page": null,
+                  "section": "The Thinking Machine 1961 Documentary (full)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "s 100th anniversary (1861–1961)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:03",
+              "claim": "The Thinking Machine is a 1961 MIT Centennial Film.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:03",
+                  "document_version_id": "web_search-e7af86a4ff27c7e4",
+                  "page": null,
+                  "section": "The Thinking Machine (1961) - MIT Centennial Film",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The Thinking Machine (1961) - MIT Centennial Film",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:04",
+              "claim": "The Thinking Machine was a rare episode of CBS's Tomorrow series.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:04",
+                  "document_version_id": "web_search-6a9c718fc31f162b",
+                  "page": null,
+                  "section": "The Thinking Machine 1961 Documentary (full)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "This rare episode of CBS",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:05",
+              "claim": "The documentary was hosted by actor David Wayne.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:05",
+                  "document_version_id": "web_search-6a9c718fc31f162b",
+                  "page": null,
+                  "section": "The Thinking Machine 1961 Documentary (full)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Hosted by actor David Wayne",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:06",
+              "claim": "Oliver G. Selfridge was an AI visionary of MIT Lincoln Laboratory.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:06",
+                  "document_version_id": "web_search-6a9c718fc31f162b",
+                  "page": null,
+                  "section": "The Thinking Machine 1961 Documentary (full)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "AI visionary Oliver G. Selfridge of MIT Lincoln Laboratory",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:07",
+              "claim": "Jerome B. Wiesner was MIT President.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:07",
+                  "document_version_id": "web_search-6a9c718fc31f162b",
+                  "page": null,
+                  "section": "The Thinking Machine 1961 Documentary (full)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "MIT President Jerome B. Wiesner",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:08",
+              "claim": "Wiesner was science advisor to JFK, co-founder of the MIT Media Lab, and eventually President of MIT.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:08",
+                  "document_version_id": "web_search-452b2d90caa7d8a3",
+                  "page": null,
+                  "section": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Wiesner was science advisor to JFK, co-founder of the MIT Media Lab, and eventually President of MIT",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:09",
+              "claim": "Selfridge and Shannon were part of the legendary Dartmouth Summer Research Project on Artificial Intelligence in 1956 which gave the field its name.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:09",
+                  "document_version_id": "web_search-452b2d90caa7d8a3",
+                  "page": null,
+                  "section": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Selfridge and Shannon need little introduction being part of the legendary Dartmouth Summer Research Project on Artificial Intelligence in 1956 which gave the field its name",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:10",
+              "claim": "The Thinking Machine episode of the Tomorrow documentary series was produced to commemorate the centennial of MIT, 1861-1961.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:10",
+                  "document_version_id": "web_search-6e621eb71fcf2796",
+                  "page": null,
+                  "section": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "This episode of \"Tomorrow\" was produced to commemorate the centennial of the Massachusetts Institute of Technology (MIT), 1861 - 1961",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:11",
+              "claim": "Actor David Wayne hosts the episode and conducts interviews with leading computer scientists, including Jerome B. Wiesner and Oliver G. Selfridge.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:11",
+                  "document_version_id": "web_search-6e621eb71fcf2796",
+                  "page": null,
+                  "section": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Actor David Wayne hosts the episode and conducts interviews with leading computer scientists, including Jerome B. Wiesner (MIT president, director) and Oliver G. Selfridge (MIT Lincoln Laboratory)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:12",
+              "claim": "The Thinking Machine (1961) featured Claude Shannon and others.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:12",
+                  "document_version_id": "web_search-e1f35c885c6897f4",
+                  "page": null,
+                  "section": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "I found the full documentary, \"The Thinking Machine\" (1961), featuring Claude Shannon and others",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:13",
+              "claim": "The Thinking Machine documentary aired as part of a CBS series called Tomorrow, which the network produced in conjunction with MIT.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:13",
+                  "document_version_id": "web_search-c22251477b79ae86",
+                  "page": null,
+                  "section": "To understand artificial intelligence in 2019, watch this ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "a documentary about artificial intelligence aired as part of a CBS series called _Tomorrow_, which the network produced in conjunction",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:14",
+              "claim": "Jerome B. Wiesner was director of MIT's Research Laboratory of Electronics and later the university's president.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:14",
+                  "document_version_id": "web_search-c22251477b79ae86",
+                  "page": null,
+                  "section": "To understand artificial intelligence in 2019, watch this ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "s Research Laboratory of Electronics and later the university",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:15",
+              "claim": "Claude Shannon predicted that within 10 or 15 years, something not too far from the robot of science fiction fame would emerge from the laboratories.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:15",
+                  "document_version_id": "web_search-8735e38ed6d2d8d9",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "\"I confidently expect,\" Shannon says, his voice steady, \"that within 10 or 15 years, we will find emerging from the laboratories something not too far from the robot of science fiction fame.\"",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:16",
+              "claim": "Claude Shannon appeared in the 1961 CBS program The Thinking Machine.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:16",
+                  "document_version_id": "web_search-8735e38ed6d2d8d9",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Claude Shannon in The Thinking Machine (Screenshot: YouTube)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:17",
+              "claim": "The Thinking Machine was a 1961 CBS program.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:17",
+                  "document_version_id": "web_search-5b502d3cdf342664",
+                  "page": null,
+                  "section": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the 1961 CBS program The Thinking Machine",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:18",
+              "claim": "The Thinking Machine featured interviews with Claude Shannon, Jerome Y. Lettvin, Douglas T. Ross, Ronald Melzack, Arthur L. Samuel, and Bärbel Inhelder.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:18",
+                  "document_version_id": "web_search-5b502d3cdf342664",
+                  "page": null,
+                  "section": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "includes interviews with Claude Shannon, Jerome Y. Lettvin, Douglas T. Ross, Ronald Melzack, Arthur L. Samuel, and Bärbel Inhelder",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:19",
+              "claim": "The Thinking Machine is an MIT AI documentary from 1961 featuring Claude Shannon, Oliver Selfridge and Jerome Wiesner.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:19",
+                  "document_version_id": "web_search-6743e67a61b9d8ae",
+                  "page": null,
+                  "section": "The Thinking Machine (1961) - MIT Centennial Film",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Featuring Claude Shannon, Oliver Selfridge and Jerome Wiesner.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:20",
+              "claim": "Claude Shannon and Oliver Selfridge predicted that within 10 to 15 years machines would handle tasks once reserved for human intelligence.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:20",
+                  "document_version_id": "web_search-f11be828d7c09ac9",
+                  "page": null,
+                  "section": "tsukiema on X: \"The Thinking Machine (Artificial Intelligence in the 1961): \"Can machines really think?\" This short film from 1961 is one of the first public discussions of AI. Straight interviews at",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "They predicted within 10 to 15 years machines would handle tasks once reserved for human intelligence",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:21",
+              "claim": "Claude Shannon is the scientist from that set who predicted the sooner advent of thinking machines or robots.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:21",
+                  "document_version_id": "web_search-246e3713b07768f7",
+                  "page": null,
+                  "section": "GAIA Benchmark - Coral Protocol",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Claude Shannon is the scientist from that set who predicted the sooner advent of thinking machines or robots.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:22",
+              "claim": "No evidence was found that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:22",
+                  "document_version_id": "web_search-246e3713b07768f7",
+                  "page": null,
+                  "section": "GAIA Benchmark - Coral Protocol",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "s context or secondary sources that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:23",
+              "claim": "The Thinking Machine was a CBS documentary series episode shot at MIT in 1961.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:23",
+                  "document_version_id": "fetch_page-f09cbf59d8f1afc6",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "This week we zoom in on an episode of a CBS documentary series called",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:24",
+              "claim": "Professor Jerome Wiesner was a scientist and future presidential advisor who appeared on The Thinking Machine.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:24",
+                  "document_version_id": "fetch_page-e3f4210eef8a9a35",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Beside him, Professor Jerome Wiesner , scientist and future presidential advisor, leans forward",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:25",
+              "claim": "Jerome Wiesner predicted that in four or five years he would say machines really do think.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:25",
+                  "document_version_id": "fetch_page-e3f4210eef8a9a35",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "I suspect if you come back in four or five years, I’ll say,",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:26",
+              "claim": "Jerome Wiesner said that if asked a few years ago whether machines can think, he would have said it was very far-fetched.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:26",
+                  "document_version_id": "fetch_page-e3f4210eef8a9a35",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "If you'd asked me that question just a few years ago, I'd have said it was very far-fetched.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:27",
+              "claim": "David Wayne was the actor who hosted The Thinking Machine.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:27",
+                  "document_version_id": "fetch_page-f09cbf59d8f1afc6",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "David Wayne , the actor with a face known to millions, stands facing a camera",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:28",
+              "claim": "Claude Shannon appeared in The Thinking Machine film and predicted that within 10 or 15 years, something not too far from the robot of science fiction fame would emerge from the laboratories.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:28",
+                  "document_version_id": "fetch_page-aabd326901e43709",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "\"I confidently expect,\" Shannon says, his voice steady, \"that within 10 or 15 years, we will find emerging from the laboratories something not too far from the robot of science fiction fame.\"",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:29",
+              "claim": "Claude Shannon is the father of information theory and appeared on screen in The Thinking Machine film.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:29",
+                  "document_version_id": "fetch_page-cff266f1534bea27",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "Claude Shannon appears on screen, the father of information theory, his eyes bright with the fervor of a prophet who has glimpsed the promised land",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:30",
+              "claim": "Claude Shannon discussed simulating the human brain on a computing machine, distinguishing between accomplishments of the past and hopes for the future.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:30",
+                  "document_version_id": "fetch_page-cff266f1534bea27",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "In discussing a problem of simulating the human brain on a computing machine we must carefully distinguish between the accomplishments of the past and what we hope to do in the future.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:31",
+              "claim": "Claude Shannon stated that machines exist that will translate from one language to another, prove mathematical theorems, and play chess or checkers sometimes even better than the men who designed them.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:31",
+                  "document_version_id": "fetch_page-aabd326901e43709",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "we have machines that will translate to some extent from one language to another, machines that will prove mathematical theorems, machines that will play chess or checkers sometimes even better than the men who designed them.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:32",
+              "claim": "The Thinking Machine film was produced by MIT.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:32",
+                  "document_version_id": "fetch_page-aabd326901e43709",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "Inside these hallowed halls of MIT, you can almost here the whir of machines learning to think",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:33",
+              "claim": "Jerome Wiesner responded to a question about whether the computer worries him, saying the problems posed by the computer are really no different than the problems with other products of technology.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:33",
+                  "document_version_id": "fetch_page-aabd326901e43709",
+                  "page": null,
+                  "section": "The Year Was 1961 - by David Williams",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "Well sure it worries me, but you know the problems posed by the computer are really no different than the problems we have with other products of technology.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:34",
+              "claim": "The correct answer to the GAIA question about the scientist predicting the sooner thinking machines or robots is Claude Shannon.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:34",
+                  "document_version_id": "fetch_page-ca00837288fb3f59",
+                  "page": null,
+                  "section": "https://gaia.coralprotocol.org",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Correct answer Claude Shannon",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:35",
+              "claim": "The video 'The Thinking Machine (Artificial Intelligence in the 1960s)' features interviews with three AI pioneers: Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:35",
+                  "document_version_id": "fetch_page-ca00837288fb3f59",
+                  "page": null,
+                  "section": "https://gaia.coralprotocol.org",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "The video “The Thinking Machine (Artificial Intelligence in the 1960s)” features interviews with three AI pioneers: Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:36",
+              "claim": "Claude Shannon predicted AI in 5-10 years, which is the soonest prediction among the interviewed scientists.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:36",
+                  "document_version_id": "fetch_page-ca00837288fb3f59",
+                  "page": null,
+                  "section": "https://gaia.coralprotocol.org",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "finding again that Claude Shannon predicted AI in 5-10 years, which is the soonest",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:37",
+              "claim": "Claude Shannon stated in his 1950 paper: 'Within about ten years, machines should be capable of translating languages and performing certain intellectual tasks.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:37",
+                  "document_version_id": "fetch_page-ca00837288fb3f59",
+                  "page": null,
+                  "section": "https://gaia.coralprotocol.org",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Claude Shannon, who famously stated in his 1950 paper: “Within about ten years, machines should be capable of translating languages and performing certain intellectual tasks.”",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:38",
+              "claim": "No evidence was found that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:38",
+                  "document_version_id": "fetch_page-ca00837288fb3f59",
+                  "page": null,
+                  "section": "https://gaia.coralprotocol.org",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "No evidence was found in the video’s context or secondary sources that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T095003Z-3253173a:claim:research-01-assuming-scientists-in-the-famous-yo:39",
+              "claim": "Claude Shannon is the scientist from that set who predicted the sooner advent of thinking machines or robots.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:39",
+                  "document_version_id": "fetch_page-ca00837288fb3f59",
+                  "page": null,
+                  "section": "https://gaia.coralprotocol.org",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Claude Shannon is the scientist from that s",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:01",
+              "uri": "https://www.youtube.com/watch?v=aygSMgK3BEM",
+              "media_type": "text/markdown",
+              "content_sha256": "ec1b2a4a7e79ee4e6099d0b1c459202c808632ee926fb7413d4dbcd0cf1aa968",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-ec1b2a4a7e79ee4e",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:02",
+              "uri": "https://www.linkedin.com/posts/barryosullivan_the-thinking-machine-artificial-intelligence-activity-7344345361622155264-S_O7",
+              "media_type": "text/markdown",
+              "content_sha256": "452b2d90caa7d8a369ba2c9b6fd743e1f6240a1e137f8b35e79b8f509b2ac139",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-452b2d90caa7d8a3",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:03",
+              "uri": "https://www.youtube.com/watch?v=ZzqHXFTy68o",
+              "media_type": "text/markdown",
+              "content_sha256": "e7af86a4ff27c7e4cc5e76fa2879a08a5c04b580d151915bfa5e24421f122f29",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-e7af86a4ff27c7e4",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine (1961) - MIT Centennial Film",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:04",
+              "uri": "https://www.youtube.com/watch?v=s7Apsqv0CpI",
+              "media_type": "text/markdown",
+              "content_sha256": "6a9c718fc31f162b897bda64a57257b05ee1be587744b2d2e527666bea543544",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-6a9c718fc31f162b",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine 1961 Documentary (full)",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:05",
+              "uri": "https://www.computerhistory.org/collections/catalog/102651576",
+              "media_type": "text/markdown",
+              "content_sha256": "6e621eb71fcf279685e97ca7a2ea9a1598cfff5b73ff7002646c88e25490905d",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-6e621eb71fcf2796",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:06",
+              "uri": "https://www.reddit.com/r/compsci/comments/bnnd2z/the_thinking_machine_1961_mit_ai_documentary",
+              "media_type": "text/markdown",
+              "content_sha256": "e1f35c885c6897f44e604379b261d8cafd11aaf6a1a9eefd6645247384fc8540",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-e1f35c885c6897f4",
+                "critical_claims_allowed": true,
+                "source_title": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:07",
+              "uri": "https://www.fastcompany.com/90399709/to-understand-ai-in-2019-watch-this-1960-tv-show",
+              "media_type": "text/markdown",
+              "content_sha256": "c22251477b79ae869b56efcc6ff960d94aebbaa1d923ac8dfb98a1a71440f335",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-c22251477b79ae86",
+                "critical_claims_allowed": true,
+                "source_title": "To understand artificial intelligence in 2019, watch this ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:08",
+              "uri": "https://www.sciencehistory.org/stories/magazine/thinking-machines-the-search-for-artificial-intelligence",
+              "media_type": "text/markdown",
+              "content_sha256": "539dc0699b93df5a656aa8db1efbd9e2e6918dae6dbc19c2f3f55af95c49a1ef",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-539dc0699b93df5a",
+                "critical_claims_allowed": true,
+                "source_title": "Thinking Machines: The Search for Artificial Intelligence | Science History Institute",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:09",
+              "uri": "https://www.youtube.com/watch?v=s7Apsqv0CpI",
+              "media_type": "text/markdown",
+              "content_sha256": "c52575e8a8168d5e7e48ea60edd014a4103c7f70d9d813b0846317ac29edc071",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-c52575e8a8168d5e",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine 1961 Documentary (full)",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:10",
+              "uri": "https://www.reddit.com/r/compsci/comments/bnnd2z/the_thinking_machine_1961_mit_ai_documentary",
+              "media_type": "text/markdown",
+              "content_sha256": "f4541377f5c641edbf00bc4b27ab699e5707840a4e8846a63bb1244c59601e86",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-f4541377f5c641ed",
+                "critical_claims_allowed": true,
+                "source_title": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:11",
+              "uri": "https://www.linkedin.com/posts/sdalbera_questions-about-ai-are-nothing-new-here-activity-7355588711188721664-71bB",
+              "media_type": "text/markdown",
+              "content_sha256": "5b502d3cdf34266479376f8b087169c5d3fa5616d3e76c0b8943c6ac90062b43",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-5b502d3cdf342664",
+                "critical_claims_allowed": true,
+                "source_title": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:12",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "8735e38ed6d2d8d9d00fffa70892f783be9fbb032812a1e0bf45eade7883051e",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-8735e38ed6d2d8d9",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:13",
+              "uri": "https://www.youtube.com/watch?v=ZzqHXFTy68o",
+              "media_type": "text/markdown",
+              "content_sha256": "6743e67a61b9d8aee9a8dbd1e050e3786847ce834fcea38ce7e56066ec2b45e4",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-6743e67a61b9d8ae",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine (1961) - MIT Centennial Film",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:14",
+              "uri": "https://gaia.coralprotocol.org",
+              "media_type": "text/markdown",
+              "content_sha256": "246e3713b07768f7406983d47b4fe9b67827ddaf12fff756202469c309de6ac8",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-246e3713b07768f7",
+                "critical_claims_allowed": true,
+                "source_title": "GAIA Benchmark - Coral Protocol",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:15",
+              "uri": "https://x.com/tsukiema_/status/2077069112497303933",
+              "media_type": "text/markdown",
+              "content_sha256": "f11be828d7c09ac9d5c74c300e2cc820ffa58b7d95edbd860ee89b5241579894",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-f11be828d7c09ac9",
+                "critical_claims_allowed": true,
+                "source_title": "tsukiema on X: \"The Thinking Machine (Artificial Intelligence in the 1961): \"Can machines really think?\" This short film from 1961 is one of the first public discussions of AI. Straight interviews at ",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:16",
+              "uri": "https://www.youtube.com/watch?v=ZzqHXFTy68o",
+              "media_type": "text/markdown",
+              "content_sha256": "534ddb290d641b0cdc5bc4847002586312e06ab4d3e8b9bb2ac93a38fc4c5a81",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "web_search-534ddb290d641b0c",
+                "critical_claims_allowed": true,
+                "source_title": "The Thinking Machine (1961) - MIT Centennial Film",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:17",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "f09cbf59d8f1afc6287edcad6ad8b3961e7ecb0969a73573ba1c370af8fad2f2",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-f09cbf59d8f1afc6",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:18",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "e3f4210eef8a9a35355b67372697af1efe72e398267d57b4d64b44f4196981a7",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-e3f4210eef8a9a35",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:19",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "d18762f8b355c0a7164ea71424fbfe0b8a5ed7052138c834bcb2a6666884f7f1",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-d18762f8b355c0a7",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:20",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "928b35fa19b195023227ee6111bc3e004f850f5718432db8665f4a3692beded2",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-928b35fa19b19502",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:21",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "cff266f1534bea273cccc47b7b186c34352ffc5501040f95351f1683ad6aa173",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-cff266f1534bea27",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9200
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:22",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "aabd326901e43709f6b4abeae71daf3cabc258c9344839203b922796906e2ada",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-aabd326901e43709",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 5,
+                "char_start": 9000,
+                "char_end": 11000
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:23",
+              "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+              "media_type": "text/markdown",
+              "content_sha256": "98c333a91f9e0ba4ca0b023e3ee9e5778ca22c37026f990365ce84ab397bfa11",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-98c333a91f9e0ba4",
+                "critical_claims_allowed": true,
+                "source_title": "The Year Was 1961 - by David Williams",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 6,
+                "char_start": 10800,
+                "char_end": 11172
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:24",
+              "uri": "https://gaia.coralprotocol.org",
+              "media_type": "text/markdown",
+              "content_sha256": "38eb6d1124b52a79aaebe9e94b4548e65e90e85aa77c0787ae86d797a18bf1d7",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-38eb6d1124b52a79",
+                "critical_claims_allowed": true,
+                "source_title": "https://gaia.coralprotocol.org",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:25",
+              "uri": "https://gaia.coralprotocol.org",
+              "media_type": "text/markdown",
+              "content_sha256": "ca00837288fb3f59644e24335e9a73f308e6a4d09797603e1136f58244a3e4da",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-ca00837288fb3f59",
+                "critical_claims_allowed": true,
+                "source_title": "https://gaia.coralprotocol.org",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:26",
+              "uri": "https://gaia.coralprotocol.org",
+              "media_type": "text/markdown",
+              "content_sha256": "495fb6a402c871efe9b8aa4ad0d3652e25727a76f099a9a87a2b42eb36280e8f",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-495fb6a402c871ef",
+                "critical_claims_allowed": true,
+                "source_title": "https://gaia.coralprotocol.org",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:27",
+              "uri": "https://gaia.coralprotocol.org",
+              "media_type": "text/markdown",
+              "content_sha256": "71c4a40b329fcdbdc8d1aa76d3f28eb0d2c81c8d6fd1551d220b6052227502fe",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-71c4a40b329fcdbd",
+                "critical_claims_allowed": true,
+                "source_title": "https://gaia.coralprotocol.org",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:28",
+              "uri": "https://gaia.coralprotocol.org",
+              "media_type": "text/markdown",
+              "content_sha256": "254236f19945b3857c9c62ba2fa8095fcf285b94dffb878702044faabd6098a8",
+              "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+              "metadata": {
+                "document_version_id": "fetch_page-254236f19945b385",
+                "critical_claims_allowed": true,
+                "source_title": "https://gaia.coralprotocol.org",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9133
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:01",
+          "uri": "https://www.youtube.com/watch?v=aygSMgK3BEM",
+          "media_type": "text/markdown",
+          "content_sha256": "ec1b2a4a7e79ee4e6099d0b1c459202c808632ee926fb7413d4dbcd0cf1aa968",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-ec1b2a4a7e79ee4e",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:02",
+          "uri": "https://www.linkedin.com/posts/barryosullivan_the-thinking-machine-artificial-intelligence-activity-7344345361622155264-S_O7",
+          "media_type": "text/markdown",
+          "content_sha256": "452b2d90caa7d8a369ba2c9b6fd743e1f6240a1e137f8b35e79b8f509b2ac139",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-452b2d90caa7d8a3",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:03",
+          "uri": "https://www.youtube.com/watch?v=ZzqHXFTy68o",
+          "media_type": "text/markdown",
+          "content_sha256": "e7af86a4ff27c7e4cc5e76fa2879a08a5c04b580d151915bfa5e24421f122f29",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-e7af86a4ff27c7e4",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine (1961) - MIT Centennial Film",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:04",
+          "uri": "https://www.youtube.com/watch?v=s7Apsqv0CpI",
+          "media_type": "text/markdown",
+          "content_sha256": "6a9c718fc31f162b897bda64a57257b05ee1be587744b2d2e527666bea543544",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-6a9c718fc31f162b",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine 1961 Documentary (full)",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:05",
+          "uri": "https://www.computerhistory.org/collections/catalog/102651576",
+          "media_type": "text/markdown",
+          "content_sha256": "6e621eb71fcf279685e97ca7a2ea9a1598cfff5b73ff7002646c88e25490905d",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-6e621eb71fcf2796",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:06",
+          "uri": "https://www.reddit.com/r/compsci/comments/bnnd2z/the_thinking_machine_1961_mit_ai_documentary",
+          "media_type": "text/markdown",
+          "content_sha256": "e1f35c885c6897f44e604379b261d8cafd11aaf6a1a9eefd6645247384fc8540",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-e1f35c885c6897f4",
+            "critical_claims_allowed": true,
+            "source_title": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:07",
+          "uri": "https://www.fastcompany.com/90399709/to-understand-ai-in-2019-watch-this-1960-tv-show",
+          "media_type": "text/markdown",
+          "content_sha256": "c22251477b79ae869b56efcc6ff960d94aebbaa1d923ac8dfb98a1a71440f335",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-c22251477b79ae86",
+            "critical_claims_allowed": true,
+            "source_title": "To understand artificial intelligence in 2019, watch this ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:08",
+          "uri": "https://www.sciencehistory.org/stories/magazine/thinking-machines-the-search-for-artificial-intelligence",
+          "media_type": "text/markdown",
+          "content_sha256": "539dc0699b93df5a656aa8db1efbd9e2e6918dae6dbc19c2f3f55af95c49a1ef",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-539dc0699b93df5a",
+            "critical_claims_allowed": true,
+            "source_title": "Thinking Machines: The Search for Artificial Intelligence | Science History Institute",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:09",
+          "uri": "https://www.youtube.com/watch?v=s7Apsqv0CpI",
+          "media_type": "text/markdown",
+          "content_sha256": "c52575e8a8168d5e7e48ea60edd014a4103c7f70d9d813b0846317ac29edc071",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-c52575e8a8168d5e",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine 1961 Documentary (full)",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:10",
+          "uri": "https://www.reddit.com/r/compsci/comments/bnnd2z/the_thinking_machine_1961_mit_ai_documentary",
+          "media_type": "text/markdown",
+          "content_sha256": "f4541377f5c641edbf00bc4b27ab699e5707840a4e8846a63bb1244c59601e86",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-f4541377f5c641ed",
+            "critical_claims_allowed": true,
+            "source_title": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:11",
+          "uri": "https://www.linkedin.com/posts/sdalbera_questions-about-ai-are-nothing-new-here-activity-7355588711188721664-71bB",
+          "media_type": "text/markdown",
+          "content_sha256": "5b502d3cdf34266479376f8b087169c5d3fa5616d3e76c0b8943c6ac90062b43",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-5b502d3cdf342664",
+            "critical_claims_allowed": true,
+            "source_title": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:12",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "8735e38ed6d2d8d9d00fffa70892f783be9fbb032812a1e0bf45eade7883051e",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-8735e38ed6d2d8d9",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:13",
+          "uri": "https://www.youtube.com/watch?v=ZzqHXFTy68o",
+          "media_type": "text/markdown",
+          "content_sha256": "6743e67a61b9d8aee9a8dbd1e050e3786847ce834fcea38ce7e56066ec2b45e4",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-6743e67a61b9d8ae",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine (1961) - MIT Centennial Film",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:14",
+          "uri": "https://gaia.coralprotocol.org",
+          "media_type": "text/markdown",
+          "content_sha256": "246e3713b07768f7406983d47b4fe9b67827ddaf12fff756202469c309de6ac8",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-246e3713b07768f7",
+            "critical_claims_allowed": true,
+            "source_title": "GAIA Benchmark - Coral Protocol",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:15",
+          "uri": "https://x.com/tsukiema_/status/2077069112497303933",
+          "media_type": "text/markdown",
+          "content_sha256": "f11be828d7c09ac9d5c74c300e2cc820ffa58b7d95edbd860ee89b5241579894",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-f11be828d7c09ac9",
+            "critical_claims_allowed": true,
+            "source_title": "tsukiema on X: \"The Thinking Machine (Artificial Intelligence in the 1961): \"Can machines really think?\" This short film from 1961 is one of the first public discussions of AI. Straight interviews at ",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:16",
+          "uri": "https://www.youtube.com/watch?v=ZzqHXFTy68o",
+          "media_type": "text/markdown",
+          "content_sha256": "534ddb290d641b0cdc5bc4847002586312e06ab4d3e8b9bb2ac93a38fc4c5a81",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "web_search-534ddb290d641b0c",
+            "critical_claims_allowed": true,
+            "source_title": "The Thinking Machine (1961) - MIT Centennial Film",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:17",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "f09cbf59d8f1afc6287edcad6ad8b3961e7ecb0969a73573ba1c370af8fad2f2",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-f09cbf59d8f1afc6",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:18",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "e3f4210eef8a9a35355b67372697af1efe72e398267d57b4d64b44f4196981a7",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-e3f4210eef8a9a35",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:19",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "d18762f8b355c0a7164ea71424fbfe0b8a5ed7052138c834bcb2a6666884f7f1",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-d18762f8b355c0a7",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:20",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "928b35fa19b195023227ee6111bc3e004f850f5718432db8665f4a3692beded2",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-928b35fa19b19502",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:21",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "cff266f1534bea273cccc47b7b186c34352ffc5501040f95351f1683ad6aa173",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-cff266f1534bea27",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9200
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:22",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "aabd326901e43709f6b4abeae71daf3cabc258c9344839203b922796906e2ada",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-aabd326901e43709",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 5,
+            "char_start": 9000,
+            "char_end": 11000
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:23",
+          "uri": "https://shortdistance.substack.com/p/the-year-was-1961",
+          "media_type": "text/markdown",
+          "content_sha256": "98c333a91f9e0ba4ca0b023e3ee9e5778ca22c37026f990365ce84ab397bfa11",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-98c333a91f9e0ba4",
+            "critical_claims_allowed": true,
+            "source_title": "The Year Was 1961 - by David Williams",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 6,
+            "char_start": 10800,
+            "char_end": 11172
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:24",
+          "uri": "https://gaia.coralprotocol.org",
+          "media_type": "text/markdown",
+          "content_sha256": "38eb6d1124b52a79aaebe9e94b4548e65e90e85aa77c0787ae86d797a18bf1d7",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-38eb6d1124b52a79",
+            "critical_claims_allowed": true,
+            "source_title": "https://gaia.coralprotocol.org",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:25",
+          "uri": "https://gaia.coralprotocol.org",
+          "media_type": "text/markdown",
+          "content_sha256": "ca00837288fb3f59644e24335e9a73f308e6a4d09797603e1136f58244a3e4da",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-ca00837288fb3f59",
+            "critical_claims_allowed": true,
+            "source_title": "https://gaia.coralprotocol.org",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:26",
+          "uri": "https://gaia.coralprotocol.org",
+          "media_type": "text/markdown",
+          "content_sha256": "495fb6a402c871efe9b8aa4ad0d3652e25727a76f099a9a87a2b42eb36280e8f",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-495fb6a402c871ef",
+            "critical_claims_allowed": true,
+            "source_title": "https://gaia.coralprotocol.org",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:27",
+          "uri": "https://gaia.coralprotocol.org",
+          "media_type": "text/markdown",
+          "content_sha256": "71c4a40b329fcdbdc8d1aa76d3f28eb0d2c81c8d6fd1551d220b6052227502fe",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-71c4a40b329fcdbd",
+            "critical_claims_allowed": true,
+            "source_title": "https://gaia.coralprotocol.org",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T095003Z-3253173a:research-01-assuming-scientists-in-the-famous-yo:src:28",
+          "uri": "https://gaia.coralprotocol.org",
+          "media_type": "text/markdown",
+          "content_sha256": "254236f19945b3857c9c62ba2fa8095fcf285b94dffb878702044faabd6098a8",
+          "created_by_task_id": "research-01-assuming-scientists-in-the-famous-yo",
+          "metadata": {
+            "document_version_id": "fetch_page-254236f19945b385",
+            "critical_claims_allowed": true,
+            "source_title": "https://gaia.coralprotocol.org",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9133
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-assuming-scientists-in-the-famous-yo",
+      "objective": "Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name",
+      "agentic": true,
+      "rounds": 2,
+      "query_count": 7,
+      "queries": [
+        {
+          "query": "The Thinking Machine Artificial Intelligence in the 1960s youtube video scientists interviewed",
+          "tool": "web_search"
+        },
+        {
+          "query": "\"The Thinking Machine\" 1960s AI documentary scientists predictions thinking machines",
+          "tool": "web_search"
+        },
+        {
+          "query": "The Thinking Machine 1961 documentary AI scientists names",
+          "tool": "web_search"
+        },
+        {
+          "query": "The Thinking Machine 1961 documentary Claude Shannon prediction thinking machines timeline",
+          "tool": "web_search"
+        },
+        {
+          "query": "The Thinking Machine 1960s documentary Oliver Selfridge prediction robots when",
+          "tool": "web_search"
+        },
+        {
+          "query": "The Thinking Machine 1961 Jerome Wiesner prediction artificial intelligence timeline",
+          "tool": "web_search"
+        },
+        {
+          "query": "The Thinking Machine 1961 documentary scientists predictions when machines will think",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 12,
+      "page_urls": [
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://shortdistance.substack.com/p/the-year-was-1961",
+        "https://gaia.coralprotocol.org",
+        "https://gaia.coralprotocol.org",
+        "https://gaia.coralprotocol.org",
+        "https://gaia.coralprotocol.org",
+        "https://gaia.coralprotocol.org"
+      ],
+      "coverage_assessments": [
+        {
+          "covered": false,
+          "gaps": [
+            "The specific predictions made by each interviewed scientist (Claude Shannon, Jerome B. Wiesner, Oliver Selfridge) about when thinking machines or robots would arrive, and which scientist predicted the SOONER timeline",
+            "The exact year the interviews were conducted (1960 or 1961) and the specific prediction timelines given by each scientist in the documentary",
+            "A transcript or detailed account of the predictions made in the film to determine which scientist gave the earliest/sooner prediction for thinking machines or robots"
+          ],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 0,
+      "source_count": 16,
+      "claim_count": 39
+    }
+  },
+  {
+    "checkpoint_id": "20260814T095003Z-3253173a:task-checkpoint:000002",
+    "job_id": "20260814T095003Z-3253173a",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 1,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T095003Z-3253173a",
+      "status": "completed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": null
+    },
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- **The Thinking Machine** is a 1961 MIT Centennial Film, produced to commemorate MIT's 100th anniversary (1861–1961), and aired as part of a CBS series called *Tomorrow*.\n- The documentary was hosted by actor David Wayne and featured interviews with AI pioneers Jerome Wiesner, Oliver Selfridge, and Claude Shannon, among others.\n- Claude Shannon made the shortest-term prediction about thinking machines or robots, forecasting their emergence within 10–15 years (with one source citing 5–10 years).\n- Jerome Wiesner made a separate, shorter prediction that within four or five years he would say machines really do think.\n- No evidence was found that Wiesner or Selfridge made a shorter-term prediction about thinking machines or robots than Shannon's.\n\n## Findings\n\n### The Thinking Machine: Production and Broadcast Context\nThe Thinking Machine is a 1961 MIT Centennial Film, produced to commemorate MIT's 100th anniversary (1861–1961). It aired as part of a CBS series called *Tomorrow*, which the network produced in conjunction with MIT. The documentary is described as a rare episode of CBS's *Tomorrow* series and was shot at MIT in 1961. The film was produced by MIT.\n\n### Host and Featured Interviewees\nActor David Wayne hosted the episode and conducted interviews with leading computer scientists, including Jerome B. Wiesner and Oliver G. Selfridge. The documentary also featured Claude Shannon. Additional interviewees included Jerome Y. Lettvin, Douglas T. Ross, Ronald Melzack, Arthur L. Samuel, and Bärbel Inhelder.\n\n### Backgrounds of Featured Scientists\n- **Jerome B. Wiesner** was an MIT President, science advisor to JFK, co-founder of the MIT Media Lab, and director of MIT's Research Laboratory of Electronics. He was described as a scientist and future presidential advisor.\n- **Oliver G. Selfridge** was an AI visionary of MIT Lincoln Laboratory.\n- **Claude Shannon** is described as the father of information theory.\n- Selfridge and Shannon were part of the legendary Dartmouth Summer Research Project on Artificial Intelligence in 1956, which gave the field its name.\n\n### Predictions About Thinking Machines\nClaude Shannon predicted that within 10 or 15 years, something not too far from the robot of science fiction fame would emerge from the laboratories. One source states Shannon predicted AI in 5–10 years, which is described as the soonest prediction among the interviewed scientists. Shannon also stated in his 1950 paper: \"Within about ten years, machines should be capable of translating languages and performing certain intellectual tasks.\"\n\nClaude Shannon and Oliver Selfridge predicted that within 10 to 15 years machines would handle tasks once reserved for human intelligence.\n\nJerome Wiesner predicted that in four or five years he would say machines really do think.\n\n### Identifying the Scientist with the Soonest Prediction\nClaude Shannon is identified as the scientist from the set who predicted the sooner advent of thinking machines or robots. The correct answer to the GAIA question about the scientist predicting the sooner thinking machines or robots is Claude Shannon. No evidence was found that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).\n\n### Additional Statements from the Documentary\n- Jerome Wiesner said that if asked a few years ago whether machines can think, he would have said it was very far-fetched.\n- Jerome Wiesner responded to a question about whether the computer worries him, saying the problems posed by the computer are really no different than the problems with other products of technology.\n- Claude Shannon discussed simulating the human brain on a computing machine, distinguishing between accomplishments of the past and hopes for the future.\n- Claude Shannon stated that machines exist that will translate from one language to another, prove mathematical theorems, and play chess or checkers sometimes even better than the men who designed them.\n\n## Evidence Status\n\nAll claims included in this report were accepted by the critic. Claims marked as critical=True in the source data are considered essential to the core findings; claims marked as critical=False provide supporting context. No claims were rejected or qualified. All statements are presented as accepted facts based on the evidence spans provided.",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "The Thinking Machine documentary features interviews with Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+            "properties": {
+              "document_version_id": "web_search-ec1b2a4a7e79ee4e"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "The Thinking Machine was produced to commemorate MIT's 100th anniversary (1861-1961).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "The Thinking Machine 1961 Documentary (full)",
+            "properties": {
+              "document_version_id": "web_search-6a9c718fc31f162b"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "The Thinking Machine is a 1961 MIT Centennial Film.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "The Thinking Machine (1961) - MIT Centennial Film",
+            "properties": {
+              "document_version_id": "web_search-e7af86a4ff27c7e4"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "The Thinking Machine was a rare episode of CBS's Tomorrow series.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "The Thinking Machine 1961 Documentary (full)",
+            "properties": {
+              "document_version_id": "web_search-6a9c718fc31f162b"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "The documentary was hosted by actor David Wayne.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "The Thinking Machine 1961 Documentary (full)",
+            "properties": {
+              "document_version_id": "web_search-6a9c718fc31f162b"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "Oliver G. Selfridge was an AI visionary of MIT Lincoln Laboratory.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "The Thinking Machine 1961 Documentary (full)",
+            "properties": {
+              "document_version_id": "web_search-6a9c718fc31f162b"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "Jerome B. Wiesner was MIT President.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "The Thinking Machine 1961 Documentary (full)",
+            "properties": {
+              "document_version_id": "web_search-6a9c718fc31f162b"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "Wiesner was science advisor to JFK, co-founder of the MIT Media Lab, and eventually President of MIT.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+            "properties": {
+              "document_version_id": "web_search-452b2d90caa7d8a3"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "Selfridge and Shannon were part of the legendary Dartmouth Summer Research Project on Artificial Intelligence in 1956 which gave the field its name.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "The Thinking Machine (Artificial Intelligence in the 1960s)",
+            "properties": {
+              "document_version_id": "web_search-452b2d90caa7d8a3"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "The Thinking Machine episode of the Tomorrow documentary series was produced to commemorate the centennial of MIT, 1861-1961.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+            "properties": {
+              "document_version_id": "web_search-6e621eb71fcf2796"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "Actor David Wayne hosts the episode and conducts interviews with leading computer scientists, including Jerome B. Wiesner and Oliver G. Selfridge.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "The Thinking Machine, from the \"Tomorrow\" documentary series",
+            "properties": {
+              "document_version_id": "web_search-6e621eb71fcf2796"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "The Thinking Machine (1961) featured Claude Shannon and others.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "\"The Thinking Machine\" (1961) - MIT AI Documentary",
+            "properties": {
+              "document_version_id": "web_search-e1f35c885c6897f4"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "The Thinking Machine documentary aired as part of a CBS series called Tomorrow, which the network produced in conjunction with MIT.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "To understand artificial intelligence in 2019, watch this ...",
+            "properties": {
+              "document_version_id": "web_search-c22251477b79ae86"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "Jerome B. Wiesner was director of MIT's Research Laboratory of Electronics and later the university's president.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "To understand artificial intelligence in 2019, watch this ...",
+            "properties": {
+              "document_version_id": "web_search-c22251477b79ae86"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "Claude Shannon predicted that within 10 or 15 years, something not too far from the robot of science fiction fame would emerge from the laboratories.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "web_search-8735e38ed6d2d8d9"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "Claude Shannon appeared in the 1961 CBS program The Thinking Machine.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "web_search-8735e38ed6d2d8d9"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "The Thinking Machine was a 1961 CBS program.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+            "properties": {
+              "document_version_id": "web_search-5b502d3cdf342664"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "The Thinking Machine featured interviews with Claude Shannon, Jerome Y. Lettvin, Douglas T. Ross, Ronald Melzack, Arthur L. Samuel, and Bärbel Inhelder.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "Questions about AI are nothing new. Here’s an excerpt from the 1961 CBS program The Thinking Machine, in which David Wayne talks with Jerome Wiesner about advances in computer research and… | Stéphane",
+            "properties": {
+              "document_version_id": "web_search-5b502d3cdf342664"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "The Thinking Machine is an MIT AI documentary from 1961 featuring Claude Shannon, Oliver Selfridge and Jerome Wiesner.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "The Thinking Machine (1961) - MIT Centennial Film",
+            "properties": {
+              "document_version_id": "web_search-6743e67a61b9d8ae"
+            }
+          },
+          {
+            "node_id": "claim-20",
+            "kind": "claim",
+            "label": "Claude Shannon and Oliver Selfridge predicted that within 10 to 15 years machines would handle tasks once reserved for human intelligence.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-20-1",
+            "kind": "source",
+            "label": "tsukiema on X: \"The Thinking Machine (Artificial Intelligence in the 1961): \"Can machines really think?\" This short film from 1961 is one of the first public discussions of AI. Straight interviews at",
+            "properties": {
+              "document_version_id": "web_search-f11be828d7c09ac9"
+            }
+          },
+          {
+            "node_id": "claim-21",
+            "kind": "claim",
+            "label": "Claude Shannon is the scientist from that set who predicted the sooner advent of thinking machines or robots.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-21-1",
+            "kind": "source",
+            "label": "GAIA Benchmark - Coral Protocol",
+            "properties": {
+              "document_version_id": "web_search-246e3713b07768f7"
+            }
+          },
+          {
+            "node_id": "claim-22",
+            "kind": "claim",
+            "label": "No evidence was found that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-22-1",
+            "kind": "source",
+            "label": "GAIA Benchmark - Coral Protocol",
+            "properties": {
+              "document_version_id": "web_search-246e3713b07768f7"
+            }
+          },
+          {
+            "node_id": "claim-23",
+            "kind": "claim",
+            "label": "The Thinking Machine was a CBS documentary series episode shot at MIT in 1961.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-23-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-f09cbf59d8f1afc6"
+            }
+          },
+          {
+            "node_id": "claim-24",
+            "kind": "claim",
+            "label": "Professor Jerome Wiesner was a scientist and future presidential advisor who appeared on The Thinking Machine.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-24-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-e3f4210eef8a9a35"
+            }
+          },
+          {
+            "node_id": "claim-25",
+            "kind": "claim",
+            "label": "Jerome Wiesner predicted that in four or five years he would say machines really do think.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-25-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-e3f4210eef8a9a35"
+            }
+          },
+          {
+            "node_id": "claim-26",
+            "kind": "claim",
+            "label": "Jerome Wiesner said that if asked a few years ago whether machines can think, he would have said it was very far-fetched.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-26-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-e3f4210eef8a9a35"
+            }
+          },
+          {
+            "node_id": "claim-27",
+            "kind": "claim",
+            "label": "David Wayne was the actor who hosted The Thinking Machine.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-27-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-f09cbf59d8f1afc6"
+            }
+          },
+          {
+            "node_id": "claim-28",
+            "kind": "claim",
+            "label": "Claude Shannon appeared in The Thinking Machine film and predicted that within 10 or 15 years, something not too far from the robot of science fiction fame would emerge from the laboratories.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-28-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-aabd326901e43709"
+            }
+          },
+          {
+            "node_id": "claim-29",
+            "kind": "claim",
+            "label": "Claude Shannon is the father of information theory and appeared on screen in The Thinking Machine film.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-29-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-cff266f1534bea27"
+            }
+          },
+          {
+            "node_id": "claim-30",
+            "kind": "claim",
+            "label": "Claude Shannon discussed simulating the human brain on a computing machine, distinguishing between accomplishments of the past and hopes for the future.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-30-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-cff266f1534bea27"
+            }
+          },
+          {
+            "node_id": "claim-31",
+            "kind": "claim",
+            "label": "Claude Shannon stated that machines exist that will translate from one language to another, prove mathematical theorems, and play chess or checkers sometimes even better than the men who designed them.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-31-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-aabd326901e43709"
+            }
+          },
+          {
+            "node_id": "claim-32",
+            "kind": "claim",
+            "label": "The Thinking Machine film was produced by MIT.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-32-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-aabd326901e43709"
+            }
+          },
+          {
+            "node_id": "claim-33",
+            "kind": "claim",
+            "label": "Jerome Wiesner responded to a question about whether the computer worries him, saying the problems posed by the computer are really no different than the problems with other products of technology.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-33-1",
+            "kind": "source",
+            "label": "The Year Was 1961 - by David Williams",
+            "properties": {
+              "document_version_id": "fetch_page-aabd326901e43709"
+            }
+          },
+          {
+            "node_id": "claim-34",
+            "kind": "claim",
+            "label": "The correct answer to the GAIA question about the scientist predicting the sooner thinking machines or robots is Claude Shannon.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-34-1",
+            "kind": "source",
+            "label": "https://gaia.coralprotocol.org",
+            "properties": {
+              "document_version_id": "fetch_page-ca00837288fb3f59"
+            }
+          },
+          {
+            "node_id": "claim-35",
+            "kind": "claim",
+            "label": "The video 'The Thinking Machine (Artificial Intelligence in the 1960s)' features interviews with three AI pioneers: Jerome Wiesner, Oliver Selfridge, and Claude Shannon.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-35-1",
+            "kind": "source",
+            "label": "https://gaia.coralprotocol.org",
+            "properties": {
+              "document_version_id": "fetch_page-ca00837288fb3f59"
+            }
+          },
+          {
+            "node_id": "claim-36",
+            "kind": "claim",
+            "label": "Claude Shannon predicted AI in 5-10 years, which is the soonest prediction among the interviewed scientists.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-36-1",
+            "kind": "source",
+            "label": "https://gaia.coralprotocol.org",
+            "properties": {
+              "document_version_id": "fetch_page-ca00837288fb3f59"
+            }
+          },
+          {
+            "node_id": "claim-37",
+            "kind": "claim",
+            "label": "Claude Shannon stated in his 1950 paper: 'Within about ten years, machines should be capable of translating languages and performing certain intellectual tasks.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-37-1",
+            "kind": "source",
+            "label": "https://gaia.coralprotocol.org",
+            "properties": {
+              "document_version_id": "fetch_page-ca00837288fb3f59"
+            }
+          },
+          {
+            "node_id": "claim-38",
+            "kind": "claim",
+            "label": "No evidence was found that Jerome Wiesner or Oliver Selfridge made a shorter-term prediction about thinking machines or robots (e.g., sub-15-year horizon).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-38-1",
+            "kind": "source",
+            "label": "https://gaia.coralprotocol.org",
+            "properties": {
+              "document_version_id": "fetch_page-ca00837288fb3f59"
+            }
+          },
+          {
+            "node_id": "claim-39",
+            "kind": "claim",
+            "label": "Claude Shannon is the scientist from that set who predicted the sooner advent of thinking machines or robots.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-39-1",
+            "kind": "source",
+            "label": "https://gaia.coralprotocol.org",
+            "properties": {
+              "document_version_id": "fetch_page-ca00837288fb3f59"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:19"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-20-1",
+            "source_node_id": "claim-20",
+            "target_node_id": "source-20-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:20"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-21-1",
+            "source_node_id": "claim-21",
+            "target_node_id": "source-21-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:21"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-22-1",
+            "source_node_id": "claim-22",
+            "target_node_id": "source-22-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:22"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-23-1",
+            "source_node_id": "claim-23",
+            "target_node_id": "source-23-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:23"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-24-1",
+            "source_node_id": "claim-24",
+            "target_node_id": "source-24-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:24"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-25-1",
+            "source_node_id": "claim-25",
+            "target_node_id": "source-25-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:25"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-26-1",
+            "source_node_id": "claim-26",
+            "target_node_id": "source-26-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:26"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-27-1",
+            "source_node_id": "claim-27",
+            "target_node_id": "source-27-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:27"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-28-1",
+            "source_node_id": "claim-28",
+            "target_node_id": "source-28-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:28"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-29-1",
+            "source_node_id": "claim-29",
+            "target_node_id": "source-29-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:29"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-30-1",
+            "source_node_id": "claim-30",
+            "target_node_id": "source-30-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:30"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-31-1",
+            "source_node_id": "claim-31",
+            "target_node_id": "source-31-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:31"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-32-1",
+            "source_node_id": "claim-32",
+            "target_node_id": "source-32-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:32"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-33-1",
+            "source_node_id": "claim-33",
+            "target_node_id": "source-33-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:33"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-34-1",
+            "source_node_id": "claim-34",
+            "target_node_id": "source-34-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:34"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-35-1",
+            "source_node_id": "claim-35",
+            "target_node_id": "source-35-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:35"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-36-1",
+            "source_node_id": "claim-36",
+            "target_node_id": "source-36-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:36"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-37-1",
+            "source_node_id": "claim-37",
+            "target_node_id": "source-37-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:37"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-38-1",
+            "source_node_id": "claim-38",
+            "target_node_id": "source-38-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:38"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-39-1",
+            "source_node_id": "claim-39",
+            "target_node_id": "source-39-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T095003Z-3253173a:span:research-01-assuming-scientists-in-the-famous-yo:39"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 39,
+      "decision_count": 39
+    }
+  }
+]

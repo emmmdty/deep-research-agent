@@ -1,0 +1,150 @@
+{
+  "benchmark": "gaia",
+  "source": "GAIA 2023 validation, text-only subset (no attachments)",
+  "upstream": "huggingface.co/datasets/sayan1101/gaia_filtered_text_only (mirror of gated gaia-benchmark/GAIA)",
+  "split": "validation",
+  "selection_policy": "stratified sample by Level (L1=7, L2=8, L3=5), seed 2026; text-only questions only",
+  "total_available": 127,
+  "questions": [
+    {
+      "task_id": "00d579ea-0889-4fd9-a771-2c8d79835c8d",
+      "question": "Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name",
+      "level": "3",
+      "ground_truth": "Claude Shannon",
+      "annotator_steps": "1. Search \"The Thinking Machine (Artificial Intelligence in the 1960s)\" and open the YouTube result\n2. Listen to the video.\n3. Search for a transcript to confirm, due to struggling to feel confident in my answer.\n4. Fail to find a transcript.\n5. Watch again, finding again that Claude Shannon predicted AI in 5-10 years, which is the soonest."
+    },
+    {
+      "task_id": "0383a3ee-47a7-41a4-b493-519bdefe0488",
+      "question": "On the BBC Earth YouTube video of the Top 5 Silliest Animal Moments, what species of bird is featured?",
+      "level": "1",
+      "ground_truth": "Rockhopper penguin",
+      "annotator_steps": "1. Search \"top 5 silliest animal moments bbc earth youtube\" on Google search.\n2. Open the top link to \"Top 5 Silliest Animal Moments! | BBC Earth - YouTube\".\n3. Listen to the video until the species is named."
+    },
+    {
+      "task_id": "0b260a57-3f3a-4405-9f29-6d7a1012dbfb",
+      "question": "On ScienceDirect, what is the difference to 3 decimal places in the sample standard deviations of the number of Reference Works in each Life Science domain compared to Health Sciences as of 2022?",
+      "level": "2",
+      "ground_truth": "0.269",
+      "annotator_steps": "1. Searched \"ScienceDirect\" on Google.\n2. Opened the ScienceDirect website.\n3. Clicked on the top listed domain in the Life Science section on the main page (Agricultural and Biological Sciences).\n4. Clicked on \"Reference works\" in the filters.\n5. Noted the number at the top.\n6. Subtracted the number that had 2023 or later as a date.\n7. Changed the domain to the following one and noted the number.\n8. Repeated step 6 for all Life Science domains.\n9. Calculated the sample standard deviation (16.195678435929).\n10. Went back to the home page.\n11. Repeated steps 3-9 for Health Science (15.926916420534).\n12. Subtracted 16.195678435929 - 15.926916420534.\n13. Rounded to the third decimal place."
+    },
+    {
+      "task_id": "11af4e1a-5f45-467d-9aeb-46f4bb0bf034",
+      "question": "How many more blocks (also denoted as layers) in BERT base encoder than the encoder from the architecture proposed in Attention is All You Need?",
+      "level": "1",
+      "ground_truth": "6",
+      "annotator_steps": "1. Search the internet for \"blocks in bert base\"\n2. Examine the search results page to locate the answer (12)\n3. Search the internet for \"attention is all you need layers\"\n4, Navigate to https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf from the search results page\n5. Examine the architecture section of the PDF to locate the answer (12)\n6. Calculate the difference between the two numbers"
+    },
+    {
+      "task_id": "14569e28-c88c-43e4-8c32-097d35b9a67d",
+      "question": "In Unlambda, what exact charcter or text needs to be added to correct the following code to output \"For penguins\"? If what is needed is a character, answer with the name of the character. If there are different names for the character, use the shortest. The text location is not needed. Code:\n\n`r```````````.F.o.r. .p.e.n.g.u.i.n.si",
+      "level": "2",
+      "ground_truth": "backtick",
+      "annotator_steps": "1. Searched \"Unlambda syntax\" online (optional).\n2. Opened https://en.wikipedia.org/wiki/Unlambda.\n3. Note that the hello world program is very similar in syntax to the code in this question.\n4. Go to the source referenced by the hello world program.\n5. From the referenced source, read what the components of the program do to understand that each period needs a backtick after the initial `r.\n6. Observe that in the given code, there are 12 periods but only 11 backticks after the initial `r, so the missing character is a backtick."
+    },
+    {
+      "task_id": "305ac316-eef6-4446-960a-92d80d542f82",
+      "question": "Who did the actor who played Ray in the Polish-language version of Everybody Loves Raymond play in Magda M.? Give only the first name.",
+      "level": "1",
+      "ground_truth": "Wojciech",
+      "annotator_steps": "1. Search \"Polish-language version of Everybody Loves Raymond\" and pull up the Wiki page for Wszyscy kochają Romana.\n2. See that Bartłomiej Kasprzykowski is marked as playing Ray and go to his Wiki page.\n3. See that he is stated to have played Wojciech Płaska in Magda M."
+    },
+    {
+      "task_id": "4b6bb5f7-f634-410e-815d-e673ab7f8632",
+      "question": "In Series 9, Episode 11 of Doctor Who, the Doctor is trapped inside an ever-shifting maze. What is this location called in the official script for the episode? Give the setting exactly as it appears in the first scene heading.",
+      "level": "1",
+      "ground_truth": "THE CASTLE",
+      "annotator_steps": "1. Search the web for “Doctor Who series 9 episode 11 official script”.\n2. Click result on the BBC website.\n3. Scroll through the PDF to read the script, noting that it takes place in a mechanical castle location.\n4. Scroll back to the first scene heading to note the answer, THE CASTLE"
+    },
+    {
+      "task_id": "50ec8903-b81f-4257-9450-1085afd2c319",
+      "question": "A standard Rubik’s cube has been broken into cubes making up its sides. The cubes are jumbled, and one is removed. There are 6 cubes with one colored face, 12 edge cubes with two colored faces, and 8 corner cubes with three colored faces. All blue cubes have been found. All cubes directly left, right, above, and below the orange center cube have been found, along with the center cube. The green corners have all been found, along with all green that borders yellow. For all orange cubes found, the opposite face’s cubes have been found. The removed cube has two colors on its faces. What are they? Answer using a comma separated list, with the colors ordered alphabetically.",
+      "level": "1",
+      "ground_truth": "green, white",
+      "annotator_steps": "1. Set up a standard Rubik's cube (red opposite orange, white opposite yellow, green opposite blue).\n2. Eliminated blue cubes, along with adjacent colors.\n3. Eliminated orange cubes, along with adjacent colors.\n4. Eliminated green corners and the green/yellow edge.\n5. Eliminated red, opposite of orange, cubes and adjacent colors.\n6. Identified the last possible two-face cube."
+    },
+    {
+      "task_id": "5188369a-3bbe-43d8-8b94-11558f909a08",
+      "question": "What writer is quoted by Merriam-Webster for the Word of the Day from June 27, 2022?",
+      "level": "1",
+      "ground_truth": "Annie Levin",
+      "annotator_steps": "1. Search \"merriam-webster word of the day\" on Google search.\n2. Opened the top \"Word of the Day\" result from the Merriam-Webster dictionary online.\n3. Clicked \"SEE ALL WORDS OF THE DAY\" at the bottom.\n4. Scrolled down to June 27, 2022.\n5. Opened the Word of the Day (\"jingoism\").\n6. Scrolled down and identified context quote for \"jingoism\".\n7. Noted the name attributed to the quote. "
+    },
+    {
+      "task_id": "56137764-b4e0-45b8-9c52-1866420c3df5",
+      "question": "Which contributor to the version of OpenCV where support was added for the Mask-RCNN model has the same name as a former Chinese head of government when the names are transliterated to the Latin alphabet?",
+      "level": "2",
+      "ground_truth": "Li Peng",
+      "annotator_steps": "1. Use search engine to search for \"OpenCV change log\".\n2. Open the top result from GitHub and search the page for \"Mask-RCNN\".\n3. Observe that support for Mask-RCNN model was added in OpenCV version 4.0.0.\n4. Expand the two lists of contributors for version 4.0.0.\n5. Go to the Wikipedia page for head of government. \n6. Scan through and note that for China, the head of government is the premier.\n7. Go to the Wikipedia page for premier of the People's Republic of China.\n8. Go to the linked page for List of premiers of the People's Republic of China.\n9. Compare the list of OpenCV version 4.0.0 contributors' names and the list of premiers of China to find that Li Peng is present in both lists."
+    },
+    {
+      "task_id": "624cbf11-6a41-4692-af9c-36b3e5ca3130",
+      "question": "What's the last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022?",
+      "level": "2",
+      "ground_truth": "So we had to let it die.",
+      "annotator_steps": "1. Searched \"ben and jerrys flavor graveyard\" on Google search.\n2. Opened \"Flavor Graveyard\" on www.benjerry.com.\n3. Opened each flavor to find the oldest one (Dastardly Mash).\n4. Deciphered the blurry name on the headstone behind it (Miz Jelena's Sweet Potato Pie).\n5. Scrolled down to Miz Jelena's Sweet Potato Pie.\n6. Copied the last line of the rhyme.\n7. (Optional) Copied the URL.\n8. Searched \"internet archive\" on Google search.\n9. Opened the Wayback Machine.\n10. Entered the URL.\n11. Loaded the last 2022 page.\n12. Confirmed the information was the same."
+    },
+    {
+      "task_id": "72c06643-a2fa-4186-aa5c-9ec33ae9b445",
+      "question": "What is the volume in milliliters of a system comprised of 0.312 kg Freon-12 refrigerant when placed at the bottom of the Marianas Trench and allowed to stabilize at the Trench's peak temperature, rounded to the nearest mL? Provide your answer as just an integer value.",
+      "level": "3",
+      "ground_truth": "55",
+      "annotator_steps": "1. Searched \"volume from pressure, temperature, mass\" on Google.\n2. Opened the \"Specific Volume: Definition, Formulas, Examples - ThoughtCo\" page.\n3. Noted that PV = nRT where V is volume, R is the ideal gas constant, T is temperature, P is pressure, and M is moles.\n4. Followed the \"gas constant\" link.\n5. Noted that R = 8.31446261815324 J/K-mol.\n6. Searched \"Freon-12\" on Google.\n7. Opened the \"Dichlorodifluoromethane\" on Wikipedia.\n8. Noted the molar mass of 120.91 g/mol.\n9. Converted 0.312 kg = 312 g.\n10. Calculated moles: 312 g / 120.91 g/mol = 2.58 mol.\n11. Searched \"Marianas Trench pressure\" on Google.\n12. Noted the pressure in the featured text snippet of 15,750 psi.\n13. Searched \"psi to atm\" on Google.\n14. Noted 1 psi = 0.068046 atm.\n15. Converted psi to atm: 15,750 * 0.068046 = 1071.7245 atm.\n16. Searched \"Marianas Trench temperature\" on Google.\n17. Noted the temperature range from 34-39F.\n18. Searched \"F to K\" on Google.\n19. Noted that K equals F plus 459.67 times 5/9 from the conversion tool.\n20. Converted temperature to K: 39 + 459.67 * 5/9 = 277.039K.\n21. Searched \"joules to atm\" on Google and noted the conversion of 1 Joule = 0.0098692326671601 Liter Atmosphere from the featured text snippet.\n22. Converted 8.31446261815324 * 0.0098692326671601 = 0.08205736608096 L-atm/K-mol.\n21. Changed PV = nRT to V = nRT/P\n22. Plugged numbers into the ideal gas equation: V = (0.08205736608096 L-atm/K-mol * 277.039K * 2.58 mol) / (1071.7245 atm) = 0.05473 L.\n23. Converted to mL: 0.05473 L = 54.73.\n24. Rounded to the nearest mL."
+    },
+    {
+      "task_id": "72e110e7-464c-453c-a309-90a95aed6538",
+      "question": "Under DDC 633 on Bielefeld University Library's BASE, as of 2020, from what country was the unknown language article with a flag unique from the others?",
+      "level": "1",
+      "ground_truth": "Guatemala",
+      "annotator_steps": "1. Searched \"Bielefeld University Library's BASE\" on Google.\n2. Opened https://www.base-search.net/.\n3. Clicked \"Browsing\".\n4. Selected Clicked \"Dewey Decimal Classification (DDC) > 6 > 63 > 633.\n5. Refined to Unknown Language.\n6. Found the only article with a flag unique from the others in the search from pre-2020.\n7. Copied the country name from the institution."
+    },
+    {
+      "task_id": "8131e2c0-0083-4265-9ce7-78c2d568425d",
+      "question": "I was trying to remember how well the Cheater Beater performed in comparison to the Cheater when James tested it on his channel. I know that the Cheater still outperformed the Cheater Beater in terms of CFM. Could you please look that up for me, and report the CFM of both the Cheater and the Cheater Beater? I'm not sure if he made any changes to his testing, but this was back in season 4, so just report the value from that season. Please format your response like this: CFM number for Cheater, CFM number for Cheater beater",
+      "level": "3",
+      "ground_truth": "101.376, 84.348",
+      "annotator_steps": "Step 1: Using a web browser, navigate to a search engine and conduct a search: \"James Cheater Cheater Beater CFM Season 4\"\nStep 2: Finding no relevant result, navigate to a search engine and conduct another search: \"Cheater Beater Season 4\"\nStep 3: Navigate to the first search result, https://www.youtube.com/watch?v=2vq3COPZbKo\nStep 4: Evaluate the YouTube page, noting that the video description identifies the video content comparing the performance of computer fans to a fan referred to as the \"cheater\"\nStep 5: Follow the link to the YouTube channel Major Hardware, https://www.youtube.com/@MajorHardware\nStep 6: Navigate to the About tab link, https://www.youtube.com/@MajorHardware/about\nStep 7: Evaluate the content, noting that the page identifies the operator of the channel as James\nStep 8: Navigate to a search engine and conduct a search, \"James Major Hardware Cheater Beater\"\nStep 9: Navigate to the first result, identical to the result from step 3 above, https://www.youtube.com/watch?v=2vq3COPZbKo\nStep 10: Search the page for CFM, finding no result\nStep 11: Load the video content and review it\nStep 12: Note an onscreen text element identifying a fan as \"CALL SIGN: CHEATER BEATER\" at timestamp 224\nStep 13: Note an onscreen table identifying the performance of various fans tested during season four, at timestamp 485\nStep 14: Evaluate the table content, identifying an entry for a fan named \"Cheater\" and a fan named \"Cheater Beater\"\nStep 15: Evaluate the table content, identifying that the data for both fans were recorded in season 4, S4E1 for Cheater, S4E6 for Cheater Beater\nStep 16: Record the data from the CFM column for the two fans, \"Cheater: 101.376\", and \"Cheater Beater: 84.348\"\nStep 17: Report the correct response to my user:\n\"Cheater: 101.376\nCheater Beater: 84.348\""
+    },
+    {
+      "task_id": "87c610df-bef7-4932-b950-1d83ef4e282b",
+      "question": "In April of 1977, who was the Prime Minister of the first place mentioned by name in the Book of Esther (in the New International Version)?",
+      "level": "2",
+      "ground_truth": "Morarji Desai",
+      "annotator_steps": "1. Search the web for “Book of Esther NIV”.\n2. Click search result to read the text of the first chapter.\n3. Note the first place named, India.\n4. Search the web for “prime ministers of India list”.\n5. Click Wikipedia result.\n6. Scroll down to find the prime minister during the specified timeframe, Morarji Desai."
+    },
+    {
+      "task_id": "ad2b4d70-9314-4fe6-bfbe-894a45f6055f",
+      "question": "Eva Draconis has a personal website which can be accessed on her YouTube page. What is the meaning of the only symbol seen in the top banner that has a curved line that isn't a circle or a portion of a circle? Answer without punctuation.",
+      "level": "3",
+      "ground_truth": "War is not here this is a land of peace",
+      "annotator_steps": "1. By googling Eva Draconis youtube, you can find her channel.\n2. In her about section, she has written her website URL, orionmindproject.com.\n3. Entering this website, you can see a series of symbols at the top, and the text \"> see what the symbols mean here\" below it.\n4. Reading through the entries, you can see a short description of some of the symbols.\n5. The only symbol with a curved line that isn't a circle or a portion of a circle is the last one.\n6. Note that the symbol supposedly means \"War is not here, this is a land of peace.\""
+    },
+    {
+      "task_id": "b4cc024b-3f5e-480e-b96a-6656493255b5",
+      "question": "The photograph in the Whitney Museum of American Art's collection with accession number 2022.128 shows a person holding a book. Which military unit did the author of this book join in 1813? Answer without using articles.",
+      "level": "2",
+      "ground_truth": "Russian-German Legion",
+      "annotator_steps": "1. Use search engine to search for \"Whitney Museum of American Art collection search\".\n2. Go to the Whitney Museum's collection search webpage.\n3. Enter 2022.128 in the search box and submit the search.\n4. Open the single result, titled \"Rain in Rifle Season, Distributions from Split-Interest Trusts, Price Includes Uniform, Never Hit Soft, 2003\".\n5. Verify that this photograph has the correct accession number.\n6. Note that the subject of the photograph is holding the book \"On War\", by Carl von Clausewitz.\n7. Go to the Wikipedia page for Carl von Clausewitz.\n8. Search the page for 1813 to find that Carl von Clausewitz joined the Russian-German Legion in 1813.\n9. Go to the Wikipedia page for Russian-German Legion to verify that this was a military unit."
+    },
+    {
+      "task_id": "e8cb5b03-41e0-4086-99e5-f6806cd97211",
+      "question": "I went to Virtue restaurant & bar in Chicago for my birthday on March 22, 2021 and the main course I had was delicious!  Unfortunately, when I went back about a month later on April 21, it was no longer on the dinner menu.  Using the Wayback Machine, can you help me figure out which main course was on the dinner menu for Virtue on March 22, 2021 but not April 21, 2021? Answer using the singular form, without articles.",
+      "level": "2",
+      "ground_truth": "shrimp",
+      "annotator_steps": "1. Search the web for \"Virtue restaurant & bar Chicago\"\n2. Find the restaurant's website, https://www.virtuerestaurant.com\n3. Find the page for the dinner menu, https://www.virtuerestaurant.com/menus/\n4. Paste the URL of this page into the Wayback Machine at web.archive.org\n5. Open the versions of the page archived on March 22, 2021 and April 21, 2021\n6. Ensure that both pages are open to the \"dinner menu\" tab\n7. Find the \"large ration\" that was present on the March 22 version of the menu but not April 21: shrimp"
+    },
+    {
+      "task_id": "e961a717-6b25-4175-8a68-874d28190ee4",
+      "question": "According to wikipedia, how many Asian countries still have a monarchy and access to the sea in 2021?",
+      "level": "3",
+      "ground_truth": "12",
+      "annotator_steps": "1. Search the internet for \"asian monarchies\"\n2. Navigate to from the search results \n3. Switch to the history tab\n4. Locate and navigate to a revision from 2021\n5. Open the articles for each listed monarchy in new tabs\n6. Verify access to the sea for each country using the provided maps and optionally Google Maps"
+    },
+    {
+      "task_id": "f2feb6a4-363c-4c09-a804-0db564eafd68",
+      "question": "I’m thinking about selling my home, so I want to learn more about how homes in my area sold recently. I live in Pearl City, Hawaii, which is on the island of Oahu. I know two homes near me that sold in 2022 were 2072 Akaikai Loop, and 2017 Komo Mai Drive. Find which of those homes sold for more in 2022, and tell me how much it sold for. Don’t put commas or decimal places in the answer.",
+      "level": "2",
+      "ground_truth": "900000",
+      "annotator_steps": "1. Search the web for “2072 akaikai loop pearl city hi”.\n2. Click Zillow result.\n3. Navigate to “Price and tax history”.\n4. Find the amount the house sold for when it was sold in 2022: $860,000.\n5. Search the web for “2017 komo mai drive pearl city hi”.\n6. Click Zillow result.\n7. Navigate to “Price and tax history”.\n8. Find the amount the house sold for when it was sold in 2022: $900,000.\n9. Express the higher amount in the specified format, $900000."
+    }
+  ]
+}

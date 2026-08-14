@@ -1,0 +1,28 @@
+{
+  "task_id": "00d579ea-0889-4fd9-a771-2c8d79835c8d",
+  "question": "Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name",
+  "level": "3",
+  "ground_truth": "Claude Shannon",
+  "extracted_answer": "Claude Shannon",
+  "grade": {
+    "correct": true,
+    "rationale": "The candidate answer exactly matches the ground truth name 'Claude Shannon'.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": true,
+  "job_id": "20260814T095003Z-3253173a",
+  "status": "completed",
+  "claim_count": 39,
+  "source_count": 28,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 20,
+    "search_calls": 5,
+    "total_input_tokens": 43524,
+    "total_output_tokens": 10291,
+    "total_tokens": 53815,
+    "estimated_cost_usd": 0.0538,
+    "wall_seconds": 106.93
+  },
+  "model": "deepseek-v4-flash"
+}

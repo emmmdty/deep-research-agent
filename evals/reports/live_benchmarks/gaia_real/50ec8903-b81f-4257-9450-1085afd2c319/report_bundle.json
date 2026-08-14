@@ -1,0 +1,1639 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- The Western color scheme (BOY: blue-orange-yellow) is the most used color arrangement used on Rubik's Cubes.\n- The Western color scheme is also called Minus Yellow because if you add or extract yellow from any side you get its opposite.\n- The Western color scheme is known as BOY, short for Blue-Orange-Yellow, for the arrangement of colors around one of the cube's corners.\n- In the Western color scheme, the color of any side, plus or minus yellow, equals the color of the opposite side.\n- The Western color scheme is also called Minus Yellow, referring to the relation between each opposing sides' colors.\n- The non-Japanese color scheme is called BOY: Blue-Orange-Yellow go clockwise around a corner.\n- On a standard Rubik's cube, the blue and green faces are opposite each other.\n- A standard Rubik's Cube features six colors: white, yellow, red, orange, blue, and green.\n- The most common color scheme on the 3x3 Rubik's cube is where the opposite of yellow is white, the opposite of orange is red, and the opposite of green is blue.\n- If yellow is on top and blue is facing you, to the left of blue is orange and to the right of blue will be red.\n- The blue/green pair will always be on opposite sides.\n- The Western color scheme (also known as BOY: blue-orange-yellow) is the most used color arrangement used not only on Rubik's Cubes but on the majority of cube-shaped twisty puzzles these days.\n- In the Western color scheme, white + yellow = yellow, red + yellow = orange, and blue + yellow = green.\n- The original Ideal scheme had Yellow-Up with Red-Right and Blue-Back.\n- The current scheme has White-Up, which makes the logo visible.\n- The western scheme is the original.\n- The western scheme is the original, and even the first series of cubes were colored according to the western scheme when those cubes were produced and sold only in Hungary.\n- The yellow and white sides are next to each other in an unusual color scheme.\n- In the original Japanese scheme, blue and white are opposite each other.\n- The most intelligent designs make it possible to distinguish opposite colours in low light.\n\n## Findings\n\n### Standard Color Oppositions\nIn the standard Rubik's Cube color scheme, Blue is opposite Green, Orange is opposite Red, and Yellow is opposite White. The blue/green pair is always on opposite sides. A standard Rubik's Cube features six colors: white, yellow, red, orange, blue, and green.\n\n### Western (BOY) Color Scheme\nThe Western color scheme, also known as BOY (short for Blue-Orange-Yellow), is the most used color arrangement on Rubik's Cubes and on the majority of cube-shaped twisty puzzles. In this scheme, Blue-Orange-Yellow go clockwise around a corner. With yellow on top and blue facing you, orange is to the left of blue and red is to the right of blue.\n\n### \"Minus Yellow\" Naming\nThe Western color scheme is also called \"Minus Yellow.\" This name refers to the relation between opposing sides' colors: if you add or extract yellow from any side, you get its opposite. Specifically, white + yellow = yellow, red + yellow = orange, and blue + yellow = green.\n\n### Historical Origin and Scheme Evolution\nThe Western scheme is the original scheme. The first series of cubes were colored according to the Western scheme when those cubes were produced and sold only in Hungary. The original Ideal scheme had Yellow-Up with Red-Right and Blue-Back. The current scheme has White-Up, which makes the logo visible.\n\n### Japanese Color Scheme\nIn the original Japanese scheme, blue and white are opposite each other. This differs from the Western scheme, where blue is opposite green and white is opposite yellow.\n\n### Unusual Color Arrangements\nThe yellow and white sides being next to each other is described as an unusual color scheme.\n\n### Low-Light Distinction\nThe most intelligent designs make it possible to distinguish opposite colors in low light.\n\n## Evidence Status\n\nAll claims were accepted by the critic. The evidence directly supports each claim, with no hedged or qualified statements requiring additional qualification. The claims are consistent with one another regarding the standard color oppositions, the Western scheme's prevalence and naming, and the historical details of the original and current schemes.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:04",
+      "claim": "The Western color scheme is also called Minus Yellow because if you add or extract yellow from any side you get its opposite.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:04",
+          "document_version_id": "web_search-26781779a27385e4",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "This color scheme is also called Minus Yellow because if you add or extract yellow from any side you get its opposite.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:05",
+      "claim": "The Western color scheme is known as BOY, short for Blue-Orange-Yellow, for the arrangement of colors around one of the cube's corners.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:05",
+          "document_version_id": "web_search-0e6fb89c73385273",
+          "page": null,
+          "section": "Western Color Scheme - WikiCube - Fandom",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "This color scheme is also known as BOY, short for Blue-Orange-Yellow, for the arrangement of colors around one of the cube's corners",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:06",
+      "claim": "In the Western color scheme, the color of any side, plus or minus yellow, equals the color of the opposite side.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:06",
+          "document_version_id": "web_search-0e6fb89c73385273",
+          "page": null,
+          "section": "Western Color Scheme - WikiCube - Fandom",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the color of any side, plus or minus yellow, equals the color of the opposite side.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:07",
+      "claim": "The Western color scheme is also called Minus Yellow, referring to the relation between each opposing sides' colors.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:07",
+          "document_version_id": "web_search-0e6fb89c73385273",
+          "page": null,
+          "section": "Western Color Scheme - WikiCube - Fandom",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "or Minus Yellow, referring to the relation between each opposing sides' colors, as described below.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:08",
+      "claim": "The non-Japanese color scheme is called BOY: Blue-Orange-Yellow go clockwise around a corner.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:08",
+          "document_version_id": "web_search-7700e10124cc9592",
+          "page": null,
+          "section": "Standard 3x3 Color Schemes",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "I usually heard the non-Japanese called BOY: Blue-Orange-Yellow go clockwise around a corner.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:09",
+      "claim": "On a standard Rubik's cube, the blue and green faces are opposite each other.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:09",
+          "document_version_id": "web_search-7224a2e4c84b056e",
+          "page": null,
+          "section": "Rubik Cube",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "On my Cube the blue and green faces are opposite each other.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:12",
+      "claim": "A standard Rubik's Cube features six colors: white, yellow, red, orange, blue, and green.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:12",
+          "document_version_id": "web_search-02ec8107a0a64ee8",
+          "page": null,
+          "section": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "A Standard Rubik's Cube features six colors: white, yellow, red, orange, blue, and green",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:16",
+      "claim": "The most common color scheme on the 3x3 Rubik's cube is where the opposite of yellow is white, the opposite of orange is red, and the opposite of green is blue.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:16",
+          "document_version_id": "web_search-81bb1d752684d7ad",
+          "page": null,
+          "section": "3×3 Rubik’s Cube Tutorial for Beginners (Full Step-by-Step Guide)",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the opposite of yellow is white, the opposite of orange is red, and the opposite of green is blue",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:17",
+      "claim": "If yellow is on top and blue is facing you, to the left of blue is orange and to the right of blue will be red.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:17",
+          "document_version_id": "web_search-81bb1d752684d7ad",
+          "page": null,
+          "section": "3×3 Rubik’s Cube Tutorial for Beginners (Full Step-by-Step Guide)",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "If yellow is on top and blue is facing you, to the left of blue is orange and to the right of blue will be red",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:18",
+      "claim": "The blue/green pair will always be on opposite sides.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:18",
+          "document_version_id": "web_search-faca0c31fd213da4",
+          "page": null,
+          "section": "Rubik Cube",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "they will always be on opposite sides",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:19",
+      "claim": "The Western color scheme (also known as BOY: blue-orange-yellow) is the most used color arrangement used not only on Rubik's Cubes but on the majority of cube-shaped twisty puzzles these days.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:19",
+          "document_version_id": "fetch_page-68c5d6a2d09ee862",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "The Western color sheme (also known as BOY: blue-orange-yellow) is the most used color arrangement used not only on Rubik's Cubes but on the majority of cube-shaped twisty puzzles these days",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:20",
+      "claim": "In the Western color scheme, white + yellow = yellow, red + yellow = orange, and blue + yellow = green.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:20",
+          "document_version_id": "fetch_page-68c5d6a2d09ee862",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "white + yellow = yellow",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:21",
+      "claim": "The original Ideal scheme had Yellow-Up with Red-Right and Blue-Back.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:21",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "The original Ideal scheme had Yellow-Up with Red-Right and Blue-Back.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:22",
+      "claim": "The current scheme has White-Up, which makes the logo visible.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:22",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "current scheme has White-Up, which makes the logo visible.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:23",
+      "claim": "The western scheme is the original.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:23",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "The western scheme is the original.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:24",
+      "claim": "The western scheme is the original, and even the first series of cubes were colored according to the western scheme when those cubes were produced and sold only in Hungary.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:24",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "the first series of cubes were colored according to the western scheme when those cubes were produced and sold only in Hungary.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:25",
+      "claim": "The yellow and white sides are next to each other in an unusual color scheme.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.7,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:25",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "The yellow and white sides next to each other: an unusual color scheme",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:26",
+      "claim": "In the original Japanese scheme, blue and white are opposite each other.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:26",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "time I see a cube and blue and white aren't opposite each other, it just seems weird to",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:27",
+      "claim": "The most intelligent designs make it possible to distinguish opposite colours in low light.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.7,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:27",
+          "document_version_id": "fetch_page-e494638ef0f82834",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "the most intelligent designs make it possible to distinguish opposite colours in low",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02",
+      "claim": "The Western color scheme (BOY: blue-orange-yellow) is the most used color arrangement used on Rubik's Cubes.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:02",
+          "document_version_id": "web_search-9bfa96e0313ea152",
+          "page": null,
+          "section": "Rubik's Cube Color Schemes - Western and Japanese",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The Western color sheme (also known as BOY: blue-orange-yellow) is the most used color arrangement used not only on Rubik's Cubes but on the majority of cube-shaped twisty puzzles these days.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02": [
+      "web_search-9bfa96e0313ea152"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:04": [
+      "web_search-26781779a27385e4"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:05": [
+      "web_search-0e6fb89c73385273"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:06": [
+      "web_search-0e6fb89c73385273"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:07": [
+      "web_search-0e6fb89c73385273"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:08": [
+      "web_search-7700e10124cc9592"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:09": [
+      "web_search-7224a2e4c84b056e"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:12": [
+      "web_search-02ec8107a0a64ee8"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:16": [
+      "web_search-81bb1d752684d7ad"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:17": [
+      "web_search-81bb1d752684d7ad"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:18": [
+      "web_search-faca0c31fd213da4"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:19": [
+      "fetch_page-68c5d6a2d09ee862"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:20": [
+      "fetch_page-68c5d6a2d09ee862"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:21": [
+      "fetch_page-e494638ef0f82834"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:22": [
+      "fetch_page-e494638ef0f82834"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:23": [
+      "fetch_page-e494638ef0f82834"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:24": [
+      "fetch_page-e494638ef0f82834"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:25": [
+      "fetch_page-e494638ef0f82834"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:26": [
+      "fetch_page-e494638ef0f82834"
+    ],
+    "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:27": [
+      "fetch_page-e494638ef0f82834"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "In the standard BOY color scheme, Blue is placed opposite Green, Orange is placed opposite Red, and Yellow is placed opposite White.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "On a standard Rubik's cube, white and yellow are opposite faces.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "On a standard Rubik's cube, red and orange are opposite faces.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "A standard Rubik's Cube features six colors: white, yellow, red, orange, blue, and green.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "In the standard Rubik's cube color scheme, Blue is placed opposite Green.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "In the standard Rubik's cube color scheme, Orange is placed opposite Red.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "In the standard Rubik's cube color scheme, Yellow is placed opposite White.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "The most common color scheme on the 3x3 Rubik's cube is where the opposite of yellow is white, the opposite of orange is red, and the opposite of green is blue.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "If yellow is on top and blue is facing you, to the left of blue is orange and to the right of blue will be red.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-18",
+        "kind": "claim",
+        "label": "The blue/green pair will always be on opposite sides.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-19",
+        "kind": "claim",
+        "label": "The Western color scheme (also known as BOY: blue-orange-yellow) is the most used color arrangement used not only on Rubik's Cubes but on the majority of cube-shaped twisty puzzles these days.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "The Western color scheme (BOY: blue-orange-yellow) is the most used color arrangement used on Rubik's Cubes.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-20",
+        "kind": "claim",
+        "label": "In the Western color scheme, white + yellow = yellow, red + yellow = orange, and blue + yellow = green.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-21",
+        "kind": "claim",
+        "label": "The original Ideal scheme had Yellow-Up with Red-Right and Blue-Back.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-22",
+        "kind": "claim",
+        "label": "The current scheme has White-Up, which makes the logo visible.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-23",
+        "kind": "claim",
+        "label": "The western scheme is the original.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-24",
+        "kind": "claim",
+        "label": "The western scheme is the original, and even the first series of cubes were colored according to the western scheme when those cubes were produced and sold only in Hungary.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-25",
+        "kind": "claim",
+        "label": "The yellow and white sides are next to each other in an unusual color scheme.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-26",
+        "kind": "claim",
+        "label": "In the original Japanese scheme, blue and white are opposite each other.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-27",
+        "kind": "claim",
+        "label": "The most intelligent designs make it possible to distinguish opposite colours in low light.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "The Western color scheme (BOY: blue-orange-yellow) is the most used color arrangement on Rubik's Cubes.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The Western color scheme is also called Minus Yellow because if you add or extract yellow from any side you get its opposite.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "The Western color scheme is known as BOY, short for Blue-Orange-Yellow, for the arrangement of colors around one of the cube's corners.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "In the Western color scheme, the color of any side, plus or minus yellow, equals the color of the opposite side.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "The Western color scheme is also called Minus Yellow, referring to the relation between each opposing sides' colors.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "The non-Japanese color scheme is called BOY: Blue-Orange-Yellow go clockwise around a corner.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "On a standard Rubik's cube, the blue and green faces are opposite each other.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "properties": {
+          "document_version_id": "web_search-db9dd9bccde52863"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "Rubik Cube",
+        "properties": {
+          "document_version_id": "web_search-7224a2e4c84b056e"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "Rubik Cube",
+        "properties": {
+          "document_version_id": "web_search-7224a2e4c84b056e"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "properties": {
+          "document_version_id": "web_search-02ec8107a0a64ee8"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "properties": {
+          "document_version_id": "web_search-4a6720ebbc45b859"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "properties": {
+          "document_version_id": "web_search-4a6720ebbc45b859"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "properties": {
+          "document_version_id": "web_search-4a6720ebbc45b859"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "3×3 Rubik’s Cube Tutorial for Beginners (Full Step-by-Step Guide)",
+        "properties": {
+          "document_version_id": "web_search-81bb1d752684d7ad"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "3×3 Rubik’s Cube Tutorial for Beginners (Full Step-by-Step Guide)",
+        "properties": {
+          "document_version_id": "web_search-81bb1d752684d7ad"
+        }
+      },
+      {
+        "node_id": "source-18-1",
+        "kind": "source",
+        "label": "Rubik Cube",
+        "properties": {
+          "document_version_id": "web_search-faca0c31fd213da4"
+        }
+      },
+      {
+        "node_id": "source-19-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-68c5d6a2d09ee862"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "web_search-9bfa96e0313ea152"
+        }
+      },
+      {
+        "node_id": "source-20-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-68c5d6a2d09ee862"
+        }
+      },
+      {
+        "node_id": "source-21-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-22-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-23-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-24-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-25-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-26-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-27-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "fetch_page-e494638ef0f82834"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "web_search-26781779a27385e4"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "Rubik's Cube Color Schemes - Western and Japanese",
+        "properties": {
+          "document_version_id": "web_search-26781779a27385e4"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "Western Color Scheme - WikiCube - Fandom",
+        "properties": {
+          "document_version_id": "web_search-0e6fb89c73385273"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "Western Color Scheme - WikiCube - Fandom",
+        "properties": {
+          "document_version_id": "web_search-0e6fb89c73385273"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "Western Color Scheme - WikiCube - Fandom",
+        "properties": {
+          "document_version_id": "web_search-0e6fb89c73385273"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "Standard 3x3 Color Schemes",
+        "properties": {
+          "document_version_id": "web_search-7700e10124cc9592"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "Rubik Cube",
+        "properties": {
+          "document_version_id": "web_search-7224a2e4c84b056e"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-18-1",
+        "source_node_id": "claim-18",
+        "target_node_id": "source-18-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:18"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-19-1",
+        "source_node_id": "claim-19",
+        "target_node_id": "source-19-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:19"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-20-1",
+        "source_node_id": "claim-20",
+        "target_node_id": "source-20-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:20"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-21-1",
+        "source_node_id": "claim-21",
+        "target_node_id": "source-21-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:21"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-22-1",
+        "source_node_id": "claim-22",
+        "target_node_id": "source-22-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:22"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-23-1",
+        "source_node_id": "claim-23",
+        "target_node_id": "source-23-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:23"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-24-1",
+        "source_node_id": "claim-24",
+        "target_node_id": "source-24-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:24"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-25-1",
+        "source_node_id": "claim-25",
+        "target_node_id": "source-25-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:25"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-26-1",
+        "source_node_id": "claim-26",
+        "target_node_id": "source-26-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:26"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-27-1",
+        "source_node_id": "claim-27",
+        "target_node_id": "source-27-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:27"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T103845Z-540412ce:span:research-01-a-standard-rubik-s-cube-has-been-bro:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:01",
+      "uri": "https://cubesolver.ai/blog/rubiks-cube-colors",
+      "media_type": "text/markdown",
+      "content_sha256": "db9dd9bccde52863617c702943a5e3ec4f27f5a9acf3796993439ffdaa6fa931",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-db9dd9bccde52863",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:02",
+      "uri": "https://forum.artofmemory.com/t/rubiks-cube-with-3-colors-same-color-on-opposite-faces/39070",
+      "media_type": "text/markdown",
+      "content_sha256": "32d7a6d235ce77f98dd78fbc741d750b344070569b25c5b672472081a03eaa5d",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-32d7a6d235ce77f9",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's cube with 3 colors, same color on opposite faces - Speed-Cubing - Art of Memory Forum",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:03",
+      "uri": "https://ruwix.com/the-rubiks-cube/japanese-western-color-schemes",
+      "media_type": "text/markdown",
+      "content_sha256": "9bfa96e0313ea1528d3e403851e4c8f3e613c688e4af9510f3771e752f11e877",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-9bfa96e0313ea152",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Color Schemes - Western and Japanese",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:04",
+      "uri": "https://www.youtube.com/watch?v=nl8KeNRqq24",
+      "media_type": "text/markdown",
+      "content_sha256": "8d03bf492de226b5cd8c75b0605bb07532719460704d86ac43abd2b700f9eb19",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-8d03bf492de226b5",
+        "critical_claims_allowed": true,
+        "source_title": "I tried EVERY Color Scheme to find the WORST",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:05",
+      "uri": "https://ruwix.com/the-rubiks-cube/japanese-western-color-schemes",
+      "media_type": "text/markdown",
+      "content_sha256": "26781779a27385e474fc6e9eeff393bb662bb7d92d3f4bb5ac7187b15c9d22e8",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-26781779a27385e4",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Color Schemes - Western and Japanese",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:06",
+      "uri": "https://www.youtube.com/watch?v=nl8KeNRqq24",
+      "media_type": "text/markdown",
+      "content_sha256": "cbf324e852dddd10f94b95545b5660d9426e2dde37dcb00aad54eba7a323b94a",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-cbf324e852dddd10",
+        "critical_claims_allowed": true,
+        "source_title": "I tried EVERY Color Scheme to find the WORST",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:07",
+      "uri": "https://rubiks.fandom.com/wiki/Western_Color_Scheme",
+      "media_type": "text/markdown",
+      "content_sha256": "0e6fb89c73385273a48cb8ba5ad89221531f206c6b418507544d447d88cef135",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-0e6fb89c73385273",
+        "critical_claims_allowed": true,
+        "source_title": "Western Color Scheme - WikiCube - Fandom",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:08",
+      "uri": "https://www.speedsolving.com/threads/standard-3x3-color-schemes.88368",
+      "media_type": "text/markdown",
+      "content_sha256": "7700e10124cc9592742dcc18d2527342e204c8d13ce312b1174d93af3c976786",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-7700e10124cc9592",
+        "critical_claims_allowed": true,
+        "source_title": "Standard 3x3 Color Schemes",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:09",
+      "uri": "https://cubesolver.ai/blog/rubiks-cube-colors",
+      "media_type": "text/markdown",
+      "content_sha256": "02ec8107a0a64ee8b2f4a49ea1d8fb81c5812e103381ae595b85d5dcc069cb5b",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-02ec8107a0a64ee8",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:10",
+      "uri": "https://ruwix.com/the-rubiks-cube/japanese-western-color-schemes",
+      "media_type": "text/markdown",
+      "content_sha256": "37344efca65311f561e1c65b9ddb143897dfbd7a84ad9dbfce6927dd35f692f0",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-37344efca65311f5",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Color Schemes - Western and Japanese",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:11",
+      "uri": "https://www.agu.ac.jp/~vicks62/jeffreyb/Rcube.html",
+      "media_type": "text/markdown",
+      "content_sha256": "7224a2e4c84b056ed0842f97969b4c232ba910e7f689856cdf96e65920bdf7b5",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-7224a2e4c84b056e",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik Cube",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:12",
+      "uri": "https://www.youtube.com/watch?v=nl8KeNRqq24",
+      "media_type": "text/markdown",
+      "content_sha256": "355aa6a3351f6a29f5c76d7f6b2b5f8d55a9b8ef2a956a184f2c0b40a24e789d",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-355aa6a3351f6a29",
+        "critical_claims_allowed": true,
+        "source_title": "I tried EVERY Color Scheme to find the WORST",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:13",
+      "uri": "https://cubesolver.ai/blog/rubiks-cube-colors",
+      "media_type": "text/markdown",
+      "content_sha256": "4a6720ebbc45b859a10b4b82e8e7d18289c553175a490945d589b33d5746f8fb",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-4a6720ebbc45b859",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Colors Explained: Order & Opposite Sides",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:14",
+      "uri": "https://www.youtube.com/watch?v=YPzzGPXW8fs&vl=en",
+      "media_type": "text/markdown",
+      "content_sha256": "81bb1d752684d7adcc85584cf5cfe8d8fc0b0d16e6dd287ffe5b02725d7b3ab8",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-81bb1d752684d7ad",
+        "critical_claims_allowed": true,
+        "source_title": "3×3 Rubik’s Cube Tutorial for Beginners (Full Step-by-Step Guide)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:15",
+      "uri": "https://www.agu.ac.jp/~vicks62/jeffreyb/Rcube.html",
+      "media_type": "text/markdown",
+      "content_sha256": "faca0c31fd213da47482a01d6c407121d368aae18da5bbc4b7a3996acbd35170",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "web_search-faca0c31fd213da4",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik Cube",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:16",
+      "uri": "https://ruwix.com/the-rubiks-cube/japanese-western-color-schemes/",
+      "media_type": "text/markdown",
+      "content_sha256": "68c5d6a2d09ee8621338100de53aef1c2ee5ed5d764696aa654d3ca743d61b7f",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "fetch_page-68c5d6a2d09ee862",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Color Schemes - Western and Japanese",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:17",
+      "uri": "https://ruwix.com/the-rubiks-cube/japanese-western-color-schemes/",
+      "media_type": "text/markdown",
+      "content_sha256": "e494638ef0f828344c71dd771b6c69e189121bfb4a4e754b1de61b165c168b40",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "fetch_page-e494638ef0f82834",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Color Schemes - Western and Japanese",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 3800
+      }
+    },
+    {
+      "artifact_id": "20260814T103845Z-540412ce:research-01-a-standard-rubik-s-cube-has-been-bro:src:18",
+      "uri": "https://ruwix.com/the-rubiks-cube/japanese-western-color-schemes/",
+      "media_type": "text/markdown",
+      "content_sha256": "76f965e1e255c003a6c73a57d59c9cee3beec254a9a783d4b35d89d6651ef36b",
+      "created_by_task_id": "research-01-a-standard-rubik-s-cube-has-been-bro",
+      "metadata": {
+        "document_version_id": "fetch_page-76f965e1e255c003",
+        "critical_claims_allowed": true,
+        "source_title": "Rubik's Cube Color Schemes - Western and Japanese",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 2,
+        "char_start": 3600,
+        "char_end": 3921
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:04",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:05",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:06",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:07",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:08",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:09",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:12",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:16",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:17",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:18",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:19",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:20",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:21",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:22",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:23",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:24",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:25",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:26",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:27"
+    ],
+    "qualified_claim_ids": [
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:01",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:03",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:10",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:11",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:13",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:14",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:15"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:04",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:05",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:06",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:07",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:08",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:09",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:12",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:16",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:17",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:18",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:19",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:20",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:21",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:22",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:23",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:24",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:25",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:26",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:27"
+    ],
+    "degradations": {
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:01": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:03": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:10": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:11": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:13": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:14": "critic_unresolved",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:15": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:01",
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:15"
+      ],
+      [
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02",
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:03"
+      ],
+      [
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:10",
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:11"
+      ],
+      [
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:13",
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:14"
+      ],
+      [
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:13",
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:15"
+      ],
+      [
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:14",
+        "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:15"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:01",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:02",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:03",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:10",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:11",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:13",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:14",
+      "20260814T103845Z-540412ce:claim:research-01-a-standard-rubik-s-cube-has-been-bro:15"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T103845Z-540412ce",
+    "document_version_ids": [
+      "fetch_page-68c5d6a2d09ee862",
+      "fetch_page-76f965e1e255c003",
+      "fetch_page-e494638ef0f82834",
+      "web_search-02ec8107a0a64ee8",
+      "web_search-0e6fb89c73385273",
+      "web_search-26781779a27385e4",
+      "web_search-32d7a6d235ce77f9",
+      "web_search-355aa6a3351f6a29",
+      "web_search-37344efca65311f5",
+      "web_search-4a6720ebbc45b859",
+      "web_search-7224a2e4c84b056e",
+      "web_search-7700e10124cc9592",
+      "web_search-81bb1d752684d7ad",
+      "web_search-8d03bf492de226b5",
+      "web_search-9bfa96e0313ea152",
+      "web_search-cbf324e852dddd10",
+      "web_search-db9dd9bccde52863",
+      "web_search-faca0c31fd213da4"
+    ],
+    "content_hashes": {
+      "web_search-db9dd9bccde52863": "db9dd9bccde52863617c702943a5e3ec4f27f5a9acf3796993439ffdaa6fa931",
+      "web_search-32d7a6d235ce77f9": "32d7a6d235ce77f98dd78fbc741d750b344070569b25c5b672472081a03eaa5d",
+      "web_search-9bfa96e0313ea152": "9bfa96e0313ea1528d3e403851e4c8f3e613c688e4af9510f3771e752f11e877",
+      "web_search-8d03bf492de226b5": "8d03bf492de226b5cd8c75b0605bb07532719460704d86ac43abd2b700f9eb19",
+      "web_search-26781779a27385e4": "26781779a27385e474fc6e9eeff393bb662bb7d92d3f4bb5ac7187b15c9d22e8",
+      "web_search-cbf324e852dddd10": "cbf324e852dddd10f94b95545b5660d9426e2dde37dcb00aad54eba7a323b94a",
+      "web_search-0e6fb89c73385273": "0e6fb89c73385273a48cb8ba5ad89221531f206c6b418507544d447d88cef135",
+      "web_search-7700e10124cc9592": "7700e10124cc9592742dcc18d2527342e204c8d13ce312b1174d93af3c976786",
+      "web_search-02ec8107a0a64ee8": "02ec8107a0a64ee8b2f4a49ea1d8fb81c5812e103381ae595b85d5dcc069cb5b",
+      "web_search-37344efca65311f5": "37344efca65311f561e1c65b9ddb143897dfbd7a84ad9dbfce6927dd35f692f0",
+      "web_search-7224a2e4c84b056e": "7224a2e4c84b056ed0842f97969b4c232ba910e7f689856cdf96e65920bdf7b5",
+      "web_search-355aa6a3351f6a29": "355aa6a3351f6a29f5c76d7f6b2b5f8d55a9b8ef2a956a184f2c0b40a24e789d",
+      "web_search-4a6720ebbc45b859": "4a6720ebbc45b859a10b4b82e8e7d18289c553175a490945d589b33d5746f8fb",
+      "web_search-81bb1d752684d7ad": "81bb1d752684d7adcc85584cf5cfe8d8fc0b0d16e6dd287ffe5b02725d7b3ab8",
+      "web_search-faca0c31fd213da4": "faca0c31fd213da47482a01d6c407121d368aae18da5bbc4b7a3996acbd35170",
+      "fetch_page-68c5d6a2d09ee862": "68c5d6a2d09ee8621338100de53aef1c2ee5ed5d764696aa654d3ca743d61b7f",
+      "fetch_page-e494638ef0f82834": "e494638ef0f828344c71dd771b6c69e189121bfb4a4e754b1de61b165c168b40",
+      "fetch_page-76f965e1e255c003": "76f965e1e255c003a6c73a57d59c9cee3beec254a9a783d4b35d89d6651ef36b"
+    },
+    "critical_claims_allowed": {
+      "web_search-db9dd9bccde52863": true,
+      "web_search-32d7a6d235ce77f9": true,
+      "web_search-9bfa96e0313ea152": true,
+      "web_search-8d03bf492de226b5": true,
+      "web_search-26781779a27385e4": true,
+      "web_search-cbf324e852dddd10": true,
+      "web_search-0e6fb89c73385273": true,
+      "web_search-7700e10124cc9592": true,
+      "web_search-02ec8107a0a64ee8": true,
+      "web_search-37344efca65311f5": true,
+      "web_search-7224a2e4c84b056e": true,
+      "web_search-355aa6a3351f6a29": true,
+      "web_search-4a6720ebbc45b859": true,
+      "web_search-81bb1d752684d7ad": true,
+      "web_search-faca0c31fd213da4": true,
+      "fetch_page-68c5d6a2d09ee862": true,
+      "fetch_page-e494638ef0f82834": true,
+      "fetch_page-76f965e1e255c003": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T103845Z-540412ce",
+    "status": "completed"
+  }
+}

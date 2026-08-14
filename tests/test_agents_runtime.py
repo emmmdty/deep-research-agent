@@ -292,8 +292,9 @@ async def test_researcher_rejects_ungrounded_model_quotes() -> None:
     )
 
     output = await worker.execute(task, context)
-    quote = output.result.evidence_packets[0].claims[0].evidence_spans[0].quote
-    assert quote in source["snippet"]
+    # the ungrounded quote shares no meaningful verbatim span (min 8 chars),
+    # so the claim is dropped rather than grounded on a fragment
+    assert output.result.evidence_packets[0].claims == []
 
 
 @pytest.mark.asyncio

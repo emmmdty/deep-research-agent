@@ -1,0 +1,1345 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- ScienceDirect's portfolio of Major Reference Works covers 17 subject areas including Agricultural, Biological & Food Sciences, Biochemistry, Genetics & Molecular Biology, Biomedical Engineering, Biomedical Science, Chemical Engineering, Chemistry, Earth & Planetary Sciences, Energy, Engineering, Environmental Science, Immunology & Microbiology, Materials Science, Mathematics & Computing, Neuroscience & Psychology, Pharmacology, Toxicology & Pharmaceutical Science, Physics, and Social Sciences.\n- ScienceDirect lists 154 new titles in Agriculture, Biological and Food Sciences.\n- ScienceDirect lists 71 new titles in Biochemistry, Genetics and Molecular Biology.\n- ScienceDirect lists 50 new titles in Biomedical Engineering.\n- ScienceDirect lists 103 new titles in Biomedical Science.\n- ScienceDirect lists 82 new titles in Chemical Engineering.\n- ScienceDirect lists 66 new titles in Chemistry.\n- ScienceDirect lists 165 new titles in Engineering.\n- ScienceDirect lists 69 new titles in Environmental Science.\n- ScienceDirect lists 40 new titles in Immunology and Microbiology.\n- ScienceDirect lists 145 new titles in Materials Science.\n- ScienceDirect lists 56 new titles in Mathematics and Computing.\n- ScienceDirect lists 71 new titles in Neuroscience and Psychology.\n- ScienceDirect has 260+ Major Reference Works providing fundamental coverage.\n- ScienceDirect Topics indexes 80,000 pages on Life Sciences, Biomedical Sciences and Neuroscience on search engines.\n- Elsevier offers more than 35,000 e-book titles and many iconic reference works, including Gray's Anatomy.\n- The number of EDS and their citation counts were negatively correlated with university ranking positions and positively correlated with ranking scores.\n\n## Findings\n\n### ScienceDirect's Major Reference Works Coverage\nScienceDirect's portfolio of Major Reference Works covers 17 subject areas, including Agricultural, Biological & Food Sciences; Biochemistry, Genetics & Molecular Biology; Biomedical Engineering; Biomedical Science; Chemical Engineering; Chemistry; Earth & Planetary Sciences; Energy; Engineering; Environmental Science; Immunology & Microbiology; Materials Science; Mathematics & Computing; Neuroscience & Psychology; Pharmacology, Toxicology & Pharmaceutical Science; Physics; and Social Sciences.\n\n### New Titles by Subject Area\nScienceDirect lists new titles in the following subject areas:\n- Agriculture, Biological and Food Sciences: 154\n- Biochemistry, Genetics and Molecular Biology: 71\n- Biomedical Engineering: 50\n- Biomedical Science: 103\n- Chemical Engineering: 82\n- Chemistry: 66\n- Engineering: 165\n- Environmental Science: 69\n- Immunology and Microbiology: 40\n- Materials Science: 145\n- Mathematics and Computing: 56\n- Neuroscience and Psychology: 71\n\n### Major Reference Works and Indexed Pages\nScienceDirect has 260+ Major Reference Works providing fundamental coverage. Additionally, ScienceDirect Topics indexes 80,000 pages on Life Sciences, Biomedical Sciences, and Neuroscience on search engines.\n\n### Elsevier's E-book and Reference Works Offering\nElsevier offers more than 35,000 e-book titles and many iconic reference works, including Gray's Anatomy.\n\n### Correlation Between EDS, Citation Counts, and University Rankings\nThe number of EDS and their citation counts were negatively correlated with university ranking positions and positively correlated with ranking scores. The term \"EDS\" is not defined in the claim, so the specific entity being measured remains ambiguous.\n\n## Evidence Status\n\nAll claims were accepted based on direct evidence spans. The evidence for each claim matched the claim's content exactly or with direct support. No claims were rejected or qualified by the critic decisions. However, the final claim (regarding EDS) contains an undefined acronym (\"EDS\") that introduces semantic ambiguity; the correlation finding is reported as stated but the subject of the correlation is not fully specified.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:01",
+      "claim": "ScienceDirect's portfolio of Major Reference Works covers 17 subject areas including Agricultural, Biological & Food Sciences, Biochemistry, Genetics & Molecular Biology, Biomedical Engineering, Biomedical Science, Chemical Engineering, Chemistry, Earth & Planetary Sciences, Energy, Engineering, Environmental Science, Immunology & Microbiology, Materials Science, Mathematics & Computing, Neuroscience & Psychology, Pharmacology, Toxicology & Pharmaceutical Science, Physics, and Social Sciences.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:01",
+          "document_version_id": "web_search-b241f44a47035e77",
+          "page": null,
+          "section": "Major Reference Works and Collections on ScienceDirect",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Our portfolio of Major Reference Works covers 17 subject areas",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:02",
+      "claim": "ScienceDirect lists 154 new titles in Agriculture, Biological and Food Sciences.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:02",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Agriculture, Biological and Food Sciences | 154",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:14",
+      "claim": "ScienceDirect has 260+ Major Reference Works providing fundamental coverage.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:14",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "260+ Major Reference Works",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:15",
+      "claim": "ScienceDirect Topics indexes 80,000 pages on Life Sciences, Biomedical Sciences and Neuroscience on search engines.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:15",
+          "document_version_id": "web_search-4cea3ed5400e27c6",
+          "page": null,
+          "section": "Elsevier Launches ScienceDirect Topics to Help Researchers Quickly ...",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "ScienceDirect Topics indexes 80,000 pages on Life Sciences, Biomedical Sciences and Neuroscience on search engines.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:16",
+      "claim": "Elsevier offers more than 35,000 e-book titles and many iconic reference works, including Gray's Anatomy.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:16",
+          "document_version_id": "web_search-4cea3ed5400e27c6",
+          "page": null,
+          "section": "Elsevier Launches ScienceDirect Topics to Help Researchers Quickly ...",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "more than 35,000 e-book titles and many iconic reference works, including Gray's Anatomy",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:17",
+      "claim": "The number of EDS and their citation counts were negatively correlated with university ranking positions and positively correlated with ranking scores.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:17",
+          "document_version_id": "web_search-90542de73955848c",
+          "page": null,
+          "section": "Frontiers | National-, institutional-, and individual-level determinants of dental research excellence: an analysis of Stanford–Elsevier lists of the top 2% scholars worldwide (2017–2023)",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The number of EDS and their citation counts were negatively correlated with university ranking positions and positively correlated with ranking scores",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03",
+      "claim": "ScienceDirect lists 71 new titles in Biochemistry, Genetics and Molecular Biology.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:03",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Biochemistry, Genetics and Molecular Biology | 71",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+      "claim": "ScienceDirect lists 50 new titles in Biomedical Engineering.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:04",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Biomedical Engineering | 50",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+      "claim": "ScienceDirect lists 103 new titles in Biomedical Science.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:05",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Biomedical Science | 103",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06",
+      "claim": "ScienceDirect lists 82 new titles in Chemical Engineering.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:06",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Chemical Engineering | 82",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+      "claim": "ScienceDirect lists 66 new titles in Chemistry.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:07",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Chemistry | 66",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08",
+      "claim": "ScienceDirect lists 165 new titles in Engineering.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:08",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Engineering | 165",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09",
+      "claim": "ScienceDirect lists 69 new titles in Environmental Science.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:09",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Environmental Science | 69",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10",
+      "claim": "ScienceDirect lists 40 new titles in Immunology and Microbiology.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:10",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Immunology and Microbiology | 40",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11",
+      "claim": "ScienceDirect lists 145 new titles in Materials Science.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:11",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Materials Science | 145",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12",
+      "claim": "ScienceDirect lists 56 new titles in Mathematics and Computing.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:12",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Mathematics and Computing | 56",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13",
+      "claim": "ScienceDirect lists 71 new titles in Neuroscience and Psychology.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:13",
+          "document_version_id": "web_search-c7c333c338a3d127",
+          "page": null,
+          "section": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Neuroscience and Psychology | 71",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:01": [
+      "web_search-b241f44a47035e77"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:02": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:14": [
+      "web_search-c7c333c338a3d127"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:15": [
+      "web_search-4cea3ed5400e27c6"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:16": [
+      "web_search-4cea3ed5400e27c6"
+    ],
+    "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:17": [
+      "web_search-90542de73955848c"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "ScienceDirect's portfolio of Major Reference Works covers 17 subject areas including Agricultural, Biological & Food Sciences, Biochemistry, Genetics & Molecular Biology, Biomedical Engineering, Biomedical Science, Chemical Engineering, Chemistry, Earth & Planetary Sciences, Energy, Engineering, Environmental Science, Immunology & Microbiology, Materials Science, Mathematics & Computing, Neuroscience & Psychology, Pharmacology, Toxicology & Pharmaceutical Science, Physics, and Social Sciences.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "ScienceDirect lists 40 new titles in Immunology and Microbiology.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "ScienceDirect lists 145 new titles in Materials Science.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "ScienceDirect lists 56 new titles in Mathematics and Computing.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "ScienceDirect lists 71 new titles in Neuroscience and Psychology.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "ScienceDirect has 260+ Major Reference Works providing fundamental coverage.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "ScienceDirect Topics indexes 80,000 pages on Life Sciences, Biomedical Sciences and Neuroscience on search engines.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "Elsevier offers more than 35,000 e-book titles and many iconic reference works, including Gray's Anatomy.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "The number of EDS and their citation counts were negatively correlated with university ranking positions and positively correlated with ranking scores.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "ScienceDirect lists 154 new titles in Agriculture, Biological and Food Sciences.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "ScienceDirect lists 71 new titles in Biochemistry, Genetics and Molecular Biology.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "ScienceDirect lists 50 new titles in Biomedical Engineering.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "ScienceDirect lists 103 new titles in Biomedical Science.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "ScienceDirect lists 82 new titles in Chemical Engineering.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "ScienceDirect lists 66 new titles in Chemistry.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "ScienceDirect lists 165 new titles in Engineering.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "ScienceDirect lists 69 new titles in Environmental Science.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "Major Reference Works and Collections on ScienceDirect",
+        "properties": {
+          "document_version_id": "web_search-b241f44a47035e77"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "Elsevier Launches ScienceDirect Topics to Help Researchers Quickly ...",
+        "properties": {
+          "document_version_id": "web_search-4cea3ed5400e27c6"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "Elsevier Launches ScienceDirect Topics to Help Researchers Quickly ...",
+        "properties": {
+          "document_version_id": "web_search-4cea3ed5400e27c6"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "Frontiers | National-, institutional-, and individual-level determinants of dental research excellence: an analysis of Stanford–Elsevier lists of the top 2% scholars worldwide (2017–2023)",
+        "properties": {
+          "document_version_id": "web_search-90542de73955848c"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "properties": {
+          "document_version_id": "web_search-c7c333c338a3d127"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T095326Z-5738917e:span:research-01-on-sciencedirect-what-is-the-differe:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:01",
+      "uri": "https://server3.ulevitch.com/browse/ZVgfX7/8TW348/sciencedirect_reference__works__life_science-domain_health_sciences-sample_standard__deviation-2022.pdf",
+      "media_type": "text/markdown",
+      "content_sha256": "a270041964b6da99f4efd80e5df7892d7a67cb6bdbb04e8998dd1fcadcb27672",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-a270041964b6da99",
+        "critical_claims_allowed": true,
+        "source_title": "SCIENCEDIRECT REFERENCE WORKS LIFE SCIENCE DOMAIN ...",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:02",
+      "uri": "https://www.scribd.com/document/319932585/aa",
+      "media_type": "text/markdown",
+      "content_sha256": "90f6c50b1433f104d2ea08b4c809a9fc409b787cbe71643782e13a429f06e35f",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-90f6c50b1433f104",
+        "critical_claims_allowed": true,
+        "source_title": "ScienceDirect Reference Works 2022 Stats | PDF | Elsevier - Scribd",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:03",
+      "uri": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3634388",
+      "media_type": "text/markdown",
+      "content_sha256": "fe17baa8a65fb3081afc467692d4e466de1e454beb3f737c1bea3746b801af4d",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-fe17baa8a65fb308",
+        "critical_claims_allowed": true,
+        "source_title": "SciVerse Science Direct - PMC - NIH",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:04",
+      "uri": "https://www.sciencedirect.com/journal/value-in-health/publish/guide-for-authors",
+      "media_type": "text/markdown",
+      "content_sha256": "e85eeb310343f7ba2be6ef72bb83c29fa1c05d081e7f7bde9fcf6106ee880893",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-e85eeb310343f7ba",
+        "critical_claims_allowed": true,
+        "source_title": "Guide for authors - Value in Health - ISSN 1098-3015 - ScienceDirect.com",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:05",
+      "uri": "https://ftp.rudraksham.com/guide/107/2TW/96z25Y/sciencedirect-reference-works-per__domain-2022-dataset__life_science__health__sciences__sample",
+      "media_type": "text/markdown",
+      "content_sha256": "94cedb5bc2bd50b6c3b1939bc2deeea6e155e1843de93761e5f9a814b78f12e9",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-94cedb5bc2bd50b6",
+        "critical_claims_allowed": true,
+        "source_title": "SCIENCEDIRECT \"REFERENCE WORKS\" \"PER DOMAIN\" \"2022\" \"DATASET\" \"LIFE SCIENCE\" \"HEALTH SCIENCES\" \"SAMPLE\"",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:06",
+      "uri": "https://www.prnewswire.com/news-releases/elsevier-launches-sciencedirect-topics-to-help-researchers-quickly-build-their-knowledge-and-save-valuable-time-searching-644170623.html",
+      "media_type": "text/markdown",
+      "content_sha256": "4364e14d733046f575dc4af1139e710afef4659c66fda393897afa55bef6ef7b",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-4364e14d733046f5",
+        "critical_claims_allowed": true,
+        "source_title": "Elsevier Launches ScienceDirect Topics to Help Researchers Quickly ...",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:07",
+      "uri": "https://www.sciencedirect.com/journal/value-in-health/publish/guide-for-authors",
+      "media_type": "text/markdown",
+      "content_sha256": "11a3a2ca911ef333f2dd738a2ba341258bdd2d8371c1cd88e02476e03a37a999",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-11a3a2ca911ef333",
+        "critical_claims_allowed": true,
+        "source_title": "Guide for authors - Value in Health - ISSN 1098-3015 - ScienceDirect.com",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:08",
+      "uri": "https://reservations.cypressvalley.com/virtual-library/96z25Y/2TW107/sciencedirect_reference__works__per-domain_2022-dataset-life__science__health__sciences__sample.pdf",
+      "media_type": "text/markdown",
+      "content_sha256": "56c4a475ade944c8787f23319dbac50d84dda67965bd925a9fae7c35917b41a7",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-56c4a475ade944c8",
+        "critical_claims_allowed": true,
+        "source_title": "[PDF] SCIENCEDIRECT REFERENCE WORKS PER DOMAIN 2022 ...",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:09",
+      "uri": "https://www.elsevier.com/products/sciencedirect/books/major-reference-works",
+      "media_type": "text/markdown",
+      "content_sha256": "b241f44a47035e775e3c5763d431887ff7eaa2bcc3125f8dc6ed9a638eb38c99",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-b241f44a47035e77",
+        "critical_claims_allowed": true,
+        "source_title": "Major Reference Works and Collections on ScienceDirect",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:10",
+      "uri": "https://www.elsevier.com/products/sciencedirect/books/new-titles-by-subjects",
+      "media_type": "text/markdown",
+      "content_sha256": "c7c333c338a3d1272f019e72854b95088e07f702d2892c9df0683038e88068ef",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-c7c333c338a3d127",
+        "critical_claims_allowed": true,
+        "source_title": "ScienceDirect Books: New Titles by Subjects | Elsevier",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:11",
+      "uri": "https://libguides.worldbank.org/agriculture/research",
+      "media_type": "text/markdown",
+      "content_sha256": "42bc24e4fe34ac80e22d5cd028088a19262077bca0e90d29df34fe01553aa159",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-42bc24e4fe34ac80",
+        "critical_claims_allowed": true,
+        "source_title": "Research Resources - Agriculture and Food - LibGuides at World Bank Group Library",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:12",
+      "uri": "https://royalsociety.org/-/media/journals/librarians/catalogue/2022-royal-society-journals-catalogue.pdf",
+      "media_type": "text/markdown",
+      "content_sha256": "45e3a39b39262ada627000c62fc931037b3b983685207eec4440e594ab25cd47",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-45e3a39b39262ada",
+        "critical_claims_allowed": true,
+        "source_title": "Journals catalogue 2022",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:13",
+      "uri": "https://shop.elsevier.com/journals/subjects/life-sciences/agricultural-and-biological-sciences",
+      "media_type": "text/markdown",
+      "content_sha256": "3e2c52da1ff46d704666d43170b17c96bafd2792018191f0d1caa16b78379ecb",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-3e2c52da1ff46d70",
+        "critical_claims_allowed": true,
+        "source_title": "Agricultural and biological sciences journals | Elsevier | Elsevier Shop",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:14",
+      "uri": "https://www.sciencedirect.com/science/article/am/pii/S0022316624003560",
+      "media_type": "text/markdown",
+      "content_sha256": "1c4a869b6408cfddcfe2f82138c1e7a149567e9f40067d3c449d5e15afbcbbcf",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-1c4a869b6408cfdd",
+        "critical_claims_allowed": true,
+        "source_title": "Page not found | ScienceDirect",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:15",
+      "uri": "https://www.frontiersin.org/journals/oral-health/articles/10.3389/froh.2025.1675102/full",
+      "media_type": "text/markdown",
+      "content_sha256": "90542de73955848cc70e89615ed3bc3f20a3dd85348a37136646becba5e6ed73",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-90542de73955848c",
+        "critical_claims_allowed": true,
+        "source_title": "Frontiers | National-, institutional-, and individual-level determinants of dental research excellence: an analysis of Stanford–Elsevier lists of the top 2% scholars worldwide (2017–2023)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:16",
+      "uri": "https://www.prnewswire.com/news-releases/elsevier-launches-sciencedirect-topics-to-help-researchers-quickly-build-their-knowledge-and-save-valuable-time-searching-644170623.html",
+      "media_type": "text/markdown",
+      "content_sha256": "4cea3ed5400e27c61e40e0e36113ce5d859bdcf5426dafcce2e2dbfb3bb11a08",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "web_search-4cea3ed5400e27c6",
+        "critical_claims_allowed": true,
+        "source_title": "Elsevier Launches ScienceDirect Topics to Help Researchers Quickly ...",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:17",
+      "uri": "https://ftp.rudraksham.com/guide/107/2TW/96z25Y/sciencedirect-reference-works-per__domain-2022-dataset__life_science__health__sciences__sample",
+      "media_type": "text/markdown",
+      "content_sha256": "4e7e93355c8325dafeebce11c79f90d9986999971718acd82686fd981f881ac0",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "fetch_page-4e7e93355c8325da",
+        "critical_claims_allowed": true,
+        "source_title": "SCIENCEDIRECT \"REFERENCE WORKS\" \"PER DOMAIN\" \"2022\" \"DATASET\" \"LIFE SCIENCE\" \"HEALTH SCIENCES\" \"SAMPLE\"",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T095326Z-5738917e:research-01-on-sciencedirect-what-is-the-differe:src:18",
+      "uri": "https://ftp.rudraksham.com/guide/107/2TW/96z25Y/sciencedirect-reference-works-per__domain-2022-dataset__life_science__health__sciences__sample",
+      "media_type": "text/markdown",
+      "content_sha256": "ef9aa49ba51e422c165ddb3144204181fc2ac01d84b69b73aea320787dc5b72c",
+      "created_by_task_id": "research-01-on-sciencedirect-what-is-the-differe",
+      "metadata": {
+        "document_version_id": "fetch_page-ef9aa49ba51e422c",
+        "critical_claims_allowed": true,
+        "source_title": "SCIENCEDIRECT \"REFERENCE WORKS\" \"PER DOMAIN\" \"2022\" \"DATASET\" \"LIFE SCIENCE\" \"HEALTH SCIENCES\" \"SAMPLE\"",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 2200
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:01",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:02",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:14",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:15",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:16",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:17"
+    ],
+    "qualified_claim_ids": [
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [],
+    "executive_summary_claim_ids": [
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:01",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:02",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:14",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:15",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:16",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:17"
+    ],
+    "degradations": {
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12": "critic_unresolved",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13"
+      ],
+      [
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12",
+        "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:03",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:04",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:05",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:06",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:07",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:08",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:09",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:10",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:11",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:12",
+      "20260814T095326Z-5738917e:claim:research-01-on-sciencedirect-what-is-the-differe:13"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T095326Z-5738917e",
+    "document_version_ids": [
+      "fetch_page-4e7e93355c8325da",
+      "fetch_page-ef9aa49ba51e422c",
+      "web_search-11a3a2ca911ef333",
+      "web_search-1c4a869b6408cfdd",
+      "web_search-3e2c52da1ff46d70",
+      "web_search-42bc24e4fe34ac80",
+      "web_search-4364e14d733046f5",
+      "web_search-45e3a39b39262ada",
+      "web_search-4cea3ed5400e27c6",
+      "web_search-56c4a475ade944c8",
+      "web_search-90542de73955848c",
+      "web_search-90f6c50b1433f104",
+      "web_search-94cedb5bc2bd50b6",
+      "web_search-a270041964b6da99",
+      "web_search-b241f44a47035e77",
+      "web_search-c7c333c338a3d127",
+      "web_search-e85eeb310343f7ba",
+      "web_search-fe17baa8a65fb308"
+    ],
+    "content_hashes": {
+      "web_search-a270041964b6da99": "a270041964b6da99f4efd80e5df7892d7a67cb6bdbb04e8998dd1fcadcb27672",
+      "web_search-90f6c50b1433f104": "90f6c50b1433f104d2ea08b4c809a9fc409b787cbe71643782e13a429f06e35f",
+      "web_search-fe17baa8a65fb308": "fe17baa8a65fb3081afc467692d4e466de1e454beb3f737c1bea3746b801af4d",
+      "web_search-e85eeb310343f7ba": "e85eeb310343f7ba2be6ef72bb83c29fa1c05d081e7f7bde9fcf6106ee880893",
+      "web_search-94cedb5bc2bd50b6": "94cedb5bc2bd50b6c3b1939bc2deeea6e155e1843de93761e5f9a814b78f12e9",
+      "web_search-4364e14d733046f5": "4364e14d733046f575dc4af1139e710afef4659c66fda393897afa55bef6ef7b",
+      "web_search-11a3a2ca911ef333": "11a3a2ca911ef333f2dd738a2ba341258bdd2d8371c1cd88e02476e03a37a999",
+      "web_search-56c4a475ade944c8": "56c4a475ade944c8787f23319dbac50d84dda67965bd925a9fae7c35917b41a7",
+      "web_search-b241f44a47035e77": "b241f44a47035e775e3c5763d431887ff7eaa2bcc3125f8dc6ed9a638eb38c99",
+      "web_search-c7c333c338a3d127": "c7c333c338a3d1272f019e72854b95088e07f702d2892c9df0683038e88068ef",
+      "web_search-42bc24e4fe34ac80": "42bc24e4fe34ac80e22d5cd028088a19262077bca0e90d29df34fe01553aa159",
+      "web_search-45e3a39b39262ada": "45e3a39b39262ada627000c62fc931037b3b983685207eec4440e594ab25cd47",
+      "web_search-3e2c52da1ff46d70": "3e2c52da1ff46d704666d43170b17c96bafd2792018191f0d1caa16b78379ecb",
+      "web_search-1c4a869b6408cfdd": "1c4a869b6408cfddcfe2f82138c1e7a149567e9f40067d3c449d5e15afbcbbcf",
+      "web_search-90542de73955848c": "90542de73955848cc70e89615ed3bc3f20a3dd85348a37136646becba5e6ed73",
+      "web_search-4cea3ed5400e27c6": "4cea3ed5400e27c61e40e0e36113ce5d859bdcf5426dafcce2e2dbfb3bb11a08",
+      "fetch_page-4e7e93355c8325da": "4e7e93355c8325dafeebce11c79f90d9986999971718acd82686fd981f881ac0",
+      "fetch_page-ef9aa49ba51e422c": "ef9aa49ba51e422c165ddb3144204181fc2ac01d84b69b73aea320787dc5b72c"
+    },
+    "critical_claims_allowed": {
+      "web_search-a270041964b6da99": true,
+      "web_search-90f6c50b1433f104": true,
+      "web_search-fe17baa8a65fb308": true,
+      "web_search-e85eeb310343f7ba": true,
+      "web_search-94cedb5bc2bd50b6": true,
+      "web_search-4364e14d733046f5": true,
+      "web_search-11a3a2ca911ef333": true,
+      "web_search-56c4a475ade944c8": true,
+      "web_search-b241f44a47035e77": true,
+      "web_search-c7c333c338a3d127": true,
+      "web_search-42bc24e4fe34ac80": true,
+      "web_search-45e3a39b39262ada": true,
+      "web_search-3e2c52da1ff46d70": true,
+      "web_search-1c4a869b6408cfdd": true,
+      "web_search-90542de73955848c": true,
+      "web_search-4cea3ed5400e27c6": true,
+      "fetch_page-4e7e93355c8325da": true,
+      "fetch_page-ef9aa49ba51e422c": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T095326Z-5738917e",
+    "status": "completed"
+  }
+}

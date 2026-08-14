@@ -1,0 +1,28 @@
+{
+  "task_id": "0b260a57-3f3a-4405-9f29-6d7a1012dbfb",
+  "question": "On ScienceDirect, what is the difference to 3 decimal places in the sample standard deviations of the number of Reference Works in each Life Science domain compared to Health Sciences as of 2022?",
+  "level": "2",
+  "ground_truth": "0.269",
+  "extracted_answer": "",
+  "grade": {
+    "correct": false,
+    "rationale": "The candidate answer is empty, so it does not provide the required difference of 0.269.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T095326Z-5738917e",
+  "status": "completed",
+  "claim_count": 17,
+  "source_count": 18,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 34,
+    "search_calls": 10,
+    "total_input_tokens": 47210,
+    "total_output_tokens": 11542,
+    "total_tokens": 58752,
+    "estimated_cost_usd": 0.0588,
+    "wall_seconds": 75.08
+  },
+  "model": "deepseek-v4-flash"
+}

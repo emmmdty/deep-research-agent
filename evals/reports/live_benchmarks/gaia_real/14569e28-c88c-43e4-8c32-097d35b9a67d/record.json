@@ -1,0 +1,28 @@
+{
+  "task_id": "14569e28-c88c-43e4-8c32-097d35b9a67d",
+  "question": "In Unlambda, what exact charcter or text needs to be added to correct the following code to output \"For penguins\"? If what is needed is a character, answer with the name of the character. If there are different names for the character, use the shortest. The text location is not needed. Code:\n\n`r```````````.F.o.r. .p.e.n.g.u.i.n.si",
+  "level": "2",
+  "ground_truth": "backtick",
+  "extracted_answer": "",
+  "grade": {
+    "correct": false,
+    "rationale": "The candidate answer is empty, while the ground truth requires the character 'backtick' to correct the Unlambda code.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T095626Z-3c1249b4",
+  "status": "failed",
+  "claim_count": 12,
+  "source_count": 26,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 73,
+    "search_calls": 16,
+    "total_input_tokens": 121832,
+    "total_output_tokens": 34063,
+    "total_tokens": 155895,
+    "estimated_cost_usd": 0.1559,
+    "wall_seconds": 115.0
+  },
+  "model": "deepseek-v4-flash"
+}

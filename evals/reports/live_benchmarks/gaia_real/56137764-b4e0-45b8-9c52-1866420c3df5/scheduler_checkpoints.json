@@ -1,0 +1,2714 @@
+[
+  {
+    "checkpoint_id": "20260814T104351Z-b880c1fe:task-checkpoint:000001",
+    "job_id": "20260814T104351Z-b880c1fe",
+    "task_id": "research-01-which-contributor-to-the-version-of-",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-which-contributor-to-the-version-of-",
+      "job_id": "20260814T104351Z-b880c1fe",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T104351Z-b880c1fe:packet:research-01-which-contributor-to-the-version-of-",
+          "task_id": "research-01-which-contributor-to-the-version-of-",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:01",
+              "document_version_id": "web_search-1cc63070ecde3cbb",
+              "page": null,
+              "section": "Mask R-CNN with OpenCV",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "s `dnn` module. Right now only a limited number of GPUs are supported, mainly Intel GPUs.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:02",
+              "document_version_id": "web_search-dbf8a23a5166a03c",
+              "page": null,
+              "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The text graph file that has been tuned by the OpenCV’s DNN support group, so that the network can be loaded using OpenCV.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:03",
+              "document_version_id": "web_search-dbf8a23a5166a03c",
+              "page": null,
+              "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the DNN module in the current OpenCV version is tested only with Intel’s GPUs.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:04",
+              "document_version_id": "web_search-8456fa0d2947ba2b",
+              "page": null,
+              "section": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Target release: June 2026, timed with CVPR 2026 in Denver.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:05",
+              "document_version_id": "web_search-8456fa0d2947ba2b",
+              "page": null,
+              "section": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Native GPU support in the new DNN engine",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:06",
+              "document_version_id": "web_search-f611ca3ba10ed429",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "## version:3.4.7",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:07",
+              "document_version_id": "web_search-f611ca3ba10ed429",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "New networks from TensorFlow Object Detection API: Faster-RCNNs, SSDs and Mask-RCNN with dilated convolutions, FPN SSD",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:08",
+              "document_version_id": "web_search-6a5cce418cc55b7d",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Added support for Mask-RCNN model.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:09",
+              "document_version_id": "web_search-d60cfdb6677610a0",
+              "page": null,
+              "section": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The DNN module allows loading pre-trained models of most popular deep learning frameworks, including Tensorflow, Caffe, Darknet, Torch.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:10",
+              "document_version_id": "web_search-d60cfdb6677610a0",
+              "page": null,
+              "section": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Besides MobileNet-SDD, other architectures are compatible with OpenCV 3.4.1:",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:11",
+              "document_version_id": "web_search-74340571e4159214",
+              "page": null,
+              "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:12",
+              "document_version_id": "web_search-74340571e4159214",
+              "page": null,
+              "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Fast R-CNN ( R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:13",
+              "document_version_id": "web_search-442fba360f718f88",
+              "page": null,
+              "section": "Mask R-CNN with OpenCV",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "s `dnn` module. Right now only a limited number of GPUs are supported, mainly Intel GPUs.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:14",
+              "document_version_id": "web_search-058ae986c43bb9cc",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "New networks from TensorFlow Object Detection API: Faster-RCNNs, SSDs and Mask-RCNN with dilated convolutions, FPN SSD",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:15",
+              "document_version_id": "web_search-058ae986c43bb9cc",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "## version:3.4.7",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:16",
+              "document_version_id": "web_search-058ae986c43bb9cc",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Implemented automatic reshaping (for the input images of different resolutions) of networks represented in IE IR format.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:17",
+              "document_version_id": "web_search-57987b110fe7399c",
+              "page": null,
+              "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:18",
+              "document_version_id": "web_search-57987b110fe7399c",
+              "page": null,
+              "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Fast R-CNN ( R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:19",
+              "document_version_id": "web_search-9f4c0cf08f3ec161",
+              "page": null,
+              "section": "Mask R-CNN with OpenCV",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The Mask R-CNN work by He et al. replaces the ROI Polling module with a more accurate ROI Align module.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:20",
+              "document_version_id": "web_search-9f4c0cf08f3ec161",
+              "page": null,
+              "section": "Mask R-CNN with OpenCV",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The output of the ROI module is then fed into two CONV layers. The output of the CONV layers is the mask itself.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:21",
+              "document_version_id": "fetch_page-973762c288b5ad49",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "New Year's update for OpenCV 4.x has been released.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:22",
+              "document_version_id": "fetch_page-973762c288b5ad49",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "fixed: Resize, ReduceMean, Gather with multiple outputs, importing of Faster RCNN ONNX model",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:23",
+              "document_version_id": "fetch_page-f3bc5d50f90e1180",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "version:4.5.0 \n October, 2020 \n The fall update of OpenCV has been released!",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:24",
+              "document_version_id": "fetch_page-f3bc5d50f90e1180",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "version:3.4.13 \n December, 2020 \n OpenCV 3.4.13 has been released.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:25",
+              "document_version_id": "fetch_page-57edffdc91b3ec70",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "version:4.4.0 \n July, 2020 \n Summer update for OpenCV 4.x has been released",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:26",
+              "document_version_id": "fetch_page-57edffdc91b3ec70",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "version:3.4.12 \n October, 2020 \n OpenCV 3.4.12 has been released.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:27",
+              "document_version_id": "fetch_page-f3bc5d50f90e1180",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Starting from OpenCV 4.5.0, all the future OpenCV 4.x and OpenCV 5.x releases will be distributed under Apache 2 license.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:28",
+              "document_version_id": "fetch_page-f3bc5d50f90e1180",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "OpenCV 3.x will keep using BSD.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:29",
+              "document_version_id": "fetch_page-57edffdc91b3ec70",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "SIFT (Scale-Invariant Feature Transform) algorithm has been moved to the main repository (patent on SIFT is expired)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:30",
+              "document_version_id": "fetch_page-57edffdc91b3ec70",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "State-of-art Yolo v4 Detector: #17148",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:31",
+              "document_version_id": "fetch_page-57edffdc91b3ec70",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "EfficientDet models support: #17384",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:32",
+              "document_version_id": "fetch_page-9786920d4fa64056",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "added support for OpenVINO 2021.1 release",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:33",
+              "document_version_id": "fetch_page-6715d34d4e426da1",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": "47 Alexander Alekhin",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:34",
+              "document_version_id": "fetch_page-f3bc5d50f90e1180",
+              "page": null,
+              "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Added support for Ope",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:01",
+              "claim": "OpenCV's DNN module does not support NVIDIA GPUs, and only a limited number of GPUs (mainly Intel GPUs) are supported.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:01",
+                  "document_version_id": "web_search-1cc63070ecde3cbb",
+                  "page": null,
+                  "section": "Mask R-CNN with OpenCV",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "s `dnn` module. Right now only a limited number of GPUs are supported, mainly Intel GPUs.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:02",
+              "claim": "The mask_rcnn_inception_v2_coco_2018_01_28.pbtxt text graph file was tuned by the OpenCV's DNN support group so the network can be loaded using OpenCV.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:02",
+                  "document_version_id": "web_search-dbf8a23a5166a03c",
+                  "page": null,
+                  "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The text graph file that has been tuned by the OpenCV’s DNN support group, so that the network can be loaded using OpenCV.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:03",
+              "claim": "The DNN module in the current OpenCV version is tested only with Intel's GPUs.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:03",
+                  "document_version_id": "web_search-dbf8a23a5166a03c",
+                  "page": null,
+                  "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the DNN module in the current OpenCV version is tested only with Intel’s GPUs.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:04",
+              "claim": "OpenCV 5.0 target release is June 2026, timed with CVPR 2026 in Denver.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:04",
+                  "document_version_id": "web_search-8456fa0d2947ba2b",
+                  "page": null,
+                  "section": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Target release: June 2026, timed with CVPR 2026 in Denver.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:05",
+              "claim": "OpenCV 5.0 includes native GPU support in the new DNN engine.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:05",
+                  "document_version_id": "web_search-8456fa0d2947ba2b",
+                  "page": null,
+                  "section": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Native GPU support in the new DNN engine",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:06",
+              "claim": "OpenCV version 3.4.7 added support for Mask-RCNN networks from the TensorFlow Object Detection API.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:06",
+                  "document_version_id": "web_search-f611ca3ba10ed429",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "## version:3.4.7",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:07",
+              "claim": "OpenCV 3.4.7 added new networks from TensorFlow Object Detection API including Mask-RCNN with dilated convolutions.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:07",
+                  "document_version_id": "web_search-f611ca3ba10ed429",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "New networks from TensorFlow Object Detection API: Faster-RCNNs, SSDs and Mask-RCNN with dilated convolutions, FPN SSD",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:08",
+              "claim": "OpenCV added support for the Mask-RCNN model in its DNN module.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:08",
+                  "document_version_id": "web_search-6a5cce418cc55b7d",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Added support for Mask-RCNN model.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:09",
+              "claim": "OpenCV 3.4.1's DNN module allows loading pre-trained models of most popular deep learning frameworks, including Tensorflow, Caffe, Darknet, Torch.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:09",
+                  "document_version_id": "web_search-d60cfdb6677610a0",
+                  "page": null,
+                  "section": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The DNN module allows loading pre-trained models of most popular deep learning frameworks, including Tensorflow, Caffe, Darknet, Torch.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:10",
+              "claim": "OpenCV 3.4.1 DNN module is compatible with architectures including GoogleLeNet, YOLO, SqueezeNet, R-CNN faster, and ResNet.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:10",
+                  "document_version_id": "web_search-d60cfdb6677610a0",
+                  "page": null,
+                  "section": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Besides MobileNet-SDD, other architectures are compatible with OpenCV 3.4.1:",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:11",
+              "claim": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:11",
+                  "document_version_id": "web_search-74340571e4159214",
+                  "page": null,
+                  "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:12",
+              "claim": "Fast R-CNN (R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:12",
+                  "document_version_id": "web_search-74340571e4159214",
+                  "page": null,
+                  "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Fast R-CNN ( R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:13",
+              "claim": "OpenCV does not support NVIDIA GPUs for its dnn module; only a limited number of GPUs are supported, mainly Intel GPUs.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:13",
+                  "document_version_id": "web_search-442fba360f718f88",
+                  "page": null,
+                  "section": "Mask R-CNN with OpenCV",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "s `dnn` module. Right now only a limited number of GPUs are supported, mainly Intel GPUs.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:14",
+              "claim": "OpenCV version 3.4.7 added support for Mask-RCNN with dilated convolutions and FPN SSD from the TensorFlow Object Detection API.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:14",
+                  "document_version_id": "web_search-058ae986c43bb9cc",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "New networks from TensorFlow Object Detection API: Faster-RCNNs, SSDs and Mask-RCNN with dilated convolutions, FPN SSD",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:15",
+              "claim": "OpenCV version 3.4.7 is the version where Mask-RCNN support was added.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:15",
+                  "document_version_id": "web_search-058ae986c43bb9cc",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "## version:3.4.7",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:16",
+              "claim": "OpenCV 3.4.7 implemented automatic reshaping (for input images of different resolutions) of networks represented in IE IR format.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:16",
+                  "document_version_id": "web_search-058ae986c43bb9cc",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Implemented automatic reshaping (for the input images of different resolutions) of networks represented in IE IR format.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:17",
+              "claim": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:17",
+                  "document_version_id": "web_search-57987b110fe7399c",
+                  "page": null,
+                  "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:18",
+              "claim": "Fast R-CNN (R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:18",
+                  "document_version_id": "web_search-57987b110fe7399c",
+                  "page": null,
+                  "section": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Fast R-CNN ( R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:19",
+              "claim": "The Mask R-CNN work by He et al. replaces the ROI Polling module with a more accurate ROI Align module.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:19",
+                  "document_version_id": "web_search-9f4c0cf08f3ec161",
+                  "page": null,
+                  "section": "Mask R-CNN with OpenCV",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The Mask R-CNN work by He et al. replaces the ROI Polling module with a more accurate ROI Align module.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:20",
+              "claim": "The output of the ROI module is then fed into two CONV layers, and the output of the CONV layers is the mask itself.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:20",
+                  "document_version_id": "web_search-9f4c0cf08f3ec161",
+                  "page": null,
+                  "section": "Mask R-CNN with OpenCV",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The output of the ROI module is then fed into two CONV layers. The output of the CONV layers is the mask itself.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:21",
+              "claim": "OpenCV 4.5.1 was released in December 2020 as a New Year's update for OpenCV 4.x.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:21",
+                  "document_version_id": "fetch_page-973762c288b5ad49",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "New Year's update for OpenCV 4.x has been released.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:22",
+              "claim": "The DNN module in OpenCV 4.5.1 added support for importing Faster RCNN ONNX models.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:22",
+                  "document_version_id": "fetch_page-973762c288b5ad49",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "fixed: Resize, ReduceMean, Gather with multiple outputs, importing of Faster RCNN ONNX model",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:23",
+              "claim": "OpenCV 4.5.0 was released in October 2020.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:23",
+                  "document_version_id": "fetch_page-f3bc5d50f90e1180",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "version:4.5.0 \n October, 2020 \n The fall update of OpenCV has been released!",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:24",
+              "claim": "OpenCV 3.4.13 was released in December 2020.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:24",
+                  "document_version_id": "fetch_page-f3bc5d50f90e1180",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "version:3.4.13 \n December, 2020 \n OpenCV 3.4.13 has been released.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:25",
+              "claim": "OpenCV 4.4.0 was released in July 2020.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:25",
+                  "document_version_id": "fetch_page-57edffdc91b3ec70",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "version:4.4.0 \n July, 2020 \n Summer update for OpenCV 4.x has been released",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:26",
+              "claim": "OpenCV 3.4.12 was released in October 2020.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:26",
+                  "document_version_id": "fetch_page-57edffdc91b3ec70",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "version:3.4.12 \n October, 2020 \n OpenCV 3.4.12 has been released.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:27",
+              "claim": "Starting from OpenCV 4.5.0, all future OpenCV 4.x and OpenCV 5.x releases will be distributed under Apache 2 license.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:27",
+                  "document_version_id": "fetch_page-f3bc5d50f90e1180",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Starting from OpenCV 4.5.0, all the future OpenCV 4.x and OpenCV 5.x releases will be distributed under Apache 2 license.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:28",
+              "claim": "OpenCV 3.x will keep using BSD license.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:28",
+                  "document_version_id": "fetch_page-f3bc5d50f90e1180",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "OpenCV 3.x will keep using BSD.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:29",
+              "claim": "SIFT algorithm was moved to the main repository in OpenCV 4.4.0 because the patent on SIFT expired.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:29",
+                  "document_version_id": "fetch_page-57edffdc91b3ec70",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "SIFT (Scale-Invariant Feature Transform) algorithm has been moved to the main repository (patent on SIFT is expired)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:30",
+              "claim": "OpenCV 4.4.0 added support for Yolo v4 Detector.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:30",
+                  "document_version_id": "fetch_page-57edffdc91b3ec70",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "State-of-art Yolo v4 Detector: #17148",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:31",
+              "claim": "OpenCV 4.4.0 added EfficientDet models support.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:31",
+                  "document_version_id": "fetch_page-57edffdc91b3ec70",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "EfficientDet models support: #17384",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:32",
+              "claim": "OpenCV 4.5.0 added support for OpenVINO 2021.1 release in the DNN module.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:32",
+                  "document_version_id": "fetch_page-9786920d4fa64056",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "added support for OpenVINO 2021.1 release",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:33",
+              "claim": "Alexander Alekhin was the top contributor to OpenCV 4.5.0 with 47 commits.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:33",
+                  "document_version_id": "fetch_page-6715d34d4e426da1",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": "47 Alexander Alekhin",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104351Z-b880c1fe:claim:research-01-which-contributor-to-the-version-of-:34",
+              "claim": "The provided source excerpts do not contain explicit mention of Mask-RCNN support being added to OpenCV.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "unsupported",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:34",
+                  "document_version_id": "fetch_page-f3bc5d50f90e1180",
+                  "page": null,
+                  "section": "ChangeLog · opencv/opencv Wiki · GitHub",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Added support for Ope",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:01",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "40596578e2599f5801b23335e2e85da96424d40b3246ac384b3534146d97eb81",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-40596578e2599f58",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:02",
+              "uri": "https://pyimagesearch.com/2018/11/19/mask-r-cnn-with-opencv",
+              "media_type": "text/markdown",
+              "content_sha256": "1cc63070ecde3cbb67abbed82a6f69935a3a58cd5bb0d099f7082e6b5f308a62",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-1cc63070ecde3cbb",
+                "critical_claims_allowed": true,
+                "source_title": "Mask R-CNN with OpenCV",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:03",
+              "uri": "https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c",
+              "media_type": "text/markdown",
+              "content_sha256": "dbf8a23a5166a03c23c1b807df2bb2aacb15f25c8dc9aca5826997f930501b0e",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-dbf8a23a5166a03c",
+                "critical_claims_allowed": true,
+                "source_title": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:04",
+              "uri": "https://opencv.org/opencv-5",
+              "media_type": "text/markdown",
+              "content_sha256": "8456fa0d2947ba2b0972ced77a915fee211616d2d0fa1df7994492bbf0cea94d",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-8456fa0d2947ba2b",
+                "critical_claims_allowed": true,
+                "source_title": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:05",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "f611ca3ba10ed42942159962af23b518e30e5e7ab582a63fe9abee4c5743f02d",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-f611ca3ba10ed429",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:06",
+              "uri": "https://github.com/opencv/opencv/issues/27240",
+              "media_type": "text/markdown",
+              "content_sha256": "b8b71ccda87889a12e6ef6db31026513f659e7ed4f18ba9ccc5595024f7bd38d",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-b8b71ccda87889a1",
+                "critical_claims_allowed": true,
+                "source_title": "Error Running Mask R-CNN Sample with OpenCV 5.0 Alpha",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:07",
+              "uri": "https://www.youtube.com/watch?v=8m8m4oWsp8M",
+              "media_type": "text/markdown",
+              "content_sha256": "ab3698691c9ea05685ba5572a637a287943f4ad9ad8977f4d5b95b591e7c28ff",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-ab3698691c9ea056",
+                "critical_claims_allowed": true,
+                "source_title": "Instance Segmentation MASK R-CNN | with Python and Opencv",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:08",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "6a5cce418cc55b7dafae8fee14f14cbd6c0e2e007ed6c9ff7d0a3c21fb4d27f3",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-6a5cce418cc55b7d",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:09",
+              "uri": "https://ebenezertechs.com/mobilenet-ssd-using-opencv-3-4-1-deep-learning-module-python",
+              "media_type": "text/markdown",
+              "content_sha256": "d60cfdb6677610a00d850c0f6a7a2c407d63c6b12b9aedd4796743757a080125",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-d60cfdb6677610a0",
+                "critical_claims_allowed": true,
+                "source_title": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:10",
+              "uri": "https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c",
+              "media_type": "text/markdown",
+              "content_sha256": "74340571e41592144a8c5960c735f82bb390d2bc695ab30dcedeedb1b75de80f",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-74340571e4159214",
+                "critical_claims_allowed": true,
+                "source_title": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:11",
+              "uri": "https://pyimagesearch.com/2018/11/19/mask-r-cnn-with-opencv",
+              "media_type": "text/markdown",
+              "content_sha256": "442fba360f718f883df43dfbe5267e31a5c1671cd664064145b0530f6510b070",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-442fba360f718f88",
+                "critical_claims_allowed": true,
+                "source_title": "Mask R-CNN with OpenCV",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:12",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "058ae986c43bb9ccf00075420c29b9219237eebec2614368ead9f0d6ded5c7bc",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-058ae986c43bb9cc",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:13",
+              "uri": "https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c",
+              "media_type": "text/markdown",
+              "content_sha256": "57987b110fe7399c21678eed64aa09fb54536af2f4557490f170764cbc8b8d91",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-57987b110fe7399c",
+                "critical_claims_allowed": true,
+                "source_title": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:14",
+              "uri": "https://pyimagesearch.com/2018/11/19/mask-r-cnn-with-opencv",
+              "media_type": "text/markdown",
+              "content_sha256": "9f4c0cf08f3ec161b59bf2afcebb1f77fc21aa1da703abcc962e54ddc467cb06",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-9f4c0cf08f3ec161",
+                "critical_claims_allowed": true,
+                "source_title": "Mask R-CNN with OpenCV",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:15",
+              "uri": "https://www.youtube.com/watch?v=8m8m4oWsp8M",
+              "media_type": "text/markdown",
+              "content_sha256": "0453703cb760c7045fbc20d0da2e32dcc7324088f3cc76871f874ed50ba65804",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "web_search-0453703cb760c704",
+                "critical_claims_allowed": true,
+                "source_title": "Instance Segmentation MASK R-CNN | with Python and Opencv",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:16",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "973762c288b5ad497b745e4b02a97b6084eb261074cff83f42d287694fa13e75",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-973762c288b5ad49",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:17",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "f3bc5d50f90e1180c012b2beabf21c3e951c5a7c890f0250005ee7ee49a6640e",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-f3bc5d50f90e1180",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:18",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "9786920d4fa64056b27ad352ca20aed4030c2049ad37f38403bfe43c127cc419",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-9786920d4fa64056",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:19",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "6715d34d4e426da16d4651829332365475ae88a7e36dd42f583477e38e8393df",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-6715d34d4e426da1",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:20",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "57edffdc91b3ec70a99a9dee9aaf69462d998e493d4545b83d844e901f5084c4",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-57edffdc91b3ec70",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9200
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:21",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "12b7174ff0ce1ef9ebd30a8953464f746655fe65175cab606d15d267ba2728c8",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-12b7174ff0ce1ef9",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 5,
+                "char_start": 9000,
+                "char_end": 11000
+              }
+            },
+            {
+              "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:22",
+              "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+              "media_type": "text/markdown",
+              "content_sha256": "be50c33e425268087e9ea261c60602a007b399230e9e63d164105e6da0273b9b",
+              "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+              "metadata": {
+                "document_version_id": "fetch_page-be50c33e42526808",
+                "critical_claims_allowed": true,
+                "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 6,
+                "char_start": 10800,
+                "char_end": 12000
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:01",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "40596578e2599f5801b23335e2e85da96424d40b3246ac384b3534146d97eb81",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-40596578e2599f58",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:02",
+          "uri": "https://pyimagesearch.com/2018/11/19/mask-r-cnn-with-opencv",
+          "media_type": "text/markdown",
+          "content_sha256": "1cc63070ecde3cbb67abbed82a6f69935a3a58cd5bb0d099f7082e6b5f308a62",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-1cc63070ecde3cbb",
+            "critical_claims_allowed": true,
+            "source_title": "Mask R-CNN with OpenCV",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:03",
+          "uri": "https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c",
+          "media_type": "text/markdown",
+          "content_sha256": "dbf8a23a5166a03c23c1b807df2bb2aacb15f25c8dc9aca5826997f930501b0e",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-dbf8a23a5166a03c",
+            "critical_claims_allowed": true,
+            "source_title": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:04",
+          "uri": "https://opencv.org/opencv-5",
+          "media_type": "text/markdown",
+          "content_sha256": "8456fa0d2947ba2b0972ced77a915fee211616d2d0fa1df7994492bbf0cea94d",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-8456fa0d2947ba2b",
+            "critical_claims_allowed": true,
+            "source_title": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:05",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "f611ca3ba10ed42942159962af23b518e30e5e7ab582a63fe9abee4c5743f02d",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-f611ca3ba10ed429",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:06",
+          "uri": "https://github.com/opencv/opencv/issues/27240",
+          "media_type": "text/markdown",
+          "content_sha256": "b8b71ccda87889a12e6ef6db31026513f659e7ed4f18ba9ccc5595024f7bd38d",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-b8b71ccda87889a1",
+            "critical_claims_allowed": true,
+            "source_title": "Error Running Mask R-CNN Sample with OpenCV 5.0 Alpha",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:07",
+          "uri": "https://www.youtube.com/watch?v=8m8m4oWsp8M",
+          "media_type": "text/markdown",
+          "content_sha256": "ab3698691c9ea05685ba5572a637a287943f4ad9ad8977f4d5b95b591e7c28ff",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-ab3698691c9ea056",
+            "critical_claims_allowed": true,
+            "source_title": "Instance Segmentation MASK R-CNN | with Python and Opencv",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:08",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "6a5cce418cc55b7dafae8fee14f14cbd6c0e2e007ed6c9ff7d0a3c21fb4d27f3",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-6a5cce418cc55b7d",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:09",
+          "uri": "https://ebenezertechs.com/mobilenet-ssd-using-opencv-3-4-1-deep-learning-module-python",
+          "media_type": "text/markdown",
+          "content_sha256": "d60cfdb6677610a00d850c0f6a7a2c407d63c6b12b9aedd4796743757a080125",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-d60cfdb6677610a0",
+            "critical_claims_allowed": true,
+            "source_title": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:10",
+          "uri": "https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c",
+          "media_type": "text/markdown",
+          "content_sha256": "74340571e41592144a8c5960c735f82bb390d2bc695ab30dcedeedb1b75de80f",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-74340571e4159214",
+            "critical_claims_allowed": true,
+            "source_title": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:11",
+          "uri": "https://pyimagesearch.com/2018/11/19/mask-r-cnn-with-opencv",
+          "media_type": "text/markdown",
+          "content_sha256": "442fba360f718f883df43dfbe5267e31a5c1671cd664064145b0530f6510b070",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-442fba360f718f88",
+            "critical_claims_allowed": true,
+            "source_title": "Mask R-CNN with OpenCV",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:12",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "058ae986c43bb9ccf00075420c29b9219237eebec2614368ead9f0d6ded5c7bc",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-058ae986c43bb9cc",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:13",
+          "uri": "https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c",
+          "media_type": "text/markdown",
+          "content_sha256": "57987b110fe7399c21678eed64aa09fb54536af2f4557490f170764cbc8b8d91",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-57987b110fe7399c",
+            "critical_claims_allowed": true,
+            "source_title": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:14",
+          "uri": "https://pyimagesearch.com/2018/11/19/mask-r-cnn-with-opencv",
+          "media_type": "text/markdown",
+          "content_sha256": "9f4c0cf08f3ec161b59bf2afcebb1f77fc21aa1da703abcc962e54ddc467cb06",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-9f4c0cf08f3ec161",
+            "critical_claims_allowed": true,
+            "source_title": "Mask R-CNN with OpenCV",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:15",
+          "uri": "https://www.youtube.com/watch?v=8m8m4oWsp8M",
+          "media_type": "text/markdown",
+          "content_sha256": "0453703cb760c7045fbc20d0da2e32dcc7324088f3cc76871f874ed50ba65804",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "web_search-0453703cb760c704",
+            "critical_claims_allowed": true,
+            "source_title": "Instance Segmentation MASK R-CNN | with Python and Opencv",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:16",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "973762c288b5ad497b745e4b02a97b6084eb261074cff83f42d287694fa13e75",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-973762c288b5ad49",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:17",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "f3bc5d50f90e1180c012b2beabf21c3e951c5a7c890f0250005ee7ee49a6640e",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-f3bc5d50f90e1180",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:18",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "9786920d4fa64056b27ad352ca20aed4030c2049ad37f38403bfe43c127cc419",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-9786920d4fa64056",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:19",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "6715d34d4e426da16d4651829332365475ae88a7e36dd42f583477e38e8393df",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-6715d34d4e426da1",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:20",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "57edffdc91b3ec70a99a9dee9aaf69462d998e493d4545b83d844e901f5084c4",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-57edffdc91b3ec70",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9200
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:21",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "12b7174ff0ce1ef9ebd30a8953464f746655fe65175cab606d15d267ba2728c8",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-12b7174ff0ce1ef9",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 5,
+            "char_start": 9000,
+            "char_end": 11000
+          }
+        },
+        {
+          "artifact_id": "20260814T104351Z-b880c1fe:research-01-which-contributor-to-the-version-of-:src:22",
+          "uri": "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+          "media_type": "text/markdown",
+          "content_sha256": "be50c33e425268087e9ea261c60602a007b399230e9e63d164105e6da0273b9b",
+          "created_by_task_id": "research-01-which-contributor-to-the-version-of-",
+          "metadata": {
+            "document_version_id": "fetch_page-be50c33e42526808",
+            "critical_claims_allowed": true,
+            "source_title": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 6,
+            "char_start": 10800,
+            "char_end": 12000
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-which-contributor-to-the-version-of-",
+      "objective": "Which contributor to the version of OpenCV where support was added for the Mask-RCNN model has the same name as a former Chinese head of government when the names are transliterated to the Latin alphabet?",
+      "agentic": true,
+      "rounds": 2,
+      "query_count": 7,
+      "queries": [
+        {
+          "query": "OpenCV Mask-RCNN support added version release history",
+          "tool": "web_search"
+        },
+        {
+          "query": "OpenCV Mask RCNN dnn module added which version",
+          "tool": "web_search"
+        },
+        {
+          "query": "OpenCV contributors Mask RCNN implementation",
+          "tool": "github_search"
+        },
+        {
+          "query": "OpenCV 3.4.1 release notes Mask RCNN dnn module added",
+          "tool": "web_search"
+        },
+        {
+          "query": "OpenCV dnn MaskRCNN commit history contributors github",
+          "tool": "github_search"
+        },
+        {
+          "query": "OpenCV Mask RCNN pull request author contributor",
+          "tool": "github_search"
+        },
+        {
+          "query": "OpenCV changelog 3.4 Mask RCNN support added version",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 7,
+      "page_urls": [
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626",
+        "https://github.com/opencv/opencv/wiki/ChangeLog/1fbc4414210217372cfd0d7ecdfd2ae5dafcc626"
+      ],
+      "coverage_assessments": [
+        {
+          "covered": false,
+          "gaps": [
+            "The specific OpenCV version in which Mask-RCNN support was added (likely OpenCV 3.4.x or 4.x) is not confirmed from the sources.",
+            "The list of contributors/committers to that specific OpenCV version's DNN module changes is not identified.",
+            "Need to identify which contributor's name transliterates to the same Latin-alphabet name as a former Chinese head of government (e.g., Zhou Enlai, Deng Xiaoping, Jiang Zemin, Hu Jintao, Wen Jiabao, Li Keqiang, etc.).",
+            "Need to cross-reference the contributor names against former Chinese heads of government names in Latin transliteration."
+          ],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 1,
+      "source_count": 15,
+      "claim_count": 34
+    }
+  },
+  {
+    "checkpoint_id": "20260814T104351Z-b880c1fe:task-checkpoint:000002",
+    "job_id": "20260814T104351Z-b880c1fe",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 1,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T104351Z-b880c1fe",
+      "status": "completed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": null
+    },
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- OpenCV's DNN module does not support NVIDIA GPUs; only a limited number of GPUs, mainly Intel GPUs, are supported.\n- OpenCV version 3.4.7 added support for Mask-RCNN networks from the TensorFlow Object Detection API, including variants with dilated convolutions.\n- OpenCV 5.0, targeted for June 2026, will include native GPU support in its new DNN engine.\n- OpenCV 4.5.0 (released October 2020) marked the transition to Apache 2 licensing for all future 4.x and 5.x releases, while OpenCV 3.x continues under BSD license.\n- Mask-RCNN evolved from R-CNN through Fast R-CNN, with Mask R-CNN replacing ROI Pooling with ROI Align.\n\n## Findings\n\n### OpenCV DNN Module GPU Support Limitations\n\nThe OpenCV DNN module does not support NVIDIA GPUs. Only a limited number of GPUs are supported, mainly Intel GPUs. The DNN module in the current OpenCV version is tested only with Intel's GPUs.\n\n### Mask-RCNN Support Added in OpenCV 3.4.7\n\nOpenCV version 3.4.7 added support for Mask-RCNN networks from the TensorFlow Object Detection API. This includes Mask-RCNN with dilated convolutions and FPN SSD. OpenCV 3.4.7 is the version where Mask-RCNN support was added. The mask_rcnn_inception_v2_coco_2018_01_28.pbtxt text graph file was tuned by OpenCV's DNN support group so the network can be loaded using OpenCV.\n\n### OpenCV 5.0 Native GPU Support\n\nOpenCV 5.0 target release is June 2026, timed with CVPR 2026 in Denver. OpenCV 5.0 includes native GPU support in the new DNN engine.\n\n### OpenCV 3.4.1 DNN Module Capabilities\n\nOpenCV 3.4.1's DNN module allows loading pre-trained models of most popular deep learning frameworks, including Tensorflow, Caffe, Darknet, and Torch. The DNN module is compatible with architectures including GoogleLeNet, YOLO, SqueezeNet, R-CNN faster, and ResNet.\n\n### Evolution of Mask-RCNN from R-CNN\n\nMask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection. Fast R-CNN (R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer. The Mask R-CNN work by He et al. replaces the ROI Polling module with a more accurate ROI Align module. The output of the ROI module is then fed into two CONV layers, and the output of the CONV layers is the mask itself.\n\n### OpenCV 4.5.1 Release and Features\n\nOpenCV 4.5.1 was released in December 2020 as a New Year's update for OpenCV 4.x. The DNN module in OpenCV 4.5.1 added support for importing Faster RCNN ONNX models.\n\n### OpenCV Release Timeline and Licensing\n\nOpenCV 4.5.0 was released in October 2020. OpenCV 3.4.13 was released in December 2020. OpenCV 4.4.0 was released in July 2020. OpenCV 3.4.12 was released in October 2020. Starting from OpenCV 4.5.0, all future OpenCV 4.x and OpenCV 5.x releases will be distributed under Apache 2 license. OpenCV 3.x will keep using BSD license.\n\n### OpenCV 4.4.0 Features\n\nSIFT algorithm was moved to the main repository in OpenCV 4.4.0 because the patent on SIFT expired. OpenCV 4.4.0 added support for Yolo v4 Detector and EfficientDet models support.\n\n### OpenCV 4.5.0 DNN and Contributor Information\n\nOpenCV 4.5.0 added support for OpenVINO 2021.1 release in the DNN module. Alexander Alekhin was the top contributor to OpenCV 4.5.0 with 47 commits.\n\n### OpenCV 3.4.7 Automatic Reshaping\n\nOpenCV 3.4.7 implemented automatic reshaping (for input images of different resolutions) of networks represented in IE IR format.\n\n## Evidence Status\n\nAll claims in this report are accepted based on evidence spans. One claim (claim 34) was contradicted: the assertion that source excerpts do not contain explicit mention of Mask-RCNN support being added to OpenCV was contradicted by evidence explicitly mentioning \"Added support for Mask-RCNN model\" and \"Mask-RCNN with dilated convolutions\" from the TensorFlow Object Detection API. This contradicted claim is excluded from the findings.",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "OpenCV's DNN module does not support NVIDIA GPUs, and only a limited number of GPUs (mainly Intel GPUs) are supported.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "Mask R-CNN with OpenCV",
+            "properties": {
+              "document_version_id": "web_search-1cc63070ecde3cbb"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "The mask_rcnn_inception_v2_coco_2018_01_28.pbtxt text graph file was tuned by the OpenCV's DNN support group so the network can be loaded using OpenCV.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "properties": {
+              "document_version_id": "web_search-dbf8a23a5166a03c"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "The DNN module in the current OpenCV version is tested only with Intel's GPUs.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "properties": {
+              "document_version_id": "web_search-dbf8a23a5166a03c"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "OpenCV 5.0 target release is June 2026, timed with CVPR 2026 in Denver.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+            "properties": {
+              "document_version_id": "web_search-8456fa0d2947ba2b"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "OpenCV 5.0 includes native GPU support in the new DNN engine.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "OpenCV 5 Deep Dive: A New Foundation for Computer ...",
+            "properties": {
+              "document_version_id": "web_search-8456fa0d2947ba2b"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "OpenCV version 3.4.7 added support for Mask-RCNN networks from the TensorFlow Object Detection API.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki",
+            "properties": {
+              "document_version_id": "web_search-f611ca3ba10ed429"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "OpenCV 3.4.7 added new networks from TensorFlow Object Detection API including Mask-RCNN with dilated convolutions.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki",
+            "properties": {
+              "document_version_id": "web_search-f611ca3ba10ed429"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "OpenCV added support for the Mask-RCNN model in its DNN module.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki",
+            "properties": {
+              "document_version_id": "web_search-6a5cce418cc55b7d"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "OpenCV 3.4.1's DNN module allows loading pre-trained models of most popular deep learning frameworks, including Tensorflow, Caffe, Darknet, Torch.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+            "properties": {
+              "document_version_id": "web_search-d60cfdb6677610a0"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "OpenCV 3.4.1 DNN module is compatible with architectures including GoogleLeNet, YOLO, SqueezeNet, R-CNN faster, and ResNet.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "MobileNet SSD object detection OpenCV 3.4.1 DNN module",
+            "properties": {
+              "document_version_id": "web_search-d60cfdb6677610a0"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "properties": {
+              "document_version_id": "web_search-74340571e4159214"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "Fast R-CNN (R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "properties": {
+              "document_version_id": "web_search-74340571e4159214"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "OpenCV does not support NVIDIA GPUs for its dnn module; only a limited number of GPUs are supported, mainly Intel GPUs.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "Mask R-CNN with OpenCV",
+            "properties": {
+              "document_version_id": "web_search-442fba360f718f88"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "OpenCV version 3.4.7 added support for Mask-RCNN with dilated convolutions and FPN SSD from the TensorFlow Object Detection API.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki",
+            "properties": {
+              "document_version_id": "web_search-058ae986c43bb9cc"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "OpenCV version 3.4.7 is the version where Mask-RCNN support was added.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki",
+            "properties": {
+              "document_version_id": "web_search-058ae986c43bb9cc"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "OpenCV 3.4.7 implemented automatic reshaping (for input images of different resolutions) of networks represented in IE IR format.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki",
+            "properties": {
+              "document_version_id": "web_search-058ae986c43bb9cc"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "Mask-RCNN is a result of a series of improvements over the original R-CNN paper (by R. Girshick et. al., CVPR 2014) for object detection.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "properties": {
+              "document_version_id": "web_search-57987b110fe7399c"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "Fast R-CNN (R. Girshik, ICCV 2015) made the R-CNN algorithm much faster by processing all the proposed regions together in their CNN using a ROIPool layer.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "Mask RCNN in OpenCV - Deep Learning Based Object ...",
+            "properties": {
+              "document_version_id": "web_search-57987b110fe7399c"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "The Mask R-CNN work by He et al. replaces the ROI Polling module with a more accurate ROI Align module.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "Mask R-CNN with OpenCV",
+            "properties": {
+              "document_version_id": "web_search-9f4c0cf08f3ec161"
+            }
+          },
+          {
+            "node_id": "claim-20",
+            "kind": "claim",
+            "label": "The output of the ROI module is then fed into two CONV layers, and the output of the CONV layers is the mask itself.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-20-1",
+            "kind": "source",
+            "label": "Mask R-CNN with OpenCV",
+            "properties": {
+              "document_version_id": "web_search-9f4c0cf08f3ec161"
+            }
+          },
+          {
+            "node_id": "claim-21",
+            "kind": "claim",
+            "label": "OpenCV 4.5.1 was released in December 2020 as a New Year's update for OpenCV 4.x.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-21-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-973762c288b5ad49"
+            }
+          },
+          {
+            "node_id": "claim-22",
+            "kind": "claim",
+            "label": "The DNN module in OpenCV 4.5.1 added support for importing Faster RCNN ONNX models.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-22-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-973762c288b5ad49"
+            }
+          },
+          {
+            "node_id": "claim-23",
+            "kind": "claim",
+            "label": "OpenCV 4.5.0 was released in October 2020.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-23-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-f3bc5d50f90e1180"
+            }
+          },
+          {
+            "node_id": "claim-24",
+            "kind": "claim",
+            "label": "OpenCV 3.4.13 was released in December 2020.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-24-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-f3bc5d50f90e1180"
+            }
+          },
+          {
+            "node_id": "claim-25",
+            "kind": "claim",
+            "label": "OpenCV 4.4.0 was released in July 2020.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-25-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-57edffdc91b3ec70"
+            }
+          },
+          {
+            "node_id": "claim-26",
+            "kind": "claim",
+            "label": "OpenCV 3.4.12 was released in October 2020.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-26-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-57edffdc91b3ec70"
+            }
+          },
+          {
+            "node_id": "claim-27",
+            "kind": "claim",
+            "label": "Starting from OpenCV 4.5.0, all future OpenCV 4.x and OpenCV 5.x releases will be distributed under Apache 2 license.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-27-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-f3bc5d50f90e1180"
+            }
+          },
+          {
+            "node_id": "claim-28",
+            "kind": "claim",
+            "label": "OpenCV 3.x will keep using BSD license.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-28-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-f3bc5d50f90e1180"
+            }
+          },
+          {
+            "node_id": "claim-29",
+            "kind": "claim",
+            "label": "SIFT algorithm was moved to the main repository in OpenCV 4.4.0 because the patent on SIFT expired.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-29-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-57edffdc91b3ec70"
+            }
+          },
+          {
+            "node_id": "claim-30",
+            "kind": "claim",
+            "label": "OpenCV 4.4.0 added support for Yolo v4 Detector.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-30-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-57edffdc91b3ec70"
+            }
+          },
+          {
+            "node_id": "claim-31",
+            "kind": "claim",
+            "label": "OpenCV 4.4.0 added EfficientDet models support.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-31-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-57edffdc91b3ec70"
+            }
+          },
+          {
+            "node_id": "claim-32",
+            "kind": "claim",
+            "label": "OpenCV 4.5.0 added support for OpenVINO 2021.1 release in the DNN module.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-32-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-9786920d4fa64056"
+            }
+          },
+          {
+            "node_id": "claim-33",
+            "kind": "claim",
+            "label": "Alexander Alekhin was the top contributor to OpenCV 4.5.0 with 47 commits.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-33-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-6715d34d4e426da1"
+            }
+          },
+          {
+            "node_id": "claim-34",
+            "kind": "claim",
+            "label": "The provided source excerpts do not contain explicit mention of Mask-RCNN support being added to OpenCV.",
+            "properties": {
+              "support_status": "unsupported",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-34-1",
+            "kind": "source",
+            "label": "ChangeLog · opencv/opencv Wiki · GitHub",
+            "properties": {
+              "document_version_id": "fetch_page-f3bc5d50f90e1180"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:19"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-20-1",
+            "source_node_id": "claim-20",
+            "target_node_id": "source-20-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:20"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-21-1",
+            "source_node_id": "claim-21",
+            "target_node_id": "source-21-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:21"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-22-1",
+            "source_node_id": "claim-22",
+            "target_node_id": "source-22-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:22"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-23-1",
+            "source_node_id": "claim-23",
+            "target_node_id": "source-23-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:23"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-24-1",
+            "source_node_id": "claim-24",
+            "target_node_id": "source-24-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:24"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-25-1",
+            "source_node_id": "claim-25",
+            "target_node_id": "source-25-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:25"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-26-1",
+            "source_node_id": "claim-26",
+            "target_node_id": "source-26-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:26"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-27-1",
+            "source_node_id": "claim-27",
+            "target_node_id": "source-27-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:27"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-28-1",
+            "source_node_id": "claim-28",
+            "target_node_id": "source-28-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:28"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-29-1",
+            "source_node_id": "claim-29",
+            "target_node_id": "source-29-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:29"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-30-1",
+            "source_node_id": "claim-30",
+            "target_node_id": "source-30-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:30"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-31-1",
+            "source_node_id": "claim-31",
+            "target_node_id": "source-31-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:31"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-32-1",
+            "source_node_id": "claim-32",
+            "target_node_id": "source-32-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:32"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-33-1",
+            "source_node_id": "claim-33",
+            "target_node_id": "source-33-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:33"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-34-1",
+            "source_node_id": "claim-34",
+            "target_node_id": "source-34-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104351Z-b880c1fe:span:research-01-which-contributor-to-the-version-of-:34"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 34,
+      "decision_count": 34
+    }
+  }
+]

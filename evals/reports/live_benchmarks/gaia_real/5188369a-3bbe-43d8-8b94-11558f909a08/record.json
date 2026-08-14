@@ -1,0 +1,28 @@
+{
+  "task_id": "5188369a-3bbe-43d8-8b94-11558f909a08",
+  "question": "What writer is quoted by Merriam-Webster for the Word of the Day from June 27, 2022?",
+  "level": "1",
+  "ground_truth": "Annie Levin",
+  "extracted_answer": "Annie Levin",
+  "grade": {
+    "correct": true,
+    "rationale": "The candidate answer exactly matches the ground truth.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": true,
+  "job_id": "20260814T104213Z-8df8c2eb",
+  "status": "completed",
+  "claim_count": 16,
+  "source_count": 17,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 145,
+    "search_calls": 35,
+    "total_input_tokens": 224102,
+    "total_output_tokens": 61335,
+    "total_tokens": 285437,
+    "estimated_cost_usd": 0.2854,
+    "wall_seconds": 88.15
+  },
+  "model": "deepseek-v4-flash"
+}

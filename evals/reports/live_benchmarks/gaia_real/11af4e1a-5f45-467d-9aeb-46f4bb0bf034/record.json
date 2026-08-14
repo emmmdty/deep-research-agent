@@ -1,0 +1,28 @@
+{
+  "task_id": "11af4e1a-5f45-467d-9aeb-46f4bb0bf034",
+  "question": "How many more blocks (also denoted as layers) in BERT base encoder than the encoder from the architecture proposed in Attention is All You Need?",
+  "level": "1",
+  "ground_truth": "6",
+  "extracted_answer": "6",
+  "grade": {
+    "correct": true,
+    "rationale": "The candidate answer matches the ground truth exactly.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": true,
+  "job_id": "20260814T095450Z-612c0d3b",
+  "status": "completed",
+  "claim_count": 32,
+  "source_count": 24,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 53,
+    "search_calls": 13,
+    "total_input_tokens": 86927,
+    "total_output_tokens": 21482,
+    "total_tokens": 108409,
+    "estimated_cost_usd": 0.1084,
+    "wall_seconds": 87.13
+  },
+  "model": "deepseek-v4-flash"
+}
