@@ -86,6 +86,12 @@ class ReportBundleCompilerV2:
 
         ordered_sources = self._deduplicate_sources([*reduced.artifacts, *sources])
         invalid_documents = self._invalid_source_documents(ordered_sources, corpus_manifest)
+        document_contents = {
+            document_id: source.metadata["source_text"]
+            for source in ordered_sources
+            if (document_id := source.metadata.get("document_version_id")) is not None
+            and isinstance(source.metadata.get("source_text"), str)
+        }
         audit = self._auditor.audit(
             claim_by_id.values(),
             corpus_manifest,
@@ -98,6 +104,7 @@ class ReportBundleCompilerV2:
                 *(span for claim in claim_by_id.values() for span in claim.evidence_spans),
             ),
             source_artifacts=ordered_sources,
+            document_contents=document_contents,
         )
         span_by_id: dict[str, EvidenceSpan] = {}
         for span in (

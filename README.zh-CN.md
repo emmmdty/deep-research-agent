@@ -83,7 +83,8 @@ cp .env.example .env        # 离线 demo 不需要任何密钥
 uv run python main.py --help
 ```
 
-确定性离线模式（无需 API key、无需网络）：
+确定性离线模式（无需 API key、无需网络）：`submit` 会自动落到确定性的
+orchestrator-v1 benchmark 管线，保证无凭据 demo 也能产出报告。
 
 ```bash
 SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
@@ -91,11 +92,13 @@ SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
   --source-profile company_trusted --allow-domain anthropic.com --json
 ```
 
-真实 agent（LLM planner + 治理化实时搜索 + researcher/critic），需在 `.env` 配置凭据：
+真实 agent（LLM planner + 治理化实时搜索 + researcher/critic），需在 `.env` 配置凭据；
+`submit` 默认走 canonical scheduler-v2 运行时，`--legacy` 可强制使用旧的
+orchestrator-v1 管线：
 
 ```bash
-SCHEDULER_RUNTIME_MODE=production AGENT_PLANNER_ENABLED=true \
-  uv run python main.py submit --topic "What did OpenAI announce for agents in 2026?" --json
+SCHEDULER_RUNTIME_MODE=production uv run python main.py submit \
+  --topic "What did OpenAI announce for agents in 2026?" --json
 ```
 
 运行时永远不会从生产模式静默回退到离线执行。

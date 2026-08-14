@@ -50,9 +50,11 @@ class EvidenceAuditor:
         evidence_span_ids: Iterable[str] = (),
         evidence_spans: Iterable[EvidenceSpan] = (),
         source_artifacts: Iterable[ArtifactRef] = (),
+        document_contents: Mapping[str, str] | None = None,
     ) -> EvidenceAuditResult:
         invalid_reasons = dict(invalid_document_reasons or {})
         frozen_ids = set(corpus_manifest.document_version_ids)
+        document_texts = dict(document_contents or {})
         buckets: dict[AuditStatus, list[ClaimRecord]] = {
             "accepted": [],
             "qualified": [],
@@ -146,6 +148,21 @@ class EvidenceAuditor:
                 degradations[claim.claim_id] = "evidence_partially_outside_frozen_corpus"
             else:
                 status = claim.support_status
+
+            # Programmatic quote containment: when the frozen document text is
+            # available, every evidence span must be an exact substring of it.
+            # A quote the source never contained cannot ground the claim, so the
+            # claim is degraded regardless of what the model self-reported.
+            if status in {"accepted", "qualified"}:
+                uncontained = [
+                    span.span_id
+                    for span in claim.evidence_spans
+                    if (text := document_texts.get(span.document_version_id)) is not None
+                    and span.quote not in text
+                ]
+                if uncontained:
+                    status = "unsupported" if claim.critical else "qualified"
+                    degradations[claim.claim_id] = "quote_not_contained_in_document"
 
             decision = critic_by_claim.get(claim.claim_id)
             if decision is not None:

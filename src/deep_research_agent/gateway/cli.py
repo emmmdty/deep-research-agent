@@ -15,6 +15,7 @@ import json
 import sys
 import time
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from configs.settings import get_settings
 from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
@@ -26,6 +27,11 @@ from loguru import logger
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
+
+if TYPE_CHECKING:
+    from deep_research_agent.kernel.contracts import ResearchBrief
+    from deep_research_agent.orchestration.dag import ResearchDAG
+    from deep_research_agent.research_jobs.models import JobRuntimeRecord
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
@@ -57,6 +63,87 @@ def _build_job_service():
     from deep_research_agent.research_jobs import ResearchJobService
 
     return ResearchJobService()
+
+
+_DEFAULT_DOMAIN_PACK_ID = "event-graph-agents-llms"
+
+
+def _plan_cli_dag(topic: str, settings) -> tuple[ResearchDAG, ResearchBrief]:
+    """Plan a scheduler-v2 DAG for a CLI topic.
+
+    Mirrors the product service composition: the LLM planner is used when
+    explicitly enabled and credentials exist; otherwise the deterministic
+    planner compiles the topic into typed research tasks. The returned brief
+    is pre-frozen with a pending job id; ``submit_scheduler_v2`` rebinds it to
+    the durable job id.
+    """
+    from deep_research_agent.domain_packs.registry import DomainPackRegistry
+    from deep_research_agent.kernel.contracts import ResearchBrief
+
+    domain_pack_id = getattr(settings, "domain_pack_id", None) or _DEFAULT_DOMAIN_PACK_ID
+    try:
+        domain_pack = DomainPackRegistry().load(domain_pack_id)
+    except (KeyError, ValueError) as exc:
+        raise ValueError(f"无法加载 domain pack {domain_pack_id!r}（{exc}）") from exc
+    brief = ResearchBrief(
+        brief_id="cli-brief",
+        job_id="pending",
+        question=topic,
+        domain_pack_id=domain_pack_id,
+        objectives=[topic],
+        constraints={"source": "cli"},
+    )
+    planner_enabled = bool(
+        getattr(settings, "agent_planner_enabled", True)
+        and getattr(settings, "llm_api_key", None)
+    )
+    if planner_enabled:
+        from deep_research_agent.agents import LLMResearchPlanner
+
+        dag = LLMResearchPlanner().plan(brief, domain_pack)
+    else:
+        from deep_research_agent.orchestration.dag import ResearchPlanner
+
+        dag = ResearchPlanner().plan(brief, domain_pack)
+    return dag, brief
+
+
+def _submit_cli_v2(
+    service,
+    *,
+    topic: str,
+    max_loops: int,
+    source_profile: str | None,
+    allow_domains: list[str],
+    deny_domains: list[str],
+    connector_budget: dict | None,
+    start_worker: bool,
+    settings,
+) -> JobRuntimeRecord:
+    """Submit a scheduler-v2 job from a CLI topic."""
+    dag, brief = _plan_cli_dag(topic, settings)
+    config_snapshot = {
+        "domain_pack_id": brief.domain_pack_id,
+        "objectives": brief.objectives,
+        "max_loops": max_loops,
+        "source_profile": source_profile,
+        "allow_domains": allow_domains,
+        "deny_domains": deny_domains,
+    }
+    if connector_budget:
+        config_snapshot["connector_budget"] = connector_budget
+    return service.submit_scheduler_v2(
+        brief=brief,
+        dag=dag,
+        config_snapshot=config_snapshot,
+        start_worker=start_worker,
+        source_profile=source_profile,
+        max_loops=max_loops,
+        allow_domains=allow_domains,
+        deny_domains=deny_domains,
+        connector_budget=connector_budget,
+        runtime_metadata={"cli_submitted": True},
+    )
 
 
 _MAX_TOPIC_CHARS = 2000
@@ -112,6 +199,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=default_source_profile,
         choices=CANONICAL_SOURCE_PROFILES,
         help=f"来源策略 profile（默认 {default_source_profile}）",
+    )
+    submit_parser.add_argument(
+        "--legacy",
+        action="store_true",
+        help="使用 legacy orchestrator-v1 管线（默认 scheduler-v2）",
     )
     submit_parser.add_argument("--allow-domain", action="append", default=[], help="额外允许的域名，可重复")
     submit_parser.add_argument("--deny-domain", action="append", default=[], help="额外禁止的域名，可重复")
@@ -424,16 +516,35 @@ def run_command(argv: list[str] | None = None) -> int:
         except ValueError as exc:
             console.print(f"[red]输入校验失败: {exc}[/red]")
             return 2
-        job = service.submit(
-            topic=topic,
-            max_loops=args.max_loops,
-            research_profile=args.profile,
-            start_worker=not args.no_worker,
-            source_profile=args.source_profile,
-            allow_domains=args.allow_domain,
-            deny_domains=args.deny_domain,
-            connector_budget=_connector_budget_from_args(args),
-        )
+        connector_budget = _connector_budget_from_args(args)
+        offline = bool(getattr(service, "_scheduler_offline", lambda: False)())
+        if args.legacy or offline:
+            # v1 orchestrator: kept for legacy compatibility, and it is the
+            # only runtime that can produce a deterministic report without
+            # LLM credentials (scheduler-v2 offline yields an honest empty
+            # bundle by design).
+            job = service.submit(
+                topic=topic,
+                max_loops=args.max_loops,
+                research_profile=args.profile,
+                start_worker=not args.no_worker,
+                source_profile=args.source_profile,
+                allow_domains=args.allow_domain,
+                deny_domains=args.deny_domain,
+                connector_budget=connector_budget,
+            )
+        else:
+            job = _submit_cli_v2(
+                service,
+                topic=topic,
+                max_loops=args.max_loops,
+                source_profile=args.source_profile,
+                allow_domains=args.allow_domain,
+                deny_domains=args.deny_domain,
+                connector_budget=connector_budget,
+                start_worker=not args.no_worker,
+                settings=settings,
+            )
         payload = _jsonable_model(job)
         if args.json:
             _print_json(payload)
@@ -441,6 +552,7 @@ def run_command(argv: list[str] | None = None) -> int:
             console.print(f"✅ 已提交 job: [cyan]{job.job_id}[/cyan]")
             console.print(f"当前状态: [bold]{job.status}[/bold] -> next: [bold]{job.current_stage}[/bold]")
             console.print(f"source_profile: [bold]{job.source_profile}[/bold]")
+            console.print(f"runtime_path: [bold]{job.runtime_path}[/bold]")
         return 0
 
     if args.command == "status":

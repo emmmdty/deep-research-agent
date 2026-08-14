@@ -12,6 +12,11 @@ from pydantic import ConfigDict, Field, model_validator
 from deep_research_agent.domain_packs.models import DomainPack
 from deep_research_agent.kernel.contracts import ResearchBrief, StrictModel, TaskSpec
 
+# Every researcher task must carry an explicit tool-call budget: the governed
+# tool gateway denies any call when ``max_tool_calls`` is missing, so the
+# deterministic planner must never emit budget-less research tasks.
+_DEFAULT_MAX_TOOL_CALLS_PER_TASK = 16
+
 
 class ResearchDAG(StrictModel):
     """One immutable revision of the tasks available to a research run."""
@@ -130,6 +135,6 @@ class ResearchPlanner:
                 "required": ["task_id"],
                 "additionalProperties": True,
             },
-            budget={},
+            budget={"max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK},
             idempotency_key=f"{brief.job_id}:{task_id}",
         )

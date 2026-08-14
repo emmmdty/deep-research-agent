@@ -13,7 +13,11 @@ from loguru import logger
 from deep_research_agent.agents.llm import LLMChat, LLMChatError
 from deep_research_agent.domain_packs.models import DomainPack
 from deep_research_agent.kernel.contracts import ResearchBrief, TaskSpec
-from deep_research_agent.orchestration.dag import ResearchDAG, ResearchPlanner
+from deep_research_agent.orchestration.dag import (
+    _DEFAULT_MAX_TOOL_CALLS_PER_TASK,
+    ResearchDAG,
+    ResearchPlanner,
+)
 
 _PLANNER_SYSTEM_PROMPT = (
     "You are the planning agent of an evidence-first deep research system. "
@@ -25,9 +29,6 @@ _PLANNER_SYSTEM_PROMPT = (
 )
 
 _DEFAULT_OBJECTIVE_CAP = 4
-# Budget covers the agentic loop: up to 2 search rounds × 4 queries + 3 full-page
-# fetches. The tool gateway enforces this as the hard cap per task.
-_MAX_TOOL_CALLS_PER_TASK = 16
 # A planner call must release its caller: the model client itself has a 180 s
 # timeout, and the planner thread must never pin the caller beyond the same
 # wall-clock bound.
@@ -91,7 +92,12 @@ class LLMResearchPlanner:
         upgraded = [
             task.model_copy(
                 update=(
-                    {"budget": {**dict(task.budget), "max_tool_calls": _MAX_TOOL_CALLS_PER_TASK}}
+                    {
+                        "budget": {
+                            **dict(task.budget),
+                            "max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK,
+                        }
+                    }
                     if task.role == "researcher"
                     else {}
                 )
@@ -211,7 +217,7 @@ class LLMResearchPlanner:
                 "required": ["task_id"],
                 "additionalProperties": True,
             },
-            budget={"max_tool_calls": _MAX_TOOL_CALLS_PER_TASK},
+            budget={"max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK},
             idempotency_key=f"{brief.job_id}:{task_id}",
         )
 

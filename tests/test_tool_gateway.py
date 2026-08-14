@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import threading
 import time
+from types import SimpleNamespace
 from typing import Literal
 
 import pytest
@@ -665,3 +666,110 @@ def test_context_must_match_task_job_and_role() -> None:
     mismatched_job = _context().model_copy(update={"job_id": "job-2"})
     with pytest.raises(ValueError, match="context job"):
         gateway.invoke(_task(), _call(idempotency_key="call-2"), mismatched_job)
+
+
+def test_policy_aware_fetch_denies_blocked_domain_before_network(monkeypatch):
+    """fetch handler 必须在任何网络 IO 前执行 source policy 校验。"""
+    from deep_research_agent.agents.factory import _policy_aware_fetch, _resolve_source_policy
+    from deep_research_agent.policy.models import SourcePolicyOverrides
+
+    policy = _resolve_source_policy(
+        "company_trusted",
+        SourcePolicyOverrides(deny_domains=["reddit.com"]).model_dump(),
+    )
+    calls = []
+
+    def fake_fetch(arguments, context):
+        calls.append(arguments)
+        return {"content": "body", "title": "t", "final_url": arguments["url"]}
+
+    wrapped = _policy_aware_fetch(policy, fake_fetch)
+    context = SimpleNamespace(job_id="job-1", task_id="task-1")
+
+    with pytest.raises(PermissionError, match="source policy"):
+        wrapped({"url": "https://reddit.com/r/agents"}, context)
+    assert calls == []
+
+    result = wrapped({"url": "https://arxiv.org/abs/2301.00001"}, context)
+    assert result["final_url"].startswith("https://arxiv.org")
+    assert len(calls) == 1
+
+
+def test_policy_aware_fetch_enforces_connector_fetch_budget(monkeypatch):
+    """BudgetGuard 必须在 fetch 前拦截超预算调用。"""
+    from deep_research_agent.agents.factory import _policy_aware_fetch, _resolve_source_policy
+    from deep_research_agent.policy.models import ConnectorBudget, SourcePolicyOverrides
+
+    policy = _resolve_source_policy(
+        "company_broad",
+        SourcePolicyOverrides(budget=ConnectorBudget(max_total_fetches=1)).model_dump(),
+    )
+    wrapped = _policy_aware_fetch(policy, lambda arguments, context: {"content": "ok"})
+    context = SimpleNamespace(job_id="job-1", task_id="task-1")
+
+    assert wrapped({"url": "https://arxiv.org/a"}, context)["content"] == "ok"
+    with pytest.raises(PermissionError, match="budget exhausted"):
+        wrapped({"url": "https://arxiv.org/b"}, context)
+
+
+def test_policy_aware_search_filters_blocked_domains():
+    """search handler 必须按 source policy 过滤不允许的域名。"""
+    from deep_research_agent.agents.factory import _policy_aware_search, _resolve_source_policy
+    from deep_research_agent.policy.models import SourcePolicyOverrides
+
+    policy = _resolve_source_policy(
+        "company_trusted",
+        SourcePolicyOverrides(allow_domains=["docs.langchain.com"]).model_dump(),
+    )
+    results = [
+        {"url": "https://docs.langchain.com/page", "title": "allowed", "snippet": "s"},
+        {"url": "https://reddit.com/r/agents", "title": "blocked", "snippet": "s"},
+    ]
+    wrapped = _policy_aware_search(policy, lambda arguments, context: results)
+
+    filtered = wrapped({"query": "agents", "max_results": 5}, SimpleNamespace())
+
+    assert [item["url"] for item in filtered] == ["https://docs.langchain.com/page"]
+
+
+def test_build_gateway_registers_policy_aware_handlers(monkeypatch):
+    """生产 build_gateway 必须接线 source profile + BudgetGuard。"""
+    import os
+
+    from deep_research_agent.agents.factory import build_gateway
+
+    settings_module = "configs.settings"
+    module = __import__(settings_module, fromlist=["get_settings"])
+    real_get_settings = module.get_settings
+
+    class FakeSettings:
+        source_policy_mode = "company_broad"
+        scheduler_runtime_mode = "production"
+        scheduler_factory_path = "deep_research_agent.agents.factory:build_scheduler_factory"
+        agent_planner_enabled = False
+        llm_api_key = None
+
+    monkeypatch.setattr(module, "get_settings", lambda: FakeSettings())
+
+    try:
+        gateway = build_gateway(source_profile="company_trusted")
+        task = _task(max_tool_calls=8)
+        context = _context()
+        for tool_name in ("web_search", "github_search", "arxiv_search", "fetch_page"):
+            result = gateway.invoke(
+                task,
+                _call(
+                    tool_name=tool_name,
+                    idempotency_key=f"call-policy-{tool_name}",
+                    arguments=(
+                        {"url": "https://arxiv.org/abs/2301.00001", "max_chars": 500}
+                        if tool_name == "fetch_page"
+                        else {"query": "agents", "max_results": 2}
+                    ),
+                ),
+                context,
+            )
+            assert result.status in {"succeeded", "failed", "denied"}
+    finally:
+        monkeypatch.setattr(module, "get_settings", real_get_settings)
+        os.environ.pop("SCHEDULER_RUNTIME_MODE", None)

@@ -868,7 +868,9 @@ class LLMResearcherWorker:
             return None
         support_status = str(item.get("support_status") or "unsupported")
         if support_status not in {"accepted", "qualified", "contradicted", "unsupported"}:
-            support_status = "qualified"
+            # Invalid self-reported statuses are treated conservatively: an
+            # unclassifiable claim must never silently upgrade into the summary.
+            support_status = "unsupported"
         return {
             "claim": claim_text,
             "claim_type": str(item.get("claim_type") or "factual_claim"),
@@ -899,12 +901,18 @@ class LLMResearcherWorker:
                 sort_keys=True,
             ).encode("utf-8")
             document_version_id = f"{source['tool']}-{hashlib.sha256(content).hexdigest()[:16]}"
+            # A search snippet is discovery-only: it cannot support a critical
+            # claim on its own. Only full page content the researcher actually
+            # read (page_chunk) is eligible for critical-claim grounding; the
+            # auditor enforces this via the corpus manifest.
+            critical_claims_allowed = source.get("kind") == "page_chunk"
             metadata: dict[str, Any] = {
                 "document_version_id": document_version_id,
-                "critical_claims_allowed": True,
+                "critical_claims_allowed": critical_claims_allowed,
                 "source_title": source["title"],
                 "tool": source["tool"],
                 "source_kind": source.get("kind", "snippet"),
+                "source_text": source["snippet"],
             }
             if source.get("kind") == "page_chunk":
                 metadata.update(

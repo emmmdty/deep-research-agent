@@ -264,7 +264,7 @@ class Settings(BaseSettings):
         ),
     )
     agent_planner_enabled: bool = Field(
-        default=False,
+        default=True,
         description=(
             "use the LLM research planner (model generates sub-objectives) when "
             "credentials are configured; the deterministic planner remains the "

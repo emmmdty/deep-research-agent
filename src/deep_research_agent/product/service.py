@@ -236,8 +236,10 @@ class ProductService:
         """
 
         settings = getattr(self.runtime_service, "settings", None)
+        offline = bool(getattr(self.database, "offline_mode", False))
         planner_enabled = bool(
-            getattr(settings, "agent_planner_enabled", False)
+            not offline
+            and getattr(settings, "agent_planner_enabled", True)
             and getattr(settings, "llm_api_key", None)
         )
         if planner_enabled:

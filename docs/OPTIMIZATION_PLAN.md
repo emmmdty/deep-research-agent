@@ -161,16 +161,19 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
 
 ## 6. 升级路线图（分四期）
 
-### 一期：让"最强实现"成为唯一默认（对齐能力基线）
+> 状态：一期（§6.1）已于 2026-08 落地（CLI 默认 scheduler-v2 + `--legacy`、planner 默认开启、
+> 引用 quote containment 审计、policy 层接线生产 gateway）；二期起进入路线图。
+
+### 一期：让"最强实现"成为唯一默认（对齐能力基线）✅
 
 1. **CLI submit 默认 scheduler-v2**：`main.py submit` 走 `submit_scheduler_v2`，v1 用 `--legacy`
-   保留（兼容测试与 legacy bundle 读取）。
-2. **AGENT_PLANNER_ENABLED 默认 true**（有凭据时），确定性 planner 仍是兜底。
+   保留（兼容测试与 legacy bundle 读取）。✅
+2. **AGENT_PLANNER_ENABLED 默认 true**（有凭据时），确定性 planner 仍是兜底。✅
 3. **证据验证硬化**：auditor 增加 **quote containment 程序化校验**（span.quote 必须出现在冻结
    文档内容中，否则 downgrade）；把 `_validate_claim` 的非法 `support_status` 从静默提升
-   `qualified` 改为保守 `unsupported`。
+   `qualified` 改为保守 `unsupported`。✅
 4. **接线 policy 层**：`build_gateway` 加载 source profile + BudgetGuard；researcher 的
-   `critical_claims_allowed` 改由 connector/来源策略决定（web snippet 默认 False）。
+   `critical_claims_allowed` 改由 connector/来源策略决定（web snippet 默认 False）。✅
 
 ### 二期：对标竞品能力（引用可验证 + 一手来源）
 

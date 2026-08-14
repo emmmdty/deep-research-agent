@@ -44,8 +44,8 @@ the canonical runtime lives under `src/deep_research_agent/`.
 compatibility consumers, both out of the product path:
 
 - `src/deep_research_agent/research_jobs/orchestrator.py` uses `legacy.agents.*` stage functions
-  for the `orchestrator-v1` runtime path (default for CLI/API submissions; deterministic
-  benchmark profile in offline mode).
+  for the `orchestrator-v1` runtime path (kept for `--legacy` submissions and the deterministic
+  benchmark profile in offline mode; CLI/API default to `scheduler-v2`).
 - Diagnostic scripts under `scripts/` and a few regression tests import `legacy.evaluation.*`
   and `legacy.research_policy`.
 

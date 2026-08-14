@@ -521,6 +521,65 @@ def test_bundle_rejects_graph_provenance_outside_frozen_manifest() -> None:
         )
 
 
+def test_bundle_degrades_claim_when_quote_not_contained_in_source_text() -> None:
+    span = _span()
+    accepted = _claim("claim-quote-missing", "accepted", critical=True, spans=[span])
+    source = _source().model_copy(
+        update={
+            "metadata": {
+                "document_version_id": "doc-v1",
+                "source_text": "The paper reports a completely different sentence.",
+            }
+        }
+    )
+
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[accepted],
+        evidence_packets=[
+            EvidencePacket(
+                packet_id="packet-1",
+                task_id="collect-1",
+                evidence_spans=[span],
+                claims=[accepted],
+            )
+        ],
+        research_graph=ResearchGraph(),
+        sources=[source],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.accepted_claims == []
+    assert bundle.audit_summary["unsupported_claim_ids"] == ["claim-quote-missing"]
+    assert bundle.audit_summary["degradations"]["claim-quote-missing"] == "quote_not_contained_in_document"
+
+
+def test_bundle_keeps_claim_when_quote_is_contained_in_source_text() -> None:
+    span = _span()
+    accepted = _claim("claim-quote-present", "accepted", critical=True, spans=[span])
+    source = _source().model_copy(
+        update={
+            "metadata": {
+                "document_version_id": "doc-v1",
+                "source_text": "Section 4.2: The intervention improved recall by 4.2 points.",
+            }
+        }
+    )
+
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[accepted],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[source],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert bundle.accepted_claims[0].claim_id == "claim-quote-present"
+
+
 def test_legacy_bundle_loader_preserves_old_artifact_reads(tmp_path) -> None:
     legacy = {"job": {"job_id": "legacy-1", "runtime_path": "legacy-cli"}, "report": {"markdown": "# Old"}}
     path = tmp_path / "report_bundle.json"

@@ -120,8 +120,96 @@ def test_run_cli_uses_settings_workspace_dir(tmp_path, monkeypatch):
     assert output_path.read_text(encoding="utf-8").startswith("# 报告")
 
 
-def test_submit_cli_dispatches_to_job_service(monkeypatch):
-    """submit 子命令应调用 job service 创建任务。"""
+def test_submit_cli_dispatches_to_scheduler_v2_by_default(monkeypatch):
+    """submit 子命令默认应走 scheduler-v2（submit_scheduler_v2）。"""
+    import main
+
+    captured: dict[str, object] = {}
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            captured["recovered"] = True
+
+        def submit_scheduler_v2(
+            self,
+            *,
+            brief,
+            dag,
+            config_snapshot,
+            start_worker=True,
+            source_profile=None,
+            max_loops=1,
+            runtime_metadata=None,
+            corpus_inputs=None,
+            allow_domains=None,
+            deny_domains=None,
+            connector_budget=None,
+        ):
+            captured["submit_v2"] = {
+                "start_worker": start_worker,
+                "source_profile": source_profile,
+                "max_loops": max_loops,
+                "allow_domains": allow_domains,
+                "deny_domains": deny_domains,
+                "connector_budget": connector_budget,
+                "config_snapshot": config_snapshot,
+                "objective_count": len(dag.tasks),
+            }
+            return SimpleNamespace(
+                job_id="job-001", status="created", current_stage="created", source_profile="company_trusted", runtime_path="scheduler-v2"
+            )
+
+    settings = SimpleNamespace(
+        max_research_loops=3,
+        workspace_dir="workspace",
+        legacy_cli_enabled=True,
+        source_policy_mode="company_broad",
+        agent_planner_enabled=False,
+        llm_api_key=None,
+    )
+    monkeypatch.setattr(main, "get_settings", lambda: settings)
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(
+        [
+            "submit",
+            "--topic",
+            "可信研究",
+            "--max-loops",
+            "4",
+            "--source-profile",
+            "company_trusted",
+            "--allow-domain",
+            "docs.langchain.com",
+            "--deny-domain",
+            "reddit.com",
+            "--max-candidates-per-connector",
+            "4",
+            "--max-fetches-per-task",
+            "3",
+            "--max-total-fetches",
+            "8",
+            "--json",
+        ]
+    )
+
+    assert exit_code == 0
+    assert captured["recovered"] is True
+    assert captured["submit_v2"]["start_worker"] is True
+    assert captured["submit_v2"]["source_profile"] == "company_trusted"
+    assert captured["submit_v2"]["max_loops"] == 4
+    assert captured["submit_v2"]["allow_domains"] == ["docs.langchain.com"]
+    assert captured["submit_v2"]["deny_domains"] == ["reddit.com"]
+    assert captured["submit_v2"]["connector_budget"] == {
+        "max_candidates_per_connector": 4,
+        "max_fetches_per_task": 3,
+        "max_total_fetches": 8,
+    }
+    assert captured["submit_v2"]["config_snapshot"]["allow_domains"] == ["docs.langchain.com"]
+
+
+def test_submit_cli_legacy_flag_dispatches_to_v1_orchestrator(monkeypatch):
+    """--legacy 应走 legacy orchestrator-v1 的 service.submit。"""
     import main
 
     captured: dict[str, object] = {}
@@ -173,6 +261,7 @@ def test_submit_cli_dispatches_to_job_service(monkeypatch):
     exit_code = main.run_command(
         [
             "submit",
+            "--legacy",
             "--topic",
             "可信研究",
             "--max-loops",
@@ -270,10 +359,21 @@ def test_submit_cli_strips_whitespace_around_topic(monkeypatch, capsys):
         def recover_stale_jobs(self):
             pass
 
-        def submit(self, **kwargs):
-            captured["topic"] = kwargs["topic"]
-            return SimpleNamespace(job_id="job-001", status="created")
+        def submit_scheduler_v2(self, **kwargs):
+            captured["topic"] = kwargs["brief"].question
+            return SimpleNamespace(
+                job_id="job-001", status="created", current_stage="created", source_profile="company_broad", runtime_path="scheduler-v2"
+            )
 
+    settings = SimpleNamespace(
+        max_research_loops=3,
+        workspace_dir="workspace",
+        legacy_cli_enabled=True,
+        source_policy_mode="company_broad",
+        agent_planner_enabled=False,
+        llm_api_key=None,
+    )
+    monkeypatch.setattr(main, "get_settings", lambda: settings)
     monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
 
     exit_code = main.run_command(["submit", "--topic", "  可信研究  ", "--json"])

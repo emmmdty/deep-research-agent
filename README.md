@@ -106,7 +106,9 @@ cp .env.example .env        # offline demo needs no secrets
 uv run python main.py --help
 ```
 
-Deterministic offline mode (no API keys, no network):
+Deterministic offline mode (no API keys, no network): `submit` falls back to
+the deterministic orchestrator-v1 benchmark pipeline so the demo produces a
+report without credentials.
 
 ```bash
 SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
@@ -115,11 +117,12 @@ SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
 ```
 
 Real agent (LLM planner + governed live search + researcher/critic) with
-credentials in `.env`:
+credentials in `.env` — `submit` defaults to the canonical scheduler-v2 runtime;
+use `--legacy` to force the older orchestrator-v1 pipeline:
 
 ```bash
-SCHEDULER_RUNTIME_MODE=production AGENT_PLANNER_ENABLED=true \
-  uv run python main.py submit --topic "What did OpenAI announce for agents in 2026?" --json
+SCHEDULER_RUNTIME_MODE=production uv run python main.py submit \
+  --topic "What did OpenAI announce for agents in 2026?" --json
 ```
 
 The runtime never silently falls back from production to offline execution.

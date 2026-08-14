@@ -241,6 +241,57 @@ async def test_agentic_researcher_reads_full_pages_and_grounds_claims_in_chunks(
 
 
 @pytest.mark.asyncio
+async def test_agentic_researcher_marks_snippets_discovery_only_and_pages_critical_eligible() -> None:
+    page = _page_chunk_source()
+    page_text = page["content"]
+    snippet = _snippet(1)
+    snippet["url"] = "https://example.com/full"
+    snippet["snippet"] = page_text[:500]
+    task = _task()
+    gateway = ScriptedGateway(
+        {
+            "web_search": [snippet],
+            "fetch_page": page,
+        }
+    )
+    quote = page_text[600:640]
+    chat = FakeToolChat(
+        [
+            {"plan_queries": {"queries": [{"query": "agents tools", "tool": "web_search"}]}},
+            {"assess_coverage": {"covered": True, "gaps": []}},
+            {"select_pages": {"urls": ["https://example.com/full"]}},
+            {"submit_claims": {"claims": [_submit_claims_entry("Deep claim from full text.", 2, quote)]}},
+        ]
+    )
+    worker = LLMResearcherWorker(chat=chat)
+
+    output = await worker.execute(task, await _context(task, gateway))
+
+    packet = output.result.evidence_packets[0]
+    by_kind = {a.metadata["source_kind"]: a for a in packet.artifacts}
+    assert by_kind["snippet"].metadata["critical_claims_allowed"] is False
+    assert by_kind["page_chunk"].metadata["critical_claims_allowed"] is True
+    assert "source_text" in by_kind["snippet"].metadata
+    assert by_kind["snippet"].metadata["source_text"] == snippet["snippet"]
+
+
+def test_researcher_invalid_support_status_is_conservatively_unsupported() -> None:
+    """非法 self-reported support_status 必须保守降级为 unsupported。"""
+    item = {
+        "claim": "Agents use tools.",
+        "claim_type": "factual_claim",
+        "critical": False,
+        "support_status": "self_reported_bogus",
+        "confidence": 0.9,
+        "source_index": 1,
+        "quote": "agents use tools",
+    }
+    validated = LLMResearcherWorker._validate_claim(item, [_snippet(1)])
+    assert validated is not None
+    assert validated["support_status"] == "unsupported"
+
+
+@pytest.mark.asyncio
 async def test_agentic_researcher_skips_pages_when_fetch_tool_unavailable() -> None:
     snippet = _snippet(1)
     task = _task()

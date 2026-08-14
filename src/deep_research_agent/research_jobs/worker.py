@@ -50,6 +50,8 @@ def build_scheduler_factory(settings, *, offline: bool = False):
     mode = "offline" if offline else getattr(settings, "scheduler_runtime_mode", "production")
     if mode == "offline":
         def offline_factory(**kwargs):
+            kwargs.pop("source_profile", None)
+            kwargs.pop("policy_overrides", None)
             return ResearchScheduler(worker=_OfflineTaskWorker(), **kwargs)
 
         return offline_factory

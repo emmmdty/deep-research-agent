@@ -244,6 +244,9 @@ class ResearchJobService:
         max_loops: int = 1,
         runtime_metadata: dict | None = None,
         corpus_inputs: list[dict] | None = None,
+        allow_domains: list[str] | None = None,
+        deny_domains: list[str] | None = None,
+        connector_budget: dict | None = None,
     ) -> JobRuntimeRecord:
         """Persist a frozen scheduler-v2 contract before any worker starts."""
         job_id = _run_id()
@@ -283,6 +286,9 @@ class ResearchJobService:
             research_profile="typed",
             start_worker=start_worker,
             source_profile=source_profile,
+            allow_domains=allow_domains,
+            deny_domains=deny_domains,
+            connector_budget=connector_budget,
             file_inputs=file_inputs,
             runtime_path="scheduler-v2",
             runtime_metadata=frozen_metadata,
@@ -568,7 +574,11 @@ class ResearchJobService:
             def cancellation_check() -> bool:
                 return bool(self._require_job(job_id).cancel_requested)
 
-            scheduler = self._scheduler_factory(cancellation_check=cancellation_check)
+            scheduler = self._scheduler_factory(
+                cancellation_check=cancellation_check,
+                source_profile=job.source_profile,
+                policy_overrides=dict(job.policy_overrides),
+            )
             dag = ResearchDAG.model_validate(job.metadata["research_dag"])
             config_snapshot = job.metadata["config_snapshot"]
             return asyncio.run(
