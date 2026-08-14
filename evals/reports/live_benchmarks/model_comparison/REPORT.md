@@ -64,3 +64,21 @@ The same live research topics run through the canonical scheduler-v2 pipeline un
 - Claims: - | Sources: - | Tokens: - | Cost: $- | Wall: -s
 - Judge comments: -
 - Error: no report: endpoint returned 401 ModelError: Model X is not supported
+
+## Retrieval A/B — Semantic Rerank On vs Off
+
+Same 3 topics, same model (`deepseek-v4-flash`), same pipeline; the only
+difference is `EMBEDDINGS_ENABLED=true` (local ONNX BGE embeddings rerank
+candidate sources before the model picks pages to read).
+
+| Lane | Judge Ø | Accuracy Ø | Claims Ø | Sources Ø | Tokens | Cost USD | Wall (s) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Baseline (no rerank) | 7.67 | 8.33 | 260 | 106 | 900K | 0.90 | 813 |
+| Semantic rerank | 7.67 | 7.67 | 335 | 132 | 1.17M | 1.17 | 843 |
+
+Honest reading: on 3 topics the reranker changes what the agent reads (more
+claims/sources, ~30% more tokens/cost) but does **not** move measured judge
+quality — a real negative result. The harness is in place
+(`retrieval/rerank.py`, gated by `EMBEDDINGS_ENABLED`); deciding whether the
+rerank earns its cost needs a larger topic sample and a fact-level metric,
+which is exactly the kind of experiment this repo is set up to run next.

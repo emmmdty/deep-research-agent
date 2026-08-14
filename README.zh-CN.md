@@ -62,15 +62,34 @@ bundle 中每条关键 claim 必须解析到冻结 corpus manifest 内的证据�
 
 ## 评测与 Benchmark 证据
 
-发布门禁是确定性的、本地可复现 —— 无需 API key、无需网络：
+发布门禁是确定性的、本地可复现 —— 无需 API key、无需网络。第二条 **live agent lane** 捕获真实
+模型驱动的运行（实时搜索）并作为证据提交。两条 lane 从不混用：确定性指标证明**管线正确性**；
+live lane 报告真实基准题上的**真实答案**——包括系统在哪里失败。
+
+### Live Lane —— 真实基准（诚实的数字）
+
+canonical scheduler-v2 agent（实时 LLM + 治理化 web/GitHub/arXiv 搜索 + 全文阅读 + 注入防护）
+在公开基准集的真实题目上运行；每题 bundle、checkpoint、judge 理由均已提交。
+
+| 基准 | 位置 | 结果 |
+| --- | --- | --- |
+| **GAIA 2023 validation** | [`evals/reports/live_benchmarks/gaia_real/`](./evals/reports/live_benchmarks/gaia_real/) | 20 道纯文本题（L1=7, L2=8, L3=5）：**7/20 判卷正确（35%），5/20 精确匹配（25%）**；L1 57% · L2 25% · L3 20%；约 7.1M tokens、$7.1、36 分钟。其中 2 道正确答案来自基准暴露并修复的 critic 崩溃（见错误分析）。 |
+| **BrowseComp** | [`evals/reports/live_benchmarks/browsecomp_real/`](./evals/reports/live_benchmarks/browsecomp_real/) | 官方 1266 题中分层抽样 15 题：真实运行 + 提交每题产物。 |
+| **头对头对比** | [`evals/reports/live_benchmarks/head_to_head/`](./evals/reports/live_benchmarks/head_to_head/) | 同一主题、同一端点/模型、盲评 LLM judge：ours（canonical agent）vs langchain-ai open_deep_research vs gpt-researcher。 |
+| **模型对比** | [`evals/reports/live_benchmarks/model_comparison/`](./evals/reports/live_benchmarks/model_comparison/) | 同一管线跑 3 主题；配置的端点当前只服务一个模型，因此如实记录：harness 就绪 + 一条完整 lane（judge Ø 7.67）+ 端点约束。 |
+| **错误分析** | [`docs/final/ERROR_ANALYSIS.md`](./docs/final/ERROR_ANALYSIS.md) | live lane 的失败分类：critic 崩溃曾消灭 25% 的正确率（已修复并重测）、多跳事实、错误事实选择、结构性不可答的图片题。 |
+
+### 确定性 Lane —— 管线正确性
 
 | 证据 | 位置 | 结果 |
 | --- | --- | --- |
 | 权威 smoke gate | `evals/reports/phase5_local_smoke/` | 5 个 suite × smoke_local，全部 passed |
 | 原生回归 | `evals/reports/native_regression/` | company12/industry12/trusted8/file8/recovery6 passed |
-| 核心指标 | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`、critical claim support precision: `1.0`、citation error rate: `0.0`、policy compliance rate: `1.0` |
+| 核心指标（确定性 lane） | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`、critical claim support precision: `1.0`、citation error rate: `0.0`、policy compliance rate: `1.0`（fixture 运行、按设计 0 provider token——衡量管线正确性，不是答案质量） |
 | 消融实验（多 agent 价值） | `evals/reports/followup_metrics/ablation_summary.md` | 见下表 |
-| 外部 benchmark 适配器 | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
+| **Live agent 运行（真实 LLM + 真实搜索）** | [`evals/reports/live_agent/`](./evals/reports/live_agent/README.md) | 真实 scheduler-v2 job：30 条 accepted claim、28 个冻结来源、12 次治理搜索、23 次 LLM 调用、104K tokens、约 $0.10；bundle + 调度 trace 已提交 |
+| **Live 路线演示（agentic loop）** | [`evals/reports/live_route_demo/`](./evals/reports/live_route_demo/README.md) | 杭州→东莞三种人设（长龙航空畅飞卡、学生票、普通出行）：5 个并行 researcher agent、39 次治理搜索、20 次全文读取（含 12306 官方页）、3 轮反思追问、98 个冻结来源上的 261 条 accepted / 1 条 qualified；planner 覆盖检查自动补上了遗漏的畅飞卡目标；含人工核验的地面真值表 |
+| 外部 benchmark 适配器 | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke（fixture 完整性 lane；真实运行在上面单独、诚实地记录） |
 | 价值计分卡 | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | 完整指标定义与结果 |
 | 实验总结 | [docs/final/EXPERIMENT_SUMMARY.md](./docs/final/EXPERIMENT_SUMMARY.md) | release smoke、native regression、外部组合、后续指标 |
 
@@ -169,15 +188,18 @@ legacy/                   已归档 graph-first runtime（orchestrator-v1 兼容
 ## 当前限制
 
 - 部署形态是小团队 Compose 栈，不是横向扩展的 SaaS control plane。
-- 确定性评测是权威 gate；live provider 质量/成本对比是 roadmap。
+- 确定性评测是管线正确性的权威 gate；live lane 报告真实基准的真实分数（有时很低）与已提交的失败分析。
+  跨模型的质量/成本对比受端点限制：当前配置的端点只服务单一模型（见模型对比报告）。
 - 开放 Web 搜索只能用于发现；关键 claim 仅限受治理的冻结来源。
+- 管线是纯文本的：需要读图的 GAIA 式题目是错误分析中记录在案的失败类别。
 - 记忆是显式 CRUD 加按主题召回；对话自动写入长期记忆是 roadmap。
 
 ## Roadmap
 
 - 在 PostgreSQL/MinIO profile 上实测后，再引入 queue/object-storage adapter。
-- Live provider 正面对比（ours vs open_deep_research vs gpt-researcher），带成本与质量遥测。
-- 扩大 GAIA/BrowseComp 受保护子集覆盖；先审查 integrity findings 再扩展。
+- 扩充 live 基准覆盖（GAIA/BrowseComp 更多题目、多模型多 provider），并用人评 rubric 做更严格的头对头。
+- 多跳事实验证：目标题需要组合 ≥2 个事实时，增加显式 "verify_facts" 校验轮。
+- 支持读图题目（GAIA 图片类）与更长的反射轮数。
 - 人工复核流程支持对已交付 bundle 重新编译或显式标注。
 
 ## 许可证

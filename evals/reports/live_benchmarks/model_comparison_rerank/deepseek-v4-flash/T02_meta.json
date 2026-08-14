@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "RAG（检索增强生成）技术的原理和应用",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T125342Z-b689ddeb",
+  "status": "completed",
+  "claims": 394,
+  "sources": 139,
+  "queries": [
+    "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks Lewis 2020 official paper",
+    "Retrieval-Augmented Generation for Large Language Models: A Survey Gao 2023 Naive Advanced Modular RAG",
+    "RAG survey 2024 2025 Naive RAG Advanced RAG Modular RAG architecture indexing retrieval generation reranking",
+    "RAG retrieval augmented generation official documentation vector database embedding model reranker",
+    "site:ibm.com RAG retrieval augmented generation architecture indexing retrieval generation",
+    "site:aws.amazon.com retrieval augmented generation RAG how it works indexing retrieval generation",
+    "site:learn.microsoft.com retrieval augmented generation RAG architecture components vector database reranking",
+    "Naive RAG Advanced RAG Modular RAG definitions official survey Gao 2023 arxiv 2312.10997",
+    "LangChain vs LlamaIndex vs Haystack RAG framework comparison 2025 features performance",
+    "Microsoft GraphRAG vs vector RAG comparison benchmark evaluation",
+    "LangChain LlamaIndex Haystack GitHub stars contributors community activity",
+    "RAG framework benchmark evaluation report 2025 LangChain LlamaIndex Haystack GraphRAG",
+    "LangChain official documentation retrievers vector stores integrations features",
+    "LlamaIndex official documentation data connectors retrievers vector databases features",
+    "Haystack framework official documentation retrievers vector databases features",
+    "Microsoft GraphRAG official documentation GitHub features architecture",
+    "2026 RAG enterprise knowledge management real-world deployment case study results",
+    "RAG retrieval augmented generation healthcare medical industry deployment 2025 2026 case study",
+    "RAG legal finance industry production deployment case study 2025 2026",
+    "RAG retrieval augmented generation enterprise production deployment case study 2025 2026",
+    "Glean enterprise knowledge management RAG deployment case study metrics 2025 2026",
+    "RAG healthcare clinical decision support hospital deployment case study results 2025 2026",
+    "RAG legal document review law firm deployment case study accuracy metrics 2025 2026",
+    "RAG financial services banking deployment case study 2025 2026 production metrics",
+    "RAG vs fine-tuning vs long-context LLM benchmark comparison accuracy cost latency 2025",
+    "retrieval augmented generation vs fine-tuning vs long context models comparative study",
+    "RAG vs fine-tuning cost latency accuracy enterprise LLM comparison study",
+    "RAG vs vector retrieval vs fine-tuning benchmark evaluation knowledge injection",
+    "RAG vs vector search only retrieval benchmark accuracy comparison knowledge base",
+    "RAG vs fine-tuning vs long-context latency end-to-end comparison milliseconds benchmark",
+    "retrieval augmented generation versus vector database retrieval only evaluation study",
+    "RAG latency overhead vs long context LLM inference cost comparison 2025"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-rag-2026-naive-rag-advanced-rag-modu": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-02-2026-rag-langchain-llamaindex-haysta": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-03-2026-rag": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-04-rag-fine-tuning-llm-2026": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 102,
+    "search_calls": 20,
+    "total_input_tokens": 296119,
+    "total_output_tokens": 100360,
+    "total_tokens": 396479,
+    "estimated_cost_usd": 0.3965
+  },
+  "wall_seconds": 298.25
+}

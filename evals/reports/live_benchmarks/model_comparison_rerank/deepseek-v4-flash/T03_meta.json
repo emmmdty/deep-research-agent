@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "多模态大模型的发展现状与趋势",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T125904Z-abb545c0",
+  "status": "completed",
+  "claims": 275,
+  "sources": 129,
+  "queries": [
+    "GPT-5 Gemini 3 Claude 4 发布 参数 规模 基准 测试 2026",
+    "Qwen-VL LLaVA-NeXT 多模态 大模型 开源 参数 2026",
+    "多模态 大模型 2026 官方 技术报告 模型卡 基准 测试",
+    "GPT-5 Gemini 3 Claude 4 图像 视频 音频 理解 生成 能力 2026",
+    "GPT-5 technical report parameters MoE architecture context window MMMU benchmark official",
+    "Gemini 3 model card parameters multimodal video audio understanding generation benchmark scores",
+    "GPT-5.5 OpenAI model card official benchmark MMMU-Pro Video-MME AudioBench",
+    "Gemini 3.1 Pro Google model card official benchmark multimodal capabilities",
+    "multimodal large language model architecture 2024 2025 unified transformer MoE native multimodal training survey",
+    "multimodal LLM training RLHF DPO instruction tuning contrastive learning 2024 2025",
+    "multimodal model inference efficiency quantization distillation KV cache long context 2024 2025",
+    "GPT-4o Gemini 1.5 native multimodal long context technical report 2024",
+    "Gemini 1.5 2.0 mixture of experts MoE architecture native multimodal technical report",
+    "unified transformer multimodal tokenization interleaved sequence modeling attention mechanism GPT-4o Gemini architecture",
+    "DeepSeek-VL MoE sparse mixture of experts multimodal architecture",
+    "native multimodal training unified token space modality alignment architecture 2024 2025",
+    "GPT-5 Gemini 3 Claude 4 multimodal benchmark comparison MMMU MMBench 2026",
+    "Qwen-VL InternVL 2026 multimodal benchmark performance MMMU video understanding",
+    "multimodal LLM benchmark comparison 2026 MMMU MMBench EvalAI leaderboard",
+    "GPT-5 Gemini 3 Claude 4 pricing latency API multimodal",
+    "Qwen-VL 2026 benchmark MMMU MMBench video understanding scores evaluation",
+    "InternVL 2026 MMMU MMBench benchmark scores comparison closed-source models",
+    "Qwen-VL InternVL open source multimodal benchmark leaderboard 2026",
+    "Qwen-VL InternVL 2026 arxiv evaluation visual question answering video understanding",
+    "multimodal large language models 2025 trends challenges real-time interaction embodied AI edge deployment survey",
+    "multimodal LLM safety alignment data scarcity evaluation benchmarks 2025 NeurIPS CVPR ICML outlook",
+    "multimodal AI 2025 industry report white paper trends embodied intelligence edge deployment roadmap",
+    "multimodal agents 2025-2026 key breakthroughs roadmap official report",
+    "Stanford AI Index 2025 multimodal foundation models trends report",
+    "OpenAI GPT-5o real-time multimodal voice video streaming latency technical report 2025",
+    "Google Gemini 2.0 real-time multimodal interaction streaming low latency 2025",
+    "multimodal large language model 2025 survey real-time interaction embodied AI edge deployment challenges"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2026-gpt-5-gemini-3-claude-4-qwen-vl": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-02-2024-2026-transformer-moe-rlhf-dpo": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-03-2026-gpt-5-gemini-3-claude-4-qwen-vl": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-04-2025-2026-1-2-neurips-cvpr-icml": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 96,
+    "search_calls": 20,
+    "total_input_tokens": 326510,
+    "total_output_tokens": 91966,
+    "total_tokens": 418476,
+    "estimated_cost_usd": 0.4185
+  },
+  "wall_seconds": 265.27
+}

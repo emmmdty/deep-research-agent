@@ -24,10 +24,18 @@ This is the recommended reading order for GitHub reviewers.
 
 ## Benchmark Evidence
 
+- [`evals/reports/live_benchmarks/gaia_real/`](../evals/reports/live_benchmarks/gaia_real/) - real GAIA 2023 validation run (20 Qs) with per-question bundles.
+- [`evals/reports/live_benchmarks/browsecomp_real/`](../evals/reports/live_benchmarks/browsecomp_real/) - real BrowseComp run (15 Qs).
+- [`evals/reports/live_benchmarks/head_to_head/`](../evals/reports/live_benchmarks/head_to_head/) - ours vs open_deep_research vs gpt-researcher, blind judge.
+- [`docs/final/ERROR_ANALYSIS.md`](./final/ERROR_ANALYSIS.md) - failure taxonomy of the live lane.
 - [`evals/reports/phase5_local_smoke/release_manifest.json`](../evals/reports/phase5_local_smoke/release_manifest.json) - authoritative merge-safe gate.
 - [`evals/reports/native_regression/native_summary.json`](../evals/reports/native_regression/native_summary.json) - deterministic native regression summary.
 - [`docs/benchmarks/README.md`](./benchmarks/README.md) - layered native and external benchmark docs.
 - [`docs/benchmarks/PORTFOLIO.md`](./benchmarks/PORTFOLIO.md) - external benchmark portfolio boundaries.
+
+## Interview Prep
+
+- [`docs/final/PORTFOLIO_STORY.md`](./final/PORTFOLIO_STORY.md) - pitch, claims/caveats, resume bullets, likely interview questions.
 
 ## Archived Code
 
