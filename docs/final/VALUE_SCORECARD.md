@@ -7,6 +7,18 @@
 - Baseline manifest: `evals/reports/phase5_local_smoke/release_manifest.json`
 - Follow-up metrics root: `evals/reports/followup_metrics`
 
+## Eval Lanes
+
+Two distinct evidence lanes, never conflated:
+
+1. **Deterministic smoke lane** (credential-free, reproducible): fixtures exercise the
+   runtime contract — completion, cancel/retry/resume/stale recovery, audit gates,
+   bundle emission. Zero provider tokens are consumed by design; all `1.0` metrics
+   below describe pipeline determinism, not model quality.
+2. **Live agent lane**: a real model-driven scheduler-v2 run with live web/GitHub/
+   arXiv search. Evidence: `evals/reports/live_agent/` (real bundle, real trace,
+   30 accepted claims over 28 frozen sources, ~$0.10, 104K tokens).
+
 ## Benchmark Layering
 
 - authoritative release gate: native Phase 5 local smoke pack under `evals/reports/phase5_local_smoke/`

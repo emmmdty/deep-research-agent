@@ -241,7 +241,7 @@ function compileDigest(question: string, plan: LivePlan, sources: LiveSource[]):
     "## 说明",
     "",
     "- 每条摘录均来自真实检索结果，可点击来源链接核验",
-    "- 完整的系统（多 agent 研究：模型规划、并行研究、证据审计）在仓库中实现，本地运行需要配置模型凭据，详见 README",
+    "- 完整的系统（多 agent 研究：模型规划、并行研究、证据审计）在仓库中实现：内置真实 LLM agent 组合（`deep_research_agent/agents/`），配置模型凭据后即可运行，并已提交真实运行证据（`evals/reports/live_agent/`），详见 README",
   ].join("\n");
 }
 

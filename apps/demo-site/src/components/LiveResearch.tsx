@@ -43,7 +43,9 @@ export function LiveResearch({ question }: { question: string }) {
         <strong>关于在线体验的说明：</strong>
         多 agent 系统以 LLM 为大脑——规划、检索决策、总结与审计都依赖模型。本在线页面未配置模型，
         因此下方执行的是<strong>多源检索工具</strong>（固定规则查询 + 摘录汇编），<strong>不是 agent 系统</strong>。
-        完整的系统（多 agent 研究、证据审计、报告交付）在仓库中实现，本地运行需要配置模型凭据。
+        完整的系统（多 agent 研究、证据审计、报告交付）在仓库中实现：内置真实 LLM agent 组合与
+        受治理的联网检索（Tavily / GitHub / arXiv），配置模型凭据后即可复现（真实运行证据见
+        `evals/reports/live_agent/`，详见 README）。
       </div>
 
       <div className="live-toolbar">

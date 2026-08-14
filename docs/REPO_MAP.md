@@ -14,7 +14,7 @@ the canonical runtime lives under `src/deep_research_agent/`.
 
 | Path | Classification | Meaning |
 | --- | --- | --- |
-| `src/deep_research_agent/` | canonical | The one implementation source of truth: gateway, orchestration, kernel, auditor, reporting, product, corpus, providers, evals. |
+| `src/deep_research_agent/` | canonical | The one implementation source of truth: agents, gateway, orchestration, kernel, auditor, reporting, product, corpus, providers, evals. |
 | `main.py` | canonical | Thin CLI wrapper around `deep_research_agent.gateway.cli`. |
 | `apps/` | UI roots | `apps/gui-web/` (React product workspace), `apps/demo-site/` (static GitHub Pages demo), `apps/desktop-tauri/` (experimental desktop shell). |
 | `desktop/` | retired path | The former `desktop/tauri/` wrapper moved to `apps/desktop-tauri/`; no current code lives at this root. |
@@ -75,6 +75,7 @@ If they exist in a local checkout, treat them as private development notes, not 
 | `evals/reports/native_regression/` | Deterministic reviewer regression evidence. |
 | `evals/reports/followup_metrics/` | Derived value-pack artifacts retained at this path because tests and final docs assert repo-relative artifact paths. |
 | `evals/reports/native_optimization/` | Derived before/after optimization artifacts retained at this path because tests and native benchmark docs assert repo-relative artifact paths. |
+| `evals/reports/live_agent/` | Live model-driven run evidence: real LLM planner/researcher/critic over governed real-time search; bundle, scheduler checkpoints, and run summary committed. |
 
 ## Boundary Rules
 
