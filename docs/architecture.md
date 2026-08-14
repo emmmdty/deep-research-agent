@@ -87,6 +87,27 @@ Own the V2 contracts and execution path:
 - deterministic merge and evidence audit; unsupported critical claims cannot enter summaries
 - versioned `ReportBundleV2` with exact source-version and evidence-span locators
 
+### `src/deep_research_agent/agents/`
+
+Own the model-driven agent roles (planner / researcher / critic):
+
+- `planner.py` — model decomposes the brief into sub-objectives with a deterministic
+  fallback; a **required-objective coverage check** appends deterministic tasks for any
+  requested objective the model missed (character-bigram fuzzy match on objectives)
+- `researcher.py` — a native **function-calling agentic loop**: `plan_queries()` proposes
+  queries with a per-query tool choice; the governed tool gateway executes them;
+  `assess_coverage()` reflects on whether the evidence answers the objective and issues
+  follow-up queries for uncovered gaps; `select_pages()` picks URLs whose full content the
+  `fetch_page` tool then reads and chunks; `submit_claims()` returns schema-constrained
+  claims where every quote must be verbatim in its source (longest-verbatim-span matcher,
+  otherwise the claim is dropped). Chat clients without function-calling support degrade
+  to prompt-based JSON extraction
+- `critic.py` — contradiction review over grounded evidence spans, then report synthesis
+- `llm.py` — OpenAI-compatible client with native `tools` API support (multi-turn parallel
+  tool loop), prompt-based JSON extraction, budget-widening and direct-answer retries for
+  thinking models, and an optional `LLM_DISABLE_THINKING` extra-body switch for providers
+  whose reasoning mode burns the whole output budget
+
 ### `src/deep_research_agent/product/`, `corpus/`, and `memory_v2/`
 
 Own product persistence and user boundaries:

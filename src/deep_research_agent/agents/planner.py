@@ -25,7 +25,9 @@ _PLANNER_SYSTEM_PROMPT = (
 )
 
 _DEFAULT_OBJECTIVE_CAP = 4
-_MAX_TOOL_CALLS_PER_TASK = 6
+# Budget covers the agentic loop: up to 2 search rounds × 4 queries + 3 full-page
+# fetches. The tool gateway enforces this as the hard cap per task.
+_MAX_TOOL_CALLS_PER_TASK = 16
 
 
 class LLMResearchPlanner:
@@ -47,11 +49,30 @@ class LLMResearchPlanner:
         self._fallback = fallback or ResearchPlanner()
         self._max_objectives = max_objectives
 
-    def plan(self, brief: ResearchBrief, domain_pack: DomainPack) -> ResearchDAG:
+    def plan(
+        self,
+        brief: ResearchBrief,
+        domain_pack: DomainPack,
+        *,
+        require_objectives: list[str] | tuple[str, ...] = (),
+    ) -> ResearchDAG:
         objectives = self._model_objectives(brief)
         if not objectives:
             logger.info("LLM planner unavailable; falling back to deterministic planning")
             return self._ensure_tool_budget(self._fallback.plan(brief, domain_pack))
+        required = [objective for objective in (require_objectives or brief.objectives) if objective]
+        missing = [
+            objective
+            for objective in required
+            if not self._objective_covered(objective, objectives)
+        ]
+        if missing:
+            logger.info(
+                "LLM planner missed {} required objective(s); appending deterministic tasks: {}",
+                len(missing),
+                missing,
+            )
+            objectives = [*objectives, *missing]
         return self._compile_dag(brief, objectives)
 
     @staticmethod
@@ -105,6 +126,36 @@ class LLMResearchPlanner:
         if not objectives:
             return None
         return objectives[: self._max_objectives]
+
+    @staticmethod
+    def _shingles(text: str) -> set[str]:
+        """Character bigrams for fuzzy coverage matching of short objectives."""
+
+        normalized = re.sub(r"\s+", "", text).casefold()
+        return {normalized[index : index + 2] for index in range(len(normalized) - 1)}
+
+    @classmethod
+    def _objective_covered(cls, required: str, planned: list[str]) -> bool:
+        """True when a required objective is effectively covered by a planned one.
+
+        Matches on substring containment or a substantial character-bigram
+        overlap, so model rewordings of a requested objective still count.
+        """
+
+        normalized = required.casefold().strip()
+        required_shingles = cls._shingles(required)
+        if not required_shingles:
+            return True
+        for candidate in planned:
+            if normalized in candidate.casefold():
+                return True
+            candidate_shingles = cls._shingles(candidate)
+            if not candidate_shingles:
+                continue
+            overlap = len(required_shingles & candidate_shingles) / len(required_shingles)
+            if overlap >= 0.35:
+                return True
+        return False
 
     @staticmethod
     def _compile_dag(brief: ResearchBrief, objectives: list[str]) -> ResearchDAG:

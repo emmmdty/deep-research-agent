@@ -1,16 +1,28 @@
-"""Minimal OpenAI-compatible chat client with JSON extraction and token accounting."""
+"""Minimal OpenAI-compatible chat client with JSON extraction and token accounting.
+
+The client exposes two interaction styles:
+
+- ``chat`` / ``chat_json`` — plain completions with prompt-based JSON extraction
+  (works on every provider, including those without a JSON mode).
+- ``chat_with_tools`` / ``tool_loop`` — native function calling via the
+  ``tools`` API. ``tool_loop`` owns the multi-turn loop: the model proposes
+  tool calls, the caller executes them, results are fed back as ``tool``
+  messages, and the loop repeats until the model answers or the round cap is
+  hit. Parallel tool calls from one assistant turn are supported.
+"""
 
 from __future__ import annotations
 
 import json
 import re
-from typing import Any
+from dataclasses import dataclass, field
+from typing import Any, Protocol, runtime_checkable
 
 from loguru import logger
+
 from openai import AsyncOpenAI
 
 from deep_research_agent.observability.cost_tracker import get_tracker
-
 
 class LLMChatError(RuntimeError):
     """Raised when a model call cannot produce a usable response."""
@@ -70,6 +82,90 @@ def _extract_balanced_json(text: str) -> Any:
     return None
 
 
+@dataclass(frozen=True)
+class ToolCallRecord:
+    """One tool call the model proposed, with its parsed arguments."""
+
+    call_id: str
+    name: str
+    arguments: dict[str, Any]
+    round: int
+
+
+@dataclass
+class ToolLoopResult:
+    """Transcript of a multi-turn function-calling loop."""
+
+    content: str | None = None
+    tool_calls: list[ToolCallRecord] = field(default_factory=list)
+    rounds: int = 0
+
+    @property
+    def tool_names(self) -> list[str]:
+        return [call.name for call in self.tool_calls]
+
+    def calls_of(self, name: str) -> list[ToolCallRecord]:
+        return [call for call in self.tool_calls if call.name == name]
+
+    def first_arguments(self, name: str) -> dict[str, Any] | None:
+        for call in self.tool_calls:
+            if call.name == name:
+                return call.arguments
+        return None
+
+
+@runtime_checkable
+class ToolLoopChat(Protocol):
+    """Capability marker: a chat client that supports native function calling.
+
+    Deterministic fakes and provider adapters without tool support simply omit
+    ``tool_loop``; agent roles check this protocol and degrade gracefully.
+    """
+
+    @property
+    def model_name(self) -> str: ...
+
+    async def tool_loop(
+        self,
+        *,
+        system: str,
+        user: str,
+        tools: list[dict[str, Any]],
+        execute_tool: Any,
+        max_rounds: int = 3,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> ToolLoopResult: ...
+
+
+def _parse_tool_arguments(raw: Any) -> dict[str, Any]:
+    if isinstance(raw, dict):
+        return raw
+    if isinstance(raw, str) and raw.strip():
+        try:
+            value = json.loads(raw)
+        except json.JSONDecodeError:
+            return {}
+        return value if isinstance(value, dict) else {}
+    return {}
+
+
+def _canonical_tool_definitions(tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return tool definitions in the provider wire format (dict)."""
+
+    canonical: list[dict[str, Any]] = []
+    for tool in tools:
+        if isinstance(tool, dict) and tool.get("type") == "function":
+            canonical.append(tool)
+        elif isinstance(tool, dict) and "function" in tool:
+            canonical.append(tool)
+        elif isinstance(tool, dict):
+            canonical.append(
+                {"type": "function", "function": {"name": tool["name"], "parameters": tool.get("parameters", {})}}
+            )
+    return canonical
+
+
 class LLMChat:
     """OpenAI-compatible chat helper bound to the configured default provider."""
 
@@ -92,10 +188,33 @@ class LLMChat:
             base_url=str(self._model["base_url"] or None),
             timeout=timeout_seconds,
         )
+        # Thinking models (e.g. DeepSeek reasoning variants) can burn the whole
+        # output budget on reasoning and return empty content; the endpoint lets
+        # us disable thinking explicitly for deterministic agent steps.
+        self._thinking_disabled = bool(
+            getattr(resolved_settings, "llm_disable_thinking", False)
+        )
 
     @property
     def model_name(self) -> str:
         return str(self._model["model"])
+
+    def _request_kwargs(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        max_tokens: int | None,
+        temperature: float | None,
+    ) -> dict[str, Any]:
+        kwargs: dict[str, Any] = {
+            "model": self._model["model"],
+            "messages": messages,
+            "temperature": self._model["temperature"] if temperature is None else temperature,
+            "max_tokens": max_tokens or int(self._model.get("max_tokens") or 4096),
+        }
+        if self._thinking_disabled:
+            kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+        return kwargs
 
     async def chat(
         self,
@@ -107,15 +226,14 @@ class LLMChat:
     ) -> str:
         """Run one chat completion and record usage on the global tracker."""
 
-        kwargs: dict[str, Any] = {
-            "model": self._model["model"],
-            "messages": [
+        kwargs = self._request_kwargs(
+            [
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},
             ],
-            "temperature": self._model["temperature"] if temperature is None else temperature,
-            "max_tokens": max_tokens or int(self._model.get("max_tokens") or 4096),
-        }
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
         last_error: Exception | None = None
         budget_attempts = 0
         for attempt in range(1, 4):
@@ -130,17 +248,34 @@ class LLMChat:
                 if not content.strip():
                     details = usage.completion_tokens_details
                     reasoning = details.reasoning_tokens if details else 0
-                    if reasoning and int(reasoning or 0) >= int(kwargs["max_tokens"]):
-                        # Thinking models sometimes consume the entire token
+                    budget = int(kwargs["max_tokens"])
+                    if reasoning and int(reasoning or 0) >= budget * 0.9:
+                        # Thinking models often consume nearly the entire token
                         # budget on reasoning; widen the budget and retry.
                         if budget_attempts < 2:
-                            kwargs["max_tokens"] = min(int(kwargs["max_tokens"]) * 2, 16384)
+                            kwargs["max_tokens"] = min(budget * 2, 16384)
                             budget_attempts += 1
                             logger.warning(
                                 "LLM reasoning consumed the token budget; widening to {} and retrying",
                                 kwargs["max_tokens"],
                             )
                             continue
+                        # The model's reasoning can grow to fill any budget. Reset
+                        # the budget and ask for a direct answer without reasoning.
+                        kwargs["max_tokens"] = max_tokens or int(self._model.get("max_tokens") or 4096)
+                        kwargs["messages"] = [
+                            {"role": "system", "content": system},
+                            {
+                                "role": "user",
+                                "content": user
+                                + "\n\nIMPORTANT: Answer immediately with the final "
+                                "content only. Do not think step by step or reason aloud.",
+                            },
+                        ]
+                        logger.warning(
+                            "LLM reasoning overflowed the widened budget; retrying with a direct-answer instruction"
+                        )
+                        continue
                     raise LLMChatError(
                         f"model returned empty content (prompt_tokens={usage.prompt_tokens}, "
                         f"completion_tokens={usage.completion_tokens}, "
@@ -188,3 +323,150 @@ class LLMChat:
         if not isinstance(value, dict):
             raise LLMChatError("model JSON response is not an object")
         return value
+
+    async def chat_with_tools(
+        self,
+        *,
+        system: str,
+        user: str,
+        tools: list[dict[str, Any]],
+        tool_choice: Any = "auto",
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> dict[str, Any]:
+        """One completion with the provider's native ``tools`` API.
+
+        Returns ``{"content": str | None, "tool_calls": [ToolCallRecord, ...]}``.
+        Raises ``LLMChatError`` on unrecoverable provider failures so callers
+        can fall back to prompt-based JSON extraction.
+        """
+
+        kwargs = self._request_kwargs(
+            [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        kwargs["tools"] = _canonical_tool_definitions(tools)
+        kwargs["tool_choice"] = tool_choice
+        last_error: Exception | None = None
+        for attempt in range(1, 4):
+            try:
+                response = await self._client.chat.completions.create(**kwargs)
+                usage = response.usage
+                get_tracker().record_llm_call(
+                    input_tokens=int(usage.prompt_tokens or 0),
+                    output_tokens=int(usage.completion_tokens or 0),
+                )
+                message = response.choices[0].message
+                tool_calls = [
+                    ToolCallRecord(
+                        call_id=str(call.id or f"call-{index}"),
+                        name=str(call.function.name or ""),
+                        arguments=_parse_tool_arguments(call.function.arguments),
+                        round=0,
+                    )
+                    for index, call in enumerate(message.tool_calls or [])
+                ]
+                return {
+                    "content": message.content or None,
+                    "tool_calls": tool_calls,
+                }
+            except Exception as exc:  # network and API retryable failures
+                if _is_rate_limit(exc):
+                    raise LLMChatError(f"LLM rate limit reached: {exc}") from exc
+                last_error = exc
+                logger.warning("LLM tool call attempt {} failed: {}", attempt, exc)
+        raise LLMChatError(f"LLM tool call failed after 3 attempts: {last_error}")
+
+    async def tool_loop(
+        self,
+        *,
+        system: str,
+        user: str,
+        tools: list[dict[str, Any]],
+        execute_tool: Any,
+        max_rounds: int = 3,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+    ) -> ToolLoopResult:
+        """Own the multi-turn tool loop: propose calls, execute, feed back.
+
+        Each assistant turn may contain several parallel tool calls; every call
+        is executed and its JSON result is appended as a ``tool`` message before
+        the next completion. The loop ends when the model answers with plain
+        content, when no tool calls are proposed, or when ``max_rounds`` is hit.
+        """
+
+        messages: list[dict[str, Any]] = [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ]
+        recorded: list[ToolCallRecord] = []
+        canonical_tools = _canonical_tool_definitions(tools)
+        for round_index in range(1, max_rounds + 1):
+            request_kwargs = self._request_kwargs(
+                messages,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            request_kwargs["tools"] = canonical_tools
+            request_kwargs["tool_choice"] = "auto"
+            try:
+                response = await self._client.chat.completions.create(**request_kwargs)
+            except Exception as exc:
+                if _is_rate_limit(exc):
+                    raise LLMChatError(f"LLM rate limit reached: {exc}") from exc
+                logger.warning("LLM tool loop round {} failed: {}", round_index, exc)
+                if round_index < max_rounds:
+                    continue
+                raise LLMChatError(
+                    f"LLM tool loop failed after {max_rounds} attempts: {exc}"
+                ) from exc
+            usage = response.usage
+            get_tracker().record_llm_call(
+                input_tokens=int(usage.prompt_tokens or 0),
+                output_tokens=int(usage.completion_tokens or 0),
+            )
+            message = response.choices[0].message
+            proposed = [
+                ToolCallRecord(
+                    call_id=str(call.id or f"call-{round_index}-{index}"),
+                    name=str(call.function.name or ""),
+                    arguments=_parse_tool_arguments(call.function.arguments),
+                    round=round_index,
+                )
+                for index, call in enumerate(message.tool_calls or [])
+            ]
+            if not proposed:
+                return ToolLoopResult(content=message.content or None, tool_calls=recorded, rounds=round_index)
+            recorded.extend(proposed)
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": message.content,
+                    "tool_calls": [
+                        {
+                            "id": call.call_id,
+                            "type": "function",
+                            "function": {"name": call.name, "arguments": json.dumps(call.arguments, ensure_ascii=False)},
+                        }
+                        for call in proposed
+                    ],
+                }
+            )
+            for call in proposed:
+                try:
+                    result = await execute_tool(call.name, call.arguments)
+                except Exception as exc:
+                    result = {"error": str(exc) or type(exc).__name__}
+                messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": call.call_id,
+                        "content": json.dumps(result, ensure_ascii=False, default=str),
+                    }
+                )
+        return ToolLoopResult(content=None, tool_calls=recorded, rounds=max_rounds)

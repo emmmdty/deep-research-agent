@@ -21,6 +21,10 @@ from deep_research_agent.orchestration.workers import (
 )
 
 _MAX_SUMMARY_CLAIMS = 5
+# The synthesis digest grows with parallel researcher outputs; keep a generous
+# budget so long reports are not truncated mid-sentence.
+_REPORT_MAX_TOKENS = 8192
+_REVIEW_MAX_TOKENS = 8192
 
 
 class LLMCriticWorker:
@@ -123,7 +127,7 @@ class LLMCriticWorker:
                 '"rationale_evidence_ids": ["span-id"], "rationale": "..."}]}'
             ),
             user=f"Claims:\n{claim_digest}\n\nEvidence spans:\n{span_digest}",
-            max_tokens=4096,
+            max_tokens=_REVIEW_MAX_TOKENS,
             temperature=0.0,
         )
         known_span_ids = set(span_index)
@@ -183,7 +187,7 @@ class LLMCriticWorker:
             ),
             user=f"Topic: {task.objective}\n\nClaims:\n{claim_digest}\n"
             f"\nCritic decisions:\n{decision_digest or '(none)'}",
-            max_tokens=4096,
+            max_tokens=_REPORT_MAX_TOKENS,
             temperature=0.0,
         )
         return markdown.strip()

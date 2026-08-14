@@ -16,6 +16,7 @@ from deep_research_agent.agents.critic import LLMCriticWorker
 from deep_research_agent.agents.researcher import LLMResearcherWorker
 from deep_research_agent.connectors.tools.arxiv_search import search_arxiv_papers
 from deep_research_agent.connectors.tools.github_search import search_github_repositories
+from deep_research_agent.connectors.tools.page_fetch import fetch_page
 from deep_research_agent.connectors.tools.web_search import search_web
 from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
@@ -47,7 +48,14 @@ def _arxiv_search_handler(arguments: dict[str, Any], context) -> list[dict[str, 
     )
 
 
-def _read_only_tool_spec(name: str, roles: tuple[str, ...]) -> ToolSpec:
+def _fetch_page_handler(arguments: dict[str, Any], context) -> dict[str, object]:
+    return fetch_page(
+        str(arguments.get("url", "")),
+        max_chars=int(arguments.get("max_chars", 12_000)),
+    )
+
+
+def _read_only_tool_spec(name: str, roles: tuple[str, ...], *, cache_ttl_seconds: float = 3600.0) -> ToolSpec:
     return ToolSpec(
         name=name,
         allowed_roles=roles,
@@ -56,7 +64,7 @@ def _read_only_tool_spec(name: str, roles: tuple[str, ...]) -> ToolSpec:
         max_retries=1,
         retry_safety="read_only",
         cache_scope="job",
-        cache_ttl_seconds=3600.0,
+        cache_ttl_seconds=cache_ttl_seconds,
         max_inline_result_bytes=200_000,
     )
 
@@ -68,6 +76,10 @@ def build_gateway() -> ToolGateway:
     registry.register(_read_only_tool_spec("web_search", ("researcher",)), _web_search_handler)
     registry.register(_read_only_tool_spec("github_search", ("researcher",)), _github_search_handler)
     registry.register(_read_only_tool_spec("arxiv_search", ("researcher",)), _arxiv_search_handler)
+    registry.register(
+        _read_only_tool_spec("fetch_page", ("researcher",), cache_ttl_seconds=1800.0),
+        _fetch_page_handler,
+    )
     return ToolGateway(registry=registry)
 
 

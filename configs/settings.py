@@ -63,6 +63,11 @@ class Settings(BaseSettings):
         default=4096,
         description="LLM 最大输出 token 数",
     )
+    llm_disable_thinking: bool = Field(
+        default=False,
+        description="向支持 thinking 模式的端点发送 extra_body 关闭推理（deepseek 等模型"
+        "推理会吃掉整个 token 预算导致空输出，关闭后更可靠、更快、更便宜）",
+    )
     openai_api_key: Optional[str] = Field(default=None, description="OpenAI API 密钥")
     openai_model_name: str = Field(default="gpt-4o-mini", description="OpenAI 默认模型")
     anthropic_api_key: Optional[str] = Field(default=None, description="Anthropic API 密钥")

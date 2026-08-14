@@ -76,6 +76,7 @@ If they exist in a local checkout, treat them as private development notes, not 
 | `evals/reports/followup_metrics/` | Derived value-pack artifacts retained at this path because tests and final docs assert repo-relative artifact paths. |
 | `evals/reports/native_optimization/` | Derived before/after optimization artifacts retained at this path because tests and native benchmark docs assert repo-relative artifact paths. |
 | `evals/reports/live_agent/` | Live model-driven run evidence: real LLM planner/researcher/critic over governed real-time search; bundle, scheduler checkpoints, and run summary committed. |
+| `evals/reports/live_route_demo/` | Live agentic-loop route demo (Hangzhou→Dongguan, three personas): function-calling researcher loop, reflection follow-ups, full-page reads, 261 accepted claims; bundle, report, run summary, and scheduler checkpoints committed. |
 
 ## Boundary Rules
 

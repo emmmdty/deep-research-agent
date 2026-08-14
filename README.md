@@ -66,12 +66,17 @@ auditor, connectors, llm, policies, evaluation, research_policy). See [Repositor
 ## How A Research Job Runs
 
 ```
-user topic → LLMResearchPlanner.plan() [deterministic fallback] → ResearchDAG
+user topic → LLMResearchPlanner.plan() [deterministic fallback; required-objective
+   coverage check appends any objectives the model missed] → ResearchDAG
    (research tasks ∥ critic task)
    → ResearchScheduler.run() [bounded asyncio, ≤8 workers, typed TaskSpec/WorkerOutput]
-   → LLMResearcherWorker: model proposes queries → ToolGateway
-     (governed Tavily web / GitHub / arXiv search, budget + idempotency)
-     → model extracts claims, each grounded by a verbatim evidence span
+   → LLMResearcherWorker — native function-calling agentic loop:
+       plan_queries() → governed ToolGateway (web/GitHub/arXiv, budget+idempotency)
+       → assess_coverage() reflection → follow-up queries when evidence is thin
+       → select_pages() → governed fetch_page() full-document reading → chunking
+       → submit_claims() schema-constrained extraction, every claim grounded in a
+         verbatim evidence span (longest-verbatim-span matcher, else claim dropped)
+     [chat clients without function calling degrade to prompt-based JSON extraction]
    → LLMCriticWorker: contradiction review (grounded CriticDecisions)
      → deterministic EvidenceReducer + EvidenceAuditor audit
    → ReportBundleCompilerV2.compile() → report_bundle.json + report.md/html
@@ -98,6 +103,7 @@ prove the agent executes against real providers.
 | Headline metrics (deterministic lane) | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`, critical claim support precision: `1.0`, citation error rate: `0.0`, policy compliance rate: `1.0` (fixture runs, 0 provider tokens by design) |
 | Ablations (multi-agent value) | `evals/reports/followup_metrics/ablation_summary.md` | see table below |
 | **Live agent run (real LLM + real search)** | [`evals/reports/live_agent/`](./evals/reports/live_agent/README.md) | real scheduler-v2 job: 30 accepted claims over 28 frozen sources, 12 governed search calls, 23 LLM calls, 104K tokens, ~$0.10; bundle + scheduler trace committed |
+| **Live route demo (agentic loop)** | [`evals/reports/live_route_demo/`](./evals/reports/live_route_demo/README.md) | Hangzhou→Dongguan routing with three personas (Loong Air 365 flight pass, student ticket, general): 5 parallel researcher agents, 39 governed searches, 20 full-page reads (incl. 12306 official pages), 3 reflection follow-up rounds, 261 accepted claims / 1 qualified over 98 frozen sources; planner coverage check auto-added the missed Loong Air objective; human-verified ground-truth table included |
 | External benchmark adapters | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
 | Value scorecard | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | full metric definitions and results, split into deterministic vs live lanes |
 | Experiment summary | [docs/final/EXPERIMENT_SUMMARY.md](./docs/final/EXPERIMENT_SUMMARY.md) | release smoke, native regression, external portfolio, follow-up metrics |

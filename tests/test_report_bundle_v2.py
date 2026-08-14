@@ -529,3 +529,71 @@ def test_legacy_bundle_loader_preserves_old_artifact_reads(tmp_path) -> None:
     loaded = load_report_bundle(path)
 
     assert loaded == legacy
+
+
+def test_bundle_merges_semantic_duplicates_across_parallel_tasks() -> None:
+    """Identical claims from two parallel researcher tasks merge without conflicts."""
+    span_a = _span("span-a")
+    span_b = _span("span-b")
+    claim_a = _claim("claim-a", "accepted", spans=[span_a])
+    claim_b = _claim("claim-b", "accepted", spans=[span_b])
+    packets = [
+        EvidencePacket(
+            packet_id="packet-a",
+            task_id="research-a",
+            evidence_spans=[span_a],
+            claims=[claim_a],
+            artifacts=[_source().model_copy(update={"artifact_id": "source-a"})],
+        ),
+        EvidencePacket(
+            packet_id="packet-b",
+            task_id="research-b",
+            evidence_spans=[span_b],
+            claims=[claim_b],
+            artifacts=[_source().model_copy(update={"artifact_id": "source-b"})],
+        ),
+    ]
+
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Findings",
+        claims=[claim_a, claim_b],
+        evidence_packets=packets,
+        research_graph=_graph("span-a"),
+        sources=[],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    claim_ids = {
+        claim.claim_id for claim in [*bundle.accepted_claims, *bundle.qualified_claims]
+    }
+    assert "claim-a" in claim_ids
+    assert "claim-b" not in claim_ids, "merged sibling must not re-enter the bundle"
+    canonical = next(
+        claim for claim in bundle.accepted_claims if claim.claim_id == "claim-a"
+    )
+    assert {span.span_id for span in canonical.evidence_spans} == {"span-a", "span-b"}
+
+
+def test_bundle_still_rejects_genuinely_conflicting_claim_definitions() -> None:
+    span = _span()
+    claim = _claim("claim-1", "accepted", critical=True, spans=[span])
+    conflicting = claim.model_copy(update={"claim": "A totally different claim text."})
+    packet = EvidencePacket(
+        packet_id="packet-1",
+        task_id="collect-1",
+        evidence_spans=[span],
+        claims=[claim],
+        artifacts=[_source()],
+    )
+
+    with pytest.raises(ValueError, match="conflicting claim definition"):
+        ReportBundleCompilerV2().compile(
+            report_markdown="# Findings",
+            claims=[conflicting],
+            evidence_packets=[packet],
+            research_graph=_graph(),
+            sources=[],
+            corpus_manifest=_manifest(),
+            run_manifest={"job_id": "job-1"},
+        )

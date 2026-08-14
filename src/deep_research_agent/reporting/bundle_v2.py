@@ -50,10 +50,35 @@ class ReportBundleCompilerV2:
         critic_decisions = list(critic_decisions)
         reduced = self._reducer.reduce(packets, critic_decisions=critic_decisions)
         claim_by_id = {claim.claim_id: claim for claim in reduced.claims}
+        merged_texts = {
+            (claim.claim.casefold(), claim.claim_type, claim.support_status, claim.critical)
+            for claim in reduced.claims
+        }
         for claim in claims:
             existing = claim_by_id.get(claim.claim_id)
             if existing is not None and existing != claim:
-                raise ValueError(f"conflicting claim definition for {claim.claim_id!r}")
+                # The reduced claim is authoritative: semantic dedup may have
+                # merged identical claims across parallel tasks and attached the
+                # union of their evidence spans (text/status never change).
+                merged_spans = {span.span_id for span in existing.evidence_spans}
+                if (
+                    existing.claim != claim.claim
+                    or existing.support_status != claim.support_status
+                    or not {span.span_id for span in claim.evidence_spans} <= merged_spans
+                ):
+                    raise ValueError(
+                        f"conflicting claim definition for {claim.claim_id!r}"
+                    )
+                continue
+            if (
+                claim.claim.casefold(),
+                claim.claim_type,
+                claim.support_status,
+                claim.critical,
+            ) in merged_texts:
+                # Identical to a sibling that semantic dedup merged away; keep
+                # the canonical merged claim only.
+                continue
             claim_by_id[claim.claim_id] = claim
 
         ordered_sources = self._deduplicate_sources([*reduced.artifacts, *sources])

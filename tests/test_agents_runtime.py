@@ -105,6 +105,53 @@ def test_planner_falls_back_on_model_failure() -> None:
     assert [task.task_id for task in dag.tasks] == [task.task_id for task in deterministic.tasks]
 
 
+def test_planner_appends_required_objectives_the_model_missed() -> None:
+    planner = LLMResearchPlanner(
+        chat=FakeChat(
+            [
+                {
+                    "objectives": [
+                        {"title": "A", "question": "What changed for tool use?"},
+                    ]
+                }
+            ]
+        )
+    )
+    brief = _brief()
+    dag = planner.plan(brief, _domain_pack(), require_objectives=["长龙航空畅飞卡的可用航线"])
+    researcher_objectives = [
+        task.objective for task in dag.tasks if task.role == "researcher"
+    ]
+    assert "What changed for tool use?" in researcher_objectives
+    assert any("畅飞卡" in objective for objective in researcher_objectives)
+
+
+def test_planner_does_not_duplicate_covered_required_objectives() -> None:
+    planner = LLMResearchPlanner(
+        chat=FakeChat(
+            [
+                {
+                    "objectives": [
+                        {"title": "A", "question": "学生票的购票规则与折扣比例"},
+                        {"title": "B", "question": "高铁车次与票价"},
+                    ]
+                }
+            ]
+        )
+    )
+    brief = _brief()
+    dag = planner.plan(
+        brief,
+        _domain_pack(),
+        require_objectives=["高铁学生票（学生证）的现行购票规则、折扣比例"],
+    )
+    researcher_objectives = [
+        task.objective for task in dag.tasks if task.role == "researcher"
+    ]
+    assert len(researcher_objectives) == 2
+    assert any("学生票" in objective for objective in researcher_objectives)
+
+
 def test_extract_json_handles_fences_and_prose() -> None:
     assert extract_json('Here you go: ```json\n{"a": 1}\n``` thanks') == {"a": 1}
     assert extract_json('{"a": 1} trailing') == {"a": 1}
