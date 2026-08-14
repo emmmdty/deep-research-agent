@@ -20,6 +20,7 @@ from deep_research_agent.kernel.contracts import (
 )
 from deep_research_agent.orchestration.reducer import EvidenceReducer
 from deep_research_agent.orchestration.reducer import CriticDecision
+from deep_research_agent.reporting.citations import CitationInjector
 
 
 class ReportBundleCompilerV2:
@@ -30,9 +31,11 @@ class ReportBundleCompilerV2:
         *,
         reducer: EvidenceReducer | None = None,
         auditor: EvidenceAuditor | None = None,
+        citations: CitationInjector | None = None,
     ) -> None:
         self._reducer = reducer or EvidenceReducer()
         self._auditor = auditor or EvidenceAuditor()
+        self._citations = citations or CitationInjector()
 
     def compile(
         self,
@@ -119,7 +122,13 @@ class ReportBundleCompilerV2:
         }
         sanitized_report = self._rebuild_executive_summary(
             report_markdown,
-            audit.executive_summary_claims,
+            self._top_executive_summary_claims(audit.executive_summary_claims),
+        )
+        citation_result = self._citations.inject(
+            sanitized_report,
+            supported,
+            span_by_id.values(),
+            ordered_sources,
         )
         audit_summary = {
             "accepted_claim_ids": [claim.claim_id for claim in audit.accepted],
@@ -132,9 +141,10 @@ class ReportBundleCompilerV2:
             "degradations": audit.degradations,
             "semantic_disagreements": reduced.semantic_disagreements,
             "unresolved_claim_ids": audit.unresolved_claim_ids,
+            "report_citation_coverage": citation_result.coverage,
         }
         return ReportBundleV2(
-            report_markdown=sanitized_report,
+            report_markdown=citation_result.markdown,
             accepted_claims=audit.accepted,
             qualified_claims=audit.qualified,
             evidence_matrix=evidence_matrix,
@@ -308,6 +318,21 @@ class ReportBundleCompilerV2:
             if underline is not None:
                 return 1 if underline.group(0)[0] == "=" else 2
         return None
+
+    @staticmethod
+    def _top_executive_summary_claims(
+        claims: Iterable[ClaimRecord],
+        *,
+        cap: int = 5,
+    ) -> list[ClaimRecord]:
+        """Pick the readable executive-summary subset: critical first, then id.
+
+        The auditor passes every supported claim through; rendering them all as
+        summary bullets produces a bullet dump that buries the findings. The
+        cap mirrors the critic's synthesis guidance (3-5 summary bullets).
+        """
+        selected = sorted(claims, key=lambda claim: (not claim.critical, claim.claim_id))
+        return selected[:cap]
 
     @staticmethod
     def _rebuild_executive_summary(

@@ -208,7 +208,13 @@ class LLMCriticWorker:
                 "qualify anything hedged. The report must have sections: "
                 "## Executive Summary (3-5 bullet findings), ## Findings "
                 "(one subsection per finding), ## Evidence Status. Never introduce "
-                "facts not present in the claims."
+                "facts not present in the claims.\n"
+                "Citation requirement: after every sentence in Findings that "
+                "restates a claim, append the marker [[claim:<claim_id>]] (the "
+                "exact id from the Claims list, e.g. [[claim:job:claim:t1:01]]). "
+                "The marker is machine-processed into a numbered reference, so "
+                "place it at the end of the sentence, separated by a single "
+                "space, e.g. \"...as measured. [[claim:job:claim:t1:01]]\"."
             ),
             user=f"Topic: {task.objective}\n\nClaims:\n{claim_digest}\n"
             f"\nCritic decisions:\n{decision_digest or '(none)'}",
@@ -239,7 +245,8 @@ class LLMCriticWorker:
             sorted(claims, key=lambda item: item.claim_id), start=1
         ):
             lines.append(
-                f"{index}. ({claim.support_status}) {claim.claim}"
+                f"{index}. ({claim.support_status}) {claim.claim} "
+                f"[[claim:{claim.claim_id}]]"
             )
         lines.extend(["", "## Evidence Status", ""])
         lines.append(

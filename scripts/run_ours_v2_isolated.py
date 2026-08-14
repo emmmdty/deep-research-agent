@@ -37,12 +37,17 @@ from deep_research_agent.agents.planner import LLMResearchPlanner  # noqa: E402
 from deep_research_agent.agents.critic import LLMCriticWorker  # noqa: E402
 from deep_research_agent.agents.researcher import LLMResearcherWorker  # noqa: E402
 from deep_research_agent.domain_packs.registry import DomainPackRegistry  # noqa: E402
-from deep_research_agent.kernel.contracts import ResearchBrief  # noqa: E402
+from deep_research_agent.kernel.contracts import (  # noqa: E402
+    CorpusManifest,
+    ResearchBrief,
+    ResearchGraph,
+)
 from deep_research_agent.observability.cost_tracker import get_tracker  # noqa: E402
 from deep_research_agent.orchestration.scheduler import (  # noqa: E402
     ResearchScheduler,
     SchedulerJob,
 )
+from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2  # noqa: E402
 
 CONSTRAINTS = {
     "must_cover": ["overview", "analysis", "comparison", "references"],
@@ -98,6 +103,50 @@ async def _run(topic: str) -> tuple[str, dict]:
         for packet in task_result.evidence_packets
         for claim in packet.claims
     ]
+    graph_payload = critic_output.get("research_graph") or {"nodes": [], "edges": []}
+    if isinstance(graph_payload, dict):
+        research_graph = ResearchGraph.model_validate(graph_payload)
+    else:
+        research_graph = graph_payload
+    corpus_manifest = CorpusManifest(
+        manifest_id=f"corpus:{job_id}",
+        document_version_ids=tuple(
+            sorted(
+                {
+                    artifact.metadata.get("document_version_id")
+                    for artifact in sources
+                    if artifact.metadata.get("document_version_id")
+                }
+            )
+        ),
+        content_hashes={
+            artifact.metadata.get("document_version_id"): artifact.content_sha256
+            for artifact in sources
+            if artifact.metadata.get("document_version_id")
+        },
+        critical_claims_allowed={
+            artifact.metadata.get("document_version_id"): True
+            for artifact in sources
+            if artifact.metadata.get("document_version_id")
+        },
+    )
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=report,
+        claims=claims,
+        evidence_packets=[
+            packet
+            for task_result in result.task_results.values()
+            for packet in task_result.evidence_packets
+        ],
+        research_graph=research_graph,
+        sources=sources,
+        corpus_manifest=corpus_manifest,
+        run_manifest={
+            "job_id": job_id,
+            "runtime_path": "scheduler-v2",
+            "comparator": "ours_v2",
+        },
+    )
     tracker = get_tracker().metrics
     meta = {
         "comparator": "ours_v2",
@@ -116,9 +165,10 @@ async def _run(topic: str) -> tuple[str, dict]:
             task_id: task_output.get("injection_stats", {})
             for task_id, task_output in result.task_outputs.items()
         },
+        "report_citation_coverage": dict(bundle.audit_summary.get("report_citation_coverage", {})),
         "cost": tracker.to_dict(),
     }
-    return report, meta
+    return bundle.report_markdown, meta
 
 
 def main() -> None:
