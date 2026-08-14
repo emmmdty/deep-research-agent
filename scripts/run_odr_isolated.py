@@ -23,7 +23,6 @@ import argparse
 import asyncio
 import json
 import os
-import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -47,7 +46,6 @@ def _configure_environment() -> None:
 
 async def run_research(topic: str) -> str:
     """Run the reference Open Deep Research graph and return the final report."""
-    from langchain.chat_models import init_chat_model
     from langchain_core.messages import HumanMessage
 
     # The OpenAI-compatible endpoint used by this repo does not support the
@@ -88,11 +86,6 @@ async def run_research(topic: str) -> str:
     from open_deep_research.deep_researcher import deep_researcher
 
     model_name = os.environ.get("OPENAI_MODEL_NAME", "deepseek-v4-flash")
-    llm = init_chat_model(
-        "openai:" + model_name,
-        api_key=os.environ.get("OPENAI_API_KEY"),
-        max_tokens=4096,
-    )
     configurable_model = "openai:" + model_name
     result = await deep_researcher.ainvoke(
         {"messages": [HumanMessage(content=topic)]},

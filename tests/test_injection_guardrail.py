@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from deep_research_agent.agents.researcher import LLMResearcherWorker
 from deep_research_agent.policy.injection import (
-    InjectionFinding,
     SanitizedContent,
     fence_content,
     sanitize_content,
@@ -129,7 +128,6 @@ def test_digest_fences_snippets_and_keeps_sanitized_text():
 def test_gather_queries_drops_override_sources():
     import asyncio
 
-    from deep_research_agent.agents.llm import ToolLoopResult
     from deep_research_agent.kernel.contracts import TaskSpec
     from deep_research_agent.orchestration.workers import TaskExecutionContext
     from deep_research_agent.tool_gateway.models import ToolResultEnvelope

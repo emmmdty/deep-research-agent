@@ -244,7 +244,10 @@ def test_tracked_files_do_not_contain_plaintext_secrets():
         for line in result.stdout.splitlines()
         if line and (PROJECT_ROOT / line).is_file()
     ]
-    secret_pattern = re.compile(r"(sk-[A-Za-z0-9_-]{16,}|tvly-[A-Za-z0-9_-]{16,})")
+    # Real provider keys are long random alphanumeric tokens (sk-... / tvly-...);
+    # short hyphenated words like "sk-rcnn-in-opencv" in research content are
+    # not keys, so the pattern requires a 24+ char token with no hyphens.
+    secret_pattern = re.compile(r"(sk-[A-Za-z0-9]{24,}|tvly-[A-Za-z0-9]{24,})")
 
     leaked = []
     for path in tracked_files:

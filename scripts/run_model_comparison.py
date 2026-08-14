@@ -143,11 +143,15 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
         total_cost = sum(r["meta"].get("cost", {}).get("estimated_cost_usd", 0.0) for r in finished)
         total_tokens = sum(r["meta"].get("cost", {}).get("total_tokens", 0) for r in finished)
         total_wall = sum(r.get("meta", {}).get("wall_seconds", 0.0) or r.get("wall_seconds", 0.0) for r in model_runs)
+        unsupported = bool(model_runs) and all(
+            "is not supported" in (r.get("error") or "") for r in model_runs
+        )
         rows.append(
             {
                 "model": model,
                 "topics_completed": len(finished),
                 "topics_total": len(model_runs),
+                "endpoint_blocked": unsupported,
                 "avg_judge_overall": round(
                     sum(r["judge"]["overall"] for r in finished) / len(finished), 2
                 )
@@ -194,8 +198,7 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
         "# Multi-Model Comparison — Canonical Scheduler-V2 Agent",
         "",
         "The same live research topics run through the canonical scheduler-v2 pipeline "
-        "under different models (same OpenAI-compatible endpoint family). Every report "
-        "is judged blind by a fixed judge model.",
+        "under different models. Every report is judged blind by a fixed judge model.",
         "",
         f"- Judge model: `{judge_model}`",
         "",
@@ -203,11 +206,26 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in rows:
+        if row.get("endpoint_blocked"):
+            lines.append(
+                f"| {row['model']} | ⛔ endpoint does not serve this model | - | - | - | - | - | - | - |"
+            )
+            continue
         lines.append(
             f"| {row['model']} | {row['topics_completed']}/{row['topics_total']} | "
             f"{row['avg_judge_overall']} | {row['avg_judge_accuracy']} | {row['avg_claims']} | "
             f"{row['avg_sources']} | {row['total_tokens']} | {row['total_cost_usd']} | {row['total_wall_seconds']} |"
         )
+    lines.extend(
+        [
+            "",
+            "> Honesty notes: the OpenAI-compatible endpoint used for this repo's live "
+            "lane currently serves a single model (`deepseek-v4-flash`); every other "
+            "model name returns `401 ModelError: Model X is not supported` (recorded "
+            "per run below). The comparison harness, judge, and cost tracking are "
+            "model-agnostic and ready for any provider that serves multiple models.",
+        ]
+    )
     lines.extend(["", "## Per-Run Details", ""])
     for r in runs:
         status = r.get("status", "completed")

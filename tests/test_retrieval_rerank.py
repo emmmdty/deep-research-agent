@@ -6,7 +6,6 @@ downloads); one optional real-model smoke is gated behind an env flag.
 
 from __future__ import annotations
 
-import asyncio
 import os
 from unittest.mock import patch
 
@@ -35,9 +34,13 @@ class FakeEmbeddingProvider:
 
 
 def _hash_vector(text: str) -> list[float]:
-    vector = [0.0] * 16
+    """Deterministic keyword-hash embeddings (stable across processes)."""
+    import hashlib
+
+    vector = [0.0] * 256
     for token in text.lower().split():
-        vector[hash(token) % 16] += 1.0
+        digest = int(hashlib.sha256(token.encode("utf-8")).hexdigest(), 16)
+        vector[digest % 256] += 1.0
     norm = sum(v * v for v in vector) ** 0.5
     return [v / norm if norm else 0.0 for v in vector]
 

@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "2024年大语言模型Agent架构的最新进展",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T122615Z-3791293b",
+  "status": "completed",
+  "claims": 328,
+  "sources": 120,
+  "queries": [
+    "LLM agent architectures survey 2024 types components",
+    "大语言模型智能体 Agent 架构 综述 2024",
+    "LLM agent framework architecture design survey 2024",
+    "LLM-based autonomous agents survey arxiv 2024",
+    "The Rise and Potential of Large Language Model Based Agents arxiv",
+    "A Survey on Large Language Model based Autonomous Agents arxiv",
+    "LangChain agent architecture components documentation",
+    "Microsoft AutoGen multi-agent framework architecture official documentation",
+    "LLM agent framework comparison 2024 AutoGPT LangChain LlamaIndex AutoGen OpenAI Assistants API",
+    "LangChain vs LlamaIndex vs AutoGen vs AutoGPT comparison architecture features 2024",
+    "Microsoft AutoGen framework architecture features official documentation",
+    "OpenAI Assistants API vs function calling agent framework comparison",
+    "AutoGPT official documentation architecture features 2024",
+    "LangChain official documentation agent architecture features",
+    "LlamaIndex official documentation agent framework features",
+    "AutoGen official documentation architecture multi-agent conversation",
+    "LLM agent architecture survey 2024 memory tool use multi-agent planning reasoning",
+    "2024 large language model agents survey challenges future directions",
+    "multi-agent collaboration LLM 2024 framework paper",
+    "LLM agent memory mechanism tool use planning reasoning 2024 technical report",
+    "MemGPT MemoryBank LLM agent memory 2024 paper",
+    "ToolLLM Gorilla tool use LLM agent 2024 paper",
+    "LLM agent memory mechanism survey 2024 MemGPT MemoryBank",
+    "tool learning large language models 2024 survey Toolformer Gorilla",
+    "2024 大语言模型 Agent 应用案例 代码生成 数据分析 自动化办公",
+    "LLM Agent 架构 实际效果 评估 2024",
+    "2024 AI Agent 用户反馈 案例 大模型",
+    "大模型 Agent 应用 评测 数据 2024",
+    "2024 LLM agent code generation case study GitHub Copilot efficiency metrics",
+    "2024 AI agent enterprise deployment case study data analysis automation results metrics",
+    "2024 大模型 Agent 企业落地案例 效率提升 量化数据",
+    "2024 agentic AI applications real-world examples benchmark evaluation results"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2024-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2024-agent-autogpt-langchain-llamain": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2024-agent-2024": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-04-2024-agent-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 88,
+    "search_calls": 20,
+    "total_input_tokens": 260283,
+    "total_output_tokens": 73207,
+    "total_tokens": 333490,
+    "estimated_cost_usd": 0.3335
+  },
+  "wall_seconds": 257.19
+}

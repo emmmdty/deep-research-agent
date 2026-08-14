@@ -43,7 +43,6 @@ from deep_research_agent.orchestration.scheduler import (  # noqa: E402
     ResearchScheduler,
     SchedulerJob,
 )
-from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2  # noqa: E402
 
 CONSTRAINTS = {
     "must_cover": ["overview", "analysis", "comparison", "references"],

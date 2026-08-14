@@ -91,20 +91,37 @@ runtime is demonstrable without credentials. The full lifecycle is documented in
 
 ## Evaluation & Benchmark Evidence
 
-The release gate is deterministic and reproducible locally — no API keys, no network. A second,
-**live agent lane** captures real model-driven runs with real-time search as committed evidence.
-The two lanes are never conflated: deterministic metrics prove pipeline correctness; live runs
-prove the agent executes against real providers.
+The release gate is deterministic and reproducible locally — no API keys, no network. A
+second, **live agent lane** captures real model-driven runs with real-time search as
+committed evidence. The two lanes are never conflated: deterministic metrics prove
+pipeline correctness against frozen fixtures; the live lane reports real answers on real
+benchmark questions, including where the system fails.
+
+### Live Lane — Real Benchmarks (the honest numbers)
+
+The canonical scheduler-v2 agent (live LLM + governed web/GitHub/arXiv search +
+full-page reads + injection guardrails) runs real questions from public benchmark sets;
+every per-question bundle, checkpoint, and judge rationale is committed.
+
+| Benchmark | Run | Result |
+| --- | --- | --- |
+| **GAIA 2023 validation** | [`evals/reports/live_benchmarks/gaia_real/`](./evals/reports/live_benchmarks/gaia_real/) | 20 text-only questions (L1=7, L2=8, L3=5): **7/20 judge-correct (35%), 5/20 exact match (25%)**; L1 57% · L2 25% · L3 20%; ~7.1M tokens, ~$7.1, 36 min. Two of those correct answers came from fixing a critic crash the benchmark surfaced (see error analysis). |
+| **BrowseComp** | [`evals/reports/live_benchmarks/browsecomp_real/`](./evals/reports/live_benchmarks/browsecomp_real/) | 15 questions (stratified by topic) from the official 1266: real runs with committed per-question artifacts. |
+| **Head-to-head** | [`evals/reports/live_benchmarks/head_to_head/`](./evals/reports/live_benchmarks/head_to_head/) | ours (canonical agent) vs langchain-ai open_deep_research vs gpt-researcher on the same topics, blind LLM judge, same endpoint/model. |
+| **Model comparison** | [`evals/reports/live_benchmarks/model_comparison/`](./evals/reports/live_benchmarks/model_comparison/) | 3 topics through the same pipeline; the configured endpoint serves a single model, so this documents the harness plus one full lane (judge Ø 7.67) and the endpoint constraint. |
+| **Error analysis** | [`docs/final/ERROR_ANALYSIS.md`](./docs/final/ERROR_ANALYSIS.md) | Failure taxonomy of the live lane: a critic crash eliminated 25% of correct answers (fixed + re-measured), multi-hop facts, wrong-fact selection, and structurally unanswerable image questions. |
+
+### Deterministic Lane — Pipeline Correctness
 
 | Evidence | Where | Result |
 | --- | --- | --- |
 | Authoritative smoke gate | `evals/reports/phase5_local_smoke/` | 5 suites × smoke_local, all passed |
 | Native regression | `evals/reports/native_regression/` | company12/industry12/trusted8/file8/recovery6 passed |
-| Headline metrics (deterministic lane) | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`, critical claim support precision: `1.0`, citation error rate: `0.0`, policy compliance rate: `1.0` (fixture runs, 0 provider tokens by design) |
+| Headline metrics (deterministic lane) | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`, critical claim support precision: `1.0`, citation error rate: `0.0`, policy compliance rate: `1.0` (fixture runs, 0 provider tokens by design — these measure pipeline correctness, not answer quality) |
 | Ablations (multi-agent value) | `evals/reports/followup_metrics/ablation_summary.md` | see table below |
 | **Live agent run (real LLM + real search)** | [`evals/reports/live_agent/`](./evals/reports/live_agent/README.md) | real scheduler-v2 job: 30 accepted claims over 28 frozen sources, 12 governed search calls, 23 LLM calls, 104K tokens, ~$0.10; bundle + scheduler trace committed |
 | **Live route demo (agentic loop)** | [`evals/reports/live_route_demo/`](./evals/reports/live_route_demo/README.md) | Hangzhou→Dongguan routing with three personas (Loong Air 365 flight pass, student ticket, general): 5 parallel researcher agents, 39 governed searches, 20 full-page reads (incl. 12306 official pages), 3 reflection follow-up rounds, 261 accepted claims / 1 qualified over 98 frozen sources; planner coverage check auto-added the missed Loong Air objective; human-verified ground-truth table included |
-| External benchmark adapters | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke |
+| External benchmark adapters | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke (fixture-based integrity lanes; the real runs above are separate and honest) |
 | Value scorecard | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | full metric definitions and results, split into deterministic vs live lanes |
 | Experiment summary | [docs/final/EXPERIMENT_SUMMARY.md](./docs/final/EXPERIMENT_SUMMARY.md) | release smoke, native regression, external portfolio, follow-up metrics |
 
@@ -221,10 +238,13 @@ legacy/                   archived graph-first runtime (orchestrator-v1 compatib
 ## Current Limits
 
 - Deployment profile is a small-team Compose stack, not a horizontally scaled SaaS control plane.
-- The deterministic eval lane is authoritative for pipeline correctness; live-provider
-  quality/cost comparisons across models are roadmap items (one live lane is captured as
-  evidence, not a benchmark).
+- The deterministic eval lane is authoritative for pipeline correctness; the live lane reports
+  real (and honest, sometimes low) scores on real benchmark questions with a committed failure
+  analysis. Live-provider quality/cost comparisons across models are limited by the configured
+  endpoint, which currently serves a single model (see the model-comparison report).
 - Open-web search is discovery-only; critical claims are limited to governed, frozen sources.
+- The pipeline is text-only: GAIA-style questions that require reading an image or photograph
+  are a documented failure class in the error analysis.
 - Memory is explicit CRUD plus subject-scoped recall; conversation-to-memory promotion is roadmap.
 - The model-driven agents assume a configured OpenAI-compatible endpoint; failure degrades
   planner/query steps to deterministic fallbacks but claim grounding fails closed (no fake claims).

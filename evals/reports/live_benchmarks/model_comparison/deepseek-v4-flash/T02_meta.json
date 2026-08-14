@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "RAG（检索增强生成）技术的原理和应用",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T123054Z-b21a06cb",
+  "status": "completed",
+  "claims": 269,
+  "sources": 119,
+  "queries": [
+    "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks Lewis 2020 arxiv",
+    "Retrieval-Augmented Generation for Large Language Models: A Survey Gao 2023 arxiv",
+    "RAG survey Naive Advanced Modular RAG architecture components retrieval generator index",
+    "retrieval augmented generation RAG official documentation components workflow variants",
+    "RAG retrieval augmented generation components retriever generator index construction official documentation",
+    "RAG pipeline indexing retrieval augmentation generation steps authoritative guide",
+    "Naive RAG Advanced RAG Modular RAG definitions differences survey",
+    "site:aws.amazon.com OR site:cloud.google.com OR site:learn.microsoft.com retrieval augmented generation RAG components workflow",
+    "RAG framework comparison 2025 2026 LangChain LlamaIndex Haystack Dify GraphRAG features performance",
+    "LangChain vs LlamaIndex vs Haystack vs Dify RAG framework benchmark comparison",
+    "Microsoft GraphRAG vs LlamaIndex vs LangChain RAG evaluation 2025",
+    "RAG框架对比 LangChain LlamaIndex Haystack Dify GraphRAG 2025",
+    "Microsoft GraphRAG GitHub repository stars contributors documentation knowledge graph features",
+    "Microsoft GraphRAG official documentation features knowledge graph integration use cases",
+    "Dify GitHub repository stars contributors features deployment open source vs cloud",
+    "Dify RAG framework official documentation features community support deployment",
+    "RAG retrieval augmented generation enterprise production deployment case study 2025 2026",
+    "RAG customer service chatbot enterprise implementation case study metrics",
+    "RAG legal medical assistant production deployment case study official",
+    "RAG enterprise knowledge base Q&A system production case study architecture",
+    "DoorDash RAG knowledge base LLM Judge evaluation official engineering blog",
+    "Glean enterprise RAG customer case study metrics official",
+    "site:openai.com RAG customer case study enterprise deployment",
+    "RAG production deployment case study 2025 official company engineering blog metrics accuracy cost",
+    "RAG limitations retrieval quality hallucination evaluation 2025",
+    "GraphRAG Hybrid RAG Agentic RAG improvements 2025 2026",
+    "long context models impact on RAG alternatives 2025",
+    "RAG challenges and future directions industry report 2025",
+    "Retrieval-Augmented Generation for Large Language Models: A Survey arxiv Gao 2023 limitations",
+    "Microsoft GraphRAG paper arxiv local global query",
+    "GraphRAG Microsoft blog uniting LLMs and knowledge graphs",
+    "RAG survey limitations retrieval hallucination evaluation arxiv 2024"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-rag-2026-naive-rag-advanced-rag-modu": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2026-rag-langchain-llamaindex-haysta": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2026-rag-3": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-04-rag-2026-graphrag-hybrid-rag-agentic": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 94,
+    "search_calls": 21,
+    "total_input_tokens": 239194,
+    "total_output_tokens": 96988,
+    "total_tokens": 336182,
+    "estimated_cost_usd": 0.3362
+  },
+  "wall_seconds": 304.66
+}

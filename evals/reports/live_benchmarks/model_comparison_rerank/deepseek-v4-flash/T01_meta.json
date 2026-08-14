@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "2024年大语言模型Agent架构的最新进展",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T124843Z-d7160e4b",
+  "status": "completed",
+  "claims": 336,
+  "sources": 129,
+  "queries": [
+    "LLM agent architectures survey 2024 ReAct Plan-and-Execute multi-agent",
+    "A Survey on Large Language Model based Autonomous Agents 2024",
+    "MetaGPT AutoGPT BabyAGI multi-agent framework comparison 2024",
+    "LLM agent architecture patterns 2024 survey ReAct Plan-and-Execute multi-agent systems",
+    "ReAct: Synergizing Reasoning and Acting in Language Models Yao et al. 2023",
+    "Plan-and-Execute LLM agent architecture survey 2024",
+    "LLM agent architectures 2024 survey ReAct Plan-and-Execute multi-agent arXiv",
+    "ReAct Plan-and-Execute agent architecture comparison 2024",
+    "LLM agent architecture 2024 survey memory tool use planning multi-agent reflection",
+    "large language model agents survey 2024 memory mechanism tool use planning",
+    "LLM agent self-reflection ReAct Reflexion 2024 paper",
+    "multi-agent LLM collaboration framework 2024 AutoGen MetaGPT",
+    "MemGPT Letta LLM operating system memory paper 2023 2024",
+    "Generative Agents Stanford MemoryBank LLM memory architecture paper",
+    "Toolformer Gorilla APIBench ToolLLM HuggingGPT tool learning LLM paper",
+    "LLM agent memory taxonomy short-term long-term episodic semantic memory survey",
+    "LLM agent architectures comparison 2024 ReAct Reflexion AutoGPT MetaGPT survey",
+    "ReAct Reflexion AutoGPT MetaGPT comparison benchmark performance 2024",
+    "MetaGPT official documentation multi-agent framework capabilities",
+    "LangChain Agent vs AutoGPT vs MetaGPT comparison 2024 evaluation",
+    "ReAct Synergizing Reasoning and Acting in Language Models paper Yao 2023",
+    "Reflexion language agents verbal reinforcement learning paper Shinn 2023",
+    "ReAct agent framework limitations advantages use cases evaluation",
+    "Reflexion agent framework limitations advantages use cases evaluation benchmark",
+    "LLM agent architecture survey 2024 paper arxiv",
+    "large language model agents survey 2024",
+    "LLM agent framework open source 2024 LangChain AutoGen",
+    "OpenAI Anthropic agent architecture official blog 2024",
+    "The Rise and Potential of Large Language Model Based Agents arxiv 2024",
+    "LLM Powered Autonomous Agents OpenAI blog 2024",
+    "OpenAI Agents SDK official documentation 2024",
+    "Anthropic building effective agents 2024 official blog"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2024-agent-react-plan-and-execute-mu": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-02-2024-agent-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-03-2024-agent-react-reflexion-autogpt-m": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": true
+    },
+    "research-04-2024-agent-doi": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 1,
+      "rerank_available": true
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 95,
+    "search_calls": 20,
+    "total_input_tokens": 266533,
+    "total_output_tokens": 92444,
+    "total_tokens": 358977,
+    "estimated_cost_usd": 0.359
+  },
+  "wall_seconds": 276.05
+}

@@ -135,3 +135,15 @@ def test_run_ours_comparator_marks_failed_quality_gate_as_failed(monkeypatch, tm
     assert result.metrics["quality_gate_status"] == "failed"
     assert result.metrics["quality_gate_fail_reason"] == "缺少真实案例证据"
     assert "真实案例" in result.error
+
+
+def test_resolve_comparators_accepts_ours_v2_aliases():
+    """The canonical scheduler-v2 comparator registers under its aliases."""
+    from legacy.evaluation.comparators import normalize_comparator_name, resolve_comparators
+    from configs.settings import Settings
+
+    assert normalize_comparator_name("ours_v2") == "ours_v2"
+    assert normalize_comparator_name("scheduler-v2") == "ours_v2"
+    assert normalize_comparator_name("canonical") == "ours_v2"
+    resolved = resolve_comparators(Settings(), requested=["ours_v2", "odr"])
+    assert resolved == ["ours_v2", "odr"]

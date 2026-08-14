@@ -1,0 +1,66 @@
+{
+  "comparator": "ours_v2",
+  "topic": "多模态大模型的发展现状与趋势",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T123621Z-bfa095a4",
+  "status": "completed",
+  "claims": 184,
+  "sources": 78,
+  "queries": [
+    "GPT-4o technical report architecture multimodal unified transformer",
+    "Gemini 2.5 technical report multimodal architecture MoE benchmark",
+    "Qwen2.5-VL InternVL3 technical report architecture benchmark MMMU Video-MME",
+    "MMMU MMBench Video-MME leaderboard 2025 multimodal benchmark results",
+    "Claude 3.5 Sonnet Claude 3.7 Sonnet Claude 4 vision capabilities architecture Anthropic technical report",
+    "InternVL3 technical report architecture native multimodal MoE benchmark MMMU Video-MME",
+    "Anthropic Claude 4 Opus Sonnet multimodal benchmark MMMU MMBench vision understanding",
+    "InternVL2.5 InternVL3 GitHub architecture MoE sparse attention benchmark results",
+    "OpenAI GPT-4o vs Google Gemini vs Anthropic Claude multimodal benchmark comparison 2025",
+    "Qwen-VL InternVL LLaVA open source multimodal model benchmark MMMU MMBench",
+    "GPT-4o Gemini Claude API pricing per million tokens 2025",
+    "Qwen2.5-VL InternVL3 model card parameters context length license",
+    "GPT-5.2 Gemini 3 Pro Claude Opus 4 MMMU Video-MME ChartQA benchmark scores official",
+    "OpenAI GPT-5 parameter count disclosed official estimate",
+    "Gemini 3 Pro Claude Opus 4 parameter count not disclosed official",
+    "GPT-5.2 Gemini 3 Claude Opus 4 multimodal benchmark comparison 2025 2026",
+    "multimodal large language models 2025 2026 trends unified generation real-time interaction edge deployment agentic",
+    "multimodal LLM 2025 survey technical evolution challenges hallucination safety alignment",
+    "multimodal large model applications healthcare education autonomous driving 2025 industry report",
+    "multimodal AI model data copyright compute cost bottleneck 2025 2026",
+    "multimodal large language models healthcare clinical applications 2025 medical imaging pathology review",
+    "multimodal large language models medical diagnosis clinical validation 2025 2026",
+    "multimodal large language models education intelligent tutoring assessment 2025 review",
+    "multimodal AI education applications personalized learning 2025 2026 industry report"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2026-gpt-4o-gemini-claude-qwen-vl-in": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2026-openai-google-anthropic-qwen-vl": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2025-2026-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 60,
+    "search_calls": 15,
+    "total_input_tokens": 174600,
+    "total_output_tokens": 56031,
+    "total_tokens": 230631,
+    "estimated_cost_usd": 0.2306
+  },
+  "wall_seconds": 247.64
+}
