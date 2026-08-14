@@ -6,6 +6,7 @@ import json
 import os
 import shlex
 import subprocess
+import sys
 import time
 from pathlib import Path
 from typing import Any, Optional
@@ -24,6 +25,9 @@ COMPARATOR_ALIASES = {
     "open_deep_research": "odr",
     "open-deep-research": "odr",
     "tongyi": "alibaba",
+    "ours-v2": "ours_v2",
+    "scheduler-v2": "ours_v2",
+    "canonical": "ours_v2",
 }
 
 INTERNAL_ABLATION_VARIANTS = {"ours_base", "ours_verifier", "ours_gate", "ours_full"}
@@ -155,6 +159,8 @@ def run_comparator(
             comparator_name="ours",
             ablation_variant=ablation_variant,
         )
+    if normalized == "ours_v2":
+        return run_ours_v2_comparator(topic, output_root)
     if normalized in INTERNAL_ABLATION_VARIANTS:
         resolved_variant = normalized if ablation_variant is None else ablation_variant
         return run_ours_comparator(
@@ -289,6 +295,45 @@ def run_ours_comparator(
             success=False,
             error=str(exc),
         )
+
+
+def run_ours_v2_comparator(
+    topic: BenchmarkTopic,
+    output_root: Path,
+    *,
+    timeout_seconds: int = 1500,
+) -> ComparatorResult:
+    """运行 canonical scheduler-v2 模型驱动 agent（与产品 API 同一运行时路径）。
+
+    Uses the current project's Python (the scheduler-v2 runtime lives in the
+    canonical ``deep_research_agent`` package) and captures the report plus
+    claim/source metadata for the head-to-head suite.
+    """
+
+    output_dir = Path(output_root) / "ours_v2"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    report_path = output_dir / f"{topic.id}.md"
+    meta_path = output_dir / f"{topic.id}_meta.json"
+    command = [
+        str(sys.executable),
+        str(PROJECT_ROOT / "scripts" / "run_ours_v2_isolated.py"),
+        "--topic",
+        topic.topic,
+        "--report-path",
+        str(report_path),
+        "--meta-path",
+        str(meta_path),
+    ]
+    env = os.environ.copy()
+    env["SCHEDULER_RUNTIME_MODE"] = "production"
+    return _run_subprocess_comparator(
+        name="ours_v2",
+        command=command,
+        report_path=report_path,
+        meta_path=meta_path,
+        timeout_seconds=timeout_seconds,
+        env=env,
+    )
 
 
 def run_gptr_comparator(

@@ -32,11 +32,16 @@ def build_runner_environment(base_env: dict[str, str] | None = None) -> dict[str
     if not env.get("OPENAI_BASE_URL") and env.get("LLM_BASE_URL"):
         env["OPENAI_BASE_URL"] = env["LLM_BASE_URL"]
 
-    env.setdefault("FAST_LLM", env.get("GPT_RESEARCHER_FAST_LLM", "openai:gpt-4o-mini"))
+    env.setdefault("FAST_LLM", env.get("GPT_RESEARCHER_FAST_LLM", "openai:deepseek-v4-flash"))
     env.setdefault("SMART_LLM", env.get("GPT_RESEARCHER_SMART_LLM", env["FAST_LLM"]))
     env.setdefault("STRATEGIC_LLM", env.get("GPT_RESEARCHER_STRATEGIC_LLM", env["SMART_LLM"]))
-    if env.get("OPENAI_API_KEY"):
-        env.setdefault("EMBEDDING", env.get("GPT_RESEARCHER_EMBEDDING", "custom:text-embedding-3-small"))
+    env.setdefault(
+        "EMBEDDING",
+        env.get(
+            "GPT_RESEARCHER_EMBEDDING",
+            "huggingface:sentence-transformers/all-MiniLM-L6-v2",
+        ),
+    )
 
     return env
 
@@ -47,6 +52,54 @@ def _configure_stdio() -> None:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     if hasattr(sys.stderr, "reconfigure") and sys.stderr.encoding != "utf-8":
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+
+def _patch_openai_compat() -> None:
+    """适配 OpenAI-compatible 端点。
+
+    - 关闭 thinking（与仓库主客户端 LLM_DISABLE_THINKING 一致），避免
+      reasoning 内容使 langchain 把 message.content 解析为块列表。
+    - 若 content 仍为块列表（reasoning + text 多块），合并为纯文本字符串，
+      因为 gpt_researcher 0.12 假设 content 始终是 str。
+    """
+
+    from openai.resources.chat.completions import AsyncCompletions, Completions
+
+    orig_sync = Completions.create
+    orig_async = AsyncCompletions.create
+
+    def _inject_extra(kwargs):
+        extra_body = dict(kwargs.get("extra_body") or {})
+        extra_body.setdefault("thinking", {"type": "disabled"})
+        kwargs["extra_body"] = extra_body
+        return kwargs
+
+    def _sync(self, **kwargs):
+        return orig_sync(self, **_inject_extra(kwargs))
+
+    async def _async(self, **kwargs):
+        return await orig_async(self, **_inject_extra(kwargs))
+
+    Completions.create = _sync
+    AsyncCompletions.create = _async
+
+    from gpt_researcher.llm_provider.generic.base import GenericLLMProvider
+
+    orig_get = GenericLLMProvider.get_chat_response
+
+    async def _get_chat_response(self, messages, stream, websocket=None):
+        output = await orig_get(self, messages, stream, websocket)
+        if isinstance(output, list):
+            parts = []
+            for block in output:
+                if isinstance(block, dict):
+                    parts.append(str(block.get("text") or block.get("content") or ""))
+                elif isinstance(block, str):
+                    parts.append(block)
+            output = "".join(parts)
+        return output or ""
+
+    GenericLLMProvider.get_chat_response = _get_chat_response
 
 
 async def run_research(topic: str) -> str:
@@ -71,6 +124,7 @@ def main() -> None:
 
     os.environ.update(build_runner_environment())
     _configure_stdio()
+    _patch_openai_compat()
 
     output_path = Path(args.output)
     meta_path = Path(args.meta)
