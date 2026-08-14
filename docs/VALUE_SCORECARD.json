@@ -521,9 +521,9 @@
     "latency_cost_summary": "evals/reports/followup_metrics/latency_cost_summary.json",
     "provider_routing_comparison": "evals/reports/followup_metrics/provider_routing_comparison.json",
     "metrics_readme": "evals/reports/followup_metrics/README.md",
-    "scorecard_markdown": "docs/final/VALUE_SCORECARD.md",
-    "scorecard_json": "docs/final/VALUE_SCORECARD.json",
-    "experiment_summary": "docs/final/EXPERIMENT_SUMMARY.md"
+    "scorecard_markdown": "docs/VALUE_SCORECARD.md",
+    "scorecard_json": "docs/VALUE_SCORECARD.json",
+    "experiment_summary": "docs/EXPERIMENT_SUMMARY.md"
   },
   "derived_from": {
     "release_manifest": "evals/reports/phase5_local_smoke/release_manifest.json",

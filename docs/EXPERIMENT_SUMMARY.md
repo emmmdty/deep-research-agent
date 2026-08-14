@@ -83,7 +83,7 @@ Latest native optimization-cycle artifacts:
 
 - `evals/reports/native_optimization/optimization_summary.json`
 - `evals/reports/native_optimization/BEFORE_AFTER.md`
-- `docs/final/NATIVE_OPTIMIZATION_REPORT.md`
+- `docs/NATIVE_OPTIMIZATION_REPORT.md`
 
 ## Follow-up Value Pack
 
@@ -103,8 +103,8 @@ Measured follow-up highlights from the committed scorecard inputs:
 
 Comparative evidence is recorded in:
 
-- `docs/final/VALUE_SCORECARD.md`
-- `docs/final/VALUE_SCORECARD.json`
+- `docs/VALUE_SCORECARD.md`
+- `docs/VALUE_SCORECARD.json`
 - `evals/reports/followup_metrics/ablation_summary.md`
 - `evals/reports/followup_metrics/latency_cost_summary.json`
 - `evals/reports/followup_metrics/provider_routing_comparison.json`

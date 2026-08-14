@@ -157,9 +157,9 @@ def _build_scorecard_payload(
         "latency_cost_summary": "evals/reports/followup_metrics/latency_cost_summary.json",
         "provider_routing_comparison": "evals/reports/followup_metrics/provider_routing_comparison.json",
         "metrics_readme": "evals/reports/followup_metrics/README.md",
-        "scorecard_markdown": "docs/final/VALUE_SCORECARD.md",
-        "scorecard_json": "docs/final/VALUE_SCORECARD.json",
-        "experiment_summary": "docs/final/EXPERIMENT_SUMMARY.md",
+        "scorecard_markdown": "docs/VALUE_SCORECARD.md",
+        "scorecard_json": "docs/VALUE_SCORECARD.json",
+        "experiment_summary": "docs/EXPERIMENT_SUMMARY.md",
         "final_change_report": "docs/archive/FINAL_CHANGE_REPORT.md",
     }
     headline = {
@@ -501,7 +501,7 @@ def _render_metrics_readme(scorecard: dict[str, Any]) -> str:
             "",
             "- `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_metrics.py --source-root evals/reports/phase5_local_smoke --output-root evals/reports/followup_metrics --json`",
             "- `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_value_ablation_pack.py --baseline-root evals/reports/phase5_local_smoke --followup-root evals/reports/followup_metrics --output-root evals/reports/followup_metrics --json`",
-            "- `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_value_scorecard.py --release-manifest evals/reports/phase5_local_smoke/release_manifest.json --metrics-root evals/reports/followup_metrics --docs-root docs/final --metrics-readme evals/reports/followup_metrics/README.md --json`",
+            "- `UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/build_value_scorecard.py --release-manifest evals/reports/phase5_local_smoke/release_manifest.json --metrics-root evals/reports/followup_metrics --docs-root docs --metrics-readme evals/reports/followup_metrics/README.md --json`",
             "",
             "Public scorecard outputs:",
             "",

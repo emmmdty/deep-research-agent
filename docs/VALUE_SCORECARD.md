@@ -238,6 +238,6 @@ Stage timing summary:
 - `benchmark_portfolio_summary`: `evals/external/reports/portfolio_summary/portfolio_summary.json`
 - `benchmark_portfolio_readme`: `evals/external/reports/portfolio_summary/README.md`
 - `benchmark_docs_portfolio`: `docs/benchmarks/PORTFOLIO.md`
-- `scorecard_markdown`: `docs/final/VALUE_SCORECARD.md`
-- `scorecard_json`: `docs/final/VALUE_SCORECARD.json`
-- `experiment_summary`: `docs/final/EXPERIMENT_SUMMARY.md`
+- `scorecard_markdown`: `docs/VALUE_SCORECARD.md`
+- `scorecard_json`: `docs/VALUE_SCORECARD.json`
+- `experiment_summary`: `docs/EXPERIMENT_SUMMARY.md`

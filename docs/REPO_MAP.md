@@ -8,7 +8,7 @@ the canonical runtime lives under `src/deep_research_agent/`.
 1. Read [`README.md`](../README.md) for the product positioning, quick run, artifact contract, limits, and roadmap.
 2. Inspect `src/deep_research_agent/` for the canonical runtime.
 3. Inspect `evals/reports/phase5_local_smoke/` for the merge-safe smoke gate.
-4. Read [`docs/final/EXPERIMENT_SUMMARY.md`](./final/EXPERIMENT_SUMMARY.md) and [`docs/benchmarks/native/README.md`](./benchmarks/native/README.md) for evaluation evidence.
+4. Read [`docs/EXPERIMENT_SUMMARY.md`](./EXPERIMENT_SUMMARY.md) and [`docs/benchmarks/native/README.md`](./benchmarks/native/README.md) for evaluation evidence.
 
 ## Root Classification
 
@@ -26,7 +26,7 @@ the canonical runtime lives under `src/deep_research_agent/`.
 | `examples/` | pointer | `sample_bundle/` demo bundle; runnable CLI examples are in the README. |
 | `migrations/` + `alembic.ini` | active | Alembic migrations for the product database schema. |
 | `deploy/` | active | Deployment fragments (web nginx config, GROBID notes); Compose lives at the root. |
-| `docs/` | public docs | Reviewer docs, architecture, development guide, ADRs, benchmark docs, GUI docs, final summaries, and archives. |
+| `docs/` | public docs | Reviewer docs, architecture, development guide, ADRs, benchmark docs, GUI docs, evaluation summaries, and archives. |
 | `legacy/` | archived | Archived graph-first runtime. It owns its full dependency closure: agents/workflows, `legacy/auditor/`, `legacy/connectors/`, `legacy/llm/`, `legacy/prompts/`, `legacy/policies/`, `legacy/capabilities/`, `legacy/memory/`, `legacy/tools/`, `legacy/evaluation/`, and `legacy/research_policy.py`. Nothing under `legacy/` is product architecture. |
 | `.github/` | repo metadata | CI, Pages deployment, issue and PR templates. |
 | `.env.example` | setup | Public environment template. |

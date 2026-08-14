@@ -15,7 +15,7 @@ Key review artifacts:
 - `evals/reports/native_regression/release_manifest.json`
 - `evals/reports/native_regression/native_summary.json`
 - `evals/reports/native_optimization/optimization_summary.json`
-- `docs/final/NATIVE_OPTIMIZATION_REPORT.md`
+- `docs/NATIVE_OPTIMIZATION_REPORT.md`
 
 Rebuild commands:
 

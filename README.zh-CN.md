@@ -6,118 +6,74 @@
 
 [English](./README.md) | 简体中文
 
-**Evidence-first 的多 agent 深度研究系统**：把一次研究任务编译成任务 DAG，通过受治理的模型/工具网关并行运行 researcher 与 critic agent，对冻结证据库逐条审计关键 claim，最终交付可审计的报告 bundle —— 而不是一个聊天式答案。
+**Evidence-first 的多 agent 深度研究系统**：模型驱动的 planner 把研究问题分解成任务 DAG；
+并行 researcher agent 通过受治理的实时 web/GitHub/arXiv 搜索，只抽取能在逐字证据中锚定的 claim；
+critic 审计每条结论并综合报告 —— 每条结论都带指向冻结不可变语料库的行内编号引用；
+无法证明的内容进入人工复核队列。
 
-## 为什么值得看
+这个仓库只认真主张一件事，并诚实测量它：**当答案错了，你能证明吗？**
 
-2025 年深度研究赛道爆发（OpenAI Deep Research、Gemini、Perplexity、STORM…）。这个项目问了一个不同的问题：**当答案错了，你能证明吗？**
+## 测量证据（live lane：真实 LLM + 真实搜索）
 
-- **多 agent 且被测量** —— 并行 researcher + critic agent，运行在有界 DAG 调度器上；每个组件的价值由确定性消融实验证明，而不是口头宣称。
-- **Evidence-first 输出** —— 交付物是机器可读的报告 bundle：每条关键 claim 都携带指向冻结不可变 corpus manifest 的证据片段。
-- **生产级可靠性** —— checkpoint 化 job 可承受 cancel/retry/resume/stale 恢复；claim graph、审计门禁、人工复核队列都是一等公民产物。
+以下每个数字都来自 canonical scheduler-v2 agent（`src/deep_research_agent/`）已提交的真实运行，
+不是 fixture 模拟。
 
-[在线 Demo](https://emmmdty.github.io/deep-research-agent/) · [竞品分析](./docs/final/COMPETITIVE_LANDSCAPE.md) · [仓库地图](./docs/REPO_MAP.md)
+| 实验 | 结果 | 位置 |
+| --- | --- | --- |
+| **GAIA 2023（20 题纯文本抽样）** | 7/20 判卷正确（35%）、5/20 精确匹配（25%）；L1 57% · L2 25% · L3 20%；约 7.1M tokens / ~$7.1 / 36 分钟 | [`gaia_real/`](./evals/reports/live_benchmarks/gaia_real/) |
+| **同模型 baseline（对照组）** | 同一个模型、每题一次调用、**无工具无检索：0/20（0%）** —— 全部分数来自 agent 机制本身，而非模型能力 | [`gaia_baseline/`](./evals/reports/live_benchmarks/gaia_baseline/) |
+| **成本分析** | 每道正确答案约 $1.0；**答错的题反而多烧 1.56 倍 token** —— 多花钱不买正确率，杠杆在决策质量与审计门禁 | [`cost_analysis/`](./evals/reports/live_benchmarks/cost_analysis/) |
+| **引用渲染** | 全部已提交 live bundle 经确定性引用注入器重渲染：每条 supported claim（**679/679**）都可通过行内 `[n]` 引用 + 编号 `## References` 段 + 完整 `## Claim Register` 追溯（此前读者看到的报告完全没有引用） | [`citation_rendering/`](./evals/reports/citation_rendering/) |
+| **BrowseComp** | 官方 1266 题分层抽样 15 题，真实运行，每题产物已提交 | [`browsecomp_real/`](./evals/reports/live_benchmarks/browsecomp_real/) |
+| **头对头对比** | ours vs langchain-ai `open_deep_research` vs `gpt-researcher`，盲评 LLM judge，同一端点。第一轮落败 —— judge 明确批评我们**缺少引用**（渲染缺口，而非证据系统问题）。修复后的第二轮：`citation_accuracy` 0.0→**1.0**、`source_coverage` 0→**47–95**（对手仍为 0），judge 的引用批评消失；剩余差距是综合散文风格，已诚实记录 | [`head_to_head/`](./evals/reports/live_benchmarks/head_to_head/) · [`head_to_head_round2/`](./evals/reports/live_benchmarks/head_to_head_round2/) |
+| **错误分析** | live lane 失败分类：critic 崩溃曾消灭 25% 的正确率（已修复并重测，25%→35% 且更便宜）、多跳事实、错误事实选择、图片题（纯文本管线） | [`docs/ERROR_ANALYSIS.md`](./docs/ERROR_ANALYSIS.md) |
 
-### 60 秒参观动线
+确定性 lane（fixture 运行、0 provider token）只证明**管线正确性**，不证明答案质量 ——
+completion rate: `1.0`、critical claim support precision `1.0`、policy compliance rate: `1.0`
+（冻结 fixture 上的数字），由发布冒烟门禁把关（`evals/reports/phase5_local_smoke/`）。
+它被刻意单独报告，绝不与 live 数字混用。
+完整指标定义见 [`docs/VALUE_SCORECARD.md`](./docs/VALUE_SCORECARD.md) 与
+[`docs/EXPERIMENT_SUMMARY.md`](./docs/EXPERIMENT_SUMMARY.md)。
 
-1. **提问** —— 首页输入任意研究问题
-2. **在线检索（真实执行）** —— 对 Wikipedia / OpenAlex / Crossref 做真实多源检索（免 Key、非 agent）：固定规则组织查询，每条摘录都链接到真实来源。页面明确说明：agent 以 LLM 为大脑；完整的多 agent 系统（规划、并行研究、证据审计、报告交付）在仓库中实现，本地运行需要配置模型凭据（见快速开始）
-3. **报告与出处** —— 每条结论可展开看来源摘录；内建演示案例支持回放
-4. **评测证据** —— "多 agent 有价值吗"的直接答案（确定性消融实验）+ 有来源的行业对比
-5. **技术实现** —— 任务 DAG、有界调度器、治理网关、证据库、产品 API
+## Benchmark 推动了哪些真实修复
 
-## 架构总览
+live lane 不是装饰，它已经驱动了三个真实修复：
 
-![Deep Research Agent user-facing architecture](./docs/assets/architecture-overview.png)
+1. **Critic 崩溃** —— 5/20 题因 critic 决策过不了 schema 校验而产出空报告。修复：确定性报告
+   兜底；同一 20 题重跑：+2 道正确、成本更低。
+2. **引用渲染缺口** —— 头对头 judge 批评我们"缺少引用"，尽管每条 claim 都有证据锚定。新增
+   `reporting/citations.py`：确定性注入器，给报告附加行内 `[n]` 引用、编号 `## References` 段
+   与完整 `## Claim Register`，并在 `audit_summary.report_citation_coverage` 里做逐 bundle
+   引用覆盖率审计。
+3. **没有对照组实验** —— 补上同模型无-agent 的 GAIA baseline，把"模型能力"和"agent 价值"
+   分开（结果：0/20 vs 7/20）。
 
-canonical runtime 位于 `src/deep_research_agent/`：
+## 架构
+
+![Architecture overview](./docs/assets/architecture-overview.png)
 
 | 层 | 模块 | 职责 |
 | --- | --- | --- |
-| Agent 编排 | `orchestration/`（`dag.py`、`scheduler.py`、`workers.py`、`reducer.py`） | 把研究 brief 编译成不可变任务 DAG；有界 asyncio 调度器并行执行就绪任务（≤8 worker），类型化消息传递 |
-| Agent 角色 | `ResearchPlanner`（researcher）、critic 任务（`CriticDecision`） | 每个 objective 一个并行 research 任务；critic 审计依赖输出并给出 accepted/qualified/contradicted/unresolved 决策 |
-| 治理 | `tool_gateway/`、`model_runtime/`、`policy/` | 角色白名单、幂等、缓存、预算上限、重试；按角色模型 fallback 链 + AES-GCM 凭据 |
-| 证据与审计 | `auditor/`、`evidence_store/`、`corpus/` | 带 support edge 的 claim graph、冲突集、复核队列；冻结 corpus manifest；来源快照 |
-| 交付 | `reporting/bundle_v2.py` | 确定性归并 → 审计 → `report_bundle.json`（+ `report.md/html`）与 sidecar 产物 |
-| 可靠性 | `research_jobs/`、`observability/` | checkpoint、事件、lease、心跳、resume/retry/refine；不含凭据的 OpenTelemetry span |
-| 产品面 | `gateway/`、`product/`、`apps/gui-web/` | CLI、本地 HTTP API（SSE 事件流）、PostgreSQL 多租户产品 API、React workspace UI |
+| Agent 角色 | `agents/` | `LLMResearchPlanner`（目标分解 + 覆盖检查）、`LLMResearcherWorker`（原生 function-calling 循环：规划查询 → 受治理工具 → 覆盖反思 → 全文读取 → 锚定 claim）、`LLMCriticWorker`（矛盾审计 + 综合） |
+| 编排 | `orchestration/` | 不可变任务 DAG、有界 asyncio 调度器（≤8 worker）、类型化消息传递、分支级重试、取消 |
+| 治理 | `tool_gateway/`、`policy/` | 角色白名单、预算、幂等、缓存、prompt 注入防护 |
+| 证据与审计 | `auditor/`、`evidence_store/` | 带 support edge 的 claim graph、冻结 corpus manifest、人工复核队列 |
+| 交付 | `reporting/` | 确定性归并 → 审计 → 引用注入 → `report_bundle.json` + `report.md/html` |
+| 可靠性 | `research_jobs/`、`observability/` | checkpoint、lease、resume/retry、成本跟踪、OpenTelemetry span |
+| 产品面 | `gateway/`、`product/`、`apps/gui-web/` | CLI、本地 HTTP API（SSE）、多租户产品 API、React workspace |
 
-canonical runtime 是 `src/deep_research_agent/`，是唯一的实现真相源。
-`legacy/` 是已归档的 graph-first 运行时及其完整依赖（agents/workflows/auditor/connectors/llm/policies/evaluation/research_policy）。完整分类见 [仓库地图](./docs/REPO_MAP.md)。
-
-## 一次研究任务的运行流程
-
-```
-user topic → ResearchPlanner.plan() → ResearchDAG（research 任务 ∥ critic 任务）
-   → ResearchScheduler.run() [有界 asyncio，≤8 workers，类型化 TaskSpec/WorkerOutput]
-   → ToolGateway（受治理检索）→ ModelRegistry（角色 fallback 链）
-   → EvidenceReducer.reduce() → EvidenceAuditor.audit()
-   → ReportBundleCompilerV2.compile() → report_bundle.json + report.md/html
-   → 产物落盘 workspace/research_jobs/<job_id>/
-```
-
+运行形态：`topic → planner → ResearchDAG → scheduler → 并行 researcher → critic → 审计 → bundle`。
 bundle 中每条关键 claim 必须解析到冻结 corpus manifest 内的证据片段；无法验证的 claim 进入
-人工复核队列。完整生命周期见 [docs/architecture.md](./docs/architecture.md) 与
-[docs/USER_GUIDE.md](./docs/USER_GUIDE.md)。
+复核队列。离线模式（`SCHEDULER_RUNTIME_MODE=offline`）切换到确定性管线，使整套运行时无需
+凭据即可演示。详见 [`docs/architecture.md`](./docs/architecture.md)。
 
-## 评测与 Benchmark 证据
+## Demo
 
-发布门禁是确定性的、本地可复现 —— 无需 API key、无需网络。第二条 **live agent lane** 捕获真实
-模型驱动的运行（实时搜索）并作为证据提交。两条 lane 从不混用：确定性指标证明**管线正确性**；
-live lane 报告真实基准题上的**真实答案**——包括系统在哪里失败。
-
-### Live Lane —— 真实基准（诚实的数字）
-
-canonical scheduler-v2 agent（实时 LLM + 治理化 web/GitHub/arXiv 搜索 + 全文阅读 + 注入防护）
-在公开基准集的真实题目上运行；每题 bundle、checkpoint、judge 理由均已提交。
-
-| 基准 | 位置 | 结果 |
-| --- | --- | --- |
-| **GAIA 2023 validation** | [`evals/reports/live_benchmarks/gaia_real/`](./evals/reports/live_benchmarks/gaia_real/) | 20 道纯文本题（L1=7, L2=8, L3=5）：**7/20 判卷正确（35%），5/20 精确匹配（25%）**；L1 57% · L2 25% · L3 20%；约 7.1M tokens、$7.1、36 分钟。其中 2 道正确答案来自基准暴露并修复的 critic 崩溃（见错误分析）。 |
-| **BrowseComp** | [`evals/reports/live_benchmarks/browsecomp_real/`](./evals/reports/live_benchmarks/browsecomp_real/) | 官方 1266 题中分层抽样 15 题：真实运行 + 提交每题产物。 |
-| **头对头对比** | [`evals/reports/live_benchmarks/head_to_head/`](./evals/reports/live_benchmarks/head_to_head/) | 同一主题、同一端点/模型、盲评 LLM judge：ours（canonical agent）vs langchain-ai open_deep_research vs gpt-researcher。 |
-| **模型对比** | [`evals/reports/live_benchmarks/model_comparison/`](./evals/reports/live_benchmarks/model_comparison/) | 同一管线跑 3 主题；配置的端点当前只服务一个模型，因此如实记录：harness 就绪 + 一条完整 lane（judge Ø 7.67）+ 端点约束。 |
-| **错误分析** | [`docs/final/ERROR_ANALYSIS.md`](./docs/final/ERROR_ANALYSIS.md) | live lane 的失败分类：critic 崩溃曾消灭 25% 的正确率（已修复并重测）、多跳事实、错误事实选择、结构性不可答的图片题。 |
-
-### 确定性 Lane —— 管线正确性
-
-| 证据 | 位置 | 结果 |
-| --- | --- | --- |
-| 权威 smoke gate | `evals/reports/phase5_local_smoke/` | 5 个 suite × smoke_local，全部 passed |
-| 原生回归 | `evals/reports/native_regression/` | company12/industry12/trusted8/file8/recovery6 passed |
-| 核心指标（确定性 lane） | `evals/reports/followup_metrics/headline_metrics.json` | completion rate: `1.0`、critical claim support precision: `1.0`、citation error rate: `0.0`、policy compliance rate: `1.0`（fixture 运行、按设计 0 provider token——衡量管线正确性，不是答案质量） |
-| 消融实验（多 agent 价值） | `evals/reports/followup_metrics/ablation_summary.md` | 见下表 |
-| **Live agent 运行（真实 LLM + 真实搜索）** | [`evals/reports/live_agent/`](./evals/reports/live_agent/README.md) | 真实 scheduler-v2 job：30 条 accepted claim、28 个冻结来源、12 次治理搜索、23 次 LLM 调用、104K tokens、约 $0.10；bundle + 调度 trace 已提交 |
-| **Live 路线演示（agentic loop）** | [`evals/reports/live_route_demo/`](./evals/reports/live_route_demo/README.md) | 杭州→东莞三种人设（长龙航空畅飞卡、学生票、普通出行）：5 个并行 researcher agent、39 次治理搜索、20 次全文读取（含 12306 官方页）、3 轮反思追问、98 个冻结来源上的 261 条 accepted / 1 条 qualified；planner 覆盖检查自动补上了遗漏的畅飞卡目标；含人工核验的地面真值表 |
-| 外部 benchmark 适配器 | `evals/external/` + `portfolio_summary.json` | BrowseComp/GAIA/LongBench-v2/LongFact/Facts grounding guarded smoke（fixture 完整性 lane；真实运行在上面单独、诚实地记录） |
-| 价值计分卡 | [docs/final/VALUE_SCORECARD.md](./docs/final/VALUE_SCORECARD.md) | 完整指标定义与结果 |
-| 实验总结 | [docs/final/EXPERIMENT_SUMMARY.md](./docs/final/EXPERIMENT_SUMMARY.md) | release smoke、native regression、外部组合、后续指标 |
-
-### 消融证据：每个组件为什么存在
-
-确定性消融证明每个机制都有可测量的因果贡献：
-
-| 消融 | 移除后的退化 |
-| --- | --- |
-| 审计门禁（`audit_on_vs_off`） | unsupported claim leakage → 1.0 |
-| Evidence-first 综合（`evidence_first_vs_baseline`） | citation error rate → 1.0，来源完整性下降 |
-| Rerank/边选择（`rerank_on_vs_off`） | critical claim support precision 1.0 → 0.5 |
-| 严格来源策略（`strict_source_policy_vs_relaxed`） | policy compliance 1.0 → 0.333 |
-
-本地一键复现：
-
-```bash
-uv sync --group dev
-uv run python main.py eval run --suite company12 --variant smoke_local
-uv run python main.py benchmark run --help
-```
-
-## 竞争定位
-
-2025 深度研究格局：闭源产品（OpenAI、Gemini、Perplexity）交付"事后引用"的报告；开源框架
-（STORM、LangChain open_deep_research、smolagents）缺少审计链。本项目差异化在**可审计性与
-受治理的证据** —— 与 Anthropic 多 agent 研究系统博客点名的行业痛点（引用归属、来源质量、
-checkpoint/恢复）完全对应。完整有据可查的对比见 [docs/final/COMPETITIVE_LANDSCAPE.md](./docs/final/COMPETITIVE_LANDSCAPE.md)。
+- **在线 Demo** —— https://emmmdty.github.io/deep-research-agent/ 。头条案例是**真实在线
+  agent 运行回放**（杭州→东莞三种人设）：5 个并行 researcher、39 次受治理搜索、20 次全文读取
+  （含 12306 官方页面）、3 轮反思补查、261 条锚定结论、人工核验地面真值表。
+- **本地** —— `npm run dev --prefix apps/demo-site`（静态、免密钥），或 `docker compose up --build`
+  跑完整产品栈。
 
 ## 快速开始
 
@@ -127,80 +83,58 @@ cp .env.example .env        # 离线 demo 不需要任何密钥
 uv run python main.py --help
 ```
 
-以确定性离线模式提交任务（无需 API key、无需网络；调度器自动切换到规则化 benchmark 研究管线）：
+确定性离线模式（无需 API key、无需网络）：
 
 ```bash
 SCHEDULER_RUNTIME_MODE=offline uv run python main.py submit \
   --topic "Anthropic company profile" \
-  --source-profile company_trusted \
-  --allow-domain anthropic.com \
-  --json
+  --source-profile company_trusted --allow-domain anthropic.com --json
 ```
 
-不加 `SCHEDULER_RUNTIME_MODE=offline` 前缀时 CLI 按生产模式运行，需要 `.env` 中有效的 LLM 凭据。
-
-本地 Web demo（无 Docker、文件型 SQLite、离线确定性模式；产品离线模式会自动联动离线调度器）：
+真实 agent（LLM planner + 治理化实时搜索 + researcher/critic），需在 `.env` 配置凭据：
 
 ```bash
-PRODUCT_DATABASE_URL=sqlite+pysqlite:///./workspace/product.db \
-PRODUCT_OFFLINE_MODE=true \
-uv run uvicorn deep_research_agent.gateway.api:app --reload
-# 另开终端
-npm run dev --prefix apps/gui-web    # 打开 http://127.0.0.1:5173
+SCHEDULER_RUNTIME_MODE=production AGENT_PLANNER_ENABLED=true \
+  uv run python main.py submit --topic "What did OpenAI announce for agents in 2026?" --json
 ```
 
-完整 Compose profile（PostgreSQL/pgvector + MinIO + GROBID + Phoenix），无凭据离线调度器：
-
-```bash
-docker compose up --build     # 打开 http://127.0.0.1:8000
-```
-
-真实网络研究需要显式配置 `SCHEDULER_FACTORY_PATH`；运行时永远不会从生产模式静默回退到离线。
-
-## Artifact Contract
-
-完成态 job 写入 `workspace/research_jobs/<job_id>/`：
-
-- `report_bundle.json` —— 权威机器可读输出
-- `report.md`、`report.html` —— 面向阅读的渲染
-- `claims.json`、`sources.json`、`audit_decision.json`、`review_queue.json`、`claim_graph.json` —— 审计 sidecar
-- `trace.jsonl`、`manifest.json`、`review_actions.jsonl` —— 执行与复核记录
-
-```bash
-uv run python main.py bundle --job-id <job_id> --json
-curl -s http://127.0.0.1:8000/v1/research/jobs/<job_id>/bundle
-```
-
-## Repository Layout
-
-```text
-src/deep_research_agent/  canonical runtime（orchestration、auditor、reporting、product...）
-apps/gui-web/             React 产品工作台（主题、运行、报告、记忆、admin）
-apps/demo-site/           静态 GitHub Pages demo（输入问题，看它被研究）
-configs/                  runtime 与 source profile 配置
-evals/                    确定性评测资产、报告与 fixtures
-docs/                     reviewer 文档（索引、架构、benchmark、final）
-tests/                    回归测试
-scripts/                  smoke、eval、demo 数据与 diagnostic 命令
-legacy/                   已归档 graph-first runtime（orchestrator-v1 兼容路径，含完整依赖闭包）
-```
+运行时永远不会从生产模式静默回退到离线执行。
 
 ## 当前限制
 
 - 部署形态是小团队 Compose 栈，不是横向扩展的 SaaS control plane。
-- 确定性评测是管线正确性的权威 gate；live lane 报告真实基准的真实分数（有时很低）与已提交的失败分析。
-  跨模型的质量/成本对比受端点限制：当前配置的端点只服务单一模型（见模型对比报告）。
-- 开放 Web 搜索只能用于发现；关键 claim 仅限受治理的冻结来源。
-- 管线是纯文本的：需要读图的 GAIA 式题目是错误分析中记录在案的失败类别。
+- 纯文本管线：需要读图的 GAIA 式题目是错误分析中记录在案的失败类别。
+- live 对比受端点限制：当前配置的端点只服务单一模型。
 - 记忆是显式 CRUD 加按主题召回；对话自动写入长期记忆是 roadmap。
+- 开放 Web 搜索只能用于发现；关键 claim 仅限受治理的冻结来源（fail closed，绝不伪造证据）。
 
 ## Roadmap
 
-- 在 PostgreSQL/MinIO profile 上实测后，再引入 queue/object-storage adapter。
-- 扩充 live 基准覆盖（GAIA/BrowseComp 更多题目、多模型多 provider），并用人评 rubric 做更严格的头对头。
-- 多跳事实验证：目标题需要组合 ≥2 个事实时，增加显式 "verify_facts" 校验轮。
-- 支持读图题目（GAIA 图片类）与更长的反射轮数。
+- 在固定题目上做 live 预算扫描（max_tool_calls / rounds vs 准确率）。
+- Tool-calling 派发（模型自主选工具）替代受治理查询循环。
 - 人工复核流程支持对已交付 bundle 重新编译或显式标注。
+- 带成本/质量遥测的更多 live provider 头对头。
+
+## Repository Layout
+
+```text
+src/deep_research_agent/  canonical runtime（agents、orchestration、auditor、reporting、product）
+apps/gui-web/             React 产品工作台
+apps/demo-site/           静态 GitHub Pages demo（真实运行回放 + benchmark 证据）
+evals/                    live lane 证据、确定性评测资产、fixtures
+docs/                     reviewer 文档（架构、评测、错误分析）
+scripts/                  live runner、eval、demo 数据与分析命令
+legacy/                   已归档 graph-first runtime（非产品代码，只读）
+```
+
+## 相关项目与参考
+
+- [Anthropic multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) —— 本系统针对的 checkpoint/恢复与引用归属行业痛点。
+- [OpenAI Deep Research / Agents SDK](https://github.com/openai/openai-agents-python) —— 子 agent 分解、工具治理。
+- [langchain-ai/open_deep_research](https://github.com/langchain-ai/open_deep_research) —— planner/researcher/critic 形态；头对头比较对象。
+- [assafelovic/gpt-researcher](https://github.com/assafelovic/gpt-researcher) —— 并行子问题研究；头对头比较对象。
+- [STORM](https://github.com/stanford-oval/storm) —— 大纲驱动的多视角写作。
+- [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) —— 受治理工具网关借鉴的接口约定。
 
 ## 许可证
 

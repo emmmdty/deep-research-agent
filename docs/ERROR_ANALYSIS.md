@@ -142,6 +142,36 @@ and the 12 wrong answers are all traceable to evidence files in this report.
 | Injection guardrails + data fences | untrusted web content was unguarded | `policy/injection.py`, `agents/researcher.py` |
 | Re-run failed questions | honest before/after measurement | `scripts/live_benchmark_runner.py` |
 
+## Failure Mode H — Citations Held Back, Not Shown (head-to-head round 1)
+
+The head-to-head vs `open_deep_research` / `gpt-researcher` (5 topics, blind
+LLM judge) lost every pairwise round on *report quality*, and the judge's
+explicit complaint was **missing citations** — despite the system grounding
+every claim in verbatim evidence. Root cause was a rendering gap: the
+reader-facing `report.md` carried the claim text but no inline reference
+markers, so the evidence layer was invisible to readers and judges alike.
+
+**Fix (applied before round 2):**
+
+1. `reporting/citations.py` — a deterministic citation injector: replaces
+   `[[claim:<id>]]` markers the critic emits with validated numbered
+   references, falls back to verbatim claim-sentence matching, and appends a
+   numbered `## References` section (title + URL + frozen document id). It can
+   only cite accepted/qualified claims with resolvable evidence spans.
+2. The compiler records a per-bundle `report_citation_coverage` audit in
+   `audit_summary`, making the report's own citation quality a measured,
+   gated artifact. A `## Claim Register` appendix (every supported claim with
+   its source numbers) is the completeness net: across all committed live
+   bundles, all 679/679 supported claims are traceable after re-render, and
+   the executive summary is capped to the top-5 critical-first findings.
+3. The comparator runner now writes the compiled, citation-injected report
+   instead of the raw critic output (`scripts/run_ours_v2_isolated.py`), so
+   round 2 measures the product as delivered.
+
+Round-2 results (`citation_accuracy` 0→1.0, `source_coverage` 0→47–95, judge
+citation complaints gone; synthesis prose style remains the documented gap)
+are in `evals/reports/live_benchmarks/head_to_head_round2/`.
+
 ## Open Questions (roadmap)
 
 - Would a stronger model (deepseek-v4 full, or a frontier model) move L1/L2 by

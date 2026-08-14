@@ -243,7 +243,7 @@ curl -s http://127.0.0.1:8000/v1/research/jobs \
 - [README](../README.md)
 - [Repository Map](./REPO_MAP.md)
 - [Docs Index](./DOCS_INDEX.md)
-- [Experiment Summary](./final/EXPERIMENT_SUMMARY.md)
+- [Experiment Summary](./EXPERIMENT_SUMMARY.md)
 - [Architecture](./architecture.md)
 - [API Contract](../specs/api-readiness-contract.md)
 - [ADR-0008](./adr/adr-0008-http-api-surface.md)
