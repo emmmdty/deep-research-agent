@@ -1,0 +1,7 @@
+# Project-local uv index configuration.
+# The global ~/.config/uv/uv.toml may point at a regional mirror; this
+# project pins the canonical PyPI index so `uv.lock` URLs stay stable and
+# portable for GitHub Actions and external contributors.
+[[index]]
+url = "https://pypi.org/simple"
+default = true
