@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-08-14T13:57:46.694419+00:00",
+  "benchmark": "BrowseComp (stratified sample)",
+  "questions": 15,
+  "judge_correct": 3,
+  "judge_accuracy": 0.2,
+  "exact_match": 2,
+  "exact_match_rate": 0.1333,
+  "accuracy_by_cohort": {
+    "Art": 0.0,
+    "Geography": 0.0,
+    "History": 0.0,
+    "Music": 0.0,
+    "Other": 0.0,
+    "Politics": 1.0,
+    "Science & technology": 0.5,
+    "Sports": 0.0,
+    "TV shows & movies": 0.3333,
+    "Video games": 0.0
+  },
+  "total_llm_tokens": 5318933,
+  "total_estimated_cost_usd": 5.319,
+  "total_wall_seconds": 1525.42,
+  "per_question": [
+    {
+      "task_id": "browsecomp-213",
+      "cohort": "TV shows & movies",
+      "correct": true,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-638",
+      "cohort": "TV shows & movies",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-932",
+      "cohort": "TV shows & movies",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-794",
+      "cohort": "Other",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-1005",
+      "cohort": "Other",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-183",
+      "cohort": "Science & technology",
+      "correct": true,
+      "exact": true
+    },
+    {
+      "task_id": "browsecomp-421",
+      "cohort": "Science & technology",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-1060",
+      "cohort": "Art",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-736",
+      "cohort": "Art",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-666",
+      "cohort": "History",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-712",
+      "cohort": "Sports",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-532",
+      "cohort": "Music",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-1245",
+      "cohort": "Video games",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-1196",
+      "cohort": "Geography",
+      "correct": false,
+      "exact": false
+    },
+    {
+      "task_id": "browsecomp-1113",
+      "cohort": "Politics",
+      "correct": true,
+      "exact": true
+    }
+  ]
+}

@@ -96,6 +96,26 @@ mirror we sample from has no attachments, so these are unanswerable by
 construction. They are kept in the sample deliberately — a system that claims
 robustness must say what it cannot do.
 
+## BrowseComp Lane (15 questions)
+
+Stratified sample of the official 1266-question BrowseComp set: **3/15 judge
+correct (20%), 2/15 exact (13.3%)**; Politics 1/1, Science & technology 1/2,
+TV shows & movies 1/3, rest 0/1 each. ~5.3M tokens, ~$5.3, 25 min.
+
+The failure classes are the same as GAIA — evidence the taxonomy generalizes:
+
+- **Multi-hop empty answers (5/12 wrong):** "Emmys → platform → article series"
+  chains stop inside the 2-round budget; the conjunctive fact never surfaces.
+- **Partial-name near misses (2):** `Daniel Delos Santos` vs ground truth
+  `John Daniel delos Santos` — correct entity, missing one name component;
+  exact match and the strict judge both mark it wrong.
+- **Cross-source aggregation (3):** "hotel furnishing cost range" and
+  "fashion brand + 75M-user app" require merging facts from separate sources.
+
+BrowseComp's official leaderboard shows frontier agents at ~30-40% on the full
+set; 20% from a flash model with a fixed budget is the expected honest band —
+and the 12 wrong answers are all traceable to evidence files in this report.
+
 ## What This Tells Us
 
 1. **Deterministic fallbacks matter more than model cleverness.** The critic

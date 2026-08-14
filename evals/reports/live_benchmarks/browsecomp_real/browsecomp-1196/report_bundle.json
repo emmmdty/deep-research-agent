@@ -1,0 +1,729 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- Hema Malini is the sitting MP of the Mathura constituency in Uttar Pradesh, currently serving her third consecutive term since 2014.\n- The city of Mathura lies within the cultural region of Braj.\n- According to the 2011 census on Mathura NPP, 95.4% of the people identified as Hindi speakers.\n- The city gets its name from Mahishasura or Mahishuru.\n- The city is named after the presiding deity at Mangaladevi Temple.\n- Indore is the largest city of the Indian state of Madhya Pradesh.\n- Indore has an estimated population of 5.6 million in 2025.\n- Between 1951 and 2011, Muslims grew by 4.4 percentage points to 14.2% of the population, while Hindus declined by 4.3 points to 79.8%.\n- Raja Ravi Varma was born into an aristocratic family of Kerala.\n- Raja Ravi Varma was best known for his lush portraits of beautiful women from wealthy homes, goddesses of the Hindu pantheon and mythological characters.\n- Temple, Texas grew from 82,652 residents in 2020 to 93,095 people counted in 2023.\n- Temple is the fastest growing city in central Texas.\n- Temple's population hit 102,000 residents.\n- Temple is one of seven cities in Texas noted as the fastest growing U.S. cities, and six of those are between the Metroplex (Dallas-Fort Worth) and San Antonio up and down Interstate 35, including Temple.\n- Raja Ravi Varma was born on April 29, 1848, at Kilimanoor Palace, near Trivandrum, Travancore princely state, British India [now Thiruvananthapuram, Kerala, India].\n- Raja Ravi Varma died on October 2, 1906, at Kilimanoor Palace.\n",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:01",
+      "claim": "Hema Malini is the sitting MP of the Mathura constituency in Uttar Pradesh, currently serving her third consecutive term since 2014.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:01",
+          "document_version_id": "web_search-9c2b2b29369508df",
+          "page": null,
+          "section": "Mathura - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Actress turned politician, Hema Malini is the sitting MP of the Mathura constituency in Uttar Pradesh, currently serving her third consecutive term since 2014.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:02",
+      "claim": "The city of Mathura lies within the cultural region of Braj.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:02",
+          "document_version_id": "web_search-9c2b2b29369508df",
+          "page": null,
+          "section": "Mathura - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The city also lies within the cultural region of Braj.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:03",
+      "claim": "According to the 2011 census on Mathura NPP, 95.4% of the people identified as Hindi speakers.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:03",
+          "document_version_id": "web_search-9c2b2b29369508df",
+          "page": null,
+          "section": "Mathura - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "According to the 2011 census on Mathura NPP, 95.4% of the people identified as Hindi speakers",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:04",
+      "claim": "The city gets its name from Mahishasura or Mahishuru.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:04",
+          "document_version_id": "web_search-8c4df09be354cf0c",
+          "page": null,
+          "section": "How did Villages, Towns and Cities in India get their ...",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "city gets its name from Mahishasura or Mahishuru.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:05",
+      "claim": "The city is named after the presiding deity at Mangaladevi Temple.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:05",
+          "document_version_id": "web_search-8c4df09be354cf0c",
+          "page": null,
+          "section": "How did Villages, Towns and Cities in India get their ...",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The city is named after the presiding deity at Mangaladevi Temple.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:06",
+      "claim": "Indore is the largest city of the Indian state of Madhya Pradesh.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:06",
+          "document_version_id": "web_search-533d9ab2fddd620d",
+          "page": null,
+          "section": "Indore",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "is the largest city of the Indian state of Madhya Pradesh.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:07",
+      "claim": "Indore has an estimated population of 5.6 million in 2025.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:07",
+          "document_version_id": "web_search-533d9ab2fddd620d",
+          "page": null,
+          "section": "Indore",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "With an estimated population of 5.6 million in 2025.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:08",
+      "claim": "Between 1951 and 2011, Muslims grew by 4.4 percentage points to 14.2% of the population, while Hindus declined by 4.3 points to 79.8%.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:08",
+          "document_version_id": "web_search-5297d2e96a84f48a",
+          "page": null,
+          "section": "Population growth and religious composition in India",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Between 1951 and 2011, Muslims grew by 4.4 percentage points to 14.2% of the population, while Hindus declined by 4.3 points to 79.8%.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:09",
+      "claim": "Raja Ravi Varma was born into an aristocratic family of Kerala.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:09",
+          "document_version_id": "web_search-d778c860c3562489",
+          "page": null,
+          "section": "Raja Ravi Varma Birthplace City Named After Deity Temple",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Varma who was born into an aristocratic family of Kerala",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:10",
+      "claim": "Raja Ravi Varma was best known for his lush portraits of beautiful women from wealthy homes, goddesses of the Hindu pantheon and mythological characters.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:10",
+          "document_version_id": "web_search-d778c860c3562489",
+          "page": null,
+          "section": "Raja Ravi Varma Birthplace City Named After Deity Temple",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Raja Ravi Varma was best known for his lush portraits of beautiful women from wealthy homes, goddesses of the Hindu pantheon and mythological characters",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:11",
+      "claim": "Temple, Texas grew from 82,652 residents in 2020 to 93,095 people counted in 2023.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:11",
+          "document_version_id": "web_search-1657b193759f0bca",
+          "page": null,
+          "section": "'Town of Opportunity': Temple shows population boom in new census report",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "From 82,652 in 2020 to 93,095 people counted in 2023.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:12",
+      "claim": "Temple is the fastest growing city in central Texas.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:12",
+          "document_version_id": "web_search-1657b193759f0bca",
+          "page": null,
+          "section": "'Town of Opportunity': Temple shows population boom in new census report",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Temple is the fastest growing city in central Texas",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:13",
+      "claim": "Temple's population hit 102,000 residents.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:13",
+          "document_version_id": "web_search-e3ce18eb6d43d164",
+          "page": null,
+          "section": "Temple population growth ‘astronomical’ as city hits 102,000 residents | News | kdhnews.com",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Temple population growth",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:14",
+      "claim": "Temple is one of seven cities in Texas noted as the fastest growing U.S. cities, and six of those are between the Metroplex (Dallas-Fort Worth) and San Antonio up and down Interstate 35, including Temple.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:14",
+          "document_version_id": "web_search-e3ce18eb6d43d164",
+          "page": null,
+          "section": "Temple population growth ‘astronomical’ as city hits 102,000 residents | News | kdhnews.com",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Seven cities in the state of Texas have been noted as the fastest growing U.S. cities and six of those are between the Metroplex (Dallas-Fort Worth) and San Antonio up and down Interstate 35, including Temple",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:15",
+      "claim": "Raja Ravi Varma was born on April 29, 1848, at Kilimanoor Palace, near Trivandrum, Travancore princely state, British India [now Thiruvananthapuram, Kerala, India].",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:15",
+          "document_version_id": "web_search-096197152ee63473",
+          "page": null,
+          "section": "Ravi Varma | Biography, Paintings, Royal Court Artist, & Printmaker",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Born: April 29, 1848, Kilimanoor Palace, near Trivandrum, Travancore princely state, British India [now Thiruvananthapuram, Kerala, India]",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:16",
+      "claim": "Raja Ravi Varma died on October 2, 1906, at Kilimanoor Palace.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T135502Z-d7e34466:span:research-01-as-of-2023-what-is-the-name-of-this-:16",
+          "document_version_id": "web_search-096197152ee63473",
+          "page": null,
+          "section": "Ravi Varma | Biography, Paintings, Royal Court Artist, & Printmaker",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Died: October 2, 1906, Kilimanoor Palace (aged 58)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [],
+  "evidence_matrix": {
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:01": [
+      "web_search-9c2b2b29369508df"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:02": [
+      "web_search-9c2b2b29369508df"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:03": [
+      "web_search-9c2b2b29369508df"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:04": [
+      "web_search-8c4df09be354cf0c"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:05": [
+      "web_search-8c4df09be354cf0c"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:06": [
+      "web_search-533d9ab2fddd620d"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:07": [
+      "web_search-533d9ab2fddd620d"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:08": [
+      "web_search-5297d2e96a84f48a"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:09": [
+      "web_search-d778c860c3562489"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:10": [
+      "web_search-d778c860c3562489"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:11": [
+      "web_search-1657b193759f0bca"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:12": [
+      "web_search-1657b193759f0bca"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:13": [
+      "web_search-e3ce18eb6d43d164"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:14": [
+      "web_search-e3ce18eb6d43d164"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:15": [
+      "web_search-096197152ee63473"
+    ],
+    "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:16": [
+      "web_search-096197152ee63473"
+    ]
+  },
+  "research_graph": {
+    "nodes": [],
+    "edges": []
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:01",
+      "uri": "https://worldpopulationreview.com/us-cities/texas/temple",
+      "media_type": "text/markdown",
+      "content_sha256": "7536fa47d970bc42cfcde80b2a38f76de575474163738de97cd7bd1513748e74",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-7536fa47d970bc42",
+        "critical_claims_allowed": true,
+        "source_title": "Temple, Texas  Population 2026",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:02",
+      "uri": "https://en.wikipedia.org/wiki/Mathura",
+      "media_type": "text/markdown",
+      "content_sha256": "9c2b2b29369508df5f2f19f40d546e31dc395bea1097a4005f9f6c7ff52bd6f6",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-9c2b2b29369508df",
+        "critical_claims_allowed": true,
+        "source_title": "Mathura - Wikipedia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:03",
+      "uri": "https://mysgv.net/cities/temple-city",
+      "media_type": "text/markdown",
+      "content_sha256": "f671e7392c2d5e3b148dcfce78e667532940260685565f860938a09e9b2b0675",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-f671e7392c2d5e3b",
+        "critical_claims_allowed": true,
+        "source_title": "Temple City, California - MySGV",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:04",
+      "uri": "https://quizlet.com/718619809/arth-111-development-of-art-ideas-chapters-1-3-5-flash-cards",
+      "media_type": "text/markdown",
+      "content_sha256": "f689e70b4f46be71e17c4a5711d82b1a7189d37eccf227f412bf50f862eafeee",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-f689e70b4f46be71",
+        "critical_claims_allowed": true,
+        "source_title": "ARTH 111: Development of Art & Ideas: Chapters 1, 3, 5 Flashcards",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:05",
+      "uri": "https://www.facebook.com/mediamafia420/posts/how-did-villages-towns-and-cities-in-india-get-their-namesas-per-2011-census-of-/740421824794546",
+      "media_type": "text/markdown",
+      "content_sha256": "8c4df09be354cf0cf74e335472a001fc282b4080ee7b804ca10081a0af67cbeb",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-8c4df09be354cf0c",
+        "critical_claims_allowed": true,
+        "source_title": "How did Villages, Towns and Cities in India get their ...",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:06",
+      "uri": "https://en.wikipedia.org/wiki/Indore",
+      "media_type": "text/markdown",
+      "content_sha256": "533d9ab2fddd620d39982c4415808d9f14479f4b996ecf86bf218263c7b5c49e",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-533d9ab2fddd620d",
+        "critical_claims_allowed": true,
+        "source_title": "Indore",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:07",
+      "uri": "https://www.worldometers.info/population/largest-cities-in-india",
+      "media_type": "text/markdown",
+      "content_sha256": "3f23f6220abe8a264d9891ee2cbafc3df82a26f5d1d1f3d6a2b3b214f8624c24",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-3f23f6220abe8a26",
+        "critical_claims_allowed": true,
+        "source_title": "Largest Cities by Population in India (2025)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:08",
+      "uri": "https://www.pewresearch.org/religion/2021/09/21/population-growth-and-religious-composition",
+      "media_type": "text/markdown",
+      "content_sha256": "5297d2e96a84f48a341e0067c71f3e539eddd1dd924db74af62a166a56fa8e0b",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-5297d2e96a84f48a",
+        "critical_claims_allowed": true,
+        "source_title": "Population growth and religious composition in India",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:09",
+      "uri": "https://www.instagram.com/popular/raja-ravi-varma-birthplace-city-named-after-deity-temple",
+      "media_type": "text/markdown",
+      "content_sha256": "d778c860c35624890f54216dbaa61b886033cccbbcbbf5c3e2bf2341467bcaa9",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-d778c860c3562489",
+        "critical_claims_allowed": true,
+        "source_title": "Raja Ravi Varma Birthplace City Named After Deity Temple",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:10",
+      "uri": "https://www.instagram.com/popular/famous-artist-born-aristocratic-family-birthplace-city",
+      "media_type": "text/markdown",
+      "content_sha256": "d97f59a721644ed2acdee2c7014c5cce9d7c8e080780f4117a5246c1103c921c",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-d97f59a721644ed2",
+        "critical_claims_allowed": true,
+        "source_title": "Famous Artist Born Aristocratic Family Birthplace City",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:11",
+      "uri": "https://www.instagram.com/popular/birthplace-of-a-famous-artist-aristocratic-family-city",
+      "media_type": "text/markdown",
+      "content_sha256": "024f1afd60d0b827a4d9e9f036adc93a10cf663a7dd26e3e57848d1612db4825",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-024f1afd60d0b827",
+        "critical_claims_allowed": true,
+        "source_title": "Birthplace Of A Famous Artist Aristocratic Family City",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:12",
+      "uri": "https://www.instagram.com/popular/birthplace-famous-artist-aristocratic-family-indian-city",
+      "media_type": "text/markdown",
+      "content_sha256": "525efaa5ffa9a387cc63e61aec33300ae6fb0ed25ab5bfe68d2d7de8e47bfdfb",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-525efaa5ffa9a387",
+        "critical_claims_allowed": true,
+        "source_title": "Birthplace Famous Artist Aristocratic Family Indian City",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:13",
+      "uri": "https://www.youtube.com/watch?v=6B70NxOe1So",
+      "media_type": "text/markdown",
+      "content_sha256": "1657b193759f0bca1b2ef89a7d4a86b675f325708648b872935e9dbcc9d52b3e",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-1657b193759f0bca",
+        "critical_claims_allowed": true,
+        "source_title": "'Town of Opportunity': Temple shows population boom in new census report",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:14",
+      "uri": "https://templeedc.com/temple-among-fastest-growing-cities-in-texas",
+      "media_type": "text/markdown",
+      "content_sha256": "1f674bb4915862300878a09c35a27b4336af80849899a594ab664e3e860c8035",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-1f674bb491586230",
+        "critical_claims_allowed": true,
+        "source_title": "Temple Among Fastest Growing Cities in Texas - Meet Temple EDC",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:15",
+      "uri": "https://kdhnews.com/news/region/temple-population-growth-astronomical-as-city-hits-102-000-residents/article_50745445-beab-5f10-be67-3b34dc0a5f9e.html",
+      "media_type": "text/markdown",
+      "content_sha256": "e3ce18eb6d43d164b0597e097939767796bc3fd25cc4f0bb4ef657dd028f571d",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-e3ce18eb6d43d164",
+        "critical_claims_allowed": true,
+        "source_title": "Temple population growth ‘astronomical’ as city hits 102,000 residents | News | kdhnews.com",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:16",
+      "uri": "https://www.wjhl.com/news/local/tri-cities-sees-record-population-growth-for-second-consecutive-year",
+      "media_type": "text/markdown",
+      "content_sha256": "dbe64c0674821b8b47a729319e1340a7f8dcc2f438705bd61373bbd9d3fa00a4",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-dbe64c0674821b8b",
+        "critical_claims_allowed": true,
+        "source_title": "Tri-Cities sees record population growth for second consecutive year",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T135502Z-d7e34466:research-01-as-of-2023-what-is-the-name-of-this-:src:17",
+      "uri": "https://www.britannica.com/biography/Ravi-Varma",
+      "media_type": "text/markdown",
+      "content_sha256": "096197152ee634731ba3f6a4c07a88c4a41a269ba4f647fe30fbe39cc974b698",
+      "created_by_task_id": "research-01-as-of-2023-what-is-the-name-of-this-",
+      "metadata": {
+        "document_version_id": "web_search-096197152ee63473",
+        "critical_claims_allowed": true,
+        "source_title": "Ravi Varma | Biography, Paintings, Royal Court Artist, & Printmaker",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:01",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:02",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:03",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:04",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:05",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:06",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:07",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:08",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:09",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:10",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:11",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:12",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:13",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:14",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:15",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:16"
+    ],
+    "qualified_claim_ids": [],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [],
+    "executive_summary_claim_ids": [
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:01",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:02",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:03",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:04",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:05",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:06",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:07",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:08",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:09",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:10",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:11",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:12",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:13",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:14",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:15",
+      "20260814T135502Z-d7e34466:claim:research-01-as-of-2023-what-is-the-name-of-this-:16"
+    ],
+    "degradations": {},
+    "semantic_disagreements": [],
+    "unresolved_claim_ids": []
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T135502Z-d7e34466",
+    "document_version_ids": [
+      "web_search-024f1afd60d0b827",
+      "web_search-096197152ee63473",
+      "web_search-1657b193759f0bca",
+      "web_search-1f674bb491586230",
+      "web_search-3f23f6220abe8a26",
+      "web_search-525efaa5ffa9a387",
+      "web_search-5297d2e96a84f48a",
+      "web_search-533d9ab2fddd620d",
+      "web_search-7536fa47d970bc42",
+      "web_search-8c4df09be354cf0c",
+      "web_search-9c2b2b29369508df",
+      "web_search-d778c860c3562489",
+      "web_search-d97f59a721644ed2",
+      "web_search-dbe64c0674821b8b",
+      "web_search-e3ce18eb6d43d164",
+      "web_search-f671e7392c2d5e3b",
+      "web_search-f689e70b4f46be71"
+    ],
+    "content_hashes": {
+      "web_search-7536fa47d970bc42": "7536fa47d970bc42cfcde80b2a38f76de575474163738de97cd7bd1513748e74",
+      "web_search-9c2b2b29369508df": "9c2b2b29369508df5f2f19f40d546e31dc395bea1097a4005f9f6c7ff52bd6f6",
+      "web_search-f671e7392c2d5e3b": "f671e7392c2d5e3b148dcfce78e667532940260685565f860938a09e9b2b0675",
+      "web_search-f689e70b4f46be71": "f689e70b4f46be71e17c4a5711d82b1a7189d37eccf227f412bf50f862eafeee",
+      "web_search-8c4df09be354cf0c": "8c4df09be354cf0cf74e335472a001fc282b4080ee7b804ca10081a0af67cbeb",
+      "web_search-533d9ab2fddd620d": "533d9ab2fddd620d39982c4415808d9f14479f4b996ecf86bf218263c7b5c49e",
+      "web_search-3f23f6220abe8a26": "3f23f6220abe8a264d9891ee2cbafc3df82a26f5d1d1f3d6a2b3b214f8624c24",
+      "web_search-5297d2e96a84f48a": "5297d2e96a84f48a341e0067c71f3e539eddd1dd924db74af62a166a56fa8e0b",
+      "web_search-d778c860c3562489": "d778c860c35624890f54216dbaa61b886033cccbbcbbf5c3e2bf2341467bcaa9",
+      "web_search-d97f59a721644ed2": "d97f59a721644ed2acdee2c7014c5cce9d7c8e080780f4117a5246c1103c921c",
+      "web_search-024f1afd60d0b827": "024f1afd60d0b827a4d9e9f036adc93a10cf663a7dd26e3e57848d1612db4825",
+      "web_search-525efaa5ffa9a387": "525efaa5ffa9a387cc63e61aec33300ae6fb0ed25ab5bfe68d2d7de8e47bfdfb",
+      "web_search-1657b193759f0bca": "1657b193759f0bca1b2ef89a7d4a86b675f325708648b872935e9dbcc9d52b3e",
+      "web_search-1f674bb491586230": "1f674bb4915862300878a09c35a27b4336af80849899a594ab664e3e860c8035",
+      "web_search-e3ce18eb6d43d164": "e3ce18eb6d43d164b0597e097939767796bc3fd25cc4f0bb4ef657dd028f571d",
+      "web_search-dbe64c0674821b8b": "dbe64c0674821b8b47a729319e1340a7f8dcc2f438705bd61373bbd9d3fa00a4",
+      "web_search-096197152ee63473": "096197152ee634731ba3f6a4c07a88c4a41a269ba4f647fe30fbe39cc974b698"
+    },
+    "critical_claims_allowed": {
+      "web_search-7536fa47d970bc42": true,
+      "web_search-9c2b2b29369508df": true,
+      "web_search-f671e7392c2d5e3b": true,
+      "web_search-f689e70b4f46be71": true,
+      "web_search-8c4df09be354cf0c": true,
+      "web_search-533d9ab2fddd620d": true,
+      "web_search-3f23f6220abe8a26": true,
+      "web_search-5297d2e96a84f48a": true,
+      "web_search-d778c860c3562489": true,
+      "web_search-d97f59a721644ed2": true,
+      "web_search-024f1afd60d0b827": true,
+      "web_search-525efaa5ffa9a387": true,
+      "web_search-1657b193759f0bca": true,
+      "web_search-1f674bb491586230": true,
+      "web_search-e3ce18eb6d43d164": true,
+      "web_search-dbe64c0674821b8b": true,
+      "web_search-096197152ee63473": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T135502Z-d7e34466",
+    "status": "failed"
+  }
+}

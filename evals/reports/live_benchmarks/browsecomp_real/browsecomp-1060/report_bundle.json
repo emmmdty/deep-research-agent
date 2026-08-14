@@ -1,0 +1,1659 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- The 2019 Georgia High School Musical Theatre Awards (The Shulers) won first place in Special Event Coverage – Live.\n- The 41st News and Documentary Emmy Awards took place on September 21-22, 2020.\n- The nominees for the 41st News and Documentary Emmy Awards were announced on August 6, 2020.\n- The National Academy of Television Arts & Sciences (NATAS) recognizes excellence in television with the Emmy Award for News & Documentary, Sports, Daytime Entertainment, and other categories.\n- The 41st News & Documentary Emmy Awards were presented by the National Academy of Television Arts and Sciences (NATAS), honoring the best in American news and documentary programming in 2019.\n- The 41st News & Documentary Emmy Awards winners were announced on two ceremonies via live-stream at Watch.TheEmmys.TV.\n- The 41st News & Documentary Emmy Awards took place on September 21, 2020 (News Categories) and September 22, 2020 (Documentary Categories).\n- The Salt Path author said in a 2020 interview with Waterstones that The Salt Path was the first thing she had written since leaving school as a teenager.\n- The Salt Path author's husband, Moth, said in a 2020 Waterstones interview that he did not know his wife could write.\n- The Salt Path author said in a 2019 BBC Radio Cornwall interview that she had searched online for a literary agent.\n- The 2019 Georgia High School Musical Theatre Awards (The Shulers) broadcast production won first place in Special Event Coverage – Live.\n- A Georgia State University student's documentary film won a 2020 Southeast Emmy Award.\n- The Salt Path author Raynor Winn confirmed she wrote a secret first book despite claiming to be a debut writer.\n- Winn repeatedly claimed The Salt Path was the first book she had ever written.\n- In a 2020 Waterstones interview, Winn said of The Salt Path: \"It's the first thing I've written since I was a teenager leaving school – the first thing.\"\n- An investigation by The Observer in 2025 claimed The Salt Path featured misleading information about Winn's life story.\n- The documentary 'Our Plastic World' was written and produced by Film & Media major Riũki Gakio in collaboration with Georgia State TV and Georgia Public Broadcasting.\n- Anh Dao received a Southeast Emmy Award in 2020 from the National Academy of Television Arts & Sciences.\n- GSUTV won two 2020 Southeast Emmy awards.\n- The 2019 Georgia High School Musical Theatre Awards (The Shulers) won first place in Special Event Coverage – Live at the 2020 Southeast Emmys.\n- The 2020 Southeast Emmy winners were announced Saturday evening in an awards ceremony live streamed from Atlanta.\n- The Regional Southeast EMMY Chapter is one of 19 chapters throughout the United States.\n\n## Findings\n\n### GSUTV Won Two 2020 Southeast Emmy Awards\n\nGSUTV won two 2020 Southeast Emmy awards. One of these awards was for the documentary 'Our Plastic World,' which won first place in Documentary – Topical and Health/Science – Program Feature/Segment at the 2020 Southeast Emmys. A Georgia State University student's documentary film won a 2020 Southeast Emmy Award.\n\n### 'Our Plastic World' Documentary Credits\n\nThe documentary 'Our Plastic World' was written and produced by Film & Media major Riũki Gakio in collaboration with Georgia State TV and Georgia Public Broadcasting.\n\n### The Shulers Won Special Event Coverage – Live\n\nThe 2019 Georgia High School Musical Theatre Awards (The Shulers) broadcast production won first place in Special Event Coverage – Live at the 2020 Southeast Emmys.\n\n### 2020 Southeast Emmy Ceremony Details\n\nThe 2020 Southeast Emmy winners were announced Saturday evening in an awards ceremony live streamed from Atlanta. The Regional Southeast EMMY Chapter is one of 19 chapters throughout the United States.\n\n### 41st News and Documentary Emmy Awards\n\nThe 41st News and Documentary Emmy Awards took place on September 21-22, 2020. The nominees were announced on August 6, 2020. The winners were announced on two ceremonies via live-stream at Watch.TheEmmys.TV. The awards were presented by the National Academy of Television Arts and Sciences (NATAS), honoring the best in American news and documentary programming in 2019. NATAS recognizes excellence in television with the Emmy Award for News & Documentary, Sports, Daytime Entertainment, and other categories.\n\n### The Salt Path Authorship Claims\n\nThe Salt Path author Raynor Winn said in a 2020 interview with Waterstones that The Salt Path was the first thing she had written since leaving school as a teenager. Winn's husband, Moth, said in the same 2020 Waterstones interview that he did not know his wife could write. Winn also said in a 2019 BBC Radio Cornwall interview that she had searched online for a literary agent.\n\nWinn repeatedly claimed The Salt Path was the first book she had ever written. In the 2020 Waterstones interview, Winn said of The Salt Path: \"It's the first thing I've written since I was a teenager leaving school – the first thing.\"\n\n### The Salt Path Investigation\n\nAn investigation by The Observer in 2025 claimed The Salt Path featured misleading information about Winn's life story. Winn confirmed she wrote a secret first book despite claiming to be a debut writer.\n\n## Evidence Status\n\nAll claims in this report were accepted by the critic. The evidence status for each finding is as follows:\n\n- **GSUTV Emmy wins**: Directly supported by evidence spans confirming two wins and the specific category placement.\n- **Documentary credits**: Directly supported by evidence confirming authorship and collaboration.\n- **The Shulers award**: Directly supported by evidence confirming the broadcast production's first-place win.\n- **Ceremony details**: Directly supported by evidence confirming the live stream from Atlanta and chapter count.\n- **41st Emmy Awards**: Directly supported by evidence confirming dates, nominee announcement, live-stream format, and NATAS involvement.\n- **Salt Path authorship claims**: Directly supported by direct quotes from interviews.\n- **Salt Path investigation**: Supported by evidence of the 2025 Observer investigation and Winn's confirmation of a secret first book.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:04",
+      "claim": "The nominees for the 41st News and Documentary Emmy Awards were announced on August 6, 2020.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:04",
+          "document_version_id": "web_search-7ab5a2ed254d2beb",
+          "page": null,
+          "section": "41st News and Documentary Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The nominees were announced on August 6, 2020 for both the News and the Documentary categories.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:05",
+      "claim": "The National Academy of Television Arts & Sciences (NATAS) recognizes excellence in television with the Emmy Award for News & Documentary, Sports, Daytime Entertainment, and other categories.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:05",
+          "document_version_id": "web_search-e78aec2b57d5d133",
+          "page": null,
+          "section": "About - Southeast Emmys®",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "It recognizes excellence in television with the coveted Emmy® Award for News & Documentary, Sports, Daytime Entertainment, Daytime Creative Arts & Entertainment, Public & Community Service, Technology &",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:06",
+      "claim": "The 41st News & Documentary Emmy Awards were presented by the National Academy of Television Arts and Sciences (NATAS), honoring the best in American news and documentary programming in 2019.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:06",
+          "document_version_id": "web_search-7ee1daa5a963f933",
+          "page": null,
+          "section": "41st News and Documentary Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The 41st News & Documentary Emmy Awards were presented by the National Academy of Television Arts and Sciences (NATAS), honoring the best in American news and documentary programming in 2019.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:07",
+      "claim": "The 41st News & Documentary Emmy Awards winners were announced on two ceremonies via live-stream at Watch.TheEmmys.TV.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:07",
+          "document_version_id": "web_search-7ee1daa5a963f933",
+          "page": null,
+          "section": "41st News and Documentary Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The winners were announced on two ceremonies via live-stream at Watch.TheEm",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:09",
+      "claim": "The Salt Path author said in a 2020 interview with Waterstones that The Salt Path was the first thing she had written since leaving school as a teenager.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:09",
+          "document_version_id": "web_search-8d74e213106ee6ef",
+          "page": null,
+          "section": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "ve written since I was a teenager leaving school – the first thing",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:10",
+      "claim": "The Salt Path author's husband, Moth, said in a 2020 Waterstones interview that he did not know his wife could write.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:10",
+          "document_version_id": "web_search-8d74e213106ee6ef",
+          "page": null,
+          "section": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "No, not at all. Not that she could write. Surprised me.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:11",
+      "claim": "The Salt Path author said in a 2019 BBC Radio Cornwall interview that she had searched online for a literary agent.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:11",
+          "document_version_id": "web_search-8d74e213106ee6ef",
+          "page": null,
+          "section": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "she said she had searched online for a literary agent",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:14",
+      "claim": "A Georgia State University student's documentary film won a 2020 Southeast Emmy Award.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:14",
+          "document_version_id": "web_search-bfa1e3b7ec0e99d9",
+          "page": null,
+          "section": "GSUTV Archives - Communication",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "s documentary film has won a 2020 Southeast Emmy Award.",
+          "extraction_method": "agent_grounding"
+        },
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:19",
+          "document_version_id": "web_search-798bff602cf2c283",
+          "page": null,
+          "section": "Student’s Environmental Documentary Wins Emmy Award - Communication at Georgia State",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "A Georgia State University student’s documentary film has won a 2020 Southeast Emmy Award.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:15",
+      "claim": "The Salt Path author Raynor Winn confirmed she wrote a secret first book despite claiming to be a debut writer.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:15",
+          "document_version_id": "web_search-084267ded56903a9",
+          "page": null,
+          "section": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The Salt Path author confirms she wrote secret first book - despite claiming to be debut writer",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:16",
+      "claim": "Winn repeatedly claimed The Salt Path was the first book she had ever written.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:16",
+          "document_version_id": "web_search-084267ded56903a9",
+          "page": null,
+          "section": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Winn repeatedly claimed The Salt Path was the first book she had ever written.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:17",
+      "claim": "In a 2020 Waterstones interview, Winn said of The Salt Path: \"It's the first thing I've written since I was a teenager leaving school – the first thing.\"",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:17",
+          "document_version_id": "web_search-084267ded56903a9",
+          "page": null,
+          "section": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "In an interview for Waterstones in 2020, she said: \"It's the first thing I've written since I was a teenager leaving school – the first thing.\"",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:18",
+      "claim": "An investigation by The Observer in 2025 claimed The Salt Path featured misleading information about Winn's life story.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:18",
+          "document_version_id": "web_search-084267ded56903a9",
+          "page": null,
+          "section": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "An investigation by The Observer in 2025 also claimed the book featured misleading information about her life story.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:20",
+      "claim": "The documentary 'Our Plastic World' was written and produced by Film & Media major Riũki Gakio in collaboration with Georgia State TV and Georgia Public Broadcasting.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:20",
+          "document_version_id": "web_search-798bff602cf2c283",
+          "page": null,
+          "section": "Student’s Environmental Documentary Wins Emmy Award - Communication at Georgia State",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "written and produced by Film & Media major Riũki Gakio in collaboration with Georgia State TV and Georgia Public Broadcasting, took first",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:21",
+      "claim": "Anh Dao received a Southeast Emmy Award in 2020 from the National Academy of Television Arts & Sciences.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:21",
+          "document_version_id": "web_search-93ff1e82f99653d4",
+          "page": null,
+          "section": "Anh Dao",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "National Academy of Television Arts & Sciences • June 2020",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:22",
+      "claim": "GSUTV won two 2020 Southeast Emmy awards.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:22",
+          "document_version_id": "fetch_page-6db8bb737d0f9de9",
+          "page": null,
+          "section": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "s partnership with Georgia Public Broadcasting, won two Southeastern Emmy awards.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:25",
+      "claim": "The 2020 Southeast Emmy winners were announced Saturday evening in an awards ceremony live streamed from Atlanta.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:25",
+          "document_version_id": "fetch_page-6db8bb737d0f9de9",
+          "page": null,
+          "section": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "The Emmy winners were announced Saturday evening in an awards ceremony live streamed from Atlanta.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:26",
+      "claim": "The Regional Southeast EMMY Chapter is one of 19 chapters throughout the United States.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:26",
+          "document_version_id": "fetch_page-507ff898f2809205",
+          "page": null,
+          "section": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+          "start_offset": 1800,
+          "end_offset": 2172,
+          "quote": "The Regional Southeast EMMY® Chapter is one of 19 chapters throughout the United States.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02",
+      "claim": "The 2019 Georgia High School Musical Theatre Awards (The Shulers) won first place in Special Event Coverage – Live.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:02",
+          "document_version_id": "web_search-52b6d9fe433e58b0",
+          "page": null,
+          "section": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The 2019 Georgia High School Musical Theatre Awards (The Shulers), the two-hour broadcast production won first place in Special Event Coverage – Live.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03",
+      "claim": "The 41st News and Documentary Emmy Awards took place on September 21-22, 2020.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:03",
+          "document_version_id": "web_search-7ab5a2ed254d2beb",
+          "page": null,
+          "section": "41st News and Documentary Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "September 21, 2020 (News Categories)  September 22, 2020 (Documentary Categories)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08",
+      "claim": "The 41st News & Documentary Emmy Awards took place on September 21, 2020 (News Categories) and September 22, 2020 (Documentary Categories).",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:08",
+          "document_version_id": "web_search-7ee1daa5a963f933",
+          "page": null,
+          "section": "41st News and Documentary Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "September 21, 2020 (News Categories)  September 22, 2020 (Documentary Categories)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13",
+      "claim": "The 2019 Georgia High School Musical Theatre Awards (The Shulers) broadcast production won first place in Special Event Coverage – Live.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:13",
+          "document_version_id": "web_search-a8fa3ba3af114d5f",
+          "page": null,
+          "section": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The 2019 Georgia High School Musical Theatre Awards (The Shulers), the two-hour broadcast production won first place in Special Event Coverage – Live.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24",
+      "claim": "The 2019 Georgia High School Musical Theatre Awards (The Shulers) won first place in Special Event Coverage – Live at the 2020 Southeast Emmys.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:24",
+          "document_version_id": "fetch_page-6db8bb737d0f9de9",
+          "page": null,
+          "section": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "The 2019 Georgia High School Musical Theatre Awards (The Shulers), the two-hour broadcast production won first place in Special Event Coverage – Live.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02": [
+      "web_search-52b6d9fe433e58b0"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03": [
+      "web_search-7ab5a2ed254d2beb"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:04": [
+      "web_search-7ab5a2ed254d2beb"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:05": [
+      "web_search-e78aec2b57d5d133"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:06": [
+      "web_search-7ee1daa5a963f933"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:07": [
+      "web_search-7ee1daa5a963f933"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08": [
+      "web_search-7ee1daa5a963f933"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:09": [
+      "web_search-8d74e213106ee6ef"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:10": [
+      "web_search-8d74e213106ee6ef"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:11": [
+      "web_search-8d74e213106ee6ef"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13": [
+      "web_search-a8fa3ba3af114d5f"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:14": [
+      "web_search-798bff602cf2c283",
+      "web_search-bfa1e3b7ec0e99d9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:15": [
+      "web_search-084267ded56903a9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:16": [
+      "web_search-084267ded56903a9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:17": [
+      "web_search-084267ded56903a9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:18": [
+      "web_search-084267ded56903a9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:20": [
+      "web_search-798bff602cf2c283"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:21": [
+      "web_search-93ff1e82f99653d4"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:22": [
+      "fetch_page-6db8bb737d0f9de9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24": [
+      "fetch_page-6db8bb737d0f9de9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:25": [
+      "fetch_page-6db8bb737d0f9de9"
+    ],
+    "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:26": [
+      "fetch_page-507ff898f2809205"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "The documentary 'Our Plastic World' won first place in Documentary – Topical and Health/Science – Program Feature/Segment.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "The Salt Path author's husband, Moth, said in a 2020 Waterstones interview that he did not know his wife could write.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "The Salt Path author said in a 2019 BBC Radio Cornwall interview that she had searched online for a literary agent.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "The documentary 'Our Plastic World' won first place in Documentary – Topical and Health/Science – Program Feature/Segment.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "The 2019 Georgia High School Musical Theatre Awards (The Shulers) broadcast production won first place in Special Event Coverage – Live.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "A Georgia State University student's documentary film won a 2020 Southeast Emmy Award.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "The Salt Path author Raynor Winn confirmed she wrote a secret first book despite claiming to be a debut writer.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "Winn repeatedly claimed The Salt Path was the first book she had ever written.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "In a 2020 Waterstones interview, Winn said of The Salt Path: \"It's the first thing I've written since I was a teenager leaving school – the first thing.\"",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-18",
+        "kind": "claim",
+        "label": "An investigation by The Observer in 2025 claimed The Salt Path featured misleading information about Winn's life story.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-19",
+        "kind": "claim",
+        "label": "A Georgia State University student's documentary film won a 2020 Southeast Emmy Award.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "The 2019 Georgia High School Musical Theatre Awards (The Shulers) won first place in Special Event Coverage – Live.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-20",
+        "kind": "claim",
+        "label": "The documentary 'Our Plastic World' was written and produced by Film & Media major Riũki Gakio in collaboration with Georgia State TV and Georgia Public Broadcasting.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-21",
+        "kind": "claim",
+        "label": "Anh Dao received a Southeast Emmy Award in 2020 from the National Academy of Television Arts & Sciences.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-22",
+        "kind": "claim",
+        "label": "GSUTV won two 2020 Southeast Emmy awards.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-23",
+        "kind": "claim",
+        "label": "GSUTV's documentary 'Our Plastic World' won first place in Documentary – Topical and Health/Science – Program Feature/Segment at the 2020 Southeast Emmys.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-24",
+        "kind": "claim",
+        "label": "The 2019 Georgia High School Musical Theatre Awards (The Shulers) won first place in Special Event Coverage – Live at the 2020 Southeast Emmys.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-25",
+        "kind": "claim",
+        "label": "The 2020 Southeast Emmy winners were announced Saturday evening in an awards ceremony live streamed from Atlanta.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-26",
+        "kind": "claim",
+        "label": "The Regional Southeast EMMY Chapter is one of 19 chapters throughout the United States.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "The 41st News and Documentary Emmy Awards took place on September 21-22, 2020.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The nominees for the 41st News and Documentary Emmy Awards were announced on August 6, 2020.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "The National Academy of Television Arts & Sciences (NATAS) recognizes excellence in television with the Emmy Award for News & Documentary, Sports, Daytime Entertainment, and other categories.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "The 41st News & Documentary Emmy Awards were presented by the National Academy of Television Arts and Sciences (NATAS), honoring the best in American news and documentary programming in 2019.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "The 41st News & Documentary Emmy Awards winners were announced on two ceremonies via live-stream at Watch.TheEmmys.TV.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "The 41st News & Documentary Emmy Awards took place on September 21, 2020 (News Categories) and September 22, 2020 (Documentary Categories).",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "The Salt Path author said in a 2020 interview with Waterstones that The Salt Path was the first thing she had written since leaving school as a teenager.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-52b6d9fe433e58b0"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+        "properties": {
+          "document_version_id": "web_search-8d74e213106ee6ef"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+        "properties": {
+          "document_version_id": "web_search-8d74e213106ee6ef"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-a8fa3ba3af114d5f"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-a8fa3ba3af114d5f"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "GSUTV Archives - Communication",
+        "properties": {
+          "document_version_id": "web_search-bfa1e3b7ec0e99d9"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+        "properties": {
+          "document_version_id": "web_search-084267ded56903a9"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+        "properties": {
+          "document_version_id": "web_search-084267ded56903a9"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+        "properties": {
+          "document_version_id": "web_search-084267ded56903a9"
+        }
+      },
+      {
+        "node_id": "source-18-1",
+        "kind": "source",
+        "label": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+        "properties": {
+          "document_version_id": "web_search-084267ded56903a9"
+        }
+      },
+      {
+        "node_id": "source-19-1",
+        "kind": "source",
+        "label": "Student’s Environmental Documentary Wins Emmy Award - Communication at Georgia State",
+        "properties": {
+          "document_version_id": "web_search-798bff602cf2c283"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-52b6d9fe433e58b0"
+        }
+      },
+      {
+        "node_id": "source-20-1",
+        "kind": "source",
+        "label": "Student’s Environmental Documentary Wins Emmy Award - Communication at Georgia State",
+        "properties": {
+          "document_version_id": "web_search-798bff602cf2c283"
+        }
+      },
+      {
+        "node_id": "source-21-1",
+        "kind": "source",
+        "label": "Anh Dao",
+        "properties": {
+          "document_version_id": "web_search-93ff1e82f99653d4"
+        }
+      },
+      {
+        "node_id": "source-22-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "properties": {
+          "document_version_id": "fetch_page-6db8bb737d0f9de9"
+        }
+      },
+      {
+        "node_id": "source-23-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "properties": {
+          "document_version_id": "fetch_page-6db8bb737d0f9de9"
+        }
+      },
+      {
+        "node_id": "source-24-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "properties": {
+          "document_version_id": "fetch_page-6db8bb737d0f9de9"
+        }
+      },
+      {
+        "node_id": "source-25-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "properties": {
+          "document_version_id": "fetch_page-6db8bb737d0f9de9"
+        }
+      },
+      {
+        "node_id": "source-26-1",
+        "kind": "source",
+        "label": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "properties": {
+          "document_version_id": "fetch_page-507ff898f2809205"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "41st News and Documentary Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-7ab5a2ed254d2beb"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "41st News and Documentary Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-7ab5a2ed254d2beb"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "About - Southeast Emmys®",
+        "properties": {
+          "document_version_id": "web_search-e78aec2b57d5d133"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "41st News and Documentary Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-7ee1daa5a963f933"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "41st News and Documentary Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-7ee1daa5a963f933"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "41st News and Documentary Emmy Awards",
+        "properties": {
+          "document_version_id": "web_search-7ee1daa5a963f933"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+        "properties": {
+          "document_version_id": "web_search-8d74e213106ee6ef"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-18-1",
+        "source_node_id": "claim-18",
+        "target_node_id": "source-18-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:18"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-19-1",
+        "source_node_id": "claim-19",
+        "target_node_id": "source-19-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:19"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-20-1",
+        "source_node_id": "claim-20",
+        "target_node_id": "source-20-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:20"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-21-1",
+        "source_node_id": "claim-21",
+        "target_node_id": "source-21-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:21"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-22-1",
+        "source_node_id": "claim-22",
+        "target_node_id": "source-22-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:22"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-23-1",
+        "source_node_id": "claim-23",
+        "target_node_id": "source-23-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:23"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-24-1",
+        "source_node_id": "claim-24",
+        "target_node_id": "source-24-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:24"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-25-1",
+        "source_node_id": "claim-25",
+        "target_node_id": "source-25-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:25"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-26-1",
+        "source_node_id": "claim-26",
+        "target_node_id": "source-26-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:26"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T134402Z-8c7b7069:span:research-01-in-late-2020-a-series-of-articles-we:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:01",
+      "uri": "https://news.gsu.edu/2020/09/16/gsutv-wins-two-2020-southeast-emmy-awards",
+      "media_type": "text/markdown",
+      "content_sha256": "52b6d9fe433e58b0db56979e85372a28136f1569af5baeab145dccb6a5ab6378",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-52b6d9fe433e58b0",
+        "critical_claims_allowed": true,
+        "source_title": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:02",
+      "uri": "https://en.wikipedia.org/wiki/41st_News_and_Documentary_Emmy_Awards",
+      "media_type": "text/markdown",
+      "content_sha256": "7ab5a2ed254d2beb89f7f010912a8b05018d91c65f657b5ef8383e07b6a0d219",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-7ab5a2ed254d2beb",
+        "critical_claims_allowed": true,
+        "source_title": "41st News and Documentary Emmy Awards",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:03",
+      "uri": "https://southeastemmy.com/about",
+      "media_type": "text/markdown",
+      "content_sha256": "e78aec2b57d5d133d56856c47868be0c615d6ad938877d78654079e6e8b45210",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-e78aec2b57d5d133",
+        "critical_claims_allowed": true,
+        "source_title": "About - Southeast Emmys®",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:04",
+      "uri": "https://www.instagram.com/southeastemmy?hl=en",
+      "media_type": "text/markdown",
+      "content_sha256": "b9bc2e2f46403bcabaeb2e54acaf875caf3f6b4a9d0c3d68546b836a286085f9",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-b9bc2e2f46403bca",
+        "critical_claims_allowed": true,
+        "source_title": "Southeast Emmy (@southeastemmy) • Instagram photos and videos",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:05",
+      "uri": "https://en.wikipedia.org/wiki/41st_News_and_Documentary_Emmy_Awards",
+      "media_type": "text/markdown",
+      "content_sha256": "7ee1daa5a963f93320812788ed04130b780615075143d2ac647ce839454fc47b",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-7ee1daa5a963f933",
+        "critical_claims_allowed": true,
+        "source_title": "41st News and Documentary Emmy Awards",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:06",
+      "uri": "https://www.instagram.com/southeastemmy?hl=en",
+      "media_type": "text/markdown",
+      "content_sha256": "f1518f8d8d1b7cd87c7aa893460fbce4a4313079b4887fc9b9ca8857df5a1d75",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-f1518f8d8d1b7cd8",
+        "critical_claims_allowed": true,
+        "source_title": "Southeast Emmy (@southeastemmy) · Atlanta, GA",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:07",
+      "uri": "https://www.theguardian.com/books/2026/mar/20/the-salt-path-author-published-earlier-book-under-alias-despite-debut-claims",
+      "media_type": "text/markdown",
+      "content_sha256": "8d74e213106ee6efc4bf275962781d510756d1ade4cdc0ce5ad14f004da4ad90",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-8d74e213106ee6ef",
+        "critical_claims_allowed": true,
+        "source_title": "The Salt Path author published earlier book under alias, despite debut claims | Books | The Guardian",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:08",
+      "uri": "https://www.youtube.com/watch?v=OV_ORMNT8W0",
+      "media_type": "text/markdown",
+      "content_sha256": "e9531acac1ad9ba11c9a17f72e6fb49d86ff33929edd4493d8b12704506dd925",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-e9531acac1ad9ba1",
+        "critical_claims_allowed": true,
+        "source_title": "Jean Hanff Korelitz: The Plot - Author Interview",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:09",
+      "uri": "https://www.youtube.com/watch?v=mN9-L_qHyhg",
+      "media_type": "text/markdown",
+      "content_sha256": "01b80193e4c83562a62245a55250315289e70c79abd4ca04d741690af27f6256",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-01b80193e4c83562",
+        "critical_claims_allowed": true,
+        "source_title": "Don Winslow: Broken - Author Interview",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:10",
+      "uri": "https://www.bbc.com/news/articles/cj32vx61x6lo",
+      "media_type": "text/markdown",
+      "content_sha256": "084267ded56903a993a51e836210221e989f14ada922fc0f3fd7bac8fb18b9ef",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-084267ded56903a9",
+        "critical_claims_allowed": true,
+        "source_title": "The Salt Path author Raynor Winn confirms she wrote secret first book",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:11",
+      "uri": "https://news.gsu.edu/2020/09/16/gsutv-wins-two-2020-southeast-emmy-awards",
+      "media_type": "text/markdown",
+      "content_sha256": "a8fa3ba3af114d5fc5daaea950e0fcacfada26ffa53337ccbb4ba0991eb91a47",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-a8fa3ba3af114d5f",
+        "critical_claims_allowed": true,
+        "source_title": "GSUTV Wins Two 2020 Southeast Emmy Awards",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:12",
+      "uri": "https://communication.gsu.edu/category/gsutv",
+      "media_type": "text/markdown",
+      "content_sha256": "bfa1e3b7ec0e99d9b6513bfc89690da7cafb8a3f9b649f071a894ad0de625db3",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-bfa1e3b7ec0e99d9",
+        "critical_claims_allowed": true,
+        "source_title": "GSUTV Archives - Communication",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:13",
+      "uri": "https://communication.gsu.edu/2020/10/01/students-environmental-documentary-wins-emmy-award",
+      "media_type": "text/markdown",
+      "content_sha256": "798bff602cf2c283d634ab525caa40ff09085064bc085409b57b769361f60e60",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-798bff602cf2c283",
+        "critical_claims_allowed": true,
+        "source_title": "Student’s Environmental Documentary Wins Emmy Award - Communication at Georgia State",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:14",
+      "uri": "https://www.linkedin.com/in/daotuanh",
+      "media_type": "text/markdown",
+      "content_sha256": "93ff1e82f99653d437210acc79e4f580ab6c63ae01f57f9fb8d641a84b6b7434",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-93ff1e82f99653d4",
+        "critical_claims_allowed": true,
+        "source_title": "Anh Dao",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:15",
+      "uri": "https://www.gpb.org/news/articles/author-interviews",
+      "media_type": "text/markdown",
+      "content_sha256": "44de8a2ef60acb8500f8e88e51aba1c2ad1e3f189bfb8aa17369e5ae65bfc2a9",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-44de8a2ef60acb85",
+        "critical_claims_allowed": true,
+        "source_title": "News Articles | Georgia Public Broadcasting",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:16",
+      "uri": "https://news.gsu.edu/magazine/spring2020/the-chronicler",
+      "media_type": "text/markdown",
+      "content_sha256": "8fb807dcaf9f1ba27c3bbf272a0ffe73a06b7338eeca40db6c9851cdb3b7de58",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "web_search-8fb807dcaf9f1ba2",
+        "critical_claims_allowed": true,
+        "source_title": "The Chronicler - Georgia State University News - Alumni, College of Arts and Sciences -",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:17",
+      "uri": "https://news.gsu.edu/2020/09/16/gsutv-wins-two-2020-southeast-emmy-awards/",
+      "media_type": "text/markdown",
+      "content_sha256": "6db8bb737d0f9de92cd2baa51cbba65dbc849a43481c1825d67dc483e777a500",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "fetch_page-6db8bb737d0f9de9",
+        "critical_claims_allowed": true,
+        "source_title": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T134402Z-8c7b7069:research-01-in-late-2020-a-series-of-articles-we:src:18",
+      "uri": "https://news.gsu.edu/2020/09/16/gsutv-wins-two-2020-southeast-emmy-awards/",
+      "media_type": "text/markdown",
+      "content_sha256": "507ff898f280920599ebd0c5d7859c4909c4e0450b88bad79732373da0555110",
+      "created_by_task_id": "research-01-in-late-2020-a-series-of-articles-we",
+      "metadata": {
+        "document_version_id": "fetch_page-507ff898f2809205",
+        "critical_claims_allowed": true,
+        "source_title": "GSUTV Wins Two 2020 Southeast Emmy Awards - Georgia State University News - College of Arts and Sciences, Press Releases - Arts & Culture",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 2172
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:04",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:05",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:06",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:07",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:09",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:10",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:11",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:14",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:15",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:16",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:17",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:18",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:20",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:21",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:22",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:25",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:26"
+    ],
+    "qualified_claim_ids": [
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:01",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:23"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:04",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:05",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:06",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:07",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:09",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:10",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:11",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:14",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:15",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:16",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:17",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:18",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:20",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:21",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:22",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:25",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:26"
+    ],
+    "degradations": {
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:01": "critic_unresolved",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02": "critic_unresolved",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03": "critic_unresolved",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08": "critic_unresolved",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13": "critic_unresolved",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:23": "critic_unresolved",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:01",
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:23"
+      ],
+      [
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02",
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13"
+      ],
+      [
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02",
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24"
+      ],
+      [
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03",
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08"
+      ],
+      [
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13",
+        "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:01",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:02",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:03",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:08",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:13",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:23",
+      "20260814T134402Z-8c7b7069:claim:research-01-in-late-2020-a-series-of-articles-we:24"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T134402Z-8c7b7069",
+    "document_version_ids": [
+      "fetch_page-507ff898f2809205",
+      "fetch_page-6db8bb737d0f9de9",
+      "web_search-01b80193e4c83562",
+      "web_search-084267ded56903a9",
+      "web_search-44de8a2ef60acb85",
+      "web_search-52b6d9fe433e58b0",
+      "web_search-798bff602cf2c283",
+      "web_search-7ab5a2ed254d2beb",
+      "web_search-7ee1daa5a963f933",
+      "web_search-8d74e213106ee6ef",
+      "web_search-8fb807dcaf9f1ba2",
+      "web_search-93ff1e82f99653d4",
+      "web_search-a8fa3ba3af114d5f",
+      "web_search-b9bc2e2f46403bca",
+      "web_search-bfa1e3b7ec0e99d9",
+      "web_search-e78aec2b57d5d133",
+      "web_search-e9531acac1ad9ba1",
+      "web_search-f1518f8d8d1b7cd8"
+    ],
+    "content_hashes": {
+      "web_search-52b6d9fe433e58b0": "52b6d9fe433e58b0db56979e85372a28136f1569af5baeab145dccb6a5ab6378",
+      "web_search-7ab5a2ed254d2beb": "7ab5a2ed254d2beb89f7f010912a8b05018d91c65f657b5ef8383e07b6a0d219",
+      "web_search-e78aec2b57d5d133": "e78aec2b57d5d133d56856c47868be0c615d6ad938877d78654079e6e8b45210",
+      "web_search-b9bc2e2f46403bca": "b9bc2e2f46403bcabaeb2e54acaf875caf3f6b4a9d0c3d68546b836a286085f9",
+      "web_search-7ee1daa5a963f933": "7ee1daa5a963f93320812788ed04130b780615075143d2ac647ce839454fc47b",
+      "web_search-f1518f8d8d1b7cd8": "f1518f8d8d1b7cd87c7aa893460fbce4a4313079b4887fc9b9ca8857df5a1d75",
+      "web_search-8d74e213106ee6ef": "8d74e213106ee6efc4bf275962781d510756d1ade4cdc0ce5ad14f004da4ad90",
+      "web_search-e9531acac1ad9ba1": "e9531acac1ad9ba11c9a17f72e6fb49d86ff33929edd4493d8b12704506dd925",
+      "web_search-01b80193e4c83562": "01b80193e4c83562a62245a55250315289e70c79abd4ca04d741690af27f6256",
+      "web_search-084267ded56903a9": "084267ded56903a993a51e836210221e989f14ada922fc0f3fd7bac8fb18b9ef",
+      "web_search-a8fa3ba3af114d5f": "a8fa3ba3af114d5fc5daaea950e0fcacfada26ffa53337ccbb4ba0991eb91a47",
+      "web_search-bfa1e3b7ec0e99d9": "bfa1e3b7ec0e99d9b6513bfc89690da7cafb8a3f9b649f071a894ad0de625db3",
+      "web_search-798bff602cf2c283": "798bff602cf2c283d634ab525caa40ff09085064bc085409b57b769361f60e60",
+      "web_search-93ff1e82f99653d4": "93ff1e82f99653d437210acc79e4f580ab6c63ae01f57f9fb8d641a84b6b7434",
+      "web_search-44de8a2ef60acb85": "44de8a2ef60acb8500f8e88e51aba1c2ad1e3f189bfb8aa17369e5ae65bfc2a9",
+      "web_search-8fb807dcaf9f1ba2": "8fb807dcaf9f1ba27c3bbf272a0ffe73a06b7338eeca40db6c9851cdb3b7de58",
+      "fetch_page-6db8bb737d0f9de9": "6db8bb737d0f9de92cd2baa51cbba65dbc849a43481c1825d67dc483e777a500",
+      "fetch_page-507ff898f2809205": "507ff898f280920599ebd0c5d7859c4909c4e0450b88bad79732373da0555110"
+    },
+    "critical_claims_allowed": {
+      "web_search-52b6d9fe433e58b0": true,
+      "web_search-7ab5a2ed254d2beb": true,
+      "web_search-e78aec2b57d5d133": true,
+      "web_search-b9bc2e2f46403bca": true,
+      "web_search-7ee1daa5a963f933": true,
+      "web_search-f1518f8d8d1b7cd8": true,
+      "web_search-8d74e213106ee6ef": true,
+      "web_search-e9531acac1ad9ba1": true,
+      "web_search-01b80193e4c83562": true,
+      "web_search-084267ded56903a9": true,
+      "web_search-a8fa3ba3af114d5f": true,
+      "web_search-bfa1e3b7ec0e99d9": true,
+      "web_search-798bff602cf2c283": true,
+      "web_search-93ff1e82f99653d4": true,
+      "web_search-44de8a2ef60acb85": true,
+      "web_search-8fb807dcaf9f1ba2": true,
+      "fetch_page-6db8bb737d0f9de9": true,
+      "fetch_page-507ff898f2809205": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T134402Z-8c7b7069",
+    "status": "completed"
+  }
+}
