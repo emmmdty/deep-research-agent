@@ -1,0 +1,202 @@
+[
+  {
+    "task_id": "00d579ea-0889-4fd9-a771-2c8d79835c8d",
+    "question": "Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name",
+    "level": "3",
+    "ground_truth": "Claude Shannon",
+    "extracted_answer": "Marvin Minsky",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is Claude Shannon, but the candidate answer is Marvin Minsky, which is a different scientist."
+  },
+  {
+    "task_id": "0383a3ee-47a7-41a4-b493-519bdefe0488",
+    "question": "On the BBC Earth YouTube video of the Top 5 Silliest Animal Moments, what species of bird is featured?",
+    "level": "1",
+    "ground_truth": "Rockhopper penguin",
+    "extracted_answer": "The species featured is the puffin.",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'Rockhopper penguin', but the candidate answer states 'puffin', which is a different species. Therefore, the candidate answer is incorrect."
+  },
+  {
+    "task_id": "0b260a57-3f3a-4405-9f29-6d7a1012dbfb",
+    "question": "On ScienceDirect, what is the difference to 3 decimal places in the sample standard deviations of the number of Reference Works in each Life Science domain compared to Health Sciences as of 2022?",
+    "level": "2",
+    "ground_truth": "0.269",
+    "extracted_answer": "I cannot answer this as it requires access to specific data on ScienceDirect that I do not have.",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer does not provide the required numerical difference (0.269) and instead states inability to answer, which is not equivalent to the ground truth."
+  },
+  {
+    "task_id": "11af4e1a-5f45-467d-9aeb-46f4bb0bf034",
+    "question": "How many more blocks (also denoted as layers) in BERT base encoder than the encoder from the architecture proposed in Attention is All You Need?",
+    "level": "1",
+    "ground_truth": "6",
+    "extracted_answer": "2",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 6, but the candidate answer is 2. BERT base has 12 encoder layers, while the Transformer in 'Attention is All You Need' has 6 encoder layers, so the difference is 6, not 2."
+  },
+  {
+    "task_id": "14569e28-c88c-43e4-8c32-097d35b9a67d",
+    "question": "In Unlambda, what exact charcter or text needs to be added to correct the following code to output \"For penguins\"? If what is needed is a character, answer with the name of the character. If there are different names for the character, use the shortest. The text location is not needed. Code:\n\n`r```````````.F.o.r. .p.e.n.g.u.i.n.si",
+    "level": "2",
+    "ground_truth": "backtick",
+    "extracted_answer": "i",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'backtick', but the candidate answer is 'i'. The candidate does not match the required character name."
+  },
+  {
+    "task_id": "305ac316-eef6-4446-960a-92d80d542f82",
+    "question": "Who did the actor who played Ray in the Polish-language version of Everybody Loves Raymond play in Magda M.? Give only the first name.",
+    "level": "1",
+    "ground_truth": "Wojciech",
+    "extracted_answer": "Marek",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'Wojciech', but the candidate answer is 'Marek', which does not match."
+  },
+  {
+    "task_id": "4b6bb5f7-f634-410e-815d-e673ab7f8632",
+    "question": "In Series 9, Episode 11 of Doctor Who, the Doctor is trapped inside an ever-shifting maze. What is this location called in the official script for the episode? Give the setting exactly as it appears in the first scene heading.",
+    "level": "1",
+    "ground_truth": "THE CASTLE",
+    "extracted_answer": "THE CONFESSION DIAL",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'THE CASTLE', but the candidate answer is 'THE CONFESSION DIAL'. These are different locations; the Confession Dial is the name of the trap itself, not the setting as it appears in the first scene heading."
+  },
+  {
+    "task_id": "50ec8903-b81f-4257-9450-1085afd2c319",
+    "question": "A standard Rubik’s cube has been broken into cubes making up its sides. The cubes are jumbled, and one is removed. There are 6 cubes with one colored face, 12 edge cubes with two colored faces, and 8 corner cubes with three colored faces. All blue cubes have been found. All cubes directly left, right, above, and below the orange center cube have been found, along with the center cube. The green corners have all been found, along with all green that borders yellow. For all orange cubes found, the opposite face’s cubes have been found. The removed cube has two colors on its faces. What are they? Answer using a comma separated list, with the colors ordered alphabetically.",
+    "level": "1",
+    "ground_truth": "green, white",
+    "extracted_answer": "blue, green",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'green, white', but the candidate answer is 'blue, green'. These are different color pairs, so the candidate is incorrect."
+  },
+  {
+    "task_id": "5188369a-3bbe-43d8-8b94-11558f909a08",
+    "question": "What writer is quoted by Merriam-Webster for the Word of the Day from June 27, 2022?",
+    "level": "1",
+    "ground_truth": "Annie Levin",
+    "extracted_answer": "I don't have that specific information.",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer does not provide the requested writer's name (Annie Levin) and instead states lack of information."
+  },
+  {
+    "task_id": "56137764-b4e0-45b8-9c52-1866420c3df5",
+    "question": "Which contributor to the version of OpenCV where support was added for the Mask-RCNN model has the same name as a former Chinese head of government when the names are transliterated to the Latin alphabet?",
+    "level": "2",
+    "ground_truth": "Li Peng",
+    "extracted_answer": "Zhou Chao",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'Li Peng', a former Chinese head of government. The candidate answer 'Zhou Chao' does not match this name, and there is no indication that 'Zhou Chao' is a contributor to OpenCV with the same transliterated name as a former Chinese head of government."
+  },
+  {
+    "task_id": "624cbf11-6a41-4692-af9c-36b3e5ca3130",
+    "question": "What's the last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022?",
+    "level": "2",
+    "ground_truth": "So we had to let it die.",
+    "extracted_answer": "I'm sorry, I cannot answer that as I don't have access to the specific image or its text.",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer does not provide the requested last line of the rhyme; it explicitly states inability to answer, which is not equivalent to the ground truth."
+  },
+  {
+    "task_id": "72c06643-a2fa-4186-aa5c-9ec33ae9b445",
+    "question": "What is the volume in milliliters of a system comprised of 0.312 kg Freon-12 refrigerant when placed at the bottom of the Marianas Trench and allowed to stabilize at the Trench's peak temperature, rounded to the nearest mL? Provide your answer as just an integer value.",
+    "level": "3",
+    "ground_truth": "55",
+    "extracted_answer": "312",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer 312 is not the correct volume. The ground truth is 55 mL, and the candidate provides a different value without any calculation or reasoning matching the required thermodynamic state."
+  },
+  {
+    "task_id": "72e110e7-464c-453c-a309-90a95aed6538",
+    "question": "Under DDC 633 on Bielefeld University Library's BASE, as of 2020, from what country was the unknown language article with a flag unique from the others?",
+    "level": "1",
+    "ground_truth": "Guatemala",
+    "extracted_answer": "Finland",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'Guatemala', but the candidate answer is 'Finland', which does not match."
+  },
+  {
+    "task_id": "8131e2c0-0083-4265-9ce7-78c2d568425d",
+    "question": "I was trying to remember how well the Cheater Beater performed in comparison to the Cheater when James tested it on his channel. I know that the Cheater still outperformed the Cheater Beater in terms of CFM. Could you please look that up for me, and report the CFM of both the Cheater and the Cheater Beater? I'm not sure if he made any changes to his testing, but this was back in season 4, so just report the value from that season. Please format your response like this: CFM number for Cheater, CFM number for Cheater beater",
+    "level": "3",
+    "ground_truth": "101.376, 84.348",
+    "extracted_answer": "I don't have access to that specific data from James's channel, so I cannot provide the CFM values.",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer does not provide the requested CFM values (101.376 for Cheater and 84.348 for Cheater Beater) and instead states inability to answer, which does not match the ground truth."
+  },
+  {
+    "task_id": "87c610df-bef7-4932-b950-1d83ef4e282b",
+    "question": "In April of 1977, who was the Prime Minister of the first place mentioned by name in the Book of Esther (in the New International Version)?",
+    "level": "2",
+    "ground_truth": "Morarji Desai",
+    "extracted_answer": "Menachem Begin",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer 'Menachem Begin' is incorrect. The ground truth answer is 'Morarji Desai', who was the Prime Minister of India in April 1977. The first place mentioned by name in the Book of Esther (NIV) is 'Shushan' (the citadel of Susa), which is in modern-day Iran, not Israel. Menachem Begin was Prime Minister of Israel, but he did not take office until June 1977, and the question refers to the Prime Minister of the country where Shushan is located, which is India? No, Shushan is in Iran, but the ground truth is Morarji Desai, so the candidate is wrong."
+  },
+  {
+    "task_id": "ad2b4d70-9314-4fe6-bfbe-894a45f6055f",
+    "question": "Eva Draconis has a personal website which can be accessed on her YouTube page. What is the meaning of the only symbol seen in the top banner that has a curved line that isn't a circle or a portion of a circle? Answer without punctuation.",
+    "level": "3",
+    "ground_truth": "War is not here this is a land of peace",
+    "extracted_answer": "infinity",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer 'infinity' does not match the ground truth answer 'War is not here this is a land of peace'. The ground truth is a specific phrase, while the candidate provides a different symbol interpretation."
+  },
+  {
+    "task_id": "b4cc024b-3f5e-480e-b96a-6656493255b5",
+    "question": "The photograph in the Whitney Museum of American Art's collection with accession number 2022.128 shows a person holding a book. Which military unit did the author of this book join in 1813? Answer without using articles.",
+    "level": "2",
+    "ground_truth": "Russian-German Legion",
+    "extracted_answer": "3rd Massachusetts Militia",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer '3rd Massachusetts Militia' does not match the ground truth 'Russian-German Legion'. The question asks about the author of the book in the photograph, and the correct military unit joined in 1813 is the Russian-German Legion, not the 3rd Massachusetts Militia."
+  },
+  {
+    "task_id": "e8cb5b03-41e0-4086-99e5-f6806cd97211",
+    "question": "I went to Virtue restaurant & bar in Chicago for my birthday on March 22, 2021 and the main course I had was delicious!  Unfortunately, when I went back about a month later on April 21, it was no longer on the dinner menu.  Using the Wayback Machine, can you help me figure out which main course was on the dinner menu for Virtue on March 22, 2021 but not April 21, 2021? Answer using the singular form, without articles.",
+    "level": "2",
+    "ground_truth": "shrimp",
+    "extracted_answer": "braised lamb shank",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 'shrimp', but the candidate answer is 'braised lamb shank', which does not match."
+  },
+  {
+    "task_id": "e961a717-6b25-4175-8a68-874d28190ee4",
+    "question": "According to wikipedia, how many Asian countries still have a monarchy and access to the sea in 2021?",
+    "level": "3",
+    "ground_truth": "12",
+    "extracted_answer": "7",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The ground truth answer is 12, but the candidate answer is 7, which is incorrect."
+  },
+  {
+    "task_id": "f2feb6a4-363c-4c09-a804-0db564eafd68",
+    "question": "I’m thinking about selling my home, so I want to learn more about how homes in my area sold recently. I live in Pearl City, Hawaii, which is on the island of Oahu. I know two homes near me that sold in 2022 were 2072 Akaikai Loop, and 2017 Komo Mai Drive. Find which of those homes sold for more in 2022, and tell me how much it sold for. Don’t put commas or decimal places in the answer.",
+    "level": "2",
+    "ground_truth": "900000",
+    "extracted_answer": "1050000",
+    "exact_match": false,
+    "judge_correct": false,
+    "judge_rationale": "The candidate answer (1050000) does not match the ground truth (900000). The correct home that sold for more in 2022 was 2072 Akaikai Loop, which sold for $900,000, not $1,050,000."
+  }
+]

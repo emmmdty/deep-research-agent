@@ -1,0 +1,30 @@
+{
+  "questions": 20,
+  "baseline_judge_correct": 0,
+  "baseline_judge_rate": 0.0,
+  "baseline_exact_match": 0,
+  "baseline_exact_rate": 0.0,
+  "agent_judge_correct": 7,
+  "agent_exact_match": 5,
+  "by_level": {
+    "3": {
+      "judge": 0,
+      "exact": 0,
+      "n": 5
+    },
+    "1": {
+      "judge": 0,
+      "exact": 0,
+      "n": 7
+    },
+    "2": {
+      "judge": 0,
+      "exact": 0,
+      "n": 8
+    }
+  },
+  "total_llm_calls": 41,
+  "total_tokens": 8234,
+  "estimated_cost_usd": 0.0082,
+  "generated_at": "2026-08-14T17:35:10+00:00"
+}

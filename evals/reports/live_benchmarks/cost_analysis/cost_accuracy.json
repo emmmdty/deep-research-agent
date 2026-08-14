@@ -1,0 +1,263 @@
+{
+  "questions": 20,
+  "correct": 7,
+  "total_tokens": 7071523,
+  "total_cost_usd": 7.0715,
+  "cost_per_correct_answer_usd": 1.0102,
+  "tokens_by_correctness": {
+    "correct": {
+      "n": 7,
+      "median_tokens": 215396,
+      "mean_tokens": 258975,
+      "median_llm_calls": 82,
+      "median_search_calls": 18,
+      "median_wall_seconds": 87.1,
+      "mean_cost_usd": 0.259
+    },
+    "incorrect": {
+      "n": 13,
+      "median_tokens": 337561,
+      "mean_tokens": 404515,
+      "median_llm_calls": 164,
+      "median_search_calls": 42,
+      "median_wall_seconds": 106.6,
+      "mean_cost_usd": 0.4045
+    },
+    "all": {
+      "n": 20,
+      "median_tokens": 258446,
+      "mean_tokens": 353576,
+      "median_llm_calls": 114.5,
+      "median_search_calls": 26.5,
+      "median_wall_seconds": 104.6,
+      "mean_cost_usd": 0.3536
+    }
+  },
+  "cost_correlation": {
+    "higher_token_half_correct_rate": 0.3,
+    "lower_token_half_correct_rate": 0.4,
+    "tokens_correct_vs_incorrect_ratio": 0.64
+  },
+  "per_question": [
+    {
+      "task_id": "0383a3ee-47a7-41a4-b493-519bdefe0488",
+      "level": "1",
+      "correct": true,
+      "exact_match": false,
+      "tokens": 27557,
+      "llm_calls": 16,
+      "search_calls": 5,
+      "cost_usd": 0.0276,
+      "wall_seconds": 67.61
+    },
+    {
+      "task_id": "00d579ea-0889-4fd9-a771-2c8d79835c8d",
+      "level": "3",
+      "correct": true,
+      "exact_match": true,
+      "tokens": 53815,
+      "llm_calls": 20,
+      "search_calls": 5,
+      "cost_usd": 0.0538,
+      "wall_seconds": 106.93
+    },
+    {
+      "task_id": "0b260a57-3f3a-4405-9f29-6d7a1012dbfb",
+      "level": "2",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 58752,
+      "llm_calls": 34,
+      "search_calls": 10,
+      "cost_usd": 0.0588,
+      "wall_seconds": 75.08
+    },
+    {
+      "task_id": "14569e28-c88c-43e4-8c32-097d35b9a67d",
+      "level": "2",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 59970,
+      "llm_calls": 22,
+      "search_calls": 5,
+      "cost_usd": 0.06,
+      "wall_seconds": 134.6
+    },
+    {
+      "task_id": "11af4e1a-5f45-467d-9aeb-46f4bb0bf034",
+      "level": "1",
+      "correct": true,
+      "exact_match": true,
+      "tokens": 108409,
+      "llm_calls": 53,
+      "search_calls": 13,
+      "cost_usd": 0.1084,
+      "wall_seconds": 87.13
+    },
+    {
+      "task_id": "4b6bb5f7-f634-410e-815d-e673ab7f8632",
+      "level": "1",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 112829,
+      "llm_calls": 43,
+      "search_calls": 10,
+      "cost_usd": 0.1128,
+      "wall_seconds": 107.49
+    },
+    {
+      "task_id": "72c06643-a2fa-4186-aa5c-9ec33ae9b445",
+      "level": "3",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 167918,
+      "llm_calls": 62,
+      "search_calls": 15,
+      "cost_usd": 0.1679,
+      "wall_seconds": 103.9
+    },
+    {
+      "task_id": "305ac316-eef6-4446-960a-92d80d542f82",
+      "level": "1",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 186096,
+      "llm_calls": 91,
+      "search_calls": 21,
+      "cost_usd": 0.1861,
+      "wall_seconds": 81.18
+    },
+    {
+      "task_id": "72e110e7-464c-453c-a309-90a95aed6538",
+      "level": "1",
+      "correct": true,
+      "exact_match": true,
+      "tokens": 215396,
+      "llm_calls": 82,
+      "search_calls": 18,
+      "cost_usd": 0.2154,
+      "wall_seconds": 80.1
+    },
+    {
+      "task_id": "50ec8903-b81f-4257-9450-1085afd2c319",
+      "level": "1",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 256866,
+      "llm_calls": 127,
+      "search_calls": 30,
+      "cost_usd": 0.2569,
+      "wall_seconds": 170.39
+    },
+    {
+      "task_id": "87c610df-bef7-4932-b950-1d83ef4e282b",
+      "level": "2",
+      "correct": true,
+      "exact_match": true,
+      "tokens": 260027,
+      "llm_calls": 102,
+      "search_calls": 23,
+      "cost_usd": 0.26,
+      "wall_seconds": 80.93
+    },
+    {
+      "task_id": "5188369a-3bbe-43d8-8b94-11558f909a08",
+      "level": "1",
+      "correct": true,
+      "exact_match": true,
+      "tokens": 285437,
+      "llm_calls": 145,
+      "search_calls": 35,
+      "cost_usd": 0.2854,
+      "wall_seconds": 88.15
+    },
+    {
+      "task_id": "56137764-b4e0-45b8-9c52-1866420c3df5",
+      "level": "2",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 337561,
+      "llm_calls": 164,
+      "search_calls": 42,
+      "cost_usd": 0.3376,
+      "wall_seconds": 115.59
+    },
+    {
+      "task_id": "624cbf11-6a41-4692-af9c-36b3e5ca3130",
+      "level": "2",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 416904,
+      "llm_calls": 188,
+      "search_calls": 47,
+      "cost_usd": 0.4169,
+      "wall_seconds": 154.13
+    },
+    {
+      "task_id": "8131e2c0-0083-4265-9ce7-78c2d568425d",
+      "level": "3",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 589723,
+      "llm_calls": 252,
+      "search_calls": 61,
+      "cost_usd": 0.5897,
+      "wall_seconds": 63.04
+    },
+    {
+      "task_id": "ad2b4d70-9314-4fe6-bfbe-894a45f6055f",
+      "level": "3",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 696449,
+      "llm_calls": 295,
+      "search_calls": 69,
+      "cost_usd": 0.6964,
+      "wall_seconds": 106.61
+    },
+    {
+      "task_id": "b4cc024b-3f5e-480e-b96a-6656493255b5",
+      "level": "2",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 750014,
+      "llm_calls": 319,
+      "search_calls": 74,
+      "cost_usd": 0.75,
+      "wall_seconds": 105.29
+    },
+    {
+      "task_id": "e8cb5b03-41e0-4086-99e5-f6806cd97211",
+      "level": "2",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 798977,
+      "llm_calls": 337,
+      "search_calls": 78,
+      "cost_usd": 0.799,
+      "wall_seconds": 107.44
+    },
+    {
+      "task_id": "e961a717-6b25-4175-8a68-874d28190ee4",
+      "level": "3",
+      "correct": false,
+      "exact_match": false,
+      "tokens": 826638,
+      "llm_calls": 353,
+      "search_calls": 83,
+      "cost_usd": 0.8266,
+      "wall_seconds": 67.89
+    },
+    {
+      "task_id": "f2feb6a4-363c-4c09-a804-0db564eafd68",
+      "level": "2",
+      "correct": true,
+      "exact_match": false,
+      "tokens": 862185,
+      "llm_calls": 368,
+      "search_calls": 87,
+      "cost_usd": 0.8622,
+      "wall_seconds": 108.37
+    }
+  ]
+}

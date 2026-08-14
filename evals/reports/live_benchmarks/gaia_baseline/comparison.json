@@ -1,0 +1,182 @@
+[
+  {
+    "task_id": "00d579ea-0889-4fd9-a771-2c8d79835c8d",
+    "level": "3",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": true,
+    "question": "Assuming scientists in the famous youtube video The Thinking Machine (Artificial"
+  },
+  {
+    "task_id": "0383a3ee-47a7-41a4-b493-519bdefe0488",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": false,
+    "question": "On the BBC Earth YouTube video of the Top 5 Silliest Animal Moments, what specie"
+  },
+  {
+    "task_id": "0b260a57-3f3a-4405-9f29-6d7a1012dbfb",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "On ScienceDirect, what is the difference to 3 decimal places in the sample stand"
+  },
+  {
+    "task_id": "11af4e1a-5f45-467d-9aeb-46f4bb0bf034",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": true,
+    "question": "How many more blocks (also denoted as layers) in BERT base encoder than the enco"
+  },
+  {
+    "task_id": "14569e28-c88c-43e4-8c32-097d35b9a67d",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "In Unlambda, what exact charcter or text needs to be added to correct the follow"
+  },
+  {
+    "task_id": "305ac316-eef6-4446-960a-92d80d542f82",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "Who did the actor who played Ray in the Polish-language version of Everybody Lov"
+  },
+  {
+    "task_id": "4b6bb5f7-f634-410e-815d-e673ab7f8632",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "In Series 9, Episode 11 of Doctor Who, the Doctor is trapped inside an ever-shif"
+  },
+  {
+    "task_id": "50ec8903-b81f-4257-9450-1085afd2c319",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "A standard Rubik’s cube has been broken into cubes making up its sides. The cube"
+  },
+  {
+    "task_id": "5188369a-3bbe-43d8-8b94-11558f909a08",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": true,
+    "question": "What writer is quoted by Merriam-Webster for the Word of the Day from June 27, 2"
+  },
+  {
+    "task_id": "56137764-b4e0-45b8-9c52-1866420c3df5",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "Which contributor to the version of OpenCV where support was added for the Mask-"
+  },
+  {
+    "task_id": "624cbf11-6a41-4692-af9c-36b3e5ca3130",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "What's the last line of the rhyme under the flavor name on the headstone visible"
+  },
+  {
+    "task_id": "72c06643-a2fa-4186-aa5c-9ec33ae9b445",
+    "level": "3",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "What is the volume in milliliters of a system comprised of 0.312 kg Freon-12 ref"
+  },
+  {
+    "task_id": "72e110e7-464c-453c-a309-90a95aed6538",
+    "level": "1",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": true,
+    "question": "Under DDC 633 on Bielefeld University Library's BASE, as of 2020, from what coun"
+  },
+  {
+    "task_id": "8131e2c0-0083-4265-9ce7-78c2d568425d",
+    "level": "3",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "I was trying to remember how well the Cheater Beater performed in comparison to "
+  },
+  {
+    "task_id": "87c610df-bef7-4932-b950-1d83ef4e282b",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": true,
+    "question": "In April of 1977, who was the Prime Minister of the first place mentioned by nam"
+  },
+  {
+    "task_id": "ad2b4d70-9314-4fe6-bfbe-894a45f6055f",
+    "level": "3",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "Eva Draconis has a personal website which can be accessed on her YouTube page. W"
+  },
+  {
+    "task_id": "b4cc024b-3f5e-480e-b96a-6656493255b5",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "The photograph in the Whitney Museum of American Art's collection with accession"
+  },
+  {
+    "task_id": "e8cb5b03-41e0-4086-99e5-f6806cd97211",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "I went to Virtue restaurant & bar in Chicago for my birthday on March 22, 2021 a"
+  },
+  {
+    "task_id": "e961a717-6b25-4175-8a68-874d28190ee4",
+    "level": "3",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": false,
+    "agent_exact": false,
+    "question": "According to wikipedia, how many Asian countries still have a monarchy and acces"
+  },
+  {
+    "task_id": "f2feb6a4-363c-4c09-a804-0db564eafd68",
+    "level": "2",
+    "baseline_judge": false,
+    "baseline_exact": false,
+    "agent_judge": true,
+    "agent_exact": false,
+    "question": "I’m thinking about selling my home, so I want to learn more about how homes in m"
+  }
+]
