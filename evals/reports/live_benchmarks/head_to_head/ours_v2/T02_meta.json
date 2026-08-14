@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "RAG（检索增强生成）技术的原理和应用",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T124343Z-b43d83d7",
+  "status": "completed",
+  "claims": 346,
+  "sources": 126,
+  "queries": [
+    "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks Lewis 2020 arxiv",
+    "Retrieval-Augmented Generation for Large Language Models: A Survey Gao 2023 arxiv",
+    "RAG 检索增强生成 原理 架构 索引 检索 生成 模块 工作流程",
+    "Naive RAG Advanced RAG Modular RAG 变体 区别 微调 对比",
+    "Lewis 2020 Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks RAG architecture DPR BART fusion-in-decoder",
+    "RAG architecture indexing retrieval generation modules vector database embedding top-k chunking prompt construction technical details",
+    "RAG 架构 索引模块 检索模块 生成模块 向量数据库 embedding top-k 分块 技术细节",
+    "Gao 2023 Retrieval-Augmented Generation for Large Language Models survey Naive Advanced Modular RAG architecture workflow",
+    "2026 RAG retrieval augmented generation enterprise applications real world use cases",
+    "RAG enterprise knowledge base customer service medical legal finance industry case studies 2025 2026",
+    "Gartner Forrester RAG adoption enterprise report 2025 2026",
+    "RAG multimodal retrieval code generation production deployment case study",
+    "RAG 企业知识库 具体产品案例 实现方式 效果 局限性 2025 2026",
+    "RAG customer service chatbot production case study company deployment results limitations 2025",
+    "RAG legal medical finance industry deployment case study official report McKinsey IDC Gartner 2025",
+    "RAG 多模态检索 代码生成 产品案例 企业落地 效果评估 2025 2026",
+    "RAG vs fine-tuning vs long-context LLM comparison benchmark 2025 2026",
+    "RAGAS RGB LongBench benchmark RAG evaluation 2025",
+    "Agentic RAG vs traditional RAG comparison survey 2025",
+    "retrieval augmented generation versus fine-tuning versus long context survey arxiv",
+    "RAG vs long-context LLM benchmark comparison LongBench performance numbers 2025",
+    "Long²RAG long context retrieval benchmark results 2025",
+    "Agentic RAG vs standard RAG fine-tuning long-context systematic comparison study",
+    "RAG versus long context LLM tradeoffs survey 2025 2026",
+    "RAG retrieval augmented generation challenges 2026 hallucination multi-hop reasoning evaluation",
+    "RAG optimization strategies retrieval quality latency cost 2025 2026 survey",
+    "LangChain LlamaIndex Haystack RAG framework documentation",
+    "RAG evaluation benchmark hallucination mitigation techniques 2025",
+    "retrieval augmented generation survey challenges retrieval quality hallucination multi-hop reasoning evaluation cost latency 2025",
+    "RAG optimization techniques query rewriting reranking adaptive retrieval self-RAG corrective RAG survey",
+    "LangChain RAG documentation retrieval evaluation",
+    "LlamaIndex RAG advanced techniques documentation"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-rag-naive-rag-advanced-rag-modular-r": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2026-rag-5": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2026-rag-fine-tuning-long-context-ll": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-04-2026-rag-10-langchain-llamaindex-hay": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 92,
+    "search_calls": 22,
+    "total_input_tokens": 272744,
+    "total_output_tokens": 90327,
+    "total_tokens": 363071,
+    "estimated_cost_usd": 0.3631
+  },
+  "wall_seconds": 333.8
+}

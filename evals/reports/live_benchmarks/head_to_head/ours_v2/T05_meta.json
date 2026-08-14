@@ -1,0 +1,66 @@
+{
+  "comparator": "ours_v2",
+  "topic": "开源 LLM 与闭源 LLM 的性能对比",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T131259Z-8ce5bec5",
+  "status": "completed",
+  "claims": 242,
+  "sources": 88,
+  "queries": [
+    "Llama 4 benchmark scores MMLU HumanEval GSM8K MATH GPQA official",
+    "DeepSeek-V3 R1 benchmark results MMLU HumanEval MATH GPQA official",
+    "Qwen2.5 Mistral Large benchmark scores MMLU HumanEval official",
+    "GPT-5 Claude 4 Gemini 2.5 benchmark scores MMLU HumanEval GPQA official",
+    "Llama 4 Maverick Scout benchmark scores MMLU HumanEval GSM8K MATH GPQA Meta official",
+    "DeepSeek-V3 technical report benchmark MMLU HumanEval GSM8K MATH GPQA scores",
+    "DeepSeek-R1 technical report benchmark MMLU HumanEval GSM8K MATH GPQA scores",
+    "site:github.com meta-llama llama-4 model card benchmarks",
+    "open source vs closed source LLM benchmark comparison 2025 2026 code generation math reasoning",
+    "open source LLM vs proprietary LLM evaluation 2025 long context instruction following safety",
+    "open source LLM enterprise deployment edge devices advantages disadvantages 2025",
+    "open source vs closed source large language models survey 2025 arxiv",
+    "open source vs closed source LLM MATH AIME HLE benchmark scores comparison 2025",
+    "open source vs proprietary LLM multilingual benchmark MMMLU Flores comparison 2025",
+    "open source LLM math reasoning benchmark DeepSeek Qwen vs GPT Claude Gemini 2025",
+    "multilingual capability open source LLM evaluation 2025 benchmark",
+    "open source vs closed source LLM comparison licensing deployment cost inference efficiency 2025",
+    "Stanford HAI AI Index report open source vs proprietary foundation models 2025",
+    "Ollama local LLM deployment cost privacy benefits vs API closed models",
+    "open source LLM license comparison Llama Mistral Apache 2.0 commercial use restrictions",
+    "Meta Llama 3 community license agreement terms monthly active users 700 million commercial use",
+    "OpenAI API pricing per token GPT-4o vs Anthropic Claude pricing official",
+    "Mistral AI Apache 2.0 license open source model commercial use terms official",
+    "site:llama.meta.com license terms Llama 3.1 acceptable use policy"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2026-llm-llama-4-deepseek-v3-r1-qwen": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2026-llm": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2026-llm-hugging-face-ollama-llm-api": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 68,
+    "search_calls": 15,
+    "total_input_tokens": 204402,
+    "total_output_tokens": 80678,
+    "total_tokens": 285080,
+    "estimated_cost_usd": 0.2851
+  },
+  "wall_seconds": 298.25
+}

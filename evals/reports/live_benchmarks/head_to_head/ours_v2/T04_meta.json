@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "AI Agent 在金融领域的应用案例",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T130622Z-c3646b5c",
+  "status": "completed",
+  "claims": 324,
+  "sources": 116,
+  "queries": [
+    "中国人民银行 AI Agent 金融 应用 报告 政策 2025 2026",
+    "金融监管总局 人工智能 Agent 监管 政策文件 2025",
+    "BIS Bank for International Settlements AI agents finance report 2025",
+    "Federal Reserve AI agents financial services regulation report 2025",
+    "中国人民银行 人工智能金融应用 政策文件 2025 2026 发布 名称",
+    "金融监管总局 人工智能 金融应用 监管文件 2025 2026 发布",
+    "People's Bank of China AI finance policy document 2025 2026 official release",
+    "国家金融监督管理总局 人工智能 应用 监管 通知 办法 2025 2026",
+    "金融机构 部署 AI Agent 案例 2024 2025 银行 券商 保险 智能客服 风险管理",
+    "bank AI agent deployment 2024 2025 case study customer service risk management quantifiable results",
+    "券商 保险 基金 AI Agent 上线 2024 2025 智能投顾 反欺诈 合规审查 官方公告",
+    "financial institution AI agent implementation 2024 2025 annual report press release efficiency cost reduction",
+    "潍坊银行 智慧合规助手 AI Agent 上线 技术方案 效果",
+    "上海农商银行 零售数智化实验室 AI Agent 智能客服 上线时间",
+    "青岛银行 法眼智控 AI 合规 智能审查 上线 效果",
+    "杭州银行 制度知识平台 AI Agent 大模型 上线 2024 2025",
+    "金融行业 AI Agent 技术架构 大模型 多智能体 RAG 工具调用 白皮书",
+    "百度 阿里 华为 科大讯飞 金融大模型 Agent 解决方案 落地案例",
+    "OpenAI Google Microsoft financial services AI agent architecture enterprise",
+    "金融大模型 评测 权威 金融AI Agent 对比 报告",
+    "百度千帆 AppBuilder 金融 Agent 解决方案 官方文档 落地案例",
+    "阿里云百炼 通义 金融大模型 Agent 解决方案 官方文档 落地案例",
+    "华为盘古 昇腾 金融大模型 Agent 解决方案 官方文档 落地案例",
+    "科大讯飞星火 金融大模型 Agent 解决方案 官方文档 落地案例",
+    "金融监管总局 人工智能 金融应用 风险管理 指引 2025",
+    "EU AI Act financial services high-risk requirements 2025",
+    "SEC AI agent finance regulation guidance 2025",
+    "AI agent finance risks hallucination data security algorithmic bias liability 2025 report",
+    "金融监管总局 银行业保险业 人工智能 安全开发应用 指导意见 32项 具体内容",
+    "AI agent financial services risks hallucination data security algorithmic bias liability white paper 2025",
+    "北京金融科技产业联盟 AI Agent 金融应用 风险 白皮书",
+    "EU AI Act financial sector obligations transparency accountability 2025 guidance"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2026-ai-agent-ai-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2024-2026-ai-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2026-ai-agent-agent-rag-openai-googl": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-04-2026-ai-agent-ai-sec-ai-agent-1-3-ai": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 88,
+    "search_calls": 20,
+    "total_input_tokens": 314989,
+    "total_output_tokens": 96289,
+    "total_tokens": 411278,
+    "estimated_cost_usd": 0.4113
+  },
+  "wall_seconds": 252.73
+}

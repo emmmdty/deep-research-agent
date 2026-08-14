@@ -48,9 +48,9 @@ def run_full_comparison_suite(
     judge = LLMJudge() if use_judge else None
     for topic_result in results:
         pairwise: dict[str, Any] = {}
-        ours = topic_result["comparators"].get("ours")
+        ours = topic_result["comparators"].get("ours") or topic_result["comparators"].get("ours_v2")
         for name, payload in topic_result["comparators"].items():
-            if name == "ours":
+            if name in {"ours", "ours_v2"}:
                 continue
             if not judge:
                 pairwise[name] = {"status": "skipped", "reason": "judge disabled"}

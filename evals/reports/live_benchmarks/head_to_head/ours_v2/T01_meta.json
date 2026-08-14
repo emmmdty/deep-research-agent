@@ -1,0 +1,80 @@
+{
+  "comparator": "ours_v2",
+  "topic": "2024年大语言模型Agent架构的最新进展",
+  "model": "deepseek-v4-flash",
+  "job_id": "20260814T122529Z-9aebac33",
+  "status": "completed",
+  "claims": 280,
+  "sources": 113,
+  "queries": [
+    "LLM agent survey 2024 architectures planning memory tool use",
+    "large language model based agents survey 2024",
+    "LLM agent architecture 2024 survey planning memory tool use",
+    "2024 LLM agent frameworks ReAct Reflexion tool use memory planning",
+    "ReAct Synergizing Reasoning and Acting in Language Models arXiv 2210.03629",
+    "Reflexion language agents verbal reinforcement learning arXiv 2303.11366",
+    "ReWOO Reasoning With Tools Without Observation arXiv 2305.18323",
+    "MetaGPT Meta Programming for Multi-Agent Collaborative Framework arXiv 2308.00352",
+    "ReAct Reflexion AutoGPT MetaGPT BabyAGI AgentGPT comparison agent architectures task decomposition self-reflection",
+    "MetaGPT multi-agent collaboration framework official documentation",
+    "Reflexion language agents verbal reinforcement learning arxiv",
+    "AutoGPT BabyAGI AgentGPT autonomous agent task decomposition limitations evaluation",
+    "ReAct Synergizing Reasoning and Acting in Language Models arXiv 2210.03629",
+    "Reflexion Language Agents with Verbal Reinforcement Learning arXiv 2303.11366",
+    "ReAct reasoning acting interleaved thought action observation loop mechanism",
+    "Reflexion vs ReAct difference self-reflection retry episodic memory",
+    "LLM agent benchmarks 2024 AgentBench WebArena ALFWorld evaluation survey",
+    "large language model agent architecture challenges error accumulation context length safety interpretability 2024",
+    "2024 LLM agent benchmark evaluation report AgentBench WebArena results",
+    "LLM agent survey 2024 benchmarks challenges limitations",
+    "AgentBench evaluating LLMs as agents ICLR 2024 results OS DB KG Web success rate",
+    "WebArena realistic web environment benchmark GPT-4 task success rate results",
+    "AgentBench benchmark results GPT-4 Claude success rate operating system database knowledge graph web tasks",
+    "WebArena benchmark 2024 evaluation results GPT-4o Claude success rate web tasks",
+    "OpenAI 2024 agent architecture documentation whitepaper",
+    "Anthropic 2024 agent architecture whitepaper building effective agents",
+    "Google DeepMind 2024 agent architecture paper",
+    "Meta 2024 agent architecture open source project",
+    "OpenAI \"A Practical Guide to Building Agents\" PDF whitepaper 2024",
+    "Anthropic \"Building Effective Agents\" blog post December 2024 site:anthropic.com",
+    "OpenAI agents cookbook 2024 official documentation",
+    "Anthropic building effective agents engineering blog 2024"
+  ],
+  "injection_stats": {
+    "critic": {},
+    "research-01-2024-agent": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-02-2024-agent-react-reflexion-autogpt-m": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-03-2024-agent-agentbench-webarena-alfwo": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    },
+    "research-04-2024-openai-anthropic-google-deepmin": {
+      "injection_findings": 0,
+      "injection_dropped_sources": 0,
+      "injection_dropped_pages": 0,
+      "rerank_available": false
+    }
+  },
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 82,
+    "search_calls": 20,
+    "total_input_tokens": 229654,
+    "total_output_tokens": 58075,
+    "total_tokens": 287729,
+    "estimated_cost_usd": 0.2877
+  },
+  "wall_seconds": 216.8
+}
