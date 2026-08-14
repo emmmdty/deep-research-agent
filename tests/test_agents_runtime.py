@@ -442,3 +442,92 @@ async def test_full_scheduler_run_with_fake_chat_produces_bundle_ready_outputs()
     critic_output = result.task_outputs["critic"]
     assert "report_markdown" in critic_output
     assert len(result.critic_decisions) >= 0
+
+
+@pytest.mark.asyncio
+async def test_critic_deterministic_fallback_when_model_synthesis_fails() -> None:
+    """A transient critic failure must not erase the report (deterministic fallback)."""
+
+    class FailingSynthesisChat:
+        model_name = "fake-failing"
+
+        async def chat_json(self, system, user, **kwargs):
+            return {
+                "decisions": [
+                    {
+                        "claim_ids": ["job:claim:research-01:01"],
+                        "decision": "accepted",
+                        "rationale_evidence_ids": ["span-1"],
+                        "rationale": "supported",
+                    }
+                ]
+            }
+
+        async def chat(self, system, user, **kwargs):
+            raise RuntimeError("model synthesis transient failure")
+
+    from deep_research_agent.agents.critic import LLMCriticWorker
+    from deep_research_agent.kernel.contracts import ClaimRecord, EvidenceSpan
+
+    claim = ClaimRecord(
+        claim_id="job:claim:research-01:01",
+        claim="Agents use tools and memory.",
+        claim_type="factual_claim",
+        critical=True,
+        support_status="accepted",
+        confidence=0.9,
+        evidence_spans=[
+            EvidenceSpan(
+                span_id="span-1",
+                document_version_id="doc-1",
+                section="agents",
+                quote="Agents use tools and memory.",
+                start_offset=0,
+                end_offset=30,
+                extraction_method="verbatim",
+            )
+        ],
+    )
+    task = TaskSpec(
+        task_id="critic",
+        job_id="job-fallback",
+        kind="critic",
+        role="critic",
+        objective="Synthesize the report.",
+        depends_on=["research-01"],
+        output_schema={"type": "object"},
+        budget={},
+        idempotency_key="job-fallback:critic",
+    )
+    packets = [
+        type(
+            "Packet",
+            (),
+            {
+                "claims": [claim],
+                "evidence_spans": claim.evidence_spans,
+                "artifacts": [],
+            },
+        )()
+    ]
+    researcher_result = type("TaskResult", (), {"evidence_packets": packets, "output_artifacts": []})()
+    dependency = type(
+        "WorkerOutput",
+        (),
+        {"result": researcher_result, "output": {}, "critic_decisions": ()},
+    )()
+    context = TaskExecutionContext(
+        job_id="job-fallback",
+        tenant_id="default",
+        task=task,
+        attempt=1,
+        config_snapshot={},
+        dependency_results={"research-01": dependency},
+        tool_gateway=None,
+    )
+    worker = LLMCriticWorker(chat=FailingSynthesisChat())
+    output = await worker.execute(task, context)
+    report = output.output["report_markdown"]
+    assert "Agents use tools and memory." in report
+    assert output.result.status == "completed"
+    assert len(output.critic_decisions) == 1

@@ -181,7 +181,7 @@ async def _run_one_question(question: dict, out_dir: Path, judge_system: str) ->
     cost = tracker.to_dict()
     cost["wall_seconds"] = wall_seconds
 
-    answer = await _extract_answer(report_markdown, question["question"])
+    answer = await _extract_answer(report_markdown, question["question"], claims)
     grade = await _grade(question, answer, judge_system)
 
     record: dict[str, Any] = {
@@ -224,12 +224,19 @@ async def _run_one_question(question: dict, out_dir: Path, judge_system: str) ->
     return record
 
 
-async def _extract_answer(report_markdown: str, question: str) -> str:
+async def _extract_answer(report_markdown: str, question: str, claims: list = None) -> str:
+    claims = claims or []
+    claim_digest = "\n".join(
+        f"- {claim.claim}" for claim in claims[:30]
+    )
     try:
         chat = LLMChat()
         payload = await chat.chat_json(
             system=_ANSWER_EXTRACT_SYSTEM,
-            user=f"Question:\n{question}\n\nResearch report:\n{report_markdown[:24000]}",
+            user=(
+                f"Question:\n{question}\n\nResearch report:\n{report_markdown[:20000]}\n\n"
+                f"Grounded claims:\n{claim_digest or '(none)'}"
+            ),
             max_tokens=512,
             temperature=0.0,
         )
@@ -366,12 +373,14 @@ def run_live_benchmark(
 
     records: list[dict] = []
     for q in questions:
-        if (out_dir / q["task_id"] / "record.json").exists():
-            records.append(
-                json.loads((out_dir / q["task_id"] / "record.json").read_text(encoding="utf-8"))
-            )
-            logger.info("[{}] already done, skipping", q["task_id"][:8])
-            continue
+        record_path = out_dir / q["task_id"] / "record.json"
+        if record_path.exists():
+            existing = json.loads(record_path.read_text(encoding="utf-8"))
+            if existing.get("status") == "completed":
+                records.append(existing)
+                logger.info("[{}] already done, skipping", q["task_id"][:8])
+                continue
+            logger.warning("[{}] previous run failed; re-running", q["task_id"][:8])
         try:
             records.append(asyncio.run(_run_one_question(q, out_dir, judge_system)))
         except Exception as exc:  # noqa: BLE001

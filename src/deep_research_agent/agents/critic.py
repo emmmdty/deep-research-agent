@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from loguru import logger
 
 from deep_research_agent.agents.llm import LLMChat
 from deep_research_agent.kernel.contracts import (
@@ -50,11 +51,10 @@ class LLMCriticWorker:
                 f"critic task {task.task_id!r} received no claims from any researcher task"
             )
         review = await self._review_claims(chat, task, context, claims, spans)
-        report_markdown = await self._synthesize_report(chat, task, context, claims, spans, review)
         decisions = [
             CriticDecision(
                 decision_id=f"{context.job_id}:decision:{index:02d}",
-                claim_ids=tuple(str(item) for item in decision.get("claim_ids", [])),
+                claim_ids=claim_ids,
                 decision=str(decision.get("decision") or "qualified"),
                 rationale_evidence_ids=tuple(
                     str(item) for item in decision.get("rationale_evidence_ids", [])
@@ -62,8 +62,33 @@ class LLMCriticWorker:
                 rationale=str(decision.get("rationale") or "model review"),
             )
             for index, decision in enumerate(review.get("decisions", []), start=1)
-            if isinstance(decision, dict) and decision.get("claim_ids")
+            if isinstance(decision, dict)
+            for claim_ids in [
+                tuple(
+                    str(item)
+                    for item in decision.get("claim_ids", [])
+                    if str(item)
+                )
+            ]
+            if claim_ids
         ]
+        try:
+            report_markdown = await self._synthesize_report(
+                chat, task, context, claims, spans, review
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(
+                "critic {}: model synthesis failed ({}); using deterministic report",
+                task.task_id,
+                exc,
+            )
+            report_markdown = self._deterministic_report(claims, task.objective)
+        if not report_markdown.strip():
+            logger.warning(
+                "critic {}: model synthesis returned an empty report; using deterministic report",
+                task.task_id,
+            )
+            report_markdown = self._deterministic_report(claims, task.objective)
         graph = self._build_graph(task, context, claims, spans)
         return WorkerOutput(
             result=TaskResult(
@@ -191,6 +216,38 @@ class LLMCriticWorker:
             temperature=0.0,
         )
         return markdown.strip()
+
+    @staticmethod
+    def _deterministic_report(claims: list[ClaimRecord], objective: str) -> str:
+        """Best-effort report compiled from grounded claims (model-free).
+
+        Guarantees the critic always emits a report when claims exist, so a
+        transient model failure cannot erase a completed research job.
+        """
+
+        lines = [
+            f"# {objective}",
+            "",
+            "## Executive Summary",
+            "",
+        ]
+        critical = [claim for claim in claims if claim.critical]
+        for claim in (critical or claims)[:_MAX_SUMMARY_CLAIMS]:
+            lines.append(f"- {claim.claim}")
+        lines.extend(["", "## Findings", ""])
+        for index, claim in enumerate(
+            sorted(claims, key=lambda item: item.claim_id), start=1
+        ):
+            lines.append(
+                f"{index}. ({claim.support_status}) {claim.claim}"
+            )
+        lines.extend(["", "## Evidence Status", ""])
+        lines.append(
+            f"- {len(claims)} grounded claims; "
+            f"{sum(1 for c in claims if c.support_status == 'accepted')} accepted, "
+            f"{sum(1 for c in claims if c.support_status == 'qualified')} qualified."
+        )
+        return "\n".join(lines)
 
     @staticmethod
     def _build_graph(
