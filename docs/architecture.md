@@ -204,7 +204,6 @@ Owns the filesystem contract for evaluation assets:
 - `evals/datasets/` for frozen smoke fixtures
 - `evals/rubrics/` for rubric metadata
 - `evals/reports/` for committed low-cost outputs and release manifests
-- `evals/legacy_diagnostics/` for the older benchmark narrative
 
 ## Public Surface Contract
 

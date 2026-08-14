@@ -21,7 +21,6 @@ This is the recommended reading order for GitHub reviewers.
 - [`specs/api-readiness-contract.md`](../specs/api-readiness-contract.md) - implemented local HTTP API and batch contract.
 - [`specs/evaluation-protocol.md`](../specs/evaluation-protocol.md) - evaluation philosophy and release-gate direction.
 - [`docs/adr/`](./adr/) - architecture decision records.
-- [`docs/archive/migrations/TREE_HYGIENE.md`](./archive/migrations/TREE_HYGIENE.md) - previous repository tree hygiene record.
 
 ## Benchmark Evidence
 
@@ -30,8 +29,6 @@ This is the recommended reading order for GitHub reviewers.
 - [`docs/benchmarks/README.md`](./benchmarks/README.md) - layered native and external benchmark docs.
 - [`docs/benchmarks/PORTFOLIO.md`](./benchmarks/PORTFOLIO.md) - external benchmark portfolio boundaries.
 
-## Historical Context
+## Archived Code
 
-- [`docs/archive/PLANS-legacy-release-train.md`](./archive/PLANS-legacy-release-train.md) - old release-train plan retained as history.
-- [`docs/archive/FINAL_CHANGE_REPORT.md`](./archive/FINAL_CHANGE_REPORT.md) - earlier migration handoff report retained as history.
 - [`legacy/README.md`](../legacy/README.md) - archive root marker.

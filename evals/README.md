@@ -9,7 +9,6 @@ This tree is the Phase 5 source of truth for:
 - rubric metadata under `evals/rubrics/`
 - committed local smoke outputs under `evals/reports/`
 - committed deterministic native regression outputs under `evals/reports/native_regression/`
-- migration notes for legacy benchmark tooling under `evals/legacy_diagnostics/`
 
 The runnable local entrypoints are:
 
