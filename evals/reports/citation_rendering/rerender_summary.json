@@ -1,0 +1,228 @@
+{
+  "bundles_rerendered": 22,
+  "claims_cited_in_prose_total": 156,
+  "claims_uncited_in_prose_total": 523,
+  "claims_register_total": 679,
+  "per_bundle": [
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/00d579ea-0889-4fd9-a771-2c8d79835c8d/report_bundle.json",
+      "supported_claims": 33,
+      "cited_in_prose": 9,
+      "uncited_in_prose": 24,
+      "register_entries": 33,
+      "marker_cited": 0,
+      "verbatim_cited": 9,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/0383a3ee-47a7-41a4-b493-519bdefe0488/report_bundle.json",
+      "supported_claims": 15,
+      "cited_in_prose": 7,
+      "uncited_in_prose": 8,
+      "register_entries": 15,
+      "marker_cited": 0,
+      "verbatim_cited": 7,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/0b260a57-3f3a-4405-9f29-6d7a1012dbfb/report_bundle.json",
+      "supported_claims": 17,
+      "cited_in_prose": 8,
+      "uncited_in_prose": 9,
+      "register_entries": 17,
+      "marker_cited": 0,
+      "verbatim_cited": 8,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/11af4e1a-5f45-467d-9aeb-46f4bb0bf034/report_bundle.json",
+      "supported_claims": 24,
+      "cited_in_prose": 3,
+      "uncited_in_prose": 21,
+      "register_entries": 24,
+      "marker_cited": 0,
+      "verbatim_cited": 3,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/14569e28-c88c-43e4-8c32-097d35b9a67d/report_bundle.json",
+      "supported_claims": 23,
+      "cited_in_prose": 11,
+      "uncited_in_prose": 12,
+      "register_entries": 23,
+      "marker_cited": 0,
+      "verbatim_cited": 11,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/305ac316-eef6-4446-960a-92d80d542f82/report_bundle.json",
+      "supported_claims": 7,
+      "cited_in_prose": 6,
+      "uncited_in_prose": 1,
+      "register_entries": 7,
+      "marker_cited": 0,
+      "verbatim_cited": 6,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/4b6bb5f7-f634-410e-815d-e673ab7f8632/report_bundle.json",
+      "supported_claims": 24,
+      "cited_in_prose": 12,
+      "uncited_in_prose": 12,
+      "register_entries": 24,
+      "marker_cited": 0,
+      "verbatim_cited": 12,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/50ec8903-b81f-4257-9450-1085afd2c319/report_bundle.json",
+      "supported_claims": 20,
+      "cited_in_prose": 9,
+      "uncited_in_prose": 11,
+      "register_entries": 20,
+      "marker_cited": 0,
+      "verbatim_cited": 9,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/5188369a-3bbe-43d8-8b94-11558f909a08/report_bundle.json",
+      "supported_claims": 4,
+      "cited_in_prose": 4,
+      "uncited_in_prose": 0,
+      "register_entries": 4,
+      "marker_cited": 0,
+      "verbatim_cited": 4,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/56137764-b4e0-45b8-9c52-1866420c3df5/report_bundle.json",
+      "supported_claims": 28,
+      "cited_in_prose": 18,
+      "uncited_in_prose": 10,
+      "register_entries": 28,
+      "marker_cited": 0,
+      "verbatim_cited": 18,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/624cbf11-6a41-4692-af9c-36b3e5ca3130/report_bundle.json",
+      "supported_claims": 45,
+      "cited_in_prose": 7,
+      "uncited_in_prose": 38,
+      "register_entries": 45,
+      "marker_cited": 0,
+      "verbatim_cited": 7,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/72c06643-a2fa-4186-aa5c-9ec33ae9b445/report_bundle.json",
+      "supported_claims": 24,
+      "cited_in_prose": 5,
+      "uncited_in_prose": 19,
+      "register_entries": 24,
+      "marker_cited": 0,
+      "verbatim_cited": 5,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/72e110e7-464c-453c-a309-90a95aed6538/report_bundle.json",
+      "supported_claims": 3,
+      "cited_in_prose": 3,
+      "uncited_in_prose": 0,
+      "register_entries": 3,
+      "marker_cited": 0,
+      "verbatim_cited": 3,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/8131e2c0-0083-4265-9ce7-78c2d568425d/report_bundle.json",
+      "supported_claims": 9,
+      "cited_in_prose": 4,
+      "uncited_in_prose": 5,
+      "register_entries": 9,
+      "marker_cited": 0,
+      "verbatim_cited": 4,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/87c610df-bef7-4932-b950-1d83ef4e282b/report_bundle.json",
+      "supported_claims": 9,
+      "cited_in_prose": 4,
+      "uncited_in_prose": 5,
+      "register_entries": 9,
+      "marker_cited": 0,
+      "verbatim_cited": 4,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/ad2b4d70-9314-4fe6-bfbe-894a45f6055f/report_bundle.json",
+      "supported_claims": 18,
+      "cited_in_prose": 9,
+      "uncited_in_prose": 9,
+      "register_entries": 18,
+      "marker_cited": 0,
+      "verbatim_cited": 9,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/b4cc024b-3f5e-480e-b96a-6656493255b5/report_bundle.json",
+      "supported_claims": 15,
+      "cited_in_prose": 5,
+      "uncited_in_prose": 10,
+      "register_entries": 15,
+      "marker_cited": 0,
+      "verbatim_cited": 5,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/e8cb5b03-41e0-4086-99e5-f6806cd97211/report_bundle.json",
+      "supported_claims": 33,
+      "cited_in_prose": 6,
+      "uncited_in_prose": 27,
+      "register_entries": 33,
+      "marker_cited": 0,
+      "verbatim_cited": 6,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/e961a717-6b25-4175-8a68-874d28190ee4/report_bundle.json",
+      "supported_claims": 14,
+      "cited_in_prose": 11,
+      "uncited_in_prose": 3,
+      "register_entries": 14,
+      "marker_cited": 0,
+      "verbatim_cited": 11,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_benchmarks/gaia_real/f2feb6a4-363c-4c09-a804-0db564eafd68/report_bundle.json",
+      "supported_claims": 20,
+      "cited_in_prose": 5,
+      "uncited_in_prose": 15,
+      "register_entries": 20,
+      "marker_cited": 0,
+      "verbatim_cited": 5,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_agent/live_agent_run_bundle.json",
+      "supported_claims": 33,
+      "cited_in_prose": 5,
+      "uncited_in_prose": 28,
+      "register_entries": 33,
+      "marker_cited": 0,
+      "verbatim_cited": 5,
+      "dropped_markers": 0
+    },
+    {
+      "bundle": "evals/reports/live_route_demo/report_bundle.json",
+      "supported_claims": 261,
+      "cited_in_prose": 5,
+      "uncited_in_prose": 256,
+      "register_entries": 261,
+      "marker_cited": 0,
+      "verbatim_cited": 5,
+      "dropped_markers": 0
+    }
+  ]
+}
