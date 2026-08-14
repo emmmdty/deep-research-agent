@@ -42,3 +42,11 @@ itself evidence: reference frameworks are not immune to pipeline failures.
 - `comparison_report.md` — generated table dump.
 - `ours_v2/ odr/ gptr/` — per-topic reports + metadata (claims, sources, cost,
   wall time).
+
+## Round 2 (post-fix)
+
+The citation-rendering fix this round surfaced has been re-run: see
+[`head_to_head_round2/`](../head_to_head_round2/) for the after-state —
+`citation_accuracy` 0.0→1.0 and `source_coverage` 0→47–95 on our reports
+(competitors unchanged at 0), judge citation complaints gone, remaining gap
+honestly documented as synthesis prose style.
