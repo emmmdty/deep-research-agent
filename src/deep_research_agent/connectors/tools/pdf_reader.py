@@ -37,4 +37,5 @@ def pdf_reader_tool(file_path: str) -> str:
 
     except Exception as e:
         logger.error("PDF 解析失败: path='{}', 错误={}", file_path, e)
-        return f"PDF 解析失败: {e}"
+        # 失败必须上抛：错误文本伪装成"内容"后会被缓存并进入 grounding 管线。
+        raise ValueError(f"PDF 解析失败: {file_path}: {e}") from e

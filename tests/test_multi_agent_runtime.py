@@ -236,7 +236,7 @@ def test_scheduler_job_service_dispatches_persisted_scheduler_runtime(tmp_path) 
     executed: list[str] = []
 
     class FakeScheduler:
-        async def run(self, job, dag, config_snapshot):
+        async def run(self, job, dag, config_snapshot, *, seed_checkpoints=None):
             executed.append(f"{job.job_id}:{dag.tasks[0].task_id}:{config_snapshot['version']}")
             from deep_research_agent.orchestration.scheduler import RunResult
             return RunResult(

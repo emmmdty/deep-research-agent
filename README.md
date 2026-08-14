@@ -30,6 +30,8 @@ scheduler-v2 agent (`src/deep_research_agent/`), not fixture simulations.
 | **BrowseComp** | 15 stratified official questions, real runs, committed per-question artifacts | [`browsecomp_real/`](./evals/reports/live_benchmarks/browsecomp_real/) |
 | **Head-to-head** | ours vs langchain-ai `open_deep_research` vs `gpt-researcher`, blind LLM judge, same endpoint. Round 1: lost — the judge explicitly flagged our **missing citations** (a rendering gap, not the evidence system). Round 2 after the fix: `citation_accuracy` 0.0→**1.0**, `source_coverage` 0→**47–95** (competitors: still 0), judge's citation complaints gone; remaining gap is synthesis prose style, honestly documented | [`head_to_head/`](./evals/reports/live_benchmarks/head_to_head/) · [`head_to_head_round2/`](./evals/reports/live_benchmarks/head_to_head_round2/) |
 | **Error analysis** | Failure taxonomy of the live lane: a critic crash eliminated 25% of correct answers (fixed + re-measured, 25%→35% and cheaper), multi-hop gaps, wrong-fact selection, image questions (text-only pipeline) | [`docs/ERROR_ANALYSIS.md`](./docs/ERROR_ANALYSIS.md) |
+| **Fault-injection fallback benchmark** | 15 deterministic scenarios, one injected fault per decision point (planner / planning / reflection / page read / extraction / critic review+synthesis / tool failures / budget). Control run triggers **0 fallbacks** (healthy path never touches a fallback); every transient fault is absorbed by its designed layer; all 3 persistent-outage scenarios **fail closed with 0 ungrounded claims published**; scheduler-v2 crash-resume recovers from the durable journal with **0 completed tasks redone** | [`fault_injection/`](./evals/reports/fault_injection/) |
+| **Agent dimension metrics** | Deterministic per-dimension measurements of one scripted job: grounding acceptance 80% (4/5 verbatim-grounded), 2-round reflection with 1 gap-triggered follow-up, per-stage prompt/token accounting (~1.9K est. tokens/job), tool-cache steady-state hit rate 100%, memory recall@1 100% + noise precision 100% + tenant isolation enforced | [`agent_metrics/`](./evals/reports/agent_metrics/) |
 
 The deterministic lane (fixture-based, 0 provider tokens) proves *pipeline
 correctness*, not answer quality — completion rate: `1.0`, critical claim
@@ -54,6 +56,16 @@ The live lane is not decoration; it has driven three real fixes:
    `audit_summary.report_citation_coverage`.
 3. **No control experiment** — added the same-model no-agent GAIA baseline to
    separate model ability from agent value (result above: 0/20 vs 7/20).
+4. **Reflection fallback was an anti-pattern** — a failed coverage assessment
+   used to be treated as "covered" (optimistic skip). It now falls back
+   conservatively to `covered=False` and continues searching, bounded by the
+   round budget. The healthy path is unchanged (fault-injection control run:
+   0 fallback triggers).
+5. **scheduler-v2 crash recovery was cosmetic** — checkpoints were persisted
+   only after a run finished, so a killed worker restarted the whole DAG. Task
+   checkpoints are now journaled to disk the moment each task completes, and a
+   fresh worker resumes from the journal (`run.resumed` event, completed work
+   never redone).
 
 ## Architecture
 

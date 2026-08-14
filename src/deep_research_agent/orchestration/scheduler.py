@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from typing import Any, Literal
 
 from jsonschema import ValidationError as JsonSchemaValidationError
@@ -52,6 +52,7 @@ class RunResult(StrictModel):
     checkpoints: list[TaskCheckpoint]
     config_snapshot: Any
     critic_decisions: list[CriticDecision] = Field(default_factory=list)
+    resumed_checkpoints: int = 0
 
 
 class ResearchScheduler:
@@ -81,7 +82,7 @@ class ResearchScheduler:
         self._token = cancellation_token or CancellationToken()
         self._cancellation_check = cancellation_check
         self._cancellation_poll_seconds = cancellation_poll_seconds
-        self._journal = journal or InMemoryRunJournal()
+        self._journal = journal if journal is not None else InMemoryRunJournal()
         self._tool_gateway = tool_gateway
 
     async def run(
@@ -89,6 +90,8 @@ class ResearchScheduler:
         job: SchedulerJob | Mapping[str, Any] | Any,
         dag: ResearchDAG,
         config_snapshot: Any,
+        *,
+        seed_checkpoints: Sequence[TaskCheckpoint] | None = None,
     ) -> RunResult:
         job_id, tenant_id, initial_cancelled = self._job_identity(job)
         if dag.job_id != job_id:
@@ -104,10 +107,28 @@ class ResearchScheduler:
         results: dict[str, TaskResult] = {}
         attempts: dict[str, int] = {task_id: 0 for task_id in task_by_id}
         failed: set[str] = set()
+        dag, resumed = self._replay_seeded_checkpoints(
+            seed_checkpoints or [],
+            dag,
+            outputs,
+            results,
+            attempts,
+            failed,
+            declared_tasks,
+        )
+        task_by_id = dag.task_by_id
 
         self._emit(events, job_id, "run.started", payload={"task_count": len(task_by_id)})
         if initial_cancelled:
             self._token.cancel()
+        if resumed:
+            pending = set(task_by_id) - set(results)
+            self._emit(
+                events,
+                job_id,
+                "run.resumed",
+                payload={"seeded_tasks": sorted(outputs) if outputs else []},
+            )
 
         while pending or running:
             if self._is_cancelled():
@@ -115,7 +136,8 @@ class ResearchScheduler:
                     job_id, pending, running, task_by_id, results, outputs, attempts, checkpoints, events
                 )
                 return self._result(
-                    job_id, "cancelled", results, outputs, attempts, events, checkpoints, config_snapshot
+                    job_id, "cancelled", results, outputs, attempts, events, checkpoints, config_snapshot,
+                    resumed_checkpoints=resumed,
                 )
 
             blocked = sorted(
@@ -182,7 +204,8 @@ class ResearchScheduler:
                     job_id, pending, running, task_by_id, results, outputs, attempts, checkpoints, events
                 )
                 return self._result(
-                    job_id, "cancelled", results, outputs, attempts, events, checkpoints, config_snapshot
+                    job_id, "cancelled", results, outputs, attempts, events, checkpoints, config_snapshot,
+                    resumed_checkpoints=resumed,
                 )
             cancellation_wait.cancel()
             await asyncio.gather(cancellation_wait, return_exceptions=True)
@@ -267,12 +290,23 @@ class ResearchScheduler:
 
                 outputs[task_id] = output
                 results[task_id] = output.result
-                self._checkpoint(checkpoints, job_id, task, attempt, output.result, output.output)
+                self._checkpoint(
+                    checkpoints,
+                    job_id,
+                    task,
+                    attempt,
+                    output.result,
+                    output.output,
+                    worker_payload=output.model_dump(mode="json"),
+                )
                 self._emit(events, job_id, "task.completed", task_id=task_id, attempt=attempt)
 
         status: Literal["completed", "failed"] = "failed" if failed else "completed"
         self._emit(events, job_id, f"run.{status}", payload={"task_count": len(results)})
-        return self._result(job_id, status, results, outputs, attempts, events, checkpoints, config_snapshot)
+        return self._result(
+            job_id, status, results, outputs, attempts, events, checkpoints, config_snapshot,
+            resumed_checkpoints=resumed,
+        )
 
     async def _execute(self, task: TaskSpec, context: TaskExecutionContext) -> WorkerOutput:
         raw = await self._worker.execute(task, context)
@@ -301,10 +335,65 @@ class ResearchScheduler:
                 continue
             result = TaskResult(task_id=task_id, job_id=job_id, status="cancelled", error="run cancelled")
             results[task_id] = result
-            attempts[task_id] = max(attempts.get(task_id, 0), 1)
-            self._checkpoint(checkpoints, job_id, task_by_id[task_id], attempts[task_id], result, {})
-            self._emit(events, job_id, "task.cancelled", task_id=task_id, attempt=attempts[task_id])
+            task_attempt = attempts.get(task_id, 0)
+            # Never fabricate an attempt for a task that did not start: the
+            # attempt counter records real executions only, so a resumed run
+            # replays cancelled tasks with a fresh budget.
+            self._checkpoint(checkpoints, job_id, task_by_id[task_id], max(task_attempt, 1), result, {})
+            self._emit(events, job_id, "task.cancelled", task_id=task_id, attempt=max(task_attempt, 1))
         self._emit(events, job_id, "run.cancelled", payload={"task_count": len(results)})
+
+    @staticmethod
+    def _replay_seeded_checkpoints(
+        seed_checkpoints: Sequence[TaskCheckpoint],
+        dag: ResearchDAG,
+        outputs: dict[str, WorkerOutput],
+        results: dict[str, TaskResult],
+        attempts: dict[str, int],
+        failed: set[str],
+        declared_tasks: dict[str, TaskSpec],
+    ) -> tuple[ResearchDAG, int]:
+        """Replay persisted checkpoints so a crashed run continues, not restarts.
+
+        Completed checkpoints restore the full worker payload (outputs and any
+        dynamically spawned tasks); failed checkpoints stay failed; cancelled
+        checkpoints are NOT restored as terminal results — a cancelled task
+        never produced output, so on resume it is re-run with a fresh attempt
+        budget. Returns the (possibly extended) DAG and the number of seeded
+        checkpoints.
+        """
+
+        if not seed_checkpoints:
+            return dag, 0
+        resumed = 0
+        for checkpoint in sorted(seed_checkpoints, key=lambda item: item.sequence):
+            task_id = checkpoint.task_id
+            if task_id not in declared_tasks:
+                # A stale checkpoint for a task that is not in the current DAG
+                # (nor declared by a replayed spawner) must not pollute the run.
+                continue
+            attempts[task_id] = max(attempts.get(task_id, 0), checkpoint.attempt)
+            if checkpoint.result.status == "completed" and checkpoint.worker_payload:
+                worker = WorkerOutput.model_validate(checkpoint.worker_payload)
+                outputs[task_id] = worker
+                results[task_id] = worker.result
+                for spawned in worker.spawned_tasks:
+                    if spawned.task_id not in declared_tasks:
+                        dag = dag.with_tasks([spawned])
+                        declared_tasks[spawned.task_id] = spawned
+                        attempts.setdefault(spawned.task_id, 0)
+                resumed += 1
+            elif checkpoint.result.status == "failed":
+                results[task_id] = checkpoint.result
+                failed.add(task_id)
+                resumed += 1
+            elif checkpoint.result.status == "cancelled":
+                # Cancellation is not a terminal outcome: the task produced no
+                # output and its dependents were never unblocked. Reset the
+                # attempt budget and leave the task pending so it is re-run.
+                attempts[task_id] = 0
+                resumed += 1
+        return dag, resumed
 
     def _emit(
         self,
@@ -337,6 +426,8 @@ class ResearchScheduler:
         attempt: int,
         result: TaskResult,
         output: dict[str, Any],
+        *,
+        worker_payload: dict[str, Any] | None = None,
     ) -> None:
         sequence = len(checkpoints) + 1
         checkpoint = TaskCheckpoint(
@@ -347,6 +438,7 @@ class ResearchScheduler:
             attempt=attempt,
             result=result,
             output=output,
+            worker_payload=worker_payload,
         )
         self._journal.record_checkpoint(checkpoint)
         checkpoints.append(checkpoint)
@@ -392,6 +484,8 @@ class ResearchScheduler:
         events: list[RunEvent],
         checkpoints: list[TaskCheckpoint],
         config_snapshot: Any,
+        *,
+        resumed_checkpoints: int = 0,
     ) -> RunResult:
         decisions: dict[str, CriticDecision] = {}
         for output in outputs.values():
@@ -410,4 +504,5 @@ class ResearchScheduler:
             checkpoints=checkpoints,
             critic_decisions=[decisions[key] for key in sorted(decisions)],
             config_snapshot=config_snapshot,
+            resumed_checkpoints=resumed_checkpoints,
         )

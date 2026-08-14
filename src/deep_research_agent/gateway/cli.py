@@ -59,6 +59,28 @@ def _build_job_service():
     return ResearchJobService()
 
 
+_MAX_TOPIC_CHARS = 2000
+
+
+def _validate_topic(topic: str) -> str:
+    """Normalize and gate a research topic before it reaches the runtime.
+
+    Blank, whitespace-only, and oversized topics are rejected up front so no
+    research budget is spent on inputs that cannot produce a report.
+    """
+
+    if not isinstance(topic, str):
+        raise ValueError("研究主题必须是文本")
+    normalized = topic.strip()
+    if not normalized:
+        raise ValueError("研究主题不能为空")
+    if len(normalized) > _MAX_TOPIC_CHARS:
+        raise ValueError(
+            f"研究主题过长（{len(normalized)} 字符，上限 {_MAX_TOPIC_CHARS}）"
+        )
+    return normalized
+
+
 def build_parser() -> argparse.ArgumentParser:
     """构建 CLI 参数解析器。"""
     settings = get_settings()
@@ -334,7 +356,12 @@ def run_command(argv: list[str] | None = None) -> int:
             console.print("[red]当前环境未启用 legacy-run[/red]")
             return 2
         legacy_args = _build_legacy_parser().parse_args(argv[1:])
-        run_cli(legacy_args.topic, max_loops=legacy_args.max_loops, profile=legacy_args.profile)
+        try:
+            topic = _validate_topic(legacy_args.topic)
+        except ValueError as exc:
+            console.print(f"[red]输入校验失败: {exc}[/red]")
+            return 2
+        run_cli(topic, max_loops=legacy_args.max_loops, profile=legacy_args.profile)
         return 0
 
     parser = build_parser()
@@ -392,8 +419,13 @@ def run_command(argv: list[str] | None = None) -> int:
     service.recover_stale_jobs()
 
     if args.command == "submit":
+        try:
+            topic = _validate_topic(args.topic)
+        except ValueError as exc:
+            console.print(f"[red]输入校验失败: {exc}[/red]")
+            return 2
         job = service.submit(
-            topic=args.topic,
+            topic=topic,
             max_loops=args.max_loops,
             research_profile=args.profile,
             start_worker=not args.no_worker,

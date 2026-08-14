@@ -222,7 +222,7 @@ def test_cached_artifact_references_are_isolated_by_job() -> None:
     assert calls == 2
 
 
-def test_cache_get_failure_is_terminal_and_finalizes_idempotency() -> None:
+def test_cache_get_failure_is_retryable_and_does_not_stick_idempotency() -> None:
     calls = 0
 
     class FailingGetCache:
@@ -251,7 +251,7 @@ def test_cache_get_failure_is_terminal_and_finalizes_idempotency() -> None:
     assert result.error_code == "cache_backend_error"
     assert result.attempt_count == 0
     assert duplicate.status == "failed"
-    assert duplicate.duplicate is True
+    assert duplicate.duplicate is False
     assert calls == 0
 
 
@@ -553,7 +553,7 @@ def test_delayed_timeout_completion_survives_cache_put_failure() -> None:
 
 
 @pytest.mark.parametrize("invalid_output", [object(), float("nan")])
-def test_non_json_tool_output_fails_and_finalizes_idempotency(invalid_output: object) -> None:
+def test_non_json_tool_output_fails_and_retries_freshly(invalid_output: object) -> None:
     calls = 0
 
     def handler(_arguments: dict[str, object], _tool_context: object) -> object:
@@ -569,11 +569,11 @@ def test_non_json_tool_output_fails_and_finalizes_idempotency(invalid_output: ob
     assert result.status == "failed"
     assert result.error_code == "invalid_tool_result"
     assert duplicate.status == "failed"
-    assert duplicate.duplicate is True
-    assert calls == 1
+    assert duplicate.duplicate is False
+    assert calls == 2
 
 
-def test_cyclic_tool_output_fails_without_stranding_idempotency() -> None:
+def test_cyclic_tool_output_fails_and_is_retryable() -> None:
     cyclic: dict[str, object] = {}
     cyclic["self"] = cyclic
     gateway = _gateway(lambda _arguments, _tool_context: cyclic)
@@ -584,7 +584,7 @@ def test_cyclic_tool_output_fails_without_stranding_idempotency() -> None:
     assert result.status == "failed"
     assert result.error_code == "invalid_tool_result"
     assert duplicate.status == "failed"
-    assert duplicate.duplicate is True
+    assert duplicate.duplicate is False
 
 
 def test_result_envelope_rejects_non_json_inline_output() -> None:

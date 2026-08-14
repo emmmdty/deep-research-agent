@@ -371,8 +371,16 @@ async def test_agentic_researcher_falls_back_when_function_call_fails() -> None:
     output = await worker.execute(task, await _context(task, gateway))
 
     assert output.result.status == "completed"
-    assert output.output["query_count"] == 1
+    assert output.output["query_count"] == 2
     assert output.output["claim_count"] == 1
+    assessment = output.output["coverage_assessments"][0]
+    assert assessment["covered"] is False
+    assert assessment["fallback"] == "deterministic_continue"
+    assert output.output["injection_stats"]["coverage_fallbacks"] == 1
+    assert list(output.output["queries"]) == [
+        {"query": "fallback query", "tool": "web_search"},
+        {"query": "fallback query", "tool": "web_search"},
+    ]
 
 
 # ---------------------------------------------------------------- fetch_page

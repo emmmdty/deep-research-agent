@@ -20,6 +20,7 @@ DEFAULT_MAX_CHARS = 12_000
 CHUNK_CHARS = 2_000
 CHUNK_OVERLAP_CHARS = 200
 _HTTP_TIMEOUT_SECONDS = 20.0
+_MAX_REDIRECTS = 5
 _USER_AGENT = "DeepResearchAgent/1.0 (evidence-first research; contact: repo owner)"
 
 _NOISE_TAGS = {"script", "style", "noscript", "svg", "iframe", "form", "nav", "footer", "header", "aside"}
@@ -58,6 +59,40 @@ def _validate_public_url(url: str) -> str:
     return url
 
 
+def _resolve_redirect_target(base: str, location: str) -> str:
+    """Resolve a redirect Location header against the current URL."""
+    from urllib.parse import urljoin
+
+    return urljoin(base, location)
+
+
+def _checked_fetch(client: httpx.Client, url: str) -> httpx.Response:
+    """Fetch one URL after validating it, and refuse private redirect hops.
+
+    Every hop is validated *before* the request is made: automatic redirect
+    following is disabled and each Location is resolved, SSRF-checked, and then
+    fetched, so an internal address can never be contacted through a redirect
+    (and DNS rebinding is bounded because each hop is resolved and validated
+    immediately before connection).
+    """
+
+    target = _validate_public_url(url)
+    response = client.get(target)
+    hops = 0
+    while response.is_redirect and hops < _MAX_REDIRECTS:
+        location = response.headers.get("location")
+        if not location:
+            break
+        next_target = _resolve_redirect_target(target, location)
+        _validate_public_url(next_target)
+        target = next_target
+        response = client.get(target)
+        hops += 1
+    if hops >= _MAX_REDIRECTS and response.is_redirect:
+        raise ValueError("fetch_page refuses to follow more than 5 redirects")
+    return response
+
+
 def fetch_page(url: str, max_chars: int = DEFAULT_MAX_CHARS) -> dict[str, object]:
     """Fetch a public web page, extract readable text, and return it as a dict.
 
@@ -67,10 +102,14 @@ def fetch_page(url: str, max_chars: int = DEFAULT_MAX_CHARS) -> dict[str, object
     truncated to ``max_chars``.
     """
 
-    target = _validate_public_url(url)
+    _validate_public_url(url)
     try:
-        with httpx.Client(timeout=_HTTP_TIMEOUT_SECONDS, follow_redirects=True, headers={"User-Agent": _USER_AGENT}) as client:
-            response = client.get(target)
+        with httpx.Client(
+            timeout=_HTTP_TIMEOUT_SECONDS,
+            follow_redirects=False,
+            headers={"User-Agent": _USER_AGENT},
+        ) as client:
+            response = _checked_fetch(client, url)
         response.raise_for_status()
     except Exception as exc:
         logger.warning("fetch_page failed for {}: {}", url, exc)

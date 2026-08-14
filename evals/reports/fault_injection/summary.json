@@ -1,0 +1,265 @@
+{
+  "scenarios": [
+    {
+      "name": "control",
+      "status": "completed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "planner_transient_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "planner_deterministic"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "planner_outage",
+      "status": "completed",
+      "fallback_layers": [
+        "planner_deterministic"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "plan_queries_transient_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "planning_prompt_path"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "model_outage",
+      "status": "failed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 0,
+      "ungrounded_claims": 0,
+      "report_emitted": false,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 0,
+      "wall_ms": 8,
+      "error": null
+    },
+    {
+      "name": "coverage_assessment_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "coverage_deterministic_continue"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 2,
+      "queries": 2,
+      "wall_ms": 7,
+      "error": null
+    },
+    {
+      "name": "page_read_failure",
+      "status": "completed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "extraction_transient_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "extraction_prompt_path"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 7,
+      "error": null
+    },
+    {
+      "name": "extraction_outage",
+      "status": "failed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 0,
+      "ungrounded_claims": 0,
+      "report_emitted": false,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 0,
+      "wall_ms": 8,
+      "error": null
+    },
+    {
+      "name": "critic_review_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "critic_deterministic_review"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "critic_synthesis_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "critic_deterministic_report"
+      ],
+      "fallback_count": 1,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": true,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "critic_total_failure",
+      "status": "completed",
+      "fallback_layers": [
+        "critic_deterministic_review",
+        "critic_deterministic_report"
+      ],
+      "fallback_count": 2,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": true,
+      "rounds": 1,
+      "queries": 1,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "search_tool_failure",
+      "status": "completed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 2,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "all_tools_down",
+      "status": "failed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 0,
+      "ungrounded_claims": 0,
+      "report_emitted": false,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 0,
+      "wall_ms": 6,
+      "error": null
+    },
+    {
+      "name": "budget_exhausted",
+      "status": "completed",
+      "fallback_layers": [],
+      "fallback_count": 0,
+      "claims_published": 1,
+      "ungrounded_claims": 0,
+      "report_emitted": true,
+      "report_deterministic": false,
+      "rounds": 1,
+      "queries": 2,
+      "wall_ms": 7,
+      "error": null
+    }
+  ],
+  "crash_resume": {
+    "status": "completed",
+    "resumed_checkpoints": 1,
+    "seeded_tasks": [
+      "task-1"
+    ],
+    "crashed_run_calls": {
+      "task-1": 1,
+      "task-2": 1
+    },
+    "resumed_run_calls": {
+      "task-2": 1,
+      "task-3": 1
+    },
+    "re_executed_completed_tasks": [],
+    "task_results": {
+      "task-1": "completed",
+      "task-2": "completed",
+      "task-3": "completed"
+    }
+  },
+  "summary": {
+    "scenario_count": 15,
+    "control_fallback_triggers": 0,
+    "control_completed": true,
+    "control_ungrounded_claims": 0,
+    "completed_count": 12,
+    "completed_rate": 0.8,
+    "transient_absorbed_count": 8,
+    "fallback_triggered_scenarios": 8,
+    "total_fallback_triggers": 9,
+    "total_ungrounded_claims": 0,
+    "fail_closed_scenarios": 3
+  }
+}

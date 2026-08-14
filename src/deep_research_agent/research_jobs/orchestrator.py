@@ -14,6 +14,7 @@ from deep_research_agent.kernel.contracts import (
     ResearchGraphNode,
 )
 from deep_research_agent.orchestration.dag import ResearchDAG
+from deep_research_agent.orchestration.events import FileRunJournal
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, RunResult
 from deep_research_agent.reporting.bundle import emit_report_artifacts
 from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2
@@ -84,30 +85,48 @@ class ResearchJobOrchestrator:
             runtime_path="scheduler-v2",
             error=None,
         )
-        result = await self.scheduler.run(job, dag, config_snapshot)
+        journal = FileRunJournal(self.store.job_dir(job_id) / "scheduler_journal.jsonl")
+        seed_checkpoints = journal.load_checkpoints()
+        if seed_checkpoints:
+            logger.info(
+                "scheduler-v2 job {}: resuming from {} persisted task checkpoint(s)",
+                job_id,
+                len(seed_checkpoints),
+            )
+        result = await self.scheduler.run(
+            job,
+            dag,
+            config_snapshot,
+            seed_checkpoints=seed_checkpoints,
+        )
         self._assert_worker_lease(job_id)
 
+        journal_events, _ = journal.load()
+        if journal_events:
+            for event in journal_events:
+                payload = dict(event.payload)
+                payload.update(
+                    {
+                        "scheduler_sequence": event.sequence,
+                        "task_id": event.task_id,
+                        "attempt": event.attempt,
+                    }
+                )
+                self._append_event(
+                    job,
+                    "scheduler",
+                    event.event_type,
+                    event.event_type,
+                    payload,
+                )
+        merged_checkpoints = {cp.task_id: cp for cp in journal.load_checkpoints()}
+        for checkpoint in result.checkpoints:
+            merged_checkpoints[checkpoint.task_id] = checkpoint
         checkpoint_path = self.store.save_scheduler_checkpoints(
             job_id,
-            [checkpoint.model_dump(mode="json") for checkpoint in result.checkpoints],
+            [cp.model_dump(mode="json") for cp in merged_checkpoints.values()],
             lease_id=self.worker_lease_id,
         )
-        for event in result.events:
-            payload = dict(event.payload)
-            payload.update(
-                {
-                    "scheduler_sequence": event.sequence,
-                    "task_id": event.task_id,
-                    "attempt": event.attempt,
-                }
-            )
-            self._append_event(
-                job,
-                "scheduler",
-                event.event_type,
-                event.event_type,
-                payload,
-            )
 
         status_by_result = {
             "completed": JobStatus.COMPLETED,

@@ -1,0 +1,67 @@
+{
+  "job": {
+    "status": "completed",
+    "wall_ms": 4,
+    "report_markdown": "## Executive Summary\n- 学生票五折。"
+  },
+  "retrieval": {
+    "queries_issued": 3,
+    "sources_gathered": 3,
+    "full_page_reads": 1,
+    "submitted_claims": 5,
+    "accepted_claims": 4,
+    "grounding_acceptance_rate": 0.8,
+    "claims_per_source": 1.333
+  },
+  "reasoning": {
+    "rounds_used": 2,
+    "coverage_assessments": 1,
+    "model_assessed_covered": 0,
+    "gap_triggers": 1,
+    "follow_up_round_rate": 1
+  },
+  "context": {
+    "prompt_metrics": {
+      "per_stage": [
+        {
+          "stage": "tool_loop",
+          "calls": 5,
+          "system_chars": 2254,
+          "user_chars": 2155,
+          "est_input_tokens": 1102
+        },
+        {
+          "stage": "chat_json",
+          "calls": 1,
+          "system_chars": 588,
+          "user_chars": 988,
+          "est_input_tokens": 394
+        },
+        {
+          "stage": "chat",
+          "calls": 1,
+          "system_chars": 767,
+          "user_chars": 733,
+          "est_input_tokens": 375
+        }
+      ],
+      "total_input_tokens": 1871,
+      "total_output_tokens": 374,
+      "est_cost_usd": 0.001
+    }
+  },
+  "cache": {
+    "cache_ttl_seconds": 3600,
+    "probes": 4,
+    "cache_hits": 4,
+    "cache_hit_rate": 1.0,
+    "job_status_first_run": "completed",
+    "job_status_second_run": "completed"
+  },
+  "memory": {
+    "stored_facts": 10,
+    "recall_at_top": 1.0,
+    "noise_precision": 1.0,
+    "tenant_isolation_enforced": true
+  }
+}

@@ -273,9 +273,17 @@ class LLMResearcherWorker:
         if context.tool_gateway is None:
             raise RuntimeError("LLM researcher requires a configured tool gateway")
         chat = self._chat or LLMChat()
-        if self._supports_tools(chat):
-            return await self._run_agentic_loop(task, context, chat)
-        return await self._run_classic_loop(task, context, chat)
+        owned_chat = self._chat is None
+        try:
+            if self._supports_tools(chat):
+                return await self._run_agentic_loop(task, context, chat)
+            return await self._run_classic_loop(task, context, chat)
+        finally:
+            if owned_chat:
+                try:
+                    await chat.aclose()
+                except Exception:  # noqa: BLE001 - closing is best-effort cleanup
+                    pass
 
     # ------------------------------------------------------------------ agentic
 
@@ -293,11 +301,13 @@ class LLMResearcherWorker:
             "injection_findings": 0,
             "injection_dropped_sources": 0,
             "injection_dropped_pages": 0,
+            "coverage_fallbacks": 0,
+            "planning_fallbacks": 0,
         }
 
         while rounds_used < self._max_rounds:
             rounds_used += 1
-            queries = await self._agentic_plan_queries(chat, task, queries_used, gaps)
+            queries = await self._agentic_plan_queries(chat, task, queries_used, gaps, stats)
             if not queries:
                 logger.info(
                     "researcher {}: agentic planning produced no queries; moving on",
@@ -311,6 +321,13 @@ class LLMResearcherWorker:
                 break
             if rounds_used < self._max_rounds:
                 assessment = await self._agentic_assess_coverage(chat, task, sources)
+                if assessment.get("fallback"):
+                    stats["coverage_fallbacks"] += 1
+                    logger.warning(
+                        "researcher {}: coverage assessment fell back to deterministic "
+                        "continue (covered=False); follow-up round targets the objective",
+                        task.task_id,
+                    )
                 assessment["round"] = rounds_used
                 coverage_assessments.append(assessment)
                 if assessment.get("covered"):
@@ -372,6 +389,7 @@ class LLMResearcherWorker:
         task,
         queries_used: list[dict[str, str]],
         gaps: list[str],
+        stats: dict[str, Any],
     ) -> list[dict[str, str]]:
         user = f"Task objective:\n{task.objective}\n"
         if queries_used:
@@ -404,6 +422,7 @@ class LLMResearcherWorker:
                 task.task_id,
                 exc,
             )
+        stats["planning_fallbacks"] = stats.get("planning_fallbacks", 0) + 1
         try:
             payload = await chat.chat_json(
                 system=(
@@ -479,7 +498,11 @@ class LLMResearcherWorker:
                     "covered": bool(arguments.get("covered", False)),
                     "gaps": [str(gap) for gap in arguments.get("gaps", []) if str(gap).strip()],
                 }
-        return {"covered": True, "gaps": []}
+        return {
+            "covered": False,
+            "gaps": [task.objective],
+            "fallback": "deterministic_continue",
+        }
 
     async def _gather_queries(
         self,

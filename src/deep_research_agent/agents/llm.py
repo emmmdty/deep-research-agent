@@ -13,7 +13,9 @@ The client exposes two interaction styles:
 
 from __future__ import annotations
 
+import asyncio
 import json
+import random
 import re
 from dataclasses import dataclass, field
 from typing import Any, Protocol, runtime_checkable
@@ -28,14 +30,56 @@ class LLMChatError(RuntimeError):
     """Raised when a model call cannot produce a usable response."""
 
 
+# Retries with exponential backoff + jitter: a 429 is precisely what backoff
+# fixes, so rate limits are retried (honoring Retry-After when present) before
+# being surfaced as errors.
+_MAX_ATTEMPTS = 3
+_BACKOFF_BASE_SECONDS = 1.0
+_BACKOFF_CAP_SECONDS = 8.0
+_RATE_LIMIT_BACKOFF_SECONDS = 2.0
+
+
 def _is_rate_limit(exc: Exception) -> bool:
-    """Detect provider quota/rate-limit errors that retrying cannot fix."""
+    """Detect provider quota/rate-limit errors that warrant a backed-off retry."""
 
     status = getattr(exc, "status_code", None)
     if status == 429:
         return True
     message = str(exc)
     return "429" in message or "rate limit" in message.lower() or "usage limit" in message.lower()
+
+
+def _retry_after_seconds(exc: Exception) -> float | None:
+    """Best-effort Retry-After header extraction for provider rate limits."""
+
+    for attr in ("headers", "response"):
+        raw = getattr(exc, attr, None)
+        headers = getattr(raw, "headers", None)
+        if headers is None and isinstance(raw, dict):
+            headers = raw
+        if not headers:
+            continue
+        try:
+            value = headers.get("retry-after") or headers.get("Retry-After")
+        except Exception:  # noqa: BLE001 - malformed headers must not break retries
+            continue
+        if not value:
+            continue
+        try:
+            return max(float(value), 0.0)
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
+async def _backoff_delay(attempt: int, *, rate_limited: bool = False) -> None:
+    """Sleep with exponential backoff and jitter before a retry."""
+
+    if rate_limited:
+        delay = _RATE_LIMIT_BACKOFF_SECONDS * (2 ** (attempt - 1))
+    else:
+        delay = min(_BACKOFF_BASE_SECONDS * (2 ** (attempt - 1)), _BACKOFF_CAP_SECONDS)
+    await asyncio.sleep(delay * (0.5 + random.random()))
 
 
 def extract_json(text: str) -> Any:
@@ -199,6 +243,10 @@ class LLMChat:
     def model_name(self) -> str:
         return str(self._model["model"])
 
+    async def aclose(self) -> None:
+        """Release the underlying HTTP client and its connection pool."""
+        await self._client.close()
+
     def _request_kwargs(
         self,
         messages: list[dict[str, Any]],
@@ -236,7 +284,7 @@ class LLMChat:
         )
         last_error: Exception | None = None
         budget_attempts = 0
-        for attempt in range(1, 4):
+        for attempt in range(1, _MAX_ATTEMPTS + 1):
             try:
                 response = await self._client.chat.completions.create(**kwargs)
                 usage = response.usage
@@ -283,11 +331,21 @@ class LLMChat:
                     )
                 return content
             except Exception as exc:  # network and API retryable failures
-                if _is_rate_limit(exc):
-                    raise LLMChatError(f"LLM rate limit reached: {exc}") from exc
+                if _is_rate_limit(exc) and attempt < _MAX_ATTEMPTS:
+                    retry_after = _retry_after_seconds(exc)
+                    delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
+                    logger.warning(
+                        "LLM rate limit on attempt {}; retrying in {:.1f}s", attempt, delay
+                    )
+                    await asyncio.sleep(delay * (0.5 + random.random()))
+                    last_error = exc
+                    continue
+                if attempt >= _MAX_ATTEMPTS:
+                    raise LLMChatError(f"LLM call failed after {_MAX_ATTEMPTS} attempts: {exc}") from exc
                 last_error = exc
+                await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
                 logger.warning("LLM call attempt {} failed: {}", attempt, exc)
-        raise LLMChatError(f"LLM call failed after 3 attempts: {last_error}")
+        raise LLMChatError(f"LLM call failed after {_MAX_ATTEMPTS} attempts: {last_error}")
 
     async def chat_json(
         self,
@@ -352,7 +410,7 @@ class LLMChat:
         kwargs["tools"] = _canonical_tool_definitions(tools)
         kwargs["tool_choice"] = tool_choice
         last_error: Exception | None = None
-        for attempt in range(1, 4):
+        for attempt in range(1, _MAX_ATTEMPTS + 1):
             try:
                 response = await self._client.chat.completions.create(**kwargs)
                 usage = response.usage
@@ -375,11 +433,25 @@ class LLMChat:
                     "tool_calls": tool_calls,
                 }
             except Exception as exc:  # network and API retryable failures
-                if _is_rate_limit(exc):
-                    raise LLMChatError(f"LLM rate limit reached: {exc}") from exc
+                if _is_rate_limit(exc) and attempt < _MAX_ATTEMPTS:
+                    retry_after = _retry_after_seconds(exc)
+                    delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
+                    logger.warning(
+                        "LLM tool call rate limit on attempt {}; retrying in {:.1f}s",
+                        attempt,
+                        delay,
+                    )
+                    await asyncio.sleep(delay * (0.5 + random.random()))
+                    last_error = exc
+                    continue
+                if attempt >= _MAX_ATTEMPTS:
+                    raise LLMChatError(
+                        f"LLM tool call failed after {_MAX_ATTEMPTS} attempts: {exc}"
+                    ) from exc
                 last_error = exc
+                await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
                 logger.warning("LLM tool call attempt {} failed: {}", attempt, exc)
-        raise LLMChatError(f"LLM tool call failed after 3 attempts: {last_error}")
+        raise LLMChatError(f"LLM tool call failed after {_MAX_ATTEMPTS} attempts: {last_error}")
 
     async def tool_loop(
         self,
@@ -417,10 +489,19 @@ class LLMChat:
             try:
                 response = await self._client.chat.completions.create(**request_kwargs)
             except Exception as exc:
-                if _is_rate_limit(exc):
-                    raise LLMChatError(f"LLM rate limit reached: {exc}") from exc
-                logger.warning("LLM tool loop round {} failed: {}", round_index, exc)
+                if _is_rate_limit(exc) and round_index < max_rounds:
+                    retry_after = _retry_after_seconds(exc)
+                    delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
+                    logger.warning(
+                        "LLM tool loop rate limit at round {}; retrying in {:.1f}s",
+                        round_index,
+                        delay,
+                    )
+                    await asyncio.sleep(delay * (0.5 + random.random()))
+                    continue
                 if round_index < max_rounds:
+                    await _backoff_delay(round_index, rate_limited=_is_rate_limit(exc))
+                    logger.warning("LLM tool loop round {} failed: {}", round_index, exc)
                     continue
                 raise LLMChatError(
                     f"LLM tool loop failed after {max_rounds} attempts: {exc}"

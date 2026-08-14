@@ -28,6 +28,10 @@ _DEFAULT_OBJECTIVE_CAP = 4
 # Budget covers the agentic loop: up to 2 search rounds × 4 queries + 3 full-page
 # fetches. The tool gateway enforces this as the hard cap per task.
 _MAX_TOOL_CALLS_PER_TASK = 16
+# A planner call must release its caller: the model client itself has a 180 s
+# timeout, and the planner thread must never pin the caller beyond the same
+# wall-clock bound.
+_PLANNER_CALL_TIMEOUT_SECONDS = 180.0
 
 
 class LLMResearchPlanner:
@@ -103,8 +107,13 @@ class LLMResearchPlanner:
     def _model_objectives(self, brief: ResearchBrief) -> list[str] | None:
         if self._chat is None:
             try:
-                self._chat = LLMChat()
-            except LLMChatError as exc:
+                # Probe credentials without binding a client to any event loop:
+                # the real client is built inside the planning thread so httpx
+                # (loop-confined) never migrates across loops.
+                if not _planner_credentials_configured():
+                    logger.info("LLM planner skipped: no LLM credentials configured")
+                    return None
+            except Exception as exc:
                 logger.info("LLM planner skipped: {}", exc)
                 return None
         context = brief.question
@@ -207,16 +216,54 @@ class LLMResearchPlanner:
         )
 
 
-def _call_planner_in_thread(chat: LLMChat, question: str) -> dict[str, Any]:
+def _planner_credentials_configured() -> bool:
+    """True when LLM credentials exist without constructing any client."""
+    try:
+        from configs.settings import get_settings
+
+        return bool(get_settings().get_llm_config().get("api_key"))
+    except Exception:  # noqa: BLE001 - planner degradation must never block research
+        return False
+
+
+def _call_planner_in_thread(chat: LLMChat | None, question: str) -> dict[str, Any]:
     """Run the async planner call in a dedicated thread with its own event loop.
 
     ``plan`` must stay synchronous (product service and CLI call it that way),
     but the model client is async; a fresh loop per call avoids conflicts with
-    any running event loop in the caller thread.
+    any running event loop in the caller thread. The client is constructed
+    inside the target thread (httpx clients are loop-confined, so a client
+    created in one loop must never be reused in another) and closed before the
+    thread exits. The timeout releases the caller without waiting for a hung
+    call: the executor is shut down without blocking, so a stuck provider
+    cannot pin the caller beyond the deadline.
     """
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-        return pool.submit(asyncio.run, _call_planner_model(chat, question)).result(timeout=180)
+    def _run() -> dict[str, Any]:
+        owned = chat is None
+        client = LLMChat() if owned else chat
+        try:
+            return asyncio.run(_call_planner_model(client, question))
+        finally:
+            if owned:
+                asyncio.run(_aclose_planner_chat(client))
+
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = pool.submit(_run)
+    try:
+        return future.result(timeout=_PLANNER_CALL_TIMEOUT_SECONDS)
+    except concurrent.futures.TimeoutError as exc:
+        raise LLMChatError("LLM planner call timed out after 180s") from exc
+    finally:
+        pool.shutdown(wait=False)
+
+
+async def _aclose_planner_chat(chat: LLMChat) -> None:
+    """Close an owned planner client from its own loop, ignoring close failures."""
+    try:
+        await chat.aclose()
+    except Exception:  # noqa: BLE001 - closing is best-effort cleanup
+        pass
 
 
 async def _call_planner_model(chat: LLMChat, question: str) -> dict[str, Any]:

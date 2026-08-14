@@ -359,6 +359,12 @@ class ToolGateway:
         fingerprint: str,
         result: ToolResultEnvelope,
     ) -> None:
+        if result.status == "failed":
+            # A failed execution must not be replayed as a "completed" result:
+            # a retry of the same call (scheduler task retry, uncertain-finalize)
+            # should re-run the tool and get a fresh outcome, not the old failure.
+            self._idempotency.reset(scope, call.idempotency_key)
+            return
         self._idempotency.complete(scope, call.idempotency_key, fingerprint, result)
 
     def _best_effort_cache_put(

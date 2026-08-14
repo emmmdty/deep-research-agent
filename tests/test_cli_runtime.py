@@ -214,6 +214,74 @@ def test_submit_cli_dispatches_to_job_service(monkeypatch):
     }
 
 
+def test_submit_cli_rejects_blank_topic(monkeypatch, capsys):
+    """空白主题必须在到达 job service 之前被拒绝。"""
+    import main
+
+    called = []
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            called.append("recover")
+
+        def submit(self, **kwargs):
+            called.append("submit")
+            return SimpleNamespace(job_id="job-001", status="created")
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    for topic in ("", "   ", "\t\n"):
+        exit_code = main.run_command(["submit", "--topic", topic, "--json"])
+        assert exit_code == 2
+        assert "不能为空" in capsys.readouterr().out
+    assert "submit" not in called
+
+
+def test_submit_cli_rejects_oversized_topic(monkeypatch, capsys):
+    """超长主题必须在到达 job service 之前被拒绝。"""
+    import main
+
+    called = []
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            called.append("recover")
+
+        def submit(self, **kwargs):
+            called.append("submit")
+            return SimpleNamespace(job_id="job-001", status="created")
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(["submit", "--topic", "长" * 2001, "--json"])
+
+    assert exit_code == 2
+    assert "过长" in capsys.readouterr().out
+    assert called == ["recover"]
+
+
+def test_submit_cli_strips_whitespace_around_topic(monkeypatch, capsys):
+    """主题两侧空白应被规范化后再进入 job service。"""
+    import main
+
+    captured: dict[str, object] = {}
+
+    class FakeService:
+        def recover_stale_jobs(self):
+            pass
+
+        def submit(self, **kwargs):
+            captured["topic"] = kwargs["topic"]
+            return SimpleNamespace(job_id="job-001", status="created")
+
+    monkeypatch.setattr(main, "_build_job_service", lambda: FakeService())
+
+    exit_code = main.run_command(["submit", "--topic", "  可信研究  ", "--json"])
+
+    assert exit_code == 0
+    assert captured["topic"] == "可信研究"
+
+
 def test_resume_cli_dispatches_to_job_service(monkeypatch):
     """resume 子命令应调用 job service 恢复任务。"""
     import main

@@ -43,6 +43,17 @@ class LLMCriticWorker:
 
     async def execute(self, task, context: TaskExecutionContext) -> WorkerOutput:
         chat = self._chat or LLMChat()
+        owned_chat = self._chat is None
+        try:
+            return await self._execute_with_chat(task, context, chat)
+        finally:
+            if owned_chat:
+                try:
+                    await chat.aclose()
+                except Exception:  # noqa: BLE001 - closing is best-effort cleanup
+                    pass
+
+    async def _execute_with_chat(self, task, context: TaskExecutionContext, chat) -> WorkerOutput:
         packets = self._collect_packets(task, context)
         claims = [claim for packet in packets for claim in packet.claims]
         spans = [span for packet in packets for span in packet.evidence_spans]
@@ -51,11 +62,13 @@ class LLMCriticWorker:
                 f"critic task {task.task_id!r} received no claims from any researcher task"
             )
         review = await self._review_claims(chat, task, context, claims, spans)
+        deterministic_review = bool(review.get("deterministic"))
         decisions = [
             CriticDecision(
                 decision_id=f"{context.job_id}:decision:{index:02d}",
                 claim_ids=claim_ids,
-                decision=str(decision.get("decision") or "qualified"),
+                decision=decision_text,
+                unresolved=(decision_text == "unresolved"),
                 rationale_evidence_ids=tuple(
                     str(item) for item in decision.get("rationale_evidence_ids", [])
                 ),
@@ -71,7 +84,9 @@ class LLMCriticWorker:
                 )
             ]
             if claim_ids
+            for decision_text in [str(decision.get("decision") or "qualified")]
         ]
+        deterministic_report = False
         try:
             report_markdown = await self._synthesize_report(
                 chat, task, context, claims, spans, review
@@ -83,12 +98,14 @@ class LLMCriticWorker:
                 exc,
             )
             report_markdown = self._deterministic_report(claims, task.objective)
+            deterministic_report = True
         if not report_markdown.strip():
             logger.warning(
                 "critic {}: model synthesis returned an empty report; using deterministic report",
                 task.task_id,
             )
             report_markdown = self._deterministic_report(claims, task.objective)
+            deterministic_report = True
         graph = self._build_graph(task, context, claims, spans)
         return WorkerOutput(
             result=TaskResult(
@@ -102,6 +119,8 @@ class LLMCriticWorker:
                 "research_graph": graph.model_dump(mode="json"),
                 "claim_count": len(claims),
                 "decision_count": len(decisions),
+                "deterministic_review": deterministic_review,
+                "deterministic_report": deterministic_report,
             },
             critic_decisions=decisions,
         )
@@ -138,23 +157,32 @@ class LLMCriticWorker:
             f"{span_id}: {quote}"
             for span_id, quote in sorted(span_index.items())
         )
-        payload = await chat.chat_json(
-            system=(
-                "You are the critic agent of an evidence-first deep research "
-                "system. Review the claims and their evidence spans. For each "
-                "claim decide: accepted (fully supported), qualified (partially "
-                "supported or hedged), contradicted (another claim or the "
-                "evidence contradicts it), or unresolved (cannot tell). Contradicted "
-                "and qualified claims MUST cite at least one rationale_evidence_id "
-                "from the provided span ids. Respond with JSON only: "
-                '{"decisions": [{"claim_ids": ["claim-id"], "decision": '
-                '"accepted|qualified|contradicted|unresolved", '
-                '"rationale_evidence_ids": ["span-id"], "rationale": "..."}]}'
-            ),
-            user=f"Claims:\n{claim_digest}\n\nEvidence spans:\n{span_digest}",
-            max_tokens=_REVIEW_MAX_TOKENS,
-            temperature=0.0,
-        )
+        try:
+            payload = await chat.chat_json(
+                system=(
+                    "You are the critic agent of an evidence-first deep research "
+                    "system. Review the claims and their evidence spans. For each "
+                    "claim decide: accepted (fully supported), qualified (partially "
+                    "supported or hedged), contradicted (another claim or the "
+                    "evidence contradicts it), or unresolved (cannot tell). Contradicted "
+                    "and qualified claims MUST cite at least one rationale_evidence_id "
+                    "from the provided span ids. Respond with JSON only: "
+                    '{"decisions": [{"claim_ids": ["claim-id"], "decision": '
+                    '"accepted|qualified|contradicted|unresolved", '
+                    '"rationale_evidence_ids": ["span-id"], "rationale": "..."}]}'
+                ),
+                user=f"Claims:\n{claim_digest}\n\nEvidence spans:\n{span_digest}",
+                max_tokens=_REVIEW_MAX_TOKENS,
+                temperature=0.0,
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(
+                "critic {}: model review unavailable ({}); using deterministic "
+                "decisions derived from claim support status",
+                task.task_id,
+                exc,
+            )
+            return {"decisions": self._deterministic_decisions(claims), "deterministic": True}
         known_span_ids = set(span_index)
         known_claim_ids = {claim.claim_id for claim in claims}
         for decision in payload.get("decisions", []):
@@ -179,6 +207,48 @@ class LLMCriticWorker:
                     "critic could not cite grounded evidence for its downgrade"
                 )
         return payload
+
+    @staticmethod
+    def _deterministic_decisions(claims: list[ClaimRecord]) -> list[dict[str, Any]]:
+        """Model-free review decisions derived from the researchers' own status.
+
+        A claim already tagged ``accepted`` or ``qualified`` by its researcher
+        (with a verbatim span that survived grounding) stays in that state;
+        anything else is escalated to ``unresolved`` — never silently promoted.
+        This guarantees the critic emits decisions whenever claims exist, so a
+        transient model failure cannot erase a completed research job.
+        """
+
+        by_id: dict[str, list[str]] = {}
+        for claim in sorted(claims, key=lambda item: item.claim_id):
+            by_id.setdefault(str(claim.support_status), []).append(claim.claim_id)
+        decisions: list[dict[str, Any]] = []
+        for status in ("accepted", "qualified"):
+            claim_ids = by_id.get(status, [])
+            if not claim_ids:
+                continue
+            decisions.append(
+                {
+                    "claim_ids": claim_ids,
+                    "decision": status,
+                    "rationale_evidence_ids": [],
+                    "rationale": "deterministic review: researcher-reported "
+                    f"support status {status!r} honored",
+                }
+            )
+        for claim_id in by_id.get("unsupported", []) + by_id.get("contradicted", []):
+            decisions.append(
+                {
+                    "claim_ids": [claim_id],
+                    "decision": "unresolved",
+                    "rationale_evidence_ids": [],
+                    "rationale": (
+                        "deterministic review: no grounded rationale available; "
+                        "claim left unresolved"
+                    ),
+                }
+            )
+        return decisions
 
     async def _synthesize_report(
         self,

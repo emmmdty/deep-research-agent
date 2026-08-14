@@ -89,6 +89,8 @@ class IdempotencyStore(Protocol):
 
     def get(self, scope: str, key: str) -> ToolResultEnvelope | None: ...
 
+    def reset(self, scope: str, key: str) -> None: ...
+
 
 @dataclass
 class _IdempotencyRecord:
@@ -130,6 +132,17 @@ class InMemoryIdempotencyStore:
         with self._lock:
             record = self._records.get((scope, key))
             return record.result if record is not None else None
+
+    def reset(self, scope: str, key: str) -> None:
+        """Drop a claim so a later invocation re-executes the tool.
+
+        A failed tool execution must never be served as a completed result:
+        retrying the same call (e.g. a scheduler task retry) should re-run the
+        tool instead of replaying the failure.
+        """
+
+        with self._lock:
+            self._records.pop((scope, key), None)
 
 
 class BudgetStore(Protocol):
