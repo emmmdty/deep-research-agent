@@ -58,14 +58,22 @@ def test_compose_and_dockerfile_fail_closed_and_run_as_non_root() -> None:
     assert "USER nginx" in dockerfile
 
 
-def test_production_scheduler_configuration_fails_closed(monkeypatch) -> None:
+def test_production_scheduler_configuration_validates_builtin_factory_and_fails_without_key(
+    monkeypatch,
+) -> None:
+    import deep_research_agent.agents.factory as agents_factory
+
+    assert callable(agents_factory.build_scheduler_factory)
     monkeypatch.setenv("DEEP_RESEARCH_AGENT_MASTER_KEY", base64.urlsafe_b64encode(b"k" * 32).decode())
-    with pytest.raises(RuntimeError, match="SCHEDULER_FACTORY_PATH"):
-        validate_runtime_configuration(
-            Settings(scheduler_runtime_mode="production", scheduler_factory_path=None)
-        )
+    validate_runtime_configuration(
+        Settings(scheduler_runtime_mode="production", scheduler_factory_path=None)
+    )
 
     validate_runtime_configuration(Settings(scheduler_runtime_mode="offline"))
+
+    monkeypatch.delenv("DEEP_RESEARCH_AGENT_MASTER_KEY", raising=False)
+    with pytest.raises(ValueError, match="DEEP_RESEARCH_AGENT_MASTER_KEY"):
+        validate_runtime_configuration(Settings(scheduler_runtime_mode="production"))
 
 
 def test_trace_attributes_are_allowlisted_and_never_keep_private_content() -> None:

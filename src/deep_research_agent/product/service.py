@@ -226,6 +226,26 @@ class ProductService:
             "updated_at": _iso(topic.updated_at),
         }
 
+    def _plan_research_dag(self, brief: ResearchBrief, domain_pack) -> Any:
+        """Plan with the model when explicitly enabled; else deterministic.
+
+        The LLM planner is opt-in (``AGENT_PLANNER_ENABLED=true``) so offline
+        and CI runs stay deterministic and credential-free. When the model is
+        unavailable or returns unusable objectives, the deterministic planner
+        is used, keeping job submission always functional.
+        """
+
+        settings = getattr(self.runtime_service, "settings", None)
+        planner_enabled = bool(
+            getattr(settings, "agent_planner_enabled", False)
+            and getattr(settings, "llm_api_key", None)
+        )
+        if planner_enabled:
+            from deep_research_agent.agents import LLMResearchPlanner
+
+            return LLMResearchPlanner().plan(brief, domain_pack)
+        return ResearchPlanner().plan(brief, domain_pack)
+
     def create_run(
         self,
         *,
@@ -276,7 +296,7 @@ class ProductService:
                 "memory_context": memory_context,
             },
         )
-        dag = ResearchPlanner().plan(brief, domain_pack)
+        dag = self._plan_research_dag(brief, domain_pack)
         resolved_start_worker = self._resolve_start_worker(start_worker)
         runtime_job = self.runtime_service.submit_scheduler_v2(
             brief=brief,

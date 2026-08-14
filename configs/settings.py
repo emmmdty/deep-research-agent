@@ -252,8 +252,19 @@ class Settings(BaseSettings):
         description="scheduler-v2 composition mode; offline is deterministic and explicit",
     )
     scheduler_factory_path: Optional[str] = Field(
-        default=None,
-        description="dotted import path for the configured provider-neutral scheduler factory",
+        default="deep_research_agent.agents.factory:build_scheduler_factory",
+        description=(
+            "dotted import path for the provider-neutral scheduler factory; "
+            "defaults to the built-in model-driven agent composition"
+        ),
+    )
+    agent_planner_enabled: bool = Field(
+        default=False,
+        description=(
+            "use the LLM research planner (model generates sub-objectives) when "
+            "credentials are configured; the deterministic planner remains the "
+            "reproducible fallback"
+        ),
     )
     legacy_cli_enabled: bool = Field(
         default=True,

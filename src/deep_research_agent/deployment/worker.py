@@ -14,14 +14,15 @@ from deep_research_agent.research_jobs import ResearchJobService
 
 
 def validate_runtime_configuration(settings: Settings) -> None:
-    """Fail closed when a production scheduler or credential key is missing."""
+    """Fail closed when a production credential key or scheduler factory is missing."""
 
     CredentialCipher.from_environment()
     if settings.scheduler_runtime_mode == "offline":
         return
-    factory_path = (settings.scheduler_factory_path or "").strip()
-    if not factory_path:
-        raise RuntimeError("SCHEDULER_FACTORY_PATH is required in production mode")
+    factory_path = (
+        (settings.scheduler_factory_path or "").strip()
+        or "deep_research_agent.agents.factory:build_scheduler_factory"
+    )
     module_name, separator, attribute_name = factory_path.replace(":", ".").rpartition(".")
     if not separator:
         raise RuntimeError("SCHEDULER_FACTORY_PATH must be a dotted import path")

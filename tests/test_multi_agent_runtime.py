@@ -724,7 +724,7 @@ def test_store_heartbeat_cannot_clobber_a_new_lease(tmp_path) -> None:
     assert service.get(job.job_id).last_heartbeat_at == replacement.last_heartbeat_at
 
 
-def test_worker_composition_requires_production_factory_and_supports_explicit_offline_mode(
+def test_worker_composition_defaults_to_builtin_production_factory_and_supports_explicit_offline_mode(
     monkeypatch,
 ) -> None:
     from configs.settings import Settings
@@ -732,13 +732,14 @@ def test_worker_composition_requires_production_factory_and_supports_explicit_of
     import types
     import sys
 
-    with pytest.raises(RuntimeError, match="scheduler factory"):
-        build_scheduler_factory(Settings(scheduler_runtime_mode="production"))
+    production_factory = build_scheduler_factory(Settings(scheduler_runtime_mode="production"))
+    scheduler = production_factory(cancellation_check=lambda: False)
+    assert scheduler.__class__.__name__ == "ResearchScheduler"
+    assert scheduler._tool_gateway is not None
 
     offline_factory = build_scheduler_factory(Settings(scheduler_runtime_mode="offline"))
     scheduler = offline_factory(cancellation_check=lambda: False)
     assert scheduler.__class__.__name__ == "ResearchScheduler"
-
     captured = {}
     module = types.ModuleType("scheduler_factory_test")
 
