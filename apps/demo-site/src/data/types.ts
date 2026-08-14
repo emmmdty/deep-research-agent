@@ -113,6 +113,18 @@ export interface RunCase {
 
 export const RUN_CASES: RunCase[] = [
   {
+    id: "live-route-real",
+    label: "真实在线运行：杭州→东莞出行方案（三种身份）",
+    description:
+      "完整多 agent 在线运行回放：5 个并行 researcher + 39 次受治理实时搜索 + 20 次全文读取（含 12306 官方页面）+ 3 轮反思补查 + critic 审计，261 条证据锚定结论。展示真实 scheduler-v2 运行轨迹。",
+    bundlePath: "data/runs/live-route-real/report_bundle.json",
+    tracePath: "data/runs/live-route-real/trace.jsonl",
+    markdownPath: "data/runs/live-route-real/report.md",
+    tag: "real",
+    lang: "zh",
+    highlight: true,
+  },
+  {
     id: "demo-anthropic",
     label: "演示案例：Anthropic 公司研究",
     description:

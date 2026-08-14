@@ -124,8 +124,10 @@ export function AboutPage() {
       <section className="bench-section">
         <h3>与行业对比</h3>
         <p className="page-note">
-          公开数字均标注来源（详见仓库 <code>docs/final/COMPETITIVE_LANDSCAPE.md</code>）。
-          诚实声明：本项目的 committed 数字是确定性本地评测，不是 live-provider 正面对比。
+          公开数字均标注来源（详见仓库 <code>docs/COMPETITIVE_LANDSCAPE.md</code>）。
+          诚实声明：本项目的 live lane 数字来自真实 LLM + 实时搜索的已提交运行（GAIA 7/20，
+          同模型无-agent baseline 0/20；头对头 vs open_deep_research / gpt-researcher 采用盲评 judge）；
+          确定性本地评测只验证管线正确性，不与 live-provider 结果混用。
         </p>
         <table className="data-table">
           <thead>
