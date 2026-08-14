@@ -1,11 +1,8 @@
 {
   "generated_at": "2026-04-21T00:00:00+00:00",
   "source_roots": [
-    "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase7-metrics-instrumentation-attempt-1/evals/reports/followup_metrics/company12_fresh",
-    "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase7-metrics-instrumentation-attempt-1/evals/reports/phase5_local_smoke",
-    "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase7-metrics-instrumentation-attempt-1/evals/reports/phase5_local_smoke",
-    "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase7-metrics-instrumentation-attempt-1/evals/reports/phase5_local_smoke",
-    "/home/tjk/myProjects/internship-projects/_codex_worktrees/phase7-metrics-instrumentation-attempt-1/evals/reports/phase5_local_smoke"
+    "evals/reports/followup_metrics",
+    "evals/reports/phase5_local_smoke"
   ],
   "delivery": {
     "completion_rate": 1.0,
@@ -53,5 +50,6 @@
     "industry12": "passed",
     "recovery6": "passed",
     "trusted8": "passed"
-  }
+  },
+  "generated_by": "deterministic offline smoke lanes (no live provider calls)"
 }
