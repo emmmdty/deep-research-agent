@@ -1,0 +1,1795 @@
+[
+  {
+    "checkpoint_id": "20260814T111020Z-149cdc34:task-checkpoint:000001",
+    "job_id": "20260814T111020Z-149cdc34",
+    "task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+      "job_id": "20260814T111020Z-149cdc34",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T111020Z-149cdc34:packet:research-01-i-m-thinking-about-selling-my-home-s",
+          "task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:01",
+              "document_version_id": "web_search-1101a71855742e73",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Dec 14, 2022 Sold",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:02",
+              "document_version_id": "web_search-1101a71855742e73",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Oct 20, 2022 Listed",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:03",
+              "document_version_id": "web_search-0ae575b1f6ff1928",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI, 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2022-10-21 | Listed for sale",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:04",
+              "document_version_id": "web_search-f37d44b6247c6076",
+              "page": null,
+              "section": "4 bed Pearl City home for sale: 2072 Akaikai Loop, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Sold on 03/07/2024",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:05",
+              "document_version_id": "web_search-a13882d43ec5e89e",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Aug 5, 2022 Sold\n\n  $900,000 (+2.9%)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:06",
+              "document_version_id": "web_search-a13882d43ec5e89e",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Jun 22, 2022 Listed\n\n  $875,000",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:07",
+              "document_version_id": "web_search-a13882d43ec5e89e",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Jul 5, 2022 In Escrow Showing",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:08",
+              "document_version_id": "web_search-9c4e0702c7a49330",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782 - MLS 202306398 - Coldwell Banker",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "sold at $1,080,000 on August 17, 2023",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:09",
+              "document_version_id": "web_search-138ece18a37ef364",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI, 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2023-03-17 | Listed for sale     | $1,250,000 42.9% $773/sqft",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:10",
+              "document_version_id": "web_search-643169d3ae797add",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Bedrooms: 4\n- Bathrooms: 2",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:11",
+              "document_version_id": "web_search-643169d3ae797add",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Total interior livable area: 1,628 sqft",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:12",
+              "document_version_id": "web_search-e7b6911f0644853a",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Last sold in 2024\n\n  $1,190,000",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:13",
+              "document_version_id": "web_search-e7b6911f0644853a",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "This home : 2072 Akaikai Loop | $1,174,000",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:14",
+              "document_version_id": "web_search-643169d3ae797add",
+              "page": null,
+              "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Total structure area: 1,901",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:15",
+              "document_version_id": "web_search-6f91a571503b591a",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2023-08-17 | Sold",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:16",
+              "document_version_id": "web_search-6f91a571503b591a",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2023-08-08 | Pending sale",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:17",
+              "document_version_id": "web_search-6f91a571503b591a",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "| $1,080,000 -7.6% $668/sqft",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:18",
+              "document_version_id": "web_search-6f91a571503b591a",
+              "page": null,
+              "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "| $1,169,000 -6.5% $723/sqft",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:19",
+              "document_version_id": "web_search-0a4bac95b085c496",
+              "page": null,
+              "section": "2546 Komo Mai Dr, Pearl City, HI, 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$1,114,700 | 4 beds | 2.5 baths | 2042 sqft",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:20",
+              "document_version_id": "web_search-6c9c7326cb1bd762",
+              "page": null,
+              "section": "2010 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "sold for $1036000 on Jul 9, 2026",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:21",
+              "document_version_id": "web_search-72599ee753233a71",
+              "page": null,
+              "section": "2015 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2025-05-02 | Listed for rent",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:22",
+              "document_version_id": "web_search-72599ee753233a71",
+              "page": null,
+              "section": "2015 Komo Mai Dr, Pearl City, HI 96782",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2021-10-26 | Contingent",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:01",
+              "claim": "2072 Akaikai Loop sold on Dec 14, 2022 for $860,000",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:01",
+                  "document_version_id": "web_search-1101a71855742e73",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Dec 14, 2022 Sold",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:02",
+              "claim": "2072 Akaikai Loop was listed for sale on Oct 20, 2022 at $850,000",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:02",
+                  "document_version_id": "web_search-1101a71855742e73",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Oct 20, 2022 Listed",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:03",
+              "claim": "2072 Akaikai Loop was listed for sale on 2022-10-21 at $850,000",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:03",
+                  "document_version_id": "web_search-0ae575b1f6ff1928",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI, 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2022-10-21 | Listed for sale",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:04",
+              "claim": "2072 Akaikai Loop sold on 03/07/2024 for $1,190,000",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:04",
+                  "document_version_id": "web_search-f37d44b6247c6076",
+                  "page": null,
+                  "section": "4 bed Pearl City home for sale: 2072 Akaikai Loop, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Sold on 03/07/2024",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:05",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 sold for $900,000 on Aug 5, 2022",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:05",
+                  "document_version_id": "web_search-a13882d43ec5e89e",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Aug 5, 2022 Sold\n\n  $900,000 (+2.9%)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:06",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 was listed for $875,000 on Jun 22, 2022",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:06",
+                  "document_version_id": "web_search-a13882d43ec5e89e",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Jun 22, 2022 Listed\n\n  $875,000",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:07",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 was in escrow on Jul 5, 2022",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:07",
+                  "document_version_id": "web_search-a13882d43ec5e89e",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Jul 5, 2022 In Escrow Showing",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:08",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 sold for $1,080,000 on August 17, 2023",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:08",
+                  "document_version_id": "web_search-9c4e0702c7a49330",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782 - MLS 202306398 - Coldwell Banker",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "sold at $1,080,000 on August 17, 2023",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:09",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 was listed for sale at $1,250,000 on 2023-03-17",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:09",
+                  "document_version_id": "web_search-138ece18a37ef364",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI, 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2023-03-17 | Listed for sale     | $1,250,000 42.9% $773/sqft",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:10",
+              "claim": "2072 Akaikai Loop in Pearl City, HI has 4 bedrooms and 2 bathrooms",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:10",
+                  "document_version_id": "web_search-643169d3ae797add",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Bedrooms: 4\n- Bathrooms: 2",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:11",
+              "claim": "2072 Akaikai Loop in Pearl City, HI has a total interior livable area of 1,628 sqft",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:11",
+                  "document_version_id": "web_search-643169d3ae797add",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Total interior livable area: 1,628 sqft",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:12",
+              "claim": "2072 Akaikai Loop in Pearl City, HI was last sold in 2024 for $1,190,000",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:12",
+                  "document_version_id": "web_search-e7b6911f0644853a",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Last sold in 2024\n\n  $1,190,000",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:13",
+              "claim": "2072 Akaikai Loop in Pearl City, HI has a RealEstimate of $1,174,000",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:13",
+                  "document_version_id": "web_search-e7b6911f0644853a",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "This home : 2072 Akaikai Loop | $1,174,000",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:14",
+              "claim": "2072 Akaikai Loop in Pearl City, HI has a total structure area of 1,901 sqft",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:14",
+                  "document_version_id": "web_search-643169d3ae797add",
+                  "page": null,
+                  "section": "2072 Akaikai Loop, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Total structure area: 1,901",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:15",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 sold for $1,080,000 on 2023-08-17",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:15",
+                  "document_version_id": "web_search-6f91a571503b591a",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2023-08-17 | Sold",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:16",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 was pending sale at $1,080,000 on 2023-08-08",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:16",
+                  "document_version_id": "web_search-6f91a571503b591a",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2023-08-08 | Pending sale",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:17",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 had a price change to $1,080,000 (-7.6%) on 2023-05-19",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:17",
+                  "document_version_id": "web_search-6f91a571503b591a",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "| $1,080,000 -7.6% $668/sqft",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:18",
+              "claim": "2017 Komo Mai Dr, Pearl City, HI 96782 had a price change to $1,169,000 (-6.5%) on 2023-03-26",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:18",
+                  "document_version_id": "web_search-6f91a571503b591a",
+                  "page": null,
+                  "section": "2017 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "| $1,169,000 -6.5% $723/sqft",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:19",
+              "claim": "2546 Komo Mai Dr, Pearl City, HI 96782 has a Zestimate of $1,114,700, 4 beds, 2.5 baths, 2042 sqft",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:19",
+                  "document_version_id": "web_search-0a4bac95b085c496",
+                  "page": null,
+                  "section": "2546 Komo Mai Dr, Pearl City, HI, 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$1,114,700 | 4 beds | 2.5 baths | 2042 sqft",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:20",
+              "claim": "2010 Komo Mai Dr, Pearl City, HI 96782 sold for $1,036,000 on Jul 9, 2026",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:20",
+                  "document_version_id": "web_search-6c9c7326cb1bd762",
+                  "page": null,
+                  "section": "2010 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "sold for $1036000 on Jul 9, 2026",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:21",
+              "claim": "2015 Komo Mai Dr, Pearl City, HI 96782 was listed for rent at $4,300 on 2025-05-02",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:21",
+                  "document_version_id": "web_search-72599ee753233a71",
+                  "page": null,
+                  "section": "2015 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2025-05-02 | Listed for rent",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T111020Z-149cdc34:claim:research-01-i-m-thinking-about-selling-my-home-s:22",
+              "claim": "2015 Komo Mai Dr, Pearl City, HI 96782 was contingent at $825,000 on 2021-10-26",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:22",
+                  "document_version_id": "web_search-72599ee753233a71",
+                  "page": null,
+                  "section": "2015 Komo Mai Dr, Pearl City, HI 96782",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2021-10-26 | Contingent",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:01",
+              "uri": "https://www.movoto.com/pearl-city-hi/2072-akaikai-loop-pearl-city-hi-96782/pid_s2bxhraach",
+              "media_type": "text/markdown",
+              "content_sha256": "1101a71855742e73725a769882f72e790ebe9868ef13241b780f74f5827bf920",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-1101a71855742e73",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:02",
+              "uri": "https://www.zillow.com/homedetails/2072-Akaikai-Loop-Pearl-City-HI-96782/702713_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "0ae575b1f6ff19281b019d5d0bf43a343fae08f8a68cb08f89a443262ef1f8c8",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-0ae575b1f6ff1928",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Akaikai Loop, Pearl City, HI, 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:03",
+              "uri": "https://listsothebysrealty.com/listing/HI/Pearl-City/2072-Akaikai-Loop-96782/181336835",
+              "media_type": "text/markdown",
+              "content_sha256": "f37d44b6247c60768f150537d7308dfb863f06467991b4932f298ec5720c5795",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-f37d44b6247c6076",
+                "critical_claims_allowed": true,
+                "source_title": "4 bed Pearl City home for sale: 2072 Akaikai Loop, Pearl City, HI 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:04",
+              "uri": "https://www.realtor.com/realestateandhomes-detail/2072-Akaikai-Loop_Pearl-City_HI_96782_M79819-26378",
+              "media_type": "text/markdown",
+              "content_sha256": "0987360809f40e5b6546ee470ae1f55408e7fafbc51ab24dc9e43a6c44cda7c0",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-0987360809f40e5b",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Akaikai Loop, Pearl City, HI 96782 | Realtor.com®",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:05",
+              "uri": "https://www.movoto.com/pearl-city-hi/2017-komo-mai-dr-pearl-city-hi-96782/pid_m5bxhraach",
+              "media_type": "text/markdown",
+              "content_sha256": "a13882d43ec5e89ea6c71f3dbd71372d66ef11786946738ddc7eed6f41337279",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-a13882d43ec5e89e",
+                "critical_claims_allowed": true,
+                "source_title": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:06",
+              "uri": "https://www.zillow.com/homedetails/2017-Komo-Mai-Dr-Pearl-City-HI-96782/702815_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "138ece18a37ef3642c3579e74ddc0067c280c42e3b82b5b08a7c72f467797e5f",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-138ece18a37ef364",
+                "critical_claims_allowed": true,
+                "source_title": "2017 Komo Mai Dr, Pearl City, HI, 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:07",
+              "uri": "https://www.coldwellbankerhomes.com/hi/pearl-city/2017-komo-mai-dr/pid_52791530",
+              "media_type": "text/markdown",
+              "content_sha256": "9c4e0702c7a49330e1651d48b958c5e950f6970fcd800efdc9cee121bd255e99",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-9c4e0702c7a49330",
+                "critical_claims_allowed": true,
+                "source_title": "2017 Komo Mai Dr, Pearl City, HI 96782 - MLS 202306398 - Coldwell Banker",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:08",
+              "uri": "https://www.zillow.com/homedetails/2015-Komo-Mai-Dr-Pearl-City-HI-96782/702816_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "6c56e9e9aabb73d37b5cb89f6d205b41a954f85beda9858c2fa4b7697a5d2bfb",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-6c56e9e9aabb73d3",
+                "critical_claims_allowed": true,
+                "source_title": "2015 Komo Mai Dr, Pearl City, HI, 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:09",
+              "uri": "https://www.zillow.com/homedetails/2072-Akaikai-Loop-Pearl-City-HI-96782/702713_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "643169d3ae797add27cbe9e2ed8d8a599114950dd558cdd8133c9c5d74b3c9e5",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-643169d3ae797add",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Akaikai Loop, Pearl City, HI 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:10",
+              "uri": "https://www.hiestates.com/property-search/detail/66/202324462/2072-akaikai-loop-pearl-city-hi-96782",
+              "media_type": "text/markdown",
+              "content_sha256": "2d3d65f610c1e7f5ff4c3a3ca1f17515702a735eb6d975531770c2460085eb21",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-2d3d65f610c1e7f5",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Akaikai Loop home for sale in Pearl City, HI 202324462",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:11",
+              "uri": "https://www.realtor.com/realestateandhomes-detail/2072-Akaikai-Loop_Pearl-City_HI_96782_M79819-26378",
+              "media_type": "text/markdown",
+              "content_sha256": "e7b6911f0644853aef2c39e08f057b82cd09040ef70b4dc3a06e2deda84eded4",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-e7b6911f0644853a",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Akaikai Loop, Pearl City, HI 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:12",
+              "uri": "https://www.zillow.com/homedetails/2072-Aaniu-Loop-Pearl-City-HI-96782/702855_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "b5ede3f3db68fbf7093d7f8d3dc642afbb849b55b3714c5eb37a4ba153e159b8",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-b5ede3f3db68fbf7",
+                "critical_claims_allowed": true,
+                "source_title": "2072 Aaniu Loop, Pearl City, HI, 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:13",
+              "uri": "https://www.zillow.com/homedetails/2017-Komo-Mai-Dr-Pearl-City-HI-96782/702815_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "6f91a571503b591a34929b112b5f2119500eecb237b72609f489c54d81530479",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-6f91a571503b591a",
+                "critical_claims_allowed": true,
+                "source_title": "2017 Komo Mai Dr, Pearl City, HI 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:14",
+              "uri": "https://www.zillow.com/homedetails/2546-Komo-Mai-Dr-Pearl-City-HI-96782/705475_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "0a4bac95b085c496d67c1041f02c34137aa070577d1ed5174f4503284e75612a",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-0a4bac95b085c496",
+                "critical_claims_allowed": true,
+                "source_title": "2546 Komo Mai Dr, Pearl City, HI, 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:15",
+              "uri": "https://www.redfin.com/HI/Pearl-City/2010-Komo-Mai-Dr-96782/home/63962642",
+              "media_type": "text/markdown",
+              "content_sha256": "6c9c7326cb1bd762e30aaab83e1705559a370f8abc07aedf1fccd43cc2209097",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-6c9c7326cb1bd762",
+                "critical_claims_allowed": true,
+                "source_title": "2010 Komo Mai Dr, Pearl City, HI 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:16",
+              "uri": "https://www.zillow.com/homedetails/2015-Komo-Mai-Dr-Pearl-City-HI-96782/702816_zpid",
+              "media_type": "text/markdown",
+              "content_sha256": "72599ee753233a7163f01a572f864b18a2e0700530ad1acce149693fd5870a3b",
+              "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+              "metadata": {
+                "document_version_id": "web_search-72599ee753233a71",
+                "critical_claims_allowed": true,
+                "source_title": "2015 Komo Mai Dr, Pearl City, HI 96782",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:01",
+          "uri": "https://www.movoto.com/pearl-city-hi/2072-akaikai-loop-pearl-city-hi-96782/pid_s2bxhraach",
+          "media_type": "text/markdown",
+          "content_sha256": "1101a71855742e73725a769882f72e790ebe9868ef13241b780f74f5827bf920",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-1101a71855742e73",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:02",
+          "uri": "https://www.zillow.com/homedetails/2072-Akaikai-Loop-Pearl-City-HI-96782/702713_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "0ae575b1f6ff19281b019d5d0bf43a343fae08f8a68cb08f89a443262ef1f8c8",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-0ae575b1f6ff1928",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Akaikai Loop, Pearl City, HI, 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:03",
+          "uri": "https://listsothebysrealty.com/listing/HI/Pearl-City/2072-Akaikai-Loop-96782/181336835",
+          "media_type": "text/markdown",
+          "content_sha256": "f37d44b6247c60768f150537d7308dfb863f06467991b4932f298ec5720c5795",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-f37d44b6247c6076",
+            "critical_claims_allowed": true,
+            "source_title": "4 bed Pearl City home for sale: 2072 Akaikai Loop, Pearl City, HI 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:04",
+          "uri": "https://www.realtor.com/realestateandhomes-detail/2072-Akaikai-Loop_Pearl-City_HI_96782_M79819-26378",
+          "media_type": "text/markdown",
+          "content_sha256": "0987360809f40e5b6546ee470ae1f55408e7fafbc51ab24dc9e43a6c44cda7c0",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-0987360809f40e5b",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Akaikai Loop, Pearl City, HI 96782 | Realtor.com®",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:05",
+          "uri": "https://www.movoto.com/pearl-city-hi/2017-komo-mai-dr-pearl-city-hi-96782/pid_m5bxhraach",
+          "media_type": "text/markdown",
+          "content_sha256": "a13882d43ec5e89ea6c71f3dbd71372d66ef11786946738ddc7eed6f41337279",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-a13882d43ec5e89e",
+            "critical_claims_allowed": true,
+            "source_title": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:06",
+          "uri": "https://www.zillow.com/homedetails/2017-Komo-Mai-Dr-Pearl-City-HI-96782/702815_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "138ece18a37ef3642c3579e74ddc0067c280c42e3b82b5b08a7c72f467797e5f",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-138ece18a37ef364",
+            "critical_claims_allowed": true,
+            "source_title": "2017 Komo Mai Dr, Pearl City, HI, 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:07",
+          "uri": "https://www.coldwellbankerhomes.com/hi/pearl-city/2017-komo-mai-dr/pid_52791530",
+          "media_type": "text/markdown",
+          "content_sha256": "9c4e0702c7a49330e1651d48b958c5e950f6970fcd800efdc9cee121bd255e99",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-9c4e0702c7a49330",
+            "critical_claims_allowed": true,
+            "source_title": "2017 Komo Mai Dr, Pearl City, HI 96782 - MLS 202306398 - Coldwell Banker",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:08",
+          "uri": "https://www.zillow.com/homedetails/2015-Komo-Mai-Dr-Pearl-City-HI-96782/702816_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "6c56e9e9aabb73d37b5cb89f6d205b41a954f85beda9858c2fa4b7697a5d2bfb",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-6c56e9e9aabb73d3",
+            "critical_claims_allowed": true,
+            "source_title": "2015 Komo Mai Dr, Pearl City, HI, 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:09",
+          "uri": "https://www.zillow.com/homedetails/2072-Akaikai-Loop-Pearl-City-HI-96782/702713_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "643169d3ae797add27cbe9e2ed8d8a599114950dd558cdd8133c9c5d74b3c9e5",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-643169d3ae797add",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:10",
+          "uri": "https://www.hiestates.com/property-search/detail/66/202324462/2072-akaikai-loop-pearl-city-hi-96782",
+          "media_type": "text/markdown",
+          "content_sha256": "2d3d65f610c1e7f5ff4c3a3ca1f17515702a735eb6d975531770c2460085eb21",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-2d3d65f610c1e7f5",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Akaikai Loop home for sale in Pearl City, HI 202324462",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:11",
+          "uri": "https://www.realtor.com/realestateandhomes-detail/2072-Akaikai-Loop_Pearl-City_HI_96782_M79819-26378",
+          "media_type": "text/markdown",
+          "content_sha256": "e7b6911f0644853aef2c39e08f057b82cd09040ef70b4dc3a06e2deda84eded4",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-e7b6911f0644853a",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:12",
+          "uri": "https://www.zillow.com/homedetails/2072-Aaniu-Loop-Pearl-City-HI-96782/702855_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "b5ede3f3db68fbf7093d7f8d3dc642afbb849b55b3714c5eb37a4ba153e159b8",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-b5ede3f3db68fbf7",
+            "critical_claims_allowed": true,
+            "source_title": "2072 Aaniu Loop, Pearl City, HI, 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:13",
+          "uri": "https://www.zillow.com/homedetails/2017-Komo-Mai-Dr-Pearl-City-HI-96782/702815_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "6f91a571503b591a34929b112b5f2119500eecb237b72609f489c54d81530479",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-6f91a571503b591a",
+            "critical_claims_allowed": true,
+            "source_title": "2017 Komo Mai Dr, Pearl City, HI 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:14",
+          "uri": "https://www.zillow.com/homedetails/2546-Komo-Mai-Dr-Pearl-City-HI-96782/705475_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "0a4bac95b085c496d67c1041f02c34137aa070577d1ed5174f4503284e75612a",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-0a4bac95b085c496",
+            "critical_claims_allowed": true,
+            "source_title": "2546 Komo Mai Dr, Pearl City, HI, 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:15",
+          "uri": "https://www.redfin.com/HI/Pearl-City/2010-Komo-Mai-Dr-96782/home/63962642",
+          "media_type": "text/markdown",
+          "content_sha256": "6c9c7326cb1bd762e30aaab83e1705559a370f8abc07aedf1fccd43cc2209097",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-6c9c7326cb1bd762",
+            "critical_claims_allowed": true,
+            "source_title": "2010 Komo Mai Dr, Pearl City, HI 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T111020Z-149cdc34:research-01-i-m-thinking-about-selling-my-home-s:src:16",
+          "uri": "https://www.zillow.com/homedetails/2015-Komo-Mai-Dr-Pearl-City-HI-96782/702816_zpid",
+          "media_type": "text/markdown",
+          "content_sha256": "72599ee753233a7163f01a572f864b18a2e0700530ad1acce149693fd5870a3b",
+          "created_by_task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+          "metadata": {
+            "document_version_id": "web_search-72599ee753233a71",
+            "critical_claims_allowed": true,
+            "source_title": "2015 Komo Mai Dr, Pearl City, HI 96782",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-i-m-thinking-about-selling-my-home-s",
+      "objective": "I’m thinking about selling my home, so I want to learn more about how homes in my area sold recently. I live in Pearl City, Hawaii, which is on the island of Oahu. I know two homes near me that sold in 2022 were 2072 Akaikai Loop, and 2017 Komo Mai Drive. Find which of those homes sold for more in 2022, and tell me how much it sold for. Don’t put commas or decimal places in the answer.",
+      "agentic": true,
+      "rounds": 1,
+      "query_count": 4,
+      "queries": [
+        {
+          "query": "2072 Akaikai Loop Pearl City Hawaii sold price 2022",
+          "tool": "web_search"
+        },
+        {
+          "query": "2017 Komo Mai Drive Pearl City Hawaii sold price 2022",
+          "tool": "web_search"
+        },
+        {
+          "query": "2072 Akaikai Loop Pearl City HI 96782 Zillow Redfin sold",
+          "tool": "web_search"
+        },
+        {
+          "query": "2017 Komo Mai Drive Pearl City HI 96782 Zillow Redfin sold",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 0,
+      "page_urls": [],
+      "coverage_assessments": [
+        {
+          "covered": true,
+          "gaps": [],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 0,
+      "source_count": 16,
+      "claim_count": 22
+    }
+  },
+  {
+    "checkpoint_id": "20260814T111020Z-149cdc34:task-checkpoint:000002",
+    "job_id": "20260814T111020Z-149cdc34",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 1,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T111020Z-149cdc34",
+      "status": "completed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": null
+    },
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- 2072 Akaikai Loop, Pearl City, HI has a documented sales history: listed at $850,000 in October 2022, sold for $860,000 on Dec 14, 2022, and subsequently sold for $1,190,000 on 03/07/2024.\n- 2017 Komo Mai Dr, Pearl City, HI 96782 has a documented sales history: listed at $875,000 in June 2022, sold for $900,000 on Aug 5, 2022, and later sold for $1,080,000 on August 17, 2023.\n- 2072 Akaikai Loop has specific property characteristics: 4 bedrooms, 2 bathrooms, 1,628 sqft interior livable area, and 1,901 sqft total structure area.\n- 2072 Akaikai Loop has a RealEstimate of $1,174,000.\n- 2546 Komo Mai Dr, Pearl City, HI 96782 has a Zestimate of $1,114,700 with 4 beds, 2.5 baths, and 2,042 sqft.\n\n## Findings\n\n### 2072 Akaikai Loop Sales History\n\n2072 Akaikai Loop was listed for sale on Oct 20, 2022 at $850,000. It was also listed for sale on 2022-10-21 at $850,000. The property sold on Dec 14, 2022 for $860,000. The property was last sold in 2024 for $1,190,000, with the specific sale date being 03/07/2024.\n\n### 2072 Akaikai Loop Property Characteristics\n\n2072 Akaikai Loop in Pearl City, HI has 4 bedrooms and 2 bathrooms. The total interior livable area is 1,628 sqft, and the total structure area is 1,901 sqft. The property has a RealEstimate of $1,174,000.\n\n### 2017 Komo Mai Dr Sales History\n\n2017 Komo Mai Dr, Pearl City, HI 96782 was listed for $875,000 on Jun 22, 2022. It was in escrow on Jul 5, 2022. The property sold for $900,000 on Aug 5, 2022. The property was later listed for sale at $1,250,000 on 2023-03-17. There was a price change to $1,169,000 (-6.5%) on 2023-03-26, followed by a price change to $1,080,000 (-7.6%) on 2023-05-19. The property was pending sale at $1,080,000 on 2023-08-08 and sold for $1,080,000 on August 17, 2023 (also recorded as 2023-08-17).\n\n### 2546 Komo Mai Dr Property Data\n\n2546 Komo Mai Dr, Pearl City, HI 96782 has a Zestimate of $1,114,700, with 4 beds, 2.5 baths, and 2,042 sqft.\n\n### Other Komo Mai Dr Properties\n\n2010 Komo Mai Dr, Pearl City, HI 96782 sold for $1,036,000 on Jul 9, 2026. 2015 Komo Mai Dr, Pearl City, HI 96782 was listed for rent at $4,300 on 2025-05-02 and was contingent at $825,000 on 2021-10-26.\n\n## Evidence Status\n\nAll 22 claims were accepted by the critic. Each claim was directly supported by evidence spans that matched the claim content. No claims were rejected or qualified. The evidence status for all claims is \"accepted\" with no hedging or uncertainty noted.",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop sold on Dec 14, 2022 for $860,000",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+            "properties": {
+              "document_version_id": "web_search-1101a71855742e73"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop was listed for sale on Oct 20, 2022 at $850,000",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782 | 1 photo - Movoto",
+            "properties": {
+              "document_version_id": "web_search-1101a71855742e73"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop was listed for sale on 2022-10-21 at $850,000",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI, 96782",
+            "properties": {
+              "document_version_id": "web_search-0ae575b1f6ff1928"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop sold on 03/07/2024 for $1,190,000",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "4 bed Pearl City home for sale: 2072 Akaikai Loop, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-f37d44b6247c6076"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 sold for $900,000 on Aug 5, 2022",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+            "properties": {
+              "document_version_id": "web_search-a13882d43ec5e89e"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 was listed for $875,000 on Jun 22, 2022",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+            "properties": {
+              "document_version_id": "web_search-a13882d43ec5e89e"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 was in escrow on Jul 5, 2022",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 | 1 photo  - Movoto",
+            "properties": {
+              "document_version_id": "web_search-a13882d43ec5e89e"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 sold for $1,080,000 on August 17, 2023",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 - MLS 202306398 - Coldwell Banker",
+            "properties": {
+              "document_version_id": "web_search-9c4e0702c7a49330"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 was listed for sale at $1,250,000 on 2023-03-17",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI, 96782",
+            "properties": {
+              "document_version_id": "web_search-138ece18a37ef364"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop in Pearl City, HI has 4 bedrooms and 2 bathrooms",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-643169d3ae797add"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop in Pearl City, HI has a total interior livable area of 1,628 sqft",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-643169d3ae797add"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop in Pearl City, HI was last sold in 2024 for $1,190,000",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-e7b6911f0644853a"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop in Pearl City, HI has a RealEstimate of $1,174,000",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-e7b6911f0644853a"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "2072 Akaikai Loop in Pearl City, HI has a total structure area of 1,901 sqft",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "2072 Akaikai Loop, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-643169d3ae797add"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 sold for $1,080,000 on 2023-08-17",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-6f91a571503b591a"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 was pending sale at $1,080,000 on 2023-08-08",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-6f91a571503b591a"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 had a price change to $1,080,000 (-7.6%) on 2023-05-19",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-6f91a571503b591a"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782 had a price change to $1,169,000 (-6.5%) on 2023-03-26",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "2017 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-6f91a571503b591a"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "2546 Komo Mai Dr, Pearl City, HI 96782 has a Zestimate of $1,114,700, 4 beds, 2.5 baths, 2042 sqft",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "2546 Komo Mai Dr, Pearl City, HI, 96782",
+            "properties": {
+              "document_version_id": "web_search-0a4bac95b085c496"
+            }
+          },
+          {
+            "node_id": "claim-20",
+            "kind": "claim",
+            "label": "2010 Komo Mai Dr, Pearl City, HI 96782 sold for $1,036,000 on Jul 9, 2026",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-20-1",
+            "kind": "source",
+            "label": "2010 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-6c9c7326cb1bd762"
+            }
+          },
+          {
+            "node_id": "claim-21",
+            "kind": "claim",
+            "label": "2015 Komo Mai Dr, Pearl City, HI 96782 was listed for rent at $4,300 on 2025-05-02",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-21-1",
+            "kind": "source",
+            "label": "2015 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-72599ee753233a71"
+            }
+          },
+          {
+            "node_id": "claim-22",
+            "kind": "claim",
+            "label": "2015 Komo Mai Dr, Pearl City, HI 96782 was contingent at $825,000 on 2021-10-26",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-22-1",
+            "kind": "source",
+            "label": "2015 Komo Mai Dr, Pearl City, HI 96782",
+            "properties": {
+              "document_version_id": "web_search-72599ee753233a71"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:19"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-20-1",
+            "source_node_id": "claim-20",
+            "target_node_id": "source-20-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:20"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-21-1",
+            "source_node_id": "claim-21",
+            "target_node_id": "source-21-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:21"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-22-1",
+            "source_node_id": "claim-22",
+            "target_node_id": "source-22-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T111020Z-149cdc34:span:research-01-i-m-thinking-about-selling-my-home-s:22"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 22,
+      "decision_count": 22
+    }
+  }
+]

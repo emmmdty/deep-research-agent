@@ -1,0 +1,28 @@
+{
+  "task_id": "87c610df-bef7-4932-b950-1d83ef4e282b",
+  "question": "In April of 1977, who was the Prime Minister of the first place mentioned by name in the Book of Esther (in the New International Version)?",
+  "ground_truth": "Morarji Desai",
+  "extracted_answer": "Morarji Desai",
+  "grade": {
+    "correct": true,
+    "rationale": "The candidate answer exactly matches the ground truth.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": true,
+  "job_id": "20260814T123958Z-fb5ddbc5",
+  "status": "failed",
+  "claim_count": 14,
+  "source_count": 23,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 102,
+    "search_calls": 23,
+    "total_input_tokens": 210263,
+    "total_output_tokens": 49764,
+    "total_tokens": 260027,
+    "estimated_cost_usd": 0.26,
+    "wall_seconds": 80.93
+  },
+  "model": "deepseek-v4-flash",
+  "level": "2"
+}

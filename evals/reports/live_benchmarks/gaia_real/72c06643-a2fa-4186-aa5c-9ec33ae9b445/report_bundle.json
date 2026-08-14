@@ -1,0 +1,1702 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- Freon-12 (R-12) is dichlorodifluoromethane.\n- Freon-12 saturation property tables exist covering temperatures from -100 to -44 degrees Celsius.\n- The specific volume of saturated liquid Freon-12 is tabulated in units of m3/kg.\n- Freon-12 has a molecular weight, boiling point, critical pressure, critical temperature, and critical density as physical properties.\n- The temperature at the bottom of the Mariana Trench is 1 to 4 °C (34 to 39 °F).\n- At the bottom of the Mariana Trench the water column above exerts a pressure of 1,086 bar (15,750 psi).\n- The pressure at the bottom of the Mariana Trench is approximately 1,071.8 times the standard atmospheric pressure at sea level.\n- The water pressure at the bottom of the Mariana Trench is about a thousand times the standard atmospheric pressure at sea level.\n- At the bottom of the Mariana Trench, the pressure is over 1,086 bar, almost 1,000 times the atmospheric pressure.\n- The water at the bottom of the Mariana Trench is consistently just above freezing, typically 1° to 4°.\n- The temperature at the bottom of the Mariana Trench is just a few degrees above freezing.\n- R-12 is a chlorofluorocarbon with a molecular mass of 120.91 g/mol.\n- Critical temperature of R-12 is 111.97°C, critical pressure is 4136 kPa.\n- R-12 has a boiling point of -29.75°C at one atmosphere.\n- Fluid density of R-12 is 565.0 kg/m³ at critical conditions.\n- Dichlorodifluoromethane critical temperature is 112 oC and critical pressure is 41.15 bar.\n- Dichlorodifluoromethane molecular weight is 120.93 g/mol.\n- Dichlorodifluoromethane liquid density at 1.013 bar at boiling point is 1486 kg/m3.\n- Dichlorodifluoromethane liquid density at 250 K is 1468 kg/m3 and at 300 K is 1304 kg/m3.\n- Dichlorodifluoromethane (Freon-12) has a chemical formula of CCl2F2.\n- At -50°C, dichlorodifluoromethane has a density of 1546.75 kg/m3.\n- At -40°C, dichlorodifluoromethane has a density of 1518.71 kg/m3.\n- At -30°C, dichlorodifluoromethane has a density of 1489.56 kg/m3.\n- The critical density of dichlorodifluoromethane is 4.70 mol/l according to Okada, Uematsu, et al., 1986.\n\n## Findings\n\n### Freon-12 Identity and Chemical Formula\nFreon-12 (R-12) is dichlorodifluoromethane, with the chemical formula CCl2F2. It is a chlorofluorocarbon with a molecular mass of 120.91 g/mol (one source gives 120.93 g/mol).\n\n### Mariana Trench Environmental Conditions\nThe temperature at the bottom of the Mariana Trench is 1 to 4 °C (34 to 39 °F). The water column above exerts a pressure of 1,086 bar (15,750 psi). This pressure is approximately 1,071.8 times standard atmospheric pressure at sea level, described in other sources as \"about a thousand times\" or \"almost 1,000 times\" atmospheric pressure. The water is consistently just above freezing, typically 1° to 4°, and is described as \"just a few degrees above freezing.\"\n\n### Freon-12 Physical Properties\nFreon-12 has a molecular weight, boiling point, critical pressure, critical temperature, and critical density as physical properties. Specific values include:\n- Boiling point: -29.75°C at one atmosphere\n- Critical temperature: 111.97°C (another source: 112 °C)\n- Critical pressure: 4136 kPa (another source: 41.15 bar)\n- Fluid density at critical conditions: 565.0 kg/m³\n- Critical density: 4.70 mol/l (per Okada, Uematsu, et al., 1986)\n\n### Freon-12 Liquid Density at Various Temperatures\nDichlorodifluoromethane liquid density values are documented:\n- At 1.013 bar at boiling point: 1486 kg/m³\n- At 250 K: 1468 kg/m³\n- At 300 K: 1304 kg/m³\n- At -50°C: 1546.75 kg/m³\n- At -40°C: 1518.71 kg/m³\n- At -30°C: 1489.56 kg/m³\n\n### Freon-12 Saturation Property Tables\nFreon-12 saturation property tables exist covering temperatures from -100 to -44 degrees Celsius. The specific volume of saturated liquid Freon-12 is tabulated in units of m³/kg.\n\n### Marianas Trench Peak Conditions Not Provided\nThe source excerpts do not provide peak temperature and pressure conditions for the Marianas Trench.\n\n## Evidence Status\n\nAll claims were accepted based on direct evidence in the source excerpts. One claim (regarding the absence of Marianas Trench peak conditions) was accepted as supported because the evidence span contained only a heading and no such data. No claims were rejected or marked as unsupported. Minor discrepancies exist between sources for molecular weight (120.91 vs. 120.93 g/mol) and critical pressure (4136 kPa vs. 41.15 bar), but both values are reported as accepted.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:02",
+      "claim": "Freon-12 (R-12) is dichlorodifluoromethane.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:02",
+          "document_version_id": "web_search-03e429c777689705",
+          "page": null,
+          "section": "R-12 Dichlorodifluoromethane - Properties",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Properties",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:03",
+      "claim": "Freon-12 saturation property tables exist covering temperatures from -100 to -44 degrees Celsius.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:03",
+          "document_version_id": "web_search-d65c5aef281a03a3",
+          "page": null,
+          "section": "Table 1: Freon 12 Saturation Properties - Temperature Table | PDF | Enthalpy | Vapor",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "a table of saturation properties for Freon 12 including temperature, pressure, volume, density, enthalpy, entropy and other values over a temperature range from -100 to -44 degrees Celsius",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:04",
+      "claim": "The specific volume of saturated liquid Freon-12 is tabulated in units of m3/kg.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:04",
+          "document_version_id": "web_search-03e429c777689705",
+          "page": null,
+          "section": "R-12 Dichlorodifluoromethane - Properties",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Specific Volume  - vi -  (m3/kg)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:05",
+      "claim": "Freon-12 has a molecular weight, boiling point, critical pressure, critical temperature, and critical density as physical properties.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:05",
+          "document_version_id": "web_search-4cc065c02651f46d",
+          "page": null,
+          "section": "[PDF] R-11 and R-12 - National Refrigerants, Inc.",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Molecular Weight Boiling Point (1atm, ˚F) Critical Pressure (psia) Critical Temperature (˚F) Critical Density (lb./ftˆ3)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:06",
+      "claim": "The temperature at the bottom of the Mariana Trench is 1 to 4 °C (34 to 39 °F).",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:06",
+          "document_version_id": "web_search-2831167960f91db1",
+          "page": null,
+          "section": "Mariana Trench - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The temperature at the bottom is 1 to 4 °C (34 to 39 °F).",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:07",
+      "claim": "At the bottom of the Mariana Trench the water column above exerts a pressure of 1,086 bar (15,750 psi).",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:07",
+          "document_version_id": "web_search-2831167960f91db1",
+          "page": null,
+          "section": "Mariana Trench - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "At the bottom of the trench the water column above exerts a pressure of 1,086 bar (15,750 psi)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:10",
+      "claim": "At the bottom of the Mariana Trench, the pressure is over 1,086 bar, almost 1,000 times the atmospheric pressure.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:10",
+          "document_version_id": "web_search-afb1c27ea440400d",
+          "page": null,
+          "section": "Crushing Pressure: The Mysteries of Mariana Trench",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "At the bottom of the Mariana Trench, the pressure is over 1,086 bar,",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:11",
+      "claim": "The water at the bottom of the Mariana Trench is consistently just above freezing, typically 1° to 4°.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:11",
+          "document_version_id": "web_search-afb1c27ea440400d",
+          "page": null,
+          "section": "Crushing Pressure: The Mysteries of Mariana Trench",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the water is consistently just above freezing,",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:12",
+      "claim": "The temperature at the bottom of the Mariana Trench is just a few degrees above freezing.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:12",
+          "document_version_id": "web_search-fee43552beb531ce",
+          "page": null,
+          "section": "The Mariana Trench",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the temperature is just a few degrees above freezing.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:13",
+      "claim": "R-12 is a chlorofluorocarbon with a molecular mass of 120.91 g/mol.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:13",
+          "document_version_id": "web_search-e7f85fe046eac7ee",
+          "page": null,
+          "section": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "R-12 is a chlorofluorocarbon with a molecular mass of 120.91 g/mol.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:14",
+      "claim": "Critical temperature of R-12 is 111.97°C, critical pressure is 4136 kPa.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:14",
+          "document_version_id": "web_search-e7f85fe046eac7ee",
+          "page": null,
+          "section": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Critical temperature of R-12 is 111.97°C, critical pressure is 4136 kPa.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:15",
+      "claim": "R-12 has a boiling point of -29.75°C at one atmosphere.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:15",
+          "document_version_id": "web_search-e7f85fe046eac7ee",
+          "page": null,
+          "section": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "R-12 has a boiling point of -29.75°C at one atmosphere.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:16",
+      "claim": "Fluid density of R-12 is 565.0 kg/m³ at critical conditions.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:16",
+          "document_version_id": "web_search-e7f85fe046eac7ee",
+          "page": null,
+          "section": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Fluid density of R-12 is 565.0 kg/m³ at critical conditions.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:17",
+      "claim": "Dichlorodifluoromethane critical temperature is 112 oC and critical pressure is 41.15 bar.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:17",
+          "document_version_id": "web_search-a97a9651349c823d",
+          "page": null,
+          "section": "R-12 Dichlorodifluoromethane - Properties",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Critical temperature : 112 oC - Critical pressure : 41.15 bar",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:18",
+      "claim": "Dichlorodifluoromethane molecular weight is 120.93 g/mol.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:18",
+          "document_version_id": "web_search-9b124cdf357f97ac",
+          "page": null,
+          "section": "R-12 Dichlorodifluoromethane - Properties",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Dichlorodifluoromethane Molecular weight : 120.93 g/mol",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:19",
+      "claim": "Dichlorodifluoromethane liquid density at 1.013 bar at boiling point is 1486 kg/m3.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:19",
+          "document_version_id": "web_search-9b124cdf357f97ac",
+          "page": null,
+          "section": "R-12 Dichlorodifluoromethane - Properties",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Dichlorodifluoromethane Liquid Density (1.013 bar at boiling point) : 1486 kg/m3",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:20",
+      "claim": "Dichlorodifluoromethane liquid density at 250 K is 1468 kg/m3 and at 300 K is 1304 kg/m3.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:20",
+          "document_version_id": "web_search-9b124cdf357f97ac",
+          "page": null,
+          "section": "R-12 Dichlorodifluoromethane - Properties",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "(250 K : 1468 kg/m3) (300 K : 1304 kg/m3)",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:21",
+      "claim": "Dichlorodifluoromethane (Freon-12) has a chemical formula of CCl2F2.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:21",
+          "document_version_id": "web_search-f806e8dd53968b7c",
+          "page": null,
+          "section": "Dichlorodifluoromethane",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Chemical formula | CCl2F2",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:25",
+      "claim": "The critical density of dichlorodifluoromethane is 4.70 mol/l according to Okada, Uematsu, et al., 1986.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:25",
+          "document_version_id": "web_search-34c0c7d8e016bfbb",
+          "page": null,
+          "section": "Dichlorodifluoromethane",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "ρc | 4.70 | mol/l | N/A | Okada, Uematsu, et al., 1986",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08",
+      "claim": "The pressure at the bottom of the Mariana Trench is approximately 1,071.8 times the standard atmospheric pressure at sea level.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:08",
+          "document_version_id": "web_search-2831167960f91db1",
+          "page": null,
+          "section": "Mariana Trench - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "approximately 1,071.8 times the standard atmospheric pressure at sea level",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09",
+      "claim": "The water pressure at the bottom of the Mariana Trench is about a thousand times the standard atmospheric pressure at sea level.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:09",
+          "document_version_id": "web_search-fee43552beb531ce",
+          "page": null,
+          "section": "The Mariana Trench",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The water pressure at the bottom of the trench is a crushing eight tons per square inch—or about a thousand times the standard atmospheric pressure at sea level.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22",
+      "claim": "At -50°C, dichlorodifluoromethane has a density of 1546.75 kg/m3.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:22",
+          "document_version_id": "web_search-8d02f4399f06f749",
+          "page": null,
+          "section": "Dichlorodifluoromethane",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "−50 | 1546.75",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23",
+      "claim": "At -40°C, dichlorodifluoromethane has a density of 1518.71 kg/m3.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:23",
+          "document_version_id": "web_search-8d02f4399f06f749",
+          "page": null,
+          "section": "Dichlorodifluoromethane",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "−40 | 1518.71",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24",
+      "claim": "At -30°C, dichlorodifluoromethane has a density of 1489.56 kg/m3.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:24",
+          "document_version_id": "web_search-8d02f4399f06f749",
+          "page": null,
+          "section": "Dichlorodifluoromethane",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "−30 | 1489.56",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:02": [
+      "web_search-03e429c777689705"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:03": [
+      "web_search-d65c5aef281a03a3"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:04": [
+      "web_search-03e429c777689705"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:05": [
+      "web_search-4cc065c02651f46d"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:06": [
+      "web_search-2831167960f91db1"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:07": [
+      "web_search-2831167960f91db1"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08": [
+      "web_search-2831167960f91db1"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09": [
+      "web_search-fee43552beb531ce"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:10": [
+      "web_search-afb1c27ea440400d"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:11": [
+      "web_search-afb1c27ea440400d"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:12": [
+      "web_search-fee43552beb531ce"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:13": [
+      "web_search-e7f85fe046eac7ee"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:14": [
+      "web_search-e7f85fe046eac7ee"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:15": [
+      "web_search-e7f85fe046eac7ee"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:16": [
+      "web_search-e7f85fe046eac7ee"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:17": [
+      "web_search-a97a9651349c823d"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:18": [
+      "web_search-9b124cdf357f97ac"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:19": [
+      "web_search-9b124cdf357f97ac"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:20": [
+      "web_search-9b124cdf357f97ac"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:21": [
+      "web_search-f806e8dd53968b7c"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22": [
+      "web_search-8d02f4399f06f749"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23": [
+      "web_search-8d02f4399f06f749"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24": [
+      "web_search-8d02f4399f06f749"
+    ],
+    "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:25": [
+      "web_search-34c0c7d8e016bfbb"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "The Marianas Trench peak temperature and pressure conditions are not provided in the source excerpts.",
+        "properties": {
+          "support_status": "unsupported",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "At the bottom of the Mariana Trench, the pressure is over 1,086 bar, almost 1,000 times the atmospheric pressure.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "The water at the bottom of the Mariana Trench is consistently just above freezing, typically 1° to 4°.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "The temperature at the bottom of the Mariana Trench is just a few degrees above freezing.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "R-12 is a chlorofluorocarbon with a molecular mass of 120.91 g/mol.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "Critical temperature of R-12 is 111.97°C, critical pressure is 4136 kPa.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "R-12 has a boiling point of -29.75°C at one atmosphere.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "Fluid density of R-12 is 565.0 kg/m³ at critical conditions.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "Dichlorodifluoromethane critical temperature is 112 oC and critical pressure is 41.15 bar.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-18",
+        "kind": "claim",
+        "label": "Dichlorodifluoromethane molecular weight is 120.93 g/mol.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-19",
+        "kind": "claim",
+        "label": "Dichlorodifluoromethane liquid density at 1.013 bar at boiling point is 1486 kg/m3.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "Freon-12 (R-12) is dichlorodifluoromethane.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-20",
+        "kind": "claim",
+        "label": "Dichlorodifluoromethane liquid density at 250 K is 1468 kg/m3 and at 300 K is 1304 kg/m3.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-21",
+        "kind": "claim",
+        "label": "Dichlorodifluoromethane (Freon-12) has a chemical formula of CCl2F2.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-22",
+        "kind": "claim",
+        "label": "At -50°C, dichlorodifluoromethane has a density of 1546.75 kg/m3.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-23",
+        "kind": "claim",
+        "label": "At -40°C, dichlorodifluoromethane has a density of 1518.71 kg/m3.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-24",
+        "kind": "claim",
+        "label": "At -30°C, dichlorodifluoromethane has a density of 1489.56 kg/m3.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-25",
+        "kind": "claim",
+        "label": "The critical density of dichlorodifluoromethane is 4.70 mol/l according to Okada, Uematsu, et al., 1986.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "Freon-12 saturation property tables exist covering temperatures from -100 to -44 degrees Celsius.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The specific volume of saturated liquid Freon-12 is tabulated in units of m3/kg.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "Freon-12 has a molecular weight, boiling point, critical pressure, critical temperature, and critical density as physical properties.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "The temperature at the bottom of the Mariana Trench is 1 to 4 °C (34 to 39 °F).",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "At the bottom of the Mariana Trench the water column above exerts a pressure of 1,086 bar (15,750 psi).",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "The pressure at the bottom of the Mariana Trench is approximately 1,071.8 times the standard atmospheric pressure at sea level.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "The water pressure at the bottom of the Mariana Trench is about a thousand times the standard atmospheric pressure at sea level.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-03e429c777689705"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "Crushing Pressure: The Mysteries of Mariana Trench",
+        "properties": {
+          "document_version_id": "web_search-afb1c27ea440400d"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "Crushing Pressure: The Mysteries of Mariana Trench",
+        "properties": {
+          "document_version_id": "web_search-afb1c27ea440400d"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "The Mariana Trench",
+        "properties": {
+          "document_version_id": "web_search-fee43552beb531ce"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+        "properties": {
+          "document_version_id": "web_search-e7f85fe046eac7ee"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+        "properties": {
+          "document_version_id": "web_search-e7f85fe046eac7ee"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+        "properties": {
+          "document_version_id": "web_search-e7f85fe046eac7ee"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+        "properties": {
+          "document_version_id": "web_search-e7f85fe046eac7ee"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-a97a9651349c823d"
+        }
+      },
+      {
+        "node_id": "source-18-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-9b124cdf357f97ac"
+        }
+      },
+      {
+        "node_id": "source-19-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-9b124cdf357f97ac"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-03e429c777689705"
+        }
+      },
+      {
+        "node_id": "source-20-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-9b124cdf357f97ac"
+        }
+      },
+      {
+        "node_id": "source-21-1",
+        "kind": "source",
+        "label": "Dichlorodifluoromethane",
+        "properties": {
+          "document_version_id": "web_search-f806e8dd53968b7c"
+        }
+      },
+      {
+        "node_id": "source-22-1",
+        "kind": "source",
+        "label": "Dichlorodifluoromethane",
+        "properties": {
+          "document_version_id": "web_search-8d02f4399f06f749"
+        }
+      },
+      {
+        "node_id": "source-23-1",
+        "kind": "source",
+        "label": "Dichlorodifluoromethane",
+        "properties": {
+          "document_version_id": "web_search-8d02f4399f06f749"
+        }
+      },
+      {
+        "node_id": "source-24-1",
+        "kind": "source",
+        "label": "Dichlorodifluoromethane",
+        "properties": {
+          "document_version_id": "web_search-8d02f4399f06f749"
+        }
+      },
+      {
+        "node_id": "source-25-1",
+        "kind": "source",
+        "label": "Dichlorodifluoromethane",
+        "properties": {
+          "document_version_id": "web_search-34c0c7d8e016bfbb"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Table 1: Freon 12 Saturation Properties - Temperature Table | PDF | Enthalpy | Vapor",
+        "properties": {
+          "document_version_id": "web_search-d65c5aef281a03a3"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "R-12 Dichlorodifluoromethane - Properties",
+        "properties": {
+          "document_version_id": "web_search-03e429c777689705"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "[PDF] R-11 and R-12 - National Refrigerants, Inc.",
+        "properties": {
+          "document_version_id": "web_search-4cc065c02651f46d"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "Mariana Trench - Wikipedia",
+        "properties": {
+          "document_version_id": "web_search-2831167960f91db1"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "Mariana Trench - Wikipedia",
+        "properties": {
+          "document_version_id": "web_search-2831167960f91db1"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "Mariana Trench - Wikipedia",
+        "properties": {
+          "document_version_id": "web_search-2831167960f91db1"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "The Mariana Trench",
+        "properties": {
+          "document_version_id": "web_search-fee43552beb531ce"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-18-1",
+        "source_node_id": "claim-18",
+        "target_node_id": "source-18-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:18"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-19-1",
+        "source_node_id": "claim-19",
+        "target_node_id": "source-19-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:19"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-20-1",
+        "source_node_id": "claim-20",
+        "target_node_id": "source-20-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:20"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-21-1",
+        "source_node_id": "claim-21",
+        "target_node_id": "source-21-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:21"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-22-1",
+        "source_node_id": "claim-22",
+        "target_node_id": "source-22-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:22"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-23-1",
+        "source_node_id": "claim-23",
+        "target_node_id": "source-23-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:23"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-24-1",
+        "source_node_id": "claim-24",
+        "target_node_id": "source-24-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:24"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-25-1",
+        "source_node_id": "claim-25",
+        "target_node_id": "source-25-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:25"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123633Z-cbc5ee17:span:research-01-what-is-the-volume-in-milliliters-of:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:01",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "03e429c77768970511f5af600cb43972baa2f2c5e1b15e061cac38749ba39d18",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-03e429c777689705",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:02",
+      "uri": "https://refrigerants.com/wp-content/uploads/2020/03/R12_RefGuid.pdf",
+      "media_type": "text/markdown",
+      "content_sha256": "4cc065c02651f46d995ccf09b9cf81a2ae47a12825132e4f2b1e416cf84db3ff",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-4cc065c02651f46d",
+        "critical_claims_allowed": true,
+        "source_title": "[PDF] R-11 and R-12 - National Refrigerants, Inc.",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:03",
+      "uri": "https://www.scribd.com/document/411580841/R-12",
+      "media_type": "text/markdown",
+      "content_sha256": "d65c5aef281a03a37ffba9524a8443e0464241627a7c1d4066a2b1d3024f5d86",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-d65c5aef281a03a3",
+        "critical_claims_allowed": true,
+        "source_title": "Table 1: Freon 12 Saturation Properties - Temperature Table | PDF | Enthalpy | Vapor",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:04",
+      "uri": "https://www.youtube.com/watch?v=qD04XetRVzk",
+      "media_type": "text/markdown",
+      "content_sha256": "b8fda64cf5e062d3f6222b3c2579c9a1b5b44eeaecba345f62591724d1bce741",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-b8fda64cf5e062d3",
+        "critical_claims_allowed": true,
+        "source_title": "Freon-12 Refrigeration Cycle",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:05",
+      "uri": "https://en.wikipedia.org/wiki/Mariana_Trench",
+      "media_type": "text/markdown",
+      "content_sha256": "2831167960f91db12d56a2495a748008f72d87de0e703c5732574ca36f1997a6",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-2831167960f91db1",
+        "critical_claims_allowed": true,
+        "source_title": "Mariana Trench - Wikipedia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:06",
+      "uri": "https://deepseachallenge.com/the-expedition/the-mariana-trench",
+      "media_type": "text/markdown",
+      "content_sha256": "fee43552beb531cef54ed1640039e2fd0ee8096adc16374dbeda779cfb95717a",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-fee43552beb531ce",
+        "critical_claims_allowed": true,
+        "source_title": "The Mariana Trench",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:07",
+      "uri": "https://www.facebook.com/groups/1295673443855365/posts/9103859576370007",
+      "media_type": "text/markdown",
+      "content_sha256": "ae7ca597ed5af30224030094617227ac625602d0874a4b8af56a1a39dc3dc713",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-ae7ca597ed5af302",
+        "critical_claims_allowed": true,
+        "source_title": "Flat Earth Friends | The Marianas Trench is 37,000 feet deep, if you removed all the water it would make it the location of the highest air pressure on Earth | Facebook",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:08",
+      "uri": "https://www.youtube.com/watch?v=MNH0k4gz1Nk",
+      "media_type": "text/markdown",
+      "content_sha256": "afb1c27ea440400d7dc1f94f3e093cfdcaa46425ca588013605b102795bade66",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-afb1c27ea440400d",
+        "critical_claims_allowed": true,
+        "source_title": "Crushing Pressure: The Mysteries of Mariana Trench",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:09",
+      "uri": "https://www.academia.edu/42273122/REFRIGERANTS_Thermodynamic_Properties_of_DuPont_Freon_12_R_12_Refrigerant",
+      "media_type": "text/markdown",
+      "content_sha256": "e7f85fe046eac7ee1a5021b54188aa9359899f371f9d452190395251ed157212",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-e7f85fe046eac7ee",
+        "critical_claims_allowed": true,
+        "source_title": "REFRIGERANTS Thermodynamic Properties of DuPont™ Freon ® 12 (R-12) Refrigerant",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:10",
+      "uri": "https://www.scribd.com/doc/214359717/Thermodynamic-Properties-of-R12",
+      "media_type": "text/markdown",
+      "content_sha256": "48e4bf14e8489516daffb859811879d4db1d28a4afb1a6391936b712572023b3",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-48e4bf14e8489516",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Refrigerant Thermodynamic Table | PDF | Thermodynamic Properties | Thermodynamics",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:11",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "a97a9651349c823d664190a33560553f6a38442ac4c78aea8d532ffc78a47aab",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-a97a9651349c823d",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:12",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "9b124cdf357f97ac86f786938d69228dc7d00ea0f05d59e85bc4d5733828f563",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-9b124cdf357f97ac",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:13",
+      "uri": "https://en.wikipedia.org/wiki/Dichlorodifluoromethane",
+      "media_type": "text/markdown",
+      "content_sha256": "8d02f4399f06f749af58324c771bf0139f616e927a1faa996b51fe8cbe430649",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-8d02f4399f06f749",
+        "critical_claims_allowed": true,
+        "source_title": "Dichlorodifluoromethane",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:14",
+      "uri": "https://www.chemeo.com/cid/13-346-3/Dichlorodifluoromethane",
+      "media_type": "text/markdown",
+      "content_sha256": "2db5a853d2789c3c8e6fd5f5b20eeacf6af6d3497ac0aa0521cc857e3464c435",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-2db5a853d2789c3c",
+        "critical_claims_allowed": true,
+        "source_title": "Dichlorodifluoromethane (CAS 75-71-8) - Chemical & Physical Properties by Cheméo",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:15",
+      "uri": "https://webbook.nist.gov/cgi/cbook.cgi?ID=C75718&Units=SI&Mask=28F",
+      "media_type": "text/markdown",
+      "content_sha256": "34c0c7d8e016bfbb4f1fd2fb2c2eec31855cc410f458e28754b468276c880ce7",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-34c0c7d8e016bfbb",
+        "critical_claims_allowed": true,
+        "source_title": "Dichlorodifluoromethane",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:16",
+      "uri": "https://en.wikipedia.org/wiki/Dichlorodifluoromethane",
+      "media_type": "text/markdown",
+      "content_sha256": "f806e8dd53968b7caaf4302b7dd0fad303f45f286eaa68876a5b13c4c0721d1c",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "web_search-f806e8dd53968b7c",
+        "critical_claims_allowed": true,
+        "source_title": "Dichlorodifluoromethane",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:17",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "a9bdc458e509365fa596e99600b7dab685ff3688d5d3906505a3cb5993ece8dd",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "fetch_page-a9bdc458e509365f",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:18",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "15e84e5657990f35f313f5c0815254d6cc1ef99fc8354a69edb943b44f5ba088",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "fetch_page-15e84e5657990f35",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 3800
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:19",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "6710148009d45bd0d04f1d9000015bf51375580ecf7c0054f385ad5fe5429890",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "fetch_page-6710148009d45bd0",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 2,
+        "char_start": 3600,
+        "char_end": 5600
+      }
+    },
+    {
+      "artifact_id": "20260814T123633Z-cbc5ee17:research-01-what-is-the-volume-in-milliliters-of:src:20",
+      "uri": "https://www.engineeringtoolbox.com/dichlorodifluoromethane-R-12-d_972.html",
+      "media_type": "text/markdown",
+      "content_sha256": "38116db6e7b145bdd426144bc33671df63493e01715f4521bda28ac16e01daff",
+      "created_by_task_id": "research-01-what-is-the-volume-in-milliliters-of",
+      "metadata": {
+        "document_version_id": "fetch_page-38116db6e7b145bd",
+        "critical_claims_allowed": true,
+        "source_title": "R-12 Dichlorodifluoromethane - Properties",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 3,
+        "char_start": 5400,
+        "char_end": 7280
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:02",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:03",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:04",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:05",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:06",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:07",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:10",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:11",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:12",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:13",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:14",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:15",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:16",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:17",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:18",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:19",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:20",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:21",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:25"
+    ],
+    "qualified_claim_ids": [
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:01"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:02",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:03",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:04",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:05",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:06",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:07",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:10",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:11",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:12",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:13",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:14",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:15",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:16",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:17",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:18",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:19",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:20",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:21",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:25"
+    ],
+    "degradations": {
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08": "critic_unresolved",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09": "critic_unresolved",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22": "critic_unresolved",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23": "critic_unresolved",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08",
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09"
+      ],
+      [
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22",
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23"
+      ],
+      [
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22",
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24"
+      ],
+      [
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23",
+        "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:08",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:09",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:22",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:23",
+      "20260814T123633Z-cbc5ee17:claim:research-01-what-is-the-volume-in-milliliters-of:24"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T123633Z-cbc5ee17",
+    "document_version_ids": [
+      "fetch_page-15e84e5657990f35",
+      "fetch_page-38116db6e7b145bd",
+      "fetch_page-6710148009d45bd0",
+      "fetch_page-a9bdc458e509365f",
+      "web_search-03e429c777689705",
+      "web_search-2831167960f91db1",
+      "web_search-2db5a853d2789c3c",
+      "web_search-34c0c7d8e016bfbb",
+      "web_search-48e4bf14e8489516",
+      "web_search-4cc065c02651f46d",
+      "web_search-8d02f4399f06f749",
+      "web_search-9b124cdf357f97ac",
+      "web_search-a97a9651349c823d",
+      "web_search-ae7ca597ed5af302",
+      "web_search-afb1c27ea440400d",
+      "web_search-b8fda64cf5e062d3",
+      "web_search-d65c5aef281a03a3",
+      "web_search-e7f85fe046eac7ee",
+      "web_search-f806e8dd53968b7c",
+      "web_search-fee43552beb531ce"
+    ],
+    "content_hashes": {
+      "web_search-03e429c777689705": "03e429c77768970511f5af600cb43972baa2f2c5e1b15e061cac38749ba39d18",
+      "web_search-4cc065c02651f46d": "4cc065c02651f46d995ccf09b9cf81a2ae47a12825132e4f2b1e416cf84db3ff",
+      "web_search-d65c5aef281a03a3": "d65c5aef281a03a37ffba9524a8443e0464241627a7c1d4066a2b1d3024f5d86",
+      "web_search-b8fda64cf5e062d3": "b8fda64cf5e062d3f6222b3c2579c9a1b5b44eeaecba345f62591724d1bce741",
+      "web_search-2831167960f91db1": "2831167960f91db12d56a2495a748008f72d87de0e703c5732574ca36f1997a6",
+      "web_search-fee43552beb531ce": "fee43552beb531cef54ed1640039e2fd0ee8096adc16374dbeda779cfb95717a",
+      "web_search-ae7ca597ed5af302": "ae7ca597ed5af30224030094617227ac625602d0874a4b8af56a1a39dc3dc713",
+      "web_search-afb1c27ea440400d": "afb1c27ea440400d7dc1f94f3e093cfdcaa46425ca588013605b102795bade66",
+      "web_search-e7f85fe046eac7ee": "e7f85fe046eac7ee1a5021b54188aa9359899f371f9d452190395251ed157212",
+      "web_search-48e4bf14e8489516": "48e4bf14e8489516daffb859811879d4db1d28a4afb1a6391936b712572023b3",
+      "web_search-a97a9651349c823d": "a97a9651349c823d664190a33560553f6a38442ac4c78aea8d532ffc78a47aab",
+      "web_search-9b124cdf357f97ac": "9b124cdf357f97ac86f786938d69228dc7d00ea0f05d59e85bc4d5733828f563",
+      "web_search-8d02f4399f06f749": "8d02f4399f06f749af58324c771bf0139f616e927a1faa996b51fe8cbe430649",
+      "web_search-2db5a853d2789c3c": "2db5a853d2789c3c8e6fd5f5b20eeacf6af6d3497ac0aa0521cc857e3464c435",
+      "web_search-34c0c7d8e016bfbb": "34c0c7d8e016bfbb4f1fd2fb2c2eec31855cc410f458e28754b468276c880ce7",
+      "web_search-f806e8dd53968b7c": "f806e8dd53968b7caaf4302b7dd0fad303f45f286eaa68876a5b13c4c0721d1c",
+      "fetch_page-a9bdc458e509365f": "a9bdc458e509365fa596e99600b7dab685ff3688d5d3906505a3cb5993ece8dd",
+      "fetch_page-15e84e5657990f35": "15e84e5657990f35f313f5c0815254d6cc1ef99fc8354a69edb943b44f5ba088",
+      "fetch_page-6710148009d45bd0": "6710148009d45bd0d04f1d9000015bf51375580ecf7c0054f385ad5fe5429890",
+      "fetch_page-38116db6e7b145bd": "38116db6e7b145bdd426144bc33671df63493e01715f4521bda28ac16e01daff"
+    },
+    "critical_claims_allowed": {
+      "web_search-03e429c777689705": true,
+      "web_search-4cc065c02651f46d": true,
+      "web_search-d65c5aef281a03a3": true,
+      "web_search-b8fda64cf5e062d3": true,
+      "web_search-2831167960f91db1": true,
+      "web_search-fee43552beb531ce": true,
+      "web_search-ae7ca597ed5af302": true,
+      "web_search-afb1c27ea440400d": true,
+      "web_search-e7f85fe046eac7ee": true,
+      "web_search-48e4bf14e8489516": true,
+      "web_search-a97a9651349c823d": true,
+      "web_search-9b124cdf357f97ac": true,
+      "web_search-8d02f4399f06f749": true,
+      "web_search-2db5a853d2789c3c": true,
+      "web_search-34c0c7d8e016bfbb": true,
+      "web_search-f806e8dd53968b7c": true,
+      "fetch_page-a9bdc458e509365f": true,
+      "fetch_page-15e84e5657990f35": true,
+      "fetch_page-6710148009d45bd0": true,
+      "fetch_page-38116db6e7b145bd": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T123633Z-cbc5ee17",
+    "status": "completed"
+  }
+}

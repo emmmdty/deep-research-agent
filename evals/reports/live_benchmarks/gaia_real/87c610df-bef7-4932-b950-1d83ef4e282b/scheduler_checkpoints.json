@@ -1,0 +1,1214 @@
+[
+  {
+    "checkpoint_id": "20260814T123958Z-fb5ddbc5:task-checkpoint:000001",
+    "job_id": "20260814T123958Z-fb5ddbc5",
+    "task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+      "job_id": "20260814T123958Z-fb5ddbc5",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T123958Z-fb5ddbc5:packet:research-01-in-april-of-1977-who-was-the-prime-m",
+          "task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:01",
+              "document_version_id": "web_search-03e6298f3b796068",
+              "page": null,
+              "section": "Esther 1 – Study Scripture Online",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The location is present-day Iran.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:02",
+              "document_version_id": "web_search-f53f285269073ec5",
+              "page": null,
+              "section": "Esther 1 - NIV - This is what happened during the time of ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Ahasuerus, a great king of Persia",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:03",
+              "document_version_id": "web_search-03e6298f3b796068",
+              "page": null,
+              "section": "Esther 1 – Study Scripture Online",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "They fit chronologically between the 6th and 7th chapters of Ezra",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:04",
+              "document_version_id": "web_search-03e6298f3b796068",
+              "page": null,
+              "section": "Esther 1 – Study Scripture Online",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "He had an extensive empire, with 127 provinces from India to Ethiopia.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:05",
+              "document_version_id": "web_search-75c32b165e0d67e8",
+              "page": null,
+              "section": "April 1977 Prime Minister Of Iran - Instagram",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Mohammad Reza Shah Pahlavi, the last king of Iran, is one of the most controversial and influential figures in modern Iranian history. He came to power in 1941 after the abdication of Reza Shah and ruled Iran until 1979",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:06",
+              "document_version_id": "web_search-6f3d090520818aa5",
+              "page": null,
+              "section": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "was the prime minister of Iran under Shah Mohammed Reza Pahlavi from January 1965 to August 1977.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:07",
+              "document_version_id": "web_search-6f3d090520818aa5",
+              "page": null,
+              "section": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "from January 1965 to August 1977",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:08",
+              "document_version_id": "web_search-edcf37ce3d16cdda",
+              "page": null,
+              "section": "Esther 1:1 NIV - This is what happened during… | Biblia",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the Ahasuerus who reigned from India to Cush",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:09",
+              "document_version_id": "web_search-6f3d090520818aa5",
+              "page": null,
+              "section": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "was the prime minister of Iran under Shah Mohammed Reza Pahlavi from January 1965 to August 1977",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:10",
+              "document_version_id": "web_search-3a56a11dca3e5243",
+              "page": null,
+              "section": "Esther 1:1 This is what happened in the days of Xerxes, who reigned over 127 provinces from India to Cush.",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the Xerxes who ruled over 127 provinces stretching from India to Cush",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:11",
+              "document_version_id": "web_search-4e4000db9e245345",
+              "page": null,
+              "section": "Esther 1 - NIV - This is what happened during the time of ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the Xerxes who ruled over 127 provinces stretching from India to Cush",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:12",
+              "document_version_id": "web_search-aed956d48e895238",
+              "page": null,
+              "section": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the Xerxes who ruled over 127 provinces",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:13",
+              "document_version_id": "web_search-3a56a11dca3e5243",
+              "page": null,
+              "section": "Esther 1:1 This is what happened in the days of Xerxes, who reigned over 127 provinces from India to Cush.",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "who ruled over 127 provinces stretching from India to Cush",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:14",
+              "document_version_id": "web_search-4e4000db9e245345",
+              "page": null,
+              "section": "Esther 1 - NIV - This is what happened during the time of ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "At that time King Xerxes reigned from his royal throne in the citadel of Susa",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:01",
+              "claim": "The Book of Esther (NIV) first mentions a place by name; the location of the events is present-day Iran.",
+              "claim_type": "geography",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:01",
+                  "document_version_id": "web_search-03e6298f3b796068",
+                  "page": null,
+                  "section": "Esther 1 – Study Scripture Online",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The location is present-day Iran.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:02",
+              "claim": "Ahasuerus was a great king of Persia.",
+              "claim_type": "historical",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:02",
+                  "document_version_id": "web_search-f53f285269073ec5",
+                  "page": null,
+                  "section": "Esther 1 - NIV - This is what happened during the time of ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Ahasuerus, a great king of Persia",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:03",
+              "claim": "The events of the Book of Esther fit chronologically between the 6th and 7th chapters of Ezra.",
+              "claim_type": "historical",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:03",
+                  "document_version_id": "web_search-03e6298f3b796068",
+                  "page": null,
+                  "section": "Esther 1 – Study Scripture Online",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "They fit chronologically between the 6th and 7th chapters of Ezra",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:04",
+              "claim": "Ahasuerus had an extensive empire with 127 provinces from India to Ethiopia.",
+              "claim_type": "historical",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:04",
+                  "document_version_id": "web_search-03e6298f3b796068",
+                  "page": null,
+                  "section": "Esther 1 – Study Scripture Online",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "He had an extensive empire, with 127 provinces from India to Ethiopia.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:05",
+              "claim": "Mohammad Reza Shah Pahlavi was the last king of Iran and ruled Iran until 1979.",
+              "claim_type": "historical",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:05",
+                  "document_version_id": "web_search-75c32b165e0d67e8",
+                  "page": null,
+                  "section": "April 1977 Prime Minister Of Iran - Instagram",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Mohammad Reza Shah Pahlavi, the last king of Iran, is one of the most controversial and influential figures in modern Iranian history. He came to power in 1941 after the abdication of Reza Shah and ruled Iran until 1979",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:06",
+              "claim": "Amīr ʿAbbas Hoveyda was the prime minister of Iran under Shah Mohammed Reza Pahlavi from January 1965 to August 1977.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:06",
+                  "document_version_id": "web_search-6f3d090520818aa5",
+                  "page": null,
+                  "section": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "was the prime minister of Iran under Shah Mohammed Reza Pahlavi from January 1965 to August 1977.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:07",
+              "claim": "Hoveyda's tenure as prime minister ended in August 1977, meaning he was no longer prime minister in April 1977.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:07",
+                  "document_version_id": "web_search-6f3d090520818aa5",
+                  "page": null,
+                  "section": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "from January 1965 to August 1977",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:08",
+              "claim": "The first place mentioned by name in the Book of Esther (NIV) is India, and the second is Cush.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:08",
+                  "document_version_id": "web_search-edcf37ce3d16cdda",
+                  "page": null,
+                  "section": "Esther 1:1 NIV - This is what happened during… | Biblia",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the Ahasuerus who reigned from India to Cush",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:09",
+              "claim": "In April 1977, the Prime Minister of India was Morarji Desai.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "unsupported",
+              "confidence": 0.3,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:09",
+                  "document_version_id": "web_search-6f3d090520818aa5",
+                  "page": null,
+                  "section": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "was the prime minister of Iran under Shah Mohammed Reza Pahlavi from January 1965 to August 1977",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:10",
+              "claim": "The first place mentioned by name in the Book of Esther (NIV) is India, mentioned in Esther 1:1.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:10",
+                  "document_version_id": "web_search-3a56a11dca3e5243",
+                  "page": null,
+                  "section": "Esther 1:1 This is what happened in the days of Xerxes, who reigned over 127 provinces from India to Cush.",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the Xerxes who ruled over 127 provinces stretching from India to Cush",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:11",
+              "claim": "The first place mentioned by name in the Book of Esther (NIV) is India, mentioned in Esther 1:1.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:11",
+                  "document_version_id": "web_search-4e4000db9e245345",
+                  "page": null,
+                  "section": "Esther 1 - NIV - This is what happened during the time of ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the Xerxes who ruled over 127 provinces stretching from India to Cush",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:12",
+              "claim": "The first place mentioned by name in the Book of Esther (NIV) is India, mentioned in Esther 1:1.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:12",
+                  "document_version_id": "web_search-aed956d48e895238",
+                  "page": null,
+                  "section": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the Xerxes who ruled over 127 provinces",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:13",
+              "claim": "The Book of Esther (NIV) mentions India and Cush as the extent of Xerxes' 127 provinces.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:13",
+                  "document_version_id": "web_search-3a56a11dca3e5243",
+                  "page": null,
+                  "section": "Esther 1:1 This is what happened in the days of Xerxes, who reigned over 127 provinces from India to Cush.",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "who ruled over 127 provinces stretching from India to Cush",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123958Z-fb5ddbc5:claim:research-01-in-april-of-1977-who-was-the-prime-m:14",
+              "claim": "The Book of Esther (NIV) mentions Susa as the citadel where King Xerxes reigned.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123958Z-fb5ddbc5:span:research-01-in-april-of-1977-who-was-the-prime-m:14",
+                  "document_version_id": "web_search-4e4000db9e245345",
+                  "page": null,
+                  "section": "Esther 1 - NIV - This is what happened during the time of ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "At that time King Xerxes reigned from his royal throne in the citadel of Susa",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:01",
+              "uri": "https://www.biblegateway.com/passage?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "5afffc51782c31c8c4f009ba25b8400ce7c1317330e1b7c937a0ab9f12807b6e",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-5afffc51782c31c8",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:02",
+              "uri": "https://www.biblestudytools.com/esther/1.html",
+              "media_type": "text/markdown",
+              "content_sha256": "02c841c39e10957722c72aac325d4323a22a62556d9b00123806d44bdb5a49e5",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-02c841c39e109577",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 - NIV - This is what happened during the time of ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:03",
+              "uri": "https://en.wikipedia.org/wiki/Book_of_Esther",
+              "media_type": "text/markdown",
+              "content_sha256": "9b4b0ec7a51e5e8183e9e063be033fff55f293b0671dbbb09e9c6e682627545b",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-9b4b0ec7a51e5e81",
+                "critical_claims_allowed": true,
+                "source_title": "Book of Esther - Wikipedia",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:04",
+              "uri": "https://www.youtube.com/watch?v=ZxDtGKJNrGc",
+              "media_type": "text/markdown",
+              "content_sha256": "d1704e9dbe7c0f52874f06b5fdeb584b969272b98b4bc6f374e4f284792768b2",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-d1704e9dbe7c0f52",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 Summary: 5 Minute Bible Study",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:05",
+              "uri": "https://www.youtube.com/watch?v=ZxDtGKJNrGc",
+              "media_type": "text/markdown",
+              "content_sha256": "029b2345d8c003574d3b4ea363fd4a46da116c0eecfe91a53d134614b2bfd1d7",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-029b2345d8c00357",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 Summary: 5 Minute Bible Study",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:06",
+              "uri": "https://studyscriptureonline.com/sermons/esther-1",
+              "media_type": "text/markdown",
+              "content_sha256": "03e6298f3b796068fb56f86a204fa3c7feef998d267638c7ba03361aaac9b26e",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-03e6298f3b796068",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 – Study Scripture Online",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:07",
+              "uri": "https://www.biblestudytools.com/esther/1.html",
+              "media_type": "text/markdown",
+              "content_sha256": "f53f285269073ec5790a819fe359ccdaa827bb9927ec205c786ac821c85a5a46",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-f53f285269073ec5",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 - NIV - This is what happened during the time of ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:08",
+              "uri": "https://www.instagram.com/popular/april-1977-prime-minister-of-iran",
+              "media_type": "text/markdown",
+              "content_sha256": "75c32b165e0d67e870c431057f589e6041265cb574d002bac239dac27ec89c8e",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-75c32b165e0d67e8",
+                "critical_claims_allowed": true,
+                "source_title": "April 1977 Prime Minister Of Iran - Instagram",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:09",
+              "uri": "https://www.britannica.com/biography/Amir-Abbas-Hoveyda",
+              "media_type": "text/markdown",
+              "content_sha256": "6f3d090520818aa52dd29d70612e918994affe63386e17fa085a222255551d6b",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-6f3d090520818aa5",
+                "critical_claims_allowed": true,
+                "source_title": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:10",
+              "uri": "https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Iran",
+              "media_type": "text/markdown",
+              "content_sha256": "3226a35a8ca5e4f2da2732c583171f3cf2d5d8dcf0d62efc47166e89c52b160c",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-3226a35a8ca5e4f2",
+                "critical_claims_allowed": true,
+                "source_title": "List of prime ministers of Iran",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:11",
+              "uri": "https://www.nonviolent-conflict.org/iranian-revolution-1977-1979",
+              "media_type": "text/markdown",
+              "content_sha256": "410c44a61c7171ce469b6c13caf87943cbab0a90041ca4d204dc5fbb53ee7f5b",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-410c44a61c7171ce",
+                "critical_claims_allowed": true,
+                "source_title": "The Iranian Revolution (1977-1979) | CNCR",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:12",
+              "uri": "https://biblia.com/bible/niv2011/esther/1/1",
+              "media_type": "text/markdown",
+              "content_sha256": "edcf37ce3d16cdda8a4d55891752fbe5f3b3ea651c5f330b89c8dfd6c97a971d",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-edcf37ce3d16cdda",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1:1 NIV - This is what happened during… | Biblia",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:13",
+              "uri": "https://biblehub.com/esther/1-1.htm",
+              "media_type": "text/markdown",
+              "content_sha256": "3a56a11dca3e5243164f1e5f34ac8523d5ea3831c57459cb30fa47618178e510",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-3a56a11dca3e5243",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1:1 This is what happened in the days of Xerxes, who reigned over 127 provinces from India to Cush.",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:14",
+              "uri": "https://www.biblestudytools.com/esther/1.html",
+              "media_type": "text/markdown",
+              "content_sha256": "4e4000db9e245345ddc44b7abf27e44180d34d62ddbb4eccdfa5033ac3c02d61",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-4e4000db9e245345",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 - NIV - This is what happened during the time of ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:15",
+              "uri": "https://www.biblegateway.com/passage?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "aed956d48e895238d3634c82762ec89bfa19e08e926600722081441bf640609a",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-aed956d48e895238",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:16",
+              "uri": "https://biblehub.com/esther/1-2.htm",
+              "media_type": "text/markdown",
+              "content_sha256": "2cca8b0434dc3ca27ec2a2b69002aa5fc7df90b0ebb7491eda3aee35aa63e904",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "web_search-2cca8b0434dc3ca2",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1:2 In those days King Xerxes sat on his royal throne in the citadel of Susa.",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:17",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "694dec810062a053db7ad3dc0f03cb39e72f4af4f51894f2a2f0998a21e616f2",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-694dec810062a053",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:18",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "7ead5f3842fd564bbddffa426c33421d20effc77c04255b0bdb1a70b8a907f0e",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-7ead5f3842fd564b",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:19",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "a4bfd2900281ae96956215a86bb1c31b307d9f4ce8b9d460a05330a682539a91",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-a4bfd2900281ae96",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:20",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "15c714e9fd2a4ded1ce5e9f893bc7d708e256d1614ed9712c14460b39cadaf7a",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-15c714e9fd2a4ded",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:21",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "3abf9fba743bf7e6cb55643dd19d4c5a4d887126a24f70a84e6c8d31394a108a",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-3abf9fba743bf7e6",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9200
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:22",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "f8b7c37c5fced4281819f7bd17231b82cd07680fb54248a01e01216c23a76f62",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-f8b7c37c5fced428",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 5,
+                "char_start": 9000,
+                "char_end": 11000
+              }
+            },
+            {
+              "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:23",
+              "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+              "media_type": "text/markdown",
+              "content_sha256": "3370e793746339d554f9c45947623cd27c5ed37d1134912e2dc5d31cf05311bf",
+              "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+              "metadata": {
+                "document_version_id": "fetch_page-3370e793746339d5",
+                "critical_claims_allowed": true,
+                "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 6,
+                "char_start": 10800,
+                "char_end": 12000
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:01",
+          "uri": "https://www.biblegateway.com/passage?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "5afffc51782c31c8c4f009ba25b8400ce7c1317330e1b7c937a0ab9f12807b6e",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-5afffc51782c31c8",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:02",
+          "uri": "https://www.biblestudytools.com/esther/1.html",
+          "media_type": "text/markdown",
+          "content_sha256": "02c841c39e10957722c72aac325d4323a22a62556d9b00123806d44bdb5a49e5",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-02c841c39e109577",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 - NIV - This is what happened during the time of ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:03",
+          "uri": "https://en.wikipedia.org/wiki/Book_of_Esther",
+          "media_type": "text/markdown",
+          "content_sha256": "9b4b0ec7a51e5e8183e9e063be033fff55f293b0671dbbb09e9c6e682627545b",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-9b4b0ec7a51e5e81",
+            "critical_claims_allowed": true,
+            "source_title": "Book of Esther - Wikipedia",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:04",
+          "uri": "https://www.youtube.com/watch?v=ZxDtGKJNrGc",
+          "media_type": "text/markdown",
+          "content_sha256": "d1704e9dbe7c0f52874f06b5fdeb584b969272b98b4bc6f374e4f284792768b2",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-d1704e9dbe7c0f52",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 Summary: 5 Minute Bible Study",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:05",
+          "uri": "https://www.youtube.com/watch?v=ZxDtGKJNrGc",
+          "media_type": "text/markdown",
+          "content_sha256": "029b2345d8c003574d3b4ea363fd4a46da116c0eecfe91a53d134614b2bfd1d7",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-029b2345d8c00357",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 Summary: 5 Minute Bible Study",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:06",
+          "uri": "https://studyscriptureonline.com/sermons/esther-1",
+          "media_type": "text/markdown",
+          "content_sha256": "03e6298f3b796068fb56f86a204fa3c7feef998d267638c7ba03361aaac9b26e",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-03e6298f3b796068",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 – Study Scripture Online",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:07",
+          "uri": "https://www.biblestudytools.com/esther/1.html",
+          "media_type": "text/markdown",
+          "content_sha256": "f53f285269073ec5790a819fe359ccdaa827bb9927ec205c786ac821c85a5a46",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-f53f285269073ec5",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 - NIV - This is what happened during the time of ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:08",
+          "uri": "https://www.instagram.com/popular/april-1977-prime-minister-of-iran",
+          "media_type": "text/markdown",
+          "content_sha256": "75c32b165e0d67e870c431057f589e6041265cb574d002bac239dac27ec89c8e",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-75c32b165e0d67e8",
+            "critical_claims_allowed": true,
+            "source_title": "April 1977 Prime Minister Of Iran - Instagram",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:09",
+          "uri": "https://www.britannica.com/biography/Amir-Abbas-Hoveyda",
+          "media_type": "text/markdown",
+          "content_sha256": "6f3d090520818aa52dd29d70612e918994affe63386e17fa085a222255551d6b",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-6f3d090520818aa5",
+            "critical_claims_allowed": true,
+            "source_title": "Amīr ʿAbbas Hoveyda | Iranian, Shah, Pahlavi",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:10",
+          "uri": "https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Iran",
+          "media_type": "text/markdown",
+          "content_sha256": "3226a35a8ca5e4f2da2732c583171f3cf2d5d8dcf0d62efc47166e89c52b160c",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-3226a35a8ca5e4f2",
+            "critical_claims_allowed": true,
+            "source_title": "List of prime ministers of Iran",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:11",
+          "uri": "https://www.nonviolent-conflict.org/iranian-revolution-1977-1979",
+          "media_type": "text/markdown",
+          "content_sha256": "410c44a61c7171ce469b6c13caf87943cbab0a90041ca4d204dc5fbb53ee7f5b",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-410c44a61c7171ce",
+            "critical_claims_allowed": true,
+            "source_title": "The Iranian Revolution (1977-1979) | CNCR",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:12",
+          "uri": "https://biblia.com/bible/niv2011/esther/1/1",
+          "media_type": "text/markdown",
+          "content_sha256": "edcf37ce3d16cdda8a4d55891752fbe5f3b3ea651c5f330b89c8dfd6c97a971d",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-edcf37ce3d16cdda",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1:1 NIV - This is what happened during… | Biblia",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:13",
+          "uri": "https://biblehub.com/esther/1-1.htm",
+          "media_type": "text/markdown",
+          "content_sha256": "3a56a11dca3e5243164f1e5f34ac8523d5ea3831c57459cb30fa47618178e510",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-3a56a11dca3e5243",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1:1 This is what happened in the days of Xerxes, who reigned over 127 provinces from India to Cush.",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:14",
+          "uri": "https://www.biblestudytools.com/esther/1.html",
+          "media_type": "text/markdown",
+          "content_sha256": "4e4000db9e245345ddc44b7abf27e44180d34d62ddbb4eccdfa5033ac3c02d61",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-4e4000db9e245345",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 - NIV - This is what happened during the time of ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:15",
+          "uri": "https://www.biblegateway.com/passage?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "aed956d48e895238d3634c82762ec89bfa19e08e926600722081441bf640609a",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-aed956d48e895238",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:16",
+          "uri": "https://biblehub.com/esther/1-2.htm",
+          "media_type": "text/markdown",
+          "content_sha256": "2cca8b0434dc3ca27ec2a2b69002aa5fc7df90b0ebb7491eda3aee35aa63e904",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "web_search-2cca8b0434dc3ca2",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1:2 In those days King Xerxes sat on his royal throne in the citadel of Susa.",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:17",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "694dec810062a053db7ad3dc0f03cb39e72f4af4f51894f2a2f0998a21e616f2",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-694dec810062a053",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:18",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "7ead5f3842fd564bbddffa426c33421d20effc77c04255b0bdb1a70b8a907f0e",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-7ead5f3842fd564b",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:19",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "a4bfd2900281ae96956215a86bb1c31b307d9f4ce8b9d460a05330a682539a91",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-a4bfd2900281ae96",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:20",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "15c714e9fd2a4ded1ce5e9f893bc7d708e256d1614ed9712c14460b39cadaf7a",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-15c714e9fd2a4ded",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:21",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "3abf9fba743bf7e6cb55643dd19d4c5a4d887126a24f70a84e6c8d31394a108a",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-3abf9fba743bf7e6",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9200
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:22",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "f8b7c37c5fced4281819f7bd17231b82cd07680fb54248a01e01216c23a76f62",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-f8b7c37c5fced428",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 5,
+            "char_start": 9000,
+            "char_end": 11000
+          }
+        },
+        {
+          "artifact_id": "20260814T123958Z-fb5ddbc5:research-01-in-april-of-1977-who-was-the-prime-m:src:23",
+          "uri": "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+          "media_type": "text/markdown",
+          "content_sha256": "3370e793746339d554f9c45947623cd27c5ed37d1134912e2dc5d31cf05311bf",
+          "created_by_task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+          "metadata": {
+            "document_version_id": "fetch_page-3370e793746339d5",
+            "critical_claims_allowed": true,
+            "source_title": "Esther 1 NIV - Queen Vashti Deposed - This is what - Bible Gateway",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 6,
+            "char_start": 10800,
+            "char_end": 12000
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-in-april-of-1977-who-was-the-prime-m",
+      "objective": "In April of 1977, who was the Prime Minister of the first place mentioned by name in the Book of Esther (in the New International Version)?",
+      "agentic": true,
+      "rounds": 2,
+      "query_count": 6,
+      "queries": [
+        {
+          "query": "Book of Esther first place mentioned New International Version",
+          "tool": "web_search"
+        },
+        {
+          "query": "Book of Esther chapter 1 NIV location first mentioned",
+          "tool": "web_search"
+        },
+        {
+          "query": "Prime Minister of Iran April 1977",
+          "tool": "web_search"
+        },
+        {
+          "query": "Esther 1:1 NIV text \"from India to Cush\" first place mentioned",
+          "tool": "web_search"
+        },
+        {
+          "query": "Book of Esther chapter 1 verse 1 2 NIV Susa citadel first place name",
+          "tool": "web_search"
+        },
+        {
+          "query": "Esther 1:1-2 NIV exact wording first location",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 7,
+      "page_urls": [
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV",
+        "https://www.biblegateway.com/passage/?search=Esther+1&version=NIV"
+      ],
+      "coverage_assessments": [
+        {
+          "covered": false,
+          "gaps": [
+            "The first place mentioned by name in the Book of Esther (NIV) needs to be identified. Esther 1:1 mentions 'Xerxes' (Ahasuerus) who ruled over 127 provinces from India to Cush/Ethiopia. The first place name mentioned is likely 'India' or 'Cush' (Ethiopia), or possibly 'Susa' (the capital). Need to confirm the exact first place name in Esther 1:1-2 NIV.",
+            "Need to determine which country corresponds to that first place name (e.g., India, Ethiopia, or Persia/Iran).",
+            "Need to identify who was the Prime Minister of that country in April 1977. If the place is Persia/Iran, the Prime Minister in April 1977 was Amir-Abbas Hoveyda (who served until August 1977), but this needs confirmation. If the place is India, need the Indian PM in April 1977 (Morarji Desai, who took office in March 1977). If Ethiopia, need the Ethiopian PM in April 1977."
+          ],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 0,
+      "source_count": 16,
+      "claim_count": 14,
+      "injection_stats": {
+        "injection_findings": 0,
+        "injection_dropped_sources": 0,
+        "injection_dropped_pages": 0,
+        "rerank_available": false
+      }
+    }
+  },
+  {
+    "checkpoint_id": "20260814T123958Z-fb5ddbc5:task-checkpoint:000002",
+    "job_id": "20260814T123958Z-fb5ddbc5",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 2,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T123958Z-fb5ddbc5",
+      "status": "failed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": "task execution failed: 1 validation error for CriticDecision\n  Value error, critic unresolved must match the decision status [type=value_error, input_value={'decision_id': '20260814...f India in April 1977.'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error"
+    },
+    "output": {}
+  }
+]

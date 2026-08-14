@@ -1,0 +1,28 @@
+{
+  "task_id": "ad2b4d70-9314-4fe6-bfbe-894a45f6055f",
+  "question": "Eva Draconis has a personal website which can be accessed on her YouTube page. What is the meaning of the only symbol seen in the top banner that has a curved line that isn't a circle or a portion of a circle? Answer without punctuation.",
+  "level": "3",
+  "ground_truth": "War is not here this is a land of peace",
+  "extracted_answer": "",
+  "grade": {
+    "correct": false,
+    "rationale": "The candidate answer is empty and does not provide any information, so it cannot match the ground truth.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T110310Z-659deefd",
+  "status": "completed",
+  "claim_count": 19,
+  "source_count": 28,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 295,
+    "search_calls": 69,
+    "total_input_tokens": 546054,
+    "total_output_tokens": 150395,
+    "total_tokens": 696449,
+    "estimated_cost_usd": 0.6964,
+    "wall_seconds": 106.61
+  },
+  "model": "deepseek-v4-flash"
+}

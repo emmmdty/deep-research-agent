@@ -1,240 +1,20 @@
 {
   "schema_version": "2.0",
-  "report_markdown": "## Executive Summary\n\n- The episode is titled 'Heaven Sent' and is Episode 11 of Series 9.\n- The Doctor arrives in an ancient castle via teleportation after the death of Clara.\n- The castle appears deserted but the Doctor finds clues that someone is hiding there.\n- The episode was released on 2015-11-28.\n- The main setting of Heaven Sent is inside the Doctor's confession dial; the Doctor's mind palace.\n- Heaven Sent is Doctor Who S09E11.\n- The writer of Heaven Sent is Steven Moffat.\n- The director of Heaven Sent is Rachel Talalay.\n- Heaven Sent premiered on 28 November 2015 on BBC One.\n- The main enemy in Heaven Sent is The Veil.\n- The Doctor is the Twelfth Doctor in Heaven Sent.\n- The episode is titled Heaven Sent.\n- The first scene heading in the official script for Heaven Sent (Series 9, Episode 11) is 'Teleport chamber room'.\n- The Doctor materialises inside the teleporter chamber at the start of the episode.\n",
+  "report_markdown": "## Executive Summary\n\n- The Doctor is trapped inside an ever-shifting maze in Series 9, Episode 11 of Doctor Who.\n- The episode is titled 'Heaven Sent'.\n- The Doctor is imprisoned in a waterlocked castle by his people, the Time Lords.\n- The castle is revealed to be the Doctor's confession dial.\n- The location where the Doctor is trapped in the ever-shifting maze is called the 'confession dial' in the episode.\n- The Doctor is trapped inside a 'killer puzzle box' in the episode.\n- The Doctor is trapped inside an empty castle in the episode.\n- The Doctor is trapped inside his confession dial in the episode Heaven Sent.\n- The castle prison in the episode was the Doctor's confession dial, made bigger on the inside using time or technology.\n- The episode Heaven Sent is set inside the confession dial.\n- The episode is titled 'Heaven Sent' and originally aired on 28 Nov 2015.\n- The first scene heading in the script is '[Teleport chamber room]'.\n- The Doctor appears in a teleport chamber after a blackened hand pulls a lever and turns to dust.\n- The Doctor determines the equipment in the room is consistent with an augmented ultra long-range teleport.\n- The Doctor says he is not more than a single light year from where he was and is in the same time zone.\n- The Doctor encounters a hunchbacked figure in pale grey veils, referred to as the Veil of the cast list.\n- The Doctor opens a door to reveal a solid wall just a pace behind it.\n- The Doctor sees sections of the walls rotating in opposite directions with the uppermost faster than the lower ones.\n- The Doctor enters a room revealed after the walls rotate, with the scene heading '[Bedroom]'.\n- In the bedroom, the Doctor sees a portrait of Clara Oswald hanging over the fireplace.\n- The Doctor dives through a broken window and bursts into the Tardis.\n- The Doctor describes the location as 'a fully automated haunted house. A mechanical maze.'\n- The Doctor describes the location as 'a killer puzzle box designed to scare me to death, and I'm trapped inside it.'\n- The Doctor walks through the great hall of Caerphilly Castle.\n\n## Findings\n\n### Episode Title and Airdate\nThe episode is titled \"Heaven Sent\" and originally aired on 28 Nov 2015. The episode is set inside the confession dial.\n\n### The Doctor's Imprisonment\nThe Doctor is trapped inside an ever-shifting maze in a waterlocked castle, imprisoned by his people, the Time Lords. He is trapped inside an empty castle, which is described as a \"killer puzzle box\" in the episode.\n\n### The Confession Dial\nThe castle is revealed to be the Doctor's confession dial. The location where the Doctor is trapped in the ever-shifting maze is called the \"confession dial\" in the episode. The castle prison was the Doctor's confession dial, made bigger on the inside using time or technology.\n\n### The Doctor's Descriptions of the Location\nThe Doctor describes the location as \"a fully automated haunted house. A mechanical maze.\" He also describes it as \"a killer puzzle box designed to scare me to death, and I'm trapped inside it.\"\n\n### Opening Scene and Teleport Chamber\nThe first scene heading in the script is \"[Teleport chamber room].\" The Doctor appears in a teleport chamber after a blackened hand pulls a lever and turns to dust. He determines the equipment in the room is consistent with an augmented ultra long-range teleport. The Doctor says he is not more than a single light year from where he was and is in the same time zone.\n\n### The Maze and Its Features\nThe Doctor encounters a hunchbacked figure in pale grey veils, referred to as the Veil of the cast list. He opens a door to reveal a solid wall just a pace behind it. The Doctor sees sections of the walls rotating in opposite directions with the uppermost faster than the lower ones. He enters a room revealed after the walls rotate, with the scene heading \"[Bedroom].\" In the bedroom, the Doctor sees a portrait of Clara Oswald hanging over the fireplace. The Doctor dives through a broken window and bursts into the Tardis. The Doctor walks through the great hall of Caerphilly Castle.\n\n## Evidence Status\n\n- **Accepted claims:** All findings above are based on accepted claims, with the exception of two qualified claims.\n- **Qualified claims:**\n  - The claim that the maze is described as an \"ever-shifting maze\" in the episode is qualified: the source says \"this energy shifting maze,\" not \"ever-shifting maze,\" so the exact phrase is not supported.\n  - The claim that the location in Series 9, Episode 11 where the Doctor is trapped in an ever-shifting maze is called \"Heaven Sent\" in the official script is qualified: the source only says \"The Doctor\" and does not support the claim that the location is called \"Heaven Sent\" in the script.\n- **Unsupported claims:** None beyond the qualified claims noted above.",
   "accepted_claims": [
     {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
-      "claim": "The episode is titled 'Heaven Sent' and is Episode 11 of Series 9.",
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:02",
+      "claim": "The episode is titled 'Heaven Sent'.",
       "claim_type": "factual_claim",
       "critical": true,
       "support_status": "accepted",
-      "confidence": 0.95,
+      "confidence": 1.0,
       "evidence_spans": [
         {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:01",
-          "document_version_id": "web_search-fbd5391147bc53d1",
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:02",
+          "document_version_id": "web_search-9b2337240d234f5b",
           "page": null,
-          "section": "Heaven Sent: Episode 11 Script | PDF | The Doctor (Doctor Who) - Scribd",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Heaven Sent: Episode 11 Script",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:02",
-      "claim": "The Doctor arrives in an ancient castle via teleportation after the death of Clara.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:02",
-          "document_version_id": "web_search-fbd5391147bc53d1",
-          "page": null,
-          "section": "Heaven Sent: Episode 11 Script | PDF | The Doctor (Doctor Who) - Scribd",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "The document describes the Doctor arriving in an ancient castle via teleportation after the death of Clara.",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:03",
-      "claim": "The castle appears deserted but the Doctor finds clues that someone is hiding there.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:03",
-          "document_version_id": "web_search-fbd5391147bc53d1",
-          "page": null,
-          "section": "Heaven Sent: Episode 11 Script | PDF | The Doctor (Doctor Who) - Scribd",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "The castle appears deserted but he finds clues that someone is hiding there.",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:04",
-      "claim": "The episode was released on 2015-11-28.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:04",
-          "document_version_id": "web_search-7d52216133cd0d96",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Release date\n\n2015-11-28",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:05",
-      "claim": "The main setting of Heaven Sent is inside the Doctor's confession dial; the Doctor's mind palace.",
-      "claim_type": "factual_claim",
-      "critical": true,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:05",
-          "document_version_id": "web_search-eaf5be13cbba63ea",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Inside the Doctor's confession dial; the Doctor's mind palace",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:06",
-      "claim": "Heaven Sent is Doctor Who S09E11.",
-      "claim_type": "factual_claim",
-      "critical": true,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:06",
-          "document_version_id": "web_search-655613ff2c619555",
-          "page": null,
-          "section": "Notes on Heaven Sent, Part 1 – @racheltalalay on Tumblr",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "scene 1 of the BBC-published script for Doctor Who S09E11",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
-      "claim": "The writer of Heaven Sent is Steven Moffat.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:07",
-          "document_version_id": "web_search-eaf5be13cbba63ea",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Steven Moffat",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:08",
-      "claim": "The director of Heaven Sent is Rachel Talalay.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:08",
-          "document_version_id": "web_search-eaf5be13cbba63ea",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Rachel Talalay",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:09",
-      "claim": "Heaven Sent premiered on 28 November 2015 on BBC One.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:09",
-          "document_version_id": "web_search-eaf5be13cbba63ea",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "28 November \"28 November (releases)\")2015 \"2015 (releases)\")",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:10",
-      "claim": "The main enemy in Heaven Sent is The Veil.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:10",
-          "document_version_id": "web_search-eaf5be13cbba63ea",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Main enemy:",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:11",
-      "claim": "The Doctor is the Twelfth Doctor in Heaven Sent.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:11",
-          "document_version_id": "web_search-eaf5be13cbba63ea",
-          "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "Twelfth Doctor",
-          "extraction_method": "agent_grounding"
-        }
-      ]
-    },
-    {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:13",
-      "claim": "The episode is titled Heaven Sent.",
-      "claim_type": "factual_claim",
-      "critical": false,
-      "support_status": "accepted",
-      "confidence": 0.9,
-      "evidence_spans": [
-        {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:13",
-          "document_version_id": "web_search-682591ffe58308ec",
-          "page": null,
-          "section": "Heaven Sent · Doctor Who S9 • Episode 11",
+          "section": "Heaven Sent · Doctor Who S9 • Episode 11 · TARDIS Guide",
           "start_offset": null,
           "end_offset": null,
           "quote": "Heaven Sent",
@@ -243,146 +23,1328 @@
       ]
     },
     {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:14",
-      "claim": "The first scene heading in the official script for Heaven Sent (Series 9, Episode 11) is 'Teleport chamber room'.",
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:03",
+      "claim": "The Doctor is imprisoned in a waterlocked castle by his people, the Time Lords.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:03",
+          "document_version_id": "web_search-4021c324eebef4fd",
+          "page": null,
+          "section": "Heaven Sent (Doctor Who) - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the alien time traveller the Twelfth Doctor (Peter Capaldi) is imprisoned in a waterlocked castle by his people, the Time Lords",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:04",
+      "claim": "The castle is revealed to be the Doctor's confession dial.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:04",
+          "document_version_id": "web_search-14fc864d98550c5b",
+          "page": null,
+          "section": "Doctor Who Recap: Season 9, Episode 11, “Heaven Sent” - Slant Magazine",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the castle miniaturises and turns into his confession dial",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:06",
+      "claim": "The location where the Doctor is trapped in the ever-shifting maze is called the 'confession dial' in the episode.",
       "claim_type": "factual_claim",
       "critical": true,
       "support_status": "accepted",
-      "confidence": 0.7,
+      "confidence": 0.9,
       "evidence_spans": [
         {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:14",
-          "document_version_id": "web_search-17114fff799beb5f",
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:06",
+          "document_version_id": "web_search-697391c238f29edf",
           "page": null,
-          "section": "Heaven Sent - The Doctor Who Transcripts",
+          "section": "Heaven Sent (Doctor Who)",
           "start_offset": null,
           "end_offset": null,
+          "quote": "the castle was in his confession dial",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:10",
+      "claim": "The Doctor is trapped inside his confession dial in the episode Heaven Sent.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:10",
+          "document_version_id": "web_search-4caaa52fdb313365",
+          "page": null,
+          "section": "Heaven Sent (TV story)",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the Doctor discovers he had been trapped inside his confession dial the entire time",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:11",
+      "claim": "The castle prison in the episode was the Doctor's confession dial, made bigger on the inside using time or technology.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:11",
+          "document_version_id": "web_search-4da01bec58efaa48",
+          "page": null,
+          "section": "Heaven Sent: Doctor Who's Ultimate Masterpiece",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the whole castle prison was L his confession dial obviously using time or technology to make it bigger on the inside",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:12",
+      "claim": "The episode Heaven Sent is set inside the confession dial.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:12",
+          "document_version_id": "web_search-3e83dc1ebbff68a5",
+          "page": null,
+          "section": "How We Designed The Castle: Heaven Sent Doctor Who - YouTube",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "we are inside the confession dial",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:13",
+      "claim": "The episode is titled 'Heaven Sent' and originally aired on 28 Nov 2015.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:13",
+          "document_version_id": "fetch_page-28dfde9966de8db5",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "Original Airdate: 28 Nov 2015",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:14",
+      "claim": "The first scene heading in the script is '[Teleport chamber room]'.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:14",
+          "document_version_id": "fetch_page-28dfde9966de8db5",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 0,
+          "end_offset": 2000,
           "quote": "[Teleport chamber room]",
           "extraction_method": "agent_grounding"
         }
       ]
     },
     {
-      "claim_id": "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:15",
-      "claim": "The Doctor materialises inside the teleporter chamber at the start of the episode.",
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:15",
+      "claim": "The Doctor appears in a teleport chamber after a blackened hand pulls a lever and turns to dust.",
       "claim_type": "factual_claim",
       "critical": false,
       "support_status": "accepted",
-      "confidence": 0.8,
+      "confidence": 1.0,
       "evidence_spans": [
         {
-          "span_id": "20260814T100007Z-90ba41df:span:research-01-in-series-9-episode-11-of-doctor-who:15",
-          "document_version_id": "web_search-1d63fe1548e79d89",
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:15",
+          "document_version_id": "fetch_page-28dfde9966de8db5",
           "page": null,
-          "section": "Heaven Sent (TV story) - Tardis | Fandom",
-          "start_offset": null,
-          "end_offset": null,
-          "quote": "materialising the Doctor inside its chamber",
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 0,
+          "end_offset": 2000,
+          "quote": "squeezes the grip to release it, and pulls. The owner of the hand gasps",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:16",
+      "claim": "The Doctor determines the equipment in the room is consistent with an augmented ultra long-range teleport.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:16",
+          "document_version_id": "fetch_page-088245c9cd340794",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "The equipment in that room is consistent with an augmented",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:17",
+      "claim": "The Doctor says he is not more than a single light year from where he was and is in the same time zone.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:17",
+          "document_version_id": "fetch_page-088245c9cd340794",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "I'm not more than a single light year from",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:18",
+      "claim": "The Doctor encounters a hunchbacked figure in pale grey veils, referred to as the Veil of the cast list.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:18",
+          "document_version_id": "fetch_page-088245c9cd340794",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 1800,
+          "end_offset": 3800,
+          "quote": "there is a figure in pale grey veils standing at one",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:19",
+      "claim": "The Doctor opens a door to reveal a solid wall just a pace behind it.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:19",
+          "document_version_id": "fetch_page-9222e8f427ce9266",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "He opens the door to reveal a solid wall just a pace behind it.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:20",
+      "claim": "The Doctor sees sections of the walls rotating in opposite directions with the uppermost faster than the lower ones.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:20",
+          "document_version_id": "fetch_page-9222e8f427ce9266",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "opening to see a sections of the walls rotating in opposite directions",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:21",
+      "claim": "The Doctor enters a room revealed after the walls rotate, with the scene heading '[Bedroom]'.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:21",
+          "document_version_id": "fetch_page-9222e8f427ce9266",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 3600,
+          "end_offset": 5600,
+          "quote": "[Bedroom]",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:22",
+      "claim": "In the bedroom, the Doctor sees a portrait of Clara Oswald hanging over the fireplace.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:22",
+          "document_version_id": "fetch_page-b316e3288f113609",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "It is, of course, a painting of",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:23",
+      "claim": "The Doctor dives through a broken window and bursts into the Tardis.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 1.0,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:23",
+          "document_version_id": "fetch_page-b316e3288f113609",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 5400,
+          "end_offset": 7400,
+          "quote": "The Doctor dives through the broken window...",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:25",
+      "claim": "The Doctor describes the location as 'a fully automated haunted house. A mechanical maze.'",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:25",
+          "document_version_id": "fetch_page-c4b75a9029d30f00",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 10800,
+          "end_offset": 12000,
+          "quote": "haunted house. A mechanical maze.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:26",
+      "claim": "The Doctor describes the location as 'a killer puzzle box designed to scare me to death, and I'm trapped inside it.'",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:26",
+          "document_version_id": "fetch_page-c4b75a9029d30f00",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 10800,
+          "end_offset": 12000,
+          "quote": "It's a killer puzzle box designed to scare me to death, and I'm",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:27",
+      "claim": "The Doctor walks through the great hall of Caerphilly Castle.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:27",
+          "document_version_id": "fetch_page-21761aed44cbf814",
+          "page": null,
+          "section": "The Doctor Who Transcripts - Heaven Sent",
+          "start_offset": 9000,
+          "end_offset": 11000,
+          "quote": "Castle - with a dining table set for one in the middle",
           "extraction_method": "agent_grounding"
         }
       ]
     }
   ],
-  "qualified_claims": [],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
+      "claim": "The Doctor is trapped inside an ever-shifting maze in Series 9, Episode 11 of Doctor Who.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:01",
+          "document_version_id": "web_search-8b21a64bff84e7b1",
+          "page": null,
+          "section": "Introduction to Heaven Sent - Doctor Who: Series 9 Episode 11 (2015) - BBC",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "the doctor finding himself transported I know you I've seen you before trapped in a mysterious castle",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
+      "claim": "The Doctor is trapped inside a 'killer puzzle box' in the episode.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:07",
+          "document_version_id": "web_search-0ac10f7265ea4501",
+          "page": null,
+          "section": "Heaven Sent - The Doctor Who Transcripts",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "It's a killer puzzle box designed to scare me to death, and I'm trapped inside it.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09",
+      "claim": "The Doctor is trapped inside an empty castle in the episode.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:09",
+          "document_version_id": "web_search-697391c238f29edf",
+          "page": null,
+          "section": "Heaven Sent (Doctor Who)",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The Twelfth Doctor is teleported into a glass chamber within an empty castl",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
   "evidence_matrix": {
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:01": [
-      "web_search-fbd5391147bc53d1"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01": [
+      "web_search-8b21a64bff84e7b1"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:02": [
-      "web_search-fbd5391147bc53d1"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:02": [
+      "web_search-9b2337240d234f5b"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:03": [
-      "web_search-fbd5391147bc53d1"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:03": [
+      "web_search-4021c324eebef4fd"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:04": [
-      "web_search-7d52216133cd0d96"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:04": [
+      "web_search-14fc864d98550c5b"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:05": [
-      "web_search-eaf5be13cbba63ea"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:06": [
+      "web_search-697391c238f29edf"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:06": [
-      "web_search-655613ff2c619555"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07": [
+      "web_search-0ac10f7265ea4501"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:07": [
-      "web_search-eaf5be13cbba63ea"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09": [
+      "web_search-697391c238f29edf"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:08": [
-      "web_search-eaf5be13cbba63ea"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:10": [
+      "web_search-4caaa52fdb313365"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:09": [
-      "web_search-eaf5be13cbba63ea"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:11": [
+      "web_search-4da01bec58efaa48"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:10": [
-      "web_search-eaf5be13cbba63ea"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:12": [
+      "web_search-3e83dc1ebbff68a5"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:11": [
-      "web_search-eaf5be13cbba63ea"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:13": [
+      "fetch_page-28dfde9966de8db5"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:13": [
-      "web_search-682591ffe58308ec"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:14": [
+      "fetch_page-28dfde9966de8db5"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:14": [
-      "web_search-17114fff799beb5f"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:15": [
+      "fetch_page-28dfde9966de8db5"
     ],
-    "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:15": [
-      "web_search-1d63fe1548e79d89"
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:16": [
+      "fetch_page-088245c9cd340794"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:17": [
+      "fetch_page-088245c9cd340794"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:18": [
+      "fetch_page-088245c9cd340794"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:19": [
+      "fetch_page-9222e8f427ce9266"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:20": [
+      "fetch_page-9222e8f427ce9266"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:21": [
+      "fetch_page-9222e8f427ce9266"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:22": [
+      "fetch_page-b316e3288f113609"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:23": [
+      "fetch_page-b316e3288f113609"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:25": [
+      "fetch_page-c4b75a9029d30f00"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:26": [
+      "fetch_page-c4b75a9029d30f00"
+    ],
+    "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:27": [
+      "fetch_page-21761aed44cbf814"
     ]
   },
   "research_graph": {
-    "nodes": [],
-    "edges": []
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "The Doctor is trapped inside an ever-shifting maze in Series 9, Episode 11 of Doctor Who.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "The Doctor is trapped inside his confession dial in the episode Heaven Sent.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "The castle prison in the episode was the Doctor's confession dial, made bigger on the inside using time or technology.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "The episode Heaven Sent is set inside the confession dial.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "The episode is titled 'Heaven Sent' and originally aired on 28 Nov 2015.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "The first scene heading in the script is '[Teleport chamber room]'.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "The Doctor appears in a teleport chamber after a blackened hand pulls a lever and turns to dust.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-16",
+        "kind": "claim",
+        "label": "The Doctor determines the equipment in the room is consistent with an augmented ultra long-range teleport.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-17",
+        "kind": "claim",
+        "label": "The Doctor says he is not more than a single light year from where he was and is in the same time zone.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-18",
+        "kind": "claim",
+        "label": "The Doctor encounters a hunchbacked figure in pale grey veils, referred to as the Veil of the cast list.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-19",
+        "kind": "claim",
+        "label": "The Doctor opens a door to reveal a solid wall just a pace behind it.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "The episode is titled 'Heaven Sent'.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-20",
+        "kind": "claim",
+        "label": "The Doctor sees sections of the walls rotating in opposite directions with the uppermost faster than the lower ones.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-21",
+        "kind": "claim",
+        "label": "The Doctor enters a room revealed after the walls rotate, with the scene heading '[Bedroom]'.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-22",
+        "kind": "claim",
+        "label": "In the bedroom, the Doctor sees a portrait of Clara Oswald hanging over the fireplace.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-23",
+        "kind": "claim",
+        "label": "The Doctor dives through a broken window and bursts into the Tardis.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-24",
+        "kind": "claim",
+        "label": "The location in Series 9, Episode 11 where the Doctor is trapped in an ever-shifting maze is called 'Heaven Sent' in the official script.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-25",
+        "kind": "claim",
+        "label": "The Doctor describes the location as 'a fully automated haunted house. A mechanical maze.'",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-26",
+        "kind": "claim",
+        "label": "The Doctor describes the location as 'a killer puzzle box designed to scare me to death, and I'm trapped inside it.'",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-27",
+        "kind": "claim",
+        "label": "The Doctor walks through the great hall of Caerphilly Castle.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "The Doctor is imprisoned in a waterlocked castle by his people, the Time Lords.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The castle is revealed to be the Doctor's confession dial.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "The location in Series 9, Episode 11 of Doctor Who where the Doctor is trapped inside an ever-shifting maze is called the confession dial.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "The location where the Doctor is trapped in the ever-shifting maze is called the 'confession dial' in the episode.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "The Doctor is trapped inside a 'killer puzzle box' in the episode.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "The maze is described as an 'ever-shifting maze' in the episode.",
+        "properties": {
+          "support_status": "unsupported",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "The Doctor is trapped inside an empty castle in the episode.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "Introduction to Heaven Sent - Doctor Who: Series 9 Episode 11 (2015) - BBC",
+        "properties": {
+          "document_version_id": "web_search-8b21a64bff84e7b1"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "Heaven Sent (TV story)",
+        "properties": {
+          "document_version_id": "web_search-4caaa52fdb313365"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "Heaven Sent: Doctor Who's Ultimate Masterpiece",
+        "properties": {
+          "document_version_id": "web_search-4da01bec58efaa48"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "How We Designed The Castle: Heaven Sent Doctor Who - YouTube",
+        "properties": {
+          "document_version_id": "web_search-3e83dc1ebbff68a5"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-28dfde9966de8db5"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-28dfde9966de8db5"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-28dfde9966de8db5"
+        }
+      },
+      {
+        "node_id": "source-16-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-088245c9cd340794"
+        }
+      },
+      {
+        "node_id": "source-17-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-088245c9cd340794"
+        }
+      },
+      {
+        "node_id": "source-18-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-088245c9cd340794"
+        }
+      },
+      {
+        "node_id": "source-19-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-9222e8f427ce9266"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "Heaven Sent · Doctor Who S9 • Episode 11 · TARDIS Guide",
+        "properties": {
+          "document_version_id": "web_search-9b2337240d234f5b"
+        }
+      },
+      {
+        "node_id": "source-20-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-9222e8f427ce9266"
+        }
+      },
+      {
+        "node_id": "source-21-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-9222e8f427ce9266"
+        }
+      },
+      {
+        "node_id": "source-22-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-b316e3288f113609"
+        }
+      },
+      {
+        "node_id": "source-23-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-b316e3288f113609"
+        }
+      },
+      {
+        "node_id": "source-24-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-beaced88a880655a"
+        }
+      },
+      {
+        "node_id": "source-25-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-c4b75a9029d30f00"
+        }
+      },
+      {
+        "node_id": "source-26-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-c4b75a9029d30f00"
+        }
+      },
+      {
+        "node_id": "source-27-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "fetch_page-21761aed44cbf814"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Heaven Sent (Doctor Who) - Wikipedia",
+        "properties": {
+          "document_version_id": "web_search-4021c324eebef4fd"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "Doctor Who Recap: Season 9, Episode 11, “Heaven Sent” - Slant Magazine",
+        "properties": {
+          "document_version_id": "web_search-14fc864d98550c5b"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "The Doctor Who Transcripts - Heaven Sent",
+        "properties": {
+          "document_version_id": "web_search-0992844313991000"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "Heaven Sent (Doctor Who)",
+        "properties": {
+          "document_version_id": "web_search-697391c238f29edf"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "Heaven Sent - The Doctor Who Transcripts",
+        "properties": {
+          "document_version_id": "web_search-0ac10f7265ea4501"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "Heaven Sent: Doctor Who's Ultimate Masterpiece",
+        "properties": {
+          "document_version_id": "web_search-27da4bc4f4aa9613"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "Heaven Sent (Doctor Who)",
+        "properties": {
+          "document_version_id": "web_search-697391c238f29edf"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-16-1",
+        "source_node_id": "claim-16",
+        "target_node_id": "source-16-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:16"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-17-1",
+        "source_node_id": "claim-17",
+        "target_node_id": "source-17-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:17"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-18-1",
+        "source_node_id": "claim-18",
+        "target_node_id": "source-18-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:18"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-19-1",
+        "source_node_id": "claim-19",
+        "target_node_id": "source-19-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:19"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-20-1",
+        "source_node_id": "claim-20",
+        "target_node_id": "source-20-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:20"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-21-1",
+        "source_node_id": "claim-21",
+        "target_node_id": "source-21-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:21"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-22-1",
+        "source_node_id": "claim-22",
+        "target_node_id": "source-22-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:22"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-23-1",
+        "source_node_id": "claim-23",
+        "target_node_id": "source-23-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:23"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-24-1",
+        "source_node_id": "claim-24",
+        "target_node_id": "source-24-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:24"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-25-1",
+        "source_node_id": "claim-25",
+        "target_node_id": "source-25-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:25"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-26-1",
+        "source_node_id": "claim-26",
+        "target_node_id": "source-26-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:26"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-27-1",
+        "source_node_id": "claim-27",
+        "target_node_id": "source-27-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:27"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T123436Z-4fb72c1d:span:research-01-in-series-9-episode-11-of-doctor-who:09"
+        ],
+        "properties": {}
+      }
+    ]
   },
   "sources": [
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:01",
-      "uri": "https://www.scribd.com/document/722109152/doctor-who-script-9-11",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:01",
+      "uri": "https://www.youtube.com/watch?v=-2Tp81jyaJU",
       "media_type": "text/markdown",
-      "content_sha256": "fbd5391147bc53d14da1daf9ed5be3b261061f5c83069c0fe3670b686c09b514",
+      "content_sha256": "8b21a64bff84e7b1a792c7a56f9527463e033514397b060c3c9d125769459512",
       "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
       "metadata": {
-        "document_version_id": "web_search-fbd5391147bc53d1",
+        "document_version_id": "web_search-8b21a64bff84e7b1",
         "critical_claims_allowed": true,
-        "source_title": "Heaven Sent: Episode 11 Script | PDF | The Doctor (Doctor Who) - Scribd",
+        "source_title": "Introduction to Heaven Sent - Doctor Who: Series 9 Episode 11 (2015) - BBC",
         "tool": "web_search",
         "source_kind": "snippet"
       }
     },
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:02",
-      "uri": "https://kneelbeforeblog.co.uk/tv/doctor-who-heaven-sent",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:02",
+      "uri": "https://tardis.guide/story/heaven-sent",
       "media_type": "text/markdown",
-      "content_sha256": "30650a43c7297e562bac35586f687461072298566493cce7b8f1aece8320d770",
+      "content_sha256": "9b2337240d234f5b141e2d4a6c209916170ce04e5935b2d56cd573f7f37335f2",
       "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
       "metadata": {
-        "document_version_id": "web_search-30650a43c7297e56",
+        "document_version_id": "web_search-9b2337240d234f5b",
         "critical_claims_allowed": true,
-        "source_title": "Kneel Before Blog - Doctor Who - Heaven Sent",
+        "source_title": "Heaven Sent · Doctor Who S9 • Episode 11 · TARDIS Guide",
         "tool": "web_search",
         "source_kind": "snippet"
       }
     },
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:03",
-      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:03",
+      "uri": "https://www.slantmagazine.com/tv/doctor-who-recap-season-9-episode-11-heaven-sent",
       "media_type": "text/markdown",
-      "content_sha256": "7d52216133cd0d9659b9336c7ac57ab6772389cc45202f79cf7ce36808d72265",
+      "content_sha256": "14fc864d98550c5b1743f0136feb288773b7a31620bd0037d5f4642663dc0b85",
       "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
       "metadata": {
-        "document_version_id": "web_search-7d52216133cd0d96",
+        "document_version_id": "web_search-14fc864d98550c5b",
         "critical_claims_allowed": true,
-        "source_title": "Heaven Sent (TV story) - Tardis | Fandom",
+        "source_title": "Doctor Who Recap: Season 9, Episode 11, “Heaven Sent” - Slant Magazine",
         "tool": "web_search",
         "source_kind": "snippet"
       }
     },
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:04",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:04",
       "uri": "https://en.wikipedia.org/wiki/Heaven_Sent_(Doctor_Who)",
       "media_type": "text/markdown",
-      "content_sha256": "b8a73fc9397f41f9ab27d42eedf85d36165f125cc850d50d865df535307f08b6",
+      "content_sha256": "4021c324eebef4fd829af306b6967d400c4718bfb6de6fa0c5b2aeb9bc158ec9",
       "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
       "metadata": {
-        "document_version_id": "web_search-b8a73fc9397f41f9",
+        "document_version_id": "web_search-4021c324eebef4fd",
         "critical_claims_allowed": true,
         "source_title": "Heaven Sent (Doctor Who) - Wikipedia",
         "tool": "web_search",
@@ -390,13 +1352,13 @@
       }
     },
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:05",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:05",
       "uri": "https://www.instagram.com/popular/heaven-sent-doctor-who-script-first-scene-heading-location",
       "media_type": "text/markdown",
-      "content_sha256": "3501edfb9183f68e48b690041b6444193adafd303dae66ee16b4fc49b622b30d",
+      "content_sha256": "9902a76dfab7b8b73f0533028e4a5ef061c9d124872193c407b04c54c7d1b925",
       "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
       "metadata": {
-        "document_version_id": "web_search-3501edfb9183f68e",
+        "document_version_id": "web_search-9902a76dfab7b8b7",
         "critical_claims_allowed": true,
         "source_title": "Heaven Sent Doctor Who Script First Scene Heading Location",
         "tool": "web_search",
@@ -404,133 +1366,7 @@
       }
     },
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:06",
-      "uri": "https://www.tumblr.com/racheltalalay/135339295759/notes-on-heaven-sent-part-1",
-      "media_type": "text/markdown",
-      "content_sha256": "655613ff2c619555f30846b738a22e1c755bebaab18248b3c1c8a1f880ea7e45",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-655613ff2c619555",
-        "critical_claims_allowed": true,
-        "source_title": "Notes on Heaven Sent, Part 1 – @racheltalalay on Tumblr",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:07",
-      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
-      "media_type": "text/markdown",
-      "content_sha256": "eaf5be13cbba63ea0bf27ea09700944a96daccf1ca50e1882c995c328a4127cb",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-eaf5be13cbba63ea",
-        "critical_claims_allowed": true,
-        "source_title": "Heaven Sent (TV story) - Tardis | Fandom",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:08",
-      "uri": "http://www.shannonsullivan.com/drwho/serials/2015k.html",
-      "media_type": "text/markdown",
-      "content_sha256": "9c8121367edb78567d84591c130544dfec6e9eb12bb8342c2a7698a0b315774f",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-9c8121367edb7856",
-        "critical_claims_allowed": true,
-        "source_title": "Heaven Sent | A Brief History Of Time (Travel)",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:09",
-      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
-      "media_type": "text/markdown",
-      "content_sha256": "cc6a64a04d1c2be0f6857c3f71f04c812053d76c29a46a77f8c3f92b412c2324",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-cc6a64a04d1c2be0",
-        "critical_claims_allowed": true,
-        "source_title": "Heaven Sent (TV story) - Tardis | Fandom",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:10",
-      "uri": "https://www.tumblr.com/racheltalalay/135339295759/notes-on-heaven-sent-part-1",
-      "media_type": "text/markdown",
-      "content_sha256": "d1518f43b082a004562c1c453d6ecbbf8099d571c5cf4bd0c3964823b4633c52",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-d1518f43b082a004",
-        "critical_claims_allowed": true,
-        "source_title": "Notes on Heaven Sent, Part 1 – @racheltalalay on Tumblr",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:11",
-      "uri": "https://tardis.guide/story/heaven-sent",
-      "media_type": "text/markdown",
-      "content_sha256": "682591ffe58308eccc428feff58d19c874827aee022c7c6c306782fdaf6566b5",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-682591ffe58308ec",
-        "critical_claims_allowed": true,
-        "source_title": "Heaven Sent · Doctor Who S9 • Episode 11",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:12",
-      "uri": "http://www.warpedfactor.com/2016/10/doctor-who-moffat-scripts-heaven-sent.html",
-      "media_type": "text/markdown",
-      "content_sha256": "998704540cc1b2c3aa6ac3305c2103d6edae028141a0731bbc992c5de68569cf",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-998704540cc1b2c3",
-        "critical_claims_allowed": true,
-        "source_title": "Doctor Who: The Moffat Scripts – HEAVEN SENT / HELL BENT - Warped Factor - Words in the Key of Geek.",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:13",
-      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
-      "media_type": "text/markdown",
-      "content_sha256": "1d63fe1548e79d8974134d5c6a3ebd0fb9078bf84e7ac69e6128d1253c7903f2",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-1d63fe1548e79d89",
-        "critical_claims_allowed": true,
-        "source_title": "Heaven Sent (TV story) - Tardis | Fandom",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:14",
-      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
-      "media_type": "text/markdown",
-      "content_sha256": "17114fff799beb5fd32135d34100bab255ded018032e7eef3f55a9bf84927487",
-      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
-      "metadata": {
-        "document_version_id": "web_search-17114fff799beb5f",
-        "critical_claims_allowed": true,
-        "source_title": "Heaven Sent - The Doctor Who Transcripts",
-        "tool": "web_search",
-        "source_kind": "snippet"
-      }
-    },
-    {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:15",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:06",
       "uri": "http://www.shannonsullivan.com/drwho/serials/2015k.html",
       "media_type": "text/markdown",
       "content_sha256": "4aa700b00b1a9faf2d40b25f19bc172ec53f20bd6bf746786827bd83907f3e5e",
@@ -544,121 +1380,439 @@
       }
     },
     {
-      "artifact_id": "20260814T100007Z-90ba41df:research-01-in-series-9-episode-11-of-doctor-who:src:16",
-      "uri": "https://www.tumblr.com/racheltalalay/135339295759/notes-on-heaven-sent-part-1",
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:07",
+      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
       "media_type": "text/markdown",
-      "content_sha256": "ecfbdde7d6470a9e5419b27656a7db39d4e1a04a8290f27b2101f11372c41eb3",
+      "content_sha256": "e6645100356702f995b986b812e2effff2a9168f354701c02a81333b4efce50b",
       "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
       "metadata": {
-        "document_version_id": "web_search-ecfbdde7d6470a9e",
+        "document_version_id": "web_search-e6645100356702f9",
         "critical_claims_allowed": true,
-        "source_title": "Notes on Heaven Sent, Part 1 – @racheltalalay on Tumblr",
+        "source_title": "Heaven Sent (TV story)",
         "tool": "web_search",
         "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:08",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "0992844313991000678cbf52dfedf4c79c9a60ce187dd488a96e14cfe99e2757",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-0992844313991000",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:09",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "0ac10f7265ea45019a6d72f180ece0ae45b54602b66998b5ee1af5eca9b12d49",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-0ac10f7265ea4501",
+        "critical_claims_allowed": true,
+        "source_title": "Heaven Sent - The Doctor Who Transcripts",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:10",
+      "uri": "https://www.youtube.com/watch?v=3U6OpboMOq4",
+      "media_type": "text/markdown",
+      "content_sha256": "27da4bc4f4aa9613b1b02c1cc61387009abb3da337f356e57f5b07ab2fe0ee3b",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-27da4bc4f4aa9613",
+        "critical_claims_allowed": true,
+        "source_title": "Heaven Sent: Doctor Who's Ultimate Masterpiece",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:11",
+      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
+      "media_type": "text/markdown",
+      "content_sha256": "02a674f493e638fc65f5fcd0502e773bc9b89179155e3149e33830dffe074268",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-02a674f493e638fc",
+        "critical_claims_allowed": true,
+        "source_title": "Heaven Sent (TV story)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:12",
+      "uri": "https://en.wikipedia.org/wiki/Heaven_Sent_(Doctor_Who)",
+      "media_type": "text/markdown",
+      "content_sha256": "697391c238f29edf6d19e2732729701fc697593b4def097eac04844ebaa759c6",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-697391c238f29edf",
+        "critical_claims_allowed": true,
+        "source_title": "Heaven Sent (Doctor Who)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:13",
+      "uri": "https://tardis.fandom.com/wiki/Heaven_Sent_(TV_story)",
+      "media_type": "text/markdown",
+      "content_sha256": "4caaa52fdb313365ee564b2781213da443fe0098de91cdebd16f6db94cd4c077",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-4caaa52fdb313365",
+        "critical_claims_allowed": true,
+        "source_title": "Heaven Sent (TV story)",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:14",
+      "uri": "https://www.youtube.com/watch?v=3U6OpboMOq4",
+      "media_type": "text/markdown",
+      "content_sha256": "4da01bec58efaa488e1fc191fa9fb2c846014f4a1e4e4af11f859a28bd5d2da5",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-4da01bec58efaa48",
+        "critical_claims_allowed": true,
+        "source_title": "Heaven Sent: Doctor Who's Ultimate Masterpiece",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:15",
+      "uri": "https://www.youtube.com/watch?v=ADDARet1HM4",
+      "media_type": "text/markdown",
+      "content_sha256": "3e83dc1ebbff68a5592e9f0c4ff772d181ac114e68375253e3c177cd642c46d1",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-3e83dc1ebbff68a5",
+        "critical_claims_allowed": true,
+        "source_title": "How We Designed The Castle: Heaven Sent Doctor Who - YouTube",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:16",
+      "uri": "https://screenplay.com/pages/ask-dr-format",
+      "media_type": "text/markdown",
+      "content_sha256": "399c56fde9312a407803c9b2f6ec10a889925ef05275abff22e3efbec30598a7",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "web_search-399c56fde9312a40",
+        "critical_claims_allowed": true,
+        "source_title": "Ask Dr. Format – Screenplay.com",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:17",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "28dfde9966de8db5cd6583b391b46ee0f3d5db4b95813910cf6859dcb653edfe",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-28dfde9966de8db5",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 2000
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:18",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "088245c9cd340794ee20a9303d50229be0d7389d925f2e431bef357f64e4f2c8",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-088245c9cd340794",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 1,
+        "char_start": 1800,
+        "char_end": 3800
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:19",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "9222e8f427ce9266e4c85d140f0599bbe8bccd04d37a3dc0f7694b11445df6b8",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-9222e8f427ce9266",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 2,
+        "char_start": 3600,
+        "char_end": 5600
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:20",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "b316e3288f113609e0d561cd5694330e7780c0f9744413607445f80d5061cd8a",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-b316e3288f113609",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 3,
+        "char_start": 5400,
+        "char_end": 7400
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:21",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "beaced88a880655a835c4c8e69d30cb6438a66cb75fcecd295e3f9c773bf0425",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-beaced88a880655a",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 4,
+        "char_start": 7200,
+        "char_end": 9200
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:22",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "21761aed44cbf814f5e76d52d94fb58749a9cb79c40320ce71648e1f29a18b0c",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-21761aed44cbf814",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 5,
+        "char_start": 9000,
+        "char_end": 11000
+      }
+    },
+    {
+      "artifact_id": "20260814T123436Z-4fb72c1d:research-01-in-series-9-episode-11-of-doctor-who:src:23",
+      "uri": "http://www.chakoteya.net/DoctorWho/35-11.html",
+      "media_type": "text/markdown",
+      "content_sha256": "c4b75a9029d30f0006d3abf307794b0e49a149b84bd3213db8aba53988abdc66",
+      "created_by_task_id": "research-01-in-series-9-episode-11-of-doctor-who",
+      "metadata": {
+        "document_version_id": "fetch_page-c4b75a9029d30f00",
+        "critical_claims_allowed": true,
+        "source_title": "The Doctor Who Transcripts - Heaven Sent",
+        "tool": "fetch_page",
+        "source_kind": "page_chunk",
+        "chunk_index": 6,
+        "char_start": 10800,
+        "char_end": 12000
       }
     }
   ],
   "audit_summary": {
     "accepted_claim_ids": [
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:02",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:03",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:04",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:05",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:06",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:08",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:09",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:10",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:11",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:13",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:14",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:15"
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:02",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:03",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:04",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:06",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:10",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:11",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:12",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:13",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:14",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:15",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:16",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:17",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:18",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:19",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:20",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:21",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:22",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:23",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:25",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:26",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:27"
     ],
-    "qualified_claim_ids": [],
+    "qualified_claim_ids": [
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09"
+    ],
     "contradicted_claim_ids": [],
     "unsupported_claim_ids": [
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:12"
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:05",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:08",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:24"
     ],
     "executive_summary_claim_ids": [
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:02",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:03",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:04",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:05",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:06",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:08",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:09",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:10",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:11",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:13",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:14",
-      "20260814T100007Z-90ba41df:claim:research-01-in-series-9-episode-11-of-doctor-who:15"
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:02",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:03",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:04",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:06",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:10",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:11",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:12",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:13",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:14",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:15",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:16",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:17",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:18",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:19",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:20",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:21",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:22",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:23",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:25",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:26",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:27"
     ],
-    "degradations": {},
-    "semantic_disagreements": [],
-    "unresolved_claim_ids": []
+    "degradations": {
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01": "critic_unresolved",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:05": "critic_unresolved",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07": "critic_unresolved",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09": "critic_unresolved",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:24": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:05"
+      ],
+      [
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:24"
+      ],
+      [
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:05",
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:24"
+      ],
+      [
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
+        "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:01",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:05",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:07",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:09",
+      "20260814T123436Z-4fb72c1d:claim:research-01-in-series-9-episode-11-of-doctor-who:24"
+    ]
   },
   "corpus_manifest": {
-    "manifest_id": "corpus:20260814T100007Z-90ba41df",
+    "manifest_id": "corpus:20260814T123436Z-4fb72c1d",
     "document_version_ids": [
-      "web_search-17114fff799beb5f",
-      "web_search-1d63fe1548e79d89",
-      "web_search-30650a43c7297e56",
-      "web_search-3501edfb9183f68e",
+      "fetch_page-088245c9cd340794",
+      "fetch_page-21761aed44cbf814",
+      "fetch_page-28dfde9966de8db5",
+      "fetch_page-9222e8f427ce9266",
+      "fetch_page-b316e3288f113609",
+      "fetch_page-beaced88a880655a",
+      "fetch_page-c4b75a9029d30f00",
+      "web_search-02a674f493e638fc",
+      "web_search-0992844313991000",
+      "web_search-0ac10f7265ea4501",
+      "web_search-14fc864d98550c5b",
+      "web_search-27da4bc4f4aa9613",
+      "web_search-399c56fde9312a40",
+      "web_search-3e83dc1ebbff68a5",
+      "web_search-4021c324eebef4fd",
       "web_search-4aa700b00b1a9faf",
-      "web_search-655613ff2c619555",
-      "web_search-682591ffe58308ec",
-      "web_search-7d52216133cd0d96",
-      "web_search-998704540cc1b2c3",
-      "web_search-9c8121367edb7856",
-      "web_search-b8a73fc9397f41f9",
-      "web_search-cc6a64a04d1c2be0",
-      "web_search-d1518f43b082a004",
-      "web_search-eaf5be13cbba63ea",
-      "web_search-ecfbdde7d6470a9e",
-      "web_search-fbd5391147bc53d1"
+      "web_search-4caaa52fdb313365",
+      "web_search-4da01bec58efaa48",
+      "web_search-697391c238f29edf",
+      "web_search-8b21a64bff84e7b1",
+      "web_search-9902a76dfab7b8b7",
+      "web_search-9b2337240d234f5b",
+      "web_search-e6645100356702f9"
     ],
     "content_hashes": {
-      "web_search-fbd5391147bc53d1": "fbd5391147bc53d14da1daf9ed5be3b261061f5c83069c0fe3670b686c09b514",
-      "web_search-30650a43c7297e56": "30650a43c7297e562bac35586f687461072298566493cce7b8f1aece8320d770",
-      "web_search-7d52216133cd0d96": "7d52216133cd0d9659b9336c7ac57ab6772389cc45202f79cf7ce36808d72265",
-      "web_search-b8a73fc9397f41f9": "b8a73fc9397f41f9ab27d42eedf85d36165f125cc850d50d865df535307f08b6",
-      "web_search-3501edfb9183f68e": "3501edfb9183f68e48b690041b6444193adafd303dae66ee16b4fc49b622b30d",
-      "web_search-655613ff2c619555": "655613ff2c619555f30846b738a22e1c755bebaab18248b3c1c8a1f880ea7e45",
-      "web_search-eaf5be13cbba63ea": "eaf5be13cbba63ea0bf27ea09700944a96daccf1ca50e1882c995c328a4127cb",
-      "web_search-9c8121367edb7856": "9c8121367edb78567d84591c130544dfec6e9eb12bb8342c2a7698a0b315774f",
-      "web_search-cc6a64a04d1c2be0": "cc6a64a04d1c2be0f6857c3f71f04c812053d76c29a46a77f8c3f92b412c2324",
-      "web_search-d1518f43b082a004": "d1518f43b082a004562c1c453d6ecbbf8099d571c5cf4bd0c3964823b4633c52",
-      "web_search-682591ffe58308ec": "682591ffe58308eccc428feff58d19c874827aee022c7c6c306782fdaf6566b5",
-      "web_search-998704540cc1b2c3": "998704540cc1b2c3aa6ac3305c2103d6edae028141a0731bbc992c5de68569cf",
-      "web_search-1d63fe1548e79d89": "1d63fe1548e79d8974134d5c6a3ebd0fb9078bf84e7ac69e6128d1253c7903f2",
-      "web_search-17114fff799beb5f": "17114fff799beb5fd32135d34100bab255ded018032e7eef3f55a9bf84927487",
+      "web_search-8b21a64bff84e7b1": "8b21a64bff84e7b1a792c7a56f9527463e033514397b060c3c9d125769459512",
+      "web_search-9b2337240d234f5b": "9b2337240d234f5b141e2d4a6c209916170ce04e5935b2d56cd573f7f37335f2",
+      "web_search-14fc864d98550c5b": "14fc864d98550c5b1743f0136feb288773b7a31620bd0037d5f4642663dc0b85",
+      "web_search-4021c324eebef4fd": "4021c324eebef4fd829af306b6967d400c4718bfb6de6fa0c5b2aeb9bc158ec9",
+      "web_search-9902a76dfab7b8b7": "9902a76dfab7b8b73f0533028e4a5ef061c9d124872193c407b04c54c7d1b925",
       "web_search-4aa700b00b1a9faf": "4aa700b00b1a9faf2d40b25f19bc172ec53f20bd6bf746786827bd83907f3e5e",
-      "web_search-ecfbdde7d6470a9e": "ecfbdde7d6470a9e5419b27656a7db39d4e1a04a8290f27b2101f11372c41eb3"
+      "web_search-e6645100356702f9": "e6645100356702f995b986b812e2effff2a9168f354701c02a81333b4efce50b",
+      "web_search-0992844313991000": "0992844313991000678cbf52dfedf4c79c9a60ce187dd488a96e14cfe99e2757",
+      "web_search-0ac10f7265ea4501": "0ac10f7265ea45019a6d72f180ece0ae45b54602b66998b5ee1af5eca9b12d49",
+      "web_search-27da4bc4f4aa9613": "27da4bc4f4aa9613b1b02c1cc61387009abb3da337f356e57f5b07ab2fe0ee3b",
+      "web_search-02a674f493e638fc": "02a674f493e638fc65f5fcd0502e773bc9b89179155e3149e33830dffe074268",
+      "web_search-697391c238f29edf": "697391c238f29edf6d19e2732729701fc697593b4def097eac04844ebaa759c6",
+      "web_search-4caaa52fdb313365": "4caaa52fdb313365ee564b2781213da443fe0098de91cdebd16f6db94cd4c077",
+      "web_search-4da01bec58efaa48": "4da01bec58efaa488e1fc191fa9fb2c846014f4a1e4e4af11f859a28bd5d2da5",
+      "web_search-3e83dc1ebbff68a5": "3e83dc1ebbff68a5592e9f0c4ff772d181ac114e68375253e3c177cd642c46d1",
+      "web_search-399c56fde9312a40": "399c56fde9312a407803c9b2f6ec10a889925ef05275abff22e3efbec30598a7",
+      "fetch_page-28dfde9966de8db5": "28dfde9966de8db5cd6583b391b46ee0f3d5db4b95813910cf6859dcb653edfe",
+      "fetch_page-088245c9cd340794": "088245c9cd340794ee20a9303d50229be0d7389d925f2e431bef357f64e4f2c8",
+      "fetch_page-9222e8f427ce9266": "9222e8f427ce9266e4c85d140f0599bbe8bccd04d37a3dc0f7694b11445df6b8",
+      "fetch_page-b316e3288f113609": "b316e3288f113609e0d561cd5694330e7780c0f9744413607445f80d5061cd8a",
+      "fetch_page-beaced88a880655a": "beaced88a880655a835c4c8e69d30cb6438a66cb75fcecd295e3f9c773bf0425",
+      "fetch_page-21761aed44cbf814": "21761aed44cbf814f5e76d52d94fb58749a9cb79c40320ce71648e1f29a18b0c",
+      "fetch_page-c4b75a9029d30f00": "c4b75a9029d30f0006d3abf307794b0e49a149b84bd3213db8aba53988abdc66"
     },
     "critical_claims_allowed": {
-      "web_search-fbd5391147bc53d1": true,
-      "web_search-30650a43c7297e56": true,
-      "web_search-7d52216133cd0d96": true,
-      "web_search-b8a73fc9397f41f9": true,
-      "web_search-3501edfb9183f68e": true,
-      "web_search-655613ff2c619555": true,
-      "web_search-eaf5be13cbba63ea": true,
-      "web_search-9c8121367edb7856": true,
-      "web_search-cc6a64a04d1c2be0": true,
-      "web_search-d1518f43b082a004": true,
-      "web_search-682591ffe58308ec": true,
-      "web_search-998704540cc1b2c3": true,
-      "web_search-1d63fe1548e79d89": true,
-      "web_search-17114fff799beb5f": true,
+      "web_search-8b21a64bff84e7b1": true,
+      "web_search-9b2337240d234f5b": true,
+      "web_search-14fc864d98550c5b": true,
+      "web_search-4021c324eebef4fd": true,
+      "web_search-9902a76dfab7b8b7": true,
       "web_search-4aa700b00b1a9faf": true,
-      "web_search-ecfbdde7d6470a9e": true
+      "web_search-e6645100356702f9": true,
+      "web_search-0992844313991000": true,
+      "web_search-0ac10f7265ea4501": true,
+      "web_search-27da4bc4f4aa9613": true,
+      "web_search-02a674f493e638fc": true,
+      "web_search-697391c238f29edf": true,
+      "web_search-4caaa52fdb313365": true,
+      "web_search-4da01bec58efaa48": true,
+      "web_search-3e83dc1ebbff68a5": true,
+      "web_search-399c56fde9312a40": true,
+      "fetch_page-28dfde9966de8db5": true,
+      "fetch_page-088245c9cd340794": true,
+      "fetch_page-9222e8f427ce9266": true,
+      "fetch_page-b316e3288f113609": true,
+      "fetch_page-beaced88a880655a": true,
+      "fetch_page-21761aed44cbf814": true,
+      "fetch_page-c4b75a9029d30f00": true
     }
   },
   "run_manifest": {
-    "job_id": "20260814T100007Z-90ba41df",
-    "status": "failed"
+    "job_id": "20260814T123436Z-4fb72c1d",
+    "status": "completed"
   }
 }

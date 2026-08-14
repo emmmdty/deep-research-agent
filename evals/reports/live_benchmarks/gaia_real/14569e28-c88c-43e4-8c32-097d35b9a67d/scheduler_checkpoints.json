@@ -1,61 +1,201 @@
 [
   {
-    "checkpoint_id": "20260814T095626Z-3c1249b4:task-checkpoint:000001",
-    "job_id": "20260814T095626Z-3c1249b4",
+    "checkpoint_id": "20260814T123208Z-039d0ef8:task-checkpoint:000001",
+    "job_id": "20260814T123208Z-039d0ef8",
     "task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
     "sequence": 1,
     "attempt": 1,
     "result": {
       "task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-      "job_id": "20260814T095626Z-3c1249b4",
+      "job_id": "20260814T123208Z-039d0ef8",
       "status": "completed",
       "evidence_packets": [
         {
-          "packet_id": "20260814T095626Z-3c1249b4:packet:research-01-in-unlambda-what-exact-charcter-or-t",
+          "packet_id": "20260814T123208Z-039d0ef8:packet:research-01-in-unlambda-what-exact-charcter-or-t",
           "task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "evidence_spans": [
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:01",
-              "document_version_id": "web_search-cb9be882069568d9",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:01",
+              "document_version_id": "web_search-0960397730285581",
               "page": null,
               "section": "The Unlambda Programming Language",
               "start_offset": null,
               "end_offset": null,
-              "quote": "The `.x` function is the only way to perform",
+              "quote": "the backquote (ASCII number 96=0x60). The backquote represents Unlambda's apply operation.",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:02",
-              "document_version_id": "web_search-cb9be882069568d9",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:02",
+              "document_version_id": "web_search-0960397730285581",
               "page": null,
               "section": "The Unlambda Programming Language",
               "start_offset": null,
               "end_offset": null,
-              "quote": "it has a side effect, namely to print the character",
+              "quote": "the most common character (essentially, it makes up half of any Unlambda program) is the backquote",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:03",
-              "document_version_id": "web_search-f1540f7d62372370",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:03",
+              "document_version_id": "web_search-291b366f7e1686ec",
               "page": null,
-              "section": "thomcc/unlambda-clj: Unlambda in Clojure!",
+              "section": "Unlambda in K",
               "start_offset": null,
               "end_offset": null,
-              "quote": "`r`: Shorthand for `.`. That is, `r` prints a newline, and returns its argument.",
+              "quote": "contains only a handful of primitives: ` (binary function application) s k i (the Curry combinators) v (self-reference) d (lazy evaluation) c (call-with-current-continuation) r (print new line) and 256 single-character printing functions .x",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:04",
-              "document_version_id": "web_search-f1540f7d62372370",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:04",
+              "document_version_id": "web_search-f66aa2e07de9c48d",
               "page": null,
-              "section": "thomcc/unlambda-clj: Unlambda in Clojure!",
+              "section": "Unlambda - Wikipedia",
               "start_offset": null,
               "end_offset": null,
-              "quote": "`e`: Exit. Halts evaluation, returning its argument as the result of the program.",
+              "quote": "Unlambda is a minimal, \"nearly pure\" functional programming language invented by David Madore.",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:05",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:05",
+              "document_version_id": "web_search-f66aa2e07de9c48d",
+              "page": null,
+              "section": "Unlambda - Wikipedia",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "It relies mainly on two built-in functions (`s` and `k`) and an apply operator (written ```, the backquote character).",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:06",
+              "document_version_id": "web_search-2a954f013cef1741",
+              "page": null,
+              "section": "Unlambda - Esolang",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The ``` prefix operator is used to apply a function to an argument; if f and x are expressions, then ``fx` is an expression that applies f to the argument x.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:07",
+              "document_version_id": "web_search-fafce48050ad38ee",
+              "page": null,
+              "section": "The Unlambda Programming Language",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the backquote (ASCII number 96=0x60). The backquote represents Unlambda's apply operation.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:08",
+              "document_version_id": "web_search-fafce48050ad38ee",
+              "page": null,
+              "section": "The Unlambda Programming Language",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the most common character (essentially, it makes up half of any Unlambda program) is the backquote",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:09",
+              "document_version_id": "web_search-9785ec7f6b59dd5b",
+              "page": null,
+              "section": "Unlambda",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Unlambda is written in a parenthesis-free prefix notation. The ``` prefix operator is used to apply a function to an argument",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:10",
+              "document_version_id": "web_search-50f8524944f48526",
+              "page": null,
+              "section": "Implementing Unlambda - Terbium",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "`r` is like `.x`, but prints a line feed instead",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:11",
+              "document_version_id": "web_search-50f8524944f48526",
+              "page": null,
+              "section": "Implementing Unlambda - Terbium",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "`.x`, where x is any letter, behaves like `i` but has the side-effect of printing the letter x when applied",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:12",
+              "document_version_id": "web_search-50f8524944f48526",
+              "page": null,
+              "section": "Implementing Unlambda - Terbium",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "`v` returns itself when applied",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:13",
+              "document_version_id": "web_search-50f8524944f48526",
+              "page": null,
+              "section": "Implementing Unlambda - Terbium",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "`c` is Scheme",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:14",
+              "document_version_id": "web_search-3004a7197a307993",
+              "page": null,
+              "section": "Unlambda in K",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the Unlambda print-character builtin '.' is bound at parse-time to the character which it prints",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:15",
+              "document_version_id": "web_search-3004a7197a307993",
+              "page": null,
+              "section": "Unlambda in K",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Unlambda contains 256 printing functions, one for each character",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:16",
+              "document_version_id": "web_search-c747939a9f8d9503",
+              "page": null,
+              "section": "Assignment 6: Prolog",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The symbol ‘ is an “apply” operator",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:17",
+              "document_version_id": "web_search-c747939a9f8d9503",
+              "page": null,
+              "section": "Assignment 6: Prolog",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "an Unlambda program consists of a string made entirely of the characters s, k, and ‘",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:18",
+              "document_version_id": "web_search-c747939a9f8d9503",
+              "page": null,
+              "section": "Assignment 6: Prolog",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "It is a prefix operator",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:19",
               "document_version_id": "fetch_page-195d5e973d9eadd8",
               "page": null,
               "section": "The Unlambda Programming Language",
@@ -65,159 +205,229 @@
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:06",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:20",
               "document_version_id": "fetch_page-195d5e973d9eadd8",
               "page": null,
               "section": "The Unlambda Programming Language",
               "start_offset": 5400,
               "end_offset": 7400,
-              "quote": "these are the Unlambda printing functions ( r",
+              "quote": "prints a newline",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:07",
-              "document_version_id": "fetch_page-740c854c7e7a5eb0",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:21",
+              "document_version_id": "fetch_page-195d5e973d9eadd8",
               "page": null,
               "section": "The Unlambda Programming Language",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": ".* prints an asterisk",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:22",
+              "document_version_id": "fetch_page-195d5e973d9eadd8",
+              "page": null,
+              "section": "The Unlambda Programming Language",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": "the most common character (essentially, it makes up",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:23",
+              "document_version_id": "fetch_page-d035a2e1694f8105",
+              "page": null,
+              "section": "The Unlambda Programming Language",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "Function application is designated with the backquote (ASCII number",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:24",
+              "document_version_id": "fetch_page-d035a2e1694f8105",
+              "page": null,
+              "section": "The Unlambda Programming Language",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "the r function is but a commodity",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:25",
+              "document_version_id": "fetch_page-2d7bd57cdab67cca",
+              "page": null,
+              "section": "Unlambda - Esolang",
               "start_offset": 0,
               "end_offset": 2000,
-              "quote": ". x",
+              "quote": ". x (where x is any character) takes one argument and returns it, with the \"side effect\" of printing x .",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:08",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:26",
+              "document_version_id": "fetch_page-4abb3b71ec2756f3",
+              "page": null,
+              "section": "The Unlambda Programming Language",
+              "start_offset": 10800,
+              "end_offset": 12000,
+              "quote": "The notation is prefix, in other words,",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:27",
+              "document_version_id": "fetch_page-2d7bd57cdab67cca",
+              "page": null,
+              "section": "Unlambda - Esolang",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "Unlambda is written in a parenthesis-free prefix notation .",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:28",
               "document_version_id": "fetch_page-3aa95fe5f8aa6630",
               "page": null,
               "section": "Unlambda - Esolang",
               "start_offset": 1800,
               "end_offset": 3800,
-              "quote": "d as a function simply takes two arguments and applies the first to the second",
+              "quote": "``d`.xi`.yi evaluates `.yi first",
               "extraction_method": "agent_grounding"
             },
             {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:09",
-              "document_version_id": "fetch_page-3aa95fe5f8aa6630",
-              "page": null,
-              "section": "Unlambda - Esolang",
-              "start_offset": 1800,
-              "end_offset": 3800,
-              "quote": "d as a function simply takes two arguments and applies the first to the second",
-              "extraction_method": "agent_grounding"
-            },
-            {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:10",
-              "document_version_id": "fetch_page-3aa95fe5f8aa6630",
-              "page": null,
-              "section": "Unlambda - Esolang",
-              "start_offset": 1800,
-              "end_offset": 3800,
-              "quote": "``d`.xi`.yi evaluates `.yi first , outputting y and returning i",
-              "extraction_method": "agent_grounding"
-            },
-            {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:11",
-              "document_version_id": "fetch_page-3aa95fe5f8aa6630",
-              "page": null,
-              "section": "Unlambda - Esolang",
-              "start_offset": 1800,
-              "end_offset": 3800,
-              "quote": "d as a function simply takes two arguments and applies the first to the second",
-              "extraction_method": "agent_grounding"
-            },
-            {
-              "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:12",
+              "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:29",
               "document_version_id": "fetch_page-c7dbdcf4021312dc",
               "page": null,
               "section": "Unlambda - Esolang",
               "start_offset": 9000,
               "end_offset": 11000,
-              "quote": "To shorten notation or to make structure sharing explicit, define names for common subexpressions.",
+              "quote": "The Unlambda Programming Language (official website)",
               "extraction_method": "agent_grounding"
             }
           ],
           "claims": [
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:01",
-              "claim": "The `.x` function is the only way to perform output in Unlambda.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:01",
+              "claim": "The backquote character (ASCII number 96=0x60) represents Unlambda's apply operation.",
               "claim_type": "factual_claim",
-              "critical": false,
+              "critical": true,
               "support_status": "accepted",
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:01",
-                  "document_version_id": "web_search-cb9be882069568d9",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:01",
+                  "document_version_id": "web_search-0960397730285581",
                   "page": null,
                   "section": "The Unlambda Programming Language",
                   "start_offset": null,
                   "end_offset": null,
-                  "quote": "The `.x` function is the only way to perform",
+                  "quote": "the backquote (ASCII number 96=0x60). The backquote represents Unlambda's apply operation.",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:02",
-              "claim": "The `.x` function prints the character x on the standard output.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:02",
+              "claim": "The backquote is the most common character in Unlambda programs, making up half of any Unlambda program.",
               "claim_type": "factual_claim",
               "critical": false,
               "support_status": "accepted",
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:02",
-                  "document_version_id": "web_search-cb9be882069568d9",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:02",
+                  "document_version_id": "web_search-0960397730285581",
                   "page": null,
                   "section": "The Unlambda Programming Language",
                   "start_offset": null,
                   "end_offset": null,
-                  "quote": "it has a side effect, namely to print the character",
+                  "quote": "the most common character (essentially, it makes up half of any Unlambda program) is the backquote",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:03",
-              "claim": "`r` is a shorthand for `.` and prints a newline, returning its argument.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:03",
+              "claim": "Unlambda contains the primitives ` (binary function application), s, k, i, v, d, c, r (print new line), and 256 single-character printing functions .x.",
               "claim_type": "factual_claim",
               "critical": false,
               "support_status": "accepted",
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:03",
-                  "document_version_id": "web_search-f1540f7d62372370",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:03",
+                  "document_version_id": "web_search-291b366f7e1686ec",
                   "page": null,
-                  "section": "thomcc/unlambda-clj: Unlambda in Clojure!",
+                  "section": "Unlambda in K",
                   "start_offset": null,
                   "end_offset": null,
-                  "quote": "`r`: Shorthand for `.`. That is, `r` prints a newline, and returns its argument.",
+                  "quote": "contains only a handful of primitives: ` (binary function application) s k i (the Curry combinators) v (self-reference) d (lazy evaluation) c (call-with-current-continuation) r (print new line) and 256 single-character printing functions .x",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:04",
-              "claim": "`e` is the Exit function that halts evaluation.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:04",
+              "claim": "Unlambda is a minimal, 'nearly pure' functional programming language invented by David Madore.",
               "claim_type": "factual_claim",
               "critical": false,
               "support_status": "accepted",
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:04",
-                  "document_version_id": "web_search-f1540f7d62372370",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:04",
+                  "document_version_id": "web_search-f66aa2e07de9c48d",
                   "page": null,
-                  "section": "thomcc/unlambda-clj: Unlambda in Clojure!",
+                  "section": "Unlambda - Wikipedia",
                   "start_offset": null,
                   "end_offset": null,
-                  "quote": "`e`: Exit. Halts evaluation, returning its argument as the result of the program.",
+                  "quote": "Unlambda is a minimal, \"nearly pure\" functional programming language invented by David Madore.",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:05",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:05",
+              "claim": "Unlambda relies mainly on two built-in functions (s and k) and an apply operator (written as the backquote character).",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:05",
+                  "document_version_id": "web_search-f66aa2e07de9c48d",
+                  "page": null,
+                  "section": "Unlambda - Wikipedia",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "It relies mainly on two built-in functions (`s` and `k`) and an apply operator (written ```, the backquote character).",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:06",
+              "claim": "In Unlambda, the backquote prefix operator is used to apply a function to an argument; if f and x are expressions, then ``fx` is an expression that applies f to the argument x.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:06",
+                  "document_version_id": "web_search-2a954f013cef1741",
+                  "page": null,
+                  "section": "Unlambda - Esolang",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The ``` prefix operator is used to apply a function to an argument; if f and x are expressions, then ``fx` is an expression that applies f to the argument x.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:07",
               "claim": "The backquote (ASCII number 96=0x60) represents Unlambda's apply operation.",
               "claim_type": "factual_claim",
               "critical": true,
@@ -225,7 +435,247 @@
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:05",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:07",
+                  "document_version_id": "web_search-fafce48050ad38ee",
+                  "page": null,
+                  "section": "The Unlambda Programming Language",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the backquote (ASCII number 96=0x60). The backquote represents Unlambda's apply operation.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:08",
+              "claim": "The backquote is the most common character in Unlambda programs, making up half of any Unlambda program.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:08",
+                  "document_version_id": "web_search-fafce48050ad38ee",
+                  "page": null,
+                  "section": "The Unlambda Programming Language",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the most common character (essentially, it makes up half of any Unlambda program) is the backquote",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:09",
+              "claim": "Unlambda is written in a parenthesis-free prefix notation, where the backquote prefix operator is used to apply a function to an argument.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:09",
+                  "document_version_id": "web_search-9785ec7f6b59dd5b",
+                  "page": null,
+                  "section": "Unlambda",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Unlambda is written in a parenthesis-free prefix notation. The ``` prefix operator is used to apply a function to an argument",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:10",
+              "claim": "In Unlambda, `r` prints a line feed instead of a character.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:10",
+                  "document_version_id": "web_search-50f8524944f48526",
+                  "page": null,
+                  "section": "Implementing Unlambda - Terbium",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "`r` is like `.x`, but prints a line feed instead",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:11",
+              "claim": "In Unlambda, `.x`, where x is any letter, behaves like `i` but has the side-effect of printing the letter x when applied.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:11",
+                  "document_version_id": "web_search-50f8524944f48526",
+                  "page": null,
+                  "section": "Implementing Unlambda - Terbium",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "`.x`, where x is any letter, behaves like `i` but has the side-effect of printing the letter x when applied",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:12",
+              "claim": "In Unlambda, `v` returns itself when applied.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:12",
+                  "document_version_id": "web_search-50f8524944f48526",
+                  "page": null,
+                  "section": "Implementing Unlambda - Terbium",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "`v` returns itself when applied",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:13",
+              "claim": "In Unlambda, `c` is Scheme's call/cc.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:13",
+                  "document_version_id": "web_search-50f8524944f48526",
+                  "page": null,
+                  "section": "Implementing Unlambda - Terbium",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "`c` is Scheme",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:14",
+              "claim": "The Unlambda print-character builtin '.' is bound at parse-time to the character which it prints.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:14",
+                  "document_version_id": "web_search-3004a7197a307993",
+                  "page": null,
+                  "section": "Unlambda in K",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the Unlambda print-character builtin '.' is bound at parse-time to the character which it prints",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:15",
+              "claim": "Unlambda contains 256 printing functions, one for each character.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:15",
+                  "document_version_id": "web_search-3004a7197a307993",
+                  "page": null,
+                  "section": "Unlambda in K",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Unlambda contains 256 printing functions, one for each character",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:16",
+              "claim": "The symbol '`' is an 'apply' operator in Unlambda.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:16",
+                  "document_version_id": "web_search-c747939a9f8d9503",
+                  "page": null,
+                  "section": "Assignment 6: Prolog",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The symbol ‘ is an “apply” operator",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:17",
+              "claim": "An Unlambda program consists of a string made entirely of the characters s, k, and '`'.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:17",
+                  "document_version_id": "web_search-c747939a9f8d9503",
+                  "page": null,
+                  "section": "Assignment 6: Prolog",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "an Unlambda program consists of a string made entirely of the characters s, k, and ‘",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:18",
+              "claim": "The '`' apply operator is a prefix operator in Unlambda.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:18",
+                  "document_version_id": "web_search-c747939a9f8d9503",
+                  "page": null,
+                  "section": "Assignment 6: Prolog",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "It is a prefix operator",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:19",
+              "claim": "The backquote (ASCII number 96=0x60) represents Unlambda's apply operation.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:19",
                   "document_version_id": "fetch_page-195d5e973d9eadd8",
                   "page": null,
                   "section": "The Unlambda Programming Language",
@@ -237,141 +687,201 @@
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:06",
-              "claim": "The r function prints a newline and .* prints an asterisk in Unlambda.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:20",
+              "claim": "The r builtin prints a newline in Unlambda.",
               "claim_type": "factual_claim",
-              "critical": false,
+              "critical": true,
               "support_status": "accepted",
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:06",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:20",
                   "document_version_id": "fetch_page-195d5e973d9eadd8",
                   "page": null,
                   "section": "The Unlambda Programming Language",
                   "start_offset": 5400,
                   "end_offset": 7400,
-                  "quote": "these are the Unlambda printing functions ( r",
+                  "quote": "prints a newline",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:07",
-              "claim": "In Unlambda, the .x function prints the character x.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:21",
+              "claim": "The .x builtin in Unlambda prints the character x.",
               "claim_type": "factual_claim",
               "critical": true,
               "support_status": "accepted",
               "confidence": 1.0,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:07",
-                  "document_version_id": "fetch_page-740c854c7e7a5eb0",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:21",
+                  "document_version_id": "fetch_page-195d5e973d9eadd8",
                   "page": null,
                   "section": "The Unlambda Programming Language",
-                  "start_offset": 0,
-                  "end_offset": 2000,
-                  "quote": ". x",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": ".* prints an asterisk",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:08",
-              "claim": "In Unlambda, the ` character is used to apply a function to its argument.",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:22",
+              "claim": "The backquote is the most common character in Unlambda programs, making up half of any Unlambda program.",
               "claim_type": "factual_claim",
               "critical": false,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:22",
+                  "document_version_id": "fetch_page-195d5e973d9eadd8",
+                  "page": null,
+                  "section": "The Unlambda Programming Language",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": "the most common character (essentially, it makes up",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:23",
+              "claim": "Function application is designated with the backquote character (ASCII number 96=0x60).",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:23",
+                  "document_version_id": "fetch_page-d035a2e1694f8105",
+                  "page": null,
+                  "section": "The Unlambda Programming Language",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "Function application is designated with the backquote (ASCII number",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:24",
+              "claim": "The r function is a synonym for . x where x is the newline character.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:24",
+                  "document_version_id": "fetch_page-d035a2e1694f8105",
+                  "page": null,
+                  "section": "The Unlambda Programming Language",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "the r function is but a commodity",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:25",
+              "claim": ". x (where x is any character) takes one argument and returns it, with the side effect of printing x.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:25",
+                  "document_version_id": "fetch_page-2d7bd57cdab67cca",
+                  "page": null,
+                  "section": "Unlambda - Esolang",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": ". x (where x is any character) takes one argument and returns it, with the \"side effect\" of printing x .",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:26",
+              "claim": "The backquote notation is prefix, in other words, ` F G means F applied to G.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:26",
+                  "document_version_id": "fetch_page-4abb3b71ec2756f3",
+                  "page": null,
+                  "section": "The Unlambda Programming Language",
+                  "start_offset": 10800,
+                  "end_offset": 12000,
+                  "quote": "The notation is prefix, in other words,",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:27",
+              "claim": "Unlambda is written in a parenthesis-free prefix notation.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 1.0,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:27",
+                  "document_version_id": "fetch_page-2d7bd57cdab67cca",
+                  "page": null,
+                  "section": "Unlambda - Esolang",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "Unlambda is written in a parenthesis-free prefix notation .",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:28",
+              "claim": "In Unlambda, the `.x` notation outputs the character x.",
+              "claim_type": "factual_claim",
+              "critical": true,
               "support_status": "accepted",
               "confidence": 0.9,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:08",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:28",
                   "document_version_id": "fetch_page-3aa95fe5f8aa6630",
                   "page": null,
                   "section": "Unlambda - Esolang",
                   "start_offset": 1800,
                   "end_offset": 3800,
-                  "quote": "d as a function simply takes two arguments and applies the first to the second",
+                  "quote": "``d`.xi`.yi evaluates `.yi first",
                   "extraction_method": "agent_grounding"
                 }
               ]
             },
             {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:09",
-              "claim": "The code `r```````````.F.o.r. .p.e.n.g.u.i.n.si outputs 'For penguins' when corrected by adding a character.",
-              "claim_type": "factual_claim",
-              "critical": true,
-              "support_status": "unsupported",
-              "confidence": 0.3,
-              "evidence_spans": [
-                {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:09",
-                  "document_version_id": "fetch_page-3aa95fe5f8aa6630",
-                  "page": null,
-                  "section": "Unlambda - Esolang",
-                  "start_offset": 1800,
-                  "end_offset": 3800,
-                  "quote": "d as a function simply takes two arguments and applies the first to the second",
-                  "extraction_method": "agent_grounding"
-                }
-              ]
-            },
-            {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:10",
-              "claim": "In Unlambda, `.x outputs the character x.",
-              "claim_type": "factual_claim",
-              "critical": false,
-              "support_status": "accepted",
-              "confidence": 0.8,
-              "evidence_spans": [
-                {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:10",
-                  "document_version_id": "fetch_page-3aa95fe5f8aa6630",
-                  "page": null,
-                  "section": "Unlambda - Esolang",
-                  "start_offset": 1800,
-                  "end_offset": 3800,
-                  "quote": "``d`.xi`.yi evaluates `.yi first , outputting y and returning i",
-                  "extraction_method": "agent_grounding"
-                }
-              ]
-            },
-            {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:11",
-              "claim": "The `r at the start of the code applies r to the rest of the program.",
-              "claim_type": "factual_claim",
-              "critical": false,
-              "support_status": "unsupported",
-              "confidence": 0.3,
-              "evidence_spans": [
-                {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:11",
-                  "document_version_id": "fetch_page-3aa95fe5f8aa6630",
-                  "page": null,
-                  "section": "Unlambda - Esolang",
-                  "start_offset": 1800,
-                  "end_offset": 3800,
-                  "quote": "d as a function simply takes two arguments and applies the first to the second",
-                  "extraction_method": "agent_grounding"
-                }
-              ]
-            },
-            {
-              "claim_id": "20260814T095626Z-3c1249b4:claim:research-01-in-unlambda-what-exact-charcter-or-t:12",
+              "claim_id": "20260814T123208Z-039d0ef8:claim:research-01-in-unlambda-what-exact-charcter-or-t:29",
               "claim": "The provided source excerpts do not contain information about the specific Unlambda code needed to output \"For penguins\" or the character required to correct the given code.",
               "claim_type": "factual_claim",
-              "critical": true,
+              "critical": false,
               "support_status": "unsupported",
-              "confidence": 0.95,
+              "confidence": 0.9,
               "evidence_spans": [
                 {
-                  "span_id": "20260814T095626Z-3c1249b4:span:research-01-in-unlambda-what-exact-charcter-or-t:12",
+                  "span_id": "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:29",
                   "document_version_id": "fetch_page-c7dbdcf4021312dc",
                   "page": null,
                   "section": "Unlambda - Esolang",
                   "start_offset": 9000,
                   "end_offset": 11000,
-                  "quote": "To shorten notation or to make structure sharing explicit, define names for common subexpressions.",
+                  "quote": "The Unlambda Programming Language (official website)",
                   "extraction_method": "agent_grounding"
                 }
               ]
@@ -379,13 +889,13 @@
           ],
           "artifacts": [
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:01",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:01",
               "uri": "http://www.madore.org/~david/programs/unlambda",
               "media_type": "text/markdown",
-              "content_sha256": "cb9be882069568d98508ab20a8472cdc7e8bcbf808a4172331619c5d6237a386",
+              "content_sha256": "096039773028558122bf9ce69d8f041c8459d8202d51cdb375575817d304f7f2",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "web_search-cb9be882069568d9",
+                "document_version_id": "web_search-0960397730285581",
                 "critical_claims_allowed": true,
                 "source_title": "The Unlambda Programming Language",
                 "tool": "web_search",
@@ -393,49 +903,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:02",
-              "uri": "https://nsl.com/papers/unlambda.htm",
-              "media_type": "text/markdown",
-              "content_sha256": "4d7d35652aed5fe89f7eb82b4d7c0d5c712c83a03120913245d01089434dff52",
-              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-              "metadata": {
-                "document_version_id": "web_search-4d7d35652aed5fe8",
-                "critical_claims_allowed": true,
-                "source_title": "Unlambda in K",
-                "tool": "web_search",
-                "source_kind": "snippet"
-              }
-            },
-            {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:03",
-              "uri": "https://github.com/thomcc/unlambda-clj",
-              "media_type": "text/markdown",
-              "content_sha256": "f1540f7d62372370556591bde06c498addd5ee0010a437111aed9402118f5fe5",
-              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-              "metadata": {
-                "document_version_id": "web_search-f1540f7d62372370",
-                "critical_claims_allowed": true,
-                "source_title": "thomcc/unlambda-clj: Unlambda in Clojure!",
-                "tool": "web_search",
-                "source_kind": "snippet"
-              }
-            },
-            {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:04",
-              "uri": "http://www.goodmath.org/blog/2006/08/11/friday-pathological-programming-unlambda-or-programming-without-variables",
-              "media_type": "text/markdown",
-              "content_sha256": "5d1585fb0dee0b19ea94c315dd0c851ebded0d4a0197c71c23e08132bca28c33",
-              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-              "metadata": {
-                "document_version_id": "web_search-5d1585fb0dee0b19",
-                "critical_claims_allowed": true,
-                "source_title": "Friday Pathological Programming: Unlambda, or Programming Without Variables | Good Math/Bad Math",
-                "tool": "web_search",
-                "source_kind": "snippet"
-              }
-            },
-            {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:05",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:02",
               "uri": "https://nsl.com/papers/unlambda.htm",
               "media_type": "text/markdown",
               "content_sha256": "291b366f7e1686eccf18774ad0b328b21cc87791311e5264cc01564ec0f87cf6",
@@ -449,13 +917,41 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:06",
-              "uri": "http://www.madore.org/~david/programs/unlambda",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:03",
+              "uri": "https://en.wikipedia.org/wiki/Unlambda",
               "media_type": "text/markdown",
-              "content_sha256": "ae9c16eda63ae549f3bd3e0cfbcb16710cda114fc6bcae8223e17d09a336c40a",
+              "content_sha256": "f66aa2e07de9c48dcdd18cca895c66a5c25d7f934474596dd24206fe1ec63d2b",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "web_search-ae9c16eda63ae549",
+                "document_version_id": "web_search-f66aa2e07de9c48d",
+                "critical_claims_allowed": true,
+                "source_title": "Unlambda - Wikipedia",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:04",
+              "uri": "https://esolangs.org/wiki/Unlambda",
+              "media_type": "text/markdown",
+              "content_sha256": "2a954f013cef1741acbb7ecccc600da58c7c3660c489623ab478e1f1dcb67418",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-2a954f013cef1741",
+                "critical_claims_allowed": true,
+                "source_title": "Unlambda - Esolang",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:05",
+              "uri": "http://www.madore.org/~david/programs/unlambda",
+              "media_type": "text/markdown",
+              "content_sha256": "fafce48050ad38ee060fff19477275862afbf08ff4a27d464026a84b9f093486",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-fafce48050ad38ee",
                 "critical_claims_allowed": true,
                 "source_title": "The Unlambda Programming Language",
                 "tool": "web_search",
@@ -463,27 +959,13 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:07",
-              "uri": "http://www.goodmath.org/blog/2006/08/11/friday-pathological-programming-unlambda-or-programming-without-variables",
-              "media_type": "text/markdown",
-              "content_sha256": "bf559e33cd3682e9d73800262113b7538114142cf24d4c0c0524ab8fced86444",
-              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-              "metadata": {
-                "document_version_id": "web_search-bf559e33cd3682e9",
-                "critical_claims_allowed": true,
-                "source_title": "Friday Pathological Programming: Unlambda, or ...",
-                "tool": "web_search",
-                "source_kind": "snippet"
-              }
-            },
-            {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:08",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:06",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
-              "content_sha256": "6cfc5ada9586d495aba5fcb9ab90da7984ca165308c0f58dd210b5f5ded6423b",
+              "content_sha256": "0f145d238598bab9db76445bc66377e4946858e7e832cf1379383a6d38ea5c1e",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "web_search-6cfc5ada9586d495",
+                "document_version_id": "web_search-0f145d238598bab9",
                 "critical_claims_allowed": true,
                 "source_title": "Unlambda",
                 "tool": "web_search",
@@ -491,63 +973,147 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:09",
-              "uri": "https://github.com/skyter10086/u6a",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:07",
+              "uri": "https://en.wikipedia.org/wiki/Unlambda",
               "media_type": "text/markdown",
-              "content_sha256": "38d3551d7c6f6043708cdc696a3c70070f71fefe9d0372da41bac419540290e5",
+              "content_sha256": "75ae1abe38be576c822e2f800536593abbbe725f417b0c192053e0793848de63",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "github_search-38d3551d7c6f6043",
+                "document_version_id": "web_search-75ae1abe38be576c",
                 "critical_claims_allowed": true,
-                "source_title": "skyter10086/u6a",
-                "tool": "github_search",
+                "source_title": "Unlambda",
+                "tool": "web_search",
                 "source_kind": "snippet"
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:10",
-              "uri": "https://github.com/seanpm2001/Learn-Unlambda",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:08",
+              "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
-              "content_sha256": "6691cb3e264a1a871d064e38a325383ca35e80d8bb9cd6ad872d487aaad396b6",
+              "content_sha256": "9785ec7f6b59dd5b07b4673b9ff03f3c6d44b2864fdc7015d815d7bddcb9d30c",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "github_search-6691cb3e264a1a87",
+                "document_version_id": "web_search-9785ec7f6b59dd5b",
                 "critical_claims_allowed": true,
-                "source_title": "seanpm2001/Learn-Unlambda",
-                "tool": "github_search",
+                "source_title": "Unlambda",
+                "tool": "web_search",
                 "source_kind": "snippet"
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:11",
-              "uri": "https://github.com/seanpm2001/SNU_2D_ProgrammingTools_IDE_Unlambda",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:09",
+              "uri": "https://github.com/irori/unlambda",
               "media_type": "text/markdown",
-              "content_sha256": "37ad5db58de7386487a783acc0e4bc94570779c273b72acfed3539e79b44eddc",
+              "content_sha256": "526dd8dfc375cc3fb05317ead403c16958d96bd93df63b5e64157f4595cfa0e5",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "github_search-37ad5db58de73864",
+                "document_version_id": "web_search-526dd8dfc375cc3f",
                 "critical_claims_allowed": true,
-                "source_title": "seanpm2001/SNU_2D_ProgrammingTools_IDE_Unlambda",
-                "tool": "github_search",
+                "source_title": "irori/unlambda: Unlambda interpreter",
+                "tool": "web_search",
                 "source_kind": "snippet"
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:12",
-              "uri": "https://github.com/jevndev/unlambda-cpp",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:10",
+              "uri": "https://chridd.nfshost.com/esolang/undo",
               "media_type": "text/markdown",
-              "content_sha256": "8d90401c2f463c232d84c65f03b954d42c37095eb15ee769ad5471238898127e",
+              "content_sha256": "8942cf699af5b68040afefcea58c797e93ab7f87c1e7ceb4d07b67648ec0c054",
               "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
               "metadata": {
-                "document_version_id": "github_search-8d90401c2f463c23",
+                "document_version_id": "web_search-8942cf699af5b680",
                 "critical_claims_allowed": true,
-                "source_title": "jevndev/unlambda-cpp",
-                "tool": "github_search",
+                "source_title": "Undo (esoteric programming language) - chridd",
+                "tool": "web_search",
                 "source_kind": "snippet"
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:13",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:11",
+              "uri": "http://www.goodmath.org/blog/2006/08/11/friday-pathological-programming-unlambda-or-programming-without-variables",
+              "media_type": "text/markdown",
+              "content_sha256": "dcba2be1bd46845b4759a2aea1a06288442b2bad774edecb33525793f96d4520",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-dcba2be1bd46845b",
+                "critical_claims_allowed": true,
+                "source_title": "Friday Pathological Programming: Unlambda, or ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:12",
+              "uri": "https://terbium.io/2019/09/unlambda",
+              "media_type": "text/markdown",
+              "content_sha256": "50f8524944f48526f99e2171f669a798db4bf87ebb1a44d7ffe2acf0ff64d3b0",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-50f8524944f48526",
+                "critical_claims_allowed": true,
+                "source_title": "Implementing Unlambda - Terbium",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:13",
+              "uri": "https://nsl.com/papers/unlambda.htm",
+              "media_type": "text/markdown",
+              "content_sha256": "3004a7197a307993356e3bc1a5424347458e75fc73b96fde157085f8d0830738",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-3004a7197a307993",
+                "critical_claims_allowed": true,
+                "source_title": "Unlambda in K",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:14",
+              "uri": "http://www.madore.org/~david/programs/unlambda",
+              "media_type": "text/markdown",
+              "content_sha256": "e9a8a34fa501fc61f228817f3e576314f291cdaf5f966adbcef00c50071dc193",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-e9a8a34fa501fc61",
+                "critical_claims_allowed": true,
+                "source_title": "The Unlambda Programming Language",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:15",
+              "uri": "https://student.cs.uwaterloo.ca/~cs442/W26/a6.pdf",
+              "media_type": "text/markdown",
+              "content_sha256": "c747939a9f8d9503e7c38c15fd143379edfb747936ff8d72857cddb64408b020",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-c747939a9f8d9503",
+                "critical_claims_allowed": true,
+                "source_title": "Assignment 6: Prolog",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:16",
+              "uri": "https://github.com/irori/unlambda",
+              "media_type": "text/markdown",
+              "content_sha256": "faa7795d0adcdf8a8b440688d1c2d064a6e31c83d07384c60d2567fe310a30e1",
+              "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+              "metadata": {
+                "document_version_id": "web_search-faa7795d0adcdf8a",
+                "critical_claims_allowed": true,
+                "source_title": "irori/unlambda: Unlambda interpreter",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:17",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "740c854c7e7a5eb00a2ecc4f6a22ae7dbf590433d94ad33929e4ee49e52e845e",
@@ -564,7 +1130,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:14",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:18",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "ba2955f3cb99ece3886b0d7fe5ee23c7a38bdb106b7801a86f8fedda5cee3e63",
@@ -581,7 +1147,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:15",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:19",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "f812b44384138a690d74247e139f224f3051f71ddb41ef1c16059d3bf7e55223",
@@ -598,7 +1164,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:16",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:20",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "195d5e973d9eadd817e7bf349b1b3bcb591d6f102b77f3d7b8b62a2c7bb919c8",
@@ -615,7 +1181,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:17",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:21",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "81f4978bae8aaaf7724ec0672aa430857a5c3e41f7b18da90b7114cca3943c7f",
@@ -632,7 +1198,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:18",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:22",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "d035a2e1694f8105257f17e99bf41ba5db96ac4f4cdf084724f245a92f8c791e",
@@ -649,7 +1215,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:19",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:23",
               "uri": "http://www.madore.org/~david/programs/unlambda/",
               "media_type": "text/markdown",
               "content_sha256": "4abb3b71ec2756f32afa0b496512d56203e41708e5299265eff0243ff170a47c",
@@ -666,7 +1232,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:20",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:24",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "2d7bd57cdab67ccab1faa34f6d4c8290e24549a0cff09f34dba81ee5b27c8861",
@@ -683,7 +1249,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:21",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:25",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "3aa95fe5f8aa6630e1034be7e7684ce3221d4d00771c843a0c5580b35c251ff7",
@@ -700,7 +1266,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:22",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:26",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "4ac431dda38e5bbd4b34dd8e55f4a9fc569879b7e453807407c9eb6b46729807",
@@ -717,7 +1283,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:23",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:27",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "388936c1a891a08a4f436722e84cd85fcfaf092f4a568c21730f1349fcb61926",
@@ -734,7 +1300,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:24",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:28",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "5a3ad9486ecaa095b482b84867140b00c23016d456355a5231af68177d406cc7",
@@ -751,7 +1317,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:25",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:29",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "c7dbdcf4021312dc4d189293cfc5a585dc89d06b6677fc72bb89da3bf5ab9664",
@@ -768,7 +1334,7 @@
               }
             },
             {
-              "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:26",
+              "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:30",
               "uri": "https://esolangs.org/wiki/Unlambda",
               "media_type": "text/markdown",
               "content_sha256": "86abb1c750a3ba0e49ecaca0a00c3c630f4653cd051ce401a7a696d536af8d50",
@@ -789,13 +1355,13 @@
       ],
       "output_artifacts": [
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:01",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:01",
           "uri": "http://www.madore.org/~david/programs/unlambda",
           "media_type": "text/markdown",
-          "content_sha256": "cb9be882069568d98508ab20a8472cdc7e8bcbf808a4172331619c5d6237a386",
+          "content_sha256": "096039773028558122bf9ce69d8f041c8459d8202d51cdb375575817d304f7f2",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "web_search-cb9be882069568d9",
+            "document_version_id": "web_search-0960397730285581",
             "critical_claims_allowed": true,
             "source_title": "The Unlambda Programming Language",
             "tool": "web_search",
@@ -803,49 +1369,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:02",
-          "uri": "https://nsl.com/papers/unlambda.htm",
-          "media_type": "text/markdown",
-          "content_sha256": "4d7d35652aed5fe89f7eb82b4d7c0d5c712c83a03120913245d01089434dff52",
-          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-          "metadata": {
-            "document_version_id": "web_search-4d7d35652aed5fe8",
-            "critical_claims_allowed": true,
-            "source_title": "Unlambda in K",
-            "tool": "web_search",
-            "source_kind": "snippet"
-          }
-        },
-        {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:03",
-          "uri": "https://github.com/thomcc/unlambda-clj",
-          "media_type": "text/markdown",
-          "content_sha256": "f1540f7d62372370556591bde06c498addd5ee0010a437111aed9402118f5fe5",
-          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-          "metadata": {
-            "document_version_id": "web_search-f1540f7d62372370",
-            "critical_claims_allowed": true,
-            "source_title": "thomcc/unlambda-clj: Unlambda in Clojure!",
-            "tool": "web_search",
-            "source_kind": "snippet"
-          }
-        },
-        {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:04",
-          "uri": "http://www.goodmath.org/blog/2006/08/11/friday-pathological-programming-unlambda-or-programming-without-variables",
-          "media_type": "text/markdown",
-          "content_sha256": "5d1585fb0dee0b19ea94c315dd0c851ebded0d4a0197c71c23e08132bca28c33",
-          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-          "metadata": {
-            "document_version_id": "web_search-5d1585fb0dee0b19",
-            "critical_claims_allowed": true,
-            "source_title": "Friday Pathological Programming: Unlambda, or Programming Without Variables | Good Math/Bad Math",
-            "tool": "web_search",
-            "source_kind": "snippet"
-          }
-        },
-        {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:05",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:02",
           "uri": "https://nsl.com/papers/unlambda.htm",
           "media_type": "text/markdown",
           "content_sha256": "291b366f7e1686eccf18774ad0b328b21cc87791311e5264cc01564ec0f87cf6",
@@ -859,13 +1383,41 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:06",
-          "uri": "http://www.madore.org/~david/programs/unlambda",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:03",
+          "uri": "https://en.wikipedia.org/wiki/Unlambda",
           "media_type": "text/markdown",
-          "content_sha256": "ae9c16eda63ae549f3bd3e0cfbcb16710cda114fc6bcae8223e17d09a336c40a",
+          "content_sha256": "f66aa2e07de9c48dcdd18cca895c66a5c25d7f934474596dd24206fe1ec63d2b",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "web_search-ae9c16eda63ae549",
+            "document_version_id": "web_search-f66aa2e07de9c48d",
+            "critical_claims_allowed": true,
+            "source_title": "Unlambda - Wikipedia",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:04",
+          "uri": "https://esolangs.org/wiki/Unlambda",
+          "media_type": "text/markdown",
+          "content_sha256": "2a954f013cef1741acbb7ecccc600da58c7c3660c489623ab478e1f1dcb67418",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-2a954f013cef1741",
+            "critical_claims_allowed": true,
+            "source_title": "Unlambda - Esolang",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:05",
+          "uri": "http://www.madore.org/~david/programs/unlambda",
+          "media_type": "text/markdown",
+          "content_sha256": "fafce48050ad38ee060fff19477275862afbf08ff4a27d464026a84b9f093486",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-fafce48050ad38ee",
             "critical_claims_allowed": true,
             "source_title": "The Unlambda Programming Language",
             "tool": "web_search",
@@ -873,27 +1425,13 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:07",
-          "uri": "http://www.goodmath.org/blog/2006/08/11/friday-pathological-programming-unlambda-or-programming-without-variables",
-          "media_type": "text/markdown",
-          "content_sha256": "bf559e33cd3682e9d73800262113b7538114142cf24d4c0c0524ab8fced86444",
-          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
-          "metadata": {
-            "document_version_id": "web_search-bf559e33cd3682e9",
-            "critical_claims_allowed": true,
-            "source_title": "Friday Pathological Programming: Unlambda, or ...",
-            "tool": "web_search",
-            "source_kind": "snippet"
-          }
-        },
-        {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:08",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:06",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
-          "content_sha256": "6cfc5ada9586d495aba5fcb9ab90da7984ca165308c0f58dd210b5f5ded6423b",
+          "content_sha256": "0f145d238598bab9db76445bc66377e4946858e7e832cf1379383a6d38ea5c1e",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "web_search-6cfc5ada9586d495",
+            "document_version_id": "web_search-0f145d238598bab9",
             "critical_claims_allowed": true,
             "source_title": "Unlambda",
             "tool": "web_search",
@@ -901,63 +1439,147 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:09",
-          "uri": "https://github.com/skyter10086/u6a",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:07",
+          "uri": "https://en.wikipedia.org/wiki/Unlambda",
           "media_type": "text/markdown",
-          "content_sha256": "38d3551d7c6f6043708cdc696a3c70070f71fefe9d0372da41bac419540290e5",
+          "content_sha256": "75ae1abe38be576c822e2f800536593abbbe725f417b0c192053e0793848de63",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "github_search-38d3551d7c6f6043",
+            "document_version_id": "web_search-75ae1abe38be576c",
             "critical_claims_allowed": true,
-            "source_title": "skyter10086/u6a",
-            "tool": "github_search",
+            "source_title": "Unlambda",
+            "tool": "web_search",
             "source_kind": "snippet"
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:10",
-          "uri": "https://github.com/seanpm2001/Learn-Unlambda",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:08",
+          "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
-          "content_sha256": "6691cb3e264a1a871d064e38a325383ca35e80d8bb9cd6ad872d487aaad396b6",
+          "content_sha256": "9785ec7f6b59dd5b07b4673b9ff03f3c6d44b2864fdc7015d815d7bddcb9d30c",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "github_search-6691cb3e264a1a87",
+            "document_version_id": "web_search-9785ec7f6b59dd5b",
             "critical_claims_allowed": true,
-            "source_title": "seanpm2001/Learn-Unlambda",
-            "tool": "github_search",
+            "source_title": "Unlambda",
+            "tool": "web_search",
             "source_kind": "snippet"
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:11",
-          "uri": "https://github.com/seanpm2001/SNU_2D_ProgrammingTools_IDE_Unlambda",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:09",
+          "uri": "https://github.com/irori/unlambda",
           "media_type": "text/markdown",
-          "content_sha256": "37ad5db58de7386487a783acc0e4bc94570779c273b72acfed3539e79b44eddc",
+          "content_sha256": "526dd8dfc375cc3fb05317ead403c16958d96bd93df63b5e64157f4595cfa0e5",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "github_search-37ad5db58de73864",
+            "document_version_id": "web_search-526dd8dfc375cc3f",
             "critical_claims_allowed": true,
-            "source_title": "seanpm2001/SNU_2D_ProgrammingTools_IDE_Unlambda",
-            "tool": "github_search",
+            "source_title": "irori/unlambda: Unlambda interpreter",
+            "tool": "web_search",
             "source_kind": "snippet"
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:12",
-          "uri": "https://github.com/jevndev/unlambda-cpp",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:10",
+          "uri": "https://chridd.nfshost.com/esolang/undo",
           "media_type": "text/markdown",
-          "content_sha256": "8d90401c2f463c232d84c65f03b954d42c37095eb15ee769ad5471238898127e",
+          "content_sha256": "8942cf699af5b68040afefcea58c797e93ab7f87c1e7ceb4d07b67648ec0c054",
           "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
           "metadata": {
-            "document_version_id": "github_search-8d90401c2f463c23",
+            "document_version_id": "web_search-8942cf699af5b680",
             "critical_claims_allowed": true,
-            "source_title": "jevndev/unlambda-cpp",
-            "tool": "github_search",
+            "source_title": "Undo (esoteric programming language) - chridd",
+            "tool": "web_search",
             "source_kind": "snippet"
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:13",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:11",
+          "uri": "http://www.goodmath.org/blog/2006/08/11/friday-pathological-programming-unlambda-or-programming-without-variables",
+          "media_type": "text/markdown",
+          "content_sha256": "dcba2be1bd46845b4759a2aea1a06288442b2bad774edecb33525793f96d4520",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-dcba2be1bd46845b",
+            "critical_claims_allowed": true,
+            "source_title": "Friday Pathological Programming: Unlambda, or ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:12",
+          "uri": "https://terbium.io/2019/09/unlambda",
+          "media_type": "text/markdown",
+          "content_sha256": "50f8524944f48526f99e2171f669a798db4bf87ebb1a44d7ffe2acf0ff64d3b0",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-50f8524944f48526",
+            "critical_claims_allowed": true,
+            "source_title": "Implementing Unlambda - Terbium",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:13",
+          "uri": "https://nsl.com/papers/unlambda.htm",
+          "media_type": "text/markdown",
+          "content_sha256": "3004a7197a307993356e3bc1a5424347458e75fc73b96fde157085f8d0830738",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-3004a7197a307993",
+            "critical_claims_allowed": true,
+            "source_title": "Unlambda in K",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:14",
+          "uri": "http://www.madore.org/~david/programs/unlambda",
+          "media_type": "text/markdown",
+          "content_sha256": "e9a8a34fa501fc61f228817f3e576314f291cdaf5f966adbcef00c50071dc193",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-e9a8a34fa501fc61",
+            "critical_claims_allowed": true,
+            "source_title": "The Unlambda Programming Language",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:15",
+          "uri": "https://student.cs.uwaterloo.ca/~cs442/W26/a6.pdf",
+          "media_type": "text/markdown",
+          "content_sha256": "c747939a9f8d9503e7c38c15fd143379edfb747936ff8d72857cddb64408b020",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-c747939a9f8d9503",
+            "critical_claims_allowed": true,
+            "source_title": "Assignment 6: Prolog",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:16",
+          "uri": "https://github.com/irori/unlambda",
+          "media_type": "text/markdown",
+          "content_sha256": "faa7795d0adcdf8a8b440688d1c2d064a6e31c83d07384c60d2567fe310a30e1",
+          "created_by_task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
+          "metadata": {
+            "document_version_id": "web_search-faa7795d0adcdf8a",
+            "critical_claims_allowed": true,
+            "source_title": "irori/unlambda: Unlambda interpreter",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:17",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "740c854c7e7a5eb00a2ecc4f6a22ae7dbf590433d94ad33929e4ee49e52e845e",
@@ -974,7 +1596,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:14",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:18",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "ba2955f3cb99ece3886b0d7fe5ee23c7a38bdb106b7801a86f8fedda5cee3e63",
@@ -991,7 +1613,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:15",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:19",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "f812b44384138a690d74247e139f224f3051f71ddb41ef1c16059d3bf7e55223",
@@ -1008,7 +1630,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:16",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:20",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "195d5e973d9eadd817e7bf349b1b3bcb591d6f102b77f3d7b8b62a2c7bb919c8",
@@ -1025,7 +1647,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:17",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:21",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "81f4978bae8aaaf7724ec0672aa430857a5c3e41f7b18da90b7114cca3943c7f",
@@ -1042,7 +1664,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:18",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:22",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "d035a2e1694f8105257f17e99bf41ba5db96ac4f4cdf084724f245a92f8c791e",
@@ -1059,7 +1681,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:19",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:23",
           "uri": "http://www.madore.org/~david/programs/unlambda/",
           "media_type": "text/markdown",
           "content_sha256": "4abb3b71ec2756f32afa0b496512d56203e41708e5299265eff0243ff170a47c",
@@ -1076,7 +1698,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:20",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:24",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "2d7bd57cdab67ccab1faa34f6d4c8290e24549a0cff09f34dba81ee5b27c8861",
@@ -1093,7 +1715,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:21",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:25",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "3aa95fe5f8aa6630e1034be7e7684ce3221d4d00771c843a0c5580b35c251ff7",
@@ -1110,7 +1732,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:22",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:26",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "4ac431dda38e5bbd4b34dd8e55f4a9fc569879b7e453807407c9eb6b46729807",
@@ -1127,7 +1749,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:23",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:27",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "388936c1a891a08a4f436722e84cd85fcfaf092f4a568c21730f1349fcb61926",
@@ -1144,7 +1766,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:24",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:28",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "5a3ad9486ecaa095b482b84867140b00c23016d456355a5231af68177d406cc7",
@@ -1161,7 +1783,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:25",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:29",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "c7dbdcf4021312dc4d189293cfc5a585dc89d06b6677fc72bb89da3bf5ab9664",
@@ -1178,7 +1800,7 @@
           }
         },
         {
-          "artifact_id": "20260814T095626Z-3c1249b4:research-01-in-unlambda-what-exact-charcter-or-t:src:26",
+          "artifact_id": "20260814T123208Z-039d0ef8:research-01-in-unlambda-what-exact-charcter-or-t:src:30",
           "uri": "https://esolangs.org/wiki/Unlambda",
           "media_type": "text/markdown",
           "content_sha256": "86abb1c750a3ba0e49ecaca0a00c3c630f4653cd051ce401a7a696d536af8d50",
@@ -1201,20 +1823,32 @@
       "task_id": "research-01-in-unlambda-what-exact-charcter-or-t",
       "objective": "In Unlambda, what exact charcter or text needs to be added to correct the following code to output \"For penguins\"? If what is needed is a character, answer with the name of the character. If there are different names for the character, use the shortest. The text location is not needed. Code:\n\n`r```````````.F.o.r. .p.e.n.g.u.i.n.si",
       "agentic": true,
-      "rounds": 1,
-      "query_count": 3,
+      "rounds": 2,
+      "query_count": 6,
       "queries": [
         {
-          "query": "Unlambda programming language syntax character to output string",
+          "query": "Unlambda programming language syntax character reference",
           "tool": "web_search"
         },
         {
-          "query": "Unlambda language reference print character syntax",
+          "query": "Unlambda language tutorial commands characters",
           "tool": "web_search"
         },
         {
-          "query": "Unlambda programming language",
-          "tool": "github_search"
+          "query": "Unlambda print string output syntax",
+          "tool": "web_search"
+        },
+        {
+          "query": "Unlambda backquote apply combinator syntax print character",
+          "tool": "web_search"
+        },
+        {
+          "query": "Unlambda programming language examples print string",
+          "tool": "web_search"
+        },
+        {
+          "query": "Unlambda language reference backquote dot print char",
+          "tool": "web_search"
         }
       ],
       "page_count": 14,
@@ -1236,30 +1870,834 @@
       ],
       "coverage_assessments": [
         {
-          "covered": true,
-          "gaps": [],
+          "covered": false,
+          "gaps": [
+            "The exact character needed to fix the given code to output 'For penguins' has not been identified. The code is: `r```````````.F.o.r. .p.e.n.g.u.i.n.si. Need to determine what character is missing or needs to be added.",
+            "Need to understand the structure of the code: `r` applies r (print newline) to the rest. The rest is a chain of backquotes applying print-char functions. The final 'i' is the identity combinator. Need to determine what's wrong with the current code and what character fixes it.",
+            "Need to verify whether the issue is a missing backquote, a missing 'i', or some other character needed to make the print-char chain properly terminate and output 'For penguins'."
+          ],
           "round": 1
         }
       ],
-      "extraction_fallbacks": 3,
-      "source_count": 12,
-      "claim_count": 12
+      "extraction_fallbacks": 0,
+      "source_count": 16,
+      "claim_count": 29,
+      "injection_stats": {
+        "injection_findings": 0,
+        "injection_dropped_sources": 0,
+        "injection_dropped_pages": 0,
+        "rerank_available": false
+      }
     }
   },
   {
-    "checkpoint_id": "20260814T095626Z-3c1249b4:task-checkpoint:000002",
-    "job_id": "20260814T095626Z-3c1249b4",
+    "checkpoint_id": "20260814T123208Z-039d0ef8:task-checkpoint:000002",
+    "job_id": "20260814T123208Z-039d0ef8",
     "task_id": "critic",
     "sequence": 2,
-    "attempt": 2,
+    "attempt": 1,
     "result": {
       "task_id": "critic",
-      "job_id": "20260814T095626Z-3c1249b4",
-      "status": "failed",
+      "job_id": "20260814T123208Z-039d0ef8",
+      "status": "completed",
       "evidence_packets": [],
       "output_artifacts": [],
-      "error": "task execution failed: 1 validation error for CriticDecision\n  Value error, critic unresolved must match the decision status [type=value_error, input_value={'decision_id': '20260814...ode or its correction.'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error"
+      "error": null
     },
-    "output": {}
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- Unlambda's apply operation is represented by the backquote character (ASCII 96=0x60), which is a prefix operator.\n- Unlambda is a minimal, 'nearly pure' functional programming language invented by David Madore, written in parenthesis-free prefix notation.\n- The language includes primitives such as `s`, `k`, `i`, `v`, `d`, `c`, `r` (prints newline), and 256 single-character printing functions `.x`.\n- The `.x` notation prints the character x and returns its argument; `r` prints a line feed.\n- One claim about program composition (only s, k, and backquote) is only partially supported, as other primitives exist.\n\n## Findings\n\n### Finding 1: The Backquote as Apply Operator\nThe backquote character (ASCII number 96=0x60) represents Unlambda's apply operation. This is a prefix operator: ` F G means F applied to G. If f and x are expressions, then ``fx` is an expression that applies f to the argument x. Unlambda is written in a parenthesis-free prefix notation.\n\n### Finding 2: Language Overview\nUnlambda is a minimal, 'nearly pure' functional programming language invented by David Madore. It relies mainly on two built-in functions (s and k) and an apply operator (written as the backquote character). The language contains the primitives ` (binary function application), s, k, i, v, d, c, r (print new line), and 256 single-character printing functions .x.\n\n### Finding 3: Printing Functions\nThe `.x` notation, where x is any character, takes one argument and returns it, with the side effect of printing x. The print-character builtin '.' is bound at parse-time to the character which it prints. Unlambda contains 256 printing functions, one for each character. The `r` builtin prints a newline (line feed).\n\n### Finding 4: Other Primitives\nIn Unlambda, `v` returns itself when applied. The `c` primitive is Scheme's call/cc.\n\n### Finding 5: Program Composition (Qualified)\nOne claim states that an Unlambda program consists of a string made entirely of the characters s, k, and '`'. This is only partially supported: while the evidence describes this simplified composition, Unlambda also includes other primitives like i, v, d, c, r, and .x, so the claim is qualified.\n\n### Finding 6: Backquote Frequency\nThe backquote is the most common character in Unlambda programs, making up half of any Unlambda program.\n\n## Evidence Status\n\n- **Accepted claims (critical=True):** Backquote as apply (multiple confirmations), parenthesis-free prefix notation, `r` prints line feed, `.x` prints character x, `.x` returns its argument with side effect, prefix notation meaning, `.x` outputs character x.\n- **Accepted claims (critical=False):** Backquote frequency (half of programs), primitive list, language description, reliance on s/k, `v` returns itself, `c` is call/cc, parse-time binding of '.', 256 printing functions, backquote as apply symbol, prefix operator nature.\n- **Qualified claims:** \n  - Claim 17 (program consists only of s, k, and backquote) — partially supported; other primitives exist.\n  - Claim 24 (r is synonym for .x where x is newline) — plausible but not fully supported by evidence.\n- **Unsupported claim:** Claim 29 — the evidence does not contain information about specific code for \"For penguins\" or the required character to correct given code.",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "The backquote character (ASCII number 96=0x60) represents Unlambda's apply operation.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "web_search-0960397730285581"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "The backquote is the most common character in Unlambda programs, making up half of any Unlambda program.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "web_search-0960397730285581"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "Unlambda contains the primitives ` (binary function application), s, k, i, v, d, c, r (print new line), and 256 single-character printing functions .x.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "Unlambda in K",
+            "properties": {
+              "document_version_id": "web_search-291b366f7e1686ec"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "Unlambda is a minimal, 'nearly pure' functional programming language invented by David Madore.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "Unlambda - Wikipedia",
+            "properties": {
+              "document_version_id": "web_search-f66aa2e07de9c48d"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "Unlambda relies mainly on two built-in functions (s and k) and an apply operator (written as the backquote character).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "Unlambda - Wikipedia",
+            "properties": {
+              "document_version_id": "web_search-f66aa2e07de9c48d"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "In Unlambda, the backquote prefix operator is used to apply a function to an argument; if f and x are expressions, then ``fx` is an expression that applies f to the argument x.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "Unlambda - Esolang",
+            "properties": {
+              "document_version_id": "web_search-2a954f013cef1741"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "The backquote (ASCII number 96=0x60) represents Unlambda's apply operation.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "web_search-fafce48050ad38ee"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "The backquote is the most common character in Unlambda programs, making up half of any Unlambda program.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "web_search-fafce48050ad38ee"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "Unlambda is written in a parenthesis-free prefix notation, where the backquote prefix operator is used to apply a function to an argument.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "Unlambda",
+            "properties": {
+              "document_version_id": "web_search-9785ec7f6b59dd5b"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "In Unlambda, `r` prints a line feed instead of a character.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "Implementing Unlambda - Terbium",
+            "properties": {
+              "document_version_id": "web_search-50f8524944f48526"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "In Unlambda, `.x`, where x is any letter, behaves like `i` but has the side-effect of printing the letter x when applied.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "Implementing Unlambda - Terbium",
+            "properties": {
+              "document_version_id": "web_search-50f8524944f48526"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "In Unlambda, `v` returns itself when applied.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "Implementing Unlambda - Terbium",
+            "properties": {
+              "document_version_id": "web_search-50f8524944f48526"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "In Unlambda, `c` is Scheme's call/cc.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "Implementing Unlambda - Terbium",
+            "properties": {
+              "document_version_id": "web_search-50f8524944f48526"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "The Unlambda print-character builtin '.' is bound at parse-time to the character which it prints.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "Unlambda in K",
+            "properties": {
+              "document_version_id": "web_search-3004a7197a307993"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "Unlambda contains 256 printing functions, one for each character.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "Unlambda in K",
+            "properties": {
+              "document_version_id": "web_search-3004a7197a307993"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "The symbol '`' is an 'apply' operator in Unlambda.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "Assignment 6: Prolog",
+            "properties": {
+              "document_version_id": "web_search-c747939a9f8d9503"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "An Unlambda program consists of a string made entirely of the characters s, k, and '`'.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "Assignment 6: Prolog",
+            "properties": {
+              "document_version_id": "web_search-c747939a9f8d9503"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "The '`' apply operator is a prefix operator in Unlambda.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "Assignment 6: Prolog",
+            "properties": {
+              "document_version_id": "web_search-c747939a9f8d9503"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "The backquote (ASCII number 96=0x60) represents Unlambda's apply operation.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-195d5e973d9eadd8"
+            }
+          },
+          {
+            "node_id": "claim-20",
+            "kind": "claim",
+            "label": "The r builtin prints a newline in Unlambda.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-20-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-195d5e973d9eadd8"
+            }
+          },
+          {
+            "node_id": "claim-21",
+            "kind": "claim",
+            "label": "The .x builtin in Unlambda prints the character x.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-21-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-195d5e973d9eadd8"
+            }
+          },
+          {
+            "node_id": "claim-22",
+            "kind": "claim",
+            "label": "The backquote is the most common character in Unlambda programs, making up half of any Unlambda program.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-22-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-195d5e973d9eadd8"
+            }
+          },
+          {
+            "node_id": "claim-23",
+            "kind": "claim",
+            "label": "Function application is designated with the backquote character (ASCII number 96=0x60).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-23-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-d035a2e1694f8105"
+            }
+          },
+          {
+            "node_id": "claim-24",
+            "kind": "claim",
+            "label": "The r function is a synonym for . x where x is the newline character.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-24-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-d035a2e1694f8105"
+            }
+          },
+          {
+            "node_id": "claim-25",
+            "kind": "claim",
+            "label": ". x (where x is any character) takes one argument and returns it, with the side effect of printing x.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-25-1",
+            "kind": "source",
+            "label": "Unlambda - Esolang",
+            "properties": {
+              "document_version_id": "fetch_page-2d7bd57cdab67cca"
+            }
+          },
+          {
+            "node_id": "claim-26",
+            "kind": "claim",
+            "label": "The backquote notation is prefix, in other words, ` F G means F applied to G.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-26-1",
+            "kind": "source",
+            "label": "The Unlambda Programming Language",
+            "properties": {
+              "document_version_id": "fetch_page-4abb3b71ec2756f3"
+            }
+          },
+          {
+            "node_id": "claim-27",
+            "kind": "claim",
+            "label": "Unlambda is written in a parenthesis-free prefix notation.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-27-1",
+            "kind": "source",
+            "label": "Unlambda - Esolang",
+            "properties": {
+              "document_version_id": "fetch_page-2d7bd57cdab67cca"
+            }
+          },
+          {
+            "node_id": "claim-28",
+            "kind": "claim",
+            "label": "In Unlambda, the `.x` notation outputs the character x.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-28-1",
+            "kind": "source",
+            "label": "Unlambda - Esolang",
+            "properties": {
+              "document_version_id": "fetch_page-3aa95fe5f8aa6630"
+            }
+          },
+          {
+            "node_id": "claim-29",
+            "kind": "claim",
+            "label": "The provided source excerpts do not contain information about the specific Unlambda code needed to output \"For penguins\" or the character required to correct the given code.",
+            "properties": {
+              "support_status": "unsupported",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-29-1",
+            "kind": "source",
+            "label": "Unlambda - Esolang",
+            "properties": {
+              "document_version_id": "fetch_page-c7dbdcf4021312dc"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:19"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-20-1",
+            "source_node_id": "claim-20",
+            "target_node_id": "source-20-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:20"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-21-1",
+            "source_node_id": "claim-21",
+            "target_node_id": "source-21-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:21"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-22-1",
+            "source_node_id": "claim-22",
+            "target_node_id": "source-22-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:22"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-23-1",
+            "source_node_id": "claim-23",
+            "target_node_id": "source-23-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:23"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-24-1",
+            "source_node_id": "claim-24",
+            "target_node_id": "source-24-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:24"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-25-1",
+            "source_node_id": "claim-25",
+            "target_node_id": "source-25-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:25"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-26-1",
+            "source_node_id": "claim-26",
+            "target_node_id": "source-26-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:26"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-27-1",
+            "source_node_id": "claim-27",
+            "target_node_id": "source-27-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:27"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-28-1",
+            "source_node_id": "claim-28",
+            "target_node_id": "source-28-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:28"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-29-1",
+            "source_node_id": "claim-29",
+            "target_node_id": "source-29-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T123208Z-039d0ef8:span:research-01-in-unlambda-what-exact-charcter-or-t:29"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 29,
+      "decision_count": 29
+    }
   }
 ]

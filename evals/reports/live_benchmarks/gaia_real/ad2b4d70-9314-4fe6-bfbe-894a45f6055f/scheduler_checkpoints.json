@@ -1,0 +1,2068 @@
+[
+  {
+    "checkpoint_id": "20260814T110310Z-659deefd:task-checkpoint:000001",
+    "job_id": "20260814T110310Z-659deefd",
+    "task_id": "research-01-eva-draconis-has-a-personal-website-",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-eva-draconis-has-a-personal-website-",
+      "job_id": "20260814T110310Z-659deefd",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T110310Z-659deefd:packet:research-01-eva-draconis-has-a-personal-website-",
+          "task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:01",
+              "document_version_id": "web_search-affab8abf3ad661e",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "ers",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:02",
+              "document_version_id": "web_search-affab8abf3ad661e",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "channel",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:03",
+              "document_version_id": "web_search-3220fa2f7873e0e4",
+              "page": null,
+              "section": "II-Agent - Intelligent Internet",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the referenced webpage (orionmindproject.com) is inaccessible",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:04",
+              "document_version_id": "web_search-3220fa2f7873e0e4",
+              "page": null,
+              "section": "II-Agent - Intelligent Internet",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the channel currently contains no available information",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:05",
+              "document_version_id": "web_search-8f96068ec4a40847",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "PreFlect handles a complex Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis’ personal website",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:06",
+              "document_version_id": "web_search-8f96068ec4a40847",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The task is particularly challenging because both the target YouTube channel and the personal webpage",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:07",
+              "document_version_id": "web_search-77e3b83c95747d1a",
+              "page": null,
+              "section": "II-Agent - Intelligent Internet",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Following the findings from the Camel team, several of their questions are based on outdated information",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:08",
+              "document_version_id": "web_search-966f0a9d5a0d7b27",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Figure 3 illustrates how PreFlect handles a complex Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:09",
+              "document_version_id": "web_search-f46c5b58baa1802c",
+              "page": null,
+              "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Eva’s website is one of five owned by the same basic entity. Maybe she gave the others away to various friends, one being Anita Ikonen.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:10",
+              "document_version_id": "web_search-f46c5b58baa1802c",
+              "page": null,
+              "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "There is a “contact” button on each website.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:11",
+              "document_version_id": "web_search-f46c5b58baa1802c",
+              "page": null,
+              "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Eva’s most interesting revelations on her website concern another successful creation; a Mantis hybrid formed squarely out of reptilian genet",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:12",
+              "document_version_id": "fetch_page-b0fbbfd8201f025e",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "we propose P rospective Reflect ion ( PreFlect ), a novel framework that shifts the reflection paradigm from reactive correction to proactive prevention, equipping agents with a prospective capability to anticipate potential pitfalls.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:13",
+              "document_version_id": "fetch_page-b0fbbfd8201f025e",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "we introduce a planning-phase reflection mechanism that operates in the cognitive window between plan generation and action execution.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:14",
+              "document_version_id": "fetch_page-b0fbbfd8201f025e",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "into PreFlect, which serves as an experiential anchor by distilling recurrent failure and success patterns from past agent trajectories.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:15",
+              "document_version_id": "fetch_page-2f456a4375056de8",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": "we incorporate a dynamic re-planning mechanism to complement planning-phase reflection by adaptively updating the agent",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:16",
+              "document_version_id": "fetch_page-2f456a4375056de8",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": "Results show that PreFlect achieves consistent performance improvements while maintaining reasonable token overhead.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:17",
+              "document_version_id": "fetch_page-8bcddd6631724047",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 7200,
+              "end_offset": 9200,
+              "quote": "al. 2022 ) architecture established the iterative",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:18",
+              "document_version_id": "fetch_page-639ebf36b058c24b",
+              "page": null,
+              "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+              "start_offset": 9000,
+              "end_offset": 11000,
+              "quote": "al. 2023 ) established the foundation for this paradigm by introducing verbal reinforcement to store linguistic feedback to prevent recurring errors.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:19",
+              "document_version_id": "fetch_page-bd355e13d71a3199",
+              "page": null,
+              "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": "nizable ) have been catalogued in their millions travelling alongside various differing entities.",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:01",
+              "claim": "Eva Draconis' YouTube channel has 1.02K subscribers.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:01",
+                  "document_version_id": "web_search-affab8abf3ad661e",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "ers",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:02",
+              "claim": "Eva Draconis' YouTube channel doesn't have any content.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:02",
+                  "document_version_id": "web_search-affab8abf3ad661e",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "channel",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:03",
+              "claim": "Eva Draconis's personal website URL is orionmindproject.com",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:03",
+                  "document_version_id": "web_search-3220fa2f7873e0e4",
+                  "page": null,
+                  "section": "II-Agent - Intelligent Internet",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the referenced webpage (orionmindproject.com) is inaccessible",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:04",
+              "claim": "Eva Draconis's YouTube channel currently contains no available information",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:04",
+                  "document_version_id": "web_search-3220fa2f7873e0e4",
+                  "page": null,
+                  "section": "II-Agent - Intelligent Internet",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the channel currently contains no available information",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:05",
+              "claim": "The task of identifying the meaning of a specific symbol on Eva Draconis's personal website is a complex Level-3 GAIA task",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:05",
+                  "document_version_id": "web_search-8f96068ec4a40847",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "PreFlect handles a complex Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis’ personal website",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:06",
+              "claim": "Both the target YouTube channel and the personal webpage are challenging for the task",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:06",
+                  "document_version_id": "web_search-8f96068ec4a40847",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The task is particularly challenging because both the target YouTube channel and the personal webpage",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:07",
+              "claim": "The task about Eva Draconis's personal website is based on outdated information and the website is no longer accessible.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:07",
+                  "document_version_id": "web_search-77e3b83c95747d1a",
+                  "page": null,
+                  "section": "II-Agent - Intelligent Internet",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Following the findings from the Camel team, several of their questions are based on outdated information",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:08",
+              "claim": "The Eva Draconis question is a Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis' personal website which can be accessed on her YouTube page.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:08",
+                  "document_version_id": "web_search-966f0a9d5a0d7b27",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Figure 3 illustrates how PreFlect handles a complex Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:09",
+              "claim": "Eva Draconis has a website owned by the same basic entity as four other websites, one possibly given to Anita Ikonen.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:09",
+                  "document_version_id": "web_search-f46c5b58baa1802c",
+                  "page": null,
+                  "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Eva’s website is one of five owned by the same basic entity. Maybe she gave the others away to various friends, one being Anita Ikonen.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:10",
+              "claim": "Eva Draconis's website contains a contact button.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:10",
+                  "document_version_id": "web_search-f46c5b58baa1802c",
+                  "page": null,
+                  "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "There is a “contact” button on each website.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:11",
+              "claim": "Eva Draconis's website contains revelations about a Mantis hybrid formed out of reptilian genetics.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:11",
+                  "document_version_id": "web_search-f46c5b58baa1802c",
+                  "page": null,
+                  "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Eva’s most interesting revelations on her website concern another successful creation; a Mantis hybrid formed squarely out of reptilian genet",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:12",
+              "claim": "PreFlect is a framework that shifts the reflection paradigm from reactive correction to proactive prevention, equipping agents with a prospective capability to anticipate potential pitfalls.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:12",
+                  "document_version_id": "fetch_page-b0fbbfd8201f025e",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "we propose P rospective Reflect ion ( PreFlect ), a novel framework that shifts the reflection paradigm from reactive correction to proactive prevention, equipping agents with a prospective capability to anticipate potential pitfalls.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:13",
+              "claim": "PreFlect introduces a planning-phase reflection mechanism that operates in the cognitive window between plan generation and action execution.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:13",
+                  "document_version_id": "fetch_page-b0fbbfd8201f025e",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "we introduce a planning-phase reflection mechanism that operates in the cognitive window between plan generation and action execution.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:14",
+              "claim": "PreFlect incorporates the 'Planning Errors' into its framework, which serves as an experiential anchor by distilling recurrent failure and success patterns from past agent trajectories.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:14",
+                  "document_version_id": "fetch_page-b0fbbfd8201f025e",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "into PreFlect, which serves as an experiential anchor by distilling recurrent failure and success patterns from past agent trajectories.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:15",
+              "claim": "PreFlect incorporates a dynamic re-planning mechanism to complement planning-phase reflection by adaptively updating the agent's plan during execution.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:15",
+                  "document_version_id": "fetch_page-2f456a4375056de8",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": "we incorporate a dynamic re-planning mechanism to complement planning-phase reflection by adaptively updating the agent",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:16",
+              "claim": "PreFlect achieves consistent performance improvements while maintaining reasonable token overhead.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:16",
+                  "document_version_id": "fetch_page-2f456a4375056de8",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": "Results show that PreFlect achieves consistent performance improvements while maintaining reasonable token overhead.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:17",
+              "claim": "The ReAct architecture established the iterative 'reason-act' paradigm.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:17",
+                  "document_version_id": "fetch_page-8bcddd6631724047",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 7200,
+                  "end_offset": 9200,
+                  "quote": "al. 2022 ) architecture established the iterative",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:18",
+              "claim": "Reflexion established the foundation for the self-reflection paradigm by introducing verbal reinforcement to store linguistic feedback to prevent recurring errors.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:18",
+                  "document_version_id": "fetch_page-639ebf36b058c24b",
+                  "page": null,
+                  "section": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                  "start_offset": 9000,
+                  "end_offset": 11000,
+                  "quote": "al. 2023 ) established the foundation for this paradigm by introducing verbal reinforcement to store linguistic feedback to prevent recurring errors.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110310Z-659deefd:claim:research-01-eva-draconis-has-a-personal-website-:19",
+              "claim": "The source excerpts do not contain any description of a symbol in a top banner with a curved line that isn't a circle or portion of a circle.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "unsupported",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:19",
+                  "document_version_id": "fetch_page-bd355e13d71a3199",
+                  "page": null,
+                  "section": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": "nizable ) have been catalogued in their millions travelling alongside various differing entities.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:01",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "affab8abf3ad661e35357bd4019c59d686c484ed65624bd656422678d4c14bf1",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-affab8abf3ad661e",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:02",
+              "uri": "https://www.youtube.com/c/EvaDraconis",
+              "media_type": "text/markdown",
+              "content_sha256": "ae2eb96cbbe454424b02849d3617ee8be74e45d2a5dc7296f39e84e2d7a4c8cb",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-ae2eb96cbbe45442",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:03",
+              "uri": "https://www.youtube.com/watch?v=O5DzKHsS60c",
+              "media_type": "text/markdown",
+              "content_sha256": "2cf6e8db88a9ced6241dafb668277cf1c456da38c221dc13809082daf23c8c19",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-2cf6e8db88a9ced6",
+                "critical_claims_allowed": true,
+                "source_title": "What I Thinks Of Eva Draconis Story",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:04",
+              "uri": "https://www.youtube.com/watch?v=Ydrhb_grrRE",
+              "media_type": "text/markdown",
+              "content_sha256": "7f26ce65eca23d2be5e5ded14e2ca4526dde3761248ff562e18d62b3528bbb6c",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-7f26ce65eca23d2b",
+                "critical_claims_allowed": true,
+                "source_title": "Eva 8 Reactive Skin Draconis",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:05",
+              "uri": "https://ii.inc/blog/post/ii-agent",
+              "media_type": "text/markdown",
+              "content_sha256": "3220fa2f7873e0e45047ba237547989a0668ca1eb912a3f40a1b920efd42dfb4",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-3220fa2f7873e0e4",
+                "critical_claims_allowed": true,
+                "source_title": "II-Agent - Intelligent Internet",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:06",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "8f96068ec4a4084735a3374149f76a7c8ac63c58d7286d6fe6942403c8f55067",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-8f96068ec4a40847",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:07",
+              "uri": "https://www.instagram.com/popular/eva-draconis-personal-website",
+              "media_type": "text/markdown",
+              "content_sha256": "c38b58eef15212ef97a189d4513b8a006c3174a5171ece969c741298c80f60ad",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-c38b58eef15212ef",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis Personal Website",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:08",
+              "uri": "https://www.youtube.com/watch?v=wKeZhJBswfc",
+              "media_type": "text/markdown",
+              "content_sha256": "302fb27757c4111078a063ab3fb34a9f020a4f019ee2d5f8627623c030e1b66c",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-302fb27757c41110",
+                "critical_claims_allowed": true,
+                "source_title": "USING THE NEW DRACONIS EVA 8 SKIN",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:09",
+              "uri": "https://ii.inc/blog/post/ii-agent",
+              "media_type": "text/markdown",
+              "content_sha256": "77e3b83c95747d1a9a7423638e7dcd710dde90d70d3f953fc9920d28f34ff06f",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-77e3b83c95747d1a",
+                "critical_claims_allowed": true,
+                "source_title": "II-Agent - Intelligent Internet",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:10",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "966f0a9d5a0d7b27448e977923a3ac552d3bf5825ddb6145586db1ab3b7cee18",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-966f0a9d5a0d7b27",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:11",
+              "uri": "https://themesbrand.com/borex/layouts/icons-evaicons.html",
+              "media_type": "text/markdown",
+              "content_sha256": "c506ab61b88244d48a3162e667c36e53e29777dcd746c7116d07ac9791a37b3c",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-c506ab61b88244d4",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Icons | Borex - Admin & Dashboard Template",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:12",
+              "uri": "https://github.com/akveo/eva-icons/blob/master/README.md",
+              "media_type": "text/markdown",
+              "content_sha256": "6078aa58b885cd617d257d996bb0c60fb51095889984ddc40d6a5a861d06d337",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-6078aa58b885cd61",
+                "critical_claims_allowed": true,
+                "source_title": "eva-icons/README.md at master · akveo/eva-icons · GitHub",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:13",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis",
+              "media_type": "text/markdown",
+              "content_sha256": "f46c5b58baa1802c1c79db74e436842502e16a77db2494c1f9549e746f7560af",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-f46c5b58baa1802c",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:14",
+              "uri": "https://www.youtube.com/watch?v=C1-kHz00g64",
+              "media_type": "text/markdown",
+              "content_sha256": "d0af401e395d04276c69cb3678f2f3fbf7673a8c5c7c97ed3c9986119d9a92b2",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "web_search-d0af401e395d0427",
+                "critical_claims_allowed": true,
+                "source_title": "Eva's Character Development ( character design advice)",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:15",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "74d4d05694b125989546514583aada54b50c5c28fe615d8b6566067901f3c1fd",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-74d4d05694b12598",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:16",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "96085dce353d298864b14266a79691a3dec02a1a4a37a4fd0fbadf7895998395",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-96085dce353d2988",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:17",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "b0fbbfd8201f025ea8c89c8a3be90c8084e4c78ff18bcbfc6a30d3e41c1f15ec",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-b0fbbfd8201f025e",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:18",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "2f456a4375056de88286f9ac1b2ee93d4bcc0f44d9c75f0ca119ac080fcd3ac0",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-2f456a4375056de8",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:19",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "8bcddd66317240471b3f396850256d29c9100589ece174e086fd20e448851f27",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-8bcddd6631724047",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9200
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:20",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "639ebf36b058c24b0e694db6f0b571d64c2ea6289add1e8a48128b429bdd0ec3",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-639ebf36b058c24b",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 5,
+                "char_start": 9000,
+                "char_end": 11000
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:21",
+              "uri": "https://arxiv.org/html/2602.07187v1",
+              "media_type": "text/markdown",
+              "content_sha256": "b7f2a4eb0658597b58e002310931455eaf6083d75e8b28b38dc1b1964495d5f9",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-b7f2a4eb0658597b",
+                "critical_claims_allowed": true,
+                "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 6,
+                "char_start": 10800,
+                "char_end": 12000
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:22",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "61e04e955f09112dfd485456da4f970cb4666e25ffb2504bbe28deac8d4dd27b",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-61e04e955f09112d",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:23",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "910220720363983ae925577557491752d7e1144154213c1ca72020a2be143e71",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-910220720363983a",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:24",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "1f24b22b4df7d7f6d09c81cd513b17963cb09b4eb99d5c79e0ec5aceff22d98a",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-1f24b22b4df7d7f6",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:25",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "bd355e13d71a31996677d351b507e0254183b9ab297b28b894a0ffedab412760",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-bd355e13d71a3199",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:26",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "6fbcd0da9f342e380507027c86470f613138abf4cf3940f45e6ee69363f63be3",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-6fbcd0da9f342e38",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9200
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:27",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "2c933db8ca14d8d8a1946b0f8a5efad408dea9351ee3ddf01486a216d2c13e24",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-2c933db8ca14d8d8",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 5,
+                "char_start": 9000,
+                "char_end": 11000
+              }
+            },
+            {
+              "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:28",
+              "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+              "media_type": "text/markdown",
+              "content_sha256": "76977e742cc0e6093359ca0e6622ad22b565fb78f403baa7e5ec4e9c7f3acd84",
+              "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+              "metadata": {
+                "document_version_id": "fetch_page-76977e742cc0e609",
+                "critical_claims_allowed": true,
+                "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 6,
+                "char_start": 10800,
+                "char_end": 12000
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:01",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "affab8abf3ad661e35357bd4019c59d686c484ed65624bd656422678d4c14bf1",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-affab8abf3ad661e",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:02",
+          "uri": "https://www.youtube.com/c/EvaDraconis",
+          "media_type": "text/markdown",
+          "content_sha256": "ae2eb96cbbe454424b02849d3617ee8be74e45d2a5dc7296f39e84e2d7a4c8cb",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-ae2eb96cbbe45442",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:03",
+          "uri": "https://www.youtube.com/watch?v=O5DzKHsS60c",
+          "media_type": "text/markdown",
+          "content_sha256": "2cf6e8db88a9ced6241dafb668277cf1c456da38c221dc13809082daf23c8c19",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-2cf6e8db88a9ced6",
+            "critical_claims_allowed": true,
+            "source_title": "What I Thinks Of Eva Draconis Story",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:04",
+          "uri": "https://www.youtube.com/watch?v=Ydrhb_grrRE",
+          "media_type": "text/markdown",
+          "content_sha256": "7f26ce65eca23d2be5e5ded14e2ca4526dde3761248ff562e18d62b3528bbb6c",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-7f26ce65eca23d2b",
+            "critical_claims_allowed": true,
+            "source_title": "Eva 8 Reactive Skin Draconis",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:05",
+          "uri": "https://ii.inc/blog/post/ii-agent",
+          "media_type": "text/markdown",
+          "content_sha256": "3220fa2f7873e0e45047ba237547989a0668ca1eb912a3f40a1b920efd42dfb4",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-3220fa2f7873e0e4",
+            "critical_claims_allowed": true,
+            "source_title": "II-Agent - Intelligent Internet",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:06",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "8f96068ec4a4084735a3374149f76a7c8ac63c58d7286d6fe6942403c8f55067",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-8f96068ec4a40847",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:07",
+          "uri": "https://www.instagram.com/popular/eva-draconis-personal-website",
+          "media_type": "text/markdown",
+          "content_sha256": "c38b58eef15212ef97a189d4513b8a006c3174a5171ece969c741298c80f60ad",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-c38b58eef15212ef",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis Personal Website",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:08",
+          "uri": "https://www.youtube.com/watch?v=wKeZhJBswfc",
+          "media_type": "text/markdown",
+          "content_sha256": "302fb27757c4111078a063ab3fb34a9f020a4f019ee2d5f8627623c030e1b66c",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-302fb27757c41110",
+            "critical_claims_allowed": true,
+            "source_title": "USING THE NEW DRACONIS EVA 8 SKIN",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:09",
+          "uri": "https://ii.inc/blog/post/ii-agent",
+          "media_type": "text/markdown",
+          "content_sha256": "77e3b83c95747d1a9a7423638e7dcd710dde90d70d3f953fc9920d28f34ff06f",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-77e3b83c95747d1a",
+            "critical_claims_allowed": true,
+            "source_title": "II-Agent - Intelligent Internet",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:10",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "966f0a9d5a0d7b27448e977923a3ac552d3bf5825ddb6145586db1ab3b7cee18",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-966f0a9d5a0d7b27",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:11",
+          "uri": "https://themesbrand.com/borex/layouts/icons-evaicons.html",
+          "media_type": "text/markdown",
+          "content_sha256": "c506ab61b88244d48a3162e667c36e53e29777dcd746c7116d07ac9791a37b3c",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-c506ab61b88244d4",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Icons | Borex - Admin & Dashboard Template",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:12",
+          "uri": "https://github.com/akveo/eva-icons/blob/master/README.md",
+          "media_type": "text/markdown",
+          "content_sha256": "6078aa58b885cd617d257d996bb0c60fb51095889984ddc40d6a5a861d06d337",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-6078aa58b885cd61",
+            "critical_claims_allowed": true,
+            "source_title": "eva-icons/README.md at master · akveo/eva-icons · GitHub",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:13",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis",
+          "media_type": "text/markdown",
+          "content_sha256": "f46c5b58baa1802c1c79db74e436842502e16a77db2494c1f9549e746f7560af",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-f46c5b58baa1802c",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:14",
+          "uri": "https://www.youtube.com/watch?v=C1-kHz00g64",
+          "media_type": "text/markdown",
+          "content_sha256": "d0af401e395d04276c69cb3678f2f3fbf7673a8c5c7c97ed3c9986119d9a92b2",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "web_search-d0af401e395d0427",
+            "critical_claims_allowed": true,
+            "source_title": "Eva's Character Development ( character design advice)",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:15",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "74d4d05694b125989546514583aada54b50c5c28fe615d8b6566067901f3c1fd",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-74d4d05694b12598",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:16",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "96085dce353d298864b14266a79691a3dec02a1a4a37a4fd0fbadf7895998395",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-96085dce353d2988",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:17",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "b0fbbfd8201f025ea8c89c8a3be90c8084e4c78ff18bcbfc6a30d3e41c1f15ec",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-b0fbbfd8201f025e",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:18",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "2f456a4375056de88286f9ac1b2ee93d4bcc0f44d9c75f0ca119ac080fcd3ac0",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-2f456a4375056de8",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:19",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "8bcddd66317240471b3f396850256d29c9100589ece174e086fd20e448851f27",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-8bcddd6631724047",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9200
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:20",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "639ebf36b058c24b0e694db6f0b571d64c2ea6289add1e8a48128b429bdd0ec3",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-639ebf36b058c24b",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 5,
+            "char_start": 9000,
+            "char_end": 11000
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:21",
+          "uri": "https://arxiv.org/html/2602.07187v1",
+          "media_type": "text/markdown",
+          "content_sha256": "b7f2a4eb0658597b58e002310931455eaf6083d75e8b28b38dc1b1964495d5f9",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-b7f2a4eb0658597b",
+            "critical_claims_allowed": true,
+            "source_title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 6,
+            "char_start": 10800,
+            "char_end": 12000
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:22",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "61e04e955f09112dfd485456da4f970cb4666e25ffb2504bbe28deac8d4dd27b",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-61e04e955f09112d",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:23",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "910220720363983ae925577557491752d7e1144154213c1ca72020a2be143e71",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-910220720363983a",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:24",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "1f24b22b4df7d7f6d09c81cd513b17963cb09b4eb99d5c79e0ec5aceff22d98a",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-1f24b22b4df7d7f6",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:25",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "bd355e13d71a31996677d351b507e0254183b9ab297b28b894a0ffedab412760",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-bd355e13d71a3199",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:26",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "6fbcd0da9f342e380507027c86470f613138abf4cf3940f45e6ee69363f63be3",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-6fbcd0da9f342e38",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9200
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:27",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "2c933db8ca14d8d8a1946b0f8a5efad408dea9351ee3ddf01486a216d2c13e24",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-2c933db8ca14d8d8",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 5,
+            "char_start": 9000,
+            "char_end": 11000
+          }
+        },
+        {
+          "artifact_id": "20260814T110310Z-659deefd:research-01-eva-draconis-has-a-personal-website-:src:28",
+          "uri": "https://exopolitician.wordpress.com/tag/eva-draconis/",
+          "media_type": "text/markdown",
+          "content_sha256": "76977e742cc0e6093359ca0e6622ad22b565fb78f403baa7e5ec4e9c7f3acd84",
+          "created_by_task_id": "research-01-eva-draconis-has-a-personal-website-",
+          "metadata": {
+            "document_version_id": "fetch_page-76977e742cc0e609",
+            "critical_claims_allowed": true,
+            "source_title": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 6,
+            "char_start": 10800,
+            "char_end": 12000
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-eva-draconis-has-a-personal-website-",
+      "objective": "Eva Draconis has a personal website which can be accessed on her YouTube page. What is the meaning of the only symbol seen in the top banner that has a curved line that isn't a circle or a portion of a circle? Answer without punctuation.",
+      "agentic": true,
+      "rounds": 2,
+      "query_count": 5,
+      "queries": [
+        {
+          "query": "Eva Draconis YouTube channel",
+          "tool": "web_search"
+        },
+        {
+          "query": "Eva Draconis personal website",
+          "tool": "web_search"
+        },
+        {
+          "query": "Eva Draconis personal website top banner symbols",
+          "tool": "web_search"
+        },
+        {
+          "query": "Eva Draconis website",
+          "tool": "web_search"
+        },
+        {
+          "query": "Eva Draconis YouTube about page website link",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 14,
+      "page_urls": [
+        "https://arxiv.org/html/2602.07187v1",
+        "https://arxiv.org/html/2602.07187v1",
+        "https://arxiv.org/html/2602.07187v1",
+        "https://arxiv.org/html/2602.07187v1",
+        "https://arxiv.org/html/2602.07187v1",
+        "https://arxiv.org/html/2602.07187v1",
+        "https://arxiv.org/html/2602.07187v1",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/",
+        "https://exopolitician.wordpress.com/tag/eva-draconis/"
+      ],
+      "coverage_assessments": [
+        {
+          "covered": false,
+          "gaps": [
+            "The actual content of Eva Draconis's personal website (the top banner and its symbols) has not been retrieved or examined.",
+            "The specific symbol in the top banner that has a curved line that isn't a circle or portion of a circle has not been identified.",
+            "The meaning of that symbol has not been determined.",
+            "The personal website URL itself has not been confirmed from the YouTube about section."
+          ],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 0,
+      "source_count": 14,
+      "claim_count": 19
+    }
+  },
+  {
+    "checkpoint_id": "20260814T110310Z-659deefd:task-checkpoint:000002",
+    "job_id": "20260814T110310Z-659deefd",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 2,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T110310Z-659deefd",
+      "status": "completed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": null
+    },
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- Eva Draconis' YouTube channel has 1.02K subscribers and currently contains no content or available information.\n- Eva Draconis' personal website is at orionmindproject.com, but it is no longer accessible due to outdated information.\n- The Eva Draconis task is a Level-3 GAIA task involving identifying the meaning of a specific symbol on her personal website, which can be accessed via her YouTube page.\n- The website contains a contact button and revelations about a Mantis hybrid formed out of reptilian genetics, and is owned by the same basic entity as four other websites, one possibly given to Anita Ikonen.\n- PreFlect is a framework that shifts reflection from reactive correction to proactive prevention, incorporating planning-phase reflection, Planning Errors, and dynamic re-planning, achieving consistent performance improvements with reasonable token overhead.\n\n## Findings\n\n### Eva Draconis' YouTube Channel\nEva Draconis' YouTube channel has 1.02K subscribers. The channel currently contains no content and no available information.\n\n### Eva Draconis' Personal Website\nEva Draconis' personal website URL is orionmindproject.com. The website contains a contact button and revelations about a Mantis hybrid formed out of reptilian genetics. The website is owned by the same basic entity as four other websites, one possibly given to Anita Ikonen.\n\n### Task Classification and Accessibility\nThe Eva Draconis question is a Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis' personal website, which can be accessed on her YouTube page. Both the target YouTube channel and the personal webpage are challenging for the task. The task is based on outdated information, and the website is no longer accessible.\n\n### PreFlect Framework\nPreFlect is a framework that shifts the reflection paradigm from reactive correction to proactive prevention, equipping agents with a prospective capability to anticipate potential pitfalls. It introduces a planning-phase reflection mechanism that operates in the cognitive window between plan generation and action execution. PreFlect incorporates 'Planning Errors' into its framework, which serves as an experiential anchor by distilling recurrent failure and success patterns from past agent trajectories. It also incorporates a dynamic re-planning mechanism to complement planning-phase reflection by adaptively updating the agent's plan during execution. PreFlect achieves consistent performance improvements while maintaining reasonable token overhead.\n\n### Foundational Architectures\nThe ReAct architecture established the iterative 'reason-act' paradigm. Reflexion established the foundation for the self-reflection paradigm by introducing verbal reinforcement to store linguistic feedback to prevent recurring errors.\n\n## Evidence Status\n\nAll claims are accepted based on supporting evidence spans. One claim (regarding the absence of a symbol description in source excerpts) is accepted as unsupported, meaning the evidence does not contain a description of a symbol in a top banner with a curved line that isn't a circle or portion of a circle. No claims were rejected.",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "Eva Draconis' YouTube channel has 1.02K subscribers.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "web_search-affab8abf3ad661e"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "Eva Draconis' YouTube channel doesn't have any content.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "web_search-affab8abf3ad661e"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "Eva Draconis's personal website URL is orionmindproject.com",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "II-Agent - Intelligent Internet",
+            "properties": {
+              "document_version_id": "web_search-3220fa2f7873e0e4"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "Eva Draconis's YouTube channel currently contains no available information",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "II-Agent - Intelligent Internet",
+            "properties": {
+              "document_version_id": "web_search-3220fa2f7873e0e4"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "The task of identifying the meaning of a specific symbol on Eva Draconis's personal website is a complex Level-3 GAIA task",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in ...",
+            "properties": {
+              "document_version_id": "web_search-8f96068ec4a40847"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "Both the target YouTube channel and the personal webpage are challenging for the task",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in ...",
+            "properties": {
+              "document_version_id": "web_search-8f96068ec4a40847"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "The task about Eva Draconis's personal website is based on outdated information and the website is no longer accessible.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "II-Agent - Intelligent Internet",
+            "properties": {
+              "document_version_id": "web_search-77e3b83c95747d1a"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "The Eva Draconis question is a Level-3 GAIA task to identify the meaning of a specific symbol on Eva Draconis' personal website which can be accessed on her YouTube page.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in ...",
+            "properties": {
+              "document_version_id": "web_search-966f0a9d5a0d7b27"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "Eva Draconis has a website owned by the same basic entity as four other websites, one possibly given to Anita Ikonen.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "properties": {
+              "document_version_id": "web_search-f46c5b58baa1802c"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "Eva Draconis's website contains a contact button.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "properties": {
+              "document_version_id": "web_search-f46c5b58baa1802c"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "Eva Draconis's website contains revelations about a Mantis hybrid formed out of reptilian genetics.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "properties": {
+              "document_version_id": "web_search-f46c5b58baa1802c"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "PreFlect is a framework that shifts the reflection paradigm from reactive correction to proactive prevention, equipping agents with a prospective capability to anticipate potential pitfalls.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-b0fbbfd8201f025e"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "PreFlect introduces a planning-phase reflection mechanism that operates in the cognitive window between plan generation and action execution.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-b0fbbfd8201f025e"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "PreFlect incorporates the 'Planning Errors' into its framework, which serves as an experiential anchor by distilling recurrent failure and success patterns from past agent trajectories.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-b0fbbfd8201f025e"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "PreFlect incorporates a dynamic re-planning mechanism to complement planning-phase reflection by adaptively updating the agent's plan during execution.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-2f456a4375056de8"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "PreFlect achieves consistent performance improvements while maintaining reasonable token overhead.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-2f456a4375056de8"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "The ReAct architecture established the iterative 'reason-act' paradigm.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-8bcddd6631724047"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "Reflexion established the foundation for the self-reflection paradigm by introducing verbal reinforcement to store linguistic feedback to prevent recurring errors.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+            "properties": {
+              "document_version_id": "fetch_page-639ebf36b058c24b"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "The source excerpts do not contain any description of a symbol in a top banner with a curved line that isn't a circle or portion of a circle.",
+            "properties": {
+              "support_status": "unsupported",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "Eva Draconis | I am Exopolitician, iXossana reincarnated",
+            "properties": {
+              "document_version_id": "fetch_page-bd355e13d71a3199"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110310Z-659deefd:span:research-01-eva-draconis-has-a-personal-website-:19"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 19,
+      "decision_count": 19
+    }
+  }
+]

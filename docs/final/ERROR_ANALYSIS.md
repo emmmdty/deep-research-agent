@@ -22,16 +22,19 @@ not validated.
 
 ## Headline Result (GAIA, first pass)
 
-| Metric | Value |
-| --- | --- |
-| Judge accuracy | 5/20 = 25% |
-| Exact match | 3/20 = 15% |
-| By level (judge) | L1 42.9%, L2 12.5%, L3 20% |
-| Total tokens / cost / wall | 8.3M / ~$8.3 / 35.7 min |
+| Metric | First pass | After critic fix |
+| --- | --- | --- |
+| Judge accuracy | 5/20 = 25% | **7/20 = 35%** |
+| Exact match | 3/20 = 15% | **5/20 = 25%** |
+| By level (judge) | L1 42.9%, L2 12.5%, L3 20% | L1 57.1%, L2 25%, L3 20% |
+| Total tokens / cost | 8.3M / ~$8.3 | 7.1M / ~$7.1 |
 
 These are *real* numbers for a small flash model with a fixed 2-round search
 budget. They are low on purpose to measure: the report is the honest baseline
-from which every later improvement is measured.
+from which every later improvement is measured. The second column is the same
+20 questions re-run **after** fixing the critic crash described in failure mode
+A below — two questions that previously produced no report at all now answer
+exactly; the fix both raised accuracy and cut cost.
 
 ## Failure Taxonomy (15 incorrect of 20)
 
@@ -52,7 +55,10 @@ task failed.
    (`src/deep_research_agent/agents/critic.py`)
 
 This failure mode alone accounted for 5 of the 10 "empty answer" errors and is
-the single highest-leverage defect the benchmark surfaced.
+the single highest-leverage defect the benchmark surfaced. After the fix, the
+same five questions produced reports; two of them now answer correctly
+(exact match), and the remaining three fail honestly (the fact was not found)
+instead of silently.
 
 ### B. Empty extraction on multi-hop questions (9/15 wrong were empty)
 

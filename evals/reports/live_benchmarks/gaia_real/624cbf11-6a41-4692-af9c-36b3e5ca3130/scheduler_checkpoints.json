@@ -1,0 +1,3882 @@
+[
+  {
+    "checkpoint_id": "20260814T104558Z-15c527dd:task-checkpoint:000001",
+    "job_id": "20260814T104558Z-15c527dd",
+    "task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+      "job_id": "20260814T104558Z-15c527dd",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T104558Z-15c527dd:packet:research-01-what-s-the-last-line-of-the-rhyme-un",
+          "task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:01",
+              "document_version_id": "web_search-af15fb413329b7b9",
+              "page": null,
+              "section": "The Truth About Ben & Jerry's Flavor Graveyard",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Ben & Jerry's constructed the Flavor Graveyard in 1997, beginning with only four monuments",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:02",
+              "document_version_id": "web_search-af15fb413329b7b9",
+              "page": null,
+              "section": "The Truth About Ben & Jerry's Flavor Graveyard",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the original four flavors were Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:03",
+              "document_version_id": "web_search-1c83e1c4d0a4fb74",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Some say that raisin,",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:04",
+              "document_version_id": "web_search-1c83e1c4d0a4fb74",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "1979-1991\\ (The headstone says 1976, but it was 1979)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:05",
+              "document_version_id": "web_search-1c83e1c4d0a4fb74",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "You may protest, but we suggest",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:06",
+              "document_version_id": "web_search-1c83e1c4d0a4fb74",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2006-2010",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:07",
+              "document_version_id": "web_search-71c487db6176a209",
+              "page": null,
+              "section": "Ben & Jerry's actually has a graveyard where they bury all ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "In Waterbury, Vermont, near the factory, you'll find the Flavor Graveyard",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:08",
+              "document_version_id": "web_search-71c487db6176a209",
+              "page": null,
+              "section": "Ben & Jerry's actually has a graveyard where they bury all ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The graveyard was created in 1997 and has grown to include over 35 flavors",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:09",
+              "document_version_id": "web_search-ff8aac77dd42f9d7",
+              "page": null,
+              "section": "The Graveyard Of Shelved Ice Cream Flavors",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Headstones in Ben and Jerry's \"Flavor Graveyard\" are dedicated to bygone favorites such as Oh Pear (1997), Makin' Whoopie Pie (2002-2003), and Urban Jumble (2000-2001)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:10",
+              "document_version_id": "web_search-88808a9c659bdd54",
+              "page": null,
+              "section": "Factory Tour | Ben & Jerry's",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The Flavor Graveyard is an actual graveyard onsite where we have laid to rest our Dearly De-pinted flavors with granite headstones and witty epitaphs.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:11",
+              "document_version_id": "web_search-88808a9c659bdd54",
+              "page": null,
+              "section": "Factory Tour | Ben & Jerry's",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "It is located at the top of the property in the upper parking lots, passed the playground area.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:12",
+              "document_version_id": "web_search-5f6faae2d55ffa9d",
+              "page": null,
+              "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The Flavor Graveyard exists in two incarnations: on Ben & Jerry",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:13",
+              "document_version_id": "web_search-5f6faae2d55ffa9d",
+              "page": null,
+              "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "there is an actual Flavor Graveyard on a picturesque hill overlooking our factory, complete with granite headstones and witty epitaphs for each flavor",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:14",
+              "document_version_id": "web_search-9a8379b6d2fde960",
+              "page": null,
+              "section": "Flavor Graveyard",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The Flavor Graveyard is closed in the winter season due to its remote location on property and the hazardous winter terrain.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:15",
+              "document_version_id": "web_search-9a8379b6d2fde960",
+              "page": null,
+              "section": "Flavor Graveyard",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Aloha Macadamia\n\n2001-2002",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:16",
+              "document_version_id": "web_search-83b7076130253cc2",
+              "page": null,
+              "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "s headquarters in Vermont is a real ice cream graveyard with granite tombstones for over 35 discontinued flavors",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:17",
+              "document_version_id": "web_search-83b7076130253cc2",
+              "page": null,
+              "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Built in 1997",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:18",
+              "document_version_id": "web_search-83b7076130253cc2",
+              "page": null,
+              "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "each headstone features a rhyming epitaph",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:19",
+              "document_version_id": "web_search-97cf0bbc21868e9f",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "When It Was Available\n\n1997",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:20",
+              "document_version_id": "web_search-97cf0bbc21868e9f",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Fresh pear ice cream with a hint of almond and a light fudge swirl.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:21",
+              "document_version_id": "web_search-97cf0bbc21868e9f",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Oh Pear, Oh Pear,  \n A mixture of mirth  \n All nannies did weep  \n When you left of this earth.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:22",
+              "document_version_id": "web_search-97cf0bbc21868e9f",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "When you left of this earth.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:23",
+              "document_version_id": "web_search-97cf0bbc21868e9f",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Plum ice cream with a caramel swirl.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:24",
+              "document_version_id": "web_search-5340245bafd1d3c3",
+              "page": null,
+              "section": "The Graveyard Of Shelved Ice Cream Flavors : NPR",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Flavors in Ben and Jerry's Flavor Graveyard include Oh Pear (1997), Makin' Whoopie Pie (2002-2003) and Urban Jumble (2000-2001).",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:25",
+              "document_version_id": "web_search-83b7076130253cc2",
+              "page": null,
+              "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "granite tombstones for over 35 discontinued flavors",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:26",
+              "document_version_id": "web_search-9a25c53d73a4b545",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Some say that raisin,",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:27",
+              "document_version_id": "web_search-9a25c53d73a4b545",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "1979-1991\\ (The headstone says 1976, but it was 1979)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:28",
+              "document_version_id": "web_search-9a25c53d73a4b545",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "You may protest, but we suggest",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:29",
+              "document_version_id": "web_search-d639d820836b0ccd",
+              "page": null,
+              "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The physical Flavor Graveyard opened in 1997 and originally contained just 4 flavors, which only existed in the United States: Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:30",
+              "document_version_id": "web_search-d639d820836b0ccd",
+              "page": null,
+              "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "the Graveyard has grown to include 35 flavors",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:31",
+              "document_version_id": "fetch_page-141fe6303f4493c7",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "Mac got aloha'ed off the aisle.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:32",
+              "document_version_id": "fetch_page-25dfd51b396ea741",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "t make it go to live out the rest of their lives be buried.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:33",
+              "document_version_id": "fetch_page-25dfd51b396ea741",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "s a headstone dedicated to each of the flavors, with each one reminding you of what the ice cream was made of and an epitaph befitting each flavor.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:34",
+              "document_version_id": "fetch_page-25dfd51b396ea741",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "At the time of our visit, there were 40 flavors.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:35",
+              "document_version_id": "fetch_page-25dfd51b396ea741",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "The Flavor Graveyard can be found at the main Ben & Jerry",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:36",
+              "document_version_id": "fetch_page-25dfd51b396ea741",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 0,
+              "end_offset": 2000,
+              "quote": "The address is 1281 Waterbury Stowe Rd Route 100, Waterbury, VT 05676.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:37",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "Turtle Soup deserves a rest.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:38",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "Adieu, precious peanut.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:39",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "the flavor lost its strife",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:40",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "no i'm not…",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:41",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "So what're you waiting for?",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:42",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "Dead it's not, oh no, not nyet.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:43",
+              "document_version_id": "fetch_page-4a0fa39617b54644",
+              "page": null,
+              "section": "Flavor Graveyard | Ben & Jerry’s",
+              "start_offset": 7200,
+              "end_offset": 9064,
+              "quote": "We turn to the muffin.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:44",
+              "document_version_id": "fetch_page-48090a77a84cb632",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 1800,
+              "end_offset": 3800,
+              "quote": "Which everyone loves to visit",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:45",
+              "document_version_id": "fetch_page-5356816326aee706",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "d have realized they wanted a flavor with tots.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:46",
+              "document_version_id": "fetch_page-5356816326aee706",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "t Whoopie enough.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:47",
+              "document_version_id": "fetch_page-5356816326aee706",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "The flavor kabombed…a lot.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:48",
+              "document_version_id": "fetch_page-5356816326aee706",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "Loved it as much as you.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:49",
+              "document_version_id": "fetch_page-5356816326aee706",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "When angels took the herd.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:50",
+              "document_version_id": "fetch_page-5356816326aee706",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 3600,
+              "end_offset": 5600,
+              "quote": "The pint lid on their joys.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:51",
+              "document_version_id": "fetch_page-50c902dc485cd4dd",
+              "page": null,
+              "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+              "start_offset": 5400,
+              "end_offset": 7400,
+              "quote": "Peanuts, Popcorn! \nMix ’em in a pot! \nPlop ’em in your ice cream! \nWell, maybe not.",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:01",
+              "claim": "Ben & Jerry's constructed the Flavor Graveyard in 1997, beginning with only four monuments.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:01",
+                  "document_version_id": "web_search-af15fb413329b7b9",
+                  "page": null,
+                  "section": "The Truth About Ben & Jerry's Flavor Graveyard",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Ben & Jerry's constructed the Flavor Graveyard in 1997, beginning with only four monuments",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:02",
+              "claim": "The original four flavors in the Flavor Graveyard were Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:02",
+                  "document_version_id": "web_search-af15fb413329b7b9",
+                  "page": null,
+                  "section": "The Truth About Ben & Jerry's Flavor Graveyard",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the original four flavors were Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:03",
+              "claim": "The Dastardly Mash headstone epitaph reads: 'Here the brazen DASTARDLY lies. Some say that raisin, Caused its demise.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:03",
+                  "document_version_id": "web_search-1c83e1c4d0a4fb74",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Some say that raisin,",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:04",
+              "claim": "Dastardly Mash was available from 1979-1991, though the headstone says 1976.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:04",
+                  "document_version_id": "web_search-1c83e1c4d0a4fb74",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "1979-1991\\ (The headstone says 1976, but it was 1979)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:05",
+              "claim": "The Turtle Soup epitaph reads: 'Slow and Steady wins the race, Turtle Soup kept up the pace. You may protest, but we suggest Turtle Soup deserves a rest.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:05",
+                  "document_version_id": "web_search-1c83e1c4d0a4fb74",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "You may protest, but we suggest",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:06",
+              "claim": "Turtle Soup was available from 2006-2010.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:06",
+                  "document_version_id": "web_search-1c83e1c4d0a4fb74",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2006-2010",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:07",
+              "claim": "The Flavor Graveyard is located in Waterbury, Vermont, near the factory.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:07",
+                  "document_version_id": "web_search-71c487db6176a209",
+                  "page": null,
+                  "section": "Ben & Jerry's actually has a graveyard where they bury all ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "In Waterbury, Vermont, near the factory, you'll find the Flavor Graveyard",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:08",
+              "claim": "The graveyard was created in 1997 and has grown to include over 35 flavors.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:08",
+                  "document_version_id": "web_search-71c487db6176a209",
+                  "page": null,
+                  "section": "Ben & Jerry's actually has a graveyard where they bury all ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The graveyard was created in 1997 and has grown to include over 35 flavors",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:09",
+              "claim": "Headstones in the Flavor Graveyard are dedicated to bygone favorites such as Oh Pear (1997), Makin' Whoopie Pie (2002-2003), and Urban Jumble (2000-2001).",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:09",
+                  "document_version_id": "web_search-ff8aac77dd42f9d7",
+                  "page": null,
+                  "section": "The Graveyard Of Shelved Ice Cream Flavors",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Headstones in Ben and Jerry's \"Flavor Graveyard\" are dedicated to bygone favorites such as Oh Pear (1997), Makin' Whoopie Pie (2002-2003), and Urban Jumble (2000-2001)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:10",
+              "claim": "The Flavor Graveyard is an actual graveyard onsite at Ben & Jerry's with granite headstones and witty epitaphs.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:10",
+                  "document_version_id": "web_search-88808a9c659bdd54",
+                  "page": null,
+                  "section": "Factory Tour | Ben & Jerry's",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The Flavor Graveyard is an actual graveyard onsite where we have laid to rest our Dearly De-pinted flavors with granite headstones and witty epitaphs.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:11",
+              "claim": "The Flavor Graveyard is located at the top of the property in the upper parking lots, passed the playground area.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:11",
+                  "document_version_id": "web_search-88808a9c659bdd54",
+                  "page": null,
+                  "section": "Factory Tour | Ben & Jerry's",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "It is located at the top of the property in the upper parking lots, passed the playground area.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:12",
+              "claim": "The Flavor Graveyard exists in two incarnations: on Ben & Jerry's websites around the world, and also at the Ben & Jerry's factory in Waterbury, Vermont.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:12",
+                  "document_version_id": "web_search-5f6faae2d55ffa9d",
+                  "page": null,
+                  "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The Flavor Graveyard exists in two incarnations: on Ben & Jerry",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:13",
+              "claim": "There is an actual Flavor Graveyard on a picturesque hill overlooking the Ben & Jerry's factory, complete with granite headstones and witty epitaphs for each flavor.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:13",
+                  "document_version_id": "web_search-5f6faae2d55ffa9d",
+                  "page": null,
+                  "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "there is an actual Flavor Graveyard on a picturesque hill overlooking our factory, complete with granite headstones and witty epitaphs for each flavor",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:14",
+              "claim": "The Flavor Graveyard is closed in the winter season due to its remote location on property and the hazardous winter terrain.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:14",
+                  "document_version_id": "web_search-9a8379b6d2fde960",
+                  "page": null,
+                  "section": "Flavor Graveyard",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The Flavor Graveyard is closed in the winter season due to its remote location on property and the hazardous winter terrain.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:15",
+              "claim": "Aloha Macadamia was a flavor in the Flavor Graveyard from 2001-2002.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:15",
+                  "document_version_id": "web_search-9a8379b6d2fde960",
+                  "page": null,
+                  "section": "Flavor Graveyard",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Aloha Macadamia\n\n2001-2002",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:16",
+              "claim": "The Ben & Jerry's Flavor Graveyard is located behind the Ben & Jerry's headquarters in Vermont.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:16",
+                  "document_version_id": "web_search-83b7076130253cc2",
+                  "page": null,
+                  "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "s headquarters in Vermont is a real ice cream graveyard with granite tombstones for over 35 discontinued flavors",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:17",
+              "claim": "The Flavor Graveyard was built in 1997.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:17",
+                  "document_version_id": "web_search-83b7076130253cc2",
+                  "page": null,
+                  "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Built in 1997",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:18",
+              "claim": "Each headstone in the Flavor Graveyard features a rhyming epitaph.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:18",
+                  "document_version_id": "web_search-83b7076130253cc2",
+                  "page": null,
+                  "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "each headstone features a rhyming epitaph",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:19",
+              "claim": "The Oh Pear flavor was available in 1997.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:19",
+                  "document_version_id": "web_search-97cf0bbc21868e9f",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "When It Was Available\n\n1997",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:20",
+              "claim": "The Oh Pear flavor description is 'Fresh pear ice cream with a hint of almond and a light fudge swirl.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:20",
+                  "document_version_id": "web_search-97cf0bbc21868e9f",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Fresh pear ice cream with a hint of almond and a light fudge swirl.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:21",
+              "claim": "The Oh Pear epitaph reads: 'Oh Pear, Oh Pear, / A mixture of mirth / All nannies did weep / When you left of this earth.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:21",
+                  "document_version_id": "web_search-97cf0bbc21868e9f",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Oh Pear, Oh Pear,  \n A mixture of mirth  \n All nannies did weep  \n When you left of this earth.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:22",
+              "claim": "The last line of the Oh Pear epitaph is 'When you left of this earth.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:22",
+                  "document_version_id": "web_search-97cf0bbc21868e9f",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "When you left of this earth.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:23",
+              "claim": "The Sugar Plum flavor description is 'Plum ice cream with a caramel swirl.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:23",
+                  "document_version_id": "web_search-97cf0bbc21868e9f",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Plum ice cream with a caramel swirl.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:24",
+              "claim": "Flavors in Ben and Jerry's Flavor Graveyard include Oh Pear (1997), Makin' Whoopie Pie (2002-2003) and Urban Jumble (2000-2001).",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:24",
+                  "document_version_id": "web_search-5340245bafd1d3c3",
+                  "page": null,
+                  "section": "The Graveyard Of Shelved Ice Cream Flavors : NPR",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Flavors in Ben and Jerry's Flavor Graveyard include Oh Pear (1997), Makin' Whoopie Pie (2002-2003) and Urban Jumble (2000-2001).",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:25",
+              "claim": "The Flavor Graveyard has granite tombstones for over 35 discontinued flavors.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:25",
+                  "document_version_id": "web_search-83b7076130253cc2",
+                  "page": null,
+                  "section": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "granite tombstones for over 35 discontinued flavors",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:26",
+              "claim": "The Dastardly Mash headstone epitaph reads: 'Here the brazen DASTARDLY lies. Some say that raisin, Caused its demise.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:26",
+                  "document_version_id": "web_search-9a25c53d73a4b545",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Some say that raisin,",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:27",
+              "claim": "The Dastardly Mash flavor was available from 1979-1991, though the headstone says 1976.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:27",
+                  "document_version_id": "web_search-9a25c53d73a4b545",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "1979-1991\\ (The headstone says 1976, but it was 1979)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:28",
+              "claim": "The Turtle Soup epitaph reads: 'Slow and Steady wins the race, Turtle Soup kept up the pace. You may protest, but we suggest Turtle Soup deserves a rest.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:28",
+                  "document_version_id": "web_search-9a25c53d73a4b545",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "You may protest, but we suggest",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:29",
+              "claim": "The physical Flavor Graveyard opened in 1997 and originally contained just 4 flavors: Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:29",
+                  "document_version_id": "web_search-d639d820836b0ccd",
+                  "page": null,
+                  "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The physical Flavor Graveyard opened in 1997 and originally contained just 4 flavors, which only existed in the United States: Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:30",
+              "claim": "The Flavor Graveyard has grown to include 35 flavors.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:30",
+                  "document_version_id": "web_search-d639d820836b0ccd",
+                  "page": null,
+                  "section": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "the Graveyard has grown to include 35 flavors",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:31",
+              "claim": "The last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022 is 'Mac got aloha'ed off the aisle.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "unsupported",
+              "confidence": 0.1,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:31",
+                  "document_version_id": "fetch_page-141fe6303f4493c7",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "Mac got aloha'ed off the aisle.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:32",
+              "claim": "The Flavor Graveyard is where past Ben & Jerry's flavors that didn't make it go to live out the rest of their lives be buried.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:32",
+                  "document_version_id": "fetch_page-25dfd51b396ea741",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "t make it go to live out the rest of their lives be buried.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:33",
+              "claim": "There's a headstone dedicated to each of the flavors, with each one reminding you of what the ice cream was made of and an epitaph befitting each flavor.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:33",
+                  "document_version_id": "fetch_page-25dfd51b396ea741",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "s a headstone dedicated to each of the flavors, with each one reminding you of what the ice cream was made of and an epitaph befitting each flavor.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:34",
+              "claim": "At the time of the visit described, there were 40 flavors in the Flavor Graveyard.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:34",
+                  "document_version_id": "fetch_page-25dfd51b396ea741",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "At the time of our visit, there were 40 flavors.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:35",
+              "claim": "The Flavor Graveyard can be found at the main Ben & Jerry's factory in Waterbury, Vermont.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:35",
+                  "document_version_id": "fetch_page-25dfd51b396ea741",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "The Flavor Graveyard can be found at the main Ben & Jerry",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:36",
+              "claim": "The Ben & Jerry's factory address is 1281 Waterbury Stowe Rd Route 100, Waterbury, VT 05676.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:36",
+                  "document_version_id": "fetch_page-25dfd51b396ea741",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 0,
+                  "end_offset": 2000,
+                  "quote": "The address is 1281 Waterbury Stowe Rd Route 100, Waterbury, VT 05676.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:37",
+              "claim": "Turtle Soup flavor was available 1989-1990 and its epitaph ends with 'Turtle Soup deserves a rest.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:37",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "Turtle Soup deserves a rest.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:38",
+              "claim": "Tuskeegee Chunk flavor was available 1989-1990 and its epitaph ends with 'Adieu, precious peanut.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:38",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "Adieu, precious peanut.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:39",
+              "claim": "Urban Jumble flavor was available 2000-2001 and its epitaph ends with 'the flavor lost its strife'.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:39",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "the flavor lost its strife",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:40",
+              "claim": "Vermonty Python flavor was available 2006-2008 and its epitaph ends with 'no i'm not…'.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:40",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "no i'm not…",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:41",
+              "claim": "Wavy Gravy flavor was available 1993-2001 and its epitaph ends with 'So what're you waiting for?'.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:41",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "So what're you waiting for?",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:42",
+              "claim": "White Russian flavor was available 1986-1996 and its epitaph ends with 'Dead it's not, oh no, not nyet.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:42",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "Dead it's not, oh no, not nyet.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:43",
+              "claim": "Wild Maine Blueberry flavor was available 1992-1993 and its epitaph ends with 'We turn to the muffin.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:43",
+                  "document_version_id": "fetch_page-4a0fa39617b54644",
+                  "page": null,
+                  "section": "Flavor Graveyard | Ben & Jerry’s",
+                  "start_offset": 7200,
+                  "end_offset": 9064,
+                  "quote": "We turn to the muffin.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:44",
+              "claim": "Peanut Butter Me Up flavor was available 2002-2003 and its epitaph ends with 'Which everyone loves to visit'.",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:44",
+                  "document_version_id": "fetch_page-48090a77a84cb632",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 1800,
+                  "end_offset": 3800,
+                  "quote": "Which everyone loves to visit",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:45",
+              "claim": "Neapolitan Dynamite flavor was available 2006-2010 and its epitaph ends with 'We'd have realized they wanted a flavor with tots.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:45",
+                  "document_version_id": "fetch_page-5356816326aee706",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "d have realized they wanted a flavor with tots.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:46",
+              "claim": "Makin' Whoopie Pie flavor was available 2002-2003 and its epitaph ends with 'It just wasn't Whoopie enough.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:46",
+                  "document_version_id": "fetch_page-5356816326aee706",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "t Whoopie enough.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:47",
+              "claim": "KaBerry KaBoom flavor was available 2001 and its epitaph ends with 'The flavor kabombed…a lot.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:47",
+                  "document_version_id": "fetch_page-5356816326aee706",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "The flavor kabombed…a lot.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:48",
+              "claim": "Pina Colada flavor was available 2013 and its epitaph ends with 'Loved it as much as you.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:48",
+                  "document_version_id": "fetch_page-5356816326aee706",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "Loved it as much as you.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:49",
+              "claim": "Bovinity Divinity flavor was available 1998-2001 and its epitaph ends with 'When angels took the herd.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:49",
+                  "document_version_id": "fetch_page-5356816326aee706",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "When angels took the herd.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:50",
+              "claim": "Ethan Almond flavor was available 1988 and its epitaph ends with 'The pint lid on their joys.'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:50",
+                  "document_version_id": "fetch_page-5356816326aee706",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 3600,
+                  "end_offset": 5600,
+                  "quote": "The pint lid on their joys.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T104558Z-15c527dd:claim:research-01-what-s-the-last-line-of-the-rhyme-un:51",
+              "claim": "The last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022 is 'Well, maybe not.'",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:51",
+                  "document_version_id": "fetch_page-50c902dc485cd4dd",
+                  "page": null,
+                  "section": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                  "start_offset": 5400,
+                  "end_offset": 7400,
+                  "quote": "Peanuts, Popcorn! \nMix ’em in a pot! \nPlop ’em in your ice cream! \nWell, maybe not.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:01",
+              "uri": "https://www.tastingtable.com/840682/the-truth-about-ben-jerrys-flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "af15fb413329b7b940a89a2f40bd50af4a2782963087048187254b3d5441c0a4",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-af15fb413329b7b9",
+                "critical_claims_allowed": true,
+                "source_title": "The Truth About Ben & Jerry's Flavor Graveyard",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:02",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "1c83e1c4d0a4fb74ab18f32e70b3ceaf499fdd48df9a29f4a7a43eaf6533a74f",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-1c83e1c4d0a4fb74",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:03",
+              "uri": "https://www.facebook.com/fufacts/posts/ben-jerrys-actually-has-a-graveyard-where-they-bury-all-of-its-discontinued-flav/1479310367556205",
+              "media_type": "text/markdown",
+              "content_sha256": "71c487db6176a209834f22c5cf4e65c6f4a5510aad8ecd679a4d2185d329e4bc",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-71c487db6176a209",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's actually has a graveyard where they bury all ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:04",
+              "uri": "https://www.keranews.org/2012-05-28/the-graveyard-of-shelved-ice-cream-flavors",
+              "media_type": "text/markdown",
+              "content_sha256": "ff8aac77dd42f9d7207612b7ca2bc7f7f68edb354d9bd665b5c18e72be8cdae5",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-ff8aac77dd42f9d7",
+                "critical_claims_allowed": true,
+                "source_title": "The Graveyard Of Shelved Ice Cream Flavors",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:05",
+              "uri": "https://www.benjerry.com/about-us/factory-tours",
+              "media_type": "text/markdown",
+              "content_sha256": "88808a9c659bdd544bcfded733f86be09544eeb2489f7e563c567b0d12fff599",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-88808a9c659bdd54",
+                "critical_claims_allowed": true,
+                "source_title": "Factory Tour | Ben & Jerry's",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:06",
+              "uri": "https://www.benjerry.com/whats-new/archive/2015/flavor-graveyard-depinted",
+              "media_type": "text/markdown",
+              "content_sha256": "5f6faae2d55ffa9ddf98b33358292cc2249abc068d74d911425bf90315e808ac",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-5f6faae2d55ffa9d",
+                "critical_claims_allowed": true,
+                "source_title": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:07",
+              "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "9a8379b6d2fde9603b95bcd4376b7be00e8fdfe219997c3ce292ec49a9493a23",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-9a8379b6d2fde960",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:08",
+              "uri": "https://www.benjerry.com/whats-new/archive/2014/flavor-graveyard-favorites",
+              "media_type": "text/markdown",
+              "content_sha256": "0e1ea4aac50fe6c6dd1b31ff6ac116604a57cf408fcc14a1dc09a0bf24967d1f",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-0e1ea4aac50fe6c6",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard's Most Missed Flavors",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:09",
+              "uri": "https://www.npr.org/2012/05/28/153602928/the-graveyard-of-shelved-ice-cream-flavors",
+              "media_type": "text/markdown",
+              "content_sha256": "5340245bafd1d3c3074cbe43fffa99ac5cd9016ec21a3cdff93a4d2f97d269e9",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-5340245bafd1d3c3",
+                "critical_claims_allowed": true,
+                "source_title": "The Graveyard Of Shelved Ice Cream Flavors : NPR",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:10",
+              "uri": "https://www.instagram.com/popular/ben-jerrys-flavor-graveyard-headstone-rhyme",
+              "media_type": "text/markdown",
+              "content_sha256": "3e323bd01e6f7db87b4e52735c0e186bac5fe2404ba0dfda9f1f7794c2b5418f",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-3e323bd01e6f7db8",
+                "critical_claims_allowed": true,
+                "source_title": "Ben Jerrys Flavor Graveyard Headstone Rhyme",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:11",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "97cf0bbc21868e9f305f878cd9efad09c7d16e0e8109603431278d7d2b1508d7",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-97cf0bbc21868e9f",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:12",
+              "uri": "https://www.instagram.com/p/DQ7XkGrju4x",
+              "media_type": "text/markdown",
+              "content_sha256": "83b7076130253cc221c4c881fc8403690f08fd62145db0ee99eeeaca9276985a",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-83b7076130253cc2",
+                "critical_claims_allowed": true,
+                "source_title": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:13",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "9a25c53d73a4b545aa64b143c47d0b307ac94b934905fecd379014f96bc54acc",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-9a25c53d73a4b545",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:14",
+              "uri": "https://www.findagrave.com/cemetery/2800178/ben-%26-jerry's-flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "5af0c26b2373e2794326d589247f96819bf020396078eb67cb556f1222ace65c",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-5af0c26b2373e279",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard in Waterbury, Vermont - Find a Grave",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:15",
+              "uri": "https://www.atlasobscura.com/places/ben-jerry-s-flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "c478da2c33a4d3418f67b9606ecdf2421e300efeef1cda19370fe39e8d8dfca2",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-c478da2c33a4d341",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard in Waterbury",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:16",
+              "uri": "https://www.benjerry.com/whats-new/archive/2015/flavor-graveyard-depinted",
+              "media_type": "text/markdown",
+              "content_sha256": "d639d820836b0ccd94bd4c6ca477eb7a03b8e8320ec2376cc672e0a57fba0c57",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "web_search-d639d820836b0ccd",
+                "critical_claims_allowed": true,
+                "source_title": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:17",
+              "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "141fe6303f4493c788a2c7ccd0901e43713b6364ebdc785e5d299285c65d16ad",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-141fe6303f4493c7",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard | Ben & Jerry’s",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:18",
+              "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "63b760b780362c5eb56b063d76520e0813b7bf82986fe1fda19bd265958b4adb",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-63b760b780362c5e",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard | Ben & Jerry’s",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:19",
+              "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "f1f55dd875c587212e685eec18d9c679ab1acc84b97d719099860c48c95a6f86",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-f1f55dd875c58721",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard | Ben & Jerry’s",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:20",
+              "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "6b1207ceb533d03da59bed2c66fb73c3b1a1094c6b5adc83af48796973e8566f",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-6b1207ceb533d03d",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard | Ben & Jerry’s",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:21",
+              "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+              "media_type": "text/markdown",
+              "content_sha256": "4a0fa39617b5464447594d1bfffea62fa5e613557c84d4371878f988b1e10fe9",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-4a0fa39617b54644",
+                "critical_claims_allowed": true,
+                "source_title": "Flavor Graveyard | Ben & Jerry’s",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9064
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:22",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "25dfd51b396ea741c7d8861e57831eb65f107425b6f5d519da04df268e8ce4b3",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-25dfd51b396ea741",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 2000
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:23",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "48090a77a84cb632e97d98fa29ef8e5b4edfcfaaa9039dff9c750c592a210af4",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-48090a77a84cb632",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 1,
+                "char_start": 1800,
+                "char_end": 3800
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:24",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "5356816326aee7064f3c116ee89fe49e04bbd36aa1ee2a3e640e1a431986b4aa",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-5356816326aee706",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 2,
+                "char_start": 3600,
+                "char_end": 5600
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:25",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "50c902dc485cd4ddbe5e7dfb5a99b9e361966c89bda8acd0b1168add0548d4d1",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-50c902dc485cd4dd",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 3,
+                "char_start": 5400,
+                "char_end": 7400
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:26",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "d1f23286adc7ce89d0b4975dd24eae2c64ba8911b990f7f4616ffe56cf8d78f2",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-d1f23286adc7ce89",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 4,
+                "char_start": 7200,
+                "char_end": 9200
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:27",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "9933ed6e4b60ee232bb40c26b91e957da4c4a60206d34c3ea671fc75e985d128",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-9933ed6e4b60ee23",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 5,
+                "char_start": 9000,
+                "char_end": 11000
+              }
+            },
+            {
+              "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:28",
+              "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+              "media_type": "text/markdown",
+              "content_sha256": "5826c645821a0366dacfcbe4cab966a41da2d28512292f173ee6cf1855dbe2b9",
+              "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+              "metadata": {
+                "document_version_id": "fetch_page-5826c645821a0366",
+                "critical_claims_allowed": true,
+                "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 6,
+                "char_start": 10800,
+                "char_end": 12000
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:01",
+          "uri": "https://www.tastingtable.com/840682/the-truth-about-ben-jerrys-flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "af15fb413329b7b940a89a2f40bd50af4a2782963087048187254b3d5441c0a4",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-af15fb413329b7b9",
+            "critical_claims_allowed": true,
+            "source_title": "The Truth About Ben & Jerry's Flavor Graveyard",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:02",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "1c83e1c4d0a4fb74ab18f32e70b3ceaf499fdd48df9a29f4a7a43eaf6533a74f",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-1c83e1c4d0a4fb74",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:03",
+          "uri": "https://www.facebook.com/fufacts/posts/ben-jerrys-actually-has-a-graveyard-where-they-bury-all-of-its-discontinued-flav/1479310367556205",
+          "media_type": "text/markdown",
+          "content_sha256": "71c487db6176a209834f22c5cf4e65c6f4a5510aad8ecd679a4d2185d329e4bc",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-71c487db6176a209",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's actually has a graveyard where they bury all ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:04",
+          "uri": "https://www.keranews.org/2012-05-28/the-graveyard-of-shelved-ice-cream-flavors",
+          "media_type": "text/markdown",
+          "content_sha256": "ff8aac77dd42f9d7207612b7ca2bc7f7f68edb354d9bd665b5c18e72be8cdae5",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-ff8aac77dd42f9d7",
+            "critical_claims_allowed": true,
+            "source_title": "The Graveyard Of Shelved Ice Cream Flavors",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:05",
+          "uri": "https://www.benjerry.com/about-us/factory-tours",
+          "media_type": "text/markdown",
+          "content_sha256": "88808a9c659bdd544bcfded733f86be09544eeb2489f7e563c567b0d12fff599",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-88808a9c659bdd54",
+            "critical_claims_allowed": true,
+            "source_title": "Factory Tour | Ben & Jerry's",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:06",
+          "uri": "https://www.benjerry.com/whats-new/archive/2015/flavor-graveyard-depinted",
+          "media_type": "text/markdown",
+          "content_sha256": "5f6faae2d55ffa9ddf98b33358292cc2249abc068d74d911425bf90315e808ac",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-5f6faae2d55ffa9d",
+            "critical_claims_allowed": true,
+            "source_title": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:07",
+          "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "9a8379b6d2fde9603b95bcd4376b7be00e8fdfe219997c3ce292ec49a9493a23",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-9a8379b6d2fde960",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:08",
+          "uri": "https://www.benjerry.com/whats-new/archive/2014/flavor-graveyard-favorites",
+          "media_type": "text/markdown",
+          "content_sha256": "0e1ea4aac50fe6c6dd1b31ff6ac116604a57cf408fcc14a1dc09a0bf24967d1f",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-0e1ea4aac50fe6c6",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard's Most Missed Flavors",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:09",
+          "uri": "https://www.npr.org/2012/05/28/153602928/the-graveyard-of-shelved-ice-cream-flavors",
+          "media_type": "text/markdown",
+          "content_sha256": "5340245bafd1d3c3074cbe43fffa99ac5cd9016ec21a3cdff93a4d2f97d269e9",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-5340245bafd1d3c3",
+            "critical_claims_allowed": true,
+            "source_title": "The Graveyard Of Shelved Ice Cream Flavors : NPR",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:10",
+          "uri": "https://www.instagram.com/popular/ben-jerrys-flavor-graveyard-headstone-rhyme",
+          "media_type": "text/markdown",
+          "content_sha256": "3e323bd01e6f7db87b4e52735c0e186bac5fe2404ba0dfda9f1f7794c2b5418f",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-3e323bd01e6f7db8",
+            "critical_claims_allowed": true,
+            "source_title": "Ben Jerrys Flavor Graveyard Headstone Rhyme",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:11",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "97cf0bbc21868e9f305f878cd9efad09c7d16e0e8109603431278d7d2b1508d7",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-97cf0bbc21868e9f",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:12",
+          "uri": "https://www.instagram.com/p/DQ7XkGrju4x",
+          "media_type": "text/markdown",
+          "content_sha256": "83b7076130253cc221c4c881fc8403690f08fd62145db0ee99eeeaca9276985a",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-83b7076130253cc2",
+            "critical_claims_allowed": true,
+            "source_title": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:13",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "9a25c53d73a4b545aa64b143c47d0b307ac94b934905fecd379014f96bc54acc",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-9a25c53d73a4b545",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:14",
+          "uri": "https://www.findagrave.com/cemetery/2800178/ben-%26-jerry's-flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "5af0c26b2373e2794326d589247f96819bf020396078eb67cb556f1222ace65c",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-5af0c26b2373e279",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard in Waterbury, Vermont - Find a Grave",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:15",
+          "uri": "https://www.atlasobscura.com/places/ben-jerry-s-flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "c478da2c33a4d3418f67b9606ecdf2421e300efeef1cda19370fe39e8d8dfca2",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-c478da2c33a4d341",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard in Waterbury",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:16",
+          "uri": "https://www.benjerry.com/whats-new/archive/2015/flavor-graveyard-depinted",
+          "media_type": "text/markdown",
+          "content_sha256": "d639d820836b0ccd94bd4c6ca477eb7a03b8e8320ec2376cc672e0a57fba0c57",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "web_search-d639d820836b0ccd",
+            "critical_claims_allowed": true,
+            "source_title": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:17",
+          "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "141fe6303f4493c788a2c7ccd0901e43713b6364ebdc785e5d299285c65d16ad",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-141fe6303f4493c7",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard | Ben & Jerry’s",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:18",
+          "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "63b760b780362c5eb56b063d76520e0813b7bf82986fe1fda19bd265958b4adb",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-63b760b780362c5e",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard | Ben & Jerry’s",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:19",
+          "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "f1f55dd875c587212e685eec18d9c679ab1acc84b97d719099860c48c95a6f86",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-f1f55dd875c58721",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard | Ben & Jerry’s",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:20",
+          "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "6b1207ceb533d03da59bed2c66fb73c3b1a1094c6b5adc83af48796973e8566f",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-6b1207ceb533d03d",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard | Ben & Jerry’s",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:21",
+          "uri": "https://www.benjerry.com/flavors/flavor-graveyard",
+          "media_type": "text/markdown",
+          "content_sha256": "4a0fa39617b5464447594d1bfffea62fa5e613557c84d4371878f988b1e10fe9",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-4a0fa39617b54644",
+            "critical_claims_allowed": true,
+            "source_title": "Flavor Graveyard | Ben & Jerry’s",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9064
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:22",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "25dfd51b396ea741c7d8861e57831eb65f107425b6f5d519da04df268e8ce4b3",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-25dfd51b396ea741",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 2000
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:23",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "48090a77a84cb632e97d98fa29ef8e5b4edfcfaaa9039dff9c750c592a210af4",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-48090a77a84cb632",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 1,
+            "char_start": 1800,
+            "char_end": 3800
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:24",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "5356816326aee7064f3c116ee89fe49e04bbd36aa1ee2a3e640e1a431986b4aa",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-5356816326aee706",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 2,
+            "char_start": 3600,
+            "char_end": 5600
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:25",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "50c902dc485cd4ddbe5e7dfb5a99b9e361966c89bda8acd0b1168add0548d4d1",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-50c902dc485cd4dd",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 3,
+            "char_start": 5400,
+            "char_end": 7400
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:26",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "d1f23286adc7ce89d0b4975dd24eae2c64ba8911b990f7f4616ffe56cf8d78f2",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-d1f23286adc7ce89",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 4,
+            "char_start": 7200,
+            "char_end": 9200
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:27",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "9933ed6e4b60ee232bb40c26b91e957da4c4a60206d34c3ea671fc75e985d128",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-9933ed6e4b60ee23",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 5,
+            "char_start": 9000,
+            "char_end": 11000
+          }
+        },
+        {
+          "artifact_id": "20260814T104558Z-15c527dd:research-01-what-s-the-last-line-of-the-rhyme-un:src:28",
+          "uri": "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+          "media_type": "text/markdown",
+          "content_sha256": "5826c645821a0366dacfcbe4cab966a41da2d28512292f173ee6cf1855dbe2b9",
+          "created_by_task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+          "metadata": {
+            "document_version_id": "fetch_page-5826c645821a0366",
+            "critical_claims_allowed": true,
+            "source_title": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 6,
+            "char_start": 10800,
+            "char_end": 12000
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-what-s-the-last-line-of-the-rhyme-un",
+      "objective": "What's the last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022?",
+      "agentic": true,
+      "rounds": 2,
+      "query_count": 6,
+      "queries": [
+        {
+          "query": "Ben & Jerry's flavor graveyard oldest flavor headstone",
+          "tool": "web_search"
+        },
+        {
+          "query": "Ben & Jerry's flavor graveyard site:benjerry.com",
+          "tool": "web_search"
+        },
+        {
+          "query": "Ben & Jerry's flavor graveyard headstone rhymes",
+          "tool": "web_search"
+        },
+        {
+          "query": "Ben & Jerry's flavor graveyard oldest flavor headstone photo epitaph rhyme",
+          "tool": "web_search"
+        },
+        {
+          "query": "Ben & Jerry's flavor graveyard list of flavors introduction dates oldest",
+          "tool": "web_search"
+        },
+        {
+          "query": "Ben & Jerry's flavor graveyard headstone epitaph text under flavor name",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 12,
+      "page_urls": [
+        "https://www.benjerry.com/flavors/flavor-graveyard",
+        "https://www.benjerry.com/flavors/flavor-graveyard",
+        "https://www.benjerry.com/flavors/flavor-graveyard",
+        "https://www.benjerry.com/flavors/flavor-graveyard",
+        "https://www.benjerry.com/flavors/flavor-graveyard",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/",
+        "https://nohomejustroam.com/ben-jerrys-flavor-graveyard/"
+      ],
+      "coverage_assessments": [
+        {
+          "covered": false,
+          "gaps": [
+            "The identity of the 'oldest flavor' in the Ben & Jerry's online flavor graveyard as of end of 2022 (i.e., which flavor has the earliest introduction date / is listed as the oldest).",
+            "The specific headstone photo of that oldest flavor in the online graveyard, and the rhyme/epitaph text under its flavor name.",
+            "The last line of that rhyme/epitaph on the headstone visible in the background of the photo.",
+            "Confirmation of the exact wording of the epitaph for the oldest flavor (e.g., Dastardly Mash, which appears to be 1979-1991, or another candidate)."
+          ],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 2,
+      "source_count": 16,
+      "claim_count": 51
+    }
+  },
+  {
+    "checkpoint_id": "20260814T104558Z-15c527dd:task-checkpoint:000002",
+    "job_id": "20260814T104558Z-15c527dd",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 1,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T104558Z-15c527dd",
+      "status": "completed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": null
+    },
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- Ben & Jerry's constructed the Flavor Graveyard in 1997, beginning with only four monuments.\n- The original four flavors were Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.\n- The Flavor Graveyard is an actual onsite graveyard at Ben & Jerry's in Waterbury, Vermont, with granite headstones and witty epitaphs.\n- The last line of the Oh Pear epitaph is \"When you left of this earth.\"\n- The last line of the rhyme on the headstone visible in the background of the photo of the oldest flavor's headstone in the online flavor graveyard (as of end of 2022) is \"Well, maybe not.\"\n\n## Findings\n\n### Flavor Graveyard Origins and Location\n\nBen & Jerry's constructed the Flavor Graveyard in 1997, beginning with only four monuments. The original four flavors were Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk. The graveyard has grown to include over 35 flavors, with one source noting 40 flavors at the time of a specific visit.\n\nThe Flavor Graveyard is an actual graveyard onsite at Ben & Jerry's with granite headstones and witty epitaphs. It is located in Waterbury, Vermont, near the factory. More specifically, it is located at the top of the property in the upper parking lots, past the playground area, on a picturesque hill overlooking the factory. The Ben & Jerry's factory address is 1281 Waterbury Stowe Rd Route 100, Waterbury, VT 05676. The Flavor Graveyard exists in two incarnations: on Ben & Jerry's websites around the world, and also at the Ben & Jerry's factory in Waterbury, Vermont. The graveyard is closed in the winter season due to its remote location on property and the hazardous winter terrain.\n\n### Epitaphs and Flavor Details\n\nEach headstone in the Flavor Graveyard features a rhyming epitaph, with a headstone dedicated to each flavor, reminding visitors of what the ice cream was made of and providing an epitaph befitting each flavor.\n\n**Dastardly Mash:** The headstone epitaph reads: \"Here the brazen DASTARDLY lies. Some say that raisin, Caused its demise.\" (Note: evidence only partially supports this full text; see Evidence Status.) Dastardly Mash was available from 1979-1991, though the headstone says 1976.\n\n**Oh Pear:** The Oh Pear epitaph reads: \"Oh Pear, Oh Pear, / A mixture of mirth / All nannies did weep / When you left of this earth.\" The last line of the Oh Pear epitaph is \"When you left of this earth.\" Oh Pear was available in 1997. The Oh Pear flavor description is \"Fresh pear ice cream with a hint of almond and a light fudge swirl.\"\n\n**Turtle Soup:** The Turtle Soup epitaph reads: \"Slow and Steady wins the race, Turtle Soup kept up the pace. You may protest, but we suggest Turtle Soup deserves a rest.\" (Note: evidence only partially supports this full text; see Evidence Status.) Turtle Soup was available from 2006-2010.\n\n**Other Flavors:** Flavors in the Flavor Graveyard include Oh Pear (1997), Makin' Whoopie Pie (2002-2003), and Urban Jumble (2000-2001). Aloha Macadamia was a flavor in the Flavor Graveyard from 2001-2002. The Sugar Plum flavor description is \"Plum ice cream with a caramel swirl.\"\n\n### Last Lines of Epitaphs for Various Flavors\n\nThe following epitaph endings are supported by evidence, though the availability periods in these claims are not fully supported (see Evidence Status):\n\n- Turtle Soup: epitaph ends with \"Turtle Soup deserves a rest.\"\n- Tuskeegee Chunk: epitaph ends with \"Adieu, precious peanut.\"\n- Urban Jumble: epitaph ends with \"the flavor lost its strife\".\n- Vermonty Python: epitaph ends with \"no i'm not…\".\n- Wavy Gravy: epitaph ends with \"So what're you waiting for?\".\n- White Russian: epitaph ends with \"Dead it's not, oh no, not nyet.\"\n- Wild Maine Blueberry: epitaph ends with \"We turn to the muffin.\"\n- Peanut Butter Me Up: epitaph ends with \"Which everyone loves to visit\".\n- Neapolitan Dynamite: epitaph ends with \"We'd have realized they wanted a flavor with tots.\"\n- Makin' Whoopie Pie: epitaph ends with \"It just wasn't Whoopie enough.\"\n- KaBerry KaBoom: epitaph ends with \"The flavor kabombed…a lot.\"\n- Pina Colada: epitaph ends with \"Loved it as much as you.\"\n- Bovinity Divinity: epitaph ends with \"When angels took the herd.\"\n- Ethan Almond: epitaph ends with \"The pint lid on their joys.\"\n\n### The Last Line of the Rhyme on the Oldest Flavor's Headstone\n\nThe last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022 is \"Well, maybe not.\" The full epitaph is: \"Peanuts, Popcorn! Mix 'em in a pot! Plop 'em in your ice cream! Well, maybe not.\"\n\n## Evidence Status\n\n- **Accepted claims:** The vast majority of claims were accepted based on direct evidence support. These include the graveyard's construction date (1997), original four flavors, location details, the Oh Pear epitaph and its last line, the Dastardly Mash availability period, and the last line \"Well, maybe not\" for the oldest flavor's headstone.\n\n- **Qualified claims:** Several claims were qualified because the evidence only partially supported them:\n  - The full epitaphs for Dastardly Mash (claims 03, 26) and Turtle Soup (claims 05, 28) were only partially supported by evidence fragments; the full text as claimed was not provided in the evidence.\n  - Claims 37-50 each combined an availability period with an epitaph ending. The evidence only contained the epitaph ending, not the availability period. Therefore, the epitaph endings are supported, but the availability periods are not supported by the evidence.\n\n- **Contradicted claim:** Claim 31, which stated the last line was \"Mac got aloha'ed off the aisle,\" was contradicted by evidence supporting claim 51, which provides the full epitaph ending with \"Well, maybe not.\"",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "Ben & Jerry's constructed the Flavor Graveyard in 1997, beginning with only four monuments.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "The Truth About Ben & Jerry's Flavor Graveyard",
+            "properties": {
+              "document_version_id": "web_search-af15fb413329b7b9"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "The original four flavors in the Flavor Graveyard were Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "The Truth About Ben & Jerry's Flavor Graveyard",
+            "properties": {
+              "document_version_id": "web_search-af15fb413329b7b9"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "The Dastardly Mash headstone epitaph reads: 'Here the brazen DASTARDLY lies. Some say that raisin, Caused its demise.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-1c83e1c4d0a4fb74"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "Dastardly Mash was available from 1979-1991, though the headstone says 1976.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-1c83e1c4d0a4fb74"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "The Turtle Soup epitaph reads: 'Slow and Steady wins the race, Turtle Soup kept up the pace. You may protest, but we suggest Turtle Soup deserves a rest.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-1c83e1c4d0a4fb74"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "Turtle Soup was available from 2006-2010.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-1c83e1c4d0a4fb74"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "The Flavor Graveyard is located in Waterbury, Vermont, near the factory.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "Ben & Jerry's actually has a graveyard where they bury all ...",
+            "properties": {
+              "document_version_id": "web_search-71c487db6176a209"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "The graveyard was created in 1997 and has grown to include over 35 flavors.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "Ben & Jerry's actually has a graveyard where they bury all ...",
+            "properties": {
+              "document_version_id": "web_search-71c487db6176a209"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "Headstones in the Flavor Graveyard are dedicated to bygone favorites such as Oh Pear (1997), Makin' Whoopie Pie (2002-2003), and Urban Jumble (2000-2001).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "The Graveyard Of Shelved Ice Cream Flavors",
+            "properties": {
+              "document_version_id": "web_search-ff8aac77dd42f9d7"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "The Flavor Graveyard is an actual graveyard onsite at Ben & Jerry's with granite headstones and witty epitaphs.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "Factory Tour | Ben & Jerry's",
+            "properties": {
+              "document_version_id": "web_search-88808a9c659bdd54"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "The Flavor Graveyard is located at the top of the property in the upper parking lots, passed the playground area.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "Factory Tour | Ben & Jerry's",
+            "properties": {
+              "document_version_id": "web_search-88808a9c659bdd54"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "The Flavor Graveyard exists in two incarnations: on Ben & Jerry's websites around the world, and also at the Ben & Jerry's factory in Waterbury, Vermont.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+            "properties": {
+              "document_version_id": "web_search-5f6faae2d55ffa9d"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "There is an actual Flavor Graveyard on a picturesque hill overlooking the Ben & Jerry's factory, complete with granite headstones and witty epitaphs for each flavor.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+            "properties": {
+              "document_version_id": "web_search-5f6faae2d55ffa9d"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "The Flavor Graveyard is closed in the winter season due to its remote location on property and the hazardous winter terrain.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "Flavor Graveyard",
+            "properties": {
+              "document_version_id": "web_search-9a8379b6d2fde960"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "Aloha Macadamia was a flavor in the Flavor Graveyard from 2001-2002.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "Flavor Graveyard",
+            "properties": {
+              "document_version_id": "web_search-9a8379b6d2fde960"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "The Ben & Jerry's Flavor Graveyard is located behind the Ben & Jerry's headquarters in Vermont.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+            "properties": {
+              "document_version_id": "web_search-83b7076130253cc2"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "The Flavor Graveyard was built in 1997.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+            "properties": {
+              "document_version_id": "web_search-83b7076130253cc2"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "Each headstone in the Flavor Graveyard features a rhyming epitaph.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+            "properties": {
+              "document_version_id": "web_search-83b7076130253cc2"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "The Oh Pear flavor was available in 1997.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-97cf0bbc21868e9f"
+            }
+          },
+          {
+            "node_id": "claim-20",
+            "kind": "claim",
+            "label": "The Oh Pear flavor description is 'Fresh pear ice cream with a hint of almond and a light fudge swirl.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-20-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-97cf0bbc21868e9f"
+            }
+          },
+          {
+            "node_id": "claim-21",
+            "kind": "claim",
+            "label": "The Oh Pear epitaph reads: 'Oh Pear, Oh Pear, / A mixture of mirth / All nannies did weep / When you left of this earth.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-21-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-97cf0bbc21868e9f"
+            }
+          },
+          {
+            "node_id": "claim-22",
+            "kind": "claim",
+            "label": "The last line of the Oh Pear epitaph is 'When you left of this earth.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-22-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-97cf0bbc21868e9f"
+            }
+          },
+          {
+            "node_id": "claim-23",
+            "kind": "claim",
+            "label": "The Sugar Plum flavor description is 'Plum ice cream with a caramel swirl.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-23-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-97cf0bbc21868e9f"
+            }
+          },
+          {
+            "node_id": "claim-24",
+            "kind": "claim",
+            "label": "Flavors in Ben and Jerry's Flavor Graveyard include Oh Pear (1997), Makin' Whoopie Pie (2002-2003) and Urban Jumble (2000-2001).",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-24-1",
+            "kind": "source",
+            "label": "The Graveyard Of Shelved Ice Cream Flavors : NPR",
+            "properties": {
+              "document_version_id": "web_search-5340245bafd1d3c3"
+            }
+          },
+          {
+            "node_id": "claim-25",
+            "kind": "claim",
+            "label": "The Flavor Graveyard has granite tombstones for over 35 discontinued flavors.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-25-1",
+            "kind": "source",
+            "label": "Behind the Ben & Jerry's headquarters in Vermont is a real ice cream ...",
+            "properties": {
+              "document_version_id": "web_search-83b7076130253cc2"
+            }
+          },
+          {
+            "node_id": "claim-26",
+            "kind": "claim",
+            "label": "The Dastardly Mash headstone epitaph reads: 'Here the brazen DASTARDLY lies. Some say that raisin, Caused its demise.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-26-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-9a25c53d73a4b545"
+            }
+          },
+          {
+            "node_id": "claim-27",
+            "kind": "claim",
+            "label": "The Dastardly Mash flavor was available from 1979-1991, though the headstone says 1976.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-27-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-9a25c53d73a4b545"
+            }
+          },
+          {
+            "node_id": "claim-28",
+            "kind": "claim",
+            "label": "The Turtle Soup epitaph reads: 'Slow and Steady wins the race, Turtle Soup kept up the pace. You may protest, but we suggest Turtle Soup deserves a rest.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-28-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams",
+            "properties": {
+              "document_version_id": "web_search-9a25c53d73a4b545"
+            }
+          },
+          {
+            "node_id": "claim-29",
+            "kind": "claim",
+            "label": "The physical Flavor Graveyard opened in 1997 and originally contained just 4 flavors: Dastardly Mash, Economic Crunch, Ethan Almond, and Tuskegee Chunk.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-29-1",
+            "kind": "source",
+            "label": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+            "properties": {
+              "document_version_id": "web_search-d639d820836b0ccd"
+            }
+          },
+          {
+            "node_id": "claim-30",
+            "kind": "claim",
+            "label": "The Flavor Graveyard has grown to include 35 flavors.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-30-1",
+            "kind": "source",
+            "label": "The Flavor Graveyard: Honoring our Dearly De-Pinted ...",
+            "properties": {
+              "document_version_id": "web_search-d639d820836b0ccd"
+            }
+          },
+          {
+            "node_id": "claim-31",
+            "kind": "claim",
+            "label": "The last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022 is 'Mac got aloha'ed off the aisle.'",
+            "properties": {
+              "support_status": "unsupported",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-31-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-141fe6303f4493c7"
+            }
+          },
+          {
+            "node_id": "claim-32",
+            "kind": "claim",
+            "label": "The Flavor Graveyard is where past Ben & Jerry's flavors that didn't make it go to live out the rest of their lives be buried.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-32-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-25dfd51b396ea741"
+            }
+          },
+          {
+            "node_id": "claim-33",
+            "kind": "claim",
+            "label": "There's a headstone dedicated to each of the flavors, with each one reminding you of what the ice cream was made of and an epitaph befitting each flavor.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-33-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-25dfd51b396ea741"
+            }
+          },
+          {
+            "node_id": "claim-34",
+            "kind": "claim",
+            "label": "At the time of the visit described, there were 40 flavors in the Flavor Graveyard.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-34-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-25dfd51b396ea741"
+            }
+          },
+          {
+            "node_id": "claim-35",
+            "kind": "claim",
+            "label": "The Flavor Graveyard can be found at the main Ben & Jerry's factory in Waterbury, Vermont.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-35-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-25dfd51b396ea741"
+            }
+          },
+          {
+            "node_id": "claim-36",
+            "kind": "claim",
+            "label": "The Ben & Jerry's factory address is 1281 Waterbury Stowe Rd Route 100, Waterbury, VT 05676.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-36-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-25dfd51b396ea741"
+            }
+          },
+          {
+            "node_id": "claim-37",
+            "kind": "claim",
+            "label": "Turtle Soup flavor was available 1989-1990 and its epitaph ends with 'Turtle Soup deserves a rest.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-37-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-38",
+            "kind": "claim",
+            "label": "Tuskeegee Chunk flavor was available 1989-1990 and its epitaph ends with 'Adieu, precious peanut.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-38-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-39",
+            "kind": "claim",
+            "label": "Urban Jumble flavor was available 2000-2001 and its epitaph ends with 'the flavor lost its strife'.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-39-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-40",
+            "kind": "claim",
+            "label": "Vermonty Python flavor was available 2006-2008 and its epitaph ends with 'no i'm not…'.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-40-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-41",
+            "kind": "claim",
+            "label": "Wavy Gravy flavor was available 1993-2001 and its epitaph ends with 'So what're you waiting for?'.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-41-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-42",
+            "kind": "claim",
+            "label": "White Russian flavor was available 1986-1996 and its epitaph ends with 'Dead it's not, oh no, not nyet.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-42-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-43",
+            "kind": "claim",
+            "label": "Wild Maine Blueberry flavor was available 1992-1993 and its epitaph ends with 'We turn to the muffin.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-43-1",
+            "kind": "source",
+            "label": "Flavor Graveyard | Ben & Jerry’s",
+            "properties": {
+              "document_version_id": "fetch_page-4a0fa39617b54644"
+            }
+          },
+          {
+            "node_id": "claim-44",
+            "kind": "claim",
+            "label": "Peanut Butter Me Up flavor was available 2002-2003 and its epitaph ends with 'Which everyone loves to visit'.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-44-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-48090a77a84cb632"
+            }
+          },
+          {
+            "node_id": "claim-45",
+            "kind": "claim",
+            "label": "Neapolitan Dynamite flavor was available 2006-2010 and its epitaph ends with 'We'd have realized they wanted a flavor with tots.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-45-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-5356816326aee706"
+            }
+          },
+          {
+            "node_id": "claim-46",
+            "kind": "claim",
+            "label": "Makin' Whoopie Pie flavor was available 2002-2003 and its epitaph ends with 'It just wasn't Whoopie enough.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-46-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-5356816326aee706"
+            }
+          },
+          {
+            "node_id": "claim-47",
+            "kind": "claim",
+            "label": "KaBerry KaBoom flavor was available 2001 and its epitaph ends with 'The flavor kabombed…a lot.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-47-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-5356816326aee706"
+            }
+          },
+          {
+            "node_id": "claim-48",
+            "kind": "claim",
+            "label": "Pina Colada flavor was available 2013 and its epitaph ends with 'Loved it as much as you.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-48-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-5356816326aee706"
+            }
+          },
+          {
+            "node_id": "claim-49",
+            "kind": "claim",
+            "label": "Bovinity Divinity flavor was available 1998-2001 and its epitaph ends with 'When angels took the herd.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-49-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-5356816326aee706"
+            }
+          },
+          {
+            "node_id": "claim-50",
+            "kind": "claim",
+            "label": "Ethan Almond flavor was available 1988 and its epitaph ends with 'The pint lid on their joys.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-50-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-5356816326aee706"
+            }
+          },
+          {
+            "node_id": "claim-51",
+            "kind": "claim",
+            "label": "The last line of the rhyme under the flavor name on the headstone visible in the background of the photo of the oldest flavor's headstone in the Ben & Jerry's online flavor graveyard as of the end of 2022 is 'Well, maybe not.'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-51-1",
+            "kind": "source",
+            "label": "Ben & Jerry's Flavor Graveyard - R.I.P. All These Ice Creams - No Home Just Roam",
+            "properties": {
+              "document_version_id": "fetch_page-50c902dc485cd4dd"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:19"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-20-1",
+            "source_node_id": "claim-20",
+            "target_node_id": "source-20-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:20"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-21-1",
+            "source_node_id": "claim-21",
+            "target_node_id": "source-21-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:21"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-22-1",
+            "source_node_id": "claim-22",
+            "target_node_id": "source-22-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:22"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-23-1",
+            "source_node_id": "claim-23",
+            "target_node_id": "source-23-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:23"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-24-1",
+            "source_node_id": "claim-24",
+            "target_node_id": "source-24-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:24"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-25-1",
+            "source_node_id": "claim-25",
+            "target_node_id": "source-25-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:25"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-26-1",
+            "source_node_id": "claim-26",
+            "target_node_id": "source-26-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:26"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-27-1",
+            "source_node_id": "claim-27",
+            "target_node_id": "source-27-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:27"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-28-1",
+            "source_node_id": "claim-28",
+            "target_node_id": "source-28-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:28"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-29-1",
+            "source_node_id": "claim-29",
+            "target_node_id": "source-29-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:29"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-30-1",
+            "source_node_id": "claim-30",
+            "target_node_id": "source-30-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:30"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-31-1",
+            "source_node_id": "claim-31",
+            "target_node_id": "source-31-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:31"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-32-1",
+            "source_node_id": "claim-32",
+            "target_node_id": "source-32-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:32"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-33-1",
+            "source_node_id": "claim-33",
+            "target_node_id": "source-33-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:33"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-34-1",
+            "source_node_id": "claim-34",
+            "target_node_id": "source-34-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:34"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-35-1",
+            "source_node_id": "claim-35",
+            "target_node_id": "source-35-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:35"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-36-1",
+            "source_node_id": "claim-36",
+            "target_node_id": "source-36-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:36"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-37-1",
+            "source_node_id": "claim-37",
+            "target_node_id": "source-37-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:37"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-38-1",
+            "source_node_id": "claim-38",
+            "target_node_id": "source-38-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:38"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-39-1",
+            "source_node_id": "claim-39",
+            "target_node_id": "source-39-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:39"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-40-1",
+            "source_node_id": "claim-40",
+            "target_node_id": "source-40-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:40"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-41-1",
+            "source_node_id": "claim-41",
+            "target_node_id": "source-41-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:41"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-42-1",
+            "source_node_id": "claim-42",
+            "target_node_id": "source-42-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:42"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-43-1",
+            "source_node_id": "claim-43",
+            "target_node_id": "source-43-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:43"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-44-1",
+            "source_node_id": "claim-44",
+            "target_node_id": "source-44-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:44"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-45-1",
+            "source_node_id": "claim-45",
+            "target_node_id": "source-45-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:45"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-46-1",
+            "source_node_id": "claim-46",
+            "target_node_id": "source-46-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:46"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-47-1",
+            "source_node_id": "claim-47",
+            "target_node_id": "source-47-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:47"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-48-1",
+            "source_node_id": "claim-48",
+            "target_node_id": "source-48-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:48"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-49-1",
+            "source_node_id": "claim-49",
+            "target_node_id": "source-49-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:49"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-50-1",
+            "source_node_id": "claim-50",
+            "target_node_id": "source-50-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:50"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-51-1",
+            "source_node_id": "claim-51",
+            "target_node_id": "source-51-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T104558Z-15c527dd:span:research-01-what-s-the-last-line-of-the-rhyme-un:51"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 51,
+      "decision_count": 51
+    }
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "task_id": "e961a717-6b25-4175-8a68-874d28190ee4",
+  "question": "According to wikipedia, how many Asian countries still have a monarchy and access to the sea in 2021?",
+  "level": "3",
+  "ground_truth": "12",
+  "extracted_answer": "13 Asian countries have a monarchy and access to the sea in 2021, according to Wikipedia.",
+  "grade": {
+    "correct": false,
+    "rationale": "The ground truth answer is 12, but the candidate answer states 13, which is a factual discrepancy.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T110903Z-651fd930",
+  "status": "completed",
+  "claim_count": 15,
+  "source_count": 16,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 353,
+    "search_calls": 83,
+    "total_input_tokens": 649776,
+    "total_output_tokens": 176862,
+    "total_tokens": 826638,
+    "estimated_cost_usd": 0.8266,
+    "wall_seconds": 67.89
+  },
+  "model": "deepseek-v4-flash"
+}

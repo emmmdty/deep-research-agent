@@ -1,28 +1,28 @@
 {
   "task_id": "4b6bb5f7-f634-410e-815d-e673ab7f8632",
   "question": "In Series 9, Episode 11 of Doctor Who, the Doctor is trapped inside an ever-shifting maze. What is this location called in the official script for the episode? Give the setting exactly as it appears in the first scene heading.",
-  "level": "1",
   "ground_truth": "THE CASTLE",
-  "extracted_answer": "",
+  "extracted_answer": "[Teleport chamber room]",
   "grade": {
     "correct": false,
-    "rationale": "The candidate answer is empty, so it does not provide the required setting 'THE CASTLE' from the official script.",
+    "rationale": "The ground truth answer is 'THE CASTLE', but the candidate answer is '[Teleport chamber room]', which does not match the setting name from the first scene heading.",
     "judge_model": "deepseek-v4-flash"
   },
   "exact_match": false,
-  "job_id": "20260814T100007Z-90ba41df",
-  "status": "failed",
-  "claim_count": 15,
-  "source_count": 16,
+  "job_id": "20260814T123436Z-4fb72c1d",
+  "status": "completed",
+  "claim_count": 27,
+  "source_count": 23,
   "cost": {
     "total_time_seconds": 0.0,
-    "llm_calls": 109,
-    "search_calls": 25,
-    "total_input_tokens": 171328,
-    "total_output_tokens": 47153,
-    "total_tokens": 218481,
-    "estimated_cost_usd": 0.2185,
-    "wall_seconds": 146.17
+    "llm_calls": 43,
+    "search_calls": 10,
+    "total_input_tokens": 88669,
+    "total_output_tokens": 24160,
+    "total_tokens": 112829,
+    "estimated_cost_usd": 0.1128,
+    "wall_seconds": 107.49
   },
-  "model": "deepseek-v4-flash"
+  "model": "deepseek-v4-flash",
+  "level": "1"
 }

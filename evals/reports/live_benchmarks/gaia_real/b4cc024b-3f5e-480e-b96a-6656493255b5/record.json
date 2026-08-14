@@ -1,0 +1,28 @@
+{
+  "task_id": "b4cc024b-3f5e-480e-b96a-6656493255b5",
+  "question": "The photograph in the Whitney Museum of American Art's collection with accession number 2022.128 shows a person holding a book. Which military unit did the author of this book join in 1813? Answer without using articles.",
+  "level": "2",
+  "ground_truth": "Russian-German Legion",
+  "extracted_answer": "The report does not answer the question. The photograph depicts Erik Prince holding a book by Carl von Clausewitz, not a book whose author joined a military unit in 1813.",
+  "grade": {
+    "correct": false,
+    "rationale": "The candidate answer does not provide the requested military unit (Russian-German Legion) and instead claims the question is unanswerable based on a misidentification of the photograph.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T110508Z-078890c2",
+  "status": "completed",
+  "claim_count": 25,
+  "source_count": 30,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 319,
+    "search_calls": 74,
+    "total_input_tokens": 590854,
+    "total_output_tokens": 159160,
+    "total_tokens": 750014,
+    "estimated_cost_usd": 0.75,
+    "wall_seconds": 105.29
+  },
+  "model": "deepseek-v4-flash"
+}

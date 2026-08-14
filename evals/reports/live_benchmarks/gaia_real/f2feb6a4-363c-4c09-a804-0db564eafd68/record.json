@@ -1,0 +1,28 @@
+{
+  "task_id": "f2feb6a4-363c-4c09-a804-0db564eafd68",
+  "question": "I’m thinking about selling my home, so I want to learn more about how homes in my area sold recently. I live in Pearl City, Hawaii, which is on the island of Oahu. I know two homes near me that sold in 2022 were 2072 Akaikai Loop, and 2017 Komo Mai Drive. Find which of those homes sold for more in 2022, and tell me how much it sold for. Don’t put commas or decimal places in the answer.",
+  "level": "2",
+  "ground_truth": "900000",
+  "extracted_answer": "2017 Komo Mai Drive sold for 900000",
+  "grade": {
+    "correct": true,
+    "rationale": "The candidate answer identifies the correct home (2017 Komo Mai Drive) and the correct sale price (900000), matching the ground truth.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T111020Z-149cdc34",
+  "status": "completed",
+  "claim_count": 22,
+  "source_count": 16,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 368,
+    "search_calls": 87,
+    "total_input_tokens": 678408,
+    "total_output_tokens": 183777,
+    "total_tokens": 862185,
+    "estimated_cost_usd": 0.8622,
+    "wall_seconds": 108.37
+  },
+  "model": "deepseek-v4-flash"
+}

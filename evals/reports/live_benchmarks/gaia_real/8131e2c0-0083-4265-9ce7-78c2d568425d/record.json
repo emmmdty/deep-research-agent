@@ -1,0 +1,28 @@
+{
+  "task_id": "8131e2c0-0083-4265-9ce7-78c2d568425d",
+  "question": "I was trying to remember how well the Cheater Beater performed in comparison to the Cheater when James tested it on his channel. I know that the Cheater still outperformed the Cheater Beater in terms of CFM. Could you please look that up for me, and report the CFM of both the Cheater and the Cheater Beater? I'm not sure if he made any changes to his testing, but this was back in season 4, so just report the value from that season. Please format your response like this: CFM number for Cheater, CFM number for Cheater beater",
+  "level": "3",
+  "ground_truth": "101.376, 84.348",
+  "extracted_answer": "768, 758",
+  "grade": {
+    "correct": false,
+    "rationale": "The candidate answer provides CFM values of 768 and 758, which do not match the ground truth values of 101.376 and 84.348. The candidate's numbers are significantly different and not a paraphrase or equivalent of the correct answer.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": false,
+  "job_id": "20260814T105651Z-95c87f70",
+  "status": "completed",
+  "claim_count": 13,
+  "source_count": 16,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 252,
+    "search_calls": 61,
+    "total_input_tokens": 461333,
+    "total_output_tokens": 128390,
+    "total_tokens": 589723,
+    "estimated_cost_usd": 0.5897,
+    "wall_seconds": 63.04
+  },
+  "model": "deepseek-v4-flash"
+}

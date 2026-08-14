@@ -1,0 +1,28 @@
+{
+  "task_id": "72e110e7-464c-453c-a309-90a95aed6538",
+  "question": "Under DDC 633 on Bielefeld University Library's BASE, as of 2020, from what country was the unknown language article with a flag unique from the others?",
+  "ground_truth": "Guatemala",
+  "extracted_answer": "Guatemala",
+  "grade": {
+    "correct": true,
+    "rationale": "The candidate answer 'Guatemala' exactly matches the ground truth answer.",
+    "judge_model": "deepseek-v4-flash"
+  },
+  "exact_match": true,
+  "job_id": "20260814T123829Z-eeac1696",
+  "status": "completed",
+  "claim_count": 8,
+  "source_count": 23,
+  "cost": {
+    "total_time_seconds": 0.0,
+    "llm_calls": 82,
+    "search_calls": 18,
+    "total_input_tokens": 172222,
+    "total_output_tokens": 43174,
+    "total_tokens": 215396,
+    "estimated_cost_usd": 0.2154,
+    "wall_seconds": 80.1
+  },
+  "model": "deepseek-v4-flash",
+  "level": "1"
+}

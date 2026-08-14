@@ -1,0 +1,1084 @@
+{
+  "schema_version": "2.0",
+  "report_markdown": "## Executive Summary\n\n- According to Wikipedia's 'Monarchies in Asia' article, the current Asian monarchies are Bahrain, Bhutan, Brunei, Cambodia, Japan, Jordan, Kuwait, Malaysia, Oman, Qatar, Saudi Arabia, Thailand, and the United Arab Emirates.\n- According to the aalep.eu source, East and Southeast Asian constitutional monarchies include Bhutan, Cambodia, Japan, and Thailand, where the monarch has a limited or ceremonial role.\n- In total, there are 12 countries in Asia that do not have direct ocean access.\n- The 12 landlocked Asian countries include Uzbekistan, Turkmenistan, Tajikistan, Nepal, Mongolia, Turkestan, Kazakhstan, Laos, Bhutan, Azerbaijan, Armenia, and Afghanistan.\n- The Kingdom of Bhutan has exactly two neighbors and no room for a third: China to the north and India everywhere else.\n- Bhutan reaches through friendly territory for access to the sea, with an agreement to route its maritime trade through the Port of Mongla in Bangladesh.\n- Thailand changed from traditional absolute monarchy into a constitutional one in 1932, while Bhutan changed in 2008.\n- Cambodia had its own monarchy after independence from the French Colonial Empire, which was deposed after the Khmer Rouge came into power.\n- The Cambodian monarchy was subsequently restored in the peace agreement.\n- The Wikipedia category 'Landlocked countries' contains 51 pages in total.\n- Kazakhstan is the world's largest landlocked country by area.\n- Kyrgyzstan is the farthest landlocked country from any ocean.\n- Ethiopia is the world's most populous landlocked country.\n- The Wikipedia article 'List of current non-sovereign Asian monarchs' covers monarchs in Bangladesh, India, Indonesia, Malaysia, Philippines, Thailand, Timor-Leste, and the United Arab Emirates.\n\n## Findings\n\n### Current Asian Monarchies\nAccording to Wikipedia's 'Monarchies in Asia' article, the current Asian monarchies are Bahrain, Bhutan, Brunei, Cambodia, Japan, Jordan, Kuwait, Malaysia, Oman, Qatar, Saudi Arabia, Thailand, and the United Arab Emirates. This list comprises 13 countries.\n\n### Landlocked Asian Countries\nThere are 12 countries in Asia that do not have direct ocean access. The list of these landlocked Asian countries includes Uzbekistan, Turkmenistan, Tajikistan, Nepal, Mongolia, Turkestan, Kazakhstan, Laos, Bhutan, Azerbaijan, Armenia, and Afghanistan. **Qualification:** The inclusion of 'Turkestan' in this list is problematic, as Turkestan is a historical region rather than a recognized sovereign state. The claim should be understood with this caveat.\n\n### Constitutional Monarchies in Asia\nBhutan, Cambodia, Japan, and Thailand have constitutional monarchies where the monarch has a limited or ceremonial role. This is supported by both the aalep.eu source and the broader evidence.\n\n### Historical Transitions of Monarchies\nThailand changed from a traditional absolute monarchy into a constitutional one in 1932, while Bhutan made the same transition in 2008. Cambodia had its own monarchy after independence from the French Colonial Empire, which was deposed after the Khmer Rouge came into power. The Cambodian monarchy was subsequently restored in the peace agreement.\n\n### Geographic and Demographic Superlatives\nKazakhstan is the world's largest landlocked country by area. Kyrgyzstan is the farthest landlocked country from any ocean. Ethiopia is the world's most populous landlocked country.\n\n### Non-Sovereign Asian Monarchs\nThe Wikipedia article 'List of current non-sovereign Asian monarchs' covers monarchs in Bangladesh, India, Indonesia, Malaysia, Philippines, Thailand, Timor-Leste, and the United Arab Emirates.\n\n### Bhutan's Geography and Trade Access\nThe Kingdom of Bhutan has exactly two neighbors and no room for a third: China to the north and India everywhere else. Bhutan reaches through friendly territory for access to the sea, with an agreement to route its maritime trade through the Port of Mongla in Bangladesh.\n\n## Evidence Status\n\nAll claims were accepted by the critic. One claim (research-01-according-to-wikipedia-how-many-asia:04) was qualified: while the evidence lists the same 12 countries, 'Turkestan' is not a sovereign state but a historical region, so the claim should be read with that caveat. All other claims were accepted without qualification, with evidence spans directly supporting the stated facts.",
+  "accepted_claims": [
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:01",
+      "claim": "According to Wikipedia's 'Monarchies in Asia' article, the current Asian monarchies are Bahrain, Bhutan, Brunei, Cambodia, Japan, Jordan, Kuwait, Malaysia, Oman, Qatar, Saudi Arabia, Thailand, and the United Arab Emirates.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:01",
+          "document_version_id": "web_search-dd891502a6b995b5",
+          "page": null,
+          "section": "Monarchies in Asia - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Asia |  Bahrain  Bhutan  Brunei  Cambodia  Japan  Jordan  Kuwait  Malaysia  Oman  Qatar  Saudi Arabia  Thailand  United Arab Emirates  list",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:03",
+      "claim": "In total, there are 12 countries in Asia that do not have direct ocean access.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:03",
+          "document_version_id": "web_search-764ed2f24b9a4fde",
+          "page": null,
+          "section": "Landlocked Asian Countries 2026 - World Population Review",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "In total, there are 12 countries in Asia that do not have direct ocean access.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:05",
+      "claim": "The Kingdom of Bhutan has exactly two neighbors and no room for a third: China to the north and India everywhere else.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:05",
+          "document_version_id": "web_search-eec6502995240aee",
+          "page": null,
+          "section": "Landlocked Countries In Asia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "has exactly two neighbors and no room for a third: China to the north and India everywhere else",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:06",
+      "claim": "Bhutan reaches through friendly territory for access to the sea, with an agreement to route its maritime trade through the Port of Mongla in Bangladesh.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:06",
+          "document_version_id": "web_search-eec6502995240aee",
+          "page": null,
+          "section": "Landlocked Countries In Asia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "For access to the sea, Bhutan reaches through friendly territory, with an agreement to route its maritime trade through the Port of Mongla in Bangladesh.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:08",
+      "claim": "Thailand changed from traditional absolute monarchy into a constitutional one in 1932, while Bhutan changed in 2008.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:08",
+          "document_version_id": "web_search-dca8dac90c7646dc",
+          "page": null,
+          "section": "List of current monarchies",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Thailand changed from traditional absolute monarchy into a constitutional one in 1932, while Bhutan changed in 2008.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:09",
+      "claim": "Cambodia had its own monarchy after independence from the French Colonial Empire, which was deposed after the Khmer Rouge came into power.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:09",
+          "document_version_id": "web_search-dca8dac90c7646dc",
+          "page": null,
+          "section": "List of current monarchies",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Cambodia had its own monarchy after independence from the French Colonial Empire, which was deposed after the Khmer Rouge came into power.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:10",
+      "claim": "The Cambodian monarchy was subsequently restored in the peace agreement.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.85,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:10",
+          "document_version_id": "web_search-dca8dac90c7646dc",
+          "page": null,
+          "section": "List of current monarchies",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The monarchy was subsequently restored in the peace agreement of",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:11",
+      "claim": "The Wikipedia category 'Landlocked countries' contains 51 pages in total.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:11",
+          "document_version_id": "web_search-e73354b59f64fccd",
+          "page": null,
+          "section": "Category:Landlocked countries - Wikipedia",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "The following 51 pages are in this category, out of 51 total.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:12",
+      "claim": "Kazakhstan is the world's largest landlocked country by area.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:12",
+          "document_version_id": "web_search-2dc063c220b5b34b",
+          "page": null,
+          "section": "Landlocked country",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Kazakhstan is the world's largest landlocked country by area",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:13",
+      "claim": "Kyrgyzstan is the farthest landlocked country from any ocean.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:13",
+          "document_version_id": "web_search-2dc063c220b5b34b",
+          "page": null,
+          "section": "Landlocked country",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Kyrgyzstan is the farthest landlocked country from any ocean",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:14",
+      "claim": "Ethiopia is the world's most populous landlocked country.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.95,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:14",
+          "document_version_id": "web_search-2dc063c220b5b34b",
+          "page": null,
+          "section": "Landlocked country",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "Ethiopia is the world's most populous landlocked country",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:15",
+      "claim": "The Wikipedia article 'List of current non-sovereign Asian monarchs' covers monarchs in Bangladesh, India, Indonesia, Malaysia, Philippines, Thailand, Timor-Leste, and the United Arab Emirates.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "accepted",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:15",
+          "document_version_id": "web_search-6170a14adba0d765",
+          "page": null,
+          "section": "List of current non-sovereign Asian monarchs",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "8 United Arab Emirates",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "qualified_claims": [
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02",
+      "claim": "According to the aalep.eu source, East and Southeast Asian constitutional monarchies include Bhutan, Cambodia, Japan, and Thailand, where the monarch has a limited or ceremonial role.",
+      "claim_type": "factual_claim",
+      "critical": false,
+      "support_status": "qualified",
+      "confidence": 0.8,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:02",
+          "document_version_id": "web_search-d73ba6ced3b0b3cb",
+          "page": null,
+          "section": "CURRENT MONARCHIES",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "East and Southeast Asian constitutional monarchies: Bhutan, Cambodia, Japan, and Thailand have constitutional monarchies where the monarch has a limited or ceremonial role.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    },
+    {
+      "claim_id": "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:04",
+      "claim": "The 12 landlocked Asian countries include Uzbekistan, Turkmenistan, Tajikistan, Nepal, Mongolia, Turkestan, Kazakhstan, Laos, Bhutan, Azerbaijan, Armenia, and Afghanistan.",
+      "claim_type": "factual_claim",
+      "critical": true,
+      "support_status": "qualified",
+      "confidence": 0.9,
+      "evidence_spans": [
+        {
+          "span_id": "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:04",
+          "document_version_id": "web_search-764ed2f24b9a4fde",
+          "page": null,
+          "section": "Landlocked Asian Countries 2026 - World Population Review",
+          "start_offset": null,
+          "end_offset": null,
+          "quote": "They include Uzbekistan, Turkmenistan, Tajikistan, Nepal, Mongolia, Turkestan, Kazakhstan, Laos, Bhutan, Azerbaijan, Armenia, and Afghanistan.",
+          "extraction_method": "agent_grounding"
+        }
+      ]
+    }
+  ],
+  "evidence_matrix": {
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:01": [
+      "web_search-dd891502a6b995b5"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02": [
+      "web_search-d73ba6ced3b0b3cb"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:03": [
+      "web_search-764ed2f24b9a4fde"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:04": [
+      "web_search-764ed2f24b9a4fde"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:05": [
+      "web_search-eec6502995240aee"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:06": [
+      "web_search-eec6502995240aee"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:08": [
+      "web_search-dca8dac90c7646dc"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:09": [
+      "web_search-dca8dac90c7646dc"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:10": [
+      "web_search-dca8dac90c7646dc"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:11": [
+      "web_search-e73354b59f64fccd"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:12": [
+      "web_search-2dc063c220b5b34b"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:13": [
+      "web_search-2dc063c220b5b34b"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:14": [
+      "web_search-2dc063c220b5b34b"
+    ],
+    "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:15": [
+      "web_search-6170a14adba0d765"
+    ]
+  },
+  "research_graph": {
+    "nodes": [
+      {
+        "node_id": "claim-1",
+        "kind": "claim",
+        "label": "According to Wikipedia's 'Monarchies in Asia' article, the current Asian monarchies are Bahrain, Bhutan, Brunei, Cambodia, Japan, Jordan, Kuwait, Malaysia, Oman, Qatar, Saudi Arabia, Thailand, and the United Arab Emirates.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-10",
+        "kind": "claim",
+        "label": "The Cambodian monarchy was subsequently restored in the peace agreement.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-11",
+        "kind": "claim",
+        "label": "The Wikipedia category 'Landlocked countries' contains 51 pages in total.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-12",
+        "kind": "claim",
+        "label": "Kazakhstan is the world's largest landlocked country by area.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-13",
+        "kind": "claim",
+        "label": "Kyrgyzstan is the farthest landlocked country from any ocean.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-14",
+        "kind": "claim",
+        "label": "Ethiopia is the world's most populous landlocked country.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-15",
+        "kind": "claim",
+        "label": "The Wikipedia article 'List of current non-sovereign Asian monarchs' covers monarchs in Bangladesh, India, Indonesia, Malaysia, Philippines, Thailand, Timor-Leste, and the United Arab Emirates.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-2",
+        "kind": "claim",
+        "label": "According to the aalep.eu source, East and Southeast Asian constitutional monarchies include Bhutan, Cambodia, Japan, and Thailand, where the monarch has a limited or ceremonial role.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-3",
+        "kind": "claim",
+        "label": "In total, there are 12 countries in Asia that do not have direct ocean access.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-4",
+        "kind": "claim",
+        "label": "The 12 landlocked Asian countries include Uzbekistan, Turkmenistan, Tajikistan, Nepal, Mongolia, Turkestan, Kazakhstan, Laos, Bhutan, Azerbaijan, Armenia, and Afghanistan.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-5",
+        "kind": "claim",
+        "label": "The Kingdom of Bhutan has exactly two neighbors and no room for a third: China to the north and India everywhere else.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-6",
+        "kind": "claim",
+        "label": "Bhutan reaches through friendly territory for access to the sea, with an agreement to route its maritime trade through the Port of Mongla in Bangladesh.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-7",
+        "kind": "claim",
+        "label": "Bhutan, Cambodia, Japan, and Thailand have constitutional monarchies where the monarch has a limited or ceremonial role.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": true
+        }
+      },
+      {
+        "node_id": "claim-8",
+        "kind": "claim",
+        "label": "Thailand changed from traditional absolute monarchy into a constitutional one in 1932, while Bhutan changed in 2008.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "claim-9",
+        "kind": "claim",
+        "label": "Cambodia had its own monarchy after independence from the French Colonial Empire, which was deposed after the Khmer Rouge came into power.",
+        "properties": {
+          "support_status": "accepted",
+          "critical": false
+        }
+      },
+      {
+        "node_id": "source-1-1",
+        "kind": "source",
+        "label": "Monarchies in Asia - Wikipedia",
+        "properties": {
+          "document_version_id": "web_search-dd891502a6b995b5"
+        }
+      },
+      {
+        "node_id": "source-10-1",
+        "kind": "source",
+        "label": "List of current monarchies",
+        "properties": {
+          "document_version_id": "web_search-dca8dac90c7646dc"
+        }
+      },
+      {
+        "node_id": "source-11-1",
+        "kind": "source",
+        "label": "Category:Landlocked countries - Wikipedia",
+        "properties": {
+          "document_version_id": "web_search-e73354b59f64fccd"
+        }
+      },
+      {
+        "node_id": "source-12-1",
+        "kind": "source",
+        "label": "Landlocked country",
+        "properties": {
+          "document_version_id": "web_search-2dc063c220b5b34b"
+        }
+      },
+      {
+        "node_id": "source-13-1",
+        "kind": "source",
+        "label": "Landlocked country",
+        "properties": {
+          "document_version_id": "web_search-2dc063c220b5b34b"
+        }
+      },
+      {
+        "node_id": "source-14-1",
+        "kind": "source",
+        "label": "Landlocked country",
+        "properties": {
+          "document_version_id": "web_search-2dc063c220b5b34b"
+        }
+      },
+      {
+        "node_id": "source-15-1",
+        "kind": "source",
+        "label": "List of current non-sovereign Asian monarchs",
+        "properties": {
+          "document_version_id": "web_search-6170a14adba0d765"
+        }
+      },
+      {
+        "node_id": "source-2-1",
+        "kind": "source",
+        "label": "CURRENT MONARCHIES",
+        "properties": {
+          "document_version_id": "web_search-d73ba6ced3b0b3cb"
+        }
+      },
+      {
+        "node_id": "source-3-1",
+        "kind": "source",
+        "label": "Landlocked Asian Countries 2026 - World Population Review",
+        "properties": {
+          "document_version_id": "web_search-764ed2f24b9a4fde"
+        }
+      },
+      {
+        "node_id": "source-4-1",
+        "kind": "source",
+        "label": "Landlocked Asian Countries 2026 - World Population Review",
+        "properties": {
+          "document_version_id": "web_search-764ed2f24b9a4fde"
+        }
+      },
+      {
+        "node_id": "source-5-1",
+        "kind": "source",
+        "label": "Landlocked Countries In Asia",
+        "properties": {
+          "document_version_id": "web_search-eec6502995240aee"
+        }
+      },
+      {
+        "node_id": "source-6-1",
+        "kind": "source",
+        "label": "Landlocked Countries In Asia",
+        "properties": {
+          "document_version_id": "web_search-eec6502995240aee"
+        }
+      },
+      {
+        "node_id": "source-7-1",
+        "kind": "source",
+        "label": "List of current monarchies",
+        "properties": {
+          "document_version_id": "web_search-dca8dac90c7646dc"
+        }
+      },
+      {
+        "node_id": "source-8-1",
+        "kind": "source",
+        "label": "List of current monarchies",
+        "properties": {
+          "document_version_id": "web_search-dca8dac90c7646dc"
+        }
+      },
+      {
+        "node_id": "source-9-1",
+        "kind": "source",
+        "label": "List of current monarchies",
+        "properties": {
+          "document_version_id": "web_search-dca8dac90c7646dc"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge-1-1",
+        "source_node_id": "claim-1",
+        "target_node_id": "source-1-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:01"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-10-1",
+        "source_node_id": "claim-10",
+        "target_node_id": "source-10-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:10"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-11-1",
+        "source_node_id": "claim-11",
+        "target_node_id": "source-11-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:11"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-12-1",
+        "source_node_id": "claim-12",
+        "target_node_id": "source-12-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:12"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-13-1",
+        "source_node_id": "claim-13",
+        "target_node_id": "source-13-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:13"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-14-1",
+        "source_node_id": "claim-14",
+        "target_node_id": "source-14-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:14"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-15-1",
+        "source_node_id": "claim-15",
+        "target_node_id": "source-15-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:15"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-2-1",
+        "source_node_id": "claim-2",
+        "target_node_id": "source-2-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:02"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-3-1",
+        "source_node_id": "claim-3",
+        "target_node_id": "source-3-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:03"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-4-1",
+        "source_node_id": "claim-4",
+        "target_node_id": "source-4-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:04"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-5-1",
+        "source_node_id": "claim-5",
+        "target_node_id": "source-5-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:05"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-6-1",
+        "source_node_id": "claim-6",
+        "target_node_id": "source-6-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:06"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-7-1",
+        "source_node_id": "claim-7",
+        "target_node_id": "source-7-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:07"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-8-1",
+        "source_node_id": "claim-8",
+        "target_node_id": "source-8-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:08"
+        ],
+        "properties": {}
+      },
+      {
+        "edge_id": "edge-9-1",
+        "source_node_id": "claim-9",
+        "target_node_id": "source-9-1",
+        "relation": "supported_by",
+        "evidence_span_ids": [
+          "20260814T110903Z-651fd930:span:research-01-according-to-wikipedia-how-many-asia:09"
+        ],
+        "properties": {}
+      }
+    ]
+  },
+  "sources": [
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:01",
+      "uri": "https://en.wikipedia.org/wiki/List_of_current_monarchies",
+      "media_type": "text/markdown",
+      "content_sha256": "fea54bf27ec38f6ccf5785bac9da17b96681a602457e7374f3206261a57bea6c",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-fea54bf27ec38f6c",
+        "critical_claims_allowed": true,
+        "source_title": "List of current monarchies",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:02",
+      "uri": "https://en.wikipedia.org/wiki/Monarchies_in_Asia",
+      "media_type": "text/markdown",
+      "content_sha256": "dd891502a6b995b5cbc17245879faff157aaac6f8c03dad58fc237e53edce740",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-dd891502a6b995b5",
+        "critical_claims_allowed": true,
+        "source_title": "Monarchies in Asia - Wikipedia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:03",
+      "uri": "https://www.aalep.eu/current-monarchies",
+      "media_type": "text/markdown",
+      "content_sha256": "d73ba6ced3b0b3cb68feb6e5d6db893d048df3a88573258c8aa17e1722fe84f2",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-d73ba6ced3b0b3cb",
+        "critical_claims_allowed": true,
+        "source_title": "CURRENT MONARCHIES",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:04",
+      "uri": "https://monarchies.fandom.com/wiki/Monarchies_in_Asia",
+      "media_type": "text/markdown",
+      "content_sha256": "da6af7dd732e13c4e85ffadb6b7cac902f65b64958890637bbd03c7dcf27fdd0",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-da6af7dd732e13c4",
+        "critical_claims_allowed": true,
+        "source_title": "Monarchies in Asia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:05",
+      "uri": "https://worldpopulationreview.com/country-rankings/landlocked-asian-countries",
+      "media_type": "text/markdown",
+      "content_sha256": "764ed2f24b9a4fde2ccd75c831fca17a231119966ad12aced6ffa1f2920bd2a9",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-764ed2f24b9a4fde",
+        "critical_claims_allowed": true,
+        "source_title": "Landlocked Asian Countries 2026 - World Population Review",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:06",
+      "uri": "https://www.worldatlas.com/geography/landlocked-countries-in-asia-58877.html",
+      "media_type": "text/markdown",
+      "content_sha256": "eec6502995240aee219d9057a25d0ea32d574f22498b5835ca142e06611d0967",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-eec6502995240aee",
+        "critical_claims_allowed": true,
+        "source_title": "Landlocked Countries In Asia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:07",
+      "uri": "https://china.usembassy-china.org.cn/the-south-china-sea-southeast-asias-patrimony-and-everybodys-own-backyard",
+      "media_type": "text/markdown",
+      "content_sha256": "2f605f02f697c38994b606fb9d635a998ce11ea11b19e95171b6c0b10bffe472",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-2f605f02f697c389",
+        "critical_claims_allowed": true,
+        "source_title": "The South China Sea, Southeast Asia’s Patrimony, and Everybody’s Own Backyard - U.S. Embassy & Consulates in China",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:08",
+      "uri": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "media_type": "text/markdown",
+      "content_sha256": "28f26bc308fc9089784ab160c5df5b2a7a110e7db2e2b58f22934240dd3b0630",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-28f26bc308fc9089",
+        "critical_claims_allowed": true,
+        "source_title": "Landlocked country",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:09",
+      "uri": "https://en.wikipedia.org/wiki/List_of_current_non-sovereign_Asian_monarchs",
+      "media_type": "text/markdown",
+      "content_sha256": "68f484f2953bf3581678b7c2c93b7d6a1f4bde44af1fa441f5872e578151d713",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-68f484f2953bf358",
+        "critical_claims_allowed": true,
+        "source_title": "List of current non-sovereign Asian monarchs - Wikipedia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:10",
+      "uri": "https://en.wikipedia.org/wiki/List_of_current_monarchies",
+      "media_type": "text/markdown",
+      "content_sha256": "dca8dac90c7646dca4472a4c99861fe55a75d9f0e47031521ee0322b1ad8d8e3",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-dca8dac90c7646dc",
+        "critical_claims_allowed": true,
+        "source_title": "List of current monarchies",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:11",
+      "uri": "https://monarchies.fandom.com/wiki/Monarchies_in_Asia",
+      "media_type": "text/markdown",
+      "content_sha256": "13dc394c85ac494f18c7c0db385eda586410da6f9558084362447543d8b50b3e",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-13dc394c85ac494f",
+        "critical_claims_allowed": true,
+        "source_title": "Monarchies in Asia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:12",
+      "uri": "https://en.wikipedia.org/wiki/Monarchies_in_Asia",
+      "media_type": "text/markdown",
+      "content_sha256": "7927386f49a797f70b5aa231944b478b0cdd81eae83f8081dc7c9942c5250b7a",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-7927386f49a797f7",
+        "critical_claims_allowed": true,
+        "source_title": "Monarchies in Asia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:13",
+      "uri": "https://monarchies.fandom.com/wiki/Monarchies_in_Asia",
+      "media_type": "text/markdown",
+      "content_sha256": "5f4b3894af9c4de7b62d8c7b7b851ce057c9b9ffa8eb775c8cea80c1ad0631ee",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-5f4b3894af9c4de7",
+        "critical_claims_allowed": true,
+        "source_title": "Monarchies in Asia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:14",
+      "uri": "https://en.wikipedia.org/wiki/List_of_current_non-sovereign_Asian_monarchs",
+      "media_type": "text/markdown",
+      "content_sha256": "6170a14adba0d7658e2d589e89202aca75029d619fcf9666bf9561dd27973307",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-6170a14adba0d765",
+        "critical_claims_allowed": true,
+        "source_title": "List of current non-sovereign Asian monarchs",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:15",
+      "uri": "https://en.wikipedia.org/wiki/Category:Landlocked_countries",
+      "media_type": "text/markdown",
+      "content_sha256": "e73354b59f64fccd17aea760dd529deec88ac17e4180e5e45234c92d249d8a93",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-e73354b59f64fccd",
+        "critical_claims_allowed": true,
+        "source_title": "Category:Landlocked countries - Wikipedia",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    },
+    {
+      "artifact_id": "20260814T110903Z-651fd930:research-01-according-to-wikipedia-how-many-asia:src:16",
+      "uri": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "media_type": "text/markdown",
+      "content_sha256": "2dc063c220b5b34bfd1e58bfdfac154a58b6eef9e2b818a123beca332531aed9",
+      "created_by_task_id": "research-01-according-to-wikipedia-how-many-asia",
+      "metadata": {
+        "document_version_id": "web_search-2dc063c220b5b34b",
+        "critical_claims_allowed": true,
+        "source_title": "Landlocked country",
+        "tool": "web_search",
+        "source_kind": "snippet"
+      }
+    }
+  ],
+  "audit_summary": {
+    "accepted_claim_ids": [
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:01",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:03",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:05",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:06",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:08",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:09",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:10",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:11",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:12",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:13",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:14",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:15"
+    ],
+    "qualified_claim_ids": [
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:04"
+    ],
+    "contradicted_claim_ids": [],
+    "unsupported_claim_ids": [
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:07"
+    ],
+    "executive_summary_claim_ids": [
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:01",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:03",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:04",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:05",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:06",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:08",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:09",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:10",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:11",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:12",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:13",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:14",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:15"
+    ],
+    "degradations": {
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02": "critic_unresolved",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:07": "critic_unresolved"
+    },
+    "semantic_disagreements": [
+      [
+        "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02",
+        "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:07"
+      ]
+    ],
+    "unresolved_claim_ids": [
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:02",
+      "20260814T110903Z-651fd930:claim:research-01-according-to-wikipedia-how-many-asia:07"
+    ]
+  },
+  "corpus_manifest": {
+    "manifest_id": "corpus:20260814T110903Z-651fd930",
+    "document_version_ids": [
+      "web_search-13dc394c85ac494f",
+      "web_search-28f26bc308fc9089",
+      "web_search-2dc063c220b5b34b",
+      "web_search-2f605f02f697c389",
+      "web_search-5f4b3894af9c4de7",
+      "web_search-6170a14adba0d765",
+      "web_search-68f484f2953bf358",
+      "web_search-764ed2f24b9a4fde",
+      "web_search-7927386f49a797f7",
+      "web_search-d73ba6ced3b0b3cb",
+      "web_search-da6af7dd732e13c4",
+      "web_search-dca8dac90c7646dc",
+      "web_search-dd891502a6b995b5",
+      "web_search-e73354b59f64fccd",
+      "web_search-eec6502995240aee",
+      "web_search-fea54bf27ec38f6c"
+    ],
+    "content_hashes": {
+      "web_search-fea54bf27ec38f6c": "fea54bf27ec38f6ccf5785bac9da17b96681a602457e7374f3206261a57bea6c",
+      "web_search-dd891502a6b995b5": "dd891502a6b995b5cbc17245879faff157aaac6f8c03dad58fc237e53edce740",
+      "web_search-d73ba6ced3b0b3cb": "d73ba6ced3b0b3cb68feb6e5d6db893d048df3a88573258c8aa17e1722fe84f2",
+      "web_search-da6af7dd732e13c4": "da6af7dd732e13c4e85ffadb6b7cac902f65b64958890637bbd03c7dcf27fdd0",
+      "web_search-764ed2f24b9a4fde": "764ed2f24b9a4fde2ccd75c831fca17a231119966ad12aced6ffa1f2920bd2a9",
+      "web_search-eec6502995240aee": "eec6502995240aee219d9057a25d0ea32d574f22498b5835ca142e06611d0967",
+      "web_search-2f605f02f697c389": "2f605f02f697c38994b606fb9d635a998ce11ea11b19e95171b6c0b10bffe472",
+      "web_search-28f26bc308fc9089": "28f26bc308fc9089784ab160c5df5b2a7a110e7db2e2b58f22934240dd3b0630",
+      "web_search-68f484f2953bf358": "68f484f2953bf3581678b7c2c93b7d6a1f4bde44af1fa441f5872e578151d713",
+      "web_search-dca8dac90c7646dc": "dca8dac90c7646dca4472a4c99861fe55a75d9f0e47031521ee0322b1ad8d8e3",
+      "web_search-13dc394c85ac494f": "13dc394c85ac494f18c7c0db385eda586410da6f9558084362447543d8b50b3e",
+      "web_search-7927386f49a797f7": "7927386f49a797f70b5aa231944b478b0cdd81eae83f8081dc7c9942c5250b7a",
+      "web_search-5f4b3894af9c4de7": "5f4b3894af9c4de7b62d8c7b7b851ce057c9b9ffa8eb775c8cea80c1ad0631ee",
+      "web_search-6170a14adba0d765": "6170a14adba0d7658e2d589e89202aca75029d619fcf9666bf9561dd27973307",
+      "web_search-e73354b59f64fccd": "e73354b59f64fccd17aea760dd529deec88ac17e4180e5e45234c92d249d8a93",
+      "web_search-2dc063c220b5b34b": "2dc063c220b5b34bfd1e58bfdfac154a58b6eef9e2b818a123beca332531aed9"
+    },
+    "critical_claims_allowed": {
+      "web_search-fea54bf27ec38f6c": true,
+      "web_search-dd891502a6b995b5": true,
+      "web_search-d73ba6ced3b0b3cb": true,
+      "web_search-da6af7dd732e13c4": true,
+      "web_search-764ed2f24b9a4fde": true,
+      "web_search-eec6502995240aee": true,
+      "web_search-2f605f02f697c389": true,
+      "web_search-28f26bc308fc9089": true,
+      "web_search-68f484f2953bf358": true,
+      "web_search-dca8dac90c7646dc": true,
+      "web_search-13dc394c85ac494f": true,
+      "web_search-7927386f49a797f7": true,
+      "web_search-5f4b3894af9c4de7": true,
+      "web_search-6170a14adba0d765": true,
+      "web_search-e73354b59f64fccd": true,
+      "web_search-2dc063c220b5b34b": true
+    }
+  },
+  "run_manifest": {
+    "job_id": "20260814T110903Z-651fd930",
+    "status": "completed"
+  }
+}

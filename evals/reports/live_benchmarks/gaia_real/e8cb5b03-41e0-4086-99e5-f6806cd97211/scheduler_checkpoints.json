@@ -1,0 +1,3102 @@
+[
+  {
+    "checkpoint_id": "20260814T110706Z-af137c28:task-checkpoint:000001",
+    "job_id": "20260814T110706Z-af137c28",
+    "task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+    "sequence": 1,
+    "attempt": 1,
+    "result": {
+      "task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+      "job_id": "20260814T110706Z-af137c28",
+      "status": "completed",
+      "evidence_packets": [
+        {
+          "packet_id": "20260814T110706Z-af137c28:packet:research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "evidence_spans": [
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:01",
+              "document_version_id": "web_search-4593a21006d64377",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🍝 Pancetta & Asparagus Gnocchi",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:02",
+              "document_version_id": "web_search-4593a21006d64377",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🍖 Lamb Kofta",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:03",
+              "document_version_id": "web_search-e985d5bbd7d6d9b5",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Pappardelle (10/10, the duck is amazing, pasta is perfect and a great serving for one person but can be shared as well)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:04",
+              "document_version_id": "web_search-e985d5bbd7d6d9b5",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Wood Roasted Oyster 🦪 (100/10 THEYRE A FULL BITE EXPERIENCE WITH THE PERFECT GARNISH)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:05",
+              "document_version_id": "web_search-e985d5bbd7d6d9b5",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "King Salmon (3/10, bland but beautifully prepared)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:06",
+              "document_version_id": "web_search-e985d5bbd7d6d9b5",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Amberjack Crudo (100/10, gonna try to make myself)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:07",
+              "document_version_id": "web_search-e985d5bbd7d6d9b5",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Focaccia Bread & ANCHOVY butter (100/10 you will get full so be careful)",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:08",
+              "document_version_id": "web_search-b5023e31fd88b48c",
+              "page": null,
+              "section": "Menus | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "estate red, napa valley 2021",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:09",
+              "document_version_id": "web_search-b5023e31fd88b48c",
+              "page": null,
+              "section": "Menus | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "a 3.5% surcharge will be added to your final bill to assist in covering the costs of providing health insurance and benefits to our team",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:10",
+              "document_version_id": "web_search-431d4b68201d0476",
+              "page": null,
+              "section": "Best South Side: Virtue Restaurant & Bar",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Elliott visits a celebrated Hyde Park restaurant for a savory salmon dish",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:11",
+              "document_version_id": "web_search-431d4b68201d0476",
+              "page": null,
+              "section": "Best South Side: Virtue Restaurant & Bar",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "we've got this delicious king salmon that I'm going to encrust with herbs. So these herbs are chives and a little bit of basil, parsley and tarragon. (upbeat music) So I just added corn, hominy, red bell peppers and a touch of butter",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:12",
+              "document_version_id": "web_search-9b0e36ea19a01273",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Dinner Menu April 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "Virtue Restaurant 1462 E 53rd Street in Chicago’s Hyde Park",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:13",
+              "document_version_id": "web_search-9b0e36ea19a01273",
+              "page": null,
+              "section": "Virtue Restaurant Chicago Dinner Menu April 2021",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "is the brainchild of James Beard Award winning chef Erick Williams",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:14",
+              "document_version_id": "web_search-d1ef4862fbb32bbb",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$29\n short rib\n\n  creamed spinach, potatoes, caramelized onion gravy",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:15",
+              "document_version_id": "web_search-d1ef4862fbb32bbb",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$42\n ny strip steak\\\n\n  bone marrow butter, chermoula",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:16",
+              "document_version_id": "web_search-d1ef4862fbb32bbb",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$69\n blackened catfish\n\n  carolina gold rice, barbeque carrots",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:17",
+              "document_version_id": "web_search-d1ef4862fbb32bbb",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "buttered grits\n\n  \"geechie\" stone ground grits, herbed butter\n\n  $8\n crushed potatoes\n\n  $8\n collards & smoked turkey\n\n  stewed collard greens, picked smoked turkey, \"pot likker\"\n\n  $13\n mac & cheese\n\n  mac and cheese as it should be!\n\n  $12\n cornbread & honey butter",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:18",
+              "document_version_id": "web_search-ec45e7c894e96f94",
+              "page": null,
+              "section": "Menus | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "a 3.5% surcharge will be added to your final bill to assist in covering the costs of providing health insurance and benefits to our team",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:19",
+              "document_version_id": "web_search-ec45e7c894e96f94",
+              "page": null,
+              "section": "Menus | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$16\n apple jack\n\n  apple brandy, lemon, raspberry",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:20",
+              "document_version_id": "web_search-ec45e7c894e96f94",
+              "page": null,
+              "section": "Menus | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$16\n all right\n\n  bourbon, curacao, aromatic bitters",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:21",
+              "document_version_id": "web_search-ec45e7c894e96f94",
+              "page": null,
+              "section": "Menus | Virtue Restaurant",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "$16\n blackthorne\n\n  sloe",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:22",
+              "document_version_id": "web_search-9d6a8bd75ccaefe0",
+              "page": null,
+              "section": "Dinner at Virtue Restaurant. : r/chicagofood",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "I liked the tangy remoulade on the fried green tomatoes",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:23",
+              "document_version_id": "web_search-9d6a8bd75ccaefe0",
+              "page": null,
+              "section": "Dinner at Virtue Restaurant. : r/chicagofood",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "The biscuits were probably my favorite side dish - simple, but done right. They were fluffy yet crispy with a nice honey glaze.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:24",
+              "document_version_id": "web_search-9d6a8bd75ccaefe0",
+              "page": null,
+              "section": "Dinner at Virtue Restaurant. : r/chicagofood",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "2 - Gumbo. This was delicious albeit",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:25",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🍝 Pancetta & Asparagus Gnocchi",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:26",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🍖 Lamb Kofta",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:27",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🐟 Caviar and Chips ⭐️",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:28",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🥚 Deviled Eggs",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:29",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🥗 Spring Citrus & Kale Salad ⭐️",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:30",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🔥 Roasted Cauliflower",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:31",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🐟 Tuna Crudo",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:32",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🍤 Shrimp Saganaki ⭐️",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:33",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🥩 Wagyu Carpaccio ⭐️",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:34",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🌰 Pistachio Cheesecake",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:35",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "🍰 Baklava ⭐️",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:36",
+              "document_version_id": "web_search-144be921962e7e63",
+              "page": null,
+              "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+              "start_offset": null,
+              "end_offset": null,
+              "quote": "They have three locations but look for this menu at the East Tremont location.",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:37",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "soft shell crab \n corn bisque, bacon, herbs \n $ 36",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:38",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "blackened catfish \n carolina gold rice, barbeque carrots \n $ 30",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:39",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "salmon* \n sweet peas, artichokes, pearl onion, guanciale vinaigrette \n $ 43",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:40",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "half chicken \n baby squash, green beans, chicken jus \n $ 29",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:41",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "short rib \n creamed spinach, potatoes, caramelized onion gravy \n $ 42",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:42",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "ny strip steak* \n bone marrow butter, chermoula \n $ 69",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:43",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "fish & grits \n blackened red drum, Geechie stone-ground grits, crab étouffée \n $ 35",
+              "extraction_method": "agent_grounding"
+            },
+            {
+              "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:44",
+              "document_version_id": "fetch_page-62756fb1c09c413d",
+              "page": null,
+              "section": "dinner menu | Virtue Restaurant",
+              "start_offset": 0,
+              "end_offset": 1841,
+              "quote": "cabbage \n holy trinity, hoppin' john, carrot pickle \n $ 26",
+              "extraction_method": "agent_grounding"
+            }
+          ],
+          "claims": [
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:01",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'Pancetta & Asparagus Gnocchi'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:01",
+                  "document_version_id": "web_search-4593a21006d64377",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🍝 Pancetta & Asparagus Gnocchi",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:02",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'Lamb Kofta'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:02",
+                  "document_version_id": "web_search-4593a21006d64377",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🍖 Lamb Kofta",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:03",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'Pappardelle' with duck",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:03",
+                  "document_version_id": "web_search-e985d5bbd7d6d9b5",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Pappardelle (10/10, the duck is amazing, pasta is perfect and a great serving for one person but can be shared as well)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:04",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'Wood Roasted Oyster'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:04",
+                  "document_version_id": "web_search-e985d5bbd7d6d9b5",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Wood Roasted Oyster 🦪 (100/10 THEYRE A FULL BITE EXPERIENCE WITH THE PERFECT GARNISH)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:05",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'King Salmon'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:05",
+                  "document_version_id": "web_search-e985d5bbd7d6d9b5",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "King Salmon (3/10, bland but beautifully prepared)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:06",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'Amberjack Crudo'",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:06",
+                  "document_version_id": "web_search-e985d5bbd7d6d9b5",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Amberjack Crudo (100/10, gonna try to make myself)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:07",
+              "claim": "Virtue restaurant in Chicago had a menu item called 'Focaccia Bread' with anchovy butter",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:07",
+                  "document_version_id": "web_search-e985d5bbd7d6d9b5",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Focaccia Bread & ANCHOVY butter (100/10 you will get full so be careful)",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:08",
+              "claim": "Virtue Restaurant's menus page includes wine listings such as 'l'éspirit des pavots' estate red, napa valley 2021",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.7,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:08",
+                  "document_version_id": "web_search-b5023e31fd88b48c",
+                  "page": null,
+                  "section": "Menus | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "estate red, napa valley 2021",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:09",
+              "claim": "Virtue Restaurant adds a 3.5% surcharge to the final bill to assist in covering the costs of providing health insurance and benefits to the team",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:09",
+                  "document_version_id": "web_search-b5023e31fd88b48c",
+                  "page": null,
+                  "section": "Menus | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "a 3.5% surcharge will be added to your final bill to assist in covering the costs of providing health insurance and benefits to our team",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:10",
+              "claim": "Virtue Restaurant & Bar is a Hyde Park restaurant",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:10",
+                  "document_version_id": "web_search-431d4b68201d0476",
+                  "page": null,
+                  "section": "Best South Side: Virtue Restaurant & Bar",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Elliott visits a celebrated Hyde Park restaurant for a savory salmon dish",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:11",
+              "claim": "Virtue Restaurant & Bar serves a king salmon dish encrusted with herbs including chives, basil, parsley and tarragon, with corn, hominy, red bell peppers and butter",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:11",
+                  "document_version_id": "web_search-431d4b68201d0476",
+                  "page": null,
+                  "section": "Best South Side: Virtue Restaurant & Bar",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "we've got this delicious king salmon that I'm going to encrust with herbs. So these herbs are chives and a little bit of basil, parsley and tarragon. (upbeat music) So I just added corn, hominy, red bell peppers and a touch of butter",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:12",
+              "claim": "Virtue Restaurant is located at 1462 E 53rd Street in Chicago's Hyde Park",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:12",
+                  "document_version_id": "web_search-9b0e36ea19a01273",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Dinner Menu April 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "Virtue Restaurant 1462 E 53rd Street in Chicago’s Hyde Park",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:13",
+              "claim": "Virtue Restaurant is the brainchild of James Beard Award winning chef Erick Williams",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:13",
+                  "document_version_id": "web_search-9b0e36ea19a01273",
+                  "page": null,
+                  "section": "Virtue Restaurant Chicago Dinner Menu April 2021",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "is the brainchild of James Beard Award winning chef Erick Williams",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:14",
+              "claim": "Virtue's dinner menu includes short rib with creamed spinach, potatoes, and caramelized onion gravy priced at $29",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:14",
+                  "document_version_id": "web_search-d1ef4862fbb32bbb",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$29\n short rib\n\n  creamed spinach, potatoes, caramelized onion gravy",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:15",
+              "claim": "Virtue's dinner menu includes ny strip steak with bone marrow butter and chermoula priced at $42",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:15",
+                  "document_version_id": "web_search-d1ef4862fbb32bbb",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$42\n ny strip steak\\\n\n  bone marrow butter, chermoula",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:16",
+              "claim": "Virtue's dinner menu includes blackened catfish with carolina gold rice and barbeque carrots priced at $69",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:16",
+                  "document_version_id": "web_search-d1ef4862fbb32bbb",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$69\n blackened catfish\n\n  carolina gold rice, barbeque carrots",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:17",
+              "claim": "Virtue's dinner menu includes extra rations such as buttered grits, crushed potatoes, collards & smoked turkey, mac & cheese, and cornbread & honey butter",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:17",
+                  "document_version_id": "web_search-d1ef4862fbb32bbb",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "buttered grits\n\n  \"geechie\" stone ground grits, herbed butter\n\n  $8\n crushed potatoes\n\n  $8\n collards & smoked turkey\n\n  stewed collard greens, picked smoked turkey, \"pot likker\"\n\n  $13\n mac & cheese\n\n  mac and cheese as it should be!\n\n  $12\n cornbread & honey butter",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:18",
+              "claim": "Virtue Restaurant adds a 3.5% surcharge to the final bill to assist in covering the costs of providing health insurance and benefits to the team",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:18",
+                  "document_version_id": "web_search-ec45e7c894e96f94",
+                  "page": null,
+                  "section": "Menus | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "a 3.5% surcharge will be added to your final bill to assist in covering the costs of providing health insurance and benefits to our team",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:19",
+              "claim": "Virtue's menu includes a cocktail called apple jack made with apple brandy, lemon, and raspberry priced at $16",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:19",
+                  "document_version_id": "web_search-ec45e7c894e96f94",
+                  "page": null,
+                  "section": "Menus | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$16\n apple jack\n\n  apple brandy, lemon, raspberry",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:20",
+              "claim": "Virtue's menu includes a cocktail called all right made with bourbon, curacao, and aromatic bitters priced at $16",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:20",
+                  "document_version_id": "web_search-ec45e7c894e96f94",
+                  "page": null,
+                  "section": "Menus | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$16\n all right\n\n  bourbon, curacao, aromatic bitters",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:21",
+              "claim": "Virtue's menu includes a cocktail called blackthorne made with sloe",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:21",
+                  "document_version_id": "web_search-ec45e7c894e96f94",
+                  "page": null,
+                  "section": "Menus | Virtue Restaurant",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "$16\n blackthorne\n\n  sloe",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:22",
+              "claim": "Virtue's menu includes fried green tomatoes served with a tangy remoulade",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:22",
+                  "document_version_id": "web_search-9d6a8bd75ccaefe0",
+                  "page": null,
+                  "section": "Dinner at Virtue Restaurant. : r/chicagofood",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "I liked the tangy remoulade on the fried green tomatoes",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:23",
+              "claim": "Virtue's menu includes biscuits that are fluffy yet crispy with a nice honey glaze",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:23",
+                  "document_version_id": "web_search-9d6a8bd75ccaefe0",
+                  "page": null,
+                  "section": "Dinner at Virtue Restaurant. : r/chicagofood",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "The biscuits were probably my favorite side dish - simple, but done right. They were fluffy yet crispy with a nice honey glaze.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:24",
+              "claim": "Virtue's menu includes gumbo",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.85,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:24",
+                  "document_version_id": "web_search-9d6a8bd75ccaefe0",
+                  "page": null,
+                  "section": "Dinner at Virtue Restaurant. : r/chicagofood",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "2 - Gumbo. This was delicious albeit",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:25",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Pancetta & Asparagus Gnocchi as a menu item",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:25",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🍝 Pancetta & Asparagus Gnocchi",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:26",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Lamb Kofta as a menu item",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:26",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🍖 Lamb Kofta",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:27",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Caviar and Chips as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:27",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🐟 Caviar and Chips ⭐️",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:28",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Deviled Eggs as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:28",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🥚 Deviled Eggs",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:29",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Spring Citrus & Kale Salad as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:29",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🥗 Spring Citrus & Kale Salad ⭐️",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:30",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Roasted Cauliflower as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:30",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🔥 Roasted Cauliflower",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:31",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Tuna Crudo as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:31",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🐟 Tuna Crudo",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:32",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Shrimp Saganaki as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:32",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🍤 Shrimp Saganaki ⭐️",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:33",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Wagyu Carpaccio as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:33",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🥩 Wagyu Carpaccio ⭐️",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:34",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Pistachio Cheesecake as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:34",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🌰 Pistachio Cheesecake",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:35",
+              "claim": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Baklava as a menu item",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.9,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:35",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "🍰 Baklava ⭐️",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:36",
+              "claim": "Virtue Restaurant has three locations and the menu shown should be looked for at the East Tremont location",
+              "claim_type": "factual_claim",
+              "critical": false,
+              "support_status": "accepted",
+              "confidence": 0.8,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:36",
+                  "document_version_id": "web_search-144be921962e7e63",
+                  "page": null,
+                  "section": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                  "start_offset": null,
+                  "end_offset": null,
+                  "quote": "They have three locations but look for this menu at the East Tremont location.",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:37",
+              "claim": "The dinner menu at Virtue restaurant includes a 'soft shell crab' large ration priced at $36.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:37",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "soft shell crab \n corn bisque, bacon, herbs \n $ 36",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:38",
+              "claim": "The dinner menu at Virtue restaurant includes a 'blackened catfish' large ration priced at $30.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:38",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "blackened catfish \n carolina gold rice, barbeque carrots \n $ 30",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:39",
+              "claim": "The dinner menu at Virtue restaurant includes a 'salmon' large ration priced at $43.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:39",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "salmon* \n sweet peas, artichokes, pearl onion, guanciale vinaigrette \n $ 43",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:40",
+              "claim": "The dinner menu at Virtue restaurant includes a 'half chicken' large ration priced at $29.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:40",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "half chicken \n baby squash, green beans, chicken jus \n $ 29",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:41",
+              "claim": "The dinner menu at Virtue restaurant includes a 'short rib' large ration priced at $42.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:41",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "short rib \n creamed spinach, potatoes, caramelized onion gravy \n $ 42",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:42",
+              "claim": "The dinner menu at Virtue restaurant includes a 'ny strip steak' large ration priced at $69.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:42",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "ny strip steak* \n bone marrow butter, chermoula \n $ 69",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:43",
+              "claim": "The dinner menu at Virtue restaurant includes a 'fish & grits' large ration priced at $35.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:43",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "fish & grits \n blackened red drum, Geechie stone-ground grits, crab étouffée \n $ 35",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            },
+            {
+              "claim_id": "20260814T110706Z-af137c28:claim:research-01-i-went-to-virtue-restaurant-bar-in-c:44",
+              "claim": "The dinner menu at Virtue restaurant includes a 'cabbage' large ration priced at $26.",
+              "claim_type": "factual_claim",
+              "critical": true,
+              "support_status": "accepted",
+              "confidence": 0.95,
+              "evidence_spans": [
+                {
+                  "span_id": "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:44",
+                  "document_version_id": "fetch_page-62756fb1c09c413d",
+                  "page": null,
+                  "section": "dinner menu | Virtue Restaurant",
+                  "start_offset": 0,
+                  "end_offset": 1841,
+                  "quote": "cabbage \n holy trinity, hoppin' john, carrot pickle \n $ 26",
+                  "extraction_method": "agent_grounding"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:01",
+              "uri": "https://www.instagram.com/popular/wayback-machine-virtue-restaurant-chicago-menu-march-2021",
+              "media_type": "text/markdown",
+              "content_sha256": "4593a21006d64377bb01503ecab7701bbd26ee1e6157ec56d635c7eecca1539e",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-4593a21006d64377",
+                "critical_claims_allowed": true,
+                "source_title": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:02",
+              "uri": "https://www.instagram.com/popular/virtue-restaurant-chicago-menu-archive-wayback-machine-2021",
+              "media_type": "text/markdown",
+              "content_sha256": "e985d5bbd7d6d9b586bb89a8a8dfbccae347ebfc0921c1aae57132eac185d172",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-e985d5bbd7d6d9b5",
+                "critical_claims_allowed": true,
+                "source_title": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:03",
+              "uri": "https://www.virtuerestaurant.com/menus",
+              "media_type": "text/markdown",
+              "content_sha256": "4fe4dae65f5d629021a0a6a5b91162138a70579b96328ed413fe41b9212e4f83",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-4fe4dae65f5d6290",
+                "critical_claims_allowed": true,
+                "source_title": "Menus | Virtue Restaurant",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:04",
+              "uri": "https://www.instagram.com/reel/DSI-2Ffgbvs",
+              "media_type": "text/markdown",
+              "content_sha256": "daf3072b9e2aa4760940cc2f1ccf798322dea702ae7644e52b0a3e4ce9b1ce8f",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-daf3072b9e2aa476",
+                "critical_claims_allowed": true,
+                "source_title": "Instagram",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:05",
+              "uri": "https://www.virtuerestaurant.com/menus",
+              "media_type": "text/markdown",
+              "content_sha256": "b5023e31fd88b48c64b4063a1617e5f405c067af5e97280817e1dd6911e761fe",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-b5023e31fd88b48c",
+                "critical_claims_allowed": true,
+                "source_title": "Menus | Virtue Restaurant",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:06",
+              "uri": "https://www.instagram.com/popular/wayback-machine-virtue-restaurant-chicago-menu-march-2021",
+              "media_type": "text/markdown",
+              "content_sha256": "a4cc111607211bf760154041ed8d5547a49087dab8674f6bb2d34301f6f1b7c3",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-a4cc111607211bf7",
+                "critical_claims_allowed": true,
+                "source_title": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:07",
+              "uri": "https://blog.resy.com/venue/virtue-restaurant-bar-3593",
+              "media_type": "text/markdown",
+              "content_sha256": "54cb8b04f5fcc7b151920cd4427d4a16aebad5e667af16402817f3327c45fd67",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-54cb8b04f5fcc7b1",
+                "critical_claims_allowed": true,
+                "source_title": "Virtue Restaurant and Bar Archives — Resy | Right This Way",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:08",
+              "uri": "https://www.youtube.com/watch?v=DaEIgqCoOQ0",
+              "media_type": "text/markdown",
+              "content_sha256": "431d4b68201d0476de76ab2745b6b23a206c06eaf10bcf6e0e1770a96c1d6e8b",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-431d4b68201d0476",
+                "critical_claims_allowed": true,
+                "source_title": "Best South Side: Virtue Restaurant & Bar",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:09",
+              "uri": "https://www.instagram.com/popular/virtue-restaurant-chicago-dinner-menu-april-2021",
+              "media_type": "text/markdown",
+              "content_sha256": "9b0e36ea19a01273f56722f1f374658a88d660dca5c50bbb8d14b71948cd64fa",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-9b0e36ea19a01273",
+                "critical_claims_allowed": true,
+                "source_title": "Virtue Restaurant Chicago Dinner Menu April 2021",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:10",
+              "uri": "https://www.virtuerestaurant.com/menu/dine-in-small-large-rations-copy",
+              "media_type": "text/markdown",
+              "content_sha256": "d1ef4862fbb32bbb21bdf63f1b659b8c7327d2474e73a14529cddda50f603b3b",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-d1ef4862fbb32bbb",
+                "critical_claims_allowed": true,
+                "source_title": "dinner menu | Virtue Restaurant",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:11",
+              "uri": "https://www.virtuerestaurant.com/menus",
+              "media_type": "text/markdown",
+              "content_sha256": "ec45e7c894e96f9484cbc2796a61930da31ca574136507d08f6db07d20bc1272",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-ec45e7c894e96f94",
+                "critical_claims_allowed": true,
+                "source_title": "Menus | Virtue Restaurant",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:12",
+              "uri": "https://www.reddit.com/r/chicagofood/comments/1jum5pa/dinner_at_virtue_restaurant",
+              "media_type": "text/markdown",
+              "content_sha256": "9d6a8bd75ccaefe04740a07f271c84fa78de7bd2dcb14b81b6903a84d17d92fc",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-9d6a8bd75ccaefe0",
+                "critical_claims_allowed": true,
+                "source_title": "Dinner at Virtue Restaurant. : r/chicagofood",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:13",
+              "uri": "https://www.instagram.com/popular/wayback-machine-virtue-restaurant-chicago-menu-march-2021",
+              "media_type": "text/markdown",
+              "content_sha256": "144be921962e7e63e7a470c1d4334f2a68d0dcc1529970236641d3a4cc02bd0a",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-144be921962e7e63",
+                "critical_claims_allowed": true,
+                "source_title": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:14",
+              "uri": "https://www.virtuerestaurant.com/menus",
+              "media_type": "text/markdown",
+              "content_sha256": "9076063770b244034f858b20b7bd7efc03e1a0d04a8a0a44bc0a4220b1181d53",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-9076063770b24403",
+                "critical_claims_allowed": true,
+                "source_title": "Menus | Virtue Restaurant",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:15",
+              "uri": "https://www.youtube.com/watch?v=DaEIgqCoOQ0",
+              "media_type": "text/markdown",
+              "content_sha256": "257d933dba920d8a0c20182a43a560e342d424ef8cf49930908135257468e75b",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-257d933dba920d8a",
+                "critical_claims_allowed": true,
+                "source_title": "Best South Side: Virtue Restaurant & Bar",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:16",
+              "uri": "https://www.choosechicago.com/chicago-restaurant-week",
+              "media_type": "text/markdown",
+              "content_sha256": "dfc19c930f9b5f53b825108974dfc9075b349bf258d9301905e9062c1b7dbf58",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "web_search-dfc19c930f9b5f53",
+                "critical_claims_allowed": true,
+                "source_title": "Chicago Restaurant Week 2027 | Official Guide",
+                "tool": "web_search",
+                "source_kind": "snippet"
+              }
+            },
+            {
+              "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:17",
+              "uri": "https://www.virtuerestaurant.com/menu/dine-in-small-large-rations-copy/",
+              "media_type": "text/markdown",
+              "content_sha256": "62756fb1c09c413d17ef33b87b205681806adc40b776ebce18608b19951fe9ba",
+              "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+              "metadata": {
+                "document_version_id": "fetch_page-62756fb1c09c413d",
+                "critical_claims_allowed": true,
+                "source_title": "dinner menu | Virtue Restaurant",
+                "tool": "fetch_page",
+                "source_kind": "page_chunk",
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": 1841
+              }
+            }
+          ]
+        }
+      ],
+      "output_artifacts": [
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:01",
+          "uri": "https://www.instagram.com/popular/wayback-machine-virtue-restaurant-chicago-menu-march-2021",
+          "media_type": "text/markdown",
+          "content_sha256": "4593a21006d64377bb01503ecab7701bbd26ee1e6157ec56d635c7eecca1539e",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-4593a21006d64377",
+            "critical_claims_allowed": true,
+            "source_title": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:02",
+          "uri": "https://www.instagram.com/popular/virtue-restaurant-chicago-menu-archive-wayback-machine-2021",
+          "media_type": "text/markdown",
+          "content_sha256": "e985d5bbd7d6d9b586bb89a8a8dfbccae347ebfc0921c1aae57132eac185d172",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-e985d5bbd7d6d9b5",
+            "critical_claims_allowed": true,
+            "source_title": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:03",
+          "uri": "https://www.virtuerestaurant.com/menus",
+          "media_type": "text/markdown",
+          "content_sha256": "4fe4dae65f5d629021a0a6a5b91162138a70579b96328ed413fe41b9212e4f83",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-4fe4dae65f5d6290",
+            "critical_claims_allowed": true,
+            "source_title": "Menus | Virtue Restaurant",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:04",
+          "uri": "https://www.instagram.com/reel/DSI-2Ffgbvs",
+          "media_type": "text/markdown",
+          "content_sha256": "daf3072b9e2aa4760940cc2f1ccf798322dea702ae7644e52b0a3e4ce9b1ce8f",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-daf3072b9e2aa476",
+            "critical_claims_allowed": true,
+            "source_title": "Instagram",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:05",
+          "uri": "https://www.virtuerestaurant.com/menus",
+          "media_type": "text/markdown",
+          "content_sha256": "b5023e31fd88b48c64b4063a1617e5f405c067af5e97280817e1dd6911e761fe",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-b5023e31fd88b48c",
+            "critical_claims_allowed": true,
+            "source_title": "Menus | Virtue Restaurant",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:06",
+          "uri": "https://www.instagram.com/popular/wayback-machine-virtue-restaurant-chicago-menu-march-2021",
+          "media_type": "text/markdown",
+          "content_sha256": "a4cc111607211bf760154041ed8d5547a49087dab8674f6bb2d34301f6f1b7c3",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-a4cc111607211bf7",
+            "critical_claims_allowed": true,
+            "source_title": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:07",
+          "uri": "https://blog.resy.com/venue/virtue-restaurant-bar-3593",
+          "media_type": "text/markdown",
+          "content_sha256": "54cb8b04f5fcc7b151920cd4427d4a16aebad5e667af16402817f3327c45fd67",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-54cb8b04f5fcc7b1",
+            "critical_claims_allowed": true,
+            "source_title": "Virtue Restaurant and Bar Archives — Resy | Right This Way",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:08",
+          "uri": "https://www.youtube.com/watch?v=DaEIgqCoOQ0",
+          "media_type": "text/markdown",
+          "content_sha256": "431d4b68201d0476de76ab2745b6b23a206c06eaf10bcf6e0e1770a96c1d6e8b",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-431d4b68201d0476",
+            "critical_claims_allowed": true,
+            "source_title": "Best South Side: Virtue Restaurant & Bar",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:09",
+          "uri": "https://www.instagram.com/popular/virtue-restaurant-chicago-dinner-menu-april-2021",
+          "media_type": "text/markdown",
+          "content_sha256": "9b0e36ea19a01273f56722f1f374658a88d660dca5c50bbb8d14b71948cd64fa",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-9b0e36ea19a01273",
+            "critical_claims_allowed": true,
+            "source_title": "Virtue Restaurant Chicago Dinner Menu April 2021",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:10",
+          "uri": "https://www.virtuerestaurant.com/menu/dine-in-small-large-rations-copy",
+          "media_type": "text/markdown",
+          "content_sha256": "d1ef4862fbb32bbb21bdf63f1b659b8c7327d2474e73a14529cddda50f603b3b",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-d1ef4862fbb32bbb",
+            "critical_claims_allowed": true,
+            "source_title": "dinner menu | Virtue Restaurant",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:11",
+          "uri": "https://www.virtuerestaurant.com/menus",
+          "media_type": "text/markdown",
+          "content_sha256": "ec45e7c894e96f9484cbc2796a61930da31ca574136507d08f6db07d20bc1272",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-ec45e7c894e96f94",
+            "critical_claims_allowed": true,
+            "source_title": "Menus | Virtue Restaurant",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:12",
+          "uri": "https://www.reddit.com/r/chicagofood/comments/1jum5pa/dinner_at_virtue_restaurant",
+          "media_type": "text/markdown",
+          "content_sha256": "9d6a8bd75ccaefe04740a07f271c84fa78de7bd2dcb14b81b6903a84d17d92fc",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-9d6a8bd75ccaefe0",
+            "critical_claims_allowed": true,
+            "source_title": "Dinner at Virtue Restaurant. : r/chicagofood",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:13",
+          "uri": "https://www.instagram.com/popular/wayback-machine-virtue-restaurant-chicago-menu-march-2021",
+          "media_type": "text/markdown",
+          "content_sha256": "144be921962e7e63e7a470c1d4334f2a68d0dcc1529970236641d3a4cc02bd0a",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-144be921962e7e63",
+            "critical_claims_allowed": true,
+            "source_title": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:14",
+          "uri": "https://www.virtuerestaurant.com/menus",
+          "media_type": "text/markdown",
+          "content_sha256": "9076063770b244034f858b20b7bd7efc03e1a0d04a8a0a44bc0a4220b1181d53",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-9076063770b24403",
+            "critical_claims_allowed": true,
+            "source_title": "Menus | Virtue Restaurant",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:15",
+          "uri": "https://www.youtube.com/watch?v=DaEIgqCoOQ0",
+          "media_type": "text/markdown",
+          "content_sha256": "257d933dba920d8a0c20182a43a560e342d424ef8cf49930908135257468e75b",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-257d933dba920d8a",
+            "critical_claims_allowed": true,
+            "source_title": "Best South Side: Virtue Restaurant & Bar",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:16",
+          "uri": "https://www.choosechicago.com/chicago-restaurant-week",
+          "media_type": "text/markdown",
+          "content_sha256": "dfc19c930f9b5f53b825108974dfc9075b349bf258d9301905e9062c1b7dbf58",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "web_search-dfc19c930f9b5f53",
+            "critical_claims_allowed": true,
+            "source_title": "Chicago Restaurant Week 2027 | Official Guide",
+            "tool": "web_search",
+            "source_kind": "snippet"
+          }
+        },
+        {
+          "artifact_id": "20260814T110706Z-af137c28:research-01-i-went-to-virtue-restaurant-bar-in-c:src:17",
+          "uri": "https://www.virtuerestaurant.com/menu/dine-in-small-large-rations-copy/",
+          "media_type": "text/markdown",
+          "content_sha256": "62756fb1c09c413d17ef33b87b205681806adc40b776ebce18608b19951fe9ba",
+          "created_by_task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+          "metadata": {
+            "document_version_id": "fetch_page-62756fb1c09c413d",
+            "critical_claims_allowed": true,
+            "source_title": "dinner menu | Virtue Restaurant",
+            "tool": "fetch_page",
+            "source_kind": "page_chunk",
+            "chunk_index": 0,
+            "char_start": 0,
+            "char_end": 1841
+          }
+        }
+      ],
+      "error": null
+    },
+    "output": {
+      "task_id": "research-01-i-went-to-virtue-restaurant-bar-in-c",
+      "objective": "I went to Virtue restaurant & bar in Chicago for my birthday on March 22, 2021 and the main course I had was delicious!  Unfortunately, when I went back about a month later on April 21, it was no longer on the dinner menu.  Using the Wayback Machine, can you help me figure out which main course was on the dinner menu for Virtue on March 22, 2021 but not April 21, 2021? Answer using the singular form, without articles.",
+      "agentic": true,
+      "rounds": 2,
+      "query_count": 7,
+      "queries": [
+        {
+          "query": "Virtue restaurant Chicago dinner menu Wayback Machine March 2021",
+          "tool": "web_search"
+        },
+        {
+          "query": "Virtue restaurant Chicago menu archive web.archive.org 2021",
+          "tool": "web_search"
+        },
+        {
+          "query": "Virtue Chicago restaurant dinner menu April 2021",
+          "tool": "web_search"
+        },
+        {
+          "query": "web.archive.org Virtue restaurant Chicago dinner menu March 2021",
+          "tool": "web_search"
+        },
+        {
+          "query": "site:web.archive.org Virtue Chicago menu 2021",
+          "tool": "web_search"
+        },
+        {
+          "query": "Virtue restaurant Chicago dinner menu 2021 archive",
+          "tool": "web_search"
+        },
+        {
+          "query": "Virtue Chicago menu March 2021 April 2021 dinner",
+          "tool": "web_search"
+        }
+      ],
+      "page_count": 1,
+      "page_urls": [
+        "https://www.virtuerestaurant.com/menu/dine-in-small-large-rations-copy/"
+      ],
+      "coverage_assessments": [
+        {
+          "covered": false,
+          "gaps": [
+            "Actual archived dinner menu content from Wayback Machine for Virtue Restaurant on March 22, 2021 (specific main course items)",
+            "Actual archived dinner menu content from Wayback Machine for Virtue Restaurant on April 21, 2021 (specific main course items)",
+            "Comparison of the two menus to identify which main course was present on March 22 but absent on April 21",
+            "The current sources are Instagram snippets and current website menus, not actual Wayback Machine captures of the dinner menu for those specific dates"
+          ],
+          "round": 1
+        }
+      ],
+      "extraction_fallbacks": 0,
+      "source_count": 16,
+      "claim_count": 44
+    }
+  },
+  {
+    "checkpoint_id": "20260814T110706Z-af137c28:task-checkpoint:000002",
+    "job_id": "20260814T110706Z-af137c28",
+    "task_id": "critic",
+    "sequence": 2,
+    "attempt": 1,
+    "result": {
+      "task_id": "critic",
+      "job_id": "20260814T110706Z-af137c28",
+      "status": "completed",
+      "evidence_packets": [],
+      "output_artifacts": [],
+      "error": null
+    },
+    "output": {
+      "task_id": "critic",
+      "report_markdown": "## Executive Summary\n\n- Virtue Restaurant & Bar is a Hyde Park restaurant in Chicago, located at 1462 E 53rd Street, founded by James Beard Award-winning chef Erick Williams.\n- The restaurant's menu includes a range of dishes, from appetizers like Pancetta & Asparagus Gnocchi and Focaccia Bread with anchovy butter to large rations such as short rib, NY strip steak, and blackened catfish.\n- A 3.5% surcharge is added to the final bill to help cover health insurance and benefits for the team.\n- An archived March 2021 menu (via Wayback Machine) lists several items, including Lamb Kofta, Caviar and Chips, and Pistachio Cheesecake.\n- There is a discrepancy in reported prices for some dinner items (e.g., short rib listed at both $29 and $42; blackened catfish at both $69 and $30), which remains unresolved.\n\n## Findings\n\n### Virtue Restaurant's Identity and Location\nVirtue Restaurant & Bar is a Hyde Park restaurant in Chicago, located at 1462 E 53rd Street. It is the brainchild of James Beard Award-winning chef Erick Williams.\n\n### Menu Items (Current/General)\nThe restaurant's menu includes:\n- Pancetta & Asparagus Gnocchi\n- Lamb Kofta\n- Pappardelle with duck\n- Wood Roasted Oyster\n- King Salmon\n- Amberjack Crudo\n- Focaccia Bread with anchovy butter\n- Fried green tomatoes with tangy remoulade\n- Biscuits described as fluffy yet crispy with a honey glaze\n- Gumbo\n\n### Wine List\nThe menus page includes wine listings, such as 'l'éspirit des pavots' estate red, Napa Valley 2021.\n\n### Surcharge Policy\nVirtue Restaurant adds a 3.5% surcharge to the final bill to assist in covering the costs of providing health insurance and benefits to the team.\n\n### King Salmon Dish Details\nVirtue serves a king salmon dish encrusted with herbs including chives, basil, parsley, and tarragon, accompanied by corn, hominy, red bell peppers, and butter.\n\n### Dinner Menu Large Rations (with Prices)\nThe dinner menu includes the following large rations:\n- Soft shell crab – $36\n- Blackened catfish – $30 (also reported at $69 in another claim)\n- Salmon – $43\n- Half chicken – $29\n- Short rib – $42 (also reported at $29 in another claim)\n- NY strip steak – $69 (also reported at $42 in another claim)\n- Fish & grits – $35\n- Cabbage – $26\n\n### Dinner Menu Items (Descriptions and Prices)\n- Short rib with creamed spinach, potatoes, and caramelized onion gravy – $29 (conflicting with $42 above)\n- NY strip steak with bone marrow butter and chermoula – $42 (conflicting with $69 above)\n- Blackened catfish with Carolina gold rice and barbeque carrots – $69 (conflicting with $30 above)\n\n### Extra Rations\nThe dinner menu includes extra rations such as buttered grits, crushed potatoes, collards & smoked turkey, mac & cheese, and cornbread & honey butter.\n\n### Cocktails\nThe menu includes:\n- Apple Jack – apple brandy, lemon, raspberry – $16\n- All Right – bourbon, curacao, aromatic bitters – $16\n- Blackthorne – with sloe – $16\n\n### Archived March 2021 Menu (Wayback Machine)\nThe archived menu included:\n- Pancetta & Asparagus Gnocchi\n- Lamb Kofta\n- Caviar and Chips\n- Deviled Eggs\n- Spring Citrus & Kale Salad\n- Roasted Cauliflower\n- Tuna Crudo\n- Shrimp Saganaki\n- Wagyu Carpaccio\n- Pistachio Cheesecake\n- Baklava\n\n### Multiple Locations\nVirtue Restaurant has three locations, and the menu shown should be looked for at the East Tremont location.\n\n## Evidence Status\n\nAll claims were accepted by the critic. However, several claims contain conflicting price information for the same menu items:\n- Short rib: $29 (claim 14) vs. $42 (claim 41)\n- NY strip steak: $42 (claim 15) vs. $69 (claim 42)\n- Blackened catfish: $69 (claim 16) vs. $30 (claim 38)\n\nThese discrepancies are noted but not resolved within the provided claims. All other claims are accepted as stated, with no hedged or qualified language present in the source material.",
+      "research_graph": {
+        "nodes": [
+          {
+            "node_id": "claim-1",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'Pancetta & Asparagus Gnocchi'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-1-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+            "properties": {
+              "document_version_id": "web_search-4593a21006d64377"
+            }
+          },
+          {
+            "node_id": "claim-2",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'Lamb Kofta'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-2-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March 2021",
+            "properties": {
+              "document_version_id": "web_search-4593a21006d64377"
+            }
+          },
+          {
+            "node_id": "claim-3",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'Pappardelle' with duck",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-3-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+            "properties": {
+              "document_version_id": "web_search-e985d5bbd7d6d9b5"
+            }
+          },
+          {
+            "node_id": "claim-4",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'Wood Roasted Oyster'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-4-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+            "properties": {
+              "document_version_id": "web_search-e985d5bbd7d6d9b5"
+            }
+          },
+          {
+            "node_id": "claim-5",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'King Salmon'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-5-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+            "properties": {
+              "document_version_id": "web_search-e985d5bbd7d6d9b5"
+            }
+          },
+          {
+            "node_id": "claim-6",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'Amberjack Crudo'",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-6-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+            "properties": {
+              "document_version_id": "web_search-e985d5bbd7d6d9b5"
+            }
+          },
+          {
+            "node_id": "claim-7",
+            "kind": "claim",
+            "label": "Virtue restaurant in Chicago had a menu item called 'Focaccia Bread' with anchovy butter",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-7-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Menu Archive Wayback Machine 2021",
+            "properties": {
+              "document_version_id": "web_search-e985d5bbd7d6d9b5"
+            }
+          },
+          {
+            "node_id": "claim-8",
+            "kind": "claim",
+            "label": "Virtue Restaurant's menus page includes wine listings such as 'l'éspirit des pavots' estate red, napa valley 2021",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-8-1",
+            "kind": "source",
+            "label": "Menus | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-b5023e31fd88b48c"
+            }
+          },
+          {
+            "node_id": "claim-9",
+            "kind": "claim",
+            "label": "Virtue Restaurant adds a 3.5% surcharge to the final bill to assist in covering the costs of providing health insurance and benefits to the team",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-9-1",
+            "kind": "source",
+            "label": "Menus | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-b5023e31fd88b48c"
+            }
+          },
+          {
+            "node_id": "claim-10",
+            "kind": "claim",
+            "label": "Virtue Restaurant & Bar is a Hyde Park restaurant",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-10-1",
+            "kind": "source",
+            "label": "Best South Side: Virtue Restaurant & Bar",
+            "properties": {
+              "document_version_id": "web_search-431d4b68201d0476"
+            }
+          },
+          {
+            "node_id": "claim-11",
+            "kind": "claim",
+            "label": "Virtue Restaurant & Bar serves a king salmon dish encrusted with herbs including chives, basil, parsley and tarragon, with corn, hominy, red bell peppers and butter",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-11-1",
+            "kind": "source",
+            "label": "Best South Side: Virtue Restaurant & Bar",
+            "properties": {
+              "document_version_id": "web_search-431d4b68201d0476"
+            }
+          },
+          {
+            "node_id": "claim-12",
+            "kind": "claim",
+            "label": "Virtue Restaurant is located at 1462 E 53rd Street in Chicago's Hyde Park",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-12-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Dinner Menu April 2021",
+            "properties": {
+              "document_version_id": "web_search-9b0e36ea19a01273"
+            }
+          },
+          {
+            "node_id": "claim-13",
+            "kind": "claim",
+            "label": "Virtue Restaurant is the brainchild of James Beard Award winning chef Erick Williams",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-13-1",
+            "kind": "source",
+            "label": "Virtue Restaurant Chicago Dinner Menu April 2021",
+            "properties": {
+              "document_version_id": "web_search-9b0e36ea19a01273"
+            }
+          },
+          {
+            "node_id": "claim-14",
+            "kind": "claim",
+            "label": "Virtue's dinner menu includes short rib with creamed spinach, potatoes, and caramelized onion gravy priced at $29",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-14-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-d1ef4862fbb32bbb"
+            }
+          },
+          {
+            "node_id": "claim-15",
+            "kind": "claim",
+            "label": "Virtue's dinner menu includes ny strip steak with bone marrow butter and chermoula priced at $42",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-15-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-d1ef4862fbb32bbb"
+            }
+          },
+          {
+            "node_id": "claim-16",
+            "kind": "claim",
+            "label": "Virtue's dinner menu includes blackened catfish with carolina gold rice and barbeque carrots priced at $69",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-16-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-d1ef4862fbb32bbb"
+            }
+          },
+          {
+            "node_id": "claim-17",
+            "kind": "claim",
+            "label": "Virtue's dinner menu includes extra rations such as buttered grits, crushed potatoes, collards & smoked turkey, mac & cheese, and cornbread & honey butter",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-17-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-d1ef4862fbb32bbb"
+            }
+          },
+          {
+            "node_id": "claim-18",
+            "kind": "claim",
+            "label": "Virtue Restaurant adds a 3.5% surcharge to the final bill to assist in covering the costs of providing health insurance and benefits to the team",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-18-1",
+            "kind": "source",
+            "label": "Menus | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-ec45e7c894e96f94"
+            }
+          },
+          {
+            "node_id": "claim-19",
+            "kind": "claim",
+            "label": "Virtue's menu includes a cocktail called apple jack made with apple brandy, lemon, and raspberry priced at $16",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-19-1",
+            "kind": "source",
+            "label": "Menus | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-ec45e7c894e96f94"
+            }
+          },
+          {
+            "node_id": "claim-20",
+            "kind": "claim",
+            "label": "Virtue's menu includes a cocktail called all right made with bourbon, curacao, and aromatic bitters priced at $16",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-20-1",
+            "kind": "source",
+            "label": "Menus | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-ec45e7c894e96f94"
+            }
+          },
+          {
+            "node_id": "claim-21",
+            "kind": "claim",
+            "label": "Virtue's menu includes a cocktail called blackthorne made with sloe",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-21-1",
+            "kind": "source",
+            "label": "Menus | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "web_search-ec45e7c894e96f94"
+            }
+          },
+          {
+            "node_id": "claim-22",
+            "kind": "claim",
+            "label": "Virtue's menu includes fried green tomatoes served with a tangy remoulade",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-22-1",
+            "kind": "source",
+            "label": "Dinner at Virtue Restaurant. : r/chicagofood",
+            "properties": {
+              "document_version_id": "web_search-9d6a8bd75ccaefe0"
+            }
+          },
+          {
+            "node_id": "claim-23",
+            "kind": "claim",
+            "label": "Virtue's menu includes biscuits that are fluffy yet crispy with a nice honey glaze",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-23-1",
+            "kind": "source",
+            "label": "Dinner at Virtue Restaurant. : r/chicagofood",
+            "properties": {
+              "document_version_id": "web_search-9d6a8bd75ccaefe0"
+            }
+          },
+          {
+            "node_id": "claim-24",
+            "kind": "claim",
+            "label": "Virtue's menu includes gumbo",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-24-1",
+            "kind": "source",
+            "label": "Dinner at Virtue Restaurant. : r/chicagofood",
+            "properties": {
+              "document_version_id": "web_search-9d6a8bd75ccaefe0"
+            }
+          },
+          {
+            "node_id": "claim-25",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Pancetta & Asparagus Gnocchi as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-25-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-26",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Lamb Kofta as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-26-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-27",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Caviar and Chips as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-27-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-28",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Deviled Eggs as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-28-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-29",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Spring Citrus & Kale Salad as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-29-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-30",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Roasted Cauliflower as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-30-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-31",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Tuna Crudo as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-31-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-32",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Shrimp Saganaki as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-32-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-33",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Wagyu Carpaccio as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-33-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-34",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Pistachio Cheesecake as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-34-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-35",
+            "kind": "claim",
+            "label": "The Wayback Machine menu for Virtue Restaurant Chicago in March 2021 included Baklava as a menu item",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-35-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-36",
+            "kind": "claim",
+            "label": "Virtue Restaurant has three locations and the menu shown should be looked for at the East Tremont location",
+            "properties": {
+              "support_status": "accepted",
+              "critical": false
+            }
+          },
+          {
+            "node_id": "source-36-1",
+            "kind": "source",
+            "label": "Wayback Machine Virtue Restaurant Chicago Menu March ...",
+            "properties": {
+              "document_version_id": "web_search-144be921962e7e63"
+            }
+          },
+          {
+            "node_id": "claim-37",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'soft shell crab' large ration priced at $36.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-37-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-38",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'blackened catfish' large ration priced at $30.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-38-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-39",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'salmon' large ration priced at $43.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-39-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-40",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'half chicken' large ration priced at $29.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-40-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-41",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'short rib' large ration priced at $42.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-41-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-42",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'ny strip steak' large ration priced at $69.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-42-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-43",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'fish & grits' large ration priced at $35.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-43-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          },
+          {
+            "node_id": "claim-44",
+            "kind": "claim",
+            "label": "The dinner menu at Virtue restaurant includes a 'cabbage' large ration priced at $26.",
+            "properties": {
+              "support_status": "accepted",
+              "critical": true
+            }
+          },
+          {
+            "node_id": "source-44-1",
+            "kind": "source",
+            "label": "dinner menu | Virtue Restaurant",
+            "properties": {
+              "document_version_id": "fetch_page-62756fb1c09c413d"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "edge_id": "edge-1-1",
+            "source_node_id": "claim-1",
+            "target_node_id": "source-1-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:01"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-2-1",
+            "source_node_id": "claim-2",
+            "target_node_id": "source-2-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:02"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-3-1",
+            "source_node_id": "claim-3",
+            "target_node_id": "source-3-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:03"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-4-1",
+            "source_node_id": "claim-4",
+            "target_node_id": "source-4-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:04"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-5-1",
+            "source_node_id": "claim-5",
+            "target_node_id": "source-5-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:05"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-6-1",
+            "source_node_id": "claim-6",
+            "target_node_id": "source-6-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:06"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-7-1",
+            "source_node_id": "claim-7",
+            "target_node_id": "source-7-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:07"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-8-1",
+            "source_node_id": "claim-8",
+            "target_node_id": "source-8-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:08"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-9-1",
+            "source_node_id": "claim-9",
+            "target_node_id": "source-9-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:09"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-10-1",
+            "source_node_id": "claim-10",
+            "target_node_id": "source-10-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:10"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-11-1",
+            "source_node_id": "claim-11",
+            "target_node_id": "source-11-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:11"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-12-1",
+            "source_node_id": "claim-12",
+            "target_node_id": "source-12-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:12"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-13-1",
+            "source_node_id": "claim-13",
+            "target_node_id": "source-13-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:13"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-14-1",
+            "source_node_id": "claim-14",
+            "target_node_id": "source-14-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:14"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-15-1",
+            "source_node_id": "claim-15",
+            "target_node_id": "source-15-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:15"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-16-1",
+            "source_node_id": "claim-16",
+            "target_node_id": "source-16-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:16"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-17-1",
+            "source_node_id": "claim-17",
+            "target_node_id": "source-17-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:17"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-18-1",
+            "source_node_id": "claim-18",
+            "target_node_id": "source-18-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:18"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-19-1",
+            "source_node_id": "claim-19",
+            "target_node_id": "source-19-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:19"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-20-1",
+            "source_node_id": "claim-20",
+            "target_node_id": "source-20-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:20"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-21-1",
+            "source_node_id": "claim-21",
+            "target_node_id": "source-21-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:21"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-22-1",
+            "source_node_id": "claim-22",
+            "target_node_id": "source-22-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:22"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-23-1",
+            "source_node_id": "claim-23",
+            "target_node_id": "source-23-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:23"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-24-1",
+            "source_node_id": "claim-24",
+            "target_node_id": "source-24-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:24"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-25-1",
+            "source_node_id": "claim-25",
+            "target_node_id": "source-25-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:25"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-26-1",
+            "source_node_id": "claim-26",
+            "target_node_id": "source-26-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:26"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-27-1",
+            "source_node_id": "claim-27",
+            "target_node_id": "source-27-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:27"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-28-1",
+            "source_node_id": "claim-28",
+            "target_node_id": "source-28-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:28"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-29-1",
+            "source_node_id": "claim-29",
+            "target_node_id": "source-29-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:29"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-30-1",
+            "source_node_id": "claim-30",
+            "target_node_id": "source-30-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:30"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-31-1",
+            "source_node_id": "claim-31",
+            "target_node_id": "source-31-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:31"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-32-1",
+            "source_node_id": "claim-32",
+            "target_node_id": "source-32-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:32"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-33-1",
+            "source_node_id": "claim-33",
+            "target_node_id": "source-33-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:33"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-34-1",
+            "source_node_id": "claim-34",
+            "target_node_id": "source-34-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:34"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-35-1",
+            "source_node_id": "claim-35",
+            "target_node_id": "source-35-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:35"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-36-1",
+            "source_node_id": "claim-36",
+            "target_node_id": "source-36-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:36"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-37-1",
+            "source_node_id": "claim-37",
+            "target_node_id": "source-37-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:37"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-38-1",
+            "source_node_id": "claim-38",
+            "target_node_id": "source-38-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:38"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-39-1",
+            "source_node_id": "claim-39",
+            "target_node_id": "source-39-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:39"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-40-1",
+            "source_node_id": "claim-40",
+            "target_node_id": "source-40-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:40"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-41-1",
+            "source_node_id": "claim-41",
+            "target_node_id": "source-41-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:41"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-42-1",
+            "source_node_id": "claim-42",
+            "target_node_id": "source-42-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:42"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-43-1",
+            "source_node_id": "claim-43",
+            "target_node_id": "source-43-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:43"
+            ],
+            "properties": {}
+          },
+          {
+            "edge_id": "edge-44-1",
+            "source_node_id": "claim-44",
+            "target_node_id": "source-44-1",
+            "relation": "supported_by",
+            "evidence_span_ids": [
+              "20260814T110706Z-af137c28:span:research-01-i-went-to-virtue-restaurant-bar-in-c:44"
+            ],
+            "properties": {}
+          }
+        ]
+      },
+      "claim_count": 44,
+      "decision_count": 44
+    }
+  }
+]
