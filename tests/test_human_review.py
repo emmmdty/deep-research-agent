@@ -318,6 +318,61 @@ def test_path_confinement_escape_rejected(tmp_path: Path):
         _sample_human_review(bundle_dir=bundle_dir, sample_size=1, seed=0, output_dir=tmp_path / "out")
 
 
+def test_job_name_cannot_escape_output_dir_on_write(tmp_path: Path):
+    """bundle 的 job_id 是外部可控输入，写盘文件名必须被净化（目录穿越拒绝）。"""
+    from deep_research_agent.gateway.cli import (
+        _import_human_review_scores,
+        _safe_review_filename,
+        _sample_human_review,
+    )
+
+    assert _safe_review_filename("job-42") == "job-42"
+    assert _safe_review_filename("../PWNED") == ".._PWNED"
+    assert _safe_review_filename("a/b") == "a_b"
+    with pytest.raises(ValueError):
+        _safe_review_filename("..")
+
+    bundle_dir = tmp_path / "evil-bundles"
+    bundle_dir.mkdir()
+    (bundle_dir / "report_bundle.json").write_text(
+        json.dumps(
+            {
+                "run_manifest": {"job_id": "../PWNED"},
+                "claims": [{"claim_id": "c1", "text": "x", "criticality": "high"}],
+                "sources": [],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    output_root = tmp_path / "out"
+    result = _sample_human_review(
+        bundle_dir=bundle_dir, sample_size=1, seed=0, output_dir=output_root
+    )
+
+    report_path = Path(result["reports"][next(iter(result["reports"]))])
+    assert report_path.parent == output_root.resolve()
+    assert report_path.name == ".._PWNED.md"
+    assert not (tmp_path / "PWNED.md").exists()
+
+    score_file = tmp_path / "score.yaml"
+    score_file.write_text(
+        yaml.safe_dump(
+            {
+                "job": "../PWNED",
+                "dimensions": {name: 4 for name in SCORE_DIMENSIONS},
+            }
+        ),
+        encoding="utf-8",
+    )
+    imported = _import_human_review_scores(
+        bundle_dir=bundle_dir, score_file=score_file, output_dir=output_root
+    )
+    assert Path(imported["scorecard_path"]).parent == output_root.resolve()
+    assert Path(imported["scorecard_path"]).name == ".._PWNED.scorecard.json"
+    assert not (tmp_path / "PWNED.scorecard.json").exists()
+
+
 # ---------------------------------------------------------------------------
 # head-to-head 常态化 A/B
 # ---------------------------------------------------------------------------

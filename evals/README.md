@@ -51,12 +51,17 @@ scorecard 落 `evals/reports/drb_gate/scorecard.json`）。
 
 ### 引用真实性门禁
 
-- 语义映射（固定常量，见 `scripts/run_drb_gate.py`）：`passed=verified`；
-  `failed=unsupported+fetch_failed`；`unresolved=unverifiable`。
+- 语义映射（常量默认，可由配置覆盖，见 `evals/external/configs/drb_gate.yaml`
+  `semantic_mapping`）：`passed=verified`；`failed=unsupported+fetch_failed`；
+  `unresolved=unverifiable`。
 - `verified_rate = passed / (passed + failed + unresolved)`；
   分母为空时 `verified_rate=None` 判定为 blocked（reason `no_citation_evidence`）。
 - 阈值从 `evals/external/configs/drb_gate.yaml` 读取（默认 `min_verified_rate: 0.9`），
-  脚本不硬编码；低于阈值 CI job `drb-gate` 失败（非零退出码）。
+  脚本不硬编码；低于阈值 CI job `drb-gate` 失败（非零退出码）；smoke 未真正完成
+  （blocked/failed）同样判定失败（reason `smoke_run_not_completed`）。
+- 基线可复现：提交的 `evals/reports/drb_gate/scorecard.json` 由
+  `DRB_GATE_FIXED_TIMESTAMP=2026-08-15T00:00:00+00:00 uv run python scripts/run_drb_gate.py`
+  生成（scorecard 不含临时路径；设置该环境变量可字节级复现基线）。
 
 ## 人工抽检通道（eval human-sample）
 

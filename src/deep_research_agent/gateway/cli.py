@@ -13,6 +13,7 @@ import argparse
 import inspect
 import json
 import random
+import re
 import sys
 import time
 from pathlib import Path
@@ -507,6 +508,18 @@ def _bundle_job_name(bundle: dict, fallback: str) -> str:
     return fallback
 
 
+def _safe_review_filename(job: str) -> str:
+    """把 bundle/评分文件中的 job 名转成安全文件名（防目录逃逸）。
+
+    job 名来自不可信的 bundle/评分内容；直接拼进输出路径可写出 output_root
+    之外的文件（../../README 之类的目录穿越），故先做白名单替换并再次校验。
+    """
+    sanitized = re.sub(r"[^A-Za-z0-9_.-]", "_", job)
+    if sanitized in {"", ".", ".."} or Path(sanitized).name != sanitized:
+        raise ValueError(f"job 名无法安全用作文件名: {job!r}")
+    return sanitized
+
+
 def _bundle_claims(bundle: dict) -> list[dict]:
     """把 v2（accepted/qualified_claims）或 v1（claims）bundle 归一化为抽检行。"""
     source_by_document: dict[str, str] = {}
@@ -726,7 +739,7 @@ def _sample_human_review(
             sample_size=sample_size,
             bundle_path=bundle_path,
         )
-        report_path = output_root / f"{job}.md"
+        report_path = output_root / f"{_safe_review_filename(job)}.md"
         report_path.write_text(markdown, encoding="utf-8")
         reports[job] = str(report_path)
     return {
@@ -788,7 +801,7 @@ def _import_human_review_scores(
 
     output_root = Path(output_dir) if output_dir else PROJECT_ROOT / _HUMAN_REVIEW_OUTPUT_DIR
     output_root.mkdir(parents=True, exist_ok=True)
-    scorecard_path = output_root / f"{job}.scorecard.json"
+    scorecard_path = output_root / f"{_safe_review_filename(job)}.scorecard.json"
     existing: dict = {}
     if scorecard_path.exists():
         existing = json.loads(scorecard_path.read_text(encoding="utf-8"))

@@ -432,6 +432,8 @@ def build_runner(
             raise UnknownStructureError(f"未注册结构 '{structure_id}'")
         if action not in ("removed", "documented"):
             raise ValueError(f"未知 override 动作 '{action}'（应为 removed/documented）")
+        if action == "removed" and STRUCTURE_REGISTRY[structure_id].removal_hook is None:
+            raise ValueError(f"结构 '{structure_id}' 是 documentation-only，无法执行 removed override")
 
     def run(tasks: list[dict[str, Any]]) -> dict[str, Any]:
         normalized = [_normalize_task(task) for task in tasks]

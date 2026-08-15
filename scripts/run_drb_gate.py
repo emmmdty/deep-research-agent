@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import tempfile
 from datetime import datetime, timezone
@@ -45,12 +46,21 @@ SEMANTIC_MAPPING = {
 }
 
 
-def verified_rate_from_summary(summary: dict[str, Any]) -> tuple[float | None, dict[str, int]]:
-    """把 CitationVerificationReport.summary 聚合成 (verified_rate, counts)。"""
+def verified_rate_from_summary(
+    summary: dict[str, Any], mapping: dict[str, list[str]] | None = None
+) -> tuple[float | None, dict[str, int]]:
+    """把 CitationVerificationReport.summary 聚合成 (verified_rate, counts)。
 
-    passed = int(summary.get("verified", 0))
-    failed = int(summary.get("unsupported", 0)) + int(summary.get("fetch_failed", 0))
-    unresolved = int(summary.get("unverifiable", 0))
+    ``mapping`` 来自门禁配置（semantic_mapping），缺省用模块内的规范映射。
+    """
+
+    mapping = mapping or SEMANTIC_MAPPING
+    passed_verdicts = list(mapping.get("passed") or VERDICT_TO_PASSED)
+    failed_verdicts = list(mapping.get("failed") or VERDICT_TO_FAILED)
+    unresolved_verdicts = list(mapping.get("unresolved") or VERDICT_TO_UNRESOLVED)
+    passed = sum(int(summary.get(verdict, 0)) for verdict in passed_verdicts)
+    failed = sum(int(summary.get(verdict, 0)) for verdict in failed_verdicts)
+    unresolved = sum(int(summary.get(verdict, 0)) for verdict in unresolved_verdicts)
     counts = {
         "total": int(summary.get("total", 0)),
         "passed": passed,
@@ -114,6 +124,14 @@ def _repo_relative(path: str | Path) -> str:
     return str(resolved)
 
 
+def _generated_at() -> str:
+    """生成时间戳；设置 DRB_GATE_FIXED_TIMESTAMP 可得到字节级可复现的基线。"""
+    fixed = os.environ.get("DRB_GATE_FIXED_TIMESTAMP")
+    if fixed:
+        return fixed
+    return datetime.now(timezone.utc).isoformat()
+
+
 def aggregate_fixture_bundles(bundle_paths: list[str | Path]) -> dict[str, Any]:
     """读取 fixture bundle 的 audit_summary.citation_verification 并合并计数。"""
 
@@ -144,6 +162,12 @@ def run_drb_gate(
         _resolve(path) for path in (fixture_paths or list(config.get("fixture_bundles") or []))
     ]
     threshold = float(min_verified_rate if min_verified_rate is not None else config["min_verified_rate"])
+    mapping = config.get("semantic_mapping") or SEMANTIC_MAPPING
+    metric_definition = str(config.get("metric_definition") or "verified / (verified + unsupported + fetch_failed + unverifiable)")
+    empty_denominator_policy = str(
+        config.get("empty_denominator_policy")
+        or "verified_rate=None -> blocked with reason no_citation_evidence"
+    )
 
     smoke_root = Path(tempfile.mkdtemp(prefix="drb-gate-smoke-"))
     smoke_result = run_external_benchmark(
@@ -153,28 +177,33 @@ def run_drb_gate(
     )
 
     aggregated = aggregate_fixture_bundles(resolved_fixture_paths)
-    verified_rate, counts = verified_rate_from_summary(aggregated["summary"])
+    verified_rate, counts = verified_rate_from_summary(aggregated["summary"], mapping=mapping)
     decision = evaluate_gate(verified_rate=verified_rate, min_verified_rate=threshold)
+    if smoke_result["status"] != "completed":
+        # smoke 未真正完成（blocked/failed）时门禁必须失败，不能只靠异常兜底。
+        decision = {
+            "status": "blocked",
+            "reasons": [f"smoke_run_not_completed: {smoke_result['status']}"],
+        }
 
     scorecard = {
         "benchmark": "drb",
         "gate": "citation_truthfulness",
         "status": decision["status"],
         "reasons": decision["reasons"],
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": _generated_at(),
         "threshold": {"min_verified_rate": threshold},
         "metric": {
             "verified_rate": verified_rate,
-            "definition": "verified / (verified + unsupported + fetch_failed + unverifiable)",
-            "semantic_mapping": SEMANTIC_MAPPING,
-            "empty_denominator_policy": "verified_rate=None -> blocked with reason no_citation_evidence",
+            "definition": metric_definition,
+            "semantic_mapping": mapping,
+            "empty_denominator_policy": empty_denominator_policy,
             "counts": counts,
         },
         "fixture_bundles": [_repo_relative(path) for path in aggregated["bundles"]],
         "smoke_run": {
             "benchmark": smoke_result["benchmark"],
             "status": smoke_result["status"],
-            "output_root": _repo_relative(smoke_result["output_root"]),
             "official_scores": smoke_result["official_metrics"],
         },
         "config_path": _repo_relative(resolved_config_path),

@@ -325,7 +325,11 @@ class LLMResearcherWorker:
             new_sources, new_query_urls = await self._gather_queries(task, context, queries, sources, stats)
             sources = new_sources
             query_urls.extend(new_query_urls)
-            queries_used.extend(queries)
+            # 只统计真正执行的查询：被记忆前置 recall 覆盖的查询未产生任何调用，
+            # 不应计入 query_count，也不应作为"已执行查询"喂给下一轮规划。
+            queries_used.extend(
+                {"query": entry["query"], "tool": entry["tool"]} for entry in new_query_urls
+            )
             if not sources:
                 break
             if rounds_used < self._max_rounds:
@@ -583,6 +587,11 @@ class LLMResearcherWorker:
             snippet = str(source.get("snippet") or "")
             if not url or not snippet:
                 continue
+            # 记忆来源虽是上一轮已净化文本，但入库后可被改写（进程内/持久仓库），
+            # 注入前按与现场来源相同的隔离标准再查一次，保持证据契约的同一道门。
+            if should_quarantine_source(snippet):
+                stats["injection_dropped_sources"] = stats.get("injection_dropped_sources", 0) + 1
+                continue
             dedupe_key = (url, snippet[:_MAX_SNIPPET_CHARS])
             if dedupe_key in seen:
                 continue
@@ -622,6 +631,7 @@ class LLMResearcherWorker:
             tool_name = query["tool"]
             if tool_name == "read_image":
                 if envelope.status != "succeeded" or envelope.output is None:
+                    query_urls.append({"query": query["query"], "tool": tool_name, "urls": []})
                     continue
                 item = envelope.output
                 if not isinstance(item, dict):
@@ -667,6 +677,7 @@ class LLMResearcherWorker:
                     return sources, query_urls
                 continue
             if envelope.status != "succeeded" or envelope.output is None:
+                query_urls.append({"query": query["query"], "tool": tool_name, "urls": []})
                 continue
             for item in envelope.output:
                 if not isinstance(item, dict):
@@ -1164,7 +1175,7 @@ class LLMResearcherWorker:
                 "task_id": task.task_id,
                 "objective": task.objective,
                 "agentic": False,
-                "query_count": len(queries),
+                "query_count": len(query_urls),
                 "query_urls": query_urls,
                 "source_count": len(sources),
                 "claim_count": len(claims),

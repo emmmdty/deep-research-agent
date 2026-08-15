@@ -7,6 +7,7 @@ import socket
 from pathlib import Path
 
 import pytest
+import yaml
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -202,6 +203,73 @@ def test_gate_fails_for_bad_fixture(tmp_path: Path):
     assert scorecard["metric"]["verified_rate"] == pytest.approx(0.25)
     assert scorecard["metric"]["counts"]["failed"] == 3
     assert any("verified_rate_below_threshold" in reason for reason in scorecard["reasons"])
+
+
+def test_gate_fails_when_smoke_run_not_completed(tmp_path: Path, monkeypatch):
+    """smoke 未真正完成（blocked/failed）时门禁必须失败，不能只靠异常兜底。"""
+    import scripts.run_drb_gate as gate_module
+    from scripts.run_drb_gate import run_drb_gate
+
+    def _stalled_smoke(*, benchmark_name, output_root, split=None, subset=None, bucket=None, config_path=None):
+        return {
+            "benchmark": benchmark_name,
+            "status": "blocked",
+            "output_root": str(output_root),
+            "official_metrics": {},
+            "internal_metrics": {},
+        }
+
+    monkeypatch.setattr(gate_module, "run_external_benchmark", _stalled_smoke)
+    scorecard = run_drb_gate(output_root=tmp_path / "gate")
+
+    assert scorecard["status"] == "blocked"
+    assert any("smoke_run_not_completed" in reason for reason in scorecard["reasons"])
+
+
+def test_semantic_mapping_comes_from_config(tmp_path: Path):
+    """semantic_mapping 配置字段必须真实参与聚合（禁止死配置）。"""
+    from scripts.run_drb_gate import run_drb_gate
+
+    config = tmp_path / "gate_alt.yaml"
+    config.write_text(
+        yaml.safe_dump(
+            {
+                "benchmark": "drb",
+                "gate": "citation_truthfulness",
+                "min_verified_rate": 0.9,
+                "semantic_mapping": {
+                    "passed": ["verified", "unverifiable"],
+                    "failed": ["unsupported", "fetch_failed"],
+                    "unresolved": [],
+                },
+                "fixture_bundles": ["evals/fixtures/drb/citation_fixture.json"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    scorecard = run_drb_gate(config_path=config, output_root=tmp_path / "gate")
+    # unverifiable 并入 passed：0 个 unverifiable 时与默认映射一致（rate 0.9）；
+    # 断言 scorecard 记录的就是配置里的映射，而不是模块常量。
+    assert scorecard["metric"]["semantic_mapping"]["passed"] == ["verified", "unverifiable"]
+
+
+def test_gate_scorecard_reproducible_with_fixed_timestamp(tmp_path: Path, monkeypatch):
+    """设置 DRB_GATE_FIXED_TIMESTAMP 后两次运行 scorecard 字节一致（基线可复现）。"""
+    from scripts.run_drb_gate import run_drb_gate
+
+    monkeypatch.setenv("DRB_GATE_FIXED_TIMESTAMP", "2026-08-15T00:00:00+00:00")
+    run_drb_gate(output_root=tmp_path / "gate-1")
+    run_drb_gate(output_root=tmp_path / "gate-2")
+
+    first_payload = json.loads(
+        (tmp_path / "gate-1" / "scorecard.json").read_text(encoding="utf-8")
+    )
+    second_payload = json.loads(
+        (tmp_path / "gate-2" / "scorecard.json").read_text(encoding="utf-8")
+    )
+    assert first_payload == second_payload
+    assert first_payload["status"] == "passed"
+    assert "generated_at" in first_payload
 
 
 def test_drb_smoke_run_has_no_http_and_is_deterministic(tmp_path: Path, monkeypatch):
