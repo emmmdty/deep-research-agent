@@ -37,7 +37,8 @@ def test_run_value_ablation_pack_writes_required_outputs_and_statuses(tmp_path: 
     assert latency_path.exists()
     assert provider_path.exists()
 
-    rows = list(csv.DictReader(csv_path.open(encoding="utf-8")))
+    with csv_path.open(encoding="utf-8", newline="") as csv_handle:
+        rows = list(csv.DictReader(csv_handle))
     statuses = {row["ablation_id"]: row["status"] for row in rows}
 
     assert statuses["audit_on_vs_off"] == "passed"

@@ -192,7 +192,7 @@ def test_pdf_reader_tool_reads_file_and_returns_text(tmp_path: Path) -> None:
     pdf_path = tmp_path / "hello.pdf"
     pdf_path.write_bytes(build_minimal_pdf())
 
-    text = pdf_reader_tool(str(pdf_path))
+    text = pdf_reader_tool.invoke({"file_path": str(pdf_path)})
 
     assert "Hello PDF 2026" in text
 
@@ -202,7 +202,7 @@ def test_pdf_reader_tool_raises_on_corrupt_file(tmp_path: Path) -> None:
     pdf_path.write_bytes(b"not a pdf")
 
     with pytest.raises(ValueError, match="PDF 解析失败"):
-        pdf_reader_tool(str(pdf_path))
+        pdf_reader_tool.invoke({"file_path": str(pdf_path)})
 
 
 def test_fetch_page_parses_pdf_content_type(httpx_mock) -> None:

@@ -76,7 +76,7 @@ deep-research-agent = "deep_research_agent.gateway.cli:main"
 dev = [
     "jsonschema>=4.26.0",
     "pytest>=9.0.2",
-    "pytest-asyncio>=1.2.0",
+    "pytest-asyncio>=1.4.0",
     "pytest-cov>=7.0.0",
     "pytest-httpx>=0.36.2",
     "ruff>=0.14.0",
@@ -100,6 +100,10 @@ ignore = [
 
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Body"]
+
+[tool.pytest.ini_options]
+# pytest-asyncio>=1.4.0 修复了 Python 3.10 下 fixture 事件循环未关闭的
+# ResourceWarning 泄漏；`pytest -W error` 可全量通过（见 tests/ 全量回归）。
 
 [tool.setuptools]
 package-dir = {"" = "src"}
