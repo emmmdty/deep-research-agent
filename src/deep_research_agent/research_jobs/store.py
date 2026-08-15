@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import contextlib
 import json
+import os
 import sqlite3
+import tempfile
 from pathlib import Path
 
 from loguru import logger
@@ -17,6 +20,24 @@ from deep_research_agent.research_jobs.models import (
     JobRuntimeRecord,
     utc_now_iso,
 )
+
+
+def _atomic_write_text(path: Path, content: str) -> None:
+    """先写临时文件再原子替换：崩溃中途不会留下半截 checkpoint。
+
+    旧的直接 write_text 在写入途中被 kill 会留下损坏文件，恢复逻辑只能
+    回退到更早的 checkpoint 并重跑副作用阶段（planner/researcher）。
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_name = tempfile.mkstemp(dir=path.parent, prefix=".tmp-", suffix=path.suffix)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(content)
+        os.replace(tmp_name, path)
+    except BaseException:
+        with contextlib.suppress(OSError):
+            os.unlink(tmp_name)
+        raise
 
 
 class WorkerLeaseConflict(RuntimeError):
@@ -524,9 +545,7 @@ class ResearchJobStore:
             checkpoint_path = (
                 self.checkpoint_dir(stored.job_id) / f"{stored.sequence:04d}-{stored.stage}.json"
             )
-            checkpoint_path.write_text(
-                json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-            )
+            _atomic_write_text(checkpoint_path, json.dumps(payload, ensure_ascii=False, indent=2))
             conn.execute(
                 """
                 INSERT INTO job_checkpoints (
@@ -561,9 +580,9 @@ class ResearchJobStore:
                 if row["worker_lease_id"] != lease_id:
                     raise WorkerLeaseConflict(f"job {job_id} 当前 lease 不是 {lease_id}")
             checkpoint_path = self.job_dir(job_id) / "scheduler_checkpoints.json"
-            checkpoint_path.write_text(
+            _atomic_write_text(
+                checkpoint_path,
                 json.dumps(payload, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
-                encoding="utf-8",
             )
             if lease_id is not None:
                 row = conn.execute(

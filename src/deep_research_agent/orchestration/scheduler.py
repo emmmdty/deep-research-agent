@@ -309,6 +309,21 @@ class ResearchScheduler:
                     error = self._error_message(exc)
                     if attempt < self._max_attempts and not isinstance(exc, DynamicTaskConflict):
                         pending.add(task_id)
+                        # 持久化这次失败：崩溃后 attempt 计数必须恢复，否则
+                        # 同一任务可以跨崩溃周期无限重试（内存计数丢失）。
+                        self._checkpoint(
+                            checkpoints,
+                            job_id,
+                            task,
+                            attempt,
+                            TaskResult(
+                                task_id=task_id,
+                                job_id=job_id,
+                                status="failed",
+                                error=error,
+                            ),
+                            {"retryable_failure": error},
+                        )
                         self._emit(
                             events,
                             job_id,
@@ -446,6 +461,11 @@ class ResearchScheduler:
                         attempts.setdefault(spawned.task_id, 0)
                 resumed += 1
             elif checkpoint.result.status == "failed":
+                if checkpoint.output.get("retryable_failure"):
+                    # 失败但仍在重试预算内的 attempt：任务保持 pending，
+                    # 只恢复 attempt 计数（上面已取 max），不当作终态。
+                    resumed += 1
+                    continue
                 results[task_id] = checkpoint.result
                 failed.add(task_id)
                 resumed += 1

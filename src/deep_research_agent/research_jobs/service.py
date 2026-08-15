@@ -434,12 +434,30 @@ class ResearchJobService:
         )
         return retry_job
 
+    def _assert_not_live(self, job: JobRuntimeRecord, action: str) -> None:
+        """resume/refine 守卫：job 还有活 worker 时拒绝，避免双 worker 竞态。
+
+        活 worker 判定与 recover_stale_jobs 一致：心跳新鲜且进程存在。
+        """
+        if not job.worker_lease_id:
+            return
+        if not job.last_heartbeat_at:
+            return
+        cutoff = datetime.now(timezone.utc) - timedelta(seconds=self.stale_timeout_seconds)
+        heartbeat = datetime.fromisoformat(job.last_heartbeat_at)
+        if heartbeat >= cutoff and _process_exists(job.worker_pid):
+            raise ValueError(
+                f"job {job.job_id} 仍有活跃 worker（lease={job.worker_lease_id}），"
+                f"不能执行 {action}"
+            )
+
     def resume(self, job_id: str, *, start_worker: bool = True) -> JobRuntimeRecord:
         """Resume the same job from its latest checkpoint."""
 
         job = self._require_job(job_id)
         if job.status == JobStatus.COMPLETED:
             return job
+        self._assert_not_live(job, "resume")
         checkpoint = self._latest_checkpoint_or_raise(job_id)
         resumed = self.store.update_job_status(
             job_id,
@@ -465,6 +483,8 @@ class ResearchJobService:
     ) -> JobRuntimeRecord:
         """Record a refinement instruction and resume from a safe stage boundary."""
 
+        job = self._require_job(job_id)
+        self._assert_not_live(job, "refine")
         checkpoint = self._latest_checkpoint_or_raise(job_id)
         state_payload = dict(checkpoint.state_payload)
         refinement_history = list(state_payload.get("refinement_history", []))

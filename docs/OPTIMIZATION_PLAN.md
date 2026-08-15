@@ -157,6 +157,18 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
    角色映射会损坏多轮对话；`evidence_store/` 只写不读；MinIO/Phoenix 容器是装饰。
    → 已修（2026-08 清理：model_runtime 已接线；clients.py 多轮 bug 修复；MinIO 移除；
    evidence_store 为 legacy 依赖保留；详情见上）。
+- **[H] legacy orchestrator-v1 路径无 quote containment**：`--legacy`/legacy API 的
+   `claim_auditor_node` 只做结构/hash 校验，"gate_status=passed" 不保证 quote 真实存在。
+   → 边界确认（2026-08）：v1 是退役路径（AGENTS.md：legacy 非产品代码，一期已把默认切到
+   scheduler-v2），给 legacy 阶段机加 V2 EvidenceAuditor 属于在退役代码上堆新语义、风险大于
+   收益；保持现状并在 v1 报告里靠 `audit_summary` 如实标注。退役计划随 legacy 一并执行。
+- **[info] 语义 judge（`auditor/semantic.py` `SemanticJudge`）从未接线**：确定性层必须始终是
+   底线（quote containment 不可绕过），judge 仅作可选增强——已按"只降级不升级"硬化
+   （citation_verifier 的 judge 路径同规则）；构造函数注入点保留为有文档的扩展点，不删。
+- **[info] admin 模型/工具端点仅 CRUD 存储**：`/v1/admin/models`、`/v1/admin/tools` 把配置
+   落库但运行时未消费——但 **GUI 的"管理→模型"页真实使用这些端点**（apps/gui-web），
+   删除会破坏产品界面；接线到凭证解析属功能开发（涉及密钥管理语义），记入后续迭代，
+   不作为死代码删除。
 
 ## 5. 本轮代码变更清单
 

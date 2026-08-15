@@ -526,3 +526,51 @@ def test_ratelimit_module_is_self_contained():
 
     assert len(results) == 80
     assert results.count(True) == 50
+
+
+def test_checkpoint_write_is_atomic(tmp_path: Path):
+    """checkpoint 写入必须原子（tmp+replace）：中途 kill 不会留下半截文件。"""
+    from deep_research_agent.research_jobs.store import ResearchJobStore
+
+    store = ResearchJobStore(workspace_dir=str(tmp_path))
+    store.upsert_job(
+        __import__(
+            "deep_research_agent.research_jobs.models", fromlist=["JobRuntimeRecord"]
+        ).JobRuntimeRecord(
+            job_id="atomic-checkpoint",
+            topic="atomic",
+            status=__import__(
+                "deep_research_agent.research_jobs.models", fromlist=["JobStatus"]
+            ).JobStatus.RUNNING,
+            current_stage=__import__(
+                "deep_research_agent.research_jobs.models", fromlist=["RuntimeStage"]
+            ).RuntimeStage.COLLECTING,
+            report_path=str(tmp_path / "report.md"),
+            report_bundle_path=str(tmp_path / "bundle" / "report_bundle.json"),
+            trace_path=str(tmp_path / "trace.jsonl"),
+        )
+    )
+    checkpoint = store.save_checkpoint(
+        __import__(
+            "deep_research_agent.research_jobs.models", fromlist=["JobCheckpoint"]
+        ).JobCheckpoint(
+            checkpoint_id="atomic-checkpoint-checkpoint-pending",
+            job_id="atomic-checkpoint",
+            stage=__import__(
+                "deep_research_agent.research_jobs.models", fromlist=["RuntimeStage"]
+            ).RuntimeStage.COLLECTING,
+            sequence=1,
+            loop_count=0,
+            next_stage=__import__(
+                "deep_research_agent.research_jobs.models", fromlist=["RuntimeStage"]
+            ).RuntimeStage.NORMALIZING,
+            state_payload={"status": "collecting"},
+        )
+    )
+    assert checkpoint.checkpoint_id.endswith("pending") is False
+    payload = checkpoint.state_payload
+    assert payload == {"status": "collecting"}
+
+    # 目录里不得残留 .tmp 半截文件
+    leftovers = list(store.checkpoint_dir("atomic-checkpoint").glob(".tmp-*"))
+    assert leftovers == []

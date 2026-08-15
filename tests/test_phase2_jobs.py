@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import pytest
 from jsonschema import ValidationError
 
+from deep_research_agent.research_jobs.service import ResearchJobService
 from legacy.workflows.states import (
     CriticFeedback,
     EvidenceNote,
@@ -851,3 +853,22 @@ def test_submit_keeps_explicit_profile_in_offline_mode(tmp_path: Path, monkeypat
         topic="explicit profile topic", max_loops=2, research_profile="default", start_worker=False
     )
     assert job.metadata["research_profile"] == "benchmark"
+
+
+def test_resume_refuse_while_worker_live(tmp_path: Path):
+    """活 worker 的 job 不能被 resume/refine（防双 worker 竞态）。"""
+    service = ResearchJobService(workspace_dir=str(tmp_path))
+    job = service.submit(
+        topic="live worker", max_loops=1, research_profile="default", start_worker=False
+    )
+    job = service.store.acquire_worker_lease(
+        job.job_id,
+        worker_pid=os.getpid(),
+        lease_id="lease-live",
+    )
+    service.store.heartbeat(job.job_id, lease_id="lease-live")
+
+    with pytest.raises(ValueError, match="仍有活跃 worker"):
+        service.resume(job.job_id, start_worker=False)
+    with pytest.raises(ValueError, match="仍有活跃 worker"):
+        service.refine(job.job_id, "改进一下", start_worker=False)

@@ -12,6 +12,7 @@ import threading
 import time
 from collections.abc import Mapping
 from contextvars import ContextVar, Token
+from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -245,9 +246,14 @@ class CostTracker:
             return self._metrics
 
     def snapshot_for(self, job_id: str) -> CostMetrics:
-        """Return the metrics recorded for one job (empty when absent)."""
+        """Return a copied snapshot for one job (empty when absent).
+
+        返回拷贝而非活对象：调用方（bundle 编译线程）与 worker 线程的
+        record_* 并发时，活对象上的 to_dict() 会在无锁迭代中看到变化。
+        """
         with self._lock:
-            return self._per_job.setdefault(job_id, CostMetrics(price_table=self._price_table))
+            current = self._per_job.setdefault(job_id, CostMetrics(price_table=self._price_table))
+            return deepcopy(current)
 
     def reset_for(self, job_id: str) -> None:
         """Clear the metrics recorded for one job."""

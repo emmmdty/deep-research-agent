@@ -534,3 +534,25 @@ async def test_scheduler_bundle_carries_cost_metrics_in_run_manifest(tmp_path: P
     assert cost_metrics["total_output_tokens"] == 40
     assert cost_metrics["estimated_cost_usd"] == 0.0002
     assert current_job_id() == "global"
+
+
+def test_configure_tracing_is_idempotent(monkeypatch):
+    """重复 configure_tracing 不得替换 TracerProvider（防缓冲 span 丢失）。"""
+    import deep_research_agent.observability.tracing as tracing_module
+
+    monkeypatch.setenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://tracing.invalid:4318/v1/traces")
+    monkeypatch.setenv("OTEL_SDK_DISABLED", "")
+
+    first = tracing_module.configure_tracing(service_name="idempotency-test")
+    provider_before = _trace_provider()
+    second = tracing_module.configure_tracing(service_name="idempotency-test")
+    provider_after = _trace_provider()
+
+    assert provider_before is provider_after
+    assert first is second or str(first) == str(second)
+
+
+def _trace_provider():
+    from opentelemetry import trace
+
+    return trace.get_tracer_provider()

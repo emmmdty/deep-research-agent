@@ -1102,7 +1102,9 @@ class LLMResearcherWorker:
                 ensure_ascii=True,
                 sort_keys=True,
             ).encode("utf-8")
-            document_version_id = f"{source['tool']}-{hashlib.sha256(content).hexdigest()[:16]}"
+            # 128 位哈希（原 64 位截断可被低成本预计算碰撞，恶意来源集可触发
+            # 冲突拒绝整单；与 corpus 服务的 document id 位数保持一致）。
+            document_version_id = f"{source['tool']}-{hashlib.sha256(content).hexdigest()[:32]}"
             # A search snippet is discovery-only: it cannot support a critical
             # claim on its own. Only full page content the researcher actually
             # read (page_chunk) or a vision-model description of an image the

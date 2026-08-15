@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import os
 from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
@@ -42,9 +43,17 @@ def sanitize_trace_attributes(attributes: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def configure_tracing(*, service_name: str = "deep-research-agent"):
-    """Configure OTLP export when an endpoint is explicit, otherwise stay no-op."""
+    """Configure OTLP export when an endpoint is explicit, otherwise stay no-op.
+
+    幂等：重复调用（worker/网关/测试多次启动）不得替换 TracerProvider——
+    新 provider 会让上一个 BatchSpanProcessor 的缓冲 span 全部丢失。
+    """
 
     from opentelemetry import trace
+
+    current = trace.get_tracer_provider()
+    if getattr(current, "_dra_configured_service", None) == service_name:
+        return trace.get_tracer(service_name)
 
     endpoint = os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT", "").strip()
     disabled = os.environ.get("OTEL_SDK_DISABLED", "").strip().casefold() in {"1", "true", "yes"}
@@ -64,6 +73,9 @@ def configure_tracing(*, service_name: str = "deep-research-agent"):
     provider = TracerProvider(resource=Resource.create({"service.name": service_name}))
     provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(endpoint=endpoint)))
     trace.set_tracer_provider(provider)
+    marker = trace.get_tracer_provider()
+    with contextlib.suppress(Exception):
+        marker._dra_configured_service = service_name  # type: ignore[attr-defined]
     return trace.get_tracer(service_name)
 
 

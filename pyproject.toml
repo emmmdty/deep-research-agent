@@ -79,6 +79,7 @@ dev = [
     "pytest-asyncio>=1.4.0",
     "pytest-cov>=7.0.0",
     "pytest-httpx>=0.36.2",
+    "pytest-xdist>=3.8.0",
     "ruff>=0.14.0",
 ]
 
@@ -104,6 +105,9 @@ extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Body"]
 [tool.pytest.ini_options]
 # pytest-asyncio>=1.4.0 修复了 Python 3.10 下 fixture 事件循环未关闭的
 # ResourceWarning 泄漏；`pytest -W error` 可全量通过（见 tests/ 全量回归）。
+# -n auto：默认多核并行（pytest-xdist，按 CPU 数派发 worker）；
+# 测试均基于 tmp_path/独立 DB，无共享路径，全量 776 passed 已验证。
+addopts = ["-n", "auto"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
