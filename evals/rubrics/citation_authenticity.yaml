@@ -1,0 +1,65 @@
+rubric_name: citation_authenticity
+rubric_style: drb_ii_levels_1_5
+description: 人工抽检评审量规（DRB-II 式 5 级锚点，2/4 为相邻锚点之间）。
+semantic_mapping:
+  passed:
+    - verified
+  failed:
+    - unsupported
+    - fetch_failed
+  unresolved:
+    - unverifiable
+numeric_anchor_guidance:
+  - "5 分参考：抽检引用的语义判定全部为 passed（verified），无 failed/unresolved。"
+  - "3 分参考：抽检引用大部分为 passed（verified），存在少量 unresolved（unverifiable），无 failed（unsupported/fetch_failed）。"
+  - "1 分参考：存在 failed 引用（unsupported 或 fetch_failed），或大量 unresolved，引用真实性不可信。"
+  - "语义映射与 scripts/run_drb_gate.py 一致：passed=verified；failed=unsupported+fetch_failed；unresolved=unverifiable。"
+dimensions:
+  - name: citation_authenticity
+    label: 引用真伪
+    description: 引用是否真实对应来源文本，声明是否得到来源支持（passed=verified；failed=unsupported+fetch_failed；unresolved=unverifiable）。
+    anchors:
+      1:
+        example: "多数抽检引用的语义判定为 failed（unsupported 或 fetch_failed），或 verified_rate 低于 0.5。"
+      2: 介于锚点 1 与 3 之间
+      3:
+        example: "抽检引用大部分为 passed（verified），存在少量 unresolved（unverifiable），且无 failed。"
+      4: 介于锚点 3 与 5 之间
+      5:
+        example: "抽检引用全部为 passed（verified），声明逐条对应来源文本，无 failed/unresolved。"
+  - name: verbatim_consistency
+    label: verbatim 一致性
+    description: 引用摘录与来源原文是否逐字一致，无改写、拼接或断章取义。
+    anchors:
+      1:
+        example: "多数引用摘录与来源原文不一致（改写、错引、拼接），关键声明无法回溯到原文片段。"
+      2: 介于锚点 1 与 3 之间
+      3:
+        example: "引用摘录与来源原文基本一致，仅个别标点/空白差异，无实质改动。"
+      4: 介于锚点 3 与 5 之间
+      5:
+        example: "所有引用摘录与来源原文逐字一致，quote 可从来源文本精确回溯。"
+  - name: source_quality
+    label: 来源质量
+    description: 来源的权威性、时效性与相关性（官方文档、一手数据优于聚合页/自媒体）。
+    anchors:
+      1:
+        example: "多数来源为低质聚合页/自媒体/无关页面，或来源无法获取（fetch_failed）。"
+      2: 介于锚点 1 与 3 之间
+      3:
+        example: "来源以一手或二手资料为主，存在少量聚合页/低信源，但不影响核心声明。"
+      4: 介于锚点 3 与 5 之间
+      5:
+        example: "全部来源为权威一手资料（官方文档/年报/一手数据），时效与主题高度相关。"
+  - name: coverage
+    label: 覆盖面
+    description: 报告关键方面是否被声明与来源覆盖，抽检声明是否覆盖报告主要结论。
+    anchors:
+      1:
+        example: "报告大量关键方面无任何声明/来源覆盖，抽检声明集中于单一主题。"
+      2: 介于锚点 1 与 3 之间
+      3:
+        example: "报告主要方面均有声明覆盖，个别次要方面缺失。"
+      4: 介于锚点 3 与 5 之间
+      5:
+        example: "报告所有关键方面均有声明与来源覆盖，抽检声明均匀覆盖各主要结论。"

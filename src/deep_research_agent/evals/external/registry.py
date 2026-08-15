@@ -83,6 +83,17 @@ _DESCRIPTORS = {
             "no_live_fetch",
         ),
     ),
+    "head_to_head": BenchmarkDescriptor(
+        benchmark="head_to_head",
+        title="Head-to-Head A/B",
+        adapter_mode="head_to_head_ab",
+        role="secondary_regression",
+        module_path="deep_research_agent.evals.external.head_to_head",
+        integrity_guards=(
+            "injectable_runners",
+            "offline_deterministic_scoring",
+        ),
+    ),
 }
 
 

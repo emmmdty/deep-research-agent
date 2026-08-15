@@ -12,11 +12,13 @@ from __future__ import annotations
 import argparse
 import inspect
 import json
+import random
 import sys
 import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import yaml
 from configs.settings import get_settings
 from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
 from deep_research_agent.evals import BENCHMARK_NAMES, EVAL_SUITE_NAMES, EVAL_VARIANT_NAMES, run_eval_suite, run_external_benchmark
@@ -296,6 +298,26 @@ def build_parser() -> argparse.ArgumentParser:
     )
     eval_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
 
+    eval_human_parser = eval_subparsers.add_parser(
+        "human-sample", help="人工抽检：采样评审单 / 导入评分生成 scorecard"
+    )
+    eval_human_parser.add_argument(
+        "--bundle-dir", required=True, type=str, help="包含 report_bundle.json 的目录"
+    )
+    eval_human_parser.add_argument(
+        "--sample-size", type=int, default=3, help="每个 bundle 抽检声明数（默认 3）"
+    )
+    eval_human_parser.add_argument(
+        "--seed", type=int, default=0, help="采样随机种子（默认 0）"
+    )
+    eval_human_parser.add_argument(
+        "--import",
+        dest="import_file",
+        type=str,
+        default=None,
+        help="导入已完成评分文件（YAML）并生成 scorecard",
+    )
+
     benchmark_parser = subparsers.add_parser("benchmark", help="运行 external benchmark portfolio")
     benchmark_subparsers = benchmark_parser.add_subparsers(dest="benchmark_command")
     benchmark_run_parser = benchmark_subparsers.add_parser("run", help="执行一个 external benchmark run")
@@ -439,6 +461,381 @@ def _artifact_payload(job, artifact_name: str):
     return path.read_text(encoding="utf-8")
 
 
+_HUMAN_REVIEW_OUTPUT_DIR = Path("evals") / "reports" / "human_review"
+_HUMAN_REVIEW_RUBRIC_REL = Path("evals") / "rubrics" / "citation_authenticity.yaml"
+
+
+def _resolve_bundle_candidate(bundle_dir: Path, candidate: Path) -> Path:
+    """解析 bundle 路径并拒绝逃逸 bundle-dir 的符号链接/路径。"""
+    base = bundle_dir.resolve()
+    resolved = candidate.resolve()
+    if base not in resolved.parents:
+        raise ValueError(f"bundle 路径逃逸 bundle-dir: {candidate}")
+    return resolved
+
+
+def _iter_report_bundles(bundle_dir: str | Path) -> list[Path]:
+    """确定性列出 bundle-dir 内的 report_bundle.json（排序，拒绝路径逃逸）。"""
+    base = Path(bundle_dir)
+    if not base.is_dir():
+        raise ValueError(f"bundle-dir 不存在: {base}")
+    candidates = [base / "report_bundle.json", *sorted(base.glob("*/report_bundle.json"))]
+    bundles: list[Path] = []
+    for candidate in candidates:
+        if not candidate.exists():
+            continue
+        bundles.append(_resolve_bundle_candidate(base, candidate))
+    return sorted(bundles, key=str)
+
+
+def _load_bundle_json(path: Path) -> dict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"bundle 必须是 JSON 对象: {path}")
+    return payload
+
+
+def _bundle_job_name(bundle: dict, fallback: str) -> str:
+    run_manifest = bundle.get("run_manifest") or {}
+    job_id = run_manifest.get("job_id")
+    if isinstance(job_id, str) and job_id:
+        return job_id
+    job = bundle.get("job") or {}
+    job_id = job.get("job_id")
+    if isinstance(job_id, str) and job_id:
+        return job_id
+    return fallback
+
+
+def _bundle_claims(bundle: dict) -> list[dict]:
+    """把 v2（accepted/qualified_claims）或 v1（claims）bundle 归一化为抽检行。"""
+    source_by_document: dict[str, str] = {}
+    source_by_id: dict[str, str] = {}
+    for source in bundle.get("sources") or []:
+        if not isinstance(source, dict):
+            continue
+        uri = source.get("uri") or source.get("canonical_uri")
+        if not isinstance(uri, str):
+            continue
+        metadata = source.get("metadata") or {}
+        document_id = metadata.get("document_version_id")
+        if isinstance(document_id, str):
+            source_by_document.setdefault(document_id, uri)
+        source_id = source.get("source_id")
+        if isinstance(source_id, str):
+            source_by_id.setdefault(source_id, uri)
+    if "accepted_claims" in bundle or "qualified_claims" in bundle:
+        claims: list[dict] = []
+        for claim in [
+            *(bundle.get("accepted_claims") or []),
+            *(bundle.get("qualified_claims") or []),
+        ]:
+            if not isinstance(claim, dict):
+                continue
+            spans = claim.get("evidence_spans") or []
+            source_url = quote = None
+            if spans and isinstance(spans[0], dict):
+                quote = spans[0].get("quote")
+                source_url = source_by_document.get(spans[0].get("document_version_id"))
+            claims.append(
+                {
+                    "claim_id": claim.get("claim_id", ""),
+                    "claim": claim.get("claim", ""),
+                    "critical": bool(claim.get("critical", False)),
+                    "source_url": source_url,
+                    "quote": quote,
+                }
+            )
+        return claims
+    fragments: dict[str, dict] = {}
+    for fragment in bundle.get("evidence_fragments") or []:
+        if isinstance(fragment, dict):
+            fragments[fragment.get("evidence_id")] = fragment
+    claims = []
+    for claim in bundle.get("claims") or []:
+        if not isinstance(claim, dict):
+            continue
+        source_url = quote = None
+        for evidence_id in claim.get("evidence_ids") or []:
+            fragment = fragments.get(evidence_id)
+            if not fragment:
+                continue
+            quote = fragment.get("excerpt")
+            source_url = source_by_id.get(fragment.get("source_id"))
+            if quote or source_url:
+                break
+        claims.append(
+            {
+                "claim_id": claim.get("claim_id", ""),
+                "claim": claim.get("text", ""),
+                "critical": str(claim.get("criticality", "")).lower() in {"high", "critical"},
+                "source_url": source_url,
+                "quote": quote,
+            }
+        )
+    return claims
+
+
+def _verified_rate_from_bundle(bundle: dict) -> tuple[float | None, dict | None, str]:
+    """按 run_drb_gate 语义聚合 citation_verification.summary。"""
+    audit_summary = bundle.get("audit_summary") or {}
+    verification = audit_summary.get("citation_verification") or {}
+    summary = verification.get("summary")
+    if not isinstance(summary, dict):
+        return None, None, "bundle audit_summary 缺少 citation_verification.summary"
+    passed = int(summary.get("verified", 0))
+    failed = int(summary.get("unsupported", 0)) + int(summary.get("fetch_failed", 0))
+    unresolved = int(summary.get("unverifiable", 0))
+    counts = {
+        "total": int(summary.get("total", 0)),
+        "passed": passed,
+        "failed": failed,
+        "unresolved": unresolved,
+    }
+    denominator = passed + failed + unresolved
+    if denominator == 0:
+        return None, counts, "citation_verification 分母为空（no_citation_evidence）"
+    return round(passed / denominator, 6), counts, None
+
+
+def _load_human_review_rubric() -> dict:
+    path = PROJECT_ROOT / _HUMAN_REVIEW_RUBRIC_REL
+    payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if not isinstance(payload, dict) or not payload.get("dimensions"):
+        raise ValueError(f"rubric 无效: {path}")
+    return payload
+
+
+def _md_cell(value) -> str:
+    if value is None:
+        return ""
+    text = str(value).replace("|", "\\|").replace("\n", " ").strip()
+    if len(text) > 200:
+        text = text[:200] + "…"
+    return text
+
+
+def _anchor_text(anchor) -> str:
+    if isinstance(anchor, dict):
+        return _md_cell(anchor.get("example", ""))
+    return _md_cell(anchor)
+
+
+def _repo_relative(path: Path) -> str:
+    try:
+        return str(path.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def _render_human_review_md(
+    *,
+    job: str,
+    bundle: dict,
+    rubric: dict,
+    sampled: list[dict],
+    seed: int,
+    sample_size: int,
+    bundle_path: Path,
+) -> str:
+    dimensions = rubric["dimensions"]
+    lines = [
+        f"# 人工抽检评审 — {job}",
+        "",
+        "> 量规：`evals/rubrics/citation_authenticity.yaml`（DRB-II 风格，1–5 级锚点，2/4 为相邻锚点之间）",
+        f"> 采样：seed={seed}，sample_size={sample_size}，bundle={_repo_relative(bundle_path)}",
+        "",
+        "## 评分区（按量规 4 个维度打分，整数 1–5）",
+        "",
+        "| 维度 | 说明 | 评分 |",
+        "|---|---|---|",
+    ]
+    for dimension in dimensions:
+        lines.append(
+            f"| `{dimension['name']}`（{dimension.get('label', '')}） | "
+            f"{dimension.get('description', '')} | ____ |"
+        )
+    lines += [
+        "",
+        "## 抽检声明",
+        "",
+        "| # | claim_id | critical | 声明 | 来源 URL | 原文摘录 |",
+        "|---|---|---|---|---|---|",
+    ]
+    for index, claim in enumerate(sampled, start=1):
+        lines.append(
+            f"| {index} | {_md_cell(claim['claim_id'])} | "
+            f"{'是' if claim['critical'] else '否'} | {_md_cell(claim['claim'])} | "
+            f"{_md_cell(claim['source_url']) or '（无证据引用）'} | "
+            f"{_md_cell(claim['quote']) or '（无原文摘录）'} |"
+        )
+    audit_summary = bundle.get("audit_summary") or {}
+    lines += ["", "## Bundle 审计摘要", ""]
+    lines.append(f"- status: `{audit_summary.get('status', '?')}`")
+    lines.append(f"- gate_status: `{audit_summary.get('gate_status', '?')}`")
+    verification = (audit_summary.get("citation_verification") or {}).get("summary")
+    if isinstance(verification, dict):
+        lines.append(f"- citation_verification.summary: {json.dumps(verification, ensure_ascii=False, sort_keys=True)}")
+    else:
+        lines.append("- citation_verification.summary: （缺失）")
+    lines += [
+        "- 语义映射：passed=verified；failed=unsupported+fetch_failed；unresolved=unverifiable",
+        "",
+        "## 量规锚点（评审参考）",
+        "",
+    ]
+    for dimension in dimensions:
+        lines.append(f"### {dimension['name']}（{dimension.get('label', '')}）")
+        anchors = dimension.get("anchors") or {}
+        for level in (1, 3, 5):
+            anchor = anchors.get(level, anchors.get(str(level), ""))
+            lines.append(f"- {level} 分：{_anchor_text(anchor)}")
+        lines.append("")
+    return "\n".join(lines)
+
+
+def _sample_human_review(
+    *,
+    bundle_dir: str | Path,
+    sample_size: int,
+    seed: int,
+    output_dir: str | Path | None = None,
+) -> dict:
+    """按种子确定性采样 bundle 声明并生成 <job>.md 评审单。"""
+    bundles = _iter_report_bundles(bundle_dir)
+    if not bundles:
+        raise ValueError(f"bundle-dir 中没有 report_bundle.json: {bundle_dir}")
+    rubric = _load_human_review_rubric()
+    output_root = Path(output_dir) if output_dir else PROJECT_ROOT / _HUMAN_REVIEW_OUTPUT_DIR
+    output_root.mkdir(parents=True, exist_ok=True)
+    reports: dict[str, str] = {}
+    for bundle_path in bundles:
+        bundle = _load_bundle_json(bundle_path)
+        job = _bundle_job_name(bundle, bundle_path.parent.name)
+        claims = _bundle_claims(bundle)
+        sampled = sorted(
+            random.Random(seed).sample(claims, min(sample_size, len(claims))),
+            key=lambda claim: str(claim["claim_id"]),
+        )
+        markdown = _render_human_review_md(
+            job=job,
+            bundle=bundle,
+            rubric=rubric,
+            sampled=sampled,
+            seed=seed,
+            sample_size=sample_size,
+            bundle_path=bundle_path,
+        )
+        report_path = output_root / f"{job}.md"
+        report_path.write_text(markdown, encoding="utf-8")
+        reports[job] = str(report_path)
+    return {
+        "command": "human-sample",
+        "status": "completed",
+        "output_root": str(output_root.resolve()),
+        "seed": seed,
+        "sample_size": sample_size,
+        "sampled_jobs": sorted(reports),
+        "reports": reports,
+    }
+
+
+def _import_human_review_scores(
+    *,
+    bundle_dir: str | Path,
+    score_file: str | Path,
+    output_dir: str | Path | None = None,
+) -> dict:
+    """导入评分文件（YAML），聚合生成 <job>.scorecard.json。"""
+    score_path = Path(score_file)
+    if not score_path.is_file():
+        raise ValueError(f"评分文件不存在: {score_path}")
+    payload = yaml.safe_load(score_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("评分文件必须是 YAML 映射")
+    rubric = _load_human_review_rubric()
+    rubric_dimensions = [dimension["name"] for dimension in rubric["dimensions"]]
+    job = payload.get("job")
+    if isinstance(job, str) and job.strip():
+        job = job.strip()
+    else:
+        job = score_path.stem
+    dimensions = payload.get("dimensions")
+    if not isinstance(dimensions, dict):
+        raise ValueError("评分文件缺少 dimensions 映射")
+    unknown = [name for name in dimensions if name not in rubric_dimensions]
+    if unknown:
+        raise ValueError(f"评分文件包含未知维度: {', '.join(sorted(unknown))}")
+    missing = [name for name in rubric_dimensions if name not in dimensions]
+    if missing:
+        raise ValueError(f"评分文件缺少维度: {', '.join(sorted(missing))}")
+    scores: dict[str, int] = {}
+    for name, value in dimensions.items():
+        if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= 5:
+            raise ValueError(f"维度 {name} 的评分必须是 1–5 的整数，得到: {value!r}")
+        scores[name] = value
+
+    bundle_path = None
+    for candidate in _iter_report_bundles(bundle_dir):
+        candidate_bundle = _load_bundle_json(candidate)
+        if _bundle_job_name(candidate_bundle, candidate.parent.name) == job:
+            bundle_path = candidate
+            break
+    if bundle_path is None:
+        raise ValueError(f"bundle-dir 中未找到 job {job!r} 对应的 report_bundle.json")
+    bundle = _load_bundle_json(bundle_path)
+    verified_rate, _counts, note = _verified_rate_from_bundle(bundle)
+
+    output_root = Path(output_dir) if output_dir else PROJECT_ROOT / _HUMAN_REVIEW_OUTPUT_DIR
+    output_root.mkdir(parents=True, exist_ok=True)
+    scorecard_path = output_root / f"{job}.scorecard.json"
+    existing: dict = {}
+    if scorecard_path.exists():
+        existing = json.loads(scorecard_path.read_text(encoding="utf-8"))
+    reviews = dict(existing.get("reviews") or {})
+    reviews[score_path.name] = scores
+    dimension_stats: dict[str, dict] = {}
+    for name in rubric_dimensions:
+        values = [review[name] for review in reviews.values()]
+        dimension_stats[name] = {
+            "mean": round(sum(values) / len(values), 4),
+            "min": min(values),
+            "max": max(values),
+            "count": len(values),
+        }
+    overall_values = [score for review in reviews.values() for score in review.values()]
+    scorecard = {
+        "job": job,
+        "rubric_name": rubric["rubric_name"],
+        "score_files": sorted(reviews),
+        "reviews": {name: reviews[name] for name in sorted(reviews)},
+        "dimensions": dimension_stats,
+        "overall": {
+            "mean": round(sum(overall_values) / len(overall_values), 4),
+            "min": min(overall_values),
+            "max": max(overall_values),
+            "count": len(overall_values),
+        },
+        "verified_rate": verified_rate,
+        "verified_rate_note": note,
+        "semantic_mapping": rubric.get("semantic_mapping") or {},
+    }
+    scorecard_path.write_text(
+        json.dumps(scorecard, ensure_ascii=False, sort_keys=True, indent=2),
+        encoding="utf-8",
+    )
+    return {
+        "command": "human-sample-import",
+        "status": "completed",
+        "job": job,
+        "score_file": str(score_path),
+        "scorecard_path": str(scorecard_path),
+        "dimensions": dimension_stats,
+        "verified_rate": verified_rate,
+        "verified_rate_note": note,
+    }
+
+
 def run_command(argv: list[str] | None = None) -> int:
     """执行一条 CLI 命令。"""
     settings = get_settings()
@@ -467,22 +864,45 @@ def run_command(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "eval":
-        if args.eval_command != "run":
-            parser.error("eval 目前只支持 `run` 子命令")
-            return 2
-        result = run_eval_suite(
-            suite_name=args.suite,
-            variant=args.variant,
-            output_root=args.output_root,
-            capture_runtime_metrics=args.capture_runtime_metrics,
-        )
-        if args.json:
-            _print_json(result)
-        else:
-            console.print(f"✅ eval suite 完成: [cyan]{args.suite}[/cyan]")
-            console.print(f"status: [bold]{result['status']}[/bold]")
-            console.print(f"summary: [cyan]{result['summary_path']}[/cyan]")
-        return 0
+        if args.eval_command == "run":
+            result = run_eval_suite(
+                suite_name=args.suite,
+                variant=args.variant,
+                output_root=args.output_root,
+                capture_runtime_metrics=args.capture_runtime_metrics,
+            )
+            if args.json:
+                _print_json(result)
+            else:
+                console.print(f"✅ eval suite 完成: [cyan]{args.suite}[/cyan]")
+                console.print(f"status: [bold]{result['status']}[/bold]")
+                console.print(f"summary: [cyan]{result['summary_path']}[/cyan]")
+            return 0
+        if args.eval_command == "human-sample":
+            try:
+                if args.import_file:
+                    result = _import_human_review_scores(
+                        bundle_dir=args.bundle_dir,
+                        score_file=args.import_file,
+                    )
+                else:
+                    result = _sample_human_review(
+                        bundle_dir=args.bundle_dir,
+                        sample_size=args.sample_size,
+                        seed=args.seed,
+                    )
+            except ValueError as exc:
+                console.print(f"[red]人工抽检失败: {exc}[/red]")
+                return 2
+            console.print(f"✅ 人工抽检完成: [cyan]{result['status']}[/cyan]")
+            if "reports" in result:
+                for job in result["sampled_jobs"]:
+                    console.print(f"- [cyan]{result['reports'][job]}[/cyan]")
+            else:
+                console.print(f"scorecard: [cyan]{result['scorecard_path']}[/cyan]")
+            return 0
+        parser.error("eval 目前只支持 `run` 和 `human-sample` 子命令")
+        return 2
 
     if args.command == "benchmark":
         if args.benchmark_command != "run":

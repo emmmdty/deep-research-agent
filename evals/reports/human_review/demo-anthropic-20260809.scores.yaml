@@ -1,0 +1,6 @@
+job: demo-anthropic-20260809
+dimensions:
+  citation_authenticity: 4
+  verbatim_consistency: 5
+  source_quality: 4
+  coverage: 3

@@ -1,0 +1,61 @@
+{
+  "dimensions": {
+    "citation_authenticity": {
+      "count": 1,
+      "max": 2,
+      "mean": 2.0,
+      "min": 2
+    },
+    "coverage": {
+      "count": 1,
+      "max": 2,
+      "mean": 2.0,
+      "min": 2
+    },
+    "source_quality": {
+      "count": 1,
+      "max": 2,
+      "mean": 2.0,
+      "min": 2
+    },
+    "verbatim_consistency": {
+      "count": 1,
+      "max": 2,
+      "mean": 2.0,
+      "min": 2
+    }
+  },
+  "job": "20260522T181016Z-baa9b27a",
+  "overall": {
+    "count": 4,
+    "max": 2,
+    "mean": 2.0,
+    "min": 2
+  },
+  "reviews": {
+    "20260522T181016Z-baa9b27a.scores.yaml": {
+      "citation_authenticity": 2,
+      "coverage": 2,
+      "source_quality": 2,
+      "verbatim_consistency": 2
+    }
+  },
+  "rubric_name": "citation_authenticity",
+  "score_files": [
+    "20260522T181016Z-baa9b27a.scores.yaml"
+  ],
+  "semantic_mapping": {
+    "failed": [
+      "unsupported",
+      "fetch_failed"
+    ],
+    "passed": [
+      "verified"
+    ],
+    "unresolved": [
+      "unverifiable"
+    ]
+  },
+  "verified_rate": null,
+  "verified_rate_note": "bundle audit_summary 缺少 citation_verification.summary"
+}

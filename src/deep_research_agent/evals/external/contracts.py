@@ -7,7 +7,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
-BENCHMARK_NAMES = ("facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb")
+BENCHMARK_NAMES = ("facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb", "head_to_head")
 BENCHMARK_ROLES = (
     "authoritative_release_gate",
     "secondary_regression",
@@ -22,6 +22,7 @@ ADAPTER_MODES = (
     "browsecomp_short_answer",
     "gaia_capability_gated",
     "drb_agentic_eval",
+    "head_to_head_ab",
 )
 BENCHMARK_STATUSES = ("completed", "blocked", "failed")
 
@@ -29,7 +30,7 @@ BENCHMARK_STATUSES = ("completed", "blocked", "failed")
 class BenchmarkRunRequest(BaseModel):
     """Runtime request for one external benchmark invocation."""
 
-    benchmark_name: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
+    benchmark_name: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb", "head_to_head"]
     output_root: str
     split: str | None = None
     subset: str | None = None
@@ -52,7 +53,7 @@ class BenchmarkTaskSpec(BaseModel):
 class BenchmarkTaskResult(BaseModel):
     """Normalized per-task benchmark result row."""
 
-    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
+    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb", "head_to_head"]
     task_id: str
     status: Literal["completed", "blocked", "failed"]
     prompt: str
@@ -68,7 +69,7 @@ class BenchmarkTaskResult(BaseModel):
 class BenchmarkIntegrityReport(BaseModel):
     """Benchmark-specific integrity report sidecar."""
 
-    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
+    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb", "head_to_head"]
     status: Literal["not_applicable", "passed", "blocked", "failed"] = "not_applicable"
     guards: list[str] = Field(default_factory=list)
     findings: list[dict[str, object]] = Field(default_factory=list)
@@ -78,7 +79,7 @@ class BenchmarkIntegrityReport(BaseModel):
 class BenchmarkRunManifest(BaseModel):
     """Top-level artifact index for one benchmark run."""
 
-    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
+    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb", "head_to_head"]
     title: str
     adapter_mode: Literal[
         "domain_report_bundle",
@@ -88,6 +89,7 @@ class BenchmarkRunManifest(BaseModel):
         "browsecomp_short_answer",
         "gaia_capability_gated",
         "drb_agentic_eval",
+        "head_to_head_ab",
     ]
     role: Literal[
         "authoritative_release_gate",
@@ -130,4 +132,31 @@ class BenchmarkPortfolioSummary(BaseModel):
     deferred: list[str] = Field(default_factory=list)
     runs: list[dict[str, object]] = Field(default_factory=list)
     artifacts: dict[str, str] = Field(default_factory=dict)
+    notes: list[str] = Field(default_factory=list)
+
+
+class HeadToHeadTaskRow(BaseModel):
+    """Normalized per-task A/B row for the head-to-head harness."""
+
+    task_id: str
+    prompt: str
+    expected_answer: str | None = None
+    prediction_a: str | None = None
+    prediction_b: str | None = None
+    score_a: float | None = None
+    score_b: float | None = None
+    delta: float | None = None
+
+
+class HeadToHeadScorecard(BaseModel):
+    """Standardized scorecard for one head-to-head run."""
+
+    benchmark: Literal["head_to_head"]
+    status: Literal["completed", "blocked", "failed"]
+    runner_a: str
+    runner_b: str
+    metric: str
+    task_count: int
+    per_task: list[HeadToHeadTaskRow] = Field(default_factory=list)
+    aggregate: dict[str, object] = Field(default_factory=dict)
     notes: list[str] = Field(default_factory=list)
