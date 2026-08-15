@@ -49,10 +49,12 @@ class LLMResearchPlanner:
         *,
         fallback: ResearchPlanner | None = None,
         max_objectives: int = _DEFAULT_OBJECTIVE_CAP,
+        settings: Any | None = None,
     ) -> None:
         self._chat = chat
-        self._fallback = fallback or ResearchPlanner()
+        self._fallback = fallback or ResearchPlanner(settings=settings)
         self._max_objectives = max_objectives
+        self._router = _router_from_settings(settings)
 
     def plan(
         self,
@@ -86,7 +88,8 @@ class LLMResearchPlanner:
 
         The deterministic fallback planner emits tasks without a tool-call
         budget; the tool gateway denies every call when ``max_tool_calls`` is
-        missing, so freeze an explicit budget here.
+        missing, so freeze an explicit budget here. Existing budgets (e.g. an
+        effort-scaled ``max_tool_calls``) are preserved untouched.
         """
 
         upgraded = [
@@ -95,7 +98,10 @@ class LLMResearchPlanner:
                     {
                         "budget": {
                             **dict(task.budget),
-                            "max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK,
+                            "max_tool_calls": (
+                                dict(task.budget).get("max_tool_calls")
+                                or _DEFAULT_MAX_TOOL_CALLS_PER_TASK
+                            ),
                         }
                     }
                     if task.role == "researcher"
@@ -111,12 +117,13 @@ class LLMResearchPlanner:
         return ResearchDAG(job_id=dag.job_id, tasks=upgraded)
 
     def _model_objectives(self, brief: ResearchBrief) -> list[str] | None:
+        effort = str(brief.constraints.get("effort") or "medium")
         if self._chat is None:
             try:
                 # Probe credentials without binding a client to any event loop:
                 # the real client is built inside the planning thread so httpx
                 # (loop-confined) never migrates across loops.
-                if not _planner_credentials_configured():
+                if not _planner_credentials_configured(self._router, effort):
                     logger.info("LLM planner skipped: no LLM credentials configured")
                     return None
             except Exception as exc:
@@ -128,7 +135,9 @@ class LLMResearchPlanner:
         if brief.constraints:
             context += f"\nConstraints: {brief.constraints}"
         try:
-            payload = _call_planner_in_thread(self._chat, context)
+            payload = _call_planner_in_thread(
+                self._chat, context, router=self._router, effort=effort
+            )
         except Exception as exc:
             logger.warning("LLM planning failed; using deterministic planner: {}", exc)
             return None
@@ -173,9 +182,36 @@ class LLMResearchPlanner:
         return False
 
     @staticmethod
-    def _compile_dag(brief: ResearchBrief, objectives: list[str]) -> ResearchDAG:
+    def _research_task(
+        brief: ResearchBrief, objective: str, *, index: int, budget: dict[str, int | str]
+    ) -> TaskSpec:
+        slug = re.sub(r"[^a-z0-9]+", "-", objective.casefold()).strip("-")[:36]
+        if not slug:
+            slug = hashlib.sha256(objective.encode("utf-8")).hexdigest()[:12]
+        task_id = f"research-{index:02d}-{slug}"
+        return TaskSpec(
+            task_id=task_id,
+            job_id=brief.job_id,
+            kind="research",
+            role="researcher",
+            objective=objective,
+            depends_on=[],
+            input_artifacts=[],
+            output_schema={
+                "type": "object",
+                "properties": {"task_id": {"type": "string"}},
+                "required": ["task_id"],
+                "additionalProperties": True,
+            },
+            budget=budget,
+            idempotency_key=f"{brief.job_id}:{task_id}",
+        )
+
+    def _compile_dag(self, brief: ResearchBrief, objectives: list[str]) -> ResearchDAG:
+        effort = str(brief.constraints.get("effort") or "medium")
+        budget = self._fallback._budget_for_effort(effort)
         tasks = [
-            LLMResearchPlanner._research_task(brief, objective, index=index)
+            LLMResearchPlanner._research_task(brief, objective, index=index, budget=budget)
             for index, objective in enumerate(objectives, start=1)
         ]
         critic = TaskSpec(
@@ -197,34 +233,29 @@ class LLMResearchPlanner:
         )
         return ResearchDAG(job_id=brief.job_id, tasks=(*tasks, critic))
 
-    @staticmethod
-    def _research_task(brief: ResearchBrief, objective: str, *, index: int) -> TaskSpec:
-        slug = re.sub(r"[^a-z0-9]+", "-", objective.casefold()).strip("-")[:36]
-        if not slug:
-            slug = hashlib.sha256(objective.encode("utf-8")).hexdigest()[:12]
-        task_id = f"research-{index:02d}-{slug}"
-        return TaskSpec(
-            task_id=task_id,
-            job_id=brief.job_id,
-            kind="research",
-            role="researcher",
-            objective=objective,
-            depends_on=[],
-            input_artifacts=[],
-            output_schema={
-                "type": "object",
-                "properties": {"task_id": {"type": "string"}},
-                "required": ["task_id"],
-                "additionalProperties": True,
-            },
-            budget={"max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK},
-            idempotency_key=f"{brief.job_id}:{task_id}",
-        )
+
+def _router_from_settings(settings: Any | None):
+    """Build a model router from settings when routing is enabled; else None."""
+    if settings is None:
+        return None
+    try:
+        if not getattr(settings, "model_router_enabled", False):
+            return None
+        from deep_research_agent.providers.router import ProviderRouter
+
+        return ProviderRouter(settings)
+    except Exception as exc:  # noqa: BLE001 - planner degradation must never block research
+        logger.info("model router unavailable for planning ({}); using default model", exc)
+        return None
 
 
-def _planner_credentials_configured() -> bool:
+def _planner_credentials_configured(router=None, effort: str = "medium") -> bool:
     """True when LLM credentials exist without constructing any client."""
     try:
+        if router is not None:
+            selection = router.route_for_role("planning", effort=effort)
+            if selection.profile.api_key:
+                return True
         from configs.settings import get_settings
 
         return bool(get_settings().get_llm_config().get("api_key"))
@@ -232,7 +263,29 @@ def _planner_credentials_configured() -> bool:
         return False
 
 
-def _call_planner_in_thread(chat: LLMChat | None, question: str) -> dict[str, Any]:
+def _planner_chat_for(router, effort: str) -> LLMChat | None:
+    """Build the routed planning chat; None when role routing is unavailable.
+
+    Constructed in the caller thread; the view is side-effect free and the
+    chat client itself is created lazily on first use inside the target loop.
+    """
+    if router is None:
+        return None
+    try:
+        selection = router.route_for_role("planning", effort=effort)
+        if not selection.profile.api_key:
+            return None
+        from deep_research_agent.providers.router import RoutedSettings
+
+        return LLMChat(settings=RoutedSettings(router.settings, selection.profile))
+    except Exception as exc:  # noqa: BLE001 - routing must never break planning
+        logger.info("routed planning chat unavailable ({}); using default model", exc)
+        return None
+
+
+def _call_planner_in_thread(
+    chat: LLMChat | None, question: str, *, router=None, effort: str = "medium"
+) -> dict[str, Any]:
     """Run the async planner call in a dedicated thread with its own event loop.
 
     ``plan`` must stay synchronous (product service and CLI call it that way),
@@ -247,7 +300,9 @@ def _call_planner_in_thread(chat: LLMChat | None, question: str) -> dict[str, An
 
     def _run() -> dict[str, Any]:
         owned = chat is None
-        client = LLMChat() if owned else chat
+        client = chat
+        if owned:
+            client = _planner_chat_for(router, effort) or LLMChat()
         try:
             return asyncio.run(_call_planner_model(client, question))
         finally:

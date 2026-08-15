@@ -359,6 +359,7 @@ def create_app(
     def submit_batch_research(
         request: BatchResearchRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
         _limited: None = Depends(rate_limited("anonymous:v1.batch.research")),
     ) -> BatchResearchResponse:
         return submit_batch_jobs(service, request.jobs)

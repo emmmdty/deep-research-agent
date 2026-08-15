@@ -245,8 +245,8 @@ class ProductService:
         if planner_enabled:
             from deep_research_agent.agents import LLMResearchPlanner
 
-            return LLMResearchPlanner().plan(brief, domain_pack)
-        return ResearchPlanner().plan(brief, domain_pack)
+            return LLMResearchPlanner(settings=settings).plan(brief, domain_pack)
+        return ResearchPlanner(settings=settings).plan(brief, domain_pack)
 
     def create_run(
         self,

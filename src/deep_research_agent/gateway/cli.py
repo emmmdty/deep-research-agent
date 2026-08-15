@@ -100,11 +100,11 @@ def _plan_cli_dag(topic: str, settings) -> tuple[ResearchDAG, ResearchBrief]:
     if planner_enabled:
         from deep_research_agent.agents import LLMResearchPlanner
 
-        dag = LLMResearchPlanner().plan(brief, domain_pack)
+        dag = LLMResearchPlanner(settings=settings).plan(brief, domain_pack)
     else:
         from deep_research_agent.orchestration.dag import ResearchPlanner
 
-        dag = ResearchPlanner().plan(brief, domain_pack)
+        dag = ResearchPlanner(settings=settings).plan(brief, domain_pack)
     return dag, brief
 
 

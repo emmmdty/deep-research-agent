@@ -332,6 +332,81 @@ def test_legacy_create_rate_limit_returns_429_with_retry_after(tmp_path: Path):
     assert batch.status_code == 202
 
 
+def test_batch_research_endpoint_requires_api_key(tmp_path: Path):
+    """batch 建 job 端点必须与单建端点一样 fail closed。"""
+    app, _ = _legacy_app(tmp_path)
+    client = TestClient(app)
+
+    missing = client.post("/v1/batch/research", json={"jobs": [_submit_payload()]})
+    assert missing.status_code == 401
+
+    wrong = client.post(
+        "/v1/batch/research",
+        headers={"X-API-Key": "wrong-key"},
+        json={"jobs": [_submit_payload()]},
+    )
+    assert wrong.status_code == 401
+
+    accepted = client.post(
+        "/v1/batch/research",
+        headers={"X-API-Key": LEGACY_KEY},
+        json={"jobs": [_submit_payload()]},
+    )
+    assert accepted.status_code == 202
+
+
+def test_batch_research_fails_closed_when_no_key_configured(tmp_path: Path, monkeypatch):
+    """未配置 master key 时 batch 端点同样不得无认证放行。"""
+    monkeypatch.delenv("DEEP_RESEARCH_AGENT_MASTER_KEY", raising=False)
+    app, _ = _legacy_app(tmp_path, api_key=None)
+    client = TestClient(app)
+
+    assert client.post(
+        "/v1/batch/research", json={"jobs": [_submit_payload()]}
+    ).status_code == 503
+
+
+def test_token_bucket_full_table_evicts_refilled_instead_of_clearing_all():
+    """容量满时只淘汰已回满（状态无关）的桶，活跃桶永不重置。"""
+    limiter = TokenBucketRateLimiter(capacity=2, refill_rate=0.001, max_keys=3)
+    assert limiter.check("victim:a") is None
+    assert limiter.check("victim:a") is None
+    assert limiter.check("victim:a") is not None  # victim 已耗尽（活跃）
+
+    assert limiter.check("flood-1") is None
+    assert limiter.check("flood-2") is None
+    assert limiter.check("flood-3") is not None  # 全表活跃，新 key fail closed
+    assert limiter.check("flood-4") is not None
+
+    assert set(limiter._buckets) == {"victim:a", "flood-1", "flood-2"}
+    assert limiter.check("victim:a") is not None  # victim 活跃桶未被重置，仍然受限
+
+
+def test_token_bucket_new_key_denied_when_all_buckets_active():
+    """表内全部桶活跃时，新 key 应 fail closed（拒绝），不得淘汰活跃桶。"""
+    limiter = TokenBucketRateLimiter(capacity=2, refill_rate=0.001, max_keys=3)
+    for key in ("a", "b", "c"):
+        assert limiter.check(key) is None
+    assert limiter.check("a") is None
+
+    denied = limiter.check("new-key")
+    assert denied is not None  # 新 key 被拒绝
+    assert limiter.check("a") is not None  # 既有活跃桶保持受限、未被重置
+
+
+def test_token_bucket_idle_refilled_bucket_is_evicted_first():
+    """已回满的闲置桶可被淘汰（无执行状态），活跃桶不受影响。"""
+    limiter = TokenBucketRateLimiter(capacity=2, refill_rate=0.1, max_keys=2)
+    assert limiter.check("idle:a", now=100.0) is None
+    assert limiter.check("active:b", now=101.0) is None
+    assert limiter.check("active:b", now=102.0) is None
+    assert limiter.check("active:b", now=103.0) is not None  # active 已耗尽（活跃）
+
+    assert limiter.check("flood-1", now=110.0) is None  # 淘汰已回满的闲置 idle 桶
+    assert set(limiter._buckets) == {"active:b", "flood-1"}
+    assert limiter.check("active:b", now=110.5) is not None  # 活跃桶保持受限
+
+
 def test_login_rate_limit_returns_429(tmp_path: Path):
     """login 端点超限应返回 429。"""
     from deep_research_agent.gateway.api import create_app

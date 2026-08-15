@@ -168,6 +168,59 @@ def test_route_for_role_follows_default_profile_without_override():
         assert selection.reason == f"role_routing:{role}:{expected}"
 
 
+def test_route_for_role_low_effort_prefers_fast_profile():
+    settings = Settings(
+        llm_provider="anthropic",
+        anthropic_model_name="anthropic-strong",
+        llm_model_name="",
+        openai_model_name="openai-fast",
+        openai_api_key="openai-key",
+    )
+    router = ProviderRouter(settings)
+
+    low = router.route_for_role("planning", effort="low")
+    assert low.profile.name == "openai"
+    assert low.profile.model == "openai-fast"
+    assert low.reason == "role_routing:planning:openai-fast"
+
+    medium = router.route_for_role("planning", effort="medium")
+    assert medium.profile.name == "anthropic"
+    assert medium.profile.model == "anthropic-strong"
+
+    high = router.route_for_role("planning", effort="high")
+    assert high.profile.name == "anthropic"
+    assert high.profile.model == "anthropic-strong"
+
+
+def test_route_for_role_override_wins_over_effort_preference():
+    settings = Settings(
+        llm_provider="anthropic",
+        anthropic_model_name="anthropic-strong",
+        llm_model_name="",
+        openai_model_name="openai-fast",
+        strong_role_models={"planning": "gpt-planning", "critic": "", "synthesis": ""},
+    )
+    router = ProviderRouter(settings)
+
+    low = router.route_for_role("planning", effort="low")
+    assert low.profile.name == "anthropic"
+    assert low.profile.model == "gpt-planning"
+
+
+def test_route_for_role_low_effort_stays_on_default_when_default_is_fast():
+    settings = Settings(
+        llm_provider="openai",
+        openai_model_name="openai-default-fast",
+        llm_model_name="",
+        openai_api_key="openai-key",
+    )
+    router = ProviderRouter(settings)
+
+    low = router.route_for_role("planning", effort="low")
+    assert low.profile.name == "openai"
+    assert low.profile.model == "openai-default-fast"
+
+
 def test_route_for_role_disabled_returns_manual_default_profile():
     settings = Settings(model_router_enabled=False)
     router = ProviderRouter(settings)
@@ -633,3 +686,96 @@ def test_orchestrator_task_model_is_never_configuration_sensitive_to_none():
     from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
 
     assert ResearchJobOrchestrator._task_model(None, "researcher") == "configured"
+
+
+# ---------------------------------------------------------------------------
+# LLMResearchPlanner role routing（P1-2 审察修复）
+# ---------------------------------------------------------------------------
+
+
+def _llm_planner_route_test_brief(effort: str | None) -> ResearchBrief:
+    constraints = {"effort": effort} if effort else {}
+    return _brief(constraints)
+
+
+def test_llm_planner_routes_planning_chat_through_router(monkeypatch):
+    import deep_research_agent.agents.planner as planner_module
+
+    from deep_research_agent.agents.planner import LLMResearchPlanner
+
+    settings = Settings(
+        llm_provider="anthropic",
+        anthropic_model_name="anthropic-strong",
+        anthropic_api_key="anthropic-key",
+        llm_model_name="",
+        openai_model_name="openai-fast",
+        openai_api_key="openai-key",
+        strong_role_models={"planning": "", "critic": "", "synthesis": ""},
+    )
+    captured: list[str] = []
+
+    async def fake_call_planner_model(client, question):
+        captured.append(client.model_name)
+        return {"objectives": [{"title": "sub", "question": "sub objective?"}]}
+
+    monkeypatch.setattr(planner_module, "_call_planner_model", fake_call_planner_model)
+
+    dag = LLMResearchPlanner(settings=settings).plan(_brief(), _domain_pack())
+
+    assert captured == ["anthropic-strong"]
+    assert len(dag.tasks) >= 2
+    assert [task.task_id for task in dag.tasks if task.role == "researcher"]
+
+
+def test_llm_planner_low_effort_brief_routes_to_fast_profile(monkeypatch):
+    import deep_research_agent.agents.planner as planner_module
+
+    from deep_research_agent.agents.planner import LLMResearchPlanner
+
+    settings = Settings(
+        llm_provider="anthropic",
+        anthropic_model_name="anthropic-strong",
+        anthropic_api_key="anthropic-key",
+        llm_model_name="",
+        openai_model_name="openai-fast",
+        openai_api_key="openai-key",
+        strong_role_models={"planning": "", "critic": "", "synthesis": ""},
+    )
+    captured: list[str] = []
+
+    async def fake_call_planner_model(client, question):
+        captured.append(client.model_name)
+        return {"objectives": [{"title": "sub", "question": "sub objective?"}]}
+
+    monkeypatch.setattr(planner_module, "_call_planner_model", fake_call_planner_model)
+
+    dag = LLMResearchPlanner(settings=settings).plan(
+        _llm_planner_route_test_brief("low"), _domain_pack()
+    )
+
+    assert captured == ["openai-fast"]
+    assert all(
+        task.budget == {"max_tool_calls": 8, "effort": "low"}
+        for task in dag.tasks
+        if task.role == "researcher"
+    )
+
+
+def test_llm_planner_without_settings_keeps_default_chat(monkeypatch):
+    import deep_research_agent.agents.planner as planner_module
+
+    from deep_research_agent.agents.planner import LLMResearchPlanner
+
+    captured: list[str] = []
+
+    async def fake_call_planner_model(client, question):
+        captured.append(client.model_name)
+        return {"objectives": [{"title": "sub", "question": "sub objective?"}]}
+
+    monkeypatch.setattr(planner_module, "_call_planner_model", fake_call_planner_model)
+
+    settings = Settings(llm_api_key="default-key", llm_model_name="")
+    LLMResearchPlanner(settings=settings).plan(_brief(), _domain_pack())
+
+    assert len(captured) == 1
+    assert captured[0] == _default_profile_model(settings)

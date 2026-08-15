@@ -127,6 +127,21 @@ def test_cost_tracker_price_table_injection_and_legacy_default() -> None:
     assert legacy.metrics.estimated_cost_usd == round(2000 * 0.001 / 1000, 4)
 
 
+def test_cost_tracker_concurrent_records_do_not_drop_counts() -> None:
+    """并发记录（多线程）不得丢失计数（P2-4 审察修复）。"""
+    import threading
+
+    tracker = CostTracker()
+    threads = [threading.Thread(target=tracker.record_search_call) for _ in range(40)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    assert tracker.metrics.search_calls == 40
+    assert tracker.snapshot_for("global").search_calls == 40
+
+
 # ---------------------------------------------------------------------------
 # Span wrapping: LLM calls and tool gateway invoke
 

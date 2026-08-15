@@ -8,6 +8,7 @@ Records are attributed to the job bound in the ``research.job_id`` contextvar
 
 from __future__ import annotations
 
+import threading
 import time
 from contextvars import ContextVar, Token
 from dataclasses import dataclass, field
@@ -188,7 +189,11 @@ def _record_prometheus_search_call() -> None:
 
 
 class CostTracker:
-    """Global cost tracker with contextvar per-job attribution support."""
+    """Global cost tracker with contextvar per-job attribution support.
+
+    Mutations are guarded by a lock so concurrent jobs (e.g. gateway threads
+    recording search calls) do not drop counters.
+    """
 
     def __init__(
         self,
@@ -198,6 +203,7 @@ class CostTracker:
         self._metrics = CostMetrics(price_table=self._price_table)
         self._per_job: dict[str, CostMetrics] = {}
         self._start_time: Optional[float] = None
+        self._lock = threading.Lock()
 
     @property
     def metrics(self) -> CostMetrics:
@@ -210,37 +216,43 @@ class CostTracker:
 
     def start(self) -> None:
         """Start timing and reset metrics."""
-        self._start_time = time.time()
-        self._metrics = CostMetrics(price_table=self._price_table)
-        self._per_job.clear()
+        with self._lock:
+            self._start_time = time.time()
+            self._metrics = CostMetrics(price_table=self._price_table)
+            self._per_job.clear()
 
     def stop(self) -> CostMetrics:
         """Stop timing and return metrics."""
-        if self._start_time is not None:
-            self._metrics.total_time_seconds = time.time() - self._start_time
-        self._start_time = None
+        with self._lock:
+            if self._start_time is not None:
+                self._metrics.total_time_seconds = time.time() - self._start_time
+            self._start_time = None
+            metrics = self._metrics
         logger.info(
             "Cost tracker: time={:.1f}s, llm_calls={}, search_calls={}, tokens={}",
-            self._metrics.total_time_seconds,
-            self._metrics.llm_calls,
-            self._metrics.search_calls,
-            self._metrics.total_tokens,
+            metrics.total_time_seconds,
+            metrics.llm_calls,
+            metrics.search_calls,
+            metrics.total_tokens,
         )
-        return self._metrics
+        return metrics
 
     def snapshot(self) -> CostMetrics:
         """Return current metrics."""
-        if self._start_time is not None:
-            self._metrics.total_time_seconds = time.time() - self._start_time
-        return self._metrics
+        with self._lock:
+            if self._start_time is not None:
+                self._metrics.total_time_seconds = time.time() - self._start_time
+            return self._metrics
 
     def snapshot_for(self, job_id: str) -> CostMetrics:
         """Return the metrics recorded for one job (empty when absent)."""
-        return self._per_job.setdefault(job_id, CostMetrics(price_table=self._price_table))
+        with self._lock:
+            return self._per_job.setdefault(job_id, CostMetrics(price_table=self._price_table))
 
     def reset_for(self, job_id: str) -> None:
         """Clear the metrics recorded for one job."""
-        self._per_job[job_id] = CostMetrics(price_table=self._price_table)
+        with self._lock:
+            self._per_job[job_id] = CostMetrics(price_table=self._price_table)
 
     def _llm_call_cost_usd(
         self,
@@ -278,11 +290,12 @@ class CostTracker:
         model: str | None = None,
     ) -> None:
         """Record one LLM call attributed to the current job context."""
-        self._record_llm(self._metrics, input_tokens, output_tokens, model)
-        job = self._per_job.setdefault(
-            current_job_id(), CostMetrics(price_table=self._price_table)
-        )
-        self._record_llm(job, input_tokens, output_tokens, model)
+        with self._lock:
+            self._record_llm(self._metrics, input_tokens, output_tokens, model)
+            job = self._per_job.setdefault(
+                current_job_id(), CostMetrics(price_table=self._price_table)
+            )
+            self._record_llm(job, input_tokens, output_tokens, model)
         _record_prometheus_llm_call(
             input_tokens,
             output_tokens,
@@ -291,11 +304,12 @@ class CostTracker:
 
     def record_search_call(self) -> None:
         """Record one search call attributed to the current job context."""
-        self._metrics.search_calls += 1
-        job = self._per_job.setdefault(
-            current_job_id(), CostMetrics(price_table=self._price_table)
-        )
-        job.search_calls += 1
+        with self._lock:
+            self._metrics.search_calls += 1
+            job = self._per_job.setdefault(
+                current_job_id(), CostMetrics(price_table=self._price_table)
+            )
+            job.search_calls += 1
         _record_prometheus_search_call()
 
     def __enter__(self):

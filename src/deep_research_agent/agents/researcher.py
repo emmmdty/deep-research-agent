@@ -556,7 +556,11 @@ class LLMResearcherWorker:
 
         # Invoke all queries concurrently (bounded), then reassemble sources in
         # the original query order so dedup, injection guards, and the
-        # _MAX_SOURCES cap behave exactly like the serial path.
+        # _MAX_SOURCES cap behave exactly like the serial path. Deliberate
+        # deviation from the serial path: all in-flight invocations complete
+        # before the first failure is re-raised, so a failing query may still
+        # cost extra provider calls — the returned source sequence is
+        # byte-identical either way.
         envelopes = await asyncio.gather(
             *(_invoke_query(query) for query in queries), return_exceptions=True
         )
@@ -768,7 +772,8 @@ class LLMResearcherWorker:
 
         # Fetch all candidate pages concurrently (bounded), then reassemble
         # chunks in the original url order so dedup and injection guards behave
-        # exactly like the serial path.
+        # exactly like the serial path. Deliberate deviation: in-flight fetches
+        # complete before the first failure is re-raised (see _gather_queries).
         envelopes = await asyncio.gather(
             *(_invoke_fetch(url) for url in urls), return_exceptions=True
         )

@@ -25,8 +25,8 @@ from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
 from deep_research_agent.policy.budget_guardrails import BudgetGuard
 from deep_research_agent.policy.source_policy import SourcePolicy, load_source_policy
-from deep_research_agent.providers.models import ProviderProfile, ProviderSelection
-from deep_research_agent.providers.router import ProviderRouter
+from deep_research_agent.providers.models import ProviderSelection
+from deep_research_agent.providers.router import ProviderRouter, RoutedSettings
 from deep_research_agent.tool_gateway.gateway import ToolGateway
 from deep_research_agent.tool_gateway.models import ToolSpec
 from deep_research_agent.tool_gateway.registry import InMemoryToolRegistry
@@ -190,33 +190,8 @@ def _policy_aware_fetch(policy: SourcePolicy, handler) -> Any:
     return wrapped
 
 
-class _RoutedSettings:
-    """Settings view pinned to a routed provider profile.
-
-    ``LLMChat`` resolves credentials through ``get_llm_config()``; this adapter
-    swaps in the routed profile while delegating every other attribute to the
-    original settings object.
-    """
-
-    def __init__(self, settings: Any, profile: ProviderProfile) -> None:
-        self._settings = settings
-        self._profile = profile
-
-    def get_llm_config(self) -> dict[str, Any]:
-        return {
-            "api_key": self._profile.api_key or "",
-            "base_url": self._profile.base_url or "",
-            "model": self._profile.model,
-            "temperature": self._profile.temperature,
-            "max_tokens": self._profile.max_tokens,
-        }
-
-    def __getattr__(self, name: str) -> Any:
-        return getattr(self._settings, name)
-
-
 def _chat_from_selection(settings: Any, selection: ProviderSelection) -> LLMChat:
-    return LLMChat(settings=_RoutedSettings(settings, selection.profile))
+    return LLMChat(settings=RoutedSettings(settings, selection.profile))
 
 
 class MultiRoleWorker:

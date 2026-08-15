@@ -44,8 +44,13 @@ class TokenBucketRateLimiter:
         if now is None:
             now = time.monotonic()
         with self._lock:
-            if len(self._buckets) >= self.max_keys:
-                self._buckets.clear()
+            if key not in self._buckets and len(self._buckets) >= self.max_keys:
+                self._evict_refilled(now)
+            if key not in self._buckets and len(self._buckets) >= self.max_keys:
+                # 表内全部桶都处于活跃限流状态：拒绝新 key（fail closed）。
+                # 绝不整体清空或淘汰活跃桶——那会重置受攻击方/正常租户的
+                # 限流状态，让新 key 洪泛成为重置绕过。
+                return max(math.ceil(self.capacity / self.refill_rate), 1)
             tokens, last_refill = self._buckets.get(key, (self.capacity, now))
             tokens = min(self.capacity, tokens + max(now - last_refill, 0.0) * self.refill_rate)
             if tokens >= 1.0:
@@ -54,6 +59,26 @@ class TokenBucketRateLimiter:
             self._buckets[key] = (tokens, now)
             wait = (1.0 - tokens) / self.refill_rate
             return max(math.ceil(wait), 1)
+
+    def _evict_refilled(self, now: float) -> None:
+        """淘汰最久未用的、已完全回满的桶（其限流状态已无执行作用）。
+
+        只有有效 token 数（惰性补充后）达到容量的桶才是"状态无关"的：
+        淘汰它等同于新建一个满桶，不重置任何正在生效的限流。活跃（未回满）
+        桶永不淘汰。
+        """
+
+        def effective(key: str, bucket: tuple[float, float]) -> float:
+            tokens, last_refill = bucket
+            return min(self.capacity, tokens + max(now - last_refill, 0.0) * self.refill_rate)
+
+        candidates = [
+            key for key, bucket in self._buckets.items() if effective(key, bucket) >= self.capacity
+        ]
+        if not candidates:
+            return
+        oldest = min(candidates, key=lambda key: self._buckets[key][1])
+        del self._buckets[oldest]
 
 
 class NullRateLimiter:

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from deep_research_agent.providers.models import (
     ProviderProfile,
     ProviderRouteRequest,
@@ -11,6 +13,32 @@ from deep_research_agent.providers.models import (
 )
 
 DEFAULT_PROVIDER_BONUS = 25
+
+
+class RoutedSettings:
+    """Settings view pinned to a routed provider profile.
+
+    ``LLMChat`` resolves credentials through ``get_llm_config()``; this adapter
+    swaps in the routed profile while delegating every other attribute to the
+    original settings object. Constructing the view is side-effect free, so the
+    caller may create it in any thread and hand it to a chat built later.
+    """
+
+    def __init__(self, settings: Any, profile: ProviderProfile) -> None:
+        self._settings = settings
+        self._profile = profile
+
+    def get_llm_config(self) -> dict[str, Any]:
+        return {
+            "api_key": self._profile.api_key or "",
+            "base_url": self._profile.base_url or "",
+            "model": self._profile.model,
+            "temperature": self._profile.temperature,
+            "max_tokens": self._profile.max_tokens,
+        }
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._settings, name)
 
 
 def _provider_family(provider_name_or_type: str | None) -> str | None:
@@ -47,9 +75,13 @@ class ProviderRouter:
         """Resolve the model for an agent role, deterministically.
 
         Explicit ``strong_role_models`` / ``cheap_role_models`` overrides win
-        first; anything else falls back to the default provider profile. When
-        the model router is disabled the call degrades to a plain manual
-        default-profile route.
+        first; anything else falls back to the default provider profile. The
+        effort tier shapes the fallback: ``low`` may downgrade to an enabled
+        fast-capable profile when a cheaper option exists, while ``medium`` and
+        ``high`` always use the quality default profile (the default is the
+        strongest configured model; effort scaling's other lever is the tool
+        budget written by the planner). When the model router is disabled the
+        call degrades to a plain manual default-profile route.
         """
         if not getattr(self.settings, "model_router_enabled", True):
             return self._route_manual(ProviderRouteRequest(task_role=role))
@@ -59,13 +91,31 @@ class ProviderRouter:
             profile = default_profile.model_copy(update={"model": override})
             model_name = override
         else:
-            profile = default_profile
+            profile = self._profile_for_effort(effort, default_profile)
             model_name = profile.model
         return ProviderSelection(
             profile=profile,
             routing_mode=RoutingMode.MANUAL,
             reason=f"role_routing:{role}:{model_name}",
         )
+
+    def _profile_for_effort(
+        self, effort: str, default_profile: ProviderProfile
+    ) -> ProviderProfile:
+        """Pick a deterministic profile for the effort tier; default when N/A."""
+        if effort == "low":
+            matches = [
+                profile
+                for profile in self._profiles.values()
+                if profile.enabled and getattr(profile.capabilities, "fast", False)
+            ]
+            if not matches:
+                return default_profile
+            matches.sort(
+                key=lambda profile: (profile.name != default_profile.name, profile.name)
+            )
+            return matches[0]
+        return default_profile
 
     def _role_model_override(self, role: str) -> str | None:
         strong = getattr(self.settings, "strong_role_models", None) or {}
