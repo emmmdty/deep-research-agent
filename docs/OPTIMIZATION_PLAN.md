@@ -163,7 +163,8 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
 
 > 状态：一期（§6.1）已于 2026-08 落地（CLI 默认 scheduler-v2 + `--legacy`、planner 默认开启、
 > 引用 quote containment 审计、policy 层接线生产 gateway）；二期（§6.2）亦已落地（引用真实性
-> 程序化核验、一手来源抓取、报告保留模型原文、多模态入口）；三期起进入路线图。
+> 程序化核验、一手来源抓取、报告保留模型原文、多模态入口）；三期（§6.3）已落地（模型路由、
+> 并发优化、观测接线、平台硬化非破坏部分，队列化延后单独发布）。
 
 ### 一期：让"最强实现"成为唯一默认（对齐能力基线）✅
 
@@ -201,16 +202,43 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
    逐跳 SSRF 校验、source policy/预算门禁、OCR 全文入库；研究者规划枚举可主动选 `read_image`；
    独立审察发现的三处缺口已修复并补回归测试，见 `5924060`。）
 
-### 三期：成本与性能（工程化）
+### 三期：成本与性能（工程化）✅
+
+> 状态：三期已于 2026-08 落地（`6a49f08` 模型路由、`6272d1f` 并发优化、`d6877ea` 平台硬化、
+> `6c58926` 观测接线、`3ea0a1a` 独立审察修复——batch 认证旁路、限流桶重置绕过、
+> planning 角色路由与 effort 生效）。队列化（条目 12 的 job 存储换 Redis/DB-backed 队列）
+> 会改 docker-compose 拓扑，属破坏性变更，**延后单独发布**。
 
 9. **模型路由**：按角色/阶段路由（规划、critic、终稿用强模型；摘要、压缩、rerank 摘要用
-   便宜模型），引入按任务价值的分级预算（effort scaling）。
+   便宜模型），引入按任务价值的分级预算（effort scaling）。✅
+   （`providers/router.py` `route_for_role(role, effort=...)`：`strong_role_models`/
+   `cheap_role_models` env 覆盖 → 默认 profile，`reason="role_routing:<role>:<model>"`；
+   `MultiRoleWorker` 按角色注入 routed chat，researcher 按 `task.budget["effort"]` 选 tier；
+   `LLMResearchPlanner` 经 router 用 planning 强模型（brief `constraints["effort"]` 贯通）；
+   `ResearchPlanner` 从 `brief.constraints["effort"]`（缺省 medium）写 `max_tool_calls`+
+   `effort` 进 research task budget（8/16/32，env 可覆盖）；orchestrator `_task_model`
+   优先 `config_snapshot[f"{role}_model"]` 归因。注明：critic 任务同时承担报告合成
+   （"终稿"），故 `strong_role_models["synthesis"]` 由 critic 角色的强模型路由覆盖；
+   `cheap_role_models["summarization"/"compression"/"rerank"]` 已在 `route_for_role` 就绪，
+   但当前运行时无对应 LLM 调用点（rerank 为 embedding 实现），属前向配置。）
 10. **并发优化**：researcher 搜索/抓取 `asyncio.gather` 有界并发；`tool_loop` 并行 tool calls
-    真正并行；verbatim span 匹配用 Aho-Corasick/索引化。
+   真正并行；verbatim span 匹配用 Aho-Corasick/索引化。✅
+   （`Semaphore(2)`+`gather`，结果按 query/url 原始顺序归位——sources/claims 与串行
+   逐字节一致（测试断言）；`tool_loop` 单轮并行、结果按调用顺序追加；`auditor/span_matcher.py`
+   `build_verbatim_matcher`/`match_quotes`，pyahocorasick 惰性导入、缺失时回退逐条 `in`，
+   语义等价有测试覆盖。）
 11. **观测接线**：`configure_tracing()` 在 app/worker 启动调用；`research_span` 包 LLM/tool/
-    阶段；CostTracker 改为 per-job 归因并落盘到 bundle；`/metrics` Prometheus 端点。
+   阶段；CostTracker 改为 per-job 归因并落盘到 bundle；`/metrics` Prometheus 端点。✅
+   （`research.job_id` contextvar 由编排边界设置；CostTracker `snapshot_for/reset_for` +
+   可注入价格表 + 线程安全；`run_manifest["cost_metrics"]` 落盘；`/metrics` 用
+   prometheus-client 惰性导入、缺包时 503；无 OTEL 端点时 tracing no-op，离线安全。）
 12. **平台硬化**：SQLite WAL + foreign_keys；supervisor try/except 隔离；job 存储换 Redis/
-    DB-backed 队列；per-tenant 配额与速率限制；legacy job API 加认证。
+   DB-backed 队列；per-tenant 配额与速率限制；legacy job API 加认证。✅（非破坏部分）
+   （sqlite connect pragma WAL+FK；损坏 checkpoint 跳过并回退、worker 主循环异常不
+   crash-loop；legacy `/v1/research/jobs*` 与 batch 端点 X-API-Key 认证 fail-closed
+   （未配置 key→503、缺失/错误→401）；进程内令牌桶按 `(tenant_id, route)` 限流、
+   满表只淘汰已回满桶、新 key fail closed，429+Retry-After，test mode 可注入零限流。
+   **队列替换未做**：改 docker-compose 拓扑，按 §7 单独发布。）
 
 ### 四期：长期竞争壁垒
 
