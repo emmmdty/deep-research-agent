@@ -11,6 +11,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from deep_research_agent.kernel.contracts import TaskSpec
+from deep_research_agent.observability.tracing import research_span
 from deep_research_agent.tool_gateway.models import (
     ToolExecutionContext,
     ToolHandlerContext,
@@ -65,57 +66,93 @@ class ToolGateway:
         call: ToolInvocation,
         context: ToolExecutionContext,
     ) -> ToolResultEnvelope:
-        self._validate_context(task, context)
-        registered = self._registry.get(call.tool_name)
-        if registered is None:
-            return self._denied(call, "tool_not_allowed", "tool is not registered")
-        spec = registered.spec
-        if task.role not in spec.allowed_roles:
-            return self._denied(call, "role_not_allowed", "task role cannot invoke this tool")
-        if call.tenant_id != context.tenant_id:
-            return self._denied(call, "tenant_mismatch", "call tenant differs from context")
-        if (
-            spec.tenant_scope == "allowlist"
-            and context.tenant_id not in spec.allowed_tenant_ids
+        with research_span(
+            "tool.invoke",
+            {"job_id": context.job_id, "role": task.role, "tool": call.tool_name},
         ):
-            return self._denied(call, "tenant_not_allowed", "tenant cannot invoke this tool")
+            self._validate_context(task, context)
+            registered = self._registry.get(call.tool_name)
+            if registered is None:
+                return self._denied(call, "tool_not_allowed", "tool is not registered")
+            spec = registered.spec
+            if task.role not in spec.allowed_roles:
+                return self._denied(call, "role_not_allowed", "task role cannot invoke this tool")
+            if call.tenant_id != context.tenant_id:
+                return self._denied(call, "tenant_mismatch", "call tenant differs from context")
+            if (
+                spec.tenant_scope == "allowlist"
+                and context.tenant_id not in spec.allowed_tenant_ids
+            ):
+                return self._denied(call, "tenant_not_allowed", "tenant cannot invoke this tool")
 
-        fingerprint = self._fingerprint(task, call, context)
-        idempotency_scope = f"{context.tenant_id}:{context.job_id}"
-        state = self._idempotency.begin(
-            idempotency_scope,
-            call.idempotency_key,
-            fingerprint,
-        )
-        if state == "conflict":
-            return self._denied(
-                call,
-                "idempotency_conflict",
-                "idempotency key was already used for a different invocation",
+            fingerprint = self._fingerprint(task, call, context)
+            idempotency_scope = f"{context.tenant_id}:{context.job_id}"
+            state = self._idempotency.begin(
+                idempotency_scope,
+                call.idempotency_key,
+                fingerprint,
             )
-        if state == "pending":
-            return self._denied(
-                call,
-                "idempotency_in_progress",
-                "an invocation with this idempotency key is in progress",
-            )
-        if state == "duplicate":
-            previous = self._idempotency.get(idempotency_scope, call.idempotency_key)
-            if previous is None:
-                raise RuntimeError("completed idempotency record has no result")
-            return previous.model_copy(update={"duplicate": True})
-
-        cache_key = self._cache_key(call, context)
-        if spec.cache_ttl_seconds > 0:
-            try:
-                cached = self._cache.get(cache_key)
-            except Exception:
-                result = self._failed(
+            if state == "conflict":
+                return self._denied(
                     call,
-                    "cache_backend_error",
-                    "tool cache lookup failed",
-                    0,
+                    "idempotency_conflict",
+                    "idempotency key was already used for a different invocation",
                 )
+            if state == "pending":
+                return self._denied(
+                    call,
+                    "idempotency_in_progress",
+                    "an invocation with this idempotency key is in progress",
+                )
+            if state == "duplicate":
+                previous = self._idempotency.get(idempotency_scope, call.idempotency_key)
+                if previous is None:
+                    raise RuntimeError("completed idempotency record has no result")
+                return previous.model_copy(update={"duplicate": True})
+
+            cache_key = self._cache_key(call, context)
+            if spec.cache_ttl_seconds > 0:
+                try:
+                    cached = self._cache.get(cache_key)
+                except Exception:
+                    result = self._failed(
+                        call,
+                        "cache_backend_error",
+                        "tool cache lookup failed",
+                        0,
+                    )
+                    self._complete_idempotency(
+                        idempotency_scope,
+                        call,
+                        fingerprint,
+                        result,
+                    )
+                    return result
+                if cached is not None:
+                    result = cached.model_copy(
+                        update={
+                            "invocation_id": call.invocation_id,
+                            "tenant_id": call.tenant_id,
+                            "from_cache": True,
+                            "duplicate": False,
+                        }
+                    )
+                    self._complete_idempotency(
+                        idempotency_scope,
+                        call,
+                        fingerprint,
+                        result,
+                    )
+                    return result
+
+            max_tool_calls = int(task.budget.get("max_tool_calls", 0))
+            if max_tool_calls <= 0 or not self._budget.consume(
+                context.tenant_id,
+                context.job_id,
+                task.task_id,
+                max_tool_calls,
+            ):
+                result = self._denied(call, "budget_exhausted", "task tool-call budget is exhausted")
                 self._complete_idempotency(
                     idempotency_scope,
                     call,
@@ -123,74 +160,42 @@ class ToolGateway:
                     result,
                 )
                 return result
-            if cached is not None:
-                result = cached.model_copy(
-                    update={
-                        "invocation_id": call.invocation_id,
-                        "tenant_id": call.tenant_id,
-                        "from_cache": True,
-                        "duplicate": False,
-                    }
-                )
-                self._complete_idempotency(
-                    idempotency_scope,
-                    call,
-                    fingerprint,
-                    result,
+
+            outcome = self._execute(
+                task,
+                call,
+                context,
+                registered.handler,
+                spec.timeout_seconds,
+                spec.max_retries,
+                spec.max_inline_result_bytes,
+            )
+            result = outcome.result
+            if outcome.pending_future is not None:
+                outcome.pending_future.add_done_callback(
+                    lambda future: self._finalize_uncertain_execution(
+                        future=future,
+                        task=task,
+                        call=call,
+                        context=context,
+                        attempt_count=result.attempt_count,
+                        max_inline_result_bytes=spec.max_inline_result_bytes,
+                        cache_key=cache_key,
+                        cache_ttl_seconds=spec.cache_ttl_seconds,
+                        idempotency_scope=idempotency_scope,
+                        fingerprint=fingerprint,
+                    )
                 )
                 return result
-
-        max_tool_calls = int(task.budget.get("max_tool_calls", 0))
-        if max_tool_calls <= 0 or not self._budget.consume(
-            context.tenant_id,
-            context.job_id,
-            task.task_id,
-            max_tool_calls,
-        ):
-            result = self._denied(call, "budget_exhausted", "task tool-call budget is exhausted")
             self._complete_idempotency(
                 idempotency_scope,
                 call,
                 fingerprint,
                 result,
             )
+            if result.status == "succeeded" and spec.cache_ttl_seconds > 0:
+                self._best_effort_cache_put(cache_key, result, spec.cache_ttl_seconds)
             return result
-
-        outcome = self._execute(
-            task,
-            call,
-            context,
-            registered.handler,
-            spec.timeout_seconds,
-            spec.max_retries,
-            spec.max_inline_result_bytes,
-        )
-        result = outcome.result
-        if outcome.pending_future is not None:
-            outcome.pending_future.add_done_callback(
-                lambda future: self._finalize_uncertain_execution(
-                    future=future,
-                    task=task,
-                    call=call,
-                    context=context,
-                    attempt_count=result.attempt_count,
-                    max_inline_result_bytes=spec.max_inline_result_bytes,
-                    cache_key=cache_key,
-                    cache_ttl_seconds=spec.cache_ttl_seconds,
-                    idempotency_scope=idempotency_scope,
-                    fingerprint=fingerprint,
-                )
-            )
-            return result
-        self._complete_idempotency(
-            idempotency_scope,
-            call,
-            fingerprint,
-            result,
-        )
-        if result.status == "succeeded" and spec.cache_ttl_seconds > 0:
-            self._best_effort_cache_put(cache_key, result, spec.cache_ttl_seconds)
-        return result
 
     def _execute(
         self,

@@ -12,6 +12,7 @@ from loguru import logger
 
 from configs.settings import get_settings
 from deep_research_agent.kernel.contracts import TaskResult, TaskSpec
+from deep_research_agent.observability.tracing import configure_tracing
 from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
 from deep_research_agent.research_jobs.models import JobStatus, RuntimeStage
@@ -77,6 +78,7 @@ def build_scheduler_factory(settings, *, offline: bool = False):
 
 
 def main() -> None:
+    configure_tracing()
     args = build_parser().parse_args()
     settings = get_settings()
     if args.scheduler_factory_path is not None:

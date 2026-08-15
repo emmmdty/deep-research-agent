@@ -24,7 +24,8 @@ from loguru import logger
 
 from openai import AsyncOpenAI
 
-from deep_research_agent.observability.cost_tracker import get_tracker
+from deep_research_agent.observability.cost_tracker import current_job_id, get_tracker
+from deep_research_agent.observability.tracing import research_span
 
 class LLMChatError(RuntimeError):
     """Raised when a model call cannot produce a usable response."""
@@ -288,66 +289,79 @@ class LLMChat:
         last_error: Exception | None = None
         budget_attempts = 0
         for attempt in range(1, _MAX_ATTEMPTS + 1):
-            try:
-                response = await self._client.chat.completions.create(**kwargs)
-                usage = response.usage
-                get_tracker().record_llm_call(
-                    input_tokens=int(usage.prompt_tokens or 0),
-                    output_tokens=int(usage.completion_tokens or 0),
-                )
-                content = response.choices[0].message.content or ""
-                if not content.strip():
-                    details = usage.completion_tokens_details
-                    reasoning = details.reasoning_tokens if details else 0
-                    budget = int(kwargs["max_tokens"])
-                    if reasoning and int(reasoning or 0) >= budget * 0.9:
-                        # Thinking models often consume nearly the entire token
-                        # budget on reasoning; widen the budget and retry.
-                        if budget_attempts < 2:
-                            kwargs["max_tokens"] = min(budget * 2, 16384)
-                            budget_attempts += 1
+            with research_span(
+                "llm.chat",
+                {
+                    "job_id": current_job_id(),
+                    "model": self.model_name,
+                    "retry_count": attempt - 1,
+                },
+            ) as span:
+                try:
+                    response = await self._client.chat.completions.create(**kwargs)
+                    usage = response.usage
+                    input_tokens = int(usage.prompt_tokens or 0)
+                    output_tokens = int(usage.completion_tokens or 0)
+                    span.set_attribute("research.input_tokens", input_tokens)
+                    span.set_attribute("research.output_tokens", output_tokens)
+                    get_tracker().record_llm_call(
+                        input_tokens=input_tokens,
+                        output_tokens=output_tokens,
+                        model=self.model_name,
+                    )
+                    content = response.choices[0].message.content or ""
+                    if not content.strip():
+                        details = usage.completion_tokens_details
+                        reasoning = details.reasoning_tokens if details else 0
+                        budget = int(kwargs["max_tokens"])
+                        if reasoning and int(reasoning or 0) >= budget * 0.9:
+                            # Thinking models often consume nearly the entire token
+                            # budget on reasoning; widen the budget and retry.
+                            if budget_attempts < 2:
+                                kwargs["max_tokens"] = min(budget * 2, 16384)
+                                budget_attempts += 1
+                                logger.warning(
+                                    "LLM reasoning consumed the token budget; widening to {} and retrying",
+                                    kwargs["max_tokens"],
+                                )
+                                continue
+                            # The model's reasoning can grow to fill any budget. Reset
+                            # the budget and ask for a direct answer without reasoning.
+                            kwargs["max_tokens"] = max_tokens or int(self._model.get("max_tokens") or 4096)
+                            kwargs["messages"] = [
+                                {"role": "system", "content": system},
+                                {
+                                    "role": "user",
+                                    "content": user
+                                    + "\n\nIMPORTANT: Answer immediately with the final "
+                                    "content only. Do not think step by step or reason aloud.",
+                                },
+                            ]
                             logger.warning(
-                                "LLM reasoning consumed the token budget; widening to {} and retrying",
-                                kwargs["max_tokens"],
+                                "LLM reasoning overflowed the widened budget; retrying with a direct-answer instruction"
                             )
                             continue
-                        # The model's reasoning can grow to fill any budget. Reset
-                        # the budget and ask for a direct answer without reasoning.
-                        kwargs["max_tokens"] = max_tokens or int(self._model.get("max_tokens") or 4096)
-                        kwargs["messages"] = [
-                            {"role": "system", "content": system},
-                            {
-                                "role": "user",
-                                "content": user
-                                + "\n\nIMPORTANT: Answer immediately with the final "
-                                "content only. Do not think step by step or reason aloud.",
-                            },
-                        ]
-                        logger.warning(
-                            "LLM reasoning overflowed the widened budget; retrying with a direct-answer instruction"
+                        raise LLMChatError(
+                            f"model returned empty content (prompt_tokens={usage.prompt_tokens}, "
+                            f"completion_tokens={usage.completion_tokens}, "
+                            f"reasoning_tokens={reasoning})"
                         )
+                    return content
+                except Exception as exc:  # network and API retryable failures
+                    if _is_rate_limit(exc) and attempt < _MAX_ATTEMPTS:
+                        retry_after = _retry_after_seconds(exc)
+                        delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
+                        logger.warning(
+                            "LLM rate limit on attempt {}; retrying in {:.1f}s", attempt, delay
+                        )
+                        await asyncio.sleep(delay * (0.5 + random.random()))
+                        last_error = exc
                         continue
-                    raise LLMChatError(
-                        f"model returned empty content (prompt_tokens={usage.prompt_tokens}, "
-                        f"completion_tokens={usage.completion_tokens}, "
-                        f"reasoning_tokens={reasoning})"
-                    )
-                return content
-            except Exception as exc:  # network and API retryable failures
-                if _is_rate_limit(exc) and attempt < _MAX_ATTEMPTS:
-                    retry_after = _retry_after_seconds(exc)
-                    delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
-                    logger.warning(
-                        "LLM rate limit on attempt {}; retrying in {:.1f}s", attempt, delay
-                    )
-                    await asyncio.sleep(delay * (0.5 + random.random()))
+                    if attempt >= _MAX_ATTEMPTS:
+                        raise LLMChatError(f"LLM call failed after {_MAX_ATTEMPTS} attempts: {exc}") from exc
                     last_error = exc
-                    continue
-                if attempt >= _MAX_ATTEMPTS:
-                    raise LLMChatError(f"LLM call failed after {_MAX_ATTEMPTS} attempts: {exc}") from exc
-                last_error = exc
-                await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
-                logger.warning("LLM call attempt {} failed: {}", attempt, exc)
+                    await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
+                    logger.warning("LLM call attempt {} failed: {}", attempt, exc)
         raise LLMChatError(f"LLM call failed after {_MAX_ATTEMPTS} attempts: {last_error}")
 
     async def chat_json(
@@ -414,46 +428,59 @@ class LLMChat:
         kwargs["tool_choice"] = tool_choice
         last_error: Exception | None = None
         for attempt in range(1, _MAX_ATTEMPTS + 1):
-            try:
-                response = await self._client.chat.completions.create(**kwargs)
-                usage = response.usage
-                get_tracker().record_llm_call(
-                    input_tokens=int(usage.prompt_tokens or 0),
-                    output_tokens=int(usage.completion_tokens or 0),
-                )
-                message = response.choices[0].message
-                tool_calls = [
-                    ToolCallRecord(
-                        call_id=str(call.id or f"call-{index}"),
-                        name=str(call.function.name or ""),
-                        arguments=_parse_tool_arguments(call.function.arguments),
-                        round=0,
+            with research_span(
+                "llm.chat",
+                {
+                    "job_id": current_job_id(),
+                    "model": self.model_name,
+                    "retry_count": attempt - 1,
+                },
+            ) as span:
+                try:
+                    response = await self._client.chat.completions.create(**kwargs)
+                    usage = response.usage
+                    input_tokens = int(usage.prompt_tokens or 0)
+                    output_tokens = int(usage.completion_tokens or 0)
+                    span.set_attribute("research.input_tokens", input_tokens)
+                    span.set_attribute("research.output_tokens", output_tokens)
+                    get_tracker().record_llm_call(
+                        input_tokens=input_tokens,
+                        output_tokens=output_tokens,
+                        model=self.model_name,
                     )
-                    for index, call in enumerate(message.tool_calls or [])
-                ]
-                return {
-                    "content": message.content or None,
-                    "tool_calls": tool_calls,
-                }
-            except Exception as exc:  # network and API retryable failures
-                if _is_rate_limit(exc) and attempt < _MAX_ATTEMPTS:
-                    retry_after = _retry_after_seconds(exc)
-                    delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
-                    logger.warning(
-                        "LLM tool call rate limit on attempt {}; retrying in {:.1f}s",
-                        attempt,
-                        delay,
-                    )
-                    await asyncio.sleep(delay * (0.5 + random.random()))
+                    message = response.choices[0].message
+                    tool_calls = [
+                        ToolCallRecord(
+                            call_id=str(call.id or f"call-{index}"),
+                            name=str(call.function.name or ""),
+                            arguments=_parse_tool_arguments(call.function.arguments),
+                            round=0,
+                        )
+                        for index, call in enumerate(message.tool_calls or [])
+                    ]
+                    return {
+                        "content": message.content or None,
+                        "tool_calls": tool_calls,
+                    }
+                except Exception as exc:  # network and API retryable failures
+                    if _is_rate_limit(exc) and attempt < _MAX_ATTEMPTS:
+                        retry_after = _retry_after_seconds(exc)
+                        delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
+                        logger.warning(
+                            "LLM tool call rate limit on attempt {}; retrying in {:.1f}s",
+                            attempt,
+                            delay,
+                        )
+                        await asyncio.sleep(delay * (0.5 + random.random()))
+                        last_error = exc
+                        continue
+                    if attempt >= _MAX_ATTEMPTS:
+                        raise LLMChatError(
+                            f"LLM tool call failed after {_MAX_ATTEMPTS} attempts: {exc}"
+                        ) from exc
                     last_error = exc
-                    continue
-                if attempt >= _MAX_ATTEMPTS:
-                    raise LLMChatError(
-                        f"LLM tool call failed after {_MAX_ATTEMPTS} attempts: {exc}"
-                    ) from exc
-                last_error = exc
-                await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
-                logger.warning("LLM tool call attempt {} failed: {}", attempt, exc)
+                    await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
+                    logger.warning("LLM tool call attempt {} failed: {}", attempt, exc)
         raise LLMChatError(f"LLM tool call failed after {_MAX_ATTEMPTS} attempts: {last_error}")
 
     async def tool_loop(
@@ -489,74 +516,87 @@ class LLMChat:
             )
             request_kwargs["tools"] = canonical_tools
             request_kwargs["tool_choice"] = "auto"
-            try:
-                response = await self._client.chat.completions.create(**request_kwargs)
-            except Exception as exc:
-                if _is_rate_limit(exc) and round_index < max_rounds:
-                    retry_after = _retry_after_seconds(exc)
-                    delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
-                    logger.warning(
-                        "LLM tool loop rate limit at round {}; retrying in {:.1f}s",
-                        round_index,
-                        delay,
-                    )
-                    await asyncio.sleep(delay * (0.5 + random.random()))
-                    continue
-                if round_index < max_rounds:
-                    await _backoff_delay(round_index, rate_limited=_is_rate_limit(exc))
-                    logger.warning("LLM tool loop round {} failed: {}", round_index, exc)
-                    continue
-                raise LLMChatError(
-                    f"LLM tool loop failed after {max_rounds} attempts: {exc}"
-                ) from exc
-            usage = response.usage
-            get_tracker().record_llm_call(
-                input_tokens=int(usage.prompt_tokens or 0),
-                output_tokens=int(usage.completion_tokens or 0),
-            )
-            message = response.choices[0].message
-            proposed = [
-                ToolCallRecord(
-                    call_id=str(call.id or f"call-{round_index}-{index}"),
-                    name=str(call.function.name or ""),
-                    arguments=_parse_tool_arguments(call.function.arguments),
-                    round=round_index,
-                )
-                for index, call in enumerate(message.tool_calls or [])
-            ]
-            if not proposed:
-                return ToolLoopResult(content=message.content or None, tool_calls=recorded, rounds=round_index)
-            recorded.extend(proposed)
-            messages.append(
+            with research_span(
+                "llm.chat",
                 {
-                    "role": "assistant",
-                    "content": message.content,
-                    "tool_calls": [
-                        {
-                            "id": call.call_id,
-                            "type": "function",
-                            "function": {"name": call.name, "arguments": json.dumps(call.arguments, ensure_ascii=False)},
-                        }
-                        for call in proposed
-                    ],
-                }
-            )
-            semaphore = asyncio.Semaphore(_MAX_PARALLEL_TOOL_CALLS)
-
-            async def _execute_call(call: ToolCallRecord) -> dict[str, Any]:
-                async with semaphore:
-                    try:
-                        return await execute_tool(call.name, call.arguments)
-                    except Exception as exc:
-                        return {"error": str(exc) or type(exc).__name__}
-
-            results = await asyncio.gather(*(_execute_call(call) for call in proposed))
-            for call, result in zip(proposed, results):
+                    "job_id": current_job_id(),
+                    "model": self.model_name,
+                    "retry_count": round_index - 1,
+                },
+            ) as span:
+                try:
+                    response = await self._client.chat.completions.create(**request_kwargs)
+                except Exception as exc:
+                    if _is_rate_limit(exc) and round_index < max_rounds:
+                        retry_after = _retry_after_seconds(exc)
+                        delay = retry_after if retry_after is not None else _BACKOFF_BASE_SECONDS
+                        logger.warning(
+                            "LLM tool loop rate limit at round {}; retrying in {:.1f}s",
+                            round_index,
+                            delay,
+                        )
+                        await asyncio.sleep(delay * (0.5 + random.random()))
+                        continue
+                    if round_index < max_rounds:
+                        await _backoff_delay(round_index, rate_limited=_is_rate_limit(exc))
+                        logger.warning("LLM tool loop round {} failed: {}", round_index, exc)
+                        continue
+                    raise LLMChatError(
+                        f"LLM tool loop failed after {max_rounds} attempts: {exc}"
+                    ) from exc
+                usage = response.usage
+                input_tokens = int(usage.prompt_tokens or 0)
+                output_tokens = int(usage.completion_tokens or 0)
+                span.set_attribute("research.input_tokens", input_tokens)
+                span.set_attribute("research.output_tokens", output_tokens)
+                get_tracker().record_llm_call(
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    model=self.model_name,
+                )
+                message = response.choices[0].message
+                proposed = [
+                    ToolCallRecord(
+                        call_id=str(call.id or f"call-{round_index}-{index}"),
+                        name=str(call.function.name or ""),
+                        arguments=_parse_tool_arguments(call.function.arguments),
+                        round=round_index,
+                    )
+                    for index, call in enumerate(message.tool_calls or [])
+                ]
+                if not proposed:
+                    return ToolLoopResult(content=message.content or None, tool_calls=recorded, rounds=round_index)
+                recorded.extend(proposed)
                 messages.append(
                     {
-                        "role": "tool",
-                        "tool_call_id": call.call_id,
-                        "content": json.dumps(result, ensure_ascii=False, default=str),
+                        "role": "assistant",
+                        "content": message.content,
+                        "tool_calls": [
+                            {
+                                "id": call.call_id,
+                                "type": "function",
+                                "function": {"name": call.name, "arguments": json.dumps(call.arguments, ensure_ascii=False)},
+                            }
+                            for call in proposed
+                        ],
                     }
                 )
+                semaphore = asyncio.Semaphore(_MAX_PARALLEL_TOOL_CALLS)
+
+                async def _execute_call(call: ToolCallRecord) -> dict[str, Any]:
+                    async with semaphore:
+                        try:
+                            return await execute_tool(call.name, call.arguments)
+                        except Exception as exc:
+                            return {"error": str(exc) or type(exc).__name__}
+
+                results = await asyncio.gather(*(_execute_call(call) for call in proposed))
+                for call, result in zip(proposed, results):
+                    messages.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": call.call_id,
+                            "content": json.dumps(result, ensure_ascii=False, default=str),
+                        }
+                    )
         return ToolLoopResult(content=None, tool_calls=recorded, rounds=max_rounds)

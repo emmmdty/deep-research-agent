@@ -13,6 +13,11 @@ from deep_research_agent.kernel.contracts import (
     ResearchGraph,
     ResearchGraphNode,
 )
+from deep_research_agent.observability.cost_tracker import (
+    get_tracker,
+    reset_job_id,
+    set_job_id,
+)
 from deep_research_agent.orchestration.dag import ResearchDAG
 from deep_research_agent.orchestration.events import FileRunJournal
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, RunResult
@@ -92,6 +97,18 @@ class ResearchJobOrchestrator:
 
         if self.scheduler is None:
             raise RuntimeError("run_dag requires an injected ResearchScheduler")
+        token = set_job_id(job_id)
+        try:
+            return await self._run_dag(job_id, dag, config_snapshot)
+        finally:
+            reset_job_id(token)
+
+    async def _run_dag(
+        self,
+        job_id: str,
+        dag: ResearchDAG,
+        config_snapshot: Any,
+    ) -> RunResult:
         job = self._assert_worker_lease(job_id)
         job = self.store.update_job(
             job_id,
@@ -293,6 +310,7 @@ class ResearchJobOrchestrator:
                 "runtime_path": "scheduler-v2",
                 "config_version_id": job.metadata.get("product_config_version_id"),
                 "tasks": tasks,
+                "cost_metrics": get_tracker().snapshot_for(job.job_id).to_dict(),
             },
             citation_verification=citation_verification,
         )
@@ -357,6 +375,13 @@ class ResearchJobOrchestrator:
 
     def run(self, job_id: str) -> JobRuntimeRecord:
         """执行或恢复指定 job。"""
+        token = set_job_id(job_id)
+        try:
+            return self._run(job_id)
+        finally:
+            reset_job_id(token)
+
+    def _run(self, job_id: str) -> JobRuntimeRecord:
         job = self._assert_worker_lease(job_id)
 
         while job.status not in TERMINAL_JOB_STATUSES:

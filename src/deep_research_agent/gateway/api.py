@@ -28,6 +28,7 @@ from deep_research_agent.gateway.contracts import (
 )
 from deep_research_agent.gateway.routes import PRODUCT_ROUTERS
 from deep_research_agent.gateway.routes.auth import rate_limited
+from deep_research_agent.observability.tracing import configure_tracing
 from deep_research_agent.product.db import create_database
 from deep_research_agent.product.ratelimit import RateLimiter, TokenBucketRateLimiter
 from deep_research_agent.product.service import ProductService
@@ -35,6 +36,25 @@ from deep_research_agent.research_jobs import ResearchJobService
 
 
 ServiceFactory = Callable[[], ResearchJobService]
+
+
+def render_research_metrics() -> tuple[str, str] | None:
+    """Render the Prometheus exposition; None when the optional client is absent."""
+
+    try:
+        from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+    except ImportError:
+        return None
+    from deep_research_agent.observability.cost_tracker import (
+        prometheus_registry,
+        refresh_prometheus_gauges,
+    )
+
+    registry = prometheus_registry()
+    if registry is None:
+        return None
+    refresh_prometheus_gauges()
+    return generate_latest(registry).decode("utf-8"), CONTENT_TYPE_LATEST
 
 
 def create_app(
@@ -55,6 +75,7 @@ def create_app(
 ) -> FastAPI:
     """Create the local Phase 4 HTTP API."""
 
+    configure_tracing()
     factory = service_factory or ResearchJobService
     runtime_service = factory()
     app = FastAPI(
@@ -162,6 +183,17 @@ def create_app(
             "service": "deep-research-agent",
             "version": "0.1.0",
         }
+
+    @app.get("/metrics")
+    def metrics() -> Response:
+        rendered = render_research_metrics()
+        if rendered is None:
+            raise HTTPException(
+                status_code=503,
+                detail="prometheus-client is not installed; install prometheus-client to enable /metrics",
+            )
+        body, content_type = rendered
+        return Response(content=body, media_type=content_type)
 
     @app.post("/v1/research/jobs", response_model=PublicJobResponse, status_code=202)
     def submit_research_job(
