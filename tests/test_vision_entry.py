@@ -171,8 +171,9 @@ def test_read_image_wraps_model_failure_as_value_error(httpx_mock, monkeypatch) 
         read_image(IMAGE_URL)
 
 
-def test_read_image_refuses_private_redirect_hop(httpx_mock) -> None:
+def test_read_image_refuses_private_redirect_hop(httpx_mock, monkeypatch) -> None:
     """重定向到内网地址的每一跳都必须在请求发出前被拒绝（TOCTOU SSRF 防护）。"""
+    monkeypatch.setattr(image_reader, "VisionChat", FakeVisionChat)
     httpx_mock.add_response(
         url=IMAGE_URL,
         status_code=302,
