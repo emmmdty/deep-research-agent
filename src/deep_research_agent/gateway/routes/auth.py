@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response, status
@@ -12,6 +13,42 @@ from deep_research_agent.product.service import ProductService
 
 
 router = APIRouter(tags=["authentication"])
+
+
+def rate_limited(key: str) -> Callable[[Request], None]:
+    """进程内令牌桶限流依赖（anonymous 维度），未注入限流器时 no-op。"""
+
+    def dependency(request: Request) -> None:
+        limiter = getattr(request.app.state, "ratelimiter", None)
+        if limiter is None:
+            return
+        retry_after = limiter.check(key)
+        if retry_after is not None:
+            raise HTTPException(
+                status_code=429,
+                detail="rate limit exceeded",
+                headers={"Retry-After": str(int(retry_after))},
+            )
+
+    return dependency
+
+
+def tenant_rate_limited(key: str) -> Callable[[Request, SessionIdentity], None]:
+    """按 (tenant_id, route) 维度计数的限流依赖。"""
+
+    def dependency(request: Request, identity: IdentityDependency) -> None:
+        limiter = getattr(request.app.state, "ratelimiter", None)
+        if limiter is None:
+            return
+        retry_after = limiter.check(f"{identity.tenant_id}:{key}")
+        if retry_after is not None:
+            raise HTTPException(
+                status_code=429,
+                detail="rate limit exceeded",
+                headers={"Retry-After": str(int(retry_after))},
+            )
+
+    return dependency
 
 
 class StrictRequest(BaseModel):
@@ -96,7 +133,12 @@ AdminCsrfIdentityDependency = Annotated[SessionIdentity, Depends(admin_csrf_iden
 
 
 @router.post("/v1/auth/login")
-def login(payload: LoginRequest, response: Response, service: ProductServiceDependency) -> dict:
+def login(
+    payload: LoginRequest,
+    response: Response,
+    service: ProductServiceDependency,
+    _limited: None = Depends(rate_limited("anonymous:v1.auth.login")),
+) -> dict:
     try:
         login_session = service.auth.login(email=payload.email, password=payload.password)
     except (PermissionError, ValueError) as exc:
@@ -132,6 +174,7 @@ def register(
     request: Request,
     response: Response,
     service: ProductServiceDependency,
+    _limited: None = Depends(rate_limited("anonymous:v1.auth.register")),
 ) -> dict:
     if not getattr(request.app.state, "allow_public_registration", False):
         raise HTTPException(status_code=404, detail="public registration is disabled")
@@ -230,5 +273,7 @@ __all__ = [
     "NonBlankText",
     "ProductServiceDependency",
     "get_product_service",
+    "rate_limited",
     "router",
+    "tenant_rate_limited",
 ]

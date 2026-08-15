@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+import hmac
 import os
+from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, Response
 
 from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
@@ -24,10 +26,12 @@ from deep_research_agent.gateway.contracts import (
     public_job_event,
     public_job_response,
 )
-from deep_research_agent.research_jobs import ResearchJobService
-from deep_research_agent.product.db import create_database
-from deep_research_agent.product.service import ProductService
 from deep_research_agent.gateway.routes import PRODUCT_ROUTERS
+from deep_research_agent.gateway.routes.auth import rate_limited
+from deep_research_agent.product.db import create_database
+from deep_research_agent.product.ratelimit import RateLimiter, TokenBucketRateLimiter
+from deep_research_agent.product.service import ProductService
+from deep_research_agent.research_jobs import ResearchJobService
 
 
 ServiceFactory = Callable[[], ResearchJobService]
@@ -46,6 +50,8 @@ def create_app(
     event_poll_interval_seconds: float | None = None,
     event_heartbeat_interval_seconds: float | None = None,
     event_stream_timeout_seconds: float | None = None,
+    api_key: str | None = None,
+    ratelimiter: RateLimiter | None = None,
 ) -> FastAPI:
     """Create the local Phase 4 HTTP API."""
 
@@ -113,6 +119,8 @@ def create_app(
     app.state.event_poll_interval_seconds = resolved_event_poll
     app.state.event_heartbeat_interval_seconds = resolved_event_heartbeat
     app.state.event_stream_timeout_seconds = resolved_event_timeout
+    app.state.legacy_master_key = api_key or os.environ.get("DEEP_RESEARCH_AGENT_MASTER_KEY")
+    app.state.ratelimiter = ratelimiter if ratelimiter is not None else TokenBucketRateLimiter()
 
     def get_service() -> ResearchJobService:
         return runtime_service
@@ -130,6 +138,20 @@ def create_app(
             raise HTTPException(status_code=404, detail=f"unknown job: {job_id}")
         return job
 
+    def require_legacy_api_key(
+        request: Request,
+        api_key_header: Annotated[str | None, Header(alias="X-API-Key")] = None,
+    ) -> None:
+        """Legacy jobs API 鉴权：X-API-Key 必须匹配 master key，fail closed。"""
+        configured = getattr(request.app.state, "legacy_master_key", None)
+        if not configured:
+            raise HTTPException(
+                status_code=503,
+                detail="the legacy API requires DEEP_RESEARCH_AGENT_MASTER_KEY",
+            )
+        if not api_key_header or not hmac.compare_digest(api_key_header, configured):
+            raise HTTPException(status_code=401, detail="missing or invalid X-API-Key")
+
     def _conflict(error: Exception) -> HTTPException:
         return HTTPException(status_code=409, detail=str(error))
 
@@ -145,6 +167,8 @@ def create_app(
     def submit_research_job(
         request: SubmitJobRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
+        _limited: None = Depends(rate_limited("anonymous:v1.research.jobs")),
     ) -> PublicJobResponse:
         job = service.submit(
             topic=request.topic,
@@ -162,6 +186,7 @@ def create_app(
     def get_research_job(
         job_id: str,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> PublicJobResponse:
         return public_job_response(require_legacy_job(service, job_id))
 
@@ -170,6 +195,7 @@ def create_app(
         job_id: str,
         after_sequence: int = Query(default=0, ge=0),
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> JobEventsResponse:
         require_legacy_job(service, job_id)
         events = [public_job_event(item) for item in service.list_events(job_id, after_sequence=after_sequence)]
@@ -180,6 +206,7 @@ def create_app(
         job_id: str,
         _: EmptyRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> PublicJobResponse:
         try:
             require_legacy_job(service, job_id)
@@ -192,6 +219,7 @@ def create_app(
         job_id: str,
         request: RetryJobRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> PublicJobResponse:
         try:
             require_legacy_job(service, job_id)
@@ -206,6 +234,7 @@ def create_app(
         job_id: str,
         request: ResumeJobRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> PublicJobResponse:
         try:
             require_legacy_job(service, job_id)
@@ -220,6 +249,7 @@ def create_app(
         job_id: str,
         request: RefineJobRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> PublicJobResponse:
         try:
             require_legacy_job(service, job_id)
@@ -240,6 +270,7 @@ def create_app(
         job_id: str,
         request: ReviewJobRequest,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> PublicJobResponse:
         try:
             require_legacy_job(service, job_id)
@@ -262,6 +293,7 @@ def create_app(
     def get_research_job_bundle(
         job_id: str,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> JSONResponse:
         job = require_legacy_job(service, job_id)
         bundle_path = artifact_path_for_job(job, "report_bundle.json")
@@ -274,6 +306,7 @@ def create_app(
         job_id: str,
         artifact_name: str,
         service: ResearchJobService = Depends(get_service),
+        _auth: None = Depends(require_legacy_api_key),
     ) -> Response:
         if artifact_name not in ARTIFACT_NAME_CHOICES:
             raise HTTPException(status_code=404, detail=f"unsupported artifact: {artifact_name}")
@@ -294,6 +327,7 @@ def create_app(
     def submit_batch_research(
         request: BatchResearchRequest,
         service: ResearchJobService = Depends(get_service),
+        _limited: None = Depends(rate_limited("anonymous:v1.batch.research")),
     ) -> BatchResearchResponse:
         return submit_batch_jobs(service, request.jobs)
 

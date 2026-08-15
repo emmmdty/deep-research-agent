@@ -6,6 +6,8 @@ import json
 import sqlite3
 from pathlib import Path
 
+from loguru import logger
+
 from deep_research_agent.common import DEFAULT_SOURCE_PROFILE
 from deep_research_agent.reporting.schemas import validate_instance
 from deep_research_agent.research_jobs.models import (
@@ -547,19 +549,21 @@ class ResearchJobStore:
         return self._read_checkpoint_row(row)
 
     def get_latest_checkpoint(self, job_id: str) -> JobCheckpoint | None:
+        """返回最新可读 checkpoint；损坏文件跳过并继续回退到上一个有效文件。"""
         with self._connect() as conn:
-            row = conn.execute(
+            rows = conn.execute(
                 """
                 SELECT * FROM job_checkpoints
                 WHERE job_id = ?
                 ORDER BY sequence DESC
-                LIMIT 1
                 """,
                 (job_id,),
-            ).fetchone()
-        if row is None:
-            return None
-        return self._read_checkpoint_row(row)
+            ).fetchall()
+        for row in rows:
+            checkpoint = self._read_checkpoint_row(row)
+            if checkpoint is not None:
+                return checkpoint
+        return None
 
     def _row_to_job(self, row: sqlite3.Row) -> JobRuntimeRecord:
         return JobRuntimeRecord.model_validate(
@@ -609,8 +613,13 @@ class ResearchJobStore:
             }
         )
 
-    def _read_checkpoint_row(self, row: sqlite3.Row) -> JobCheckpoint:
+    def _read_checkpoint_row(self, row: sqlite3.Row) -> JobCheckpoint | None:
+        """读取 checkpoint payload 文件；损坏文件记录错误并跳过（supervisor 隔离）。"""
         checkpoint_path = Path(row["payload_ref"])
-        payload = json.loads(checkpoint_path.read_text(encoding="utf-8"))
-        validate_instance("job-checkpoint", payload)
-        return JobCheckpoint.model_validate(payload)
+        try:
+            payload = json.loads(checkpoint_path.read_text(encoding="utf-8"))
+            validate_instance("job-checkpoint", payload)
+            return JobCheckpoint.model_validate(payload)
+        except Exception as exc:  # noqa: BLE001 - 损坏 checkpoint 不得 crash worker 主循环
+            logger.error("跳过损坏 checkpoint 文件 {}: {}", checkpoint_path, exc)
+            return None

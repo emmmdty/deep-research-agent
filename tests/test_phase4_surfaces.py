@@ -8,6 +8,10 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 
 
+LEGACY_MASTER_KEY = "phase4-master-key"
+LEGACY_HEADERS = {"X-API-Key": LEGACY_MASTER_KEY}
+
+
 def _write_job_artifacts(job) -> None:
     bundle_dir = Path(job.report_bundle_path).parent
     audit_dir = Path(job.review_queue_path).parent
@@ -72,7 +76,7 @@ def test_http_api_submit_status_events_bundle_and_artifacts(tmp_path: Path):
     from deep_research_agent.research_jobs import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    app = create_app(service_factory=lambda: service)
+    app = create_app(service_factory=lambda: service, api_key=LEGACY_MASTER_KEY)
     client = TestClient(app)
 
     submit_payload = {
@@ -85,18 +89,18 @@ def test_http_api_submit_status_events_bundle_and_artifacts(tmp_path: Path):
         "connector_budget": {"max_fetches_per_task": 2},
         "start_worker": False,
     }
-    response = client.post("/v1/research/jobs", json=submit_payload)
+    response = client.post("/v1/research/jobs", json=submit_payload, headers=LEGACY_HEADERS)
     assert response.status_code == 202
 
     job = response.json()
     job_id = job["job_id"]
 
-    status_response = client.get(f"/v1/research/jobs/{job_id}")
+    status_response = client.get(f"/v1/research/jobs/{job_id}", headers=LEGACY_HEADERS)
     assert status_response.status_code == 200
     assert status_response.json()["job_id"] == job_id
     assert status_response.json()["artifact_urls"]["bundle"].endswith(f"/v1/research/jobs/{job_id}/bundle")
 
-    events_response = client.get(f"/v1/research/jobs/{job_id}/events")
+    events_response = client.get(f"/v1/research/jobs/{job_id}/events", headers=LEGACY_HEADERS)
     assert events_response.status_code == 200
     payload = events_response.json()
     assert payload["job_id"] == job_id
@@ -112,11 +116,14 @@ def test_http_api_submit_status_events_bundle_and_artifacts(tmp_path: Path):
     )
     _write_job_artifacts(completed)
 
-    bundle_response = client.get(f"/v1/research/jobs/{job_id}/bundle")
+    bundle_response = client.get(f"/v1/research/jobs/{job_id}/bundle", headers=LEGACY_HEADERS)
     assert bundle_response.status_code == 200
     assert bundle_response.json()["job"]["job_id"] == job_id
 
-    artifact_response = client.get(f"/v1/research/jobs/{job_id}/artifacts/report.html")
+    artifact_response = client.get(
+        f"/v1/research/jobs/{job_id}/artifacts/report.html",
+        headers=LEGACY_HEADERS,
+    )
     assert artifact_response.status_code == 200
     assert "Surface smoke." in artifact_response.text
 
@@ -129,7 +136,7 @@ def test_http_api_lifecycle_and_review_routes(tmp_path: Path):
     from deep_research_agent.research_jobs import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    app = create_app(service_factory=lambda: service)
+    app = create_app(service_factory=lambda: service, api_key=LEGACY_MASTER_KEY)
     client = TestClient(app)
 
     created = client.post(
@@ -140,26 +147,36 @@ def test_http_api_lifecycle_and_review_routes(tmp_path: Path):
             "research_profile": "default",
             "start_worker": False,
         },
+        headers=LEGACY_HEADERS,
     ).json()
     job_id = created["job_id"]
 
-    cancel_response = client.post(f"/v1/research/jobs/{job_id}:cancel", json={})
+    cancel_response = client.post(f"/v1/research/jobs/{job_id}:cancel", json={}, headers=LEGACY_HEADERS)
     assert cancel_response.status_code == 200
     assert cancel_response.json()["cancel_requested"] is True
 
     service.store.update_job(job_id, status="failed", current_stage="failed", error="smoke failure")
 
-    retry_response = client.post(f"/v1/research/jobs/{job_id}:retry", json={"start_worker": False})
+    retry_response = client.post(
+        f"/v1/research/jobs/{job_id}:retry",
+        json={"start_worker": False},
+        headers=LEGACY_HEADERS,
+    )
     assert retry_response.status_code == 200
     assert retry_response.json()["retry_of"] == job_id
 
-    resume_response = client.post(f"/v1/research/jobs/{job_id}:resume", json={"start_worker": False})
+    resume_response = client.post(
+        f"/v1/research/jobs/{job_id}:resume",
+        json={"start_worker": False},
+        headers=LEGACY_HEADERS,
+    )
     assert resume_response.status_code == 200
     assert resume_response.json()["job_id"] == job_id
 
     refine_response = client.post(
         f"/v1/research/jobs/{job_id}:refine",
         json={"instruction": "Expand the evidence table.", "start_worker": False},
+        headers=LEGACY_HEADERS,
     )
     assert refine_response.status_code == 200
     assert refine_response.json()["current_stage"] == "planned"
@@ -173,6 +190,7 @@ def test_http_api_lifecycle_and_review_routes(tmp_path: Path):
             "reason": "Human reviewer accepted the claim after manual verification.",
             "reviewer": "phase4-test",
         },
+        headers=LEGACY_HEADERS,
     )
     assert review_response.status_code == 200
     assert review_response.json()["audit_gate_status"] in {"passed", "pending_manual_review", "blocked"}
@@ -233,7 +251,7 @@ def test_http_api_batch_route_and_public_contract_schemas(tmp_path: Path):
         Draft202012Validator(schema).validate(instance)
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    app = create_app(service_factory=lambda: service)
+    app = create_app(service_factory=lambda: service, api_key=LEGACY_MASTER_KEY)
     client = TestClient(app)
 
     batch_payload = {
@@ -248,7 +266,7 @@ def test_http_api_batch_route_and_public_contract_schemas(tmp_path: Path):
             },
         ]
     }
-    batch_response = client.post("/v1/batch/research", json=batch_payload)
+    batch_response = client.post("/v1/batch/research", json=batch_payload, headers=LEGACY_HEADERS)
     assert batch_response.status_code == 202
 
     body = batch_response.json()

@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 
 from deep_research_agent.gateway.routes.auth import (
     CsrfIdentityDependency,
     IdentityDependency,
     ProductServiceDependency,
+    tenant_rate_limited,
 )
 
 
@@ -19,6 +20,7 @@ async def upload_corpus(
     identity: CsrfIdentityDependency,
     service: ProductServiceDependency,
     file: UploadFile = File(...),
+    _limited: None = Depends(tenant_rate_limited("v1.corpus.upload")),
 ) -> dict:
     try:
         content = await file.read()

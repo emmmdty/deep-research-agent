@@ -98,6 +98,7 @@ class ProductRepository:
     def create_topic(self, topic: TopicTable, conversation: ConversationTable) -> TopicTable:
         with self._session() as session:
             session.add(topic)
+            session.flush()
             session.add(conversation)
         return topic
 

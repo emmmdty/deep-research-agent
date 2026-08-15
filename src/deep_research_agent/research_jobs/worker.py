@@ -14,6 +14,7 @@ from configs.settings import get_settings
 from deep_research_agent.kernel.contracts import TaskResult, TaskSpec
 from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
+from deep_research_agent.research_jobs.models import JobStatus, RuntimeStage
 from deep_research_agent.research_jobs.service import ResearchJobService
 
 
@@ -106,6 +107,17 @@ def main() -> None:
     heartbeat_thread.start()
     try:
         service.run_job(args.job_id, worker_lease_id=lease_id)
+    except Exception as exc:  # noqa: BLE001 - supervisor 隔离：worker 不得 crash-loop
+        logger.error("phase2 worker 主循环异常，将 job 标记为失败: {}", exc)
+        try:
+            service.store.update_job_status(
+                args.job_id,
+                status=JobStatus.FAILED,
+                current_stage=RuntimeStage.FAILED,
+                error=f"worker crash: {exc}",
+            )
+        except Exception as mark_exc:  # noqa: BLE001 - 标记失败本身不能再崩溃
+            logger.error("phase2 worker 标记 job 失败时发生异常: {}", mark_exc)
     finally:
         stop_event.set()
         heartbeat_thread.join(timeout=1)

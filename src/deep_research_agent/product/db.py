@@ -4,10 +4,21 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from sqlalchemy import Engine, create_engine
+from sqlalchemy import Engine, create_engine, event
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
+
+
+def _sqlite_connect_pragmas(dbapi_connection, _connection_record) -> None:
+    """SQLite 连接启用 WAL journal 与 foreign key 约束（仅 sqlite backend 注册）。"""
+
+    cursor = dbapi_connection.cursor()
+    try:
+        cursor.execute("PRAGMA journal_mode=WAL").fetchone()
+        cursor.execute("PRAGMA foreign_keys=ON").fetchone()
+    finally:
+        cursor.close()
 
 
 @dataclass(frozen=True)
@@ -40,8 +51,10 @@ def create_database(database_url: str, *, offline_mode: bool = False) -> Product
     if backend == "sqlite" and url.database in {None, ":memory:"}:
         engine_options["poolclass"] = StaticPool
     engine = create_engine(url, connect_args=connect_args, **engine_options)
+    if backend == "sqlite":
+        event.listen(engine, "connect", _sqlite_connect_pragmas)
     sessions = sessionmaker(bind=engine, expire_on_commit=False)
     return ProductDatabase(engine=engine, sessions=sessions, offline_mode=offline_mode)
 
 
-__all__ = ["ProductDatabase", "create_database"]
+__all__ = ["ProductDatabase", "_sqlite_connect_pragmas", "create_database"]

@@ -16,6 +16,7 @@ from deep_research_agent.research_jobs import ResearchJobService
 
 ADMIN_EMAIL = "admin@example.test"
 ADMIN_PASSWORD = "correct horse battery staple"
+LEGACY_MASTER_KEY = "product-api-v2-master-key"
 
 
 @pytest.fixture
@@ -27,6 +28,7 @@ def app(tmp_path: Path):
         offline_mode=True,
         bootstrap_admin_email=ADMIN_EMAIL,
         bootstrap_admin_password=ADMIN_PASSWORD,
+        api_key=LEGACY_MASTER_KEY,
     )
 
 
@@ -738,6 +740,7 @@ def test_product_cancel_and_resume_delegate_to_canonical_runtime(admin, app):
 
 def test_product_runtime_jobs_are_not_exposed_through_legacy_gateway(admin):
     client, csrf = admin
+    legacy_headers = {"X-API-Key": LEGACY_MASTER_KEY}
     topic = _create_topic(client, csrf)
     run = client.post(
         f"/v1/topics/{topic['topic_id']}/runs",
@@ -746,12 +749,19 @@ def test_product_runtime_jobs_are_not_exposed_through_legacy_gateway(admin):
     ).json()
     runtime_job_id = run["research_job_id"]
 
-    assert client.get(f"/v1/research/jobs/{runtime_job_id}").status_code == 404
-    assert client.get(f"/v1/research/jobs/{runtime_job_id}/events").status_code == 404
-    assert client.get(f"/v1/research/jobs/{runtime_job_id}/bundle").status_code == 404
+    assert client.get(
+        f"/v1/research/jobs/{runtime_job_id}", headers=legacy_headers
+    ).status_code == 404
+    assert client.get(
+        f"/v1/research/jobs/{runtime_job_id}/events", headers=legacy_headers
+    ).status_code == 404
+    assert client.get(
+        f"/v1/research/jobs/{runtime_job_id}/bundle", headers=legacy_headers
+    ).status_code == 404
     assert client.post(
         f"/v1/research/jobs/{runtime_job_id}:cancel",
         json={},
+        headers=legacy_headers,
     ).status_code == 404
 
 
