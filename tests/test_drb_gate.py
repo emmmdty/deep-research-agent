@@ -9,7 +9,6 @@ from pathlib import Path
 import pytest
 import yaml
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CITATION_FIXTURE = PROJECT_ROOT / "evals" / "fixtures" / "drb" / "citation_fixture.json"
 GATE_CONFIG = PROJECT_ROOT / "evals" / "external" / "configs" / "drb_gate.yaml"
@@ -210,7 +209,9 @@ def test_gate_fails_when_smoke_run_not_completed(tmp_path: Path, monkeypatch):
     import scripts.run_drb_gate as gate_module
     from scripts.run_drb_gate import run_drb_gate
 
-    def _stalled_smoke(*, benchmark_name, output_root, split=None, subset=None, bucket=None, config_path=None):
+    def _stalled_smoke(
+        *, benchmark_name, output_root, split=None, subset=None, bucket=None, config_path=None
+    ):
         return {
             "benchmark": benchmark_name,
             "status": "blocked",
@@ -261,9 +262,7 @@ def test_gate_scorecard_reproducible_with_fixed_timestamp(tmp_path: Path, monkey
     run_drb_gate(output_root=tmp_path / "gate-1")
     run_drb_gate(output_root=tmp_path / "gate-2")
 
-    first_payload = json.loads(
-        (tmp_path / "gate-1" / "scorecard.json").read_text(encoding="utf-8")
-    )
+    first_payload = json.loads((tmp_path / "gate-1" / "scorecard.json").read_text(encoding="utf-8"))
     second_payload = json.loads(
         (tmp_path / "gate-2" / "scorecard.json").read_text(encoding="utf-8")
     )
@@ -289,7 +288,9 @@ def test_drb_smoke_run_has_no_http_and_is_deterministic(tmp_path: Path, monkeypa
     def _snapshot(root: Path) -> dict[str, str]:
         return {
             "official_scores": (root / "official_scores.json").read_text(encoding="utf-8"),
-            "internal_diagnostics": (root / "internal_diagnostics.json").read_text(encoding="utf-8"),
+            "internal_diagnostics": (root / "internal_diagnostics.json").read_text(
+                encoding="utf-8"
+            ),
             "task_results": (root / "task_results.jsonl").read_text(encoding="utf-8"),
         }
 

@@ -71,7 +71,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate scholarly product acceptance metrics")
     parser.add_argument("metrics", help="path to a JSON metrics object")
     args = parser.parse_args()
-    metrics = ProductAcceptanceMetrics.model_validate_json(open(args.metrics, encoding="utf-8").read())
+    with open(args.metrics, encoding="utf-8") as metrics_file:
+        metrics = ProductAcceptanceMetrics.model_validate_json(metrics_file.read())
     evaluation = evaluate_product_acceptance(metrics)
     print(evaluation.model_dump_json(indent=2))
     raise SystemExit(0 if evaluation.passed else 1)

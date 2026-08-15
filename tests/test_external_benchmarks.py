@@ -93,7 +93,9 @@ def test_longfact_safe_smoke_run_writes_metrics_and_backend_logs(tmp_path: Path)
     )
 
     official_scores = json.loads((output_root / "official_scores.json").read_text(encoding="utf-8"))
-    diagnostics = json.loads((output_root / "internal_diagnostics.json").read_text(encoding="utf-8"))
+    diagnostics = json.loads(
+        (output_root / "internal_diagnostics.json").read_text(encoding="utf-8")
+    )
     manifest = json.loads((output_root / "benchmark_run_manifest.json").read_text(encoding="utf-8"))
 
     assert result["benchmark"] == "longfact_safe"
@@ -130,7 +132,9 @@ def test_longbench_v2_short_smoke_runs_and_medium_bucket_reports_blocked(tmp_pat
         subset="smoke",
         output_root=medium_root,
     )
-    medium_manifest = json.loads((medium_root / "benchmark_run_manifest.json").read_text(encoding="utf-8"))
+    medium_manifest = json.loads(
+        (medium_root / "benchmark_run_manifest.json").read_text(encoding="utf-8")
+    )
     assert medium_result["status"] == "blocked"
     assert medium_manifest["status"] == "blocked"
     assert medium_manifest["role"] == "challenge_track"
@@ -147,7 +151,9 @@ def test_browsecomp_guarded_smoke_writes_integrity_report(tmp_path: Path):
         subset="smoke",
         output_root=output_root,
     )
-    integrity_report = json.loads((output_root / "integrity_report.json").read_text(encoding="utf-8"))
+    integrity_report = json.loads(
+        (output_root / "integrity_report.json").read_text(encoding="utf-8")
+    )
 
     assert result["status"] == "completed"
     assert integrity_report["status"] == "passed"
@@ -165,7 +171,9 @@ def test_gaia_supported_subset_smoke_reports_capability_gated_success(tmp_path: 
         output_root=output_root,
     )
     official_scores = json.loads((output_root / "official_scores.json").read_text(encoding="utf-8"))
-    diagnostics = json.loads((output_root / "internal_diagnostics.json").read_text(encoding="utf-8"))
+    diagnostics = json.loads(
+        (output_root / "internal_diagnostics.json").read_text(encoding="utf-8")
+    )
 
     assert result["status"] == "completed"
     assert official_scores["success_rate"] == 1.0

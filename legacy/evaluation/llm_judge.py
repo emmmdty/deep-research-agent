@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import json
 
-from configs.settings import Settings, get_settings
-from ..llm.provider import get_llm
 from loguru import logger
 
+from configs.settings import Settings, get_settings
+
+from ..llm.provider import get_llm
 
 # LLM 评分提示词模板
 JUDGE_SYSTEM_PROMPT = """\
@@ -104,9 +105,7 @@ class LLMJudge:
         settings = self._settings or get_settings()
         if settings.judge_model:
             logger.info("LLM Judge 使用独立模型: {}", settings.judge_model)
-            return settings.model_copy(
-                update={"llm_model_name": settings.judge_model}
-            )
+            return settings.model_copy(update={"llm_model_name": settings.judge_model})
         return settings
 
     @property
@@ -157,9 +156,7 @@ class LLMJudge:
             logger.error("LLM Judge 评分失败: {}", e)
             return self._empty_scores(f"评分过程出错: {e}")
 
-    def compare_reports(
-        self, report_a: str, report_b: str, topic: str = ""
-    ) -> dict:
+    def compare_reports(self, report_a: str, report_b: str, topic: str = "") -> dict:
         """对比评估两份报告（A/B 盲评）。
 
         Args:

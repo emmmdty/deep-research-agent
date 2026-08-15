@@ -8,6 +8,8 @@ designed deterministic fallback absorbs it without changing the healthy path.
 
 from deep_research_agent.evals.reliability.agent_metrics import (
     format_report as format_agent_metrics_report,
+)
+from deep_research_agent.evals.reliability.agent_metrics import (
     run_metrics,
 )
 from deep_research_agent.evals.reliability.fault_injection import (
@@ -31,8 +33,8 @@ __all__ = [
     "ScenarioResult",
     "ScriptedChat",
     "build_scripted_gateway",
-    "format_report",
     "format_agent_metrics_report",
+    "format_report",
     "run_all",
     "run_crash_resume",
     "run_metrics",

@@ -4,18 +4,18 @@ from __future__ import annotations
 
 import json
 import re
-from html import escape
+from collections.abc import Mapping
 from datetime import datetime, timezone
 from hashlib import sha256
+from html import escape
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 from uuid import uuid4
 
 from loguru import logger
 from pydantic import BaseModel
 
 from deep_research_agent.reporting.schemas import validate_instance
-
 
 LEGACY_STAGE_ORDER = ("supervisor", "planner", "researcher", "verifier", "critic")
 BLOCKING_CLAIM_STATUSES = {"contradicted", "unsupported", "unverifiable"}
@@ -248,7 +248,9 @@ def _audit_conflicts(result_data: dict[str, Any], artifact: dict[str, Any]) -> l
     return _as_list(result_data.get("conflict_sets") or artifact.get("conflict_sets"))
 
 
-def _real_evidence_fragments(result_data: dict[str, Any], artifact: dict[str, Any]) -> list[dict[str, Any]]:
+def _real_evidence_fragments(
+    result_data: dict[str, Any], artifact: dict[str, Any]
+) -> list[dict[str, Any]]:
     return _as_list(result_data.get("evidence_fragments") or artifact.get("evidence_fragments"))
 
 
@@ -378,7 +380,9 @@ def build_report_bundle(
         source_records,
         real_snapshots=real_snapshots,
     )
-    evidence_fragments = _real_evidence_fragments(result_data, artifact) or synthetic_evidence_fragments
+    evidence_fragments = (
+        _real_evidence_fragments(result_data, artifact) or synthetic_evidence_fragments
+    )
     claims = _audit_claims(result_data, artifact) or _build_claims(
         notes,
         fallback_summaries=task_summaries,
@@ -386,12 +390,26 @@ def build_report_bundle(
     )
     claim_support_edges = _audit_edges(result_data, artifact)
     conflict_sets = _audit_conflicts(result_data, artifact)
-    audit_gate_status = str(result_data.get("audit_gate_status") or artifact.get("audit_gate_status") or "unchecked")
-    critical_claim_count = int(result_data.get("critical_claim_count", len([claim for claim in claims if claim.get("criticality") == "high"])))
+    audit_gate_status = str(
+        result_data.get("audit_gate_status") or artifact.get("audit_gate_status") or "unchecked"
+    )
+    critical_claim_count = int(
+        result_data.get(
+            "critical_claim_count",
+            len([claim for claim in claims if claim.get("criticality") == "high"]),
+        )
+    )
     blocked_critical_claim_count = int(
         result_data.get(
             "blocked_critical_claim_count",
-            len([claim for claim in claims if claim.get("criticality") == "high" and claim.get("status") in {"contradicted", "unsupported", "unverifiable"}]),
+            len(
+                [
+                    claim
+                    for claim in claims
+                    if claim.get("criticality") == "high"
+                    and claim.get("status") in {"contradicted", "unsupported", "unverifiable"}
+                ]
+            ),
         )
     )
 
@@ -422,9 +440,17 @@ def build_report_bundle(
             "status": str(result_data.get("status") or "completed"),
             "gate_status": audit_gate_status,
             "event_count": len(bundle_audit_events),
-            "tool_event_count": sum(1 for event in bundle_audit_events if event["event_type"] == "tool.invoked"),
-            "stage_event_count": sum(1 for event in bundle_audit_events if event["event_type"] == "stage.completed"),
-            "stages": [event["stage"] for event in bundle_audit_events if event["event_type"] == "stage.completed"],
+            "tool_event_count": sum(
+                1 for event in bundle_audit_events if event["event_type"] == "tool.invoked"
+            ),
+            "stage_event_count": sum(
+                1 for event in bundle_audit_events if event["event_type"] == "stage.completed"
+            ),
+            "stages": [
+                event["stage"]
+                for event in bundle_audit_events
+                if event["event_type"] == "stage.completed"
+            ],
             "critical_claim_count": critical_claim_count,
             "blocked_critical_claim_count": blocked_critical_claim_count,
             "manual_review_required": bool(blocked_critical_claim_count),
@@ -496,7 +522,10 @@ def _artifact_ref(path: Path | None, root: Path) -> str | None:
 def _blocking_claim_ids(bundle: Mapping[str, Any]) -> list[str]:
     claim_ids: list[str] = []
     for claim in bundle.get("claims", []):
-        if str(claim.get("criticality") or "") == "high" and str(claim.get("status") or "") in BLOCKING_CLAIM_STATUSES:
+        if (
+            str(claim.get("criticality") or "") == "high"
+            and str(claim.get("status") or "") in BLOCKING_CLAIM_STATUSES
+        ):
             claim_ids.append(str(claim.get("claim_id") or ""))
     return [claim_id for claim_id in claim_ids if claim_id]
 
@@ -584,9 +613,13 @@ def emit_report_artifacts(
     sources_path = bundle_dir / "sources.json"
     audit_decision_path = bundle_dir / "audit_decision.json"
     manifest_path = bundle_dir / "manifest.json"
-    bundle_ref = report_bundle_ref or str(Path(bundle_output_dirname) / resolved_job_id / "report_bundle.json")
+    bundle_ref = report_bundle_ref or str(
+        Path(bundle_output_dirname) / resolved_job_id / "report_bundle.json"
+    )
 
-    resolved_trace_events = trace_events or build_trace_events(result_data, job_id=resolved_job_id, bundle_ref=bundle_ref)
+    resolved_trace_events = trace_events or build_trace_events(
+        result_data, job_id=resolved_job_id, bundle_ref=bundle_ref
+    )
     bundle = build_report_bundle(
         result_data,
         job_id=resolved_job_id,
@@ -613,7 +646,9 @@ def emit_report_artifacts(
         workspace_dir.resolve(),
     )
     artifact_refs = {
-        "report_markdown": _artifact_ref(report_path.resolve() if report_path is not None else None, workspace_dir.resolve()),
+        "report_markdown": _artifact_ref(
+            report_path.resolve() if report_path is not None else None, workspace_dir.resolve()
+        ),
         "report_html": _artifact_ref(report_html_path, workspace_dir.resolve()),
         "report_bundle": _artifact_ref(bundle_path, workspace_dir.resolve()),
         "claims": _artifact_ref(claims_path, workspace_dir.resolve()),
@@ -624,7 +659,9 @@ def emit_report_artifacts(
         "review_queue": review_queue_ref,
         "claim_graph": claim_graph_ref,
     }
-    manifest = _build_artifact_manifest(bundle, generated_at=generated_at, artifact_refs=artifact_refs)
+    manifest = _build_artifact_manifest(
+        bundle, generated_at=generated_at, artifact_refs=artifact_refs
+    )
     audit_decision = _build_audit_decision_artifact(
         bundle,
         review_queue_ref=review_queue_ref,

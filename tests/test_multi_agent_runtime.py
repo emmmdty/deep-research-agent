@@ -62,7 +62,9 @@ def _task(
     )
 
 
-def _completed(task: TaskSpec, output: dict[str, Any], *, spawned: list[TaskSpec] | None = None) -> WorkerOutput:
+def _completed(
+    task: TaskSpec, output: dict[str, Any], *, spawned: list[TaskSpec] | None = None
+) -> WorkerOutput:
     return WorkerOutput(
         result=TaskResult(task_id=task.task_id, job_id=task.job_id, status="completed"),
         output=output,
@@ -172,7 +174,10 @@ async def test_scheduler_accepts_dynamic_fan_out_without_rerunning_parent() -> N
         async def execute(self, task: TaskSpec, context) -> WorkerOutput:
             self.calls[task.task_id] += 1
             if task.task_id == "seed":
-                children = [_task("child-b", depends_on=("seed",)), _task("child-a", depends_on=("seed",))]
+                children = [
+                    _task("child-b", depends_on=("seed",)),
+                    _task("child-a", depends_on=("seed",)),
+                ]
                 return _completed(task, {"task_id": task.task_id}, spawned=children)
             return _completed(task, {"task_id": task.task_id})
 
@@ -239,6 +244,7 @@ def test_scheduler_job_service_dispatches_persisted_scheduler_runtime(tmp_path) 
         async def run(self, job, dag, config_snapshot, *, seed_checkpoints=None):
             executed.append(f"{job.job_id}:{dag.tasks[0].task_id}:{config_snapshot['version']}")
             from deep_research_agent.orchestration.scheduler import RunResult
+
             return RunResult(
                 job_id=job.job_id,
                 status="completed",
@@ -362,7 +368,9 @@ async def test_scheduler_retries_only_the_failed_branch() -> None:
 
     assert result.status == "completed"
     assert worker.calls == Counter({"left": 2, "left-child": 1, "right": 1, "right-child": 1})
-    assert [event.task_id for event in result.events if event.event_type == "task.retry_scheduled"] == ["left"]
+    assert [
+        event.task_id for event in result.events if event.event_type == "task.retry_scheduled"
+    ] == ["left"]
 
 
 @pytest.mark.asyncio
@@ -419,7 +427,9 @@ async def test_failed_task_retry_does_not_duplicate_idempotent_tool_side_effect(
             allowed_tenant_ids=("tenant-1",),
             retry_safety="adapter_idempotent",
         ),
-        lambda arguments, context: side_effects.append(context.idempotency_key) or {"saved": arguments["url"]},
+        lambda arguments, context: (
+            side_effects.append(context.idempotency_key) or {"saved": arguments["url"]}
+        ),
     )
     gateway = ToolGateway(registry=registry)
 
@@ -524,9 +534,14 @@ def test_reducer_deduplicates_exact_records_without_resolving_disagreement() -> 
     contradicted = accepted.model_copy(
         update={"claim_id": "claim-b", "support_status": "contradicted", "confidence": 0.8}
     )
-    packet_a = EvidencePacket(packet_id="packet-a", task_id="left", evidence_spans=[span], claims=[accepted])
+    packet_a = EvidencePacket(
+        packet_id="packet-a", task_id="left", evidence_spans=[span], claims=[accepted]
+    )
     packet_b = EvidencePacket(
-        packet_id="packet-b", task_id="right", evidence_spans=[span], claims=[accepted, contradicted]
+        packet_id="packet-b",
+        task_id="right",
+        evidence_spans=[span],
+        claims=[accepted, contradicted],
     )
 
     reduced = EvidenceReducer().reduce([packet_b, packet_a, packet_a])
@@ -554,7 +569,11 @@ def test_reducer_merges_semantic_duplicate_claims_and_documents_deterministicall
         evidence_spans=[span_b],
     )
     claim_a = claim_b.model_copy(
-        update={"claim_id": "claim-a", "claim": "The result is reproducible.", "evidence_spans": [span_a]}
+        update={
+            "claim_id": "claim-a",
+            "claim": "The result is reproducible.",
+            "evidence_spans": [span_a],
+        }
     )
     artifact_b = ArtifactRef(
         artifact_id="source-b",
@@ -562,7 +581,9 @@ def test_reducer_merges_semantic_duplicate_claims_and_documents_deterministicall
         media_type="application/pdf",
         content_sha256="a" * 64,
     )
-    artifact_a = artifact_b.model_copy(update={"artifact_id": "source-a", "uri": "artifact://source-a"})
+    artifact_a = artifact_b.model_copy(
+        update={"artifact_id": "source-a", "uri": "artifact://source-a"}
+    )
 
     reduced = EvidenceReducer().reduce(
         [
@@ -596,7 +617,9 @@ def test_orchestration_modules_do_not_import_provider_sdks() -> None:
 
 
 @pytest.mark.asyncio
-async def test_job_orchestrator_bridges_new_runs_to_scheduler_and_persists_checkpoints(tmp_path) -> None:
+async def test_job_orchestrator_bridges_new_runs_to_scheduler_and_persists_checkpoints(
+    tmp_path,
+) -> None:
     from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
     from deep_research_agent.research_jobs.service import ResearchJobService
 
@@ -629,7 +652,9 @@ async def test_job_orchestrator_bridges_new_runs_to_scheduler_and_persists_check
     checkpoint_path = Path(loaded.metadata["scheduler_checkpoint_path"])
     assert checkpoint_path.exists()
     assert json.loads(checkpoint_path.read_text(encoding="utf-8"))[0]["task_id"] == "bridge-task"
-    scheduler_events = [event for event in service.list_events(job.job_id) if event.stage == "scheduler"]
+    scheduler_events = [
+        event for event in service.list_events(job.job_id) if event.stage == "scheduler"
+    ]
     assert [event.payload["scheduler_sequence"] for event in scheduler_events] == list(
         range(1, len(scheduler_events) + 1)
     )
@@ -676,12 +701,18 @@ async def test_job_orchestrator_fences_scheduler_writes_after_losing_lease(tmp_p
 
 
 def test_store_fences_each_mutation_at_the_sqlite_boundary(tmp_path) -> None:
-    from deep_research_agent.research_jobs.models import JobCheckpoint, JobProgressEvent, RuntimeStage
+    from deep_research_agent.research_jobs.models import (
+        JobCheckpoint,
+        JobProgressEvent,
+        RuntimeStage,
+    )
     from deep_research_agent.research_jobs.service import ResearchJobService
     from deep_research_agent.research_jobs.store import WorkerLeaseConflict
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="lease boundary", max_loops=1, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="lease boundary", max_loops=1, research_profile="default", start_worker=False
+    )
     service.store.acquire_worker_lease(job.job_id, worker_pid=1, lease_id="lease-a")
 
     service.store.clear_worker(job.job_id, lease_id="lease-a")
@@ -691,16 +722,24 @@ def test_store_fences_each_mutation_at_the_sqlite_boundary(tmp_path) -> None:
     with pytest.raises(WorkerLeaseConflict):
         service.store.append_event(
             JobProgressEvent(
-                event_id="pending", job_id=job.job_id, sequence=0, stage="scheduler",
-                event_type="stale", message="stale",
+                event_id="pending",
+                job_id=job.job_id,
+                sequence=0,
+                stage="scheduler",
+                event_type="stale",
+                message="stale",
             ),
             lease_id="lease-a",
         )
     with pytest.raises(WorkerLeaseConflict):
         service.store.save_checkpoint(
             JobCheckpoint(
-                checkpoint_id="pending", job_id=job.job_id, stage=RuntimeStage.CREATED,
-                sequence=0, loop_count=0, next_stage=RuntimeStage.CLARIFYING,
+                checkpoint_id="pending",
+                job_id=job.job_id,
+                stage=RuntimeStage.CREATED,
+                sequence=0,
+                loop_count=0,
+                next_stage=RuntimeStage.CLARIFYING,
                 state_payload={},
             ),
             lease_id="lease-a",
@@ -713,7 +752,9 @@ def test_store_heartbeat_cannot_clobber_a_new_lease(tmp_path) -> None:
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="heartbeat boundary", max_loops=1, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="heartbeat boundary", max_loops=1, research_profile="default", start_worker=False
+    )
     service.store.acquire_worker_lease(job.job_id, worker_pid=1, lease_id="lease-a")
     service.store.clear_worker(job.job_id, lease_id="lease-a")
     replacement = service.store.acquire_worker_lease(job.job_id, worker_pid=2, lease_id="lease-b")
@@ -727,10 +768,11 @@ def test_store_heartbeat_cannot_clobber_a_new_lease(tmp_path) -> None:
 def test_worker_composition_defaults_to_builtin_production_factory_and_supports_explicit_offline_mode(
     monkeypatch,
 ) -> None:
+    import sys
+    import types
+
     from configs.settings import Settings
     from deep_research_agent.research_jobs.worker import build_scheduler_factory
-    import types
-    import sys
 
     production_factory = build_scheduler_factory(Settings(scheduler_runtime_mode="production"))
     scheduler = production_factory(cancellation_check=lambda: False)
@@ -745,9 +787,8 @@ def test_worker_composition_defaults_to_builtin_production_factory_and_supports_
 
     def configured_factory(*, settings, **kwargs):
         captured["mode"] = settings.scheduler_runtime_mode
-        from deep_research_agent.research_jobs.worker import _OfflineTaskWorker
-
         from deep_research_agent.orchestration.scheduler import ResearchScheduler
+        from deep_research_agent.research_jobs.worker import _OfflineTaskWorker
 
         return ResearchScheduler(worker=_OfflineTaskWorker(), **kwargs)
 
@@ -759,7 +800,10 @@ def test_worker_composition_defaults_to_builtin_production_factory_and_supports_
             scheduler_factory_path="scheduler_factory_test.configured_factory",
         )
     )
-    assert production_factory(cancellation_check=lambda: False).__class__.__name__ == "ResearchScheduler"
+    assert (
+        production_factory(cancellation_check=lambda: False).__class__.__name__
+        == "ResearchScheduler"
+    )
     assert captured["mode"] == "production"
 
 

@@ -45,4 +45,10 @@ def test_release_gate_config_requires_phase5_eval_suites():
     config = load_release_gate_config()
     check_ids = {check["id"] for check in config["checks"]}
 
-    assert {"company12-smoke", "industry12-smoke", "trusted8-smoke", "file8-smoke", "recovery6-smoke"} <= check_ids
+    assert {
+        "company12-smoke",
+        "industry12-smoke",
+        "trusted8-smoke",
+        "file8-smoke",
+        "recovery6-smoke",
+    } <= check_ids

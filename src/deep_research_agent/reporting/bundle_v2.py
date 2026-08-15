@@ -18,8 +18,7 @@ from deep_research_agent.kernel.contracts import (
     ReportBundleV2,
     ResearchGraph,
 )
-from deep_research_agent.orchestration.reducer import EvidenceReducer
-from deep_research_agent.orchestration.reducer import CriticDecision
+from deep_research_agent.orchestration.reducer import CriticDecision, EvidenceReducer
 from deep_research_agent.reporting.citations import CitationInjector
 
 _SUMMARY_MARKER_RE = re.compile(r"\[\[claim:([^\]]+)\]\]")
@@ -72,9 +71,7 @@ class ReportBundleCompilerV2:
                     or existing.support_status != claim.support_status
                     or not {span.span_id for span in claim.evidence_spans} <= merged_spans
                 ):
-                    raise ValueError(
-                        f"conflicting claim definition for {claim.claim_id!r}"
-                    )
+                    raise ValueError(f"conflicting claim definition for {claim.claim_id!r}")
                 continue
             if (
                 claim.claim.casefold(),
@@ -200,8 +197,13 @@ class ReportBundleCompilerV2:
             current_has_document = current is not None and isinstance(
                 current.metadata.get("document_version_id"), str
             )
-            if current is None or (source_has_document and not current_has_document) or (
-                source_has_document == current_has_document and source.artifact_id < current.artifact_id
+            if (
+                current is None
+                or (source_has_document and not current_has_document)
+                or (
+                    source_has_document == current_has_document
+                    and source.artifact_id < current.artifact_id
+                )
             ):
                 source_by_content[source.content_sha256] = source
         return sorted(source_by_content.values(), key=lambda item: item.artifact_id)
@@ -274,11 +276,12 @@ class ReportBundleCompilerV2:
             if unknown:
                 raise ValueError(f"graph edge {edge.edge_id} references unknown evidence spans")
             outside = {
-                evidence_spans[span_id].document_version_id
-                for span_id in edge.evidence_span_ids
+                evidence_spans[span_id].document_version_id for span_id in edge.evidence_span_ids
             } - set(corpus_manifest.document_version_ids)
             if outside:
-                raise ValueError(f"graph edge {edge.edge_id} references evidence outside frozen corpus")
+                raise ValueError(
+                    f"graph edge {edge.edge_id} references evidence outside frozen corpus"
+                )
             missing_artifacts = {
                 evidence_spans[span_id].document_version_id
                 for span_id in edge.evidence_span_ids
@@ -291,7 +294,8 @@ class ReportBundleCompilerV2:
             mismatched_artifacts = {
                 document_id
                 for document_id in {
-                    evidence_spans[span_id].document_version_id for span_id in edge.evidence_span_ids
+                    evidence_spans[span_id].document_version_id
+                    for span_id in edge.evidence_span_ids
                 }
                 if source_by_document[document_id].content_sha256
                 != corpus_manifest.content_hashes[document_id]
@@ -466,7 +470,8 @@ class ReportBundleCompilerV2:
         summary_matches = [
             (line_index, heading)
             for line_index in range(len(lines))
-            if (heading := ReportBundleCompilerV2._summary_heading_at(lines, line_index)) is not None
+            if (heading := ReportBundleCompilerV2._summary_heading_at(lines, line_index))
+            is not None
         ]
         if len(summary_matches) > 1:
             raise ValueError("ambiguous executive summary headings")

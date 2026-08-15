@@ -239,9 +239,7 @@ class TestRefetchPaths:
         assert item.quote_contained is False
         assert item.support_score == 0.0
 
-    def test_default_refetch_never_raises_on_fetch_error(
-        self, monkeypatch
-    ) -> None:
+    def test_default_refetch_never_raises_on_fetch_error(self, monkeypatch) -> None:
         import deep_research_agent.connectors.tools.page_fetch as page_fetch_module
 
         span = _span()
@@ -280,9 +278,7 @@ class TestJudgePaths:
         )
 
     def test_judge_verified_yields_llm_judge_method(self) -> None:
-        report = self._report_with_judge(
-            lambda claim_text, source_text: "verified"
-        )
+        report = self._report_with_judge(lambda claim_text, source_text: "verified")
         item = report.items[0]
         assert item.verdict == "verified"
         assert item.method == "llm_judge"
@@ -295,17 +291,13 @@ class TestJudgePaths:
         assert item.method == "deterministic"
 
     def test_judge_contradicted_maps_to_unsupported(self) -> None:
-        report = self._report_with_judge(
-            lambda claim_text, source_text: "contradicted"
-        )
+        report = self._report_with_judge(lambda claim_text, source_text: "contradicted")
         item = report.items[0]
         assert item.verdict == "unsupported"
         assert item.method == "llm_judge"
 
     def test_judge_unsupported_maps_to_unsupported(self) -> None:
-        report = self._report_with_judge(
-            lambda claim_text, source_text: "unsupported"
-        )
+        report = self._report_with_judge(lambda claim_text, source_text: "unsupported")
         item = report.items[0]
         assert item.verdict == "unsupported"
         assert item.method == "llm_judge"
@@ -331,8 +323,7 @@ class TestJudgePaths:
 class TestMaxVerifications:
     def test_cap_limits_verified_items_sorted_by_claim_id(self) -> None:
         claims = [
-            _claim(f"claim-{suffix}", spans=[_span(f"span-{suffix}")])
-            for suffix in ("c", "a", "b")
+            _claim(f"claim-{suffix}", spans=[_span(f"span-{suffix}")]) for suffix in ("c", "a", "b")
         ]
         refetch = _ok_refetch(f"Live page: {QUOTE}")
         verifier = CitationVerifier(refetch=refetch, max_verifications=2)
@@ -445,9 +436,7 @@ class TestCompileIntegration:
         canonical = ReportBundleCompilerV2.to_canonical_json(bundle)
         assert json.loads(canonical)["schema_version"] == "2.0"
         assert (
-            json.loads(canonical)["audit_summary"]["citation_verification"]["items"][0][
-                "verdict"
-            ]
+            json.loads(canonical)["audit_summary"]["citation_verification"]["items"][0]["verdict"]
             == "verified"
         )
 

@@ -18,7 +18,6 @@ from deep_research_agent.auditor.models import (
 from deep_research_agent.auditor.store import write_claim_graph, write_review_queue
 from legacy.workflows.states import EvidenceNote, RunMetrics, SourceRecord, TaskItem
 
-
 _CRITICAL_HEADING = "核心结论"
 _NEGATIVE_MARKERS = ("不", "不是", "不能", "未", "无", "没有", "并非", "does not", "not ", "no ")
 _POSITIVE_MARKERS = ("支持", "可以", "能够", "是", "supports", "support", "stateful", "framework")
@@ -68,7 +67,9 @@ def claim_auditor_node(state: dict) -> dict:
 
     summaries: list[tuple[EvidenceNote | None, str, str]] = []
     for note in notes:
-        section_ref = note.task_title or (task_index.get(note.task_id).title if note.task_id in task_index else "")
+        section_ref = note.task_title or (
+            task_index.get(note.task_id).title if note.task_id in task_index else ""
+        )
         summaries.append((note, note.summary, section_ref))
     if not summaries:
         for summary in task_summaries:
@@ -100,10 +101,14 @@ def claim_auditor_node(state: dict) -> dict:
                 fragments_by_source=fragments_by_source,
                 fallback_fragments=evidence_fragments,
             )
-            claim_edges = _link_claim_to_evidence(claim, candidate_fragments, start_index=edge_counter + 1)
+            claim_edges = _link_claim_to_evidence(
+                claim, candidate_fragments, start_index=edge_counter + 1
+            )
             edge_counter += len(claim_edges)
             claim.evidence_ids = [edge.evidence_id for edge in claim_edges]
-            claim.status, claim.uncertainty = _claim_status_from_edges(claim_edges, claim.criticality)
+            claim.status, claim.uncertainty = _claim_status_from_edges(
+                claim_edges, claim.criticality
+            )
 
             claims.append(claim)
             edges.extend(claim_edges)
@@ -124,7 +129,10 @@ def claim_auditor_node(state: dict) -> dict:
                     )
                 )
 
-            if any(edge.relation == "contradicts" and _is_grounded_claim_edge(edge) for edge in claim_edges):
+            if any(
+                edge.relation == "contradicts" and _is_grounded_claim_edge(edge)
+                for edge in claim_edges
+            ):
                 conflict_counter += 1
                 conflicts.append(
                     ConflictSetRecord(
@@ -147,7 +155,9 @@ def claim_auditor_node(state: dict) -> dict:
     new_rescue_count = len(set(pending_follow_up_queries) - set(previous_follow_up_queries))
     if new_rescue_count:
         run_metrics.audit_rescue_queries += new_rescue_count
-        tasks = _reset_tasks_for_audit_rescue(tasks, review_items=review_items, claim_notes=claim_notes)
+        tasks = _reset_tasks_for_audit_rescue(
+            tasks, review_items=review_items, claim_notes=claim_notes
+        )
     review_payload = {
         "job_id": str(state.get("job_id") or state.get("research_topic") or "unknown-job"),
         "items": [item.model_dump(mode="json") for item in review_items],
@@ -296,7 +306,9 @@ def _classify_claim_relation(claim_text: str, evidence_text: str) -> tuple[str, 
 
     if overlap >= 0.2 and claim_negative != evidence_negative:
         return "contradicts", 0.95, "claim 与证据存在明确方向冲突。"
-    if overlap >= 0.2 and ((claim_negative and evidence_positive) or (claim_positive and evidence_negative)):
+    if overlap >= 0.2 and (
+        (claim_negative and evidence_positive) or (claim_positive and evidence_negative)
+    ):
         return "contradicts", 0.95, "claim 与证据存在明确方向冲突。"
     if overlap >= 0.3:
         return "supports", min(0.9, 0.55 + overlap), "claim 与证据关键词高度重合。"

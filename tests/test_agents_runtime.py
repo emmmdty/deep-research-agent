@@ -119,9 +119,7 @@ def test_planner_appends_required_objectives_the_model_missed() -> None:
     )
     brief = _brief()
     dag = planner.plan(brief, _domain_pack(), require_objectives=["长龙航空畅飞卡的可用航线"])
-    researcher_objectives = [
-        task.objective for task in dag.tasks if task.role == "researcher"
-    ]
+    researcher_objectives = [task.objective for task in dag.tasks if task.role == "researcher"]
     assert "What changed for tool use?" in researcher_objectives
     assert any("畅飞卡" in objective for objective in researcher_objectives)
 
@@ -145,9 +143,7 @@ def test_planner_does_not_duplicate_covered_required_objectives() -> None:
         _domain_pack(),
         require_objectives=["高铁学生票（学生证）的现行购票规则、折扣比例"],
     )
-    researcher_objectives = [
-        task.objective for task in dag.tasks if task.role == "researcher"
-    ]
+    researcher_objectives = [task.objective for task in dag.tasks if task.role == "researcher"]
     assert len(researcher_objectives) == 2
     assert any("学生票" in objective for objective in researcher_objectives)
 
@@ -510,7 +506,9 @@ async def test_critic_deterministic_fallback_when_model_synthesis_fails() -> Non
             },
         )()
     ]
-    researcher_result = type("TaskResult", (), {"evidence_packets": packets, "output_artifacts": []})()
+    researcher_result = type(
+        "TaskResult", (), {"evidence_packets": packets, "output_artifacts": []}
+    )()
     dependency = type(
         "WorkerOutput",
         (),

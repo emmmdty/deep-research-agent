@@ -4,11 +4,18 @@ from __future__ import annotations
 
 from loguru import logger
 
+from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TaskItem
+
+from ..auditor.models import (
+    ClaimRecord,
+    ClaimSupportEdgeRecord,
+    ConflictSetRecord,
+    CriticalClaimReviewItem,
+    EvidenceFragmentRecord,
+)
 from ..llm.provider import get_llm
 from ..prompts.templates import WRITER_SYSTEM_PROMPT, WRITER_USER_PROMPT
 from ..research_policy import build_benchmark_report
-from ..auditor.models import ClaimRecord, ClaimSupportEdgeRecord, ConflictSetRecord, CriticalClaimReviewItem, EvidenceFragmentRecord
-from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
 
 def writer_node(state: dict) -> dict:
@@ -33,7 +40,9 @@ def writer_node(state: dict) -> dict:
     ]
     evidence_notes = state.get("evidence_notes", [])
     evidence_fragments: list[EvidenceFragmentRecord] = [
-        fragment if isinstance(fragment, EvidenceFragmentRecord) else EvidenceFragmentRecord.model_validate(fragment)
+        fragment
+        if isinstance(fragment, EvidenceFragmentRecord)
+        else EvidenceFragmentRecord.model_validate(fragment)
         for fragment in state.get("evidence_fragments", [])
     ]
     evidence_units = state.get("evidence_units", [])
@@ -44,15 +53,21 @@ def writer_node(state: dict) -> dict:
         for claim in state.get("claims", [])
     ]
     claim_support_edges: list[ClaimSupportEdgeRecord] = [
-        edge if isinstance(edge, ClaimSupportEdgeRecord) else ClaimSupportEdgeRecord.model_validate(edge)
+        edge
+        if isinstance(edge, ClaimSupportEdgeRecord)
+        else ClaimSupportEdgeRecord.model_validate(edge)
         for edge in state.get("claim_support_edges", [])
     ]
     conflict_sets: list[ConflictSetRecord] = [
-        conflict if isinstance(conflict, ConflictSetRecord) else ConflictSetRecord.model_validate(conflict)
+        conflict
+        if isinstance(conflict, ConflictSetRecord)
+        else ConflictSetRecord.model_validate(conflict)
         for conflict in state.get("conflict_sets", [])
     ]
     review_queue: list[CriticalClaimReviewItem] = [
-        item if isinstance(item, CriticalClaimReviewItem) else CriticalClaimReviewItem.model_validate(item)
+        item
+        if isinstance(item, CriticalClaimReviewItem)
+        else CriticalClaimReviewItem.model_validate(item)
         for item in state.get("critical_claim_review_queue", [])
     ]
     audit_gate_status = str(state.get("audit_gate_status") or "unchecked")
@@ -101,7 +116,9 @@ def writer_node(state: dict) -> dict:
         report = clean_llm_output(report)
 
     if audit_gate_status == "blocked":
-        report = _prepend_audit_block_notice(report, review_queue, conflict_sets, audit_block_reason)
+        report = _prepend_audit_block_notice(
+            report, review_queue, conflict_sets, audit_block_reason
+        )
 
     logger.info("📝 Writer 报告撰写完成: 长度={} 字符", len(report))
 
@@ -153,10 +170,7 @@ def _format_source_catalog(sources: list[SourceRecord]) -> str:
     if not sources:
         return "暂无来源。"
 
-    return "\n".join(
-        f"[{source.citation_id}] {source.title} - {source.url}"
-        for source in sources
-    )
+    return "\n".join(f"[{source.citation_id}] {source.title} - {source.url}" for source in sources)
 
 
 def _prepend_audit_block_notice(

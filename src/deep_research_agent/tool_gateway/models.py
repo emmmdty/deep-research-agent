@@ -18,7 +18,6 @@ from pydantic import (
 
 from deep_research_agent.kernel.contracts import ArtifactRef
 
-
 Identifier = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 _JSON_VALUE_ADAPTER = TypeAdapter(JsonValue)
 

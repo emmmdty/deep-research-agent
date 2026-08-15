@@ -28,18 +28,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from scripts.live_benchmark_runner import (  # noqa: E402
+from scripts.live_benchmark_runner import (
     GAIA_JUDGE_SYSTEM,
     run_live_benchmark,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = (
-    PROJECT_ROOT
-    / "evals"
-    / "external"
-    / "dataset_manifests"
-    / "gaia_2023_val_text_sample20.json"
+    PROJECT_ROOT / "evals" / "external" / "dataset_manifests" / "gaia_2023_val_text_sample20.json"
 )
 DEFAULT_OUT_DIR = PROJECT_ROOT / "evals" / "reports" / "live_benchmarks" / "gaia_real"
 

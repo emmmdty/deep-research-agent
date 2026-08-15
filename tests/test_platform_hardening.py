@@ -11,8 +11,13 @@ from fastapi.testclient import TestClient
 from deep_research_agent.product.ratelimit import NullRateLimiter, TokenBucketRateLimiter
 from deep_research_agent.research_jobs import ResearchJobService
 from deep_research_agent.research_jobs.models import JobStatus, RuntimeStage
-from legacy.workflows.states import CriticFeedback, ReportArtifact, RunMetrics, SourceRecord, TaskItem
-
+from legacy.workflows.states import (
+    CriticFeedback,
+    ReportArtifact,
+    RunMetrics,
+    SourceRecord,
+    TaskItem,
+)
 
 LEGACY_KEY = "platform-hardening-master-key"
 
@@ -38,7 +43,8 @@ def _submit_payload() -> dict:
 
 def test_sqlite_database_enables_wal_and_foreign_keys(tmp_path: Path):
     """sqlite backend 连接应启用 WAL 与 foreign key 约束。"""
-    from sqlalchemy import event as sqlalchemy_event, text
+    from sqlalchemy import event as sqlalchemy_event
+    from sqlalchemy import text
 
     from deep_research_agent.product.db import _sqlite_connect_pragmas, create_database
 
@@ -174,7 +180,10 @@ def test_corrupt_latest_checkpoint_falls_back_to_previous_valid_one(tmp_path: Pa
             state_payload=first.state_payload,
         )
     )
-    corrupted = service.store.checkpoint_dir(job.job_id) / f"{second.sequence:04d}-{second.stage.value}.json"
+    corrupted = (
+        service.store.checkpoint_dir(job.job_id)
+        / f"{second.sequence:04d}-{second.stage.value}.json"
+    )
     corrupted.write_text("{ not valid json", encoding="utf-8")
 
     latest = service.store.get_latest_checkpoint(job.job_id)
@@ -271,10 +280,13 @@ def test_legacy_jobs_api_rejects_missing_and_wrong_api_key(tmp_path: Path):
     )
     assert accepted.status_code == 202
     job_id = accepted.json()["job_id"]
-    assert client.get(
-        f"/v1/research/jobs/{job_id}",
-        headers={"X-API-Key": LEGACY_KEY},
-    ).status_code == 200
+    assert (
+        client.get(
+            f"/v1/research/jobs/{job_id}",
+            headers={"X-API-Key": LEGACY_KEY},
+        ).status_code
+        == 200
+    )
     assert client.get(f"/v1/research/jobs/{job_id}").status_code == 401
 
 
@@ -294,16 +306,22 @@ def test_legacy_api_key_reads_master_key_from_environment(tmp_path: Path, monkey
     app, _ = _legacy_app(tmp_path, api_key=None)
     client = TestClient(app)
 
-    assert client.post(
-        "/v1/research/jobs",
-        headers={"X-API-Key": "env-master-key"},
-        json=_submit_payload(),
-    ).status_code == 202
-    assert client.post(
-        "/v1/research/jobs",
-        headers={"X-API-Key": "wrong"},
-        json=_submit_payload(),
-    ).status_code == 401
+    assert (
+        client.post(
+            "/v1/research/jobs",
+            headers={"X-API-Key": "env-master-key"},
+            json=_submit_payload(),
+        ).status_code
+        == 202
+    )
+    assert (
+        client.post(
+            "/v1/research/jobs",
+            headers={"X-API-Key": "wrong"},
+            json=_submit_payload(),
+        ).status_code
+        == 401
+    )
 
 
 def test_legacy_create_rate_limit_returns_429_with_retry_after(tmp_path: Path):
@@ -316,7 +334,10 @@ def test_legacy_create_rate_limit_returns_429_with_retry_after(tmp_path: Path):
     headers = {"X-API-Key": LEGACY_KEY}
 
     for _ in range(2):
-        assert client.post("/v1/research/jobs", headers=headers, json=_submit_payload()).status_code == 202
+        assert (
+            client.post("/v1/research/jobs", headers=headers, json=_submit_payload()).status_code
+            == 202
+        )
 
     limited = client.post("/v1/research/jobs", headers=headers, json=_submit_payload())
     assert limited.status_code == 429
@@ -361,9 +382,7 @@ def test_batch_research_fails_closed_when_no_key_configured(tmp_path: Path, monk
     app, _ = _legacy_app(tmp_path, api_key=None)
     client = TestClient(app)
 
-    assert client.post(
-        "/v1/batch/research", json={"jobs": [_submit_payload()]}
-    ).status_code == 503
+    assert client.post("/v1/batch/research", json={"jobs": [_submit_payload()]}).status_code == 503
 
 
 def test_token_bucket_full_table_evicts_refilled_instead_of_clearing_all():
@@ -478,7 +497,10 @@ def test_rate_limit_can_be_disabled_for_test_mode(tmp_path: Path):
     headers = {"X-API-Key": LEGACY_KEY}
 
     for _ in range(5):
-        assert client.post("/v1/research/jobs", headers=headers, json=_submit_payload()).status_code == 202
+        assert (
+            client.post("/v1/research/jobs", headers=headers, json=_submit_payload()).status_code
+            == 202
+        )
 
 
 def test_ratelimit_module_is_self_contained():

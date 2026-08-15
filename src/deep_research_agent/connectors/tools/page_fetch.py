@@ -27,7 +27,18 @@ _HTTP_TIMEOUT_SECONDS = 20.0
 _MAX_REDIRECTS = 5
 _USER_AGENT = "DeepResearchAgent/1.0 (evidence-first research; contact: repo owner)"
 
-_NOISE_TAGS = {"script", "style", "noscript", "svg", "iframe", "form", "nav", "footer", "header", "aside"}
+_NOISE_TAGS = {
+    "script",
+    "style",
+    "noscript",
+    "svg",
+    "iframe",
+    "form",
+    "nav",
+    "footer",
+    "header",
+    "aside",
+}
 
 
 def _is_private_host(hostname: str) -> bool:
@@ -42,7 +53,13 @@ def _is_private_host(hostname: str) -> bool:
             address = ipaddress.ip_address(info[4][0])
         except ValueError:
             continue
-        if address.is_private or address.is_loopback or address.is_link_local or address.is_reserved or address.is_multicast:
+        if (
+            address.is_private
+            or address.is_loopback
+            or address.is_link_local
+            or address.is_reserved
+            or address.is_multicast
+        ):
             return True
     return False
 
@@ -196,7 +213,9 @@ def _page_from_response(
     _validate_public_url(final_url)
 
     content_type = response.headers.get("content-type", "").lower()
-    pdf_like = "application/pdf" in content_type or urlparse(final_url).path.lower().endswith(".pdf")
+    pdf_like = "application/pdf" in content_type or urlparse(final_url).path.lower().endswith(
+        ".pdf"
+    )
     if pdf_like:
         from deep_research_agent.connectors.tools.pdf_reader import extract_pdf_text
 
@@ -239,7 +258,9 @@ def _normalize_text(text: str) -> str:
     return text.strip()
 
 
-def chunk_text(text: str, chunk_chars: int = CHUNK_CHARS, overlap_chars: int = CHUNK_OVERLAP_CHARS) -> list[dict[str, object]]:
+def chunk_text(
+    text: str, chunk_chars: int = CHUNK_CHARS, overlap_chars: int = CHUNK_OVERLAP_CHARS
+) -> list[dict[str, object]]:
     """Deterministic character-window chunking with overlap.
 
     Returns ``[{"chunk_index", "start", "end", "text"}]``. Every chunk overlaps
@@ -248,7 +269,9 @@ def chunk_text(text: str, chunk_chars: int = CHUNK_CHARS, overlap_chars: int = C
     """
 
     if chunk_chars <= 0 or overlap_chars < 0 or overlap_chars >= chunk_chars:
-        raise ValueError("chunk_chars must be positive and overlap_chars must be in [0, chunk_chars)")
+        raise ValueError(
+            "chunk_chars must be positive and overlap_chars must be in [0, chunk_chars)"
+        )
     if not text:
         return []
     chunks: list[dict[str, object]] = []

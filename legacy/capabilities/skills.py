@@ -7,7 +7,6 @@ from pathlib import Path
 
 from legacy.workflows.states import SkillDefinition
 
-
 _FRONTMATTER_PATTERN = re.compile(r"\A---\s*\n(.*?)\n---\s*\n?(.*)\Z", re.DOTALL)
 
 

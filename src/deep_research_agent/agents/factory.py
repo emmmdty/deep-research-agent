@@ -8,8 +8,10 @@ composition. Offline mode keeps the deterministic benchmark pipeline untouched.
 
 from __future__ import annotations
 
+import contextlib
+from collections.abc import Callable
 from functools import partial
-from typing import Any, Callable
+from typing import Any
 
 from loguru import logger
 
@@ -70,7 +72,9 @@ def _read_image_handler(arguments: dict[str, Any], context) -> dict[str, Any]:
     )
 
 
-def _read_only_tool_spec(name: str, roles: tuple[str, ...], *, cache_ttl_seconds: float = 3600.0) -> ToolSpec:
+def _read_only_tool_spec(
+    name: str, roles: tuple[str, ...], *, cache_ttl_seconds: float = 3600.0
+) -> ToolSpec:
     return ToolSpec(
         name=name,
         allowed_roles=roles,
@@ -140,7 +144,9 @@ def _resolve_source_policy(
     try:
         policy = load_source_policy(profile_name)
     except Exception as exc:  # noqa: BLE001 - missing profiles must not break research
-        logger.warning("source policy {} unavailable ({}); using permissive default", profile_name, exc)
+        logger.warning(
+            "source policy {} unavailable ({}); using permissive default", profile_name, exc
+        )
         policy = load_source_policy("company_broad")
     if policy_overrides:
         from deep_research_agent.policy.models import SourcePolicyOverrides
@@ -222,9 +228,7 @@ class MultiRoleWorker:
                 return None
             return self._chat_factory(selection)
         except Exception as exc:  # noqa: BLE001 - routing must never break research
-            logger.warning(
-                "role routing for {} unavailable ({}); using default worker", role, exc
-            )
+            logger.warning("role routing for {} unavailable ({}); using default worker", role, exc)
             return None
 
     @staticmethod
@@ -232,10 +236,8 @@ class MultiRoleWorker:
         close = getattr(chat, "aclose", None)
         if close is None:
             return
-        try:
+        with contextlib.suppress(Exception):
             await close()
-        except Exception:  # noqa: BLE001 - closing is best-effort cleanup
-            pass
 
     async def _execute_routed(self, task, context: TaskExecutionContext, worker) -> WorkerOutput:
         if task.role == "researcher":
@@ -253,9 +255,7 @@ class MultiRoleWorker:
         finally:
             await self._close_chat(chat)
 
-    async def execute(
-        self, task, context: TaskExecutionContext
-    ) -> WorkerOutput:
+    async def execute(self, task, context: TaskExecutionContext) -> WorkerOutput:
         if task.role == "researcher":
             return await self._execute_routed(task, context, self._researcher)
         if task.role == "critic":

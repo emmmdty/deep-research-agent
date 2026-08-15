@@ -12,8 +12,8 @@ from .service import CorpusService
 from .storage import InMemoryCorpusRepository
 
 __all__ = [
-    "CorpusService",
     "CorpusManifest",
+    "CorpusService",
     "CorpusSnapshot",
     "DocumentVersion",
     "InMemoryCorpusRepository",

@@ -44,7 +44,11 @@ class RoutedSettings:
 def _provider_family(provider_name_or_type: str | None) -> str | None:
     if not provider_name_or_type:
         return None
-    if provider_name_or_type in {ProviderType.OPENAI.value, ProviderType.OPENAI_COMPATIBLE.value, "openai"}:
+    if provider_name_or_type in {
+        ProviderType.OPENAI.value,
+        ProviderType.OPENAI_COMPATIBLE.value,
+        "openai",
+    }:
         return "openai"
     if provider_name_or_type in {
         ProviderType.ANTHROPIC.value,
@@ -99,9 +103,7 @@ class ProviderRouter:
             reason=f"role_routing:{role}:{model_name}",
         )
 
-    def _profile_for_effort(
-        self, effort: str, default_profile: ProviderProfile
-    ) -> ProviderProfile:
+    def _profile_for_effort(self, effort: str, default_profile: ProviderProfile) -> ProviderProfile:
         """Pick a deterministic profile for the effort tier; default when N/A."""
         if effort == "low":
             matches = [
@@ -111,9 +113,7 @@ class ProviderRouter:
             ]
             if not matches:
                 return default_profile
-            matches.sort(
-                key=lambda profile: (profile.name != default_profile.name, profile.name)
-            )
+            matches.sort(key=lambda profile: (profile.name != default_profile.name, profile.name))
             return matches[0]
         return default_profile
 

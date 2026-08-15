@@ -76,9 +76,7 @@ class CitationVerificationReport(StrictModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     job_id: str = Field(min_length=1)
-    created_at: str = Field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     items: list[CitationVerificationRecord] = Field(default_factory=list)
     summary: dict[str, int] = Field(
         default_factory=lambda: {
@@ -131,9 +129,7 @@ class CitationVerifier:
         candidates = [claim for claim in claims if claim.critical]
         candidates = sorted(candidates, key=lambda claim: claim.claim_id)
         for claim in candidates[: self._max_verifications]:
-            records.append(
-                self._verify_claim(claim, source_by_document, frozen_texts, job_id)
-            )
+            records.append(self._verify_claim(claim, source_by_document, frozen_texts, job_id))
         for record in records:
             counts["total"] += 1
             counts[record.verdict] += 1
@@ -170,15 +166,13 @@ class CitationVerifier:
                 source_text = str(fetched.get("content") or "")
                 fetch_status = "ok"
 
-        quote_contained = any(
-            span.quote in source_text for span in claim.evidence_spans
-        )
+        quote_contained = any(span.quote in source_text for span in claim.evidence_spans)
         support_score = _token_overlap(claim.claim, source_text)
 
         if fetch_status == "failed":
-            verdict: Literal[
-                "verified", "unsupported", "unverifiable", "fetch_failed"
-            ] = "fetch_failed"
+            verdict: Literal["verified", "unsupported", "unverifiable", "fetch_failed"] = (
+                "fetch_failed"
+            )
             method: Literal["deterministic", "llm_judge", "fetch_failed"] = "fetch_failed"
             rationale = "refetch failed; source text unavailable"
         elif quote_contained:

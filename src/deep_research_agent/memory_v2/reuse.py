@@ -144,7 +144,9 @@ def _source_from_record(record: MemoryRecord) -> dict[str, Any] | None:
 
 
 def _query_covered(
-    query: dict[str, str], recalled: list[tuple[dict[str, Any], MemoryRecord]], recalled_urls: set[str]
+    query: dict[str, str],
+    recalled: list[tuple[dict[str, Any], MemoryRecord]],
+    recalled_urls: set[str],
 ) -> bool:
     """Deterministic URL-based coverage: was this planned query answered before?
 
@@ -230,9 +232,7 @@ class MemoryRecall:
                 scope=MemoryScope.TOPIC_MEMORY,
             )
         except PermissionError:
-            logger.warning(
-                "memory recall denied for tenant {}; treating as no-hit", tenant_id
-            )
+            logger.warning("memory recall denied for tenant {}; treating as no-hit", tenant_id)
             return [], set()
         recalled: list[tuple[dict[str, Any], MemoryRecord]] = []
         for record in records:

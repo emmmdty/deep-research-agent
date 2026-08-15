@@ -25,20 +25,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from deep_research_agent.agents.llm import LLMChat  # noqa: E402
-from deep_research_agent.observability.cost_tracker import get_tracker  # noqa: E402
-from scripts.live_benchmark_runner import (  # noqa: E402
+from deep_research_agent.agents.llm import LLMChat
+from deep_research_agent.observability.cost_tracker import get_tracker
+from scripts.live_benchmark_runner import (
     GAIA_JUDGE_SYSTEM,
     _normalize,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = (
-    PROJECT_ROOT
-    / "evals"
-    / "external"
-    / "dataset_manifests"
-    / "gaia_2023_val_text_sample20.json"
+    PROJECT_ROOT / "evals" / "external" / "dataset_manifests" / "gaia_2023_val_text_sample20.json"
 )
 DEFAULT_OUT_DIR = PROJECT_ROOT / "evals" / "reports" / "live_benchmarks" / "gaia_baseline"
 AGENT_OUT_DIR = PROJECT_ROOT / "evals" / "reports" / "live_benchmarks" / "gaia_real"
@@ -155,9 +151,7 @@ async def _main(out_dir: Path, manifest_path: Path) -> None:
         "baseline_judge_rate": round(judge / len(records), 4) if records else 0.0,
         "baseline_exact_match": exact,
         "baseline_exact_rate": round(exact / len(records), 4) if records else 0.0,
-        "agent_judge_correct": sum(
-            1 for row in comparison_rows if row["agent_judge"]
-        ),
+        "agent_judge_correct": sum(1 for row in comparison_rows if row["agent_judge"]),
         "agent_exact_match": sum(1 for row in comparison_rows if row["agent_exact"]),
         "by_level": by_level,
         "total_llm_calls": llm_calls,
@@ -184,7 +178,7 @@ async def _main(out_dir: Path, manifest_path: Path) -> None:
         "",
         "| Lane | Judge-correct | Exact match |",
         "| --- | --- | --- |",
-        f"| Baseline (single LLM call) | **{judge}/20 ({judge/len(records):.0%})** | **{exact}/20 ({exact/len(records):.0%})** |",
+        f"| Baseline (single LLM call) | **{judge}/20 ({judge / len(records):.0%})** | **{exact}/20 ({exact / len(records):.0%})** |",
         "| Agent lane (scheduler-v2) | 7/20 (35%) | 5/20 (25%) |",
         "",
         "The agent machinery (governed live search + full-page reads + grounded claims",

@@ -10,15 +10,21 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from deep_research_agent.evals.native_benchmark import build_native_benchmark_summary as _build_native_benchmark_summary
+from deep_research_agent.evals.native_benchmark import (
+    build_native_benchmark_summary as _build_native_benchmark_summary,
+)
 
 
-def run_native_benchmark_summary(*, reports_root: str | Path, docs_root: str | Path) -> dict[str, Any]:
+def run_native_benchmark_summary(
+    *, reports_root: str | Path, docs_root: str | Path
+) -> dict[str, Any]:
     return _build_native_benchmark_summary(reports_root=reports_root, docs_root=docs_root)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build native benchmark summary docs from committed regression artifacts")
+    parser = argparse.ArgumentParser(
+        description="Build native benchmark summary docs from committed regression artifacts"
+    )
     parser.add_argument(
         "--reports-root",
         default=str(Path("evals") / "reports" / "native_regression"),

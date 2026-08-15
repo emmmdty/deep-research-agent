@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -43,7 +42,10 @@ def test_run_value_metrics_emits_expected_pack_for_committed_smoke_root(tmp_path
     assert headline["metrics"]["resume_success_rate"]["value"] == 1.0
     assert headline["metrics"]["trusted_only_success_rate"]["value"] == 1.0
     assert headline["metrics"]["estimated_api_cost_per_completed_job"]["value"] is None
-    assert headline["metrics"]["estimated_api_cost_per_completed_job"]["reason"] == "provider_free_fixture_run"
+    assert (
+        headline["metrics"]["estimated_api_cost_per_completed_job"]["reason"]
+        == "provider_free_fixture_run"
+    )
     assert headline["metrics"]["ttff_seconds_p50"]["value"] is None
     assert headline["metrics"]["ttff_seconds_p50"]["reason"] == "frozen_artifact_timestamps"
     assert dashboard["delivery"]["completion_rate"] == 1.0

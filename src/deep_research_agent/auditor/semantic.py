@@ -17,7 +17,6 @@ from deep_research_agent.kernel.contracts import (
 )
 from deep_research_agent.orchestration.reducer import CriticDecision
 
-
 AuditStatus = Literal["accepted", "qualified", "contradicted", "unsupported"]
 SemanticJudge = Callable[[ClaimRecord], AuditStatus | None]
 
@@ -65,9 +64,7 @@ class EvidenceAuditor:
         degradations: dict[str, str] = {}
         claim_list = sorted(claims, key=lambda item: item.claim_id)
         claim_ids = {claim.claim_id for claim in claim_list}
-        known_evidence_ids = {
-            span.span_id for claim in claim_list for span in claim.evidence_spans
-        }
+        known_evidence_ids = {span.span_id for claim in claim_list for span in claim.evidence_spans}
         known_evidence_ids.update(evidence_span_ids)
         span_by_id = {
             span.span_id: span
@@ -90,19 +87,19 @@ class EvidenceAuditor:
             ):
                 source_by_document[document_id] = source
         decisions_by_claim: dict[str, list[CriticDecision]] = {}
-        unresolved_claim_ids = {
-            claim_id for pair in semantic_disagreements for claim_id in pair
-        }
+        unresolved_claim_ids = {claim_id for pair in semantic_disagreements for claim_id in pair}
         for decision in critic_decisions:
             valid_group = set(decision.claim_ids) <= claim_ids
-            valid_rationale = bool(decision.rationale_evidence_ids) and set(
-                decision.rationale_evidence_ids
-            ) <= known_evidence_ids
+            valid_rationale = (
+                bool(decision.rationale_evidence_ids)
+                and set(decision.rationale_evidence_ids) <= known_evidence_ids
+            )
             valid_rationale = valid_rationale and all(
                 (span := span_by_id.get(span_id)) is not None
                 and span.document_version_id in frozen_ids
                 and (source := source_by_document.get(span.document_version_id)) is not None
-                and source.content_sha256 == corpus_manifest.content_hashes[span.document_version_id]
+                and source.content_sha256
+                == corpus_manifest.content_hashes[span.document_version_id]
                 for span_id in decision.rationale_evidence_ids
             )
             if not valid_group or not valid_rationale:

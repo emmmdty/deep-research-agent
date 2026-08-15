@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
+
+from legacy.workflows.states import TaskItem, ToolCapability
 
 from ..capabilities.mcp import build_mcp_capabilities
 from ..capabilities.skills import load_skill_definitions
-from legacy.workflows.states import TaskItem, ToolCapability
 
 
 @dataclass
@@ -29,9 +30,7 @@ class CapabilityRegistry:
         """按任务类型和触发词排序能力。"""
         scored: list[tuple[int, ToolCapability]] = []
         text = f"{task.title} {task.intent} {task.query} {' '.join(task.expected_aspects)}".lower()
-        preferred_builtin = {
-            source_name for source_name in (task.preferred_sources or [])
-        }
+        preferred_builtin = set(task.preferred_sources or [])
         missing_text = " ".join(missing_aspects or []).lower()
         failure_context = failure_context or {}
 
@@ -40,7 +39,10 @@ class CapabilityRegistry:
             if capability.kind == "builtin":
                 if capability.metadata.get("source_name") in preferred_builtin:
                     score += 100
-                if task.task_type == "tutorial" and capability.metadata.get("source_name") == "arxiv":
+                if (
+                    task.task_type == "tutorial"
+                    and capability.metadata.get("source_name") == "arxiv"
+                ):
                     score -= 100
             if capability.kind == "skill":
                 triggers = capability.metadata.get("triggers", [])
@@ -52,7 +54,10 @@ class CapabilityRegistry:
                     score += 15
             if missing_text and any(token in missing_text for token in capability.tags):
                 score += 20
-            if failure_context.get("quality_gate_status") == "failed" and capability.kind in {"skill", "mcp"}:
+            if failure_context.get("quality_gate_status") == "failed" and capability.kind in {
+                "skill",
+                "mcp",
+            }:
                 score += 10
             scored.append((score, capability))
 
@@ -60,14 +65,18 @@ class CapabilityRegistry:
         filtered = [
             cap
             for cap in planned
-            if cap.kind != "builtin" or cap.metadata.get("source_name") in preferred_builtin or cap.metadata.get("source_name") == "web"
+            if cap.kind != "builtin"
+            or cap.metadata.get("source_name") in preferred_builtin
+            or cap.metadata.get("source_name") == "web"
         ]
         return _dedupe_capabilities(filtered)
 
 
 def build_capability_registry(settings) -> CapabilityRegistry:
     """从 settings 构建完整 registry。"""
-    capability_types = set(getattr(settings, "enabled_capability_types", ["builtin", "skill", "mcp"]))
+    capability_types = set(
+        getattr(settings, "enabled_capability_types", ["builtin", "skill", "mcp"])
+    )
     capabilities: list[ToolCapability] = []
     if "builtin" in capability_types:
         capabilities.extend(_builtin_capabilities(getattr(settings, "enabled_sources", [])))

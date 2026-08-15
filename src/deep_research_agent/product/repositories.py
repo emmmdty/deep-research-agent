@@ -91,7 +91,9 @@ class ProductRepository:
 
     def delete_session_by_token_hash(self, token_hash: str) -> None:
         with self._session() as session:
-            record = session.scalar(select(SessionTable).where(SessionTable.token_hash == token_hash))
+            record = session.scalar(
+                select(SessionTable).where(SessionTable.token_hash == token_hash)
+            )
             if record is not None:
                 session.delete(record)
 
@@ -160,7 +162,9 @@ class ProductRepository:
         if topic_id is not None:
             statement = statement.where(RunTable.topic_id == topic_id)
         with self.sessions() as session:
-            return list(session.scalars(statement.order_by(RunTable.created_at.desc(), RunTable.run_id)))
+            return list(
+                session.scalars(statement.order_by(RunTable.created_at.desc(), RunTable.run_id))
+            )
 
     def latest_completed_run(self, topic_id: str, *, tenant_id: str) -> RunTable | None:
         with self.sessions() as session:
@@ -265,7 +269,9 @@ class ProductRepository:
             session.add(document)
         return document
 
-    def get_corpus_document(self, document_id: str, *, tenant_id: str) -> CorpusDocumentTable | None:
+    def get_corpus_document(
+        self, document_id: str, *, tenant_id: str
+    ) -> CorpusDocumentTable | None:
         with self.sessions() as session:
             return session.scalar(
                 select(CorpusDocumentTable).where(
@@ -332,9 +338,7 @@ class ProductRepository:
                     )
                 )
             memories = list(
-                session.scalars(
-                    statement.order_by(MemoryTable.created_at, MemoryTable.memory_id)
-                )
+                session.scalars(statement.order_by(MemoryTable.created_at, MemoryTable.memory_id))
             )
             now = utc_now()
             active: list[MemoryTable] = []
@@ -411,7 +415,9 @@ class ProductRepository:
 
     def list_models(self) -> list[ModelEndpointTable]:
         with self.sessions() as session:
-            return list(session.scalars(select(ModelEndpointTable).order_by(ModelEndpointTable.endpoint_id)))
+            return list(
+                session.scalars(select(ModelEndpointTable).order_by(ModelEndpointTable.endpoint_id))
+            )
 
     def save_tool(self, tool: ToolConfigTable) -> ToolConfigTable:
         with self._session() as session:
@@ -445,7 +451,9 @@ class ProductRepository:
 
     def get_active_runtime_config(self) -> RuntimeConfigTable | None:
         with self.sessions() as session:
-            return session.scalar(select(RuntimeConfigTable).where(RuntimeConfigTable.active.is_(True)))
+            return session.scalar(
+                select(RuntimeConfigTable).where(RuntimeConfigTable.active.is_(True))
+            )
 
     def list_runtime_configs(self) -> list[RuntimeConfigTable]:
         with self.sessions() as session:

@@ -42,8 +42,7 @@ async def test_every_designed_fallback_absorbs_its_scenario() -> None:
     for scenario in ALL_SCENARIOS:
         result = await _run_scenario(scenario)
         assert result.ungrounded_claims == 0, (
-            f"{scenario.name}: no ungrounded claim may be published, got "
-            f"{result.ungrounded_claims}"
+            f"{scenario.name}: no ungrounded claim may be published, got {result.ungrounded_claims}"
         )
         if scenario.expect_completed:
             assert result.status == "completed", (

@@ -1,8 +1,7 @@
 """Add provenance and lifecycle fields to product memories."""
 
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 revision = "0002_memory_lifecycle"
 down_revision = "0001_product_schema"
@@ -44,8 +43,7 @@ def upgrade() -> None:
         "WHERE subject_id IS NULL AND scope IN ('user_memory', 'agent_experience')"
     )
     op.execute(
-        "UPDATE product_memories SET key = scope || ':' || memory_id "
-        "WHERE key = '' OR key IS NULL"
+        "UPDATE product_memories SET key = scope || ':' || memory_id WHERE key = '' OR key IS NULL"
     )
 
 

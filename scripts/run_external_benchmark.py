@@ -14,7 +14,9 @@ from deep_research_agent.evals.external import BENCHMARK_NAMES, run_external_ben
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run one external benchmark")
-    parser.add_argument("--benchmark", required=True, choices=BENCHMARK_NAMES, help="benchmark 名称")
+    parser.add_argument(
+        "--benchmark", required=True, choices=BENCHMARK_NAMES, help="benchmark 名称"
+    )
     parser.add_argument("--split", type=str, default=None, help="benchmark split，例如 open")
     parser.add_argument("--subset", type=str, default="smoke", help="subset 名称，例如 smoke")
     parser.add_argument("--bucket", type=str, default=None, help="可选 bucket")
@@ -28,7 +30,9 @@ def main() -> None:
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
-    output_root = args.output_root or str(Path("evals") / "external" / "reports" / f"{args.benchmark}_{args.subset}")
+    output_root = args.output_root or str(
+        Path("evals") / "external" / "reports" / f"{args.benchmark}_{args.subset}"
+    )
     result = run_external_benchmark(
         benchmark_name=args.benchmark,
         split=args.split,

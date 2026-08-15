@@ -33,5 +33,7 @@ def _sanitize_proxy_env() -> None:
     for key in ("ALL_PROXY", "all_proxy", "HTTPS_PROXY", "https_proxy", "HTTP_PROXY", "http_proxy"):
         value = os.environ.get(key, "")
         if value.lower().startswith("socks5://") or value.lower().startswith("socks://"):
-            logger.warning("检测到 {} 使用 SOCKS 代理但未安装 socksio，已在当前进程移除该代理配置", key)
+            logger.warning(
+                "检测到 {} 使用 SOCKS 代理但未安装 socksio，已在当前进程移除该代理配置", key
+            )
             os.environ.pop(key, None)

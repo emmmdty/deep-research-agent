@@ -27,9 +27,7 @@ def main() -> None:
     logger.info("running fault-injection fallback benchmark (deterministic)")
     payload = asyncio.run(run_all(_OUTPUT_ROOT))
     _OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    (_OUTPUT_ROOT / "REPORT.md").write_text(
-        format_report(payload), encoding="utf-8"
-    )
+    (_OUTPUT_ROOT / "REPORT.md").write_text(format_report(payload), encoding="utf-8")
     (_OUTPUT_ROOT / "summary.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

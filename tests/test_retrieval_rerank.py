@@ -58,7 +58,7 @@ def _snippet(index: int, text: str) -> dict:
 
 def _fake_reranker() -> SemanticReranker:
     reranker = SemanticReranker(provider=FakeEmbeddingProvider())  # type: ignore[arg-type]
-    reranker.available = True  # noqa: ignore -- fake provider reports available
+    reranker.available = True  # fake provider reports available
     return reranker
 
 

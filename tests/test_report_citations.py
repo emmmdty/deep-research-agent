@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-
 from deep_research_agent.kernel.contracts import ArtifactRef, ClaimRecord, EvidenceSpan
 from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2
 from deep_research_agent.reporting.citations import CitationInjector
-
 
 DOC_A = "a" * 64
 DOC_B = "b" * 64
@@ -27,7 +25,11 @@ def _source(artifact_id: str, document_id: str, *, title: str | None = None) -> 
     )
 
 
-def _span(span_id: str, document_id: str = "doc-a", quote: str = "The system improved recall by 4.2 points.") -> EvidenceSpan:
+def _span(
+    span_id: str,
+    document_id: str = "doc-a",
+    quote: str = "The system improved recall by 4.2 points.",
+) -> EvidenceSpan:
     return EvidenceSpan(
         span_id=span_id,
         document_version_id=document_id,
@@ -190,7 +192,10 @@ def test_injection_preserves_blank_line_paragraph_structure() -> None:
     report = "## Findings\n\nThe system improved recall by 4.2 points. [[claim:job:claim:b:01]]\n\nBody paragraph two.\n"
     result = CitationInjector().inject(report, [claim], [span], sources)
 
-    assert "\n\nThe system improved recall by 4.2 points. [1]\n\nBody paragraph two." in result.markdown
+    assert (
+        "\n\nThe system improved recall by 4.2 points. [1]\n\nBody paragraph two."
+        in result.markdown
+    )
 
 
 def test_claim_register_not_duplicated_when_present() -> None:

@@ -11,7 +11,6 @@ from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 from deep_research_agent.product.auth import SESSION_COOKIE_NAME, SESSION_TTL, SessionIdentity
 from deep_research_agent.product.service import ProductService
 
-
 router = APIRouter(tags=["authentication"])
 
 

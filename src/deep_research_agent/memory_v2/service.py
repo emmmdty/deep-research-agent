@@ -18,7 +18,9 @@ class MemoryRepository(Protocol):
 
     def get(self, memory_id: str) -> MemoryRecord | None: ...
 
-    def list(self, *, tenant_id: str | None = None, subject_id: str | None = None) -> list[MemoryRecord]: ...
+    def list(
+        self, *, tenant_id: str | None = None, subject_id: str | None = None
+    ) -> list[MemoryRecord]: ...
 
 
 class SQLMemoryRepository(Protocol):
@@ -48,7 +50,9 @@ class InMemoryMemoryRepository:
                 "supersedes",
                 "metadata",
             )
-            if any(getattr(existing, field) != getattr(record, field) for field in immutable_fields):
+            if any(
+                getattr(existing, field) != getattr(record, field) for field in immutable_fields
+            ):
                 raise ValueError(f"memory record {record.memory_id!r} is immutable")
         self.records[record.memory_id] = deepcopy(record)
 
@@ -56,13 +60,17 @@ class InMemoryMemoryRepository:
         record = self.records.get(memory_id)
         return deepcopy(record) if record is not None else None
 
-    def list(self, *, tenant_id: str | None = None, subject_id: str | None = None) -> list[MemoryRecord]:
-        return deepcopy([
-            record
-            for record in self.records.values()
-            if (tenant_id is None or record.tenant_id == tenant_id)
-            and (subject_id is None or record.subject_id == subject_id)
-        ])
+    def list(
+        self, *, tenant_id: str | None = None, subject_id: str | None = None
+    ) -> list[MemoryRecord]:
+        return deepcopy(
+            [
+                record
+                for record in self.records.values()
+                if (tenant_id is None or record.tenant_id == tenant_id)
+                and (subject_id is None or record.subject_id == subject_id)
+            ]
+        )
 
 
 class MemoryService:
@@ -117,7 +125,9 @@ class MemoryService:
                 or explicit_target.scope != normalized_scope
                 or explicit_target.key != key
             ):
-                raise PermissionError("a memory may only supersede the same key in the same tenant scope")
+                raise PermissionError(
+                    "a memory may only supersede the same key in the same tenant scope"
+                )
             explicit_target = self._fresh(explicit_target)
             if explicit_target.status != MemoryStatus.ACTIVE:
                 raise ValueError("only an active memory record can be superseded")
@@ -147,7 +157,13 @@ class MemoryService:
             created_at=now,
             updated_at=now,
             expires_at=expires_at,
-            supersedes=(explicit_target.memory_id if explicit_target is not None else existing.memory_id if existing else None),
+            supersedes=(
+                explicit_target.memory_id
+                if explicit_target is not None
+                else existing.memory_id
+                if existing
+                else None
+            ),
             metadata=dict(metadata or {}),
         )
         if existing is not None and all(
@@ -162,11 +178,25 @@ class MemoryService:
         ):
             return existing
         if existing is not None:
-            self.repository.save(existing.model_copy(update={"status": MemoryStatus.SUPERSEDED, "superseded_by": memory_id, "updated_at": now}))
-        if explicit_target is not None and (existing is None or explicit_target.memory_id != existing.memory_id):
+            self.repository.save(
+                existing.model_copy(
+                    update={
+                        "status": MemoryStatus.SUPERSEDED,
+                        "superseded_by": memory_id,
+                        "updated_at": now,
+                    }
+                )
+            )
+        if explicit_target is not None and (
+            existing is None or explicit_target.memory_id != existing.memory_id
+        ):
             self.repository.save(
                 explicit_target.model_copy(
-                    update={"status": MemoryStatus.SUPERSEDED, "superseded_by": memory_id, "updated_at": now}
+                    update={
+                        "status": MemoryStatus.SUPERSEDED,
+                        "superseded_by": memory_id,
+                        "updated_at": now,
+                    }
                 )
             )
         self.repository.save(record)
@@ -180,7 +210,9 @@ class MemoryService:
             raise PermissionError("memory record is outside the authorized tenant")
         return self._fresh(record)
 
-    def search(self, query: str, *, tenant_id: str, scope: MemoryScope | str | None = None) -> list[MemoryRecord]:
+    def search(
+        self, query: str, *, tenant_id: str, scope: MemoryScope | str | None = None
+    ) -> list[MemoryRecord]:
         terms = [part for part in query.casefold().split() if part]
         normalized_scope = MemoryScope(scope) if scope is not None else None
         matches: list[MemoryRecord] = []
@@ -206,7 +238,9 @@ class MemoryService:
         now = self.clock()
         for record in self.repository.list(tenant_id=tenant_id, subject_id=subject_id):
             if record.status != MemoryStatus.DELETED:
-                self.repository.save(record.model_copy(update={"status": MemoryStatus.DELETED, "updated_at": now}))
+                self.repository.save(
+                    record.model_copy(update={"status": MemoryStatus.DELETED, "updated_at": now})
+                )
                 count += 1
         return count
 
@@ -226,7 +260,9 @@ class MemoryService:
         now = self.clock()
         for record in self.repository.list():
             if record.status == MemoryStatus.ACTIVE and record.is_expired(now):
-                self.repository.save(record.model_copy(update={"status": MemoryStatus.EXPIRED, "updated_at": now}))
+                self.repository.save(
+                    record.model_copy(update={"status": MemoryStatus.EXPIRED, "updated_at": now})
+                )
                 count += 1
         return count
 
@@ -239,12 +275,16 @@ class MemoryService:
         record = self.get(memory_id, tenant_id=tenant_id)
         if record.status == MemoryStatus.DELETED:
             return False
-        self.repository.save(record.model_copy(update={"status": MemoryStatus.DELETED, "updated_at": self.clock()}))
+        self.repository.save(
+            record.model_copy(update={"status": MemoryStatus.DELETED, "updated_at": self.clock()})
+        )
         return True
 
     def _fresh(self, record: MemoryRecord) -> MemoryRecord:
         if record.status == MemoryStatus.ACTIVE and record.is_expired(self.clock()):
-            expired = record.model_copy(update={"status": MemoryStatus.EXPIRED, "updated_at": self.clock()})
+            expired = record.model_copy(
+                update={"status": MemoryStatus.EXPIRED, "updated_at": self.clock()}
+            )
             self.repository.save(expired)
             return expired
         return record
@@ -284,5 +324,7 @@ class MemoryService:
             sort_keys=True,
             default=str,
         )
-        value = "\0".join((tenant_id, subject_id, scope.value, key, content, now.isoformat(), governed))
+        value = "\0".join(
+            (tenant_id, subject_id, scope.value, key, content, now.isoformat(), governed)
+        )
         return f"memory:{hashlib.sha256(value.encode()).hexdigest()[:32]}"

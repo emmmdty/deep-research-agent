@@ -10,7 +10,6 @@ from jsonschema import ValidationError
 
 from legacy.workflows.states import RunMetrics, SourceRecord
 
-
 PHASE3_SCHEMA_NAMES = [
     "artifact-manifest",
     "connector-health-record",
@@ -139,12 +138,16 @@ def test_source_policy_enforces_allow_deny_and_budget():
         allow_domains=["docs.langchain.com", "github.com"],
         deny_domains=["reddit.com"],
         auth_scopes=["public"],
-        budget=ConnectorBudget(max_candidates_per_connector=2, max_fetches_per_task=1, max_total_fetches=2),
+        budget=ConnectorBudget(
+            max_candidates_per_connector=2, max_fetches_per_task=1, max_total_fetches=2
+        ),
     )
     overrides = SourcePolicyOverrides(
         allow_domains=["reference.langchain.com"],
         deny_domains=["github.com"],
-        budget=ConnectorBudget(max_candidates_per_connector=1, max_fetches_per_task=1, max_total_fetches=1),
+        budget=ConnectorBudget(
+            max_candidates_per_connector=1, max_fetches_per_task=1, max_total_fetches=1
+        ),
     )
     effective = policy.with_overrides(overrides)
 
@@ -179,7 +182,9 @@ def test_source_policy_blocks_unsafe_fetch_uris():
     """fetch policy 应拒绝非 http(s)、localhost 与私网地址。"""
     from legacy.policies.source_policy import SourcePolicy
 
-    policy = SourcePolicy(profile_name="open-web", connectors=["open_web"], connector_order=["open_web"])
+    policy = SourcePolicy(
+        profile_name="open-web", connectors=["open_web"], connector_order=["open_web"]
+    )
 
     assert policy.validate_fetch_uri("file:///etc/passwd").allowed is False
     assert policy.validate_fetch_uri("file:///etc/passwd").reason == "unsupported_scheme"
@@ -223,6 +228,7 @@ def test_researcher_does_not_fetch_policy_blocked_private_url(tmp_path: Path, mo
         },
     )()
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
+
     class StaticLLM:
         def invoke(self, messages):
             return type("Response", (), {"content": "No usable public sources."})()
@@ -401,7 +407,9 @@ def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Pat
         },
     )()
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm"))
+    )
     monkeypatch.setattr(
         researcher,
         "_build_phase3_connector_registry",
@@ -455,7 +463,9 @@ def test_researcher_collecting_uses_connectors_and_emits_snapshots(tmp_path: Pat
     assert result["sources_gathered"]
     assert result["sources_gathered"][0].snapshot_ref
     assert result["source_snapshots"]
-    assert result["source_snapshots"][0]["snapshot_id"] == result["sources_gathered"][0].snapshot_ref
+    assert (
+        result["source_snapshots"][0]["snapshot_id"] == result["sources_gathered"][0].snapshot_ref
+    )
 
 
 def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path, monkeypatch):
@@ -483,7 +493,9 @@ def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path,
         },
     )()
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm"))
+    )
     monkeypatch.setattr(
         researcher,
         "_fetch_remote_pdf_text",
@@ -512,8 +524,8 @@ def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path,
                     fetch_fn=lambda url: {
                         "text": (
                             "<html><body><h1>DeepSeek V4 Preview Release</h1>"
-                            "<a href=\"https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/"
-                            "blob/main/DeepSeek_V4.pdf\">Tech Report</a></body></html>"
+                            '<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/'
+                            'blob/main/DeepSeek_V4.pdf">Tech Report</a></body></html>'
                         ),
                         "mime_type": "text/html",
                     },
@@ -529,7 +541,11 @@ def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path,
             "source_profile": "industry_broad",
             "policy_overrides": {
                 "allow_domains": ["api-docs.deepseek.com", "huggingface.co"],
-                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+                "budget": {
+                    "max_candidates_per_connector": 4,
+                    "max_fetches_per_task": 4,
+                    "max_total_fetches": 6,
+                },
             },
             "tasks": [
                 TaskItem(
@@ -551,13 +567,20 @@ def test_researcher_expands_official_page_to_linked_pdf_snapshot(tmp_path: Path,
         }
     )
 
-    pdf_sources = [source for source in result["sources_gathered"] if source.mime_type == "application/pdf"]
+    pdf_sources = [
+        source for source in result["sources_gathered"] if source.mime_type == "application/pdf"
+    ]
     assert len(pdf_sources) == 1
-    assert pdf_sources[0].canonical_uri == "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
+    assert (
+        pdf_sources[0].canonical_uri
+        == "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf"
+    )
     assert "1.6T total parameters" in pdf_sources[0].snippet
     assert pdf_sources[0].metadata["parent_source_id"] == "source-1"
     assert pdf_sources[0].metadata["discovery_reason"] == "technical_report_link"
-    assert any(snapshot["mime_type"] == "application/pdf" for snapshot in result["source_snapshots"])
+    assert any(
+        snapshot["mime_type"] == "application/pdf" for snapshot in result["source_snapshots"]
+    )
     assert result["run_metrics"].remote_pdfs_ingested == 1
 
 
@@ -586,11 +609,15 @@ def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monk
         },
     )()
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm"))
+    )
     monkeypatch.setattr(
         researcher,
         "_fetch_remote_pdf_text",
-        lambda url, workspace_dir: (_ for _ in ()).throw(AssertionError("blocked PDF should not be fetched")),
+        lambda url, workspace_dir: (_ for _ in ()).throw(
+            AssertionError("blocked PDF should not be fetched")
+        ),
         raising=False,
     )
     monkeypatch.setattr(
@@ -610,8 +637,8 @@ def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monk
                     ],
                     fetch_fn=lambda url: {
                         "text": (
-                            "<a href=\"https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/"
-                            "blob/main/DeepSeek_V4.pdf\">Tech Report</a>"
+                            '<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/'
+                            'blob/main/DeepSeek_V4.pdf">Tech Report</a>'
                         ),
                         "mime_type": "text/html",
                     },
@@ -627,7 +654,11 @@ def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monk
             "source_profile": "industry_broad",
             "policy_overrides": {
                 "allow_domains": ["api-docs.deepseek.com"],
-                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+                "budget": {
+                    "max_candidates_per_connector": 4,
+                    "max_fetches_per_task": 4,
+                    "max_total_fetches": 6,
+                },
             },
             "tasks": [
                 TaskItem(
@@ -654,7 +685,9 @@ def test_researcher_blocks_linked_pdf_outside_source_policy(tmp_path: Path, monk
     assert result["blocked_source_candidates"][0]["reason"] == "domain_not_allowed"
 
 
-def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(tmp_path: Path, monkeypatch):
+def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(
+    tmp_path: Path, monkeypatch
+):
     """补采集遇到已抓取过的官方 PDF 时，应复用现有 source，而不是追加“暂无可用信息”。"""
     from legacy.agents import researcher
     from legacy.connectors.legacy import LegacyConnectorAdapter
@@ -701,7 +734,9 @@ def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(tm
                             "snippet": "DeepSeek-V4 technical report",
                         }
                     ],
-                    fetch_fn=lambda url: (_ for _ in ()).throw(AssertionError("visited source should be reused")),
+                    fetch_fn=lambda url: (_ for _ in ()).throw(
+                        AssertionError("visited source should be reused")
+                    ),
                 )
             }
         ),
@@ -744,7 +779,11 @@ def test_researcher_reuses_existing_pdf_for_follow_up_without_empty_overwrite(tm
             "source_profile": "industry_broad",
             "policy_overrides": {
                 "allow_domains": ["huggingface.co"],
-                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+                "budget": {
+                    "max_candidates_per_connector": 4,
+                    "max_fetches_per_task": 4,
+                    "max_total_fetches": 6,
+                },
             },
             "tasks": [
                 TaskItem(
@@ -816,7 +855,9 @@ def test_researcher_uses_query_aware_snippet_for_fetched_web_text(tmp_path: Path
 
     class StaticLLM:
         def invoke(self, messages):
-            return type("Response", (), {"content": "API is available via OpenAI ChatCompletions. [1]"})()
+            return type(
+                "Response", (), {"content": "API is available via OpenAI ChatCompletions. [1]"}
+            )()
 
     monkeypatch.setattr(researcher, "get_llm", lambda: StaticLLM())
     monkeypatch.setattr(
@@ -855,7 +896,11 @@ def test_researcher_uses_query_aware_snippet_for_fetched_web_text(tmp_path: Path
             "source_profile": "industry_broad",
             "policy_overrides": {
                 "allow_domains": ["api-docs.deepseek.com"],
-                "budget": {"max_candidates_per_connector": 4, "max_fetches_per_task": 4, "max_total_fetches": 6},
+                "budget": {
+                    "max_candidates_per_connector": 4,
+                    "max_fetches_per_task": 4,
+                    "max_total_fetches": 6,
+                },
             },
             "tasks": [
                 TaskItem(
@@ -884,11 +929,11 @@ def test_researcher_uses_query_aware_snippet_for_fetched_web_text(tmp_path: Path
 def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, monkeypatch):
     """公开 orchestrator 路径应把 snapshot 和 bundle sidecars 写入 job 目录。"""
     from deep_research_agent.reporting.schemas import validate_instance
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+    from deep_research_agent.research_jobs.service import ResearchJobService
     from legacy.agents import researcher
     from legacy.connectors.legacy import LegacyConnectorAdapter
     from legacy.connectors.registry import ConnectorRegistry
-    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
-    from deep_research_agent.research_jobs.service import ResearchJobService
     from legacy.workflows.states import CriticFeedback, ReportArtifact, TaskItem
 
     settings = type(
@@ -909,7 +954,9 @@ def test_phase3_orchestrator_persists_snapshots_under_job_dir(tmp_path: Path, mo
         },
     )()
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm"))
+    )
     monkeypatch.setattr(
         researcher,
         "_build_phase3_connector_registry",

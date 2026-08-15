@@ -19,13 +19,13 @@ from deep_research_agent.orchestration.events import (
     RunJournal,
     TaskCheckpoint,
 )
+from deep_research_agent.orchestration.reducer import CriticDecision
 from deep_research_agent.orchestration.workers import (
     TaskExecutionContext,
     TaskWorker,
     WorkerOutput,
     normalize_worker_output,
 )
-from deep_research_agent.orchestration.reducer import CriticDecision
 
 
 class DynamicTaskConflict(ValueError):
@@ -107,7 +107,7 @@ class ResearchScheduler:
         running: dict[asyncio.Task[WorkerOutput], str] = {}
         outputs: dict[str, WorkerOutput] = {}
         results: dict[str, TaskResult] = {}
-        attempts: dict[str, int] = {task_id: 0 for task_id in task_by_id}
+        attempts: dict[str, int] = dict.fromkeys(task_by_id, 0)
         failed: set[str] = set()
         dag, resumed = self._replay_seeded_checkpoints(
             seed_checkpoints or [],
@@ -135,17 +135,30 @@ class ResearchScheduler:
         while pending or running:
             if self._is_cancelled():
                 await self._cancel_remaining(
-                    job_id, pending, running, task_by_id, results, outputs, attempts, checkpoints, events
+                    job_id,
+                    pending,
+                    running,
+                    task_by_id,
+                    results,
+                    outputs,
+                    attempts,
+                    checkpoints,
+                    events,
                 )
                 return self._result(
-                    job_id, "cancelled", results, outputs, attempts, events, checkpoints, config_snapshot,
+                    job_id,
+                    "cancelled",
+                    results,
+                    outputs,
+                    attempts,
+                    events,
+                    checkpoints,
+                    config_snapshot,
                     resumed_checkpoints=resumed,
                 )
 
             blocked = sorted(
-                task_id
-                for task_id in pending
-                if set(task_by_id[task_id].depends_on) & failed
+                task_id for task_id in pending if set(task_by_id[task_id].depends_on) & failed
             )
             for task_id in blocked:
                 pending.remove(task_id)
@@ -157,8 +170,16 @@ class ResearchScheduler:
                     error="dependency failed",
                 )
                 results[task_id] = result
-                self._checkpoint(checkpoints, job_id, task_by_id[task_id], max(attempts[task_id], 1), result, {})
-                self._emit(events, job_id, "task.blocked", task_id=task_id, payload={"reason": "dependency_failed"})
+                self._checkpoint(
+                    checkpoints, job_id, task_by_id[task_id], max(attempts[task_id], 1), result, {}
+                )
+                self._emit(
+                    events,
+                    job_id,
+                    "task.blocked",
+                    task_id=task_id,
+                    payload={"reason": "dependency_failed"},
+                )
 
             ready = sorted(
                 task_id
@@ -177,7 +198,9 @@ class ResearchScheduler:
                     task=task,
                     attempt=attempt,
                     config_snapshot=config_snapshot,
-                    dependency_results={dependency: outputs[dependency] for dependency in task.depends_on},
+                    dependency_results={
+                        dependency: outputs[dependency] for dependency in task.depends_on
+                    },
                     tool_gateway=self._tool_gateway,
                     memory=self.memory,
                 )
@@ -187,7 +210,9 @@ class ResearchScheduler:
 
             if not running:
                 if pending:
-                    raise RuntimeError("scheduler reached a non-terminal DAG state without ready tasks")
+                    raise RuntimeError(
+                        "scheduler reached a non-terminal DAG state without ready tasks"
+                    )
                 break
 
             cancellation_wait = asyncio.create_task(self._token.wait())
@@ -204,10 +229,25 @@ class ResearchScheduler:
                 cancellation_wait.cancel()
                 await asyncio.gather(cancellation_wait, return_exceptions=True)
                 await self._cancel_remaining(
-                    job_id, pending, running, task_by_id, results, outputs, attempts, checkpoints, events
+                    job_id,
+                    pending,
+                    running,
+                    task_by_id,
+                    results,
+                    outputs,
+                    attempts,
+                    checkpoints,
+                    events,
                 )
                 return self._result(
-                    job_id, "cancelled", results, outputs, attempts, events, checkpoints, config_snapshot,
+                    job_id,
+                    "cancelled",
+                    results,
+                    outputs,
+                    attempts,
+                    events,
+                    checkpoints,
+                    config_snapshot,
                     resumed_checkpoints=resumed,
                 )
             cancellation_wait.cancel()
@@ -225,7 +265,9 @@ class ResearchScheduler:
                 try:
                     output = future.result()
                     if output.result.status != "completed":
-                        raise RuntimeError(output.result.error or f"worker returned {output.result.status}")
+                        raise RuntimeError(
+                            output.result.error or f"worker returned {output.result.status}"
+                        )
                     self._validate_output_schema(task, output.output)
                     if output.spawned_tasks:
                         new_tasks: list[TaskSpec] = []
@@ -257,7 +299,11 @@ class ResearchScheduler:
                             "task.fan_out",
                             task_id=task_id,
                             attempt=attempt,
-                            payload={"spawned_task_ids": sorted(item.task_id for item in output.spawned_tasks)},
+                            payload={
+                                "spawned_task_ids": sorted(
+                                    item.task_id for item in output.spawned_tasks
+                                )
+                            },
                         )
                 except Exception as exc:
                     error = self._error_message(exc)
@@ -307,7 +353,14 @@ class ResearchScheduler:
         status: Literal["completed", "failed"] = "failed" if failed else "completed"
         self._emit(events, job_id, f"run.{status}", payload={"task_count": len(results)})
         return self._result(
-            job_id, status, results, outputs, attempts, events, checkpoints, config_snapshot,
+            job_id,
+            status,
+            results,
+            outputs,
+            attempts,
+            events,
+            checkpoints,
+            config_snapshot,
             resumed_checkpoints=resumed,
         )
 
@@ -336,14 +389,20 @@ class ResearchScheduler:
         for task_id in sorted(task_ids):
             if task_id in results:
                 continue
-            result = TaskResult(task_id=task_id, job_id=job_id, status="cancelled", error="run cancelled")
+            result = TaskResult(
+                task_id=task_id, job_id=job_id, status="cancelled", error="run cancelled"
+            )
             results[task_id] = result
             task_attempt = attempts.get(task_id, 0)
             # Never fabricate an attempt for a task that did not start: the
             # attempt counter records real executions only, so a resumed run
             # replays cancelled tasks with a fresh budget.
-            self._checkpoint(checkpoints, job_id, task_by_id[task_id], max(task_attempt, 1), result, {})
-            self._emit(events, job_id, "task.cancelled", task_id=task_id, attempt=max(task_attempt, 1))
+            self._checkpoint(
+                checkpoints, job_id, task_by_id[task_id], max(task_attempt, 1), result, {}
+            )
+            self._emit(
+                events, job_id, "task.cancelled", task_id=task_id, attempt=max(task_attempt, 1)
+            )
         self._emit(events, job_id, "run.cancelled", payload={"task_count": len(results)})
 
     @staticmethod
@@ -447,7 +506,9 @@ class ResearchScheduler:
         checkpoints.append(checkpoint)
 
     def _is_cancelled(self) -> bool:
-        return self._token.cancelled or bool(self._cancellation_check and self._cancellation_check())
+        return self._token.cancelled or bool(
+            self._cancellation_check and self._cancellation_check()
+        )
 
     @staticmethod
     def _validate_output_schema(task: TaskSpec, output: dict[str, Any]) -> None:
@@ -495,7 +556,9 @@ class ResearchScheduler:
             for decision in output.critic_decisions:
                 existing = decisions.get(decision.decision_id)
                 if existing is not None and existing != decision:
-                    raise ValueError(f"conflicting critic decision definition for {decision.decision_id!r}")
+                    raise ValueError(
+                        f"conflicting critic decision definition for {decision.decision_id!r}"
+                    )
                 decisions[decision.decision_id] = decision
         return RunResult(
             job_id=job_id,

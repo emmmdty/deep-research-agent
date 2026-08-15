@@ -8,7 +8,6 @@ from typing import Any
 
 from deep_research_agent.research_jobs.models import JobRuntimeRecord
 
-
 ARTIFACT_NAME_CHOICES = (
     "report.md",
     "report.html",

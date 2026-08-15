@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import argparse
 import importlib
-from pathlib import Path
 import signal
 import threading
+from pathlib import Path
 
 from configs.settings import Settings, get_settings
 from deep_research_agent.model_runtime.registry import CredentialCipher
@@ -20,9 +20,8 @@ def validate_runtime_configuration(settings: Settings) -> None:
     if settings.scheduler_runtime_mode == "offline":
         return
     factory_path = (
-        (settings.scheduler_factory_path or "").strip()
-        or "deep_research_agent.agents.factory:build_scheduler_factory"
-    )
+        settings.scheduler_factory_path or ""
+    ).strip() or "deep_research_agent.agents.factory:build_scheduler_factory"
     module_name, separator, attribute_name = factory_path.replace(":", ".").rpartition(".")
     if not separator:
         raise RuntimeError("SCHEDULER_FACTORY_PATH must be a dotted import path")

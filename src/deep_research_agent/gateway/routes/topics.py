@@ -13,7 +13,6 @@ from deep_research_agent.gateway.routes.auth import (
     StrictRequest,
 )
 
-
 router = APIRouter(prefix="/v1/topics", tags=["topics"])
 
 
@@ -27,7 +26,9 @@ def create_topic(
     identity: CsrfIdentityDependency,
     service: ProductServiceDependency,
 ) -> dict:
-    return service.create_topic(tenant_id=identity.tenant_id, user_id=identity.user_id, title=payload.title)
+    return service.create_topic(
+        tenant_id=identity.tenant_id, user_id=identity.user_id, title=payload.title
+    )
 
 
 @router.get("")
@@ -36,7 +37,9 @@ def list_topics(identity: IdentityDependency, service: ProductServiceDependency)
 
 
 @router.get("/{topic_id}")
-def get_topic(topic_id: str, identity: IdentityDependency, service: ProductServiceDependency) -> dict:
+def get_topic(
+    topic_id: str, identity: IdentityDependency, service: ProductServiceDependency
+) -> dict:
     topic = service.get_topic(topic_id, tenant_id=identity.tenant_id)
     if topic is None:
         raise HTTPException(status_code=404, detail="topic not found")

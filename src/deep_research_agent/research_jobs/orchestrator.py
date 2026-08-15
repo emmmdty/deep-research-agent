@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from loguru import logger
 
@@ -23,18 +24,18 @@ from deep_research_agent.orchestration.events import FileRunJournal
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, RunResult
 from deep_research_agent.reporting.bundle import emit_report_artifacts
 from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2
+from deep_research_agent.research_jobs.models import (
+    TERMINAL_JOB_STATUSES,
+    JobCheckpoint,
+    JobProgressEvent,
+    JobRuntimeRecord,
+    JobStatus,
+    RuntimeStage,
+)
 from legacy.agents.planner import planner_node
 from legacy.agents.researcher import collect_research_step
 from legacy.agents.verifier import verifier_node
 from legacy.agents.writer import writer_node
-from deep_research_agent.research_jobs.models import (
-    TERMINAL_JOB_STATUSES,
-    JobStatus,
-    JobCheckpoint,
-    JobProgressEvent,
-    JobRuntimeRecord,
-    RuntimeStage,
-)
 from legacy.workflows.states import CriticFeedback, ResearchState
 
 
@@ -68,7 +69,9 @@ class ResearchJobOrchestrator:
         *,
         service,
         planner_fn: Callable[[dict[str, Any]], dict[str, Any]] = planner_node,
-        collect_step_fn: Callable[[dict[str, Any]], tuple[dict[str, Any], bool]] = collect_research_step,
+        collect_step_fn: Callable[
+            [dict[str, Any]], tuple[dict[str, Any], bool]
+        ] = collect_research_step,
         verifier_fn: Callable[[dict[str, Any]], dict[str, Any]] = verifier_node,
         critic_fn: Callable[[dict[str, Any]], dict[str, Any]] = _default_synthesizer,
         claim_auditor_fn: Callable[[dict[str, Any]], dict[str, Any]] = claim_auditor_node,
@@ -228,9 +231,7 @@ class ResearchJobOrchestrator:
                 continue
             existing = hashes.get(document_version_id)
             if existing is not None and existing != artifact.content_sha256:
-                raise ValueError(
-                    f"conflicting source hashes for document {document_version_id!r}"
-                )
+                raise ValueError(f"conflicting source hashes for document {document_version_id!r}")
             hashes[document_version_id] = artifact.content_sha256
             artifact_allowed = bool(artifact.metadata.get("critical_claims_allowed", False))
             if document_version_id in critical_claims_allowed:
@@ -449,7 +450,9 @@ class ResearchJobOrchestrator:
 
             stage = job.current_stage
             if job.status != JobStatus.RUNNING:
-                job = self.store.update_job_status(job.job_id, status=JobStatus.RUNNING, current_stage=stage)
+                job = self.store.update_job_status(
+                    job.job_id, status=JobStatus.RUNNING, current_stage=stage
+                )
             state = self._load_state(job)
             self._append_event(job, stage.value, "stage.started", f"开始 {stage.value} 阶段")
 
@@ -463,7 +466,9 @@ class ResearchJobOrchestrator:
                     current_stage=RuntimeStage.FAILED,
                     error=str(exc),
                 )
-                self._append_event(job, stage.value, "job.failed", f"{stage.value} 阶段失败", {"error": str(exc)})
+                self._append_event(
+                    job, stage.value, "job.failed", f"{stage.value} 阶段失败", {"error": str(exc)}
+                )
                 break
 
             checkpoint = self._save_checkpoint(job, stage=stage, next_stage=next_stage, state=state)
@@ -483,8 +488,14 @@ class ResearchJobOrchestrator:
                     current_stage=RuntimeStage(terminal_status.value),
                     active_checkpoint_id=checkpoint.checkpoint_id,
                 )
-                event_type = "job.completed" if terminal_status == JobStatus.COMPLETED else f"job.{terminal_status.value}"
-                self._append_event(job, terminal_status.value, event_type, f"job 进入 {terminal_status.value}")
+                event_type = (
+                    "job.completed"
+                    if terminal_status == JobStatus.COMPLETED
+                    else f"job.{terminal_status.value}"
+                )
+                self._append_event(
+                    job, terminal_status.value, event_type, f"job 进入 {terminal_status.value}"
+                )
                 if terminal_status == JobStatus.COMPLETED:
                     job = self._emit_job_artifacts(job, state)
                 break
@@ -601,7 +612,9 @@ class ResearchJobOrchestrator:
         merged.update(patch)
         return ResearchState.model_validate(merged).model_dump(mode="json")
 
-    def _sync_job_runtime_fields(self, job: JobRuntimeRecord, state: dict[str, Any]) -> JobRuntimeRecord:
+    def _sync_job_runtime_fields(
+        self, job: JobRuntimeRecord, state: dict[str, Any]
+    ) -> JobRuntimeRecord:
         self._assert_worker_lease(job.job_id)
         return self.store.update_job(
             job.job_id,
@@ -655,7 +668,9 @@ class ResearchJobOrchestrator:
         )
         return self.store.append_event(event, lease_id=self.worker_lease_id)
 
-    def _mark_cancelled(self, job: JobRuntimeRecord, *, stage: RuntimeStage | str) -> JobRuntimeRecord:
+    def _mark_cancelled(
+        self, job: JobRuntimeRecord, *, stage: RuntimeStage | str
+    ) -> JobRuntimeRecord:
         self._assert_worker_lease(job.job_id)
         cancelled = self.store.update_job_status(
             job.job_id,
@@ -690,7 +705,9 @@ class ResearchJobOrchestrator:
             state_for_artifacts["review_queue_path"] = job.review_queue_path
         if not state_for_artifacts.get("audit_graph_path"):
             state_for_artifacts["audit_graph_path"] = job.audit_graph_path
-        trace_events = [event.model_dump(mode="json") for event in self.store.list_events(job.job_id)]
+        trace_events = [
+            event.model_dump(mode="json") for event in self.store.list_events(job.job_id)
+        ]
         emit_report_artifacts(
             state_for_artifacts,
             topic=str(state_for_artifacts.get("research_topic") or job.topic),

@@ -24,9 +24,7 @@ def main() -> None:
     logger.info("running agent dimension-metrics benchmark (deterministic)")
     payload = asyncio.run(run_metrics())
     _OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    (_OUTPUT_ROOT / "REPORT.md").write_text(
-        format_report(payload), encoding="utf-8"
-    )
+    (_OUTPUT_ROOT / "REPORT.md").write_text(format_report(payload), encoding="utf-8")
     (_OUTPUT_ROOT / "summary.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

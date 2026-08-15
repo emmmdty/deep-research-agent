@@ -46,14 +46,13 @@ def _configure_environment() -> None:
 
 async def run_research(topic: str) -> str:
     """Run the reference Open Deep Research graph and return the final report."""
-    from langchain_core.messages import HumanMessage
-
     # The OpenAI-compatible endpoint used by this repo does not support the
     # json_schema response_format that langchain's default structured output
     # sends; function calling is supported. The upstream model also rejects
     # tool_choice while thinking mode is on, so thinking is disabled via the
     # same extra_body this repo's own client uses.
     import langchain_openai
+    from langchain_core.messages import HumanMessage
 
     _orig_with_structured_output = langchain_openai.ChatOpenAI.with_structured_output
 

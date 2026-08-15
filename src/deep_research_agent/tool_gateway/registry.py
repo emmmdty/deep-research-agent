@@ -16,7 +16,6 @@ from deep_research_agent.tool_gateway.models import (
     ToolSpec,
 )
 
-
 ToolHandler = Callable[[dict[str, Any], ToolHandlerContext], Any]
 
 

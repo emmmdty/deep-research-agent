@@ -16,19 +16,20 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Any, Optional, TypedDict
+from typing import Annotated, Any, TypedDict
 
 from langgraph.graph import END, StateGraph
 from loguru import logger
 
-from ..evaluation.cost_tracker import get_tracker
-from legacy.agents.supervisor import supervisor_node
+from legacy.agents.critic import critic_node
 from legacy.agents.planner import planner_node
 from legacy.agents.researcher import researcher_node
+from legacy.agents.supervisor import supervisor_node
 from legacy.agents.verifier import verifier_node
-from legacy.agents.critic import critic_node
 from legacy.agents.writer import writer_node
 from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, TopicSpec
+
+from ..evaluation.cost_tracker import get_tracker
 
 
 def _replace(a, b):
@@ -40,9 +41,9 @@ class GraphState(TypedDict, total=False):
     """LangGraph 状态 schema——使用 Annotated 指定合并策略。"""
 
     research_topic: Annotated[str, _replace]
-    topic_spec: Annotated[Optional[TopicSpec], _replace]
+    topic_spec: Annotated[TopicSpec | None, _replace]
     research_profile: Annotated[str, _replace]
-    ablation_variant: Annotated[Optional[str], _replace]
+    ablation_variant: Annotated[str | None, _replace]
     tasks: Annotated[list, _replace]
     task_summaries: Annotated[list, _replace]
     sources_gathered: Annotated[list, _replace]
@@ -59,13 +60,13 @@ class GraphState(TypedDict, total=False):
     critic_feedback: Annotated[Any, _replace]
     loop_count: Annotated[int, _replace]
     max_loops: Annotated[int, _replace]
-    final_report: Annotated[Optional[str], _replace]
-    report_artifact: Annotated[Optional[ReportArtifact], _replace]
+    final_report: Annotated[str | None, _replace]
+    report_artifact: Annotated[ReportArtifact | None, _replace]
     run_metrics: Annotated[RunMetrics, _replace]
     quality_gate_status: Annotated[str, _replace]
     quality_gate_fail_reason: Annotated[str, _replace]
     status: Annotated[str, _replace]
-    error: Annotated[Optional[str], _replace]
+    error: Annotated[str | None, _replace]
 
 
 def _should_continue(state: dict) -> str:
@@ -234,8 +235,12 @@ def run_research(
         selected_sources=existing_metrics.selected_sources,
         rejected_sources=existing_metrics.rejected_sources,
         fallback_search_calls=existing_metrics.fallback_search_calls,
-        quality_gate_status=final_state.get("quality_gate_status", existing_metrics.quality_gate_status),
-        quality_gate_fail_reason=final_state.get("quality_gate_fail_reason", existing_metrics.quality_gate_fail_reason),
+        quality_gate_status=final_state.get(
+            "quality_gate_status", existing_metrics.quality_gate_status
+        ),
+        quality_gate_fail_reason=final_state.get(
+            "quality_gate_fail_reason", existing_metrics.quality_gate_fail_reason
+        ),
         case_study_query_count=existing_metrics.case_study_query_count,
         case_study_rescue_calls=existing_metrics.case_study_rescue_calls,
         summary_repair_count=existing_metrics.summary_repair_count,

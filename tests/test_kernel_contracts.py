@@ -22,7 +22,6 @@ from deep_research_agent.kernel.contracts import (
     TaskSpec,
 )
 
-
 PROJECT_ROOT = Path(__file__).parent.parent
 PACKS_DIR = PROJECT_ROOT / "configs" / "domain_packs"
 VALID_SHA256 = "a" * 64

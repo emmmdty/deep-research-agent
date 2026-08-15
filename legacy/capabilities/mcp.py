@@ -41,7 +41,9 @@ def load_mcp_server_configs(
     return parse_mcp_servers(raw_servers or [])
 
 
-def parse_mcp_servers(raw_servers: list[dict[str, Any]] | list[MCPServerConfig]) -> list[MCPServerConfig]:
+def parse_mcp_servers(
+    raw_servers: list[dict[str, Any]] | list[MCPServerConfig],
+) -> list[MCPServerConfig]:
     """把 settings 中的 MCP 配置标准化。"""
     servers: list[MCPServerConfig] = []
     for raw in raw_servers:
@@ -53,7 +55,8 @@ def parse_mcp_servers(raw_servers: list[dict[str, Any]] | list[MCPServerConfig])
         servers.append(
             MCPServerConfig(
                 name=raw["name"],
-                transport=raw.get("transport") or ("stdio" if raw.get("command") else "streamable-http"),
+                transport=raw.get("transport")
+                or ("stdio" if raw.get("command") else "streamable-http"),
                 command=raw.get("command"),
                 args=list(raw.get("args", [])),
                 url=raw.get("url"),
@@ -88,7 +91,9 @@ class MCPRuntime:
             self._write_cache(server, filtered)
             return filtered
         except Exception as exc:
-            logger.warning("MCP 工具发现失败，回退到 cache/static: server={}, error={}", server.name, exc)
+            logger.warning(
+                "MCP 工具发现失败，回退到 cache/static: server={}, error={}", server.name, exc
+            )
             cached = self._read_cache(server)
             if cached:
                 return _filter_tools(cached, server)
@@ -126,7 +131,9 @@ class MCPRuntime:
             response = await session.list_tools()
             tools: list[MCPToolDefinition] = []
             for tool in getattr(response, "tools", []):
-                input_schema = getattr(tool, "inputSchema", None) or getattr(tool, "input_schema", {}) or {}
+                input_schema = (
+                    getattr(tool, "inputSchema", None) or getattr(tool, "input_schema", {}) or {}
+                )
                 tools.append(
                     MCPToolDefinition(
                         name=getattr(tool, "name", ""),
@@ -217,12 +224,16 @@ def invoke_mcp_capability(
         return []
 
     runtime = MCPRuntime(cache_dir=Path(workspace_dir) / "mcp_cache")
-    arguments = _build_tool_arguments(capability.metadata.get("input_schema", {}), query=query, max_results=max_results)
+    arguments = _build_tool_arguments(
+        capability.metadata.get("input_schema", {}), query=query, max_results=max_results
+    )
     response = runtime.call_tool(server, tool_name, arguments=arguments)
     return _normalize_tool_result(response, capability)
 
 
-def _filter_tools(tools: list[MCPToolDefinition], server: MCPServerConfig) -> list[MCPToolDefinition]:
+def _filter_tools(
+    tools: list[MCPToolDefinition], server: MCPServerConfig
+) -> list[MCPToolDefinition]:
     allowlist = set(server.tool_allowlist)
     denylist = set(server.tool_denylist)
     filtered: list[MCPToolDefinition] = []
@@ -235,7 +246,9 @@ def _filter_tools(tools: list[MCPToolDefinition], server: MCPServerConfig) -> li
     return filtered
 
 
-def _build_tool_arguments(input_schema: dict[str, Any], *, query: str, max_results: int) -> dict[str, Any]:
+def _build_tool_arguments(
+    input_schema: dict[str, Any], *, query: str, max_results: int
+) -> dict[str, Any]:
     properties = input_schema.get("properties", {}) if isinstance(input_schema, dict) else {}
     arguments: dict[str, Any] = {}
     for key in properties:
@@ -247,7 +260,9 @@ def _build_tool_arguments(input_schema: dict[str, Any], *, query: str, max_resul
     return arguments
 
 
-def _normalize_tool_result(response: dict[str, Any], capability: ToolCapability) -> list[dict[str, Any]]:
+def _normalize_tool_result(
+    response: dict[str, Any], capability: ToolCapability
+) -> list[dict[str, Any]]:
     structured = response.get("structured_content")
     source_name = capability.metadata.get("server_name", "mcp")
 

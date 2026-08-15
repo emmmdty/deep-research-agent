@@ -115,7 +115,9 @@ def test_verifier_node_detects_entity_drift_for_conflicting_sources(tmp_path: Pa
     assert any(record.status == "weakly_supported" for record in result["verification_records"])
 
 
-def test_verifier_node_ignores_general_sources_when_scoring_entity_consistency(tmp_path: Path, monkeypatch):
+def test_verifier_node_ignores_general_sources_when_scoring_entity_consistency(
+    tmp_path: Path, monkeypatch
+):
     """中性来源不应把单一主实体的可信度拉低。"""
     from legacy.agents import verifier
 

@@ -33,7 +33,9 @@ class _FakeJudge:
         }
 
 
-def test_run_benchmark_suite_keeps_running_after_single_comparator_failure(monkeypatch, tmp_path: Path):
+def test_run_benchmark_suite_keeps_running_after_single_comparator_failure(
+    monkeypatch, tmp_path: Path
+):
     """单个 comparator 失败时，benchmark 聚合不应中断。"""
     from scripts import run_benchmark
 

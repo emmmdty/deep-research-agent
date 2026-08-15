@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -23,8 +23,8 @@ class TaskItem(BaseModel):
     intent: str = Field(description="研究意图")
     query: str = Field(description="搜索查询语句")
     status: str = Field(default="pending", description="执行状态")
-    summary: Optional[str] = Field(default=None, description="任务总结")
-    sources: Optional[str] = Field(default=None, description="来源引用")
+    summary: str | None = Field(default=None, description="任务总结")
+    sources: str | None = Field(default=None, description="来源引用")
     strategy: str = Field(default="multi_source", description="执行策略")
     task_type: str = Field(default="research", description="任务类型")
     expected_aspects: list[str] = Field(default_factory=list, description="该任务负责覆盖的方面")
@@ -71,12 +71,14 @@ class MCPServerConfig(BaseModel):
 
     name: str = Field(description="server 名称")
     transport: str = Field(default="stdio", description="连接方式：stdio / sse / streamable-http")
-    command: Optional[str] = Field(default=None, description="stdio 启动命令")
+    command: str | None = Field(default=None, description="stdio 启动命令")
     args: list[str] = Field(default_factory=list, description="stdio 参数")
-    url: Optional[str] = Field(default=None, description="远程 MCP 地址")
+    url: str | None = Field(default=None, description="远程 MCP 地址")
     env: dict[str, str] = Field(default_factory=dict, description="stdio 环境变量")
-    headers_env: dict[str, str] = Field(default_factory=dict, description="HTTP 请求头到环境变量名的映射")
-    auth_env: Optional[str] = Field(default=None, description="Bearer Token 的环境变量名")
+    headers_env: dict[str, str] = Field(
+        default_factory=dict, description="HTTP 请求头到环境变量名的映射"
+    )
+    auth_env: str | None = Field(default=None, description="Bearer Token 的环境变量名")
     timeout_seconds: float = Field(default=10.0, description="连接超时")
     tool_allowlist: list[str] = Field(default_factory=list, description="允许暴露的工具名")
     tool_denylist: list[str] = Field(default_factory=list, description="禁止暴露的工具名")
@@ -119,7 +121,9 @@ class EvidenceUnit(BaseModel):
     task_title: str = Field(default="", description="任务标题")
     url: str = Field(default="", description="来源链接")
     trust_tier: int = Field(default=3, description="可信度等级")
-    support_type: str = Field(default="supported", description="supported / weakly_supported / conflicting")
+    support_type: str = Field(
+        default="supported", description="supported / weakly_supported / conflicting"
+    )
 
 
 class EvidenceCluster(BaseModel):
@@ -139,7 +143,9 @@ class VerificationRecord(BaseModel):
 
     task_title: str = Field(default="", description="任务标题")
     citation_ids: list[int] = Field(default_factory=list, description="关联来源编号")
-    status: str = Field(default="supported", description="supported / weakly_supported / conflicting")
+    status: str = Field(
+        default="supported", description="supported / weakly_supported / conflicting"
+    )
     notes: str = Field(default="", description="验证说明")
 
 
@@ -166,9 +172,9 @@ class SourceRecord(BaseModel):
     url: str = Field(default="", description="来源链接")
     snippet: str = Field(default="", description="来源摘要")
     task_title: str = Field(default="", description="所属任务标题")
-    published_at: Optional[str] = Field(default=None, description="发布时间")
+    published_at: str | None = Field(default=None, description="发布时间")
     snapshot_ref: str = Field(default="", description="来源快照引用")
-    fetched_at: Optional[str] = Field(default=None, description="抓取时间")
+    fetched_at: str | None = Field(default=None, description="抓取时间")
     mime_type: str = Field(default="text/plain", description="抓取内容 MIME 类型")
     auth_scope: str = Field(default="public", description="鉴权范围")
     freshness_metadata: dict[str, Any] = Field(default_factory=dict, description="新鲜度元数据")
@@ -177,13 +183,13 @@ class SourceRecord(BaseModel):
     relevance_score: float = Field(default=0.0, description="相关性得分")
     selection_score: float = Field(default=0.0, description="最终选择得分")
     selected: bool = Field(default=True, description="是否被选入总结")
-    rejection_reason: Optional[str] = Field(default=None, description="被过滤原因")
+    rejection_reason: str | None = Field(default=None, description="被过滤原因")
 
 
 class EvidenceNote(BaseModel):
     """研究证据笔记。"""
 
-    task_id: Optional[int] = Field(default=None, description="所属任务 ID")
+    task_id: int | None = Field(default=None, description="所属任务 ID")
     task_title: str = Field(default="", description="所属任务标题")
     query: str = Field(description="搜索查询")
     summary: str = Field(description="该轮研究总结")
@@ -211,15 +217,21 @@ class RunMetrics(BaseModel):
     case_study_query_count: int = Field(default=0, description="case-study 查询次数")
     case_study_rescue_calls: int = Field(default=0, description="case-study 补救检索次数")
     summary_repair_count: int = Field(default=0, description="benchmark summary 自动修复次数")
-    summary_repair_tasks: list[str] = Field(default_factory=list, description="触发 summary 修复的任务标题")
+    summary_repair_tasks: list[str] = Field(
+        default_factory=list, description="触发 summary 修复的任务标题"
+    )
     skill_activation_count: int = Field(default=0, description="skill 激活次数")
     mcp_activation_count: int = Field(default=0, description="MCP 能力激活次数")
     tool_use_success_rate: float = Field(default=0.0, description="工具调用成功率")
-    linked_sources_discovered: int = Field(default=0, description="从已抓取来源中发现的高价值子来源数")
+    linked_sources_discovered: int = Field(
+        default=0, description="从已抓取来源中发现的高价值子来源数"
+    )
     linked_sources_fetched: int = Field(default=0, description="成功抓取的高价值子来源数")
     remote_pdfs_ingested: int = Field(default=0, description="成功解析的远程 PDF 数")
     audit_rescue_queries: int = Field(default=0, description="claim audit 触发的补采查询数")
-    policy_blocked_child_links: int = Field(default=0, description="被 source policy 拦截的子链接数")
+    policy_blocked_child_links: int = Field(
+        default=0, description="被 source policy 拦截的子链接数"
+    )
 
     @property
     def total_tokens(self) -> int:
@@ -234,14 +246,22 @@ class ReportArtifact(BaseModel):
     report: str = Field(description="最终 Markdown 报告")
     citations: list[SourceRecord] = Field(default_factory=list, description="引用来源")
     evidence_notes: list[EvidenceNote] = Field(default_factory=list, description="证据笔记")
-    evidence_fragments: list[EvidenceFragmentRecord] = Field(default_factory=list, description="证据片段")
+    evidence_fragments: list[EvidenceFragmentRecord] = Field(
+        default_factory=list, description="证据片段"
+    )
     evidence_units: list[EvidenceUnit] = Field(default_factory=list, description="证据单元")
     evidence_clusters: list[EvidenceCluster] = Field(default_factory=list, description="证据聚类")
-    verification_records: list[VerificationRecord] = Field(default_factory=list, description="验证记录")
+    verification_records: list[VerificationRecord] = Field(
+        default_factory=list, description="验证记录"
+    )
     claims: list[ClaimRecord] = Field(default_factory=list, description="claim 图节点")
-    claim_support_edges: list[ClaimSupportEdgeRecord] = Field(default_factory=list, description="claim 与 evidence 的边")
+    claim_support_edges: list[ClaimSupportEdgeRecord] = Field(
+        default_factory=list, description="claim 与 evidence 的边"
+    )
     conflict_sets: list[ConflictSetRecord] = Field(default_factory=list, description="冲突集合")
-    critical_claim_review_queue: list[CriticalClaimReviewItem] = Field(default_factory=list, description="关键 claim 复核队列")
+    critical_claim_review_queue: list[CriticalClaimReviewItem] = Field(
+        default_factory=list, description="关键 claim 复核队列"
+    )
     audit_gate_status: str = Field(default="unchecked", description="审计门禁状态")
     audit_block_reason: str = Field(default="", description="审计阻塞原因")
     memory_stats: MemoryStats = Field(default_factory=MemoryStats, description="记忆统计")
@@ -267,9 +287,9 @@ class ResearchState(BaseModel):
     # 输入
     research_topic: str = Field(description="用户研究主题")
     job_id: str = Field(default="", description="当前 orchestrator job ID")
-    topic_spec: Optional[TopicSpec] = Field(default=None, description="结构化主题规格")
+    topic_spec: TopicSpec | None = Field(default=None, description="结构化主题规格")
     research_profile: str = Field(default="default", description="运行 profile")
-    ablation_variant: Optional[str] = Field(default=None, description="ablation 变体名称")
+    ablation_variant: str | None = Field(default=None, description="ablation 变体名称")
     source_profile: str = Field(default="open-web", description="来源策略 profile")
     policy_overrides: dict[str, Any] = Field(default_factory=dict, description="job 级策略覆盖")
     file_inputs: list[str] = Field(default_factory=list, description="内部文件输入路径")
@@ -288,42 +308,60 @@ class ResearchState(BaseModel):
         default_factory=list,
         description="从已抓取来源中发现的候选子来源",
     )
-    visited_source_uris: list[str] = Field(default_factory=list, description="已抓取或已排队的来源 URI")
+    visited_source_uris: list[str] = Field(
+        default_factory=list, description="已抓取或已排队的来源 URI"
+    )
     blocked_source_candidates: list[dict[str, Any]] = Field(
         default_factory=list,
         description="被 source policy 或安全策略拦截的候选来源",
     )
     evidence_notes: list[EvidenceNote] = Field(default_factory=list, description="结构化证据笔记")
-    evidence_fragments: list[EvidenceFragmentRecord] = Field(default_factory=list, description="证据片段")
+    evidence_fragments: list[EvidenceFragmentRecord] = Field(
+        default_factory=list, description="证据片段"
+    )
     evidence_units: list[EvidenceUnit] = Field(default_factory=list, description="证据单元")
     evidence_clusters: list[EvidenceCluster] = Field(default_factory=list, description="证据聚类")
-    verification_records: list[VerificationRecord] = Field(default_factory=list, description="验证记录")
+    verification_records: list[VerificationRecord] = Field(
+        default_factory=list, description="验证记录"
+    )
     claims: list[ClaimRecord] = Field(default_factory=list, description="claim 图节点")
-    claim_support_edges: list[ClaimSupportEdgeRecord] = Field(default_factory=list, description="claim 与证据边")
+    claim_support_edges: list[ClaimSupportEdgeRecord] = Field(
+        default_factory=list, description="claim 与证据边"
+    )
     conflict_sets: list[ConflictSetRecord] = Field(default_factory=list, description="冲突集合")
-    critical_claim_review_queue: list[CriticalClaimReviewItem] = Field(default_factory=list, description="关键 claim 复核队列")
+    critical_claim_review_queue: list[CriticalClaimReviewItem] = Field(
+        default_factory=list, description="关键 claim 复核队列"
+    )
     memory_stats: MemoryStats = Field(default_factory=MemoryStats, description="记忆统计")
-    available_capabilities: list[ToolCapability] = Field(default_factory=list, description="当前能力注册表")
-    capability_plan: dict[str, list[str]] = Field(default_factory=dict, description="任务到能力的映射")
-    tool_invocations: list[ToolInvocationRecord] = Field(default_factory=list, description="工具调用记录")
+    available_capabilities: list[ToolCapability] = Field(
+        default_factory=list, description="当前能力注册表"
+    )
+    capability_plan: dict[str, list[str]] = Field(
+        default_factory=dict, description="任务到能力的映射"
+    )
+    tool_invocations: list[ToolInvocationRecord] = Field(
+        default_factory=list, description="工具调用记录"
+    )
     connector_health: dict[str, Any] = Field(default_factory=dict, description="connector 健康统计")
     run_metrics: RunMetrics = Field(default_factory=RunMetrics, description="运行指标")
 
     # 评审阶段
-    critic_feedback: Optional[CriticFeedback] = Field(
-        default=None, description="Critic 评审反馈"
-    )
+    critic_feedback: CriticFeedback | None = Field(default=None, description="Critic 评审反馈")
     loop_count: int = Field(default=0, description="当前迭代次数")
     max_loops: int = Field(default=3, description="最大迭代次数")
 
     # 报告阶段
-    final_report: Optional[str] = Field(default=None, description="最终研究报告")
-    report_artifact: Optional[ReportArtifact] = Field(default=None, description="结构化报告产物")
+    final_report: str | None = Field(default=None, description="最终研究报告")
+    report_artifact: ReportArtifact | None = Field(default=None, description="结构化报告产物")
     coverage_status: dict[str, bool] = Field(default_factory=dict, description="方面覆盖状态")
     quality_gate_status: str = Field(default="unchecked", description="质量门控状态")
     quality_gate_fail_reason: str = Field(default="", description="质量门控失败原因")
-    pending_follow_up_queries: list[str] = Field(default_factory=list, description="待执行的补充查询")
-    refinement_history: list[dict[str, Any]] = Field(default_factory=list, description="显式 refinement 记录")
+    pending_follow_up_queries: list[str] = Field(
+        default_factory=list, description="待执行的补充查询"
+    )
+    refinement_history: list[dict[str, Any]] = Field(
+        default_factory=list, description="显式 refinement 记录"
+    )
     audit_gate_status: str = Field(default="unchecked", description="审计门禁状态")
     audit_block_reason: str = Field(default="", description="审计阻塞原因")
     critical_claim_count: int = Field(default=0, description="关键 claim 数")
@@ -333,4 +371,4 @@ class ResearchState(BaseModel):
 
     # 状态标志
     status: str = Field(default="initialized", description="工作流当前状态")
-    error: Optional[str] = Field(default=None, description="错误信息")
+    error: str | None = Field(default=None, description="错误信息")

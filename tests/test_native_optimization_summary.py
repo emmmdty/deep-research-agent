@@ -149,7 +149,9 @@ def _write_industry12_reports_root(tmp_path: Path) -> tuple[Path, Path]:
 
 def test_native_optimization_metrics_count_hardened_industry12_cases(tmp_path: Path):
     """优化指标应从 emitted bundles 与 casebook 中读出 before/after 的结构强化结果。"""
-    from deep_research_agent.evals.native_optimization import compute_industry12_discriminativeness_metrics
+    from deep_research_agent.evals.native_optimization import (
+        compute_industry12_discriminativeness_metrics,
+    )
 
     reports_root, casebook_path = _write_industry12_reports_root(tmp_path)
 
@@ -196,9 +198,11 @@ def test_build_native_optimization_summary_writes_before_after_artifacts_with_re
     monkeypatch.setattr(
         native_optimization,
         "resolve_git_ref",
-        lambda ref, *, repo_root: "e7219f195667e3b25d4c178231f44ebfb7cd8101"
-        if ref == "v0.2.0-native-regression"
-        else "967b4823dd1a5e54e5d8f8f1c7c539c54e6fd000",
+        lambda ref, *, repo_root: (
+            "e7219f195667e3b25d4c178231f44ebfb7cd8101"
+            if ref == "v0.2.0-native-regression"
+            else "967b4823dd1a5e54e5d8f8f1c7c539c54e6fd000"
+        ),
     )
 
     result = native_optimization.build_native_optimization_summary(
@@ -214,8 +218,14 @@ def test_build_native_optimization_summary_writes_before_after_artifacts_with_re
 
     assert summary_path.exists()
     assert before_after_path.exists()
-    assert result["artifacts"]["optimization_summary"] == "evals/reports/native_optimization/optimization_summary.json"
-    assert result["artifacts"]["before_after_markdown"] == "evals/reports/native_optimization/BEFORE_AFTER.md"
+    assert (
+        result["artifacts"]["optimization_summary"]
+        == "evals/reports/native_optimization/optimization_summary.json"
+    )
+    assert (
+        result["artifacts"]["before_after_markdown"]
+        == "evals/reports/native_optimization/BEFORE_AFTER.md"
+    )
 
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     serialized = json.dumps(summary, ensure_ascii=False)
@@ -225,13 +235,20 @@ def test_build_native_optimization_summary_writes_before_after_artifacts_with_re
     assert summary["selected_target"] == "industry12_discriminativeness"
     assert summary["baseline_metrics"] == baseline_metrics
     assert summary["post_change_metrics"]["industry12_conflict_case_count"] == 4
-    assert summary["deltas"]["industry12_conflict_case_count"] == {"before": 0, "after": 4, "delta": 4}
+    assert summary["deltas"]["industry12_conflict_case_count"] == {
+        "before": 0,
+        "after": 4,
+        "delta": 4,
+    }
     assert summary["deltas"]["industry12_casebook_conflict_example_present"] == {
         "before": False,
         "after": True,
         "delta": True,
     }
-    assert "industry12 bundle structure is now meaningfully conflict-aware" in summary["interpretation"]
+    assert (
+        "industry12 bundle structure is now meaningfully conflict-aware"
+        in summary["interpretation"]
+    )
     assert str(tmp_path) not in serialized
 
     before_after = before_after_path.read_text(encoding="utf-8")

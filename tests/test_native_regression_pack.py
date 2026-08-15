@@ -5,11 +5,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
-def _task_payload(*, task_id: str, suite_name: str, report_path: str, bundle_path: str) -> dict[str, object]:
+def _task_payload(
+    *, task_id: str, suite_name: str, report_path: str, bundle_path: str
+) -> dict[str, object]:
     return {
         "task_id": task_id,
         "topic": task_id.replace("-", " "),
@@ -26,7 +27,9 @@ def _task_payload(*, task_id: str, suite_name: str, report_path: str, bundle_pat
     }
 
 
-def test_run_native_regression_writes_manifest_and_preserves_smoke_gate(monkeypatch, tmp_path: Path):
+def test_run_native_regression_writes_manifest_and_preserves_smoke_gate(
+    monkeypatch, tmp_path: Path
+):
     """native regression runner 应以 regression_local 运行 suite，并保留 smoke gate 为权威。"""
     from scripts import run_native_regression
 
@@ -39,7 +42,13 @@ def test_run_native_regression_writes_manifest_and_preserves_smoke_gate(monkeypa
         "recovery6": 6,
     }
 
-    def fake_run_eval_suite(*, suite_name: str, variant: str, output_root: str | Path, capture_runtime_metrics: bool = False):
+    def fake_run_eval_suite(
+        *,
+        suite_name: str,
+        variant: str,
+        output_root: str | Path,
+        capture_runtime_metrics: bool = False,
+    ):
         calls.append((suite_name, variant, str(output_root)))
         task_count = expected_counts[suite_name]
         return {
@@ -49,7 +58,15 @@ def test_run_native_regression_writes_manifest_and_preserves_smoke_gate(monkeypa
             "status": "passed",
             "task_count": task_count,
             "metrics": {"completion_rate": 1.0},
-            "threshold_results": {"completion_rate": {"value": 1.0, "min": 1.0, "max": None, "passed": True, "reason": ""}},
+            "threshold_results": {
+                "completion_rate": {
+                    "value": 1.0,
+                    "min": 1.0,
+                    "max": None,
+                    "passed": True,
+                    "reason": "",
+                }
+            },
             "rubric_path": f"evals/rubrics/{suite_name}.yaml",
             "tasks": [],
         }
@@ -58,13 +75,22 @@ def test_run_native_regression_writes_manifest_and_preserves_smoke_gate(monkeypa
 
     manifest = run_native_regression.run_native_regression(output_root=tmp_path)
 
-    assert [suite_name for suite_name, _, _ in calls] == ["company12", "industry12", "trusted8", "file8", "recovery6"]
+    assert [suite_name for suite_name, _, _ in calls] == [
+        "company12",
+        "industry12",
+        "trusted8",
+        "file8",
+        "recovery6",
+    ]
     assert all(variant == "regression_local" for _, variant, _ in calls)
     assert manifest["status"] == "passed"
     assert manifest["authoritative_merge_gate"]["name"] == "phase5_local_smoke"
     assert manifest["authoritative_merge_gate"]["status"] == "passed"
-    assert manifest["authoritative_merge_gate"]["path"] == "evals/reports/phase5_local_smoke/release_manifest.json"
-    assert manifest["suite_variants"] == {suite_name: "regression_local" for suite_name in expected_counts}
+    assert (
+        manifest["authoritative_merge_gate"]["path"]
+        == "evals/reports/phase5_local_smoke/release_manifest.json"
+    )
+    assert manifest["suite_variants"] == dict.fromkeys(expected_counts, "regression_local")
     assert manifest["suites"]["company12"]["task_count"] == 12
     assert (tmp_path / "release_manifest.json").exists()
     assert (tmp_path / "RESULTS.md").exists()
@@ -161,7 +187,11 @@ def test_build_native_benchmark_summary_writes_docs_and_repo_relative_paths(tmp_
                 "variant": "regression_local",
                 "status": "passed",
                 "task_count": 8,
-                "metrics": {"completion_rate": 1.0, "bundle_emission_rate": 1.0, "file_input_success_rate": 1.0},
+                "metrics": {
+                    "completion_rate": 1.0,
+                    "bundle_emission_rate": 1.0,
+                    "file_input_success_rate": 1.0,
+                },
                 "tasks": [
                     _task_payload(
                         task_id="file-openai-private-brief",
@@ -197,7 +227,9 @@ def test_build_native_benchmark_summary_writes_docs_and_repo_relative_paths(tmp_
             },
         },
     }
-    (reports_root / "release_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    (reports_root / "release_manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
     build_native_benchmark_summary.run_native_benchmark_summary(
         reports_root=reports_root,
@@ -216,7 +248,10 @@ def test_build_native_benchmark_summary_writes_docs_and_repo_relative_paths(tmp_
 
     summary = json.loads(native_summary_path.read_text(encoding="utf-8"))
     joined = json.dumps(summary, ensure_ascii=False)
-    assert summary["authoritative_merge_gate"]["path"] == "evals/reports/phase5_local_smoke/release_manifest.json"
+    assert (
+        summary["authoritative_merge_gate"]["path"]
+        == "evals/reports/phase5_local_smoke/release_manifest.json"
+    )
     assert summary["suite_matrix"]["company12"]["smoke_local_task_count"] == 1
     assert summary["suite_matrix"]["company12"]["regression_local_task_count"] == 12
     assert summary["coverage"]["still_not_covered"]

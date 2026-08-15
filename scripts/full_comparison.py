@@ -108,7 +108,7 @@ def generate_comparison_report(all_results: list[dict[str, Any]]) -> str:
             for name, payload in pairwise.items():
                 lines.append(
                     f"| {name} | {payload.get('winner', payload.get('status', '-'))} | "
-                    f"{payload.get('score_diff', '-')} | {payload.get('reason', '-') } |"
+                    f"{payload.get('score_diff', '-')} | {payload.get('reason', '-')} |"
                 )
         lines.append("")
 
@@ -168,10 +168,18 @@ def main() -> None:
 
     settings = get_settings()
     requested = [item.strip() for item in args.comparators.split(",")] if args.comparators else None
-    optional = [item.strip() for item in args.include_optional.split(",")] if args.include_optional else None
+    optional = (
+        [item.strip() for item in args.include_optional.split(",")]
+        if args.include_optional
+        else None
+    )
     comparator_names = resolve_comparators(settings, requested=requested, include_optional=optional)
     run_id = time.strftime("%Y%m%d-%H%M%S")
-    output_root = Path(args.output_dir) if args.output_dir else PROJECT_ROOT / "workspace" / "comparisons" / run_id
+    output_root = (
+        Path(args.output_dir)
+        if args.output_dir
+        else PROJECT_ROOT / "workspace" / "comparisons" / run_id
+    )
 
     console.print(
         Panel(

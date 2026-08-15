@@ -22,6 +22,7 @@ prompt-based JSON path (``_classic_*``), so the worker runs on any provider.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import functools
 import hashlib
 import json
@@ -89,7 +90,12 @@ _PLAN_QUERIES_TOOL = {
                             "query": {"type": "string"},
                             "tool": {
                                 "type": "string",
-                                "enum": ["web_search", "github_search", "arxiv_search", "read_image"],
+                                "enum": [
+                                    "web_search",
+                                    "github_search",
+                                    "arxiv_search",
+                                    "read_image",
+                                ],
                             },
                         },
                         "required": ["query", "tool"],
@@ -271,9 +277,7 @@ class LLMResearcherWorker:
         try:
             return await chat.tool_loop(**kwargs)
         except LLMChatError as exc:
-            logger.warning(
-                "researcher: function-calling round unavailable ({}); falling back", exc
-            )
+            logger.warning("researcher: function-calling round unavailable ({}); falling back", exc)
             return None
 
     async def execute(self, task, context: TaskExecutionContext) -> WorkerOutput:
@@ -287,10 +291,8 @@ class LLMResearcherWorker:
             return await self._run_classic_loop(task, context, chat)
         finally:
             if owned_chat:
-                try:
+                with contextlib.suppress(Exception):
                     await chat.aclose()
-                except Exception:  # noqa: BLE001 - closing is best-effort cleanup
-                    pass
 
     # ------------------------------------------------------------------ agentic
 
@@ -322,7 +324,9 @@ class LLMResearcherWorker:
                     task.task_id,
                 )
                 break
-            new_sources, new_query_urls = await self._gather_queries(task, context, queries, sources, stats)
+            new_sources, new_query_urls = await self._gather_queries(
+                task, context, queries, sources, stats
+            )
             sources = new_sources
             query_urls.extend(new_query_urls)
             # 只统计真正执行的查询：被记忆前置 recall 覆盖的查询未产生任何调用，
@@ -616,7 +620,9 @@ class LLMResearcherWorker:
             if len(sources) >= _MAX_SOURCES:
                 break
         if recalled or covered_query_indices:
-            stats["memory_recall_sources"] = stats.get("memory_recall_sources", 0) + injected_sources
+            stats["memory_recall_sources"] = (
+                stats.get("memory_recall_sources", 0) + injected_sources
+            )
             stats["memory_recall_skipped_queries"] = stats.get(
                 "memory_recall_skipped_queries", 0
             ) + len(covered_query_indices)
@@ -637,7 +643,7 @@ class LLMResearcherWorker:
             *(_invoke_query(query) for _, query in active), return_exceptions=True
         )
         query_urls: list[dict[str, Any]] = []
-        for (_, query), envelope in zip(active, envelopes):
+        for (_, query), envelope in zip(active, envelopes, strict=True):
             produced_urls: list[str] = []
             if isinstance(envelope, Exception):
                 raise envelope
@@ -686,7 +692,9 @@ class LLMResearcherWorker:
                 )
                 produced_urls.append(url)
                 if len(sources) >= _MAX_SOURCES:
-                    query_urls.append({"query": query["query"], "tool": tool_name, "urls": produced_urls})
+                    query_urls.append(
+                        {"query": query["query"], "tool": tool_name, "urls": produced_urls}
+                    )
                     return sources, query_urls
                 continue
             if envelope.status != "succeeded" or envelope.output is None:
@@ -728,7 +736,9 @@ class LLMResearcherWorker:
                 )
                 produced_urls.append(url)
                 if len(sources) >= _MAX_SOURCES:
-                    query_urls.append({"query": query["query"], "tool": tool_name, "urls": produced_urls})
+                    query_urls.append(
+                        {"query": query["query"], "tool": tool_name, "urls": produced_urls}
+                    )
                     return sources, query_urls
             query_urls.append({"query": query["query"], "tool": tool_name, "urls": produced_urls})
         return sources, query_urls
@@ -744,7 +754,9 @@ class LLMResearcherWorker:
     ) -> tuple[list[dict[str, Any]], bool]:
         if not fetch_available:
             return [], fetch_available
-        source_list = self._reranked_source_list(task.objective, sources, max_chars=220, stats=stats)
+        source_list = self._reranked_source_list(
+            task.objective, sources, max_chars=220, stats=stats
+        )
         result = await self._maybe_tool_loop(
             chat,
             system=_SELECT_PAGES_SYSTEM_PROMPT,
@@ -762,9 +774,7 @@ class LLMResearcherWorker:
             return [], fetch_available
         known_urls = {str(source["url"]) for source in sources}
         requested = [
-            str(url)
-            for url in arguments.get("urls", [])
-            if str(url).strip() in known_urls
+            str(url) for url in arguments.get("urls", []) if str(url).strip() in known_urls
         ]
         return await self._fetch_pages(task, context, requested[: self._max_pages], stats)
 
@@ -858,7 +868,7 @@ class LLMResearcherWorker:
         envelopes = await asyncio.gather(
             *(_invoke_fetch(url) for url in urls), return_exceptions=True
         )
-        for url, envelope in zip(urls, envelopes):
+        for url, envelope in zip(urls, envelopes, strict=True):
             if isinstance(envelope, Exception):
                 raise envelope
             if envelope.status != "succeeded" or envelope.output is None:
@@ -871,7 +881,11 @@ class LLMResearcherWorker:
                 continue
             if should_quarantine_source(content):
                 stats["injection_dropped_pages"] += 1
-                logger.warning("researcher {}: dropped page {} (instruction override attempt)", task.task_id, url)
+                logger.warning(
+                    "researcher {}: dropped page {} (instruction override attempt)",
+                    task.task_id,
+                    url,
+                )
                 continue
             sanitized = sanitize_content(content)
             content = sanitized.text
@@ -1041,9 +1055,13 @@ class LLMResearcherWorker:
             return None
         source = source_by_index.get(int(item.get("source_index") or 0))
         if source is None:
-            logger.warning("researcher: model cited unknown source_index={}", item.get("source_index"))
+            logger.warning(
+                "researcher: model cited unknown source_index={}", item.get("source_index")
+            )
             return None
-        quote = LLMResearcherWorker._best_verbatim_span(str(item.get("quote") or ""), str(source["snippet"]))
+        quote = LLMResearcherWorker._best_verbatim_span(
+            str(item.get("quote") or ""), str(source["snippet"])
+        )
         if not quote:
             logger.warning("researcher: model quote has no verbatim span; claim dropped")
             return None
@@ -1064,7 +1082,10 @@ class LLMResearcherWorker:
 
     @staticmethod
     def _build_packet(
-        task, context: TaskExecutionContext, sources: list[dict[str, Any]], claims: list[dict[str, Any]]
+        task,
+        context: TaskExecutionContext,
+        sources: list[dict[str, Any]],
+        claims: list[dict[str, Any]],
     ) -> tuple[EvidencePacket, list[ArtifactRef]]:
         source_artifact_by_index: dict[int, ArtifactRef] = {}
         artifacts: list[ArtifactRef] = []
@@ -1118,9 +1139,7 @@ class LLMResearcherWorker:
         records: list[ClaimRecord] = []
         for index, claim in enumerate(claims, start=1):
             source = next(
-                candidate
-                for candidate in sources
-                if candidate["index"] == claim["source_index"]
+                candidate for candidate in sources if candidate["index"] == claim["source_index"]
             )
             artifact = source_artifact_by_index[source["index"]]
             span = EvidenceSpan(
@@ -1155,7 +1174,9 @@ class LLMResearcherWorker:
 
     # ------------------------------------------------------------------- classic
 
-    async def _run_classic_loop(self, task, context: TaskExecutionContext, chat: Any) -> WorkerOutput:
+    async def _run_classic_loop(
+        self, task, context: TaskExecutionContext, chat: Any
+    ) -> WorkerOutput:
         queries = await self._classic_plan_queries(chat, task)
         stats: dict[str, Any] = {
             "injection_findings": 0,

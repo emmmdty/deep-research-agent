@@ -43,8 +43,17 @@ def test_evaluate_report_emits_benchmark_source_metrics():
         "当前证据有限，仍需进一步验证。[2]\n"
     )
     sources = [
-        SourceRecord(citation_id=1, source_type="github", query="q", title="官方仓库", trust_tier=5, selected=True),
-        SourceRecord(citation_id=2, source_type="web", query="q", title="教程站", trust_tier=3, selected=True),
+        SourceRecord(
+            citation_id=1,
+            source_type="github",
+            query="q",
+            title="官方仓库",
+            trust_tier=5,
+            selected=True,
+        ),
+        SourceRecord(
+            citation_id=2, source_type="web", query="q", title="教程站", trust_tier=3, selected=True
+        ),
         SourceRecord(
             citation_id=3,
             source_type="web",
@@ -84,7 +93,14 @@ def test_unsupported_core_claim_count_skips_weak_claims_with_limit_markers():
         "现有高可信证据有限；基于当前公开资料，只能做出保守判断，但证据仍有限，需进一步验证。[2]\n"
     )
     sources = [
-        SourceRecord(citation_id=2, source_type="web", query="q", title="社区文章", trust_tier=2, selected=True),
+        SourceRecord(
+            citation_id=2,
+            source_type="web",
+            query="q",
+            title="社区文章",
+            trust_tier=2,
+            selected=True,
+        ),
     ]
 
     assert unsupported_core_claim_count(report, sources) == 0
@@ -93,7 +109,12 @@ def test_unsupported_core_claim_count_skips_weak_claims_with_limit_markers():
 def test_build_report_metrics_merges_memory_and_tooling_signals():
     """报告指标应吸收 verifier/memory 与工具调用信号。"""
     from legacy.evaluation.comparators import BenchmarkTopic, build_report_metrics
-    from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
+    from legacy.workflows.states import (
+        EvidenceNote,
+        MemoryStats,
+        ReportArtifact,
+        VerificationRecord,
+    )
 
     metrics = build_report_metrics(
         report_text="# 报告\n\n内容 [1]\n\n补充内容 [2]",
@@ -111,8 +132,22 @@ def test_build_report_metrics_merges_memory_and_tooling_signals():
             "mcp_activation_count": 0,
         },
         sources=[
-            SourceRecord(citation_id=1, source_type="github", query="q", title="来源 1", trust_tier=5, selected=True),
-            SourceRecord(citation_id=2, source_type="web", query="q", title="来源 2", trust_tier=3, selected=True),
+            SourceRecord(
+                citation_id=1,
+                source_type="github",
+                query="q",
+                title="来源 1",
+                trust_tier=5,
+                selected=True,
+            ),
+            SourceRecord(
+                citation_id=2,
+                source_type="web",
+                query="q",
+                title="来源 2",
+                trust_tier=3,
+                selected=True,
+            ),
         ],
         memory_stats=MemoryStats(
             total_evidence_units=4,
@@ -135,8 +170,26 @@ def test_build_report_metrics_merges_memory_and_tooling_signals():
                 "当前证据有限，需进一步验证。[2]\n"
             ),
             citations=[
-                SourceRecord(citation_id=1, source_type="github", query="q", title="来源 1", url="https://github.com/example/repo", trust_tier=5, selected=True, task_title="内容"),
-                SourceRecord(citation_id=2, source_type="web", query="q", title="来源 2", url="https://docs.example.com/guide", trust_tier=3, selected=True, task_title="内容"),
+                SourceRecord(
+                    citation_id=1,
+                    source_type="github",
+                    query="q",
+                    title="来源 1",
+                    url="https://github.com/example/repo",
+                    trust_tier=5,
+                    selected=True,
+                    task_title="内容",
+                ),
+                SourceRecord(
+                    citation_id=2,
+                    source_type="web",
+                    query="q",
+                    title="来源 2",
+                    url="https://docs.example.com/guide",
+                    trust_tier=3,
+                    selected=True,
+                    task_title="内容",
+                ),
             ],
             evidence_notes=[
                 EvidenceNote(
@@ -192,7 +245,12 @@ def test_build_report_metrics_merges_memory_and_tooling_signals():
 def test_evaluate_report_emits_case_study_reliability_metrics():
     """case-study 评估应输出连续值强度指标，而不是只保留数量计数。"""
     from legacy.evaluation.metrics import evaluate_report
-    from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
+    from legacy.workflows.states import (
+        EvidenceNote,
+        MemoryStats,
+        ReportArtifact,
+        VerificationRecord,
+    )
 
     report = (
         "# 报告\n\n"
@@ -263,7 +321,12 @@ def test_evaluate_report_emits_case_study_reliability_metrics():
                 )
             ],
             verification_records=[
-                VerificationRecord(task_title="行业应用案例", citation_ids=[1, 2], status="supported", notes="官方+一手仓库")
+                VerificationRecord(
+                    task_title="行业应用案例",
+                    citation_ids=[1, 2],
+                    status="supported",
+                    notes="官方+一手仓库",
+                )
             ],
             memory_stats=MemoryStats(
                 total_evidence_units=2,
@@ -288,14 +351,14 @@ def test_evaluate_report_emits_case_study_reliability_metrics():
 def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs():
     """没有冲突或 judge 时，应返回可解释的空值，而不是 0 分。"""
     from legacy.evaluation.comparators import BenchmarkTopic, build_report_metrics
-    from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, VerificationRecord
-
-    report = (
-        "# 报告\n\n"
-        "## 1. 内容\n\n"
-        "### 核心结论\n\n"
-        "内容 [1]\n"
+    from legacy.workflows.states import (
+        EvidenceNote,
+        MemoryStats,
+        ReportArtifact,
+        VerificationRecord,
     )
+
+    report = "# 报告\n\n## 1. 内容\n\n### 核心结论\n\n内容 [1]\n"
     sources = [
         SourceRecord(
             citation_id=1,
@@ -311,7 +374,9 @@ def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs()
 
     metrics = build_report_metrics(
         report_text=report,
-        topic=BenchmarkTopic(id="T01", topic="测试", expected_aspects=["内容"], min_sources=1, min_words=10),
+        topic=BenchmarkTopic(
+            id="T01", topic="测试", expected_aspects=["内容"], min_sources=1, min_words=10
+        ),
         runtime_metrics={"time_seconds": 10.0},
         sources=sources,
         memory_stats=MemoryStats(
@@ -339,7 +404,9 @@ def test_build_report_metrics_returns_na_for_missing_conflict_and_judge_inputs()
                 )
             ],
             verification_records=[
-                VerificationRecord(task_title="内容", citation_ids=[1], status="supported", notes="高可信")
+                VerificationRecord(
+                    task_title="内容", citation_ids=[1], status="supported", notes="高可信"
+                )
             ],
             memory_stats=MemoryStats(
                 total_evidence_units=1,
@@ -395,7 +462,10 @@ def test_scorecard_penalizes_missing_verifier_and_gate_signals():
         }
     )
 
-    assert full_metrics["research_reliability_score_100"] > base_metrics["research_reliability_score_100"]
+    assert (
+        full_metrics["research_reliability_score_100"]
+        > base_metrics["research_reliability_score_100"]
+    )
     assert full_metrics["quality_gate_margin_100"] > base_metrics["quality_gate_margin_100"]
 
 
@@ -405,7 +475,9 @@ def test_recovery_resilience_score_reflects_fallback_and_gate_failures():
 
     metrics = build_report_metrics(
         report_text="# 报告\n\n正文 [1]",
-        topic=BenchmarkTopic(id="T01", topic="测试", expected_aspects=["内容"], min_sources=1, min_words=10),
+        topic=BenchmarkTopic(
+            id="T01", topic="测试", expected_aspects=["内容"], min_sources=1, min_words=10
+        ),
         runtime_metrics={
             "time_seconds": 12.0,
             "search_calls": 10,
@@ -414,7 +486,14 @@ def test_recovery_resilience_score_reflects_fallback_and_gate_failures():
             "quality_gate_status": "failed",
         },
         sources=[
-            SourceRecord(citation_id=1, source_type="web", query="q", title="来源", trust_tier=3, selected=True),
+            SourceRecord(
+                citation_id=1,
+                source_type="web",
+                query="q",
+                title="来源",
+                trust_tier=3,
+                selected=True,
+            ),
         ],
     )
 

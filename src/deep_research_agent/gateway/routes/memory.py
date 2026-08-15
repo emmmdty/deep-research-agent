@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from fastapi import APIRouter, HTTPException, status
 from pydantic import Field
-from typing import Literal
 
 from deep_research_agent.gateway.routes.auth import (
     CsrfIdentityDependency,
@@ -12,7 +13,6 @@ from deep_research_agent.gateway.routes.auth import (
     ProductServiceDependency,
     StrictRequest,
 )
-
 
 router = APIRouter(prefix="/v1/memory", tags=["memory"])
 
@@ -36,12 +36,16 @@ class UpdateMemoryRequest(StrictRequest):
 
 @router.get("/export")
 def export_memory(identity: IdentityDependency, service: ProductServiceDependency) -> dict:
-    return {"memories": service.list_memories(tenant_id=identity.tenant_id, user_id=identity.user_id)}
+    return {
+        "memories": service.list_memories(tenant_id=identity.tenant_id, user_id=identity.user_id)
+    }
 
 
 @router.get("")
 def list_memory(identity: IdentityDependency, service: ProductServiceDependency) -> dict:
-    return {"memories": service.list_memories(tenant_id=identity.tenant_id, user_id=identity.user_id)}
+    return {
+        "memories": service.list_memories(tenant_id=identity.tenant_id, user_id=identity.user_id)
+    }
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
@@ -69,7 +73,9 @@ def create_memory(
 
 
 @router.get("/{memory_id}")
-def get_memory(memory_id: str, identity: IdentityDependency, service: ProductServiceDependency) -> dict:
+def get_memory(
+    memory_id: str, identity: IdentityDependency, service: ProductServiceDependency
+) -> dict:
     memory = service.get_memory(memory_id, tenant_id=identity.tenant_id, user_id=identity.user_id)
     if memory is None:
         raise HTTPException(status_code=404, detail="memory not found")

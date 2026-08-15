@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import json
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
-
+from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CASEBOOK_PATH = PROJECT_ROOT / "docs" / "benchmarks" / "native" / "CASEBOOK.md"
-INDUSTRY12_SUMMARY_RELATIVE_PATH = Path("evals") / "reports" / "native_regression" / "industry12" / "summary.json"
+INDUSTRY12_SUMMARY_RELATIVE_PATH = (
+    Path("evals") / "reports" / "native_regression" / "industry12" / "summary.json"
+)
 OPTIMIZATION_OUTPUT_RELATIVE_ROOT = Path("evals") / "reports" / "native_optimization"
 SELECTED_TARGET = "industry12_discriminativeness"
 
@@ -24,14 +26,20 @@ def compute_industry12_discriminativeness_metrics(
     """Compute the hardening metrics for the industry12 regression suite."""
 
     resolved_reports_root = Path(reports_root).resolve()
-    resolved_repo_root = Path(repo_root).resolve() if repo_root is not None else resolved_reports_root.parents[2]
-    resolved_casebook_path = Path(casebook_path or (resolved_repo_root / DEFAULT_CASEBOOK_PATH.relative_to(PROJECT_ROOT))).resolve()
+    resolved_repo_root = (
+        Path(repo_root).resolve() if repo_root is not None else resolved_reports_root.parents[2]
+    )
+    resolved_casebook_path = Path(
+        casebook_path or (resolved_repo_root / DEFAULT_CASEBOOK_PATH.relative_to(PROJECT_ROOT))
+    ).resolve()
     summary = _load_json(resolved_reports_root / "industry12" / "summary.json")
     casebook_text = resolved_casebook_path.read_text(encoding="utf-8")
     return _compute_metrics_from_summary(
         summary,
         casebook_text=casebook_text,
-        bundle_loader=lambda bundle_ref: _load_json(_resolve_bundle_path(bundle_ref, repo_root=resolved_repo_root)),
+        bundle_loader=lambda bundle_ref: _load_json(
+            _resolve_bundle_path(bundle_ref, repo_root=resolved_repo_root)
+        ),
     )
 
 
@@ -68,15 +76,12 @@ def resolve_git_ref(ref: str, *, repo_root: str | Path = PROJECT_ROOT) -> str:
     """Resolve a git ref to a full commit SHA."""
 
     resolved_repo_root = Path(repo_root).resolve()
-    return (
-        subprocess.run(
-            ["git", "-C", str(resolved_repo_root), "rev-list", "-n", "1", ref],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        .stdout.strip()
-    )
+    return subprocess.run(
+        ["git", "-C", str(resolved_repo_root), "rev-list", "-n", "1", ref],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
 
 
 def build_native_optimization_summary(
@@ -93,7 +98,9 @@ def build_native_optimization_summary(
     resolved_reports_root = Path(reports_root).resolve()
     resolved_output_root = Path(output_root).resolve()
     resolved_output_root.mkdir(parents=True, exist_ok=True)
-    resolved_casebook_path = Path(casebook_path or (resolved_repo_root / DEFAULT_CASEBOOK_PATH.relative_to(PROJECT_ROOT))).resolve()
+    resolved_casebook_path = Path(
+        casebook_path or (resolved_repo_root / DEFAULT_CASEBOOK_PATH.relative_to(PROJECT_ROOT))
+    ).resolve()
 
     baseline_commit = resolve_git_ref(baseline_tag, repo_root=resolved_repo_root)
     post_change_commit = resolve_git_ref("HEAD", repo_root=resolved_repo_root)
@@ -108,11 +115,19 @@ def build_native_optimization_summary(
     )
     deltas = _build_deltas(baseline_metrics, post_change_metrics)
     artifact_paths = {
-        "baseline_industry12_summary": _display_path(INDUSTRY12_SUMMARY_RELATIVE_PATH, repo_root=resolved_repo_root),
-        "post_industry12_summary": _display_path(resolved_reports_root / "industry12" / "summary.json", repo_root=resolved_repo_root),
+        "baseline_industry12_summary": _display_path(
+            INDUSTRY12_SUMMARY_RELATIVE_PATH, repo_root=resolved_repo_root
+        ),
+        "post_industry12_summary": _display_path(
+            resolved_reports_root / "industry12" / "summary.json", repo_root=resolved_repo_root
+        ),
         "post_casebook": _display_path(resolved_casebook_path, repo_root=resolved_repo_root),
-        "optimization_summary": _display_path(resolved_output_root / "optimization_summary.json", repo_root=resolved_repo_root),
-        "before_after_markdown": _display_path(resolved_output_root / "BEFORE_AFTER.md", repo_root=resolved_repo_root),
+        "optimization_summary": _display_path(
+            resolved_output_root / "optimization_summary.json", repo_root=resolved_repo_root
+        ),
+        "before_after_markdown": _display_path(
+            resolved_output_root / "BEFORE_AFTER.md", repo_root=resolved_repo_root
+        ),
     }
     interpretation = _build_interpretation(baseline_metrics, post_change_metrics)
 
@@ -133,7 +148,12 @@ def build_native_optimization_summary(
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     before_after_path.write_text(_render_before_after_markdown(summary), encoding="utf-8")
 
-    return {"artifacts": {"optimization_summary": artifact_paths["optimization_summary"], "before_after_markdown": artifact_paths["before_after_markdown"]}}
+    return {
+        "artifacts": {
+            "optimization_summary": artifact_paths["optimization_summary"],
+            "before_after_markdown": artifact_paths["before_after_markdown"],
+        }
+    }
 
 
 def _compute_metrics_from_summary(
@@ -164,11 +184,14 @@ def _compute_metrics_from_summary(
         "industry12_conflict_case_count": conflict_case_count,
         "industry12_multi_claim_task_count": multi_claim_task_count,
         "industry12_uncertainty_case_count": uncertainty_case_count,
-        "industry12_casebook_conflict_example_present": "industry-governance-policy" in casebook_text,
+        "industry12_casebook_conflict_example_present": "industry-governance-policy"
+        in casebook_text,
     }
 
 
-def _build_deltas(baseline_metrics: dict[str, Any], post_change_metrics: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def _build_deltas(
+    baseline_metrics: dict[str, Any], post_change_metrics: dict[str, Any]
+) -> dict[str, dict[str, Any]]:
     deltas: dict[str, dict[str, Any]] = {}
     for key, before in baseline_metrics.items():
         after = post_change_metrics[key]
@@ -182,17 +205,21 @@ def _build_deltas(baseline_metrics: dict[str, Any], post_change_metrics: dict[st
     return deltas
 
 
-def _build_interpretation(baseline_metrics: dict[str, Any], post_change_metrics: dict[str, Any]) -> str:
+def _build_interpretation(
+    baseline_metrics: dict[str, Any], post_change_metrics: dict[str, Any]
+) -> str:
     if (
         post_change_metrics["industry12_suite_status"] == "passed"
-        and post_change_metrics["industry12_task_count"] == baseline_metrics["industry12_task_count"]
-        and post_change_metrics["industry12_conflict_case_count"] > baseline_metrics["industry12_conflict_case_count"]
-        and post_change_metrics["industry12_multi_claim_task_count"] > baseline_metrics["industry12_multi_claim_task_count"]
-        and post_change_metrics["industry12_uncertainty_case_count"] > baseline_metrics["industry12_uncertainty_case_count"]
+        and post_change_metrics["industry12_task_count"]
+        == baseline_metrics["industry12_task_count"]
+        and post_change_metrics["industry12_conflict_case_count"]
+        > baseline_metrics["industry12_conflict_case_count"]
+        and post_change_metrics["industry12_multi_claim_task_count"]
+        > baseline_metrics["industry12_multi_claim_task_count"]
+        and post_change_metrics["industry12_uncertainty_case_count"]
+        > baseline_metrics["industry12_uncertainty_case_count"]
     ):
-        return (
-            "industry12 bundle structure is now meaningfully conflict-aware while keeping the suite passing and the task count unchanged."
-        )
+        return "industry12 bundle structure is now meaningfully conflict-aware while keeping the suite passing and the task count unchanged."
     if post_change_metrics["industry12_suite_status"] != "passed":
         return "industry12 discriminativeness increased, but the suite no longer passes and needs follow-up."
     return "industry12 changed, but the hardening signal is mixed or inconclusive."

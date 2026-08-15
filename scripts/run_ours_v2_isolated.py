@@ -26,15 +26,16 @@ from uuid import uuid4
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from configs.settings import get_settings  # noqa: E402
-from dotenv import load_dotenv  # noqa: E402
-from loguru import logger  # noqa: E402
+from dotenv import load_dotenv
+from loguru import logger
+
+from configs.settings import get_settings
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
+from deep_research_agent.agents.critic import LLMCriticWorker  # noqa: E402
 from deep_research_agent.agents.factory import MultiRoleWorker, build_gateway  # noqa: E402
 from deep_research_agent.agents.planner import LLMResearchPlanner  # noqa: E402
-from deep_research_agent.agents.critic import LLMCriticWorker  # noqa: E402
 from deep_research_agent.agents.researcher import LLMResearcherWorker  # noqa: E402
 from deep_research_agent.domain_packs.registry import DomainPackRegistry  # noqa: E402
 from deep_research_agent.kernel.contracts import (  # noqa: E402
@@ -79,7 +80,9 @@ async def _run(topic: str) -> tuple[str, dict]:
 
     gateway = build_gateway()
     worker = MultiRoleWorker(researcher=LLMResearcherWorker(), critic=LLMCriticWorker())
-    scheduler = ResearchScheduler(worker=worker, tool_gateway=gateway, max_workers=4, max_attempts=2)
+    scheduler = ResearchScheduler(
+        worker=worker, tool_gateway=gateway, max_workers=4, max_attempts=2
+    )
     result = await scheduler.run(
         SchedulerJob(job_id=job_id, tenant_id="comparator"),
         dag,

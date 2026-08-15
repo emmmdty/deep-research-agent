@@ -14,8 +14,9 @@ from __future__ import annotations
 
 import math
 import os
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Sequence
+from typing import Any
 
 from loguru import logger
 
@@ -26,9 +27,7 @@ class EmbeddingProvider:
     """Local embedding provider (lazy-loaded fastembed / ONNX)."""
 
     def __init__(self, model_name: str | None = None, *, cache_dir: str | None = None) -> None:
-        self._model_name = model_name or os.environ.get(
-            "EMBEDDING_MODEL", _DEFAULT_EMBEDDING_MODEL
-        )
+        self._model_name = model_name or os.environ.get("EMBEDDING_MODEL", _DEFAULT_EMBEDDING_MODEL)
         self._cache_dir = cache_dir or os.environ.get("EMBEDDING_CACHE_DIR")
         self._model: Any | None = None
 
@@ -76,7 +75,7 @@ def cosine_similarity(left: Sequence[float], right: Sequence[float]) -> float:
     """Cosine similarity of two vectors (assumes L2-normalized inputs)."""
     if not left or not right or len(left) != len(right):
         return 0.0
-    return sum(a * b for a, b in zip(left, right))
+    return sum(a * b for a, b in zip(left, right, strict=True))
 
 
 @dataclass(frozen=True)
@@ -112,13 +111,19 @@ class SemanticReranker:
         if not candidate_texts:
             return []
         if not self.available or not query.strip():
-            return [RankedSource(index=position, relevance=0.0) for position in range(1, len(candidate_texts) + 1)]
+            return [
+                RankedSource(index=position, relevance=0.0)
+                for position in range(1, len(candidate_texts) + 1)
+            ]
         try:
             query_vector = self._provider.embed_one(query)
             vectors = self._provider.embed(candidate_texts)
         except Exception as exc:  # noqa: BLE001
             logger.warning("semantic rerank failed; falling back to original order: {}", exc)
-            return [RankedSource(index=position, relevance=0.0) for position in range(1, len(candidate_texts) + 1)]
+            return [
+                RankedSource(index=position, relevance=0.0)
+                for position in range(1, len(candidate_texts) + 1)
+            ]
         scored = [
             RankedSource(index=position, relevance=cosine_similarity(query_vector, vector))
             for position, vector in enumerate(vectors, start=1)

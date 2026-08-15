@@ -141,10 +141,18 @@ def print_results(results: list[dict[str, Any]]) -> None:
                 topic_result["topic_id"],
                 name,
                 payload.get("status", "-"),
-                _format_md_metric(metrics.get("research_reliability_score_100")) if payload.get("success") else "-",
-                _format_md_metric(metrics.get("system_controllability_score_100")) if payload.get("success") else "-",
-                _format_md_metric(metrics.get("report_quality_score_100")) if payload.get("success") else "-",
-                _format_md_metric(metrics.get("quality_gate_margin_100")) if payload.get("success") else "-",
+                _format_md_metric(metrics.get("research_reliability_score_100"))
+                if payload.get("success")
+                else "-",
+                _format_md_metric(metrics.get("system_controllability_score_100"))
+                if payload.get("success")
+                else "-",
+                _format_md_metric(metrics.get("report_quality_score_100"))
+                if payload.get("success")
+                else "-",
+                _format_md_metric(metrics.get("quality_gate_margin_100"))
+                if payload.get("success")
+                else "-",
                 str(metrics.get("time_seconds", "-")),
             )
 
@@ -196,7 +204,9 @@ def build_benchmark_summary(
                 "judge_citation": metrics.get("judge_citation"),
                 "quality_gate_passed": quality_gate_passed,
                 "high_trust_aspect_score_100": metrics.get("high_trust_aspect_score_100"),
-                "cross_source_corroboration_score_100": metrics.get("cross_source_corroboration_score_100"),
+                "cross_source_corroboration_score_100": metrics.get(
+                    "cross_source_corroboration_score_100"
+                ),
                 "verification_strength_score_100": metrics.get("verification_strength_score_100"),
                 "entity_resolution_score_100": metrics.get("entity_resolution_score_100"),
                 "citation_alignment_score_100": metrics.get("citation_alignment_score_100"),
@@ -237,7 +247,11 @@ def build_benchmark_summary(
             "max": round(max(values), 3),
         }
 
-    judge_status = "scored" if any(row.get("judge_overall") is not None for row in completed_rows) else "skipped"
+    judge_status = (
+        "scored"
+        if any(row.get("judge_overall") is not None for row in completed_rows)
+        else "skipped"
+    )
     rankings = {
         "by_research_reliability_score_100": [
             row["topic_id"]
@@ -264,8 +278,7 @@ def build_benchmark_summary(
             )
         ],
         "by_time_seconds_fastest": [
-            row["topic_id"]
-            for row in sorted(completed_rows, key=lambda row: row["time_seconds"])
+            row["topic_id"] for row in sorted(completed_rows, key=lambda row: row["time_seconds"])
         ],
     }
     if judge_status == "scored":
@@ -351,15 +364,25 @@ def build_benchmark_summary(
             )
             if rows
             else 0.0,
-            "avg_tool_use_success_rate": _stats_from_metrics(completed_rows, "tool_use_success_rate"),
+            "avg_tool_use_success_rate": _stats_from_metrics(
+                completed_rows, "tool_use_success_rate"
+            ),
             "avg_recovery_resilience_score_100": _stats_from_metrics(
                 completed_rows,
                 "recovery_resilience_score_100",
             ),
-            "case_study_strength_score_100": _stats_from_metrics(completed_rows, "case_study_strength_score_100"),
-            "first_party_case_coverage_100": _stats_from_metrics(completed_rows, "first_party_case_coverage_100"),
-            "official_case_ratio_100": _stats_from_metrics(completed_rows, "official_case_ratio_100"),
-            "summary_repair_count_total": sum(int(row.get("summary_repair_count", 0) or 0) for row in rows),
+            "case_study_strength_score_100": _stats_from_metrics(
+                completed_rows, "case_study_strength_score_100"
+            ),
+            "first_party_case_coverage_100": _stats_from_metrics(
+                completed_rows, "first_party_case_coverage_100"
+            ),
+            "official_case_ratio_100": _stats_from_metrics(
+                completed_rows, "official_case_ratio_100"
+            ),
+            "summary_repair_count_total": sum(
+                int(row.get("summary_repair_count", 0) or 0) for row in rows
+            ),
             "summary_repair_topics": [
                 row["topic_id"] for row in rows if int(row.get("summary_repair_count", 0) or 0) > 0
             ],
@@ -397,11 +420,15 @@ def _summary_to_markdown(summary: dict[str, Any]) -> str:
 
     lines.extend(["", "## Scorecard", ""])
     for key, value in summary.get("scorecard", {}).items():
-        lines.append(f"- {key}: avg={_format_md_metric(value.get('avg'))}, min={_format_md_metric(value.get('min'))}, max={_format_md_metric(value.get('max'))}")
+        lines.append(
+            f"- {key}: avg={_format_md_metric(value.get('avg'))}, min={_format_md_metric(value.get('min'))}, max={_format_md_metric(value.get('max'))}"
+        )
 
     lines.extend(["", "## Legacy Metrics", ""])
     for key, value in summary.get("legacy_metrics", {}).items():
-        lines.append(f"- {key}: avg={_format_md_metric(value.get('avg'))}, min={_format_md_metric(value.get('min'))}, max={_format_md_metric(value.get('max'))}")
+        lines.append(
+            f"- {key}: avg={_format_md_metric(value.get('avg'))}, min={_format_md_metric(value.get('min'))}, max={_format_md_metric(value.get('max'))}"
+        )
 
     lines.extend(["", "## Counts", ""])
     for key, value in summary["counts"].items():
@@ -437,11 +464,15 @@ def _summary_to_markdown(summary: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _evaluation_reproducibility_score(*, status: str, quality_gate_passed: bool, time_seconds: float) -> float:
+def _evaluation_reproducibility_score(
+    *, status: str, quality_gate_passed: bool, time_seconds: float
+) -> float:
     completion_component = 1.0 if status == "completed" else 0.0
     gate_component = 1.0 if quality_gate_passed else 0.0
     runtime_component = max(0.0, 1.0 - min(time_seconds / 180.0, 1.0))
-    return round(100 * (0.45 * completion_component + 0.35 * gate_component + 0.20 * runtime_component), 3)
+    return round(
+        100 * (0.45 * completion_component + 0.35 * gate_component + 0.20 * runtime_component), 3
+    )
 
 
 def _format_md_metric(value: Any) -> str:
@@ -483,20 +514,32 @@ def main() -> None:
     parser.add_argument("--skip-judge", action="store_true", help="跳过 LLM Judge")
     parser.add_argument("--max-loops", type=int, default=2, help="自身工作流最大循环次数")
     parser.add_argument("--output-dir", type=str, help="输出目录")
-    parser.add_argument("--topic-set", type=str, default="default", help="主题集：default / local3 / portfolio12")
+    parser.add_argument(
+        "--topic-set", type=str, default="default", help="主题集：default / local3 / portfolio12"
+    )
     parser.add_argument("--summary", action="store_true", help="生成聚合 summary 文件")
-    parser.add_argument("--profile", type=str, default="benchmark", help="运行 profile：default 或 benchmark")
+    parser.add_argument(
+        "--profile", type=str, default="benchmark", help="运行 profile：default 或 benchmark"
+    )
     parser.add_argument("--env-file", type=str, help="显式指定运行时 env 文件")
     args = parser.parse_args()
 
     load_runtime_env(args.env_file)
     settings = get_settings()
     requested = [item.strip() for item in args.comparators.split(",")] if args.comparators else None
-    optional = [item.strip() for item in args.include_optional.split(",")] if args.include_optional else None
+    optional = (
+        [item.strip() for item in args.include_optional.split(",")]
+        if args.include_optional
+        else None
+    )
     comparator_names = resolve_comparators(settings, requested=requested, include_optional=optional)
     topics = load_topics(max_topics=args.max_topics, topic_set=args.topic_set)
     run_id = time.strftime("%Y%m%d-%H%M%S")
-    output_root = Path(args.output_dir) if args.output_dir else PROJECT_ROOT / "workspace" / "benchmarks" / run_id
+    output_root = (
+        Path(args.output_dir)
+        if args.output_dir
+        else PROJECT_ROOT / "workspace" / "benchmarks" / run_id
+    )
 
     console.print(
         Panel(

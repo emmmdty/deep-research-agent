@@ -45,7 +45,9 @@ def _normalize_summary_payload(summary: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def summary_meets_thresholds(summary: dict[str, Any], thresholds: dict[str, Any] | None = None) -> bool:
+def summary_meets_thresholds(
+    summary: dict[str, Any], thresholds: dict[str, Any] | None = None
+) -> bool:
     """判断当前 benchmark summary 是否达标。"""
     thresholds = thresholds or DEFAULT_THRESHOLDS
     completed = summary.get("counts", {}).get("completed", 0)
@@ -72,7 +74,11 @@ def build_failure_analysis(
         status = payload.get("status", "failed")
         quality_gate_passed = bool(metrics.get("quality_gate_passed", False))
         aspect_coverage = metrics.get("aspect_coverage", 0.0) or 0.0
-        if status == "completed" and quality_gate_passed and aspect_coverage >= DEFAULT_THRESHOLDS["aspect_coverage_avg"]:
+        if (
+            status == "completed"
+            and quality_gate_passed
+            and aspect_coverage >= DEFAULT_THRESHOLDS["aspect_coverage_avg"]
+        ):
             continue
 
         failing_topics.append(
@@ -125,7 +131,10 @@ def build_strategy_patch_plan(
             }
         )
 
-    if summary.get("counts", {}).get("quality_gate_passed", 0) < DEFAULT_THRESHOLDS["quality_gate_passed"]:
+    if (
+        summary.get("counts", {}).get("quality_gate_passed", 0)
+        < DEFAULT_THRESHOLDS["quality_gate_passed"]
+    ):
         actions.append(
             {
                 "action": "increase_high_trust_mix",
@@ -133,7 +142,10 @@ def build_strategy_patch_plan(
             }
         )
 
-    if any(item.get("entity_consistency_score", 1.0) < 0.9 for item in failure_analysis.get("failing_topics", [])):
+    if any(
+        item.get("entity_consistency_score", 1.0) < 0.9
+        for item in failure_analysis.get("failing_topics", [])
+    ):
         actions.append(
             {
                 "action": "strengthen_entity_resolution",
@@ -165,7 +177,9 @@ def run_optimization(
     """运行 local3 自动优化闭环。"""
     settings = get_settings()
     topics = load_topics(topic_set="local3")
-    effective_skip_judge = skip_judge if skip_judge is not None else not bool(settings.get_llm_config().get("api_key"))
+    effective_skip_judge = (
+        skip_judge if skip_judge is not None else not bool(settings.get_llm_config().get("api_key"))
+    )
 
     completed_rounds = 0
     thresholds_met = False
@@ -182,9 +196,13 @@ def run_optimization(
             research_profile=research_profile,
         )
         save_results(results, round_dir)
-        summary = _normalize_summary_payload(build_benchmark_summary(results, comparator_name="ours"))
+        summary = _normalize_summary_payload(
+            build_benchmark_summary(results, comparator_name="ours")
+        )
         save_summary(summary, round_dir)
-        failure_analysis = build_failure_analysis(results=results, summary=summary, output_root=round_dir)
+        failure_analysis = build_failure_analysis(
+            results=results, summary=summary, output_root=round_dir
+        )
         build_strategy_patch_plan(
             summary=summary,
             failure_analysis=failure_analysis,
@@ -221,13 +239,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="local3 benchmark 自动优化器")
     parser.add_argument("--output-dir", type=str, help="优化输出目录")
     parser.add_argument("--max-rounds", type=int, default=3, help="最大优化轮数")
-    parser.add_argument("--max-loops", type=int, default=2, help="单次 benchmark 的最大研究循环次数")
+    parser.add_argument(
+        "--max-loops", type=int, default=2, help="单次 benchmark 的最大研究循环次数"
+    )
     parser.add_argument("--skip-judge", action="store_true", help="跳过 LLM Judge")
     parser.add_argument("--profile", type=str, default="benchmark", help="运行 profile")
     args = parser.parse_args()
 
     run_id = time.strftime("%Y%m%d-%H%M%S")
-    output_root = Path(args.output_dir) if args.output_dir else PROJECT_ROOT / "workspace" / "benchmarks" / "optimization_runs" / run_id
+    output_root = (
+        Path(args.output_dir)
+        if args.output_dir
+        else PROJECT_ROOT / "workspace" / "benchmarks" / "optimization_runs" / run_id
+    )
     outcome = run_optimization(
         output_root=output_root,
         max_rounds=args.max_rounds,
@@ -235,7 +259,11 @@ def main() -> None:
         skip_judge=args.skip_judge,
         research_profile=args.profile,
     )
-    logger.info("优化完成: rounds={}, thresholds_met={}", outcome["completed_rounds"], outcome["thresholds_met"])
+    logger.info(
+        "优化完成: rounds={}, thresholds_met={}",
+        outcome["completed_rounds"],
+        outcome["thresholds_met"],
+    )
 
 
 if __name__ == "__main__":

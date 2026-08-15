@@ -6,8 +6,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from deep_research_agent.research_jobs.models import JobRuntimeRecord, JobProgressEvent
-
+from deep_research_agent.research_jobs.models import JobProgressEvent, JobRuntimeRecord
 
 ReviewDecision = Literal["approve", "downgrade", "reject", "override"]
 
@@ -146,9 +145,13 @@ def public_job_response(job: JobRuntimeRecord) -> PublicJobResponse:
     """Project an internal job record into the stable public contract."""
 
     status = job.status.value if hasattr(job.status, "value") else str(job.status)
-    current_stage = job.current_stage.value if hasattr(job.current_stage, "value") else str(job.current_stage)
+    current_stage = (
+        job.current_stage.value if hasattr(job.current_stage, "value") else str(job.current_stage)
+    )
     audit_gate_status = (
-        job.audit_gate_status.value if hasattr(job.audit_gate_status, "value") else str(job.audit_gate_status)
+        job.audit_gate_status.value
+        if hasattr(job.audit_gate_status, "value")
+        else str(job.audit_gate_status)
     )
     return PublicJobResponse(
         job_id=job.job_id,

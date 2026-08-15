@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from langchain_openai import ChatOpenAI
 
 from configs.settings import Settings, get_settings
@@ -14,6 +12,7 @@ from deep_research_agent.providers.router import ProviderRouter
 try:  # pragma: no cover - exercised only when Anthropic models are materialized
     from langchain_anthropic import ChatAnthropic as _BaseChatAnthropic
 except ImportError:  # pragma: no cover - explicit runtime error on use
+
     class _BaseChatAnthropic:  # type: ignore[override]
         def __init__(self, *args, **kwargs):
             raise ImportError("langchain-anthropic is required for Anthropic provider profiles")
@@ -133,7 +132,7 @@ class LLMProvider:
 
     def __init__(
         self,
-        settings: Optional[Settings] = None,
+        settings: Settings | None = None,
         *,
         task_role: str = "planning",
         provider_profile: str | None = None,
@@ -176,7 +175,7 @@ class LLMProvider:
 
 
 def get_llm(
-    settings: Optional[Settings] = None,
+    settings: Settings | None = None,
     *,
     task_role: str = "planning",
     provider_profile: str | None = None,

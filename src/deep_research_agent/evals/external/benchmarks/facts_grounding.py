@@ -18,7 +18,6 @@ from deep_research_agent.evals.external.contracts import (
 )
 from deep_research_agent.evals.external.manifests import write_benchmark_artifacts
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[5]
 
 
@@ -66,13 +65,19 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
         "adapter_mode": descriptor.adapter_mode,
         "role": descriptor.role,
         "critical_claim_support_precision": _average(
-            [float(row.internal_metrics.get("critical_claim_support_precision", 0.0)) for row in task_results]
+            [
+                float(row.internal_metrics.get("critical_claim_support_precision", 0.0))
+                for row in task_results
+            ]
         ),
         "citation_error_rate": _average(
             [float(row.internal_metrics.get("citation_error_rate", 0.0)) for row in task_results]
         ),
         "provenance_completeness": _average(
-            [float(row.internal_metrics.get("provenance_completeness", 0.0)) for row in task_results]
+            [
+                float(row.internal_metrics.get("provenance_completeness", 0.0))
+                for row in task_results
+            ]
         ),
     }
 
@@ -98,7 +103,9 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
             "grounding_score": grounding_score,
         },
         internal_metrics={
-            "critical_claim_support_precision": internal_diagnostics["critical_claim_support_precision"],
+            "critical_claim_support_precision": internal_diagnostics[
+                "critical_claim_support_precision"
+            ],
             "citation_error_rate": internal_diagnostics["citation_error_rate"],
             "provenance_completeness": internal_diagnostics["provenance_completeness"],
         },

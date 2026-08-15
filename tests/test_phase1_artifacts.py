@@ -9,8 +9,13 @@ from types import SimpleNamespace
 import pytest
 from jsonschema import ValidationError
 
-from legacy.workflows.states import EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, ToolInvocationRecord
-
+from legacy.workflows.states import (
+    EvidenceNote,
+    ReportArtifact,
+    RunMetrics,
+    SourceRecord,
+    ToolInvocationRecord,
+)
 
 SCHEMA_NAMES = [
     "research-job",
@@ -119,7 +124,10 @@ def test_report_bundle_schema_rejects_missing_report_text():
 
 def test_build_phase1_bundle_generates_snapshots_claims_and_audit_events():
     """Phase 01 bundle 构建器应从 legacy 结果生成最小可信对象。"""
-    from deep_research_agent.reporting.bundle.compiler import build_report_bundle, build_trace_events
+    from deep_research_agent.reporting.bundle.compiler import (
+        build_report_bundle,
+        build_trace_events,
+    )
 
     result = _build_legacy_result()
     trace_events = build_trace_events(result, job_id="job-test-001")

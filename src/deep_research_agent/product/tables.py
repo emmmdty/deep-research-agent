@@ -90,7 +90,9 @@ class MessageTable(Base):
 
     message_id: Mapped[str] = mapped_column(String(64), primary_key=True)
     tenant_id: Mapped[str] = mapped_column(String(128), index=True)
-    conversation_id: Mapped[str] = mapped_column(ForeignKey("product_conversations.conversation_id"), index=True)
+    conversation_id: Mapped[str] = mapped_column(
+        ForeignKey("product_conversations.conversation_id"), index=True
+    )
     role: Mapped[str] = mapped_column(String(16))
     content: Mapped[str] = mapped_column(Text)
     response_type: Mapped[str | None] = mapped_column(String(32), nullable=True)

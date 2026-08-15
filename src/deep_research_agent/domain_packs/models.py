@@ -52,7 +52,9 @@ class DomainPack(StrictModel):
             unknown_entities = referenced_entities - known_entities
             if unknown_entities:
                 unknown = ", ".join(sorted(unknown_entities))
-                raise ValueError(f"relation {relation.name!r} references unknown entity types: {unknown}")
+                raise ValueError(
+                    f"relation {relation.name!r} references unknown entity types: {unknown}"
+                )
         return self
 
 

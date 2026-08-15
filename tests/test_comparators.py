@@ -139,8 +139,8 @@ def test_run_ours_comparator_marks_failed_quality_gate_as_failed(monkeypatch, tm
 
 def test_resolve_comparators_accepts_ours_v2_aliases():
     """The canonical scheduler-v2 comparator registers under its aliases."""
-    from legacy.evaluation.comparators import normalize_comparator_name, resolve_comparators
     from configs.settings import Settings
+    from legacy.evaluation.comparators import normalize_comparator_name, resolve_comparators
 
     assert normalize_comparator_name("ours_v2") == "ours_v2"
     assert normalize_comparator_name("scheduler-v2") == "ours_v2"

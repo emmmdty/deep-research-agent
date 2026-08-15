@@ -7,13 +7,14 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 FROZEN_TIMING_REASON = "frozen_artifact_timestamps"
 PROVIDER_FREE_COST_REASON = "provider_free_fixture_run"
 
 
-def build_value_metrics_pack(*, source_roots: list[str | Path], output_root: str | Path) -> dict[str, Any]:
+def build_value_metrics_pack(
+    *, source_roots: list[str | Path], output_root: str | Path
+) -> dict[str, Any]:
     """Aggregate follow-up metrics from one or more release or suite roots."""
 
     resolved_roots = [Path(root).resolve() for root in source_roots]
@@ -50,13 +51,19 @@ def _build_headline_metrics(
 ) -> dict[str, Any]:
     task_bundles = _research_task_bundles(suites)
     runtime_measurements = _runtime_measurements(task_bundles)
-    provider_free_only = all(_bundle_is_provider_free(item["bundle"]) for item in task_bundles) if task_bundles else False
+    provider_free_only = (
+        all(_bundle_is_provider_free(item["bundle"]) for item in task_bundles)
+        if task_bundles
+        else False
+    )
 
     metrics = {
         "completion_rate": _weighted_suite_metric(suites, "completion_rate"),
         "bundle_emission_rate": _weighted_suite_metric(suites, "bundle_emission_rate"),
         "rubric_coverage": _weighted_suite_metric(suites, "rubric_coverage"),
-        "critical_claim_support_precision": _weighted_suite_metric(suites, "critical_claim_support_precision"),
+        "critical_claim_support_precision": _weighted_suite_metric(
+            suites, "critical_claim_support_precision"
+        ),
         "citation_error_rate": _weighted_suite_metric(suites, "citation_error_rate"),
         "provenance_completeness": _weighted_suite_metric(suites, "provenance_completeness"),
         "audit_pass_rate": _weighted_suite_metric(suites, "audit_pass_rate"),
@@ -66,14 +73,18 @@ def _build_headline_metrics(
         "retry_success_rate": _weighted_suite_metric(suites, "retry_success_rate"),
         "resume_success_rate": _weighted_suite_metric(suites, "resume_success_rate"),
         "refine_success_rate": _weighted_suite_metric(suites, "refine_success_rate"),
-        "stale_recovery_success_rate": _weighted_suite_metric(suites, "stale_recovery_success_rate"),
+        "stale_recovery_success_rate": _weighted_suite_metric(
+            suites, "stale_recovery_success_rate"
+        ),
         "idle_skip_rate": _weighted_suite_metric(suites, "idle_skip_rate"),
         "file_input_success_rate": _weighted_suite_metric(suites, "file_input_success_rate"),
         "conflict_detection_recall": _weighted_suite_metric(suites, "conflict_detection_recall"),
         "source_count_per_job": _mean_bundle_count(task_bundles, "sources"),
         "evidence_count_per_job": _mean_bundle_count(task_bundles, "evidence_fragments"),
         "claim_count_per_job": _mean_bundle_count(task_bundles, "claims"),
-        "prompt_tokens_per_completed_job": _token_metric(runtime_measurements, "prompt_tokens", provider_free_only=provider_free_only),
+        "prompt_tokens_per_completed_job": _token_metric(
+            runtime_measurements, "prompt_tokens", provider_free_only=provider_free_only
+        ),
         "completion_tokens_per_completed_job": _token_metric(
             runtime_measurements,
             "completion_tokens",
@@ -147,13 +158,16 @@ def _build_value_dashboard(
             "ttfr_seconds_p50": metric_values["ttfr_seconds_p50"],
             "ttfr_seconds_p95": metric_values["ttfr_seconds_p95"],
             "prompt_tokens_per_completed_job": metric_values["prompt_tokens_per_completed_job"],
-            "completion_tokens_per_completed_job": metric_values["completion_tokens_per_completed_job"],
-            "estimated_api_cost_per_completed_job": metric_values["estimated_api_cost_per_completed_job"],
+            "completion_tokens_per_completed_job": metric_values[
+                "completion_tokens_per_completed_job"
+            ],
+            "estimated_api_cost_per_completed_job": metric_values[
+                "estimated_api_cost_per_completed_job"
+            ],
         },
         "timing_status": timing_breakdown["timing_status"],
         "suite_statuses": {
-            suite_name: suite["summary"]["status"]
-            for suite_name, suite in sorted(suites.items())
+            suite_name: suite["summary"]["status"] for suite_name, suite in sorted(suites.items())
         },
     }
 
@@ -304,7 +318,9 @@ def _mean_bundle_count(task_bundles: list[dict[str, Any]], field_name: str) -> d
     }
 
 
-def _token_metric(runtime_measurements: list[dict[str, Any]], field_name: str, *, provider_free_only: bool) -> dict[str, Any]:
+def _token_metric(
+    runtime_measurements: list[dict[str, Any]], field_name: str, *, provider_free_only: bool
+) -> dict[str, Any]:
     if runtime_measurements:
         values = [int(item.get(field_name) or 0) for item in runtime_measurements]
         return {
@@ -317,8 +333,14 @@ def _token_metric(runtime_measurements: list[dict[str, Any]], field_name: str, *
     return {"value": None, "sample_size": 0, "reason": "token_usage_not_available"}
 
 
-def _cost_metric(runtime_measurements: list[dict[str, Any]], *, provider_free_only: bool, fallback_jobs: int) -> dict[str, Any]:
-    values = [item.get("estimated_api_cost_usd") for item in runtime_measurements if item.get("estimated_api_cost_usd") is not None]
+def _cost_metric(
+    runtime_measurements: list[dict[str, Any]], *, provider_free_only: bool, fallback_jobs: int
+) -> dict[str, Any]:
+    values = [
+        item.get("estimated_api_cost_usd")
+        for item in runtime_measurements
+        if item.get("estimated_api_cost_usd") is not None
+    ]
     if values:
         numeric = [float(value) for value in values]
         return {
@@ -339,8 +361,12 @@ def _cost_metric(runtime_measurements: list[dict[str, Any]], *, provider_free_on
     }
 
 
-def _latency_metric(runtime_measurements: list[dict[str, Any]], field_name: str, *, percentile: str) -> dict[str, Any]:
-    values = [float(item[field_name]) for item in runtime_measurements if item.get(field_name) is not None]
+def _latency_metric(
+    runtime_measurements: list[dict[str, Any]], field_name: str, *, percentile: str
+) -> dict[str, Any]:
+    values = [
+        float(item[field_name]) for item in runtime_measurements if item.get(field_name) is not None
+    ]
     if not values:
         return {"value": None, "sample_size": 0, "reason": FROZEN_TIMING_REASON}
     return {

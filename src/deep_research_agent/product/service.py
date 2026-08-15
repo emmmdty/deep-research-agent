@@ -31,7 +31,6 @@ from deep_research_agent.product.tables import (
 )
 from deep_research_agent.research_jobs import ResearchJobService
 
-
 TERMINAL_RUN_STATUSES = frozenset({"completed", "failed", "cancelled"})
 MEMORY_SCOPES = frozenset(
     {"run_state", "conversation_focus", "user_memory", "topic_memory", "agent_experience"}
@@ -188,7 +187,9 @@ class ProductService:
         title = title.strip()
         if not title:
             raise ValueError("title cannot be blank")
-        topic = TopicTable(topic_id=_id("top"), tenant_id=tenant_id, title=title, created_by=user_id)
+        topic = TopicTable(
+            topic_id=_id("top"), tenant_id=tenant_id, title=title, created_by=user_id
+        )
         conversation = ConversationTable(
             conversation_id=_id("con"), tenant_id=tenant_id, topic_id=topic.topic_id
         )
@@ -200,7 +201,9 @@ class ProductService:
         if topic is None:
             return None
         conversation = self.repository.conversation_for_topic(topic_id, tenant_id=tenant_id)
-        return self.topic_dict(topic, conversation_id=conversation.conversation_id if conversation else None)
+        return self.topic_dict(
+            topic, conversation_id=conversation.conversation_id if conversation else None
+        )
 
     def list_topics(self, *, tenant_id: str) -> list[dict[str, Any]]:
         return [
@@ -208,7 +211,11 @@ class ProductService:
                 topic,
                 conversation_id=(
                     conversation.conversation_id
-                    if (conversation := self.repository.conversation_for_topic(topic.topic_id, tenant_id=tenant_id))
+                    if (
+                        conversation := self.repository.conversation_for_topic(
+                            topic.topic_id, tenant_id=tenant_id
+                        )
+                    )
                     else None
                 ),
             )
@@ -415,7 +422,10 @@ class ProductService:
         return self.run_dict(run) if run is not None else None
 
     def list_runs(self, *, tenant_id: str, topic_id: str | None = None) -> list[dict[str, Any]]:
-        if topic_id is not None and self.repository.get_topic(topic_id, tenant_id=tenant_id) is None:
+        if (
+            topic_id is not None
+            and self.repository.get_topic(topic_id, tenant_id=tenant_id) is None
+        ):
             raise KeyError(topic_id)
         return [
             self.run_dict(self._sync_runtime_run(run))
@@ -580,7 +590,10 @@ class ProductService:
             "created": "job.resumed",
             "failed": "job.failed",
         }
-        if status_changed and matching_runtime_events.get(runtime_status) not in runtime_event_types:
+        if (
+            status_changed
+            and matching_runtime_events.get(runtime_status) not in runtime_event_types
+        ):
             terminal = runtime_status in TERMINAL_RUN_STATUSES
             self.append_run_event(
                 run.run_id,
@@ -646,7 +659,9 @@ class ProductService:
                 content=content,
             )
         )
-        for candidate in self.repository.list_runs(tenant_id=tenant_id, topic_id=conversation.topic_id):
+        for candidate in self.repository.list_runs(
+            tenant_id=tenant_id, topic_id=conversation.topic_id
+        ):
             self._sync_runtime_run(candidate)
         latest = self.repository.latest_completed_run(conversation.topic_id, tenant_id=tenant_id)
         topic = self.repository.get_topic(conversation.topic_id, tenant_id=tenant_id)
@@ -654,9 +669,8 @@ class ProductService:
         high_cost = any(marker in normalized_content for marker in _HIGH_COST_MARKERS)
         simple_question = self._is_simple_question(content)
         ambiguous = (
-            (_semantic_unit_count(content) <= 3 and not simple_question)
-            or normalized_content in _AMBIGUOUS_PROMPTS
-        )
+            _semantic_unit_count(content) <= 3 and not simple_question
+        ) or normalized_content in _AMBIGUOUS_PROMPTS
         run: dict[str, Any] | None = None
         answer: str | None = None
         questions: list[str] = []
@@ -685,7 +699,10 @@ class ProductService:
             prior_question=latest.question,
         ):
             response_type = "direct_answer"
-            answer = str((latest.bundle or {}).get("report_markdown") or "The frozen snapshot has no report text.")
+            answer = str(
+                (latest.bundle or {}).get("report_markdown")
+                or "The frozen snapshot has no report text."
+            )
             used_snapshot = True
         else:
             response_type = "research_job_started"
@@ -795,7 +812,10 @@ class ProductService:
         return self.corpus_dict(document) if document is not None else None
 
     def list_corpus(self, *, tenant_id: str) -> list[dict[str, Any]]:
-        return [self.corpus_dict(item) for item in self.repository.list_corpus_documents(tenant_id=tenant_id)]
+        return [
+            self.corpus_dict(item)
+            for item in self.repository.list_corpus_documents(tenant_id=tenant_id)
+        ]
 
     @staticmethod
     def corpus_dict(document: CorpusDocumentTable) -> dict[str, Any]:
@@ -833,12 +853,17 @@ class ProductService:
         resolved_subject = (subject_id or "").strip() or None
         if scope in {"user_memory", "agent_experience"}:
             resolved_subject = user_id
-        elif scope in {"topic_memory", "conversation_focus", "run_state"} and resolved_subject is None:
+        elif (
+            scope in {"topic_memory", "conversation_focus", "run_state"}
+            and resolved_subject is None
+        ):
             raise ValueError(f"{scope} requires a subject_id")
         cleaned_content = content.strip()
         if not cleaned_content:
             raise ValueError("memory content cannot be blank")
-        resolved_key = (key or "").strip() or f"{scope}:{hashlib.sha256(cleaned_content.encode()).hexdigest()[:16]}"
+        resolved_key = (
+            key or ""
+        ).strip() or f"{scope}:{hashlib.sha256(cleaned_content.encode()).hexdigest()[:16]}"
         ttl_defaults = {
             "run_state": 7 * 24 * 3600,
             "conversation_focus": 30 * 24 * 3600,
@@ -957,11 +982,17 @@ class ProductService:
 
     @staticmethod
     def tool_dict(tool: ToolConfigTable) -> dict[str, Any]:
-        return {"tool_id": tool.tool_id, "config": redact_secrets(tool.config), "enabled": tool.enabled}
+        return {
+            "tool_id": tool.tool_id,
+            "config": redact_secrets(tool.config),
+            "enabled": tool.enabled,
+        }
 
     def create_runtime_config(self, *, version_id: str, config: dict[str, Any]) -> dict[str, Any]:
         if _contains_secret_key(config):
-            raise ValueError("runtime config must reference stored credentials, not contain secrets")
+            raise ValueError(
+                "runtime config must reference stored credentials, not contain secrets"
+            )
         record = self.repository.save_runtime_config(
             RuntimeConfigTable(version_id=version_id, config=deepcopy(config), active=False)
         )
@@ -977,4 +1008,4 @@ class ProductService:
         }
 
 
-__all__ = ["MEMORY_SCOPES", "ProductService", "TERMINAL_RUN_STATUSES", "redact_secrets"]
+__all__ = ["MEMORY_SCOPES", "TERMINAL_RUN_STATUSES", "ProductService", "redact_secrets"]

@@ -18,10 +18,11 @@ import json
 import math
 import re
 import statistics
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import yaml
 
@@ -57,7 +58,10 @@ PROTECTED_STRUCTURES: tuple[dict[str, Any], ...] = (
     {
         "id": "audit_gate",
         "description": "证据契约：审计门禁（claim_auditor_node 与 AuditGateStatus，阻止未支撑的 critical claim 出报告）",
-        "module_paths": ("src/deep_research_agent/auditor/pipeline.py", "src/deep_research_agent/auditor/models.py"),
+        "module_paths": (
+            "src/deep_research_agent/auditor/pipeline.py",
+            "src/deep_research_agent/auditor/models.py",
+        ),
         "protected": True,
         "removable_in_ci": False,
     },
@@ -127,28 +131,43 @@ STRUCTURES: tuple[StructureDefinition, ...] = (
         description="有界并发抓取：researcher 搜索/抓取 asyncio.gather + Semaphore(2)，结果按原始顺序归位",
         module_paths=("src/deep_research_agent/agents/researcher.py",),
         removable_in_ci=True,
-        removal_hook=lambda stages: {**stages, "parallel_fetch_concurrency": _stage_parallel_fetch_removed},
+        removal_hook=lambda stages: {
+            **stages,
+            "parallel_fetch_concurrency": _stage_parallel_fetch_removed,
+        },
     ),
     StructureDefinition(
         structure_id="agentic_coverage_assessment",
         description="agent 反思覆盖率自评：researcher/planner 对任务覆盖做自评，扩展检索面",
-        module_paths=("src/deep_research_agent/agents/researcher.py", "src/deep_research_agent/agents/planner.py"),
+        module_paths=(
+            "src/deep_research_agent/agents/researcher.py",
+            "src/deep_research_agent/agents/planner.py",
+        ),
         removable_in_ci=True,
-        removal_hook=lambda stages: {**stages, "agentic_coverage_assessment": _stage_agentic_coverage_removed},
+        removal_hook=lambda stages: {
+            **stages,
+            "agentic_coverage_assessment": _stage_agentic_coverage_removed,
+        },
     ),
     StructureDefinition(
         structure_id="executive_summary_dual_track",
         description="executive summary 双轨：模型原文保留 + 确定性重建兜底（引用越界才降级）",
         module_paths=("src/deep_research_agent/reporting/bundle_v2.py",),
         removable_in_ci=True,
-        removal_hook=lambda stages: {**stages, "executive_summary_dual_track": _stage_executive_dual_track_removed},
+        removal_hook=lambda stages: {
+            **stages,
+            "executive_summary_dual_track": _stage_executive_dual_track_removed,
+        },
     ),
     StructureDefinition(
         structure_id="cheap_model_summarization",
         description="便宜模型路由：摘要/压缩走 cheap_role_models（模型路由的成本结构）",
         module_paths=("src/deep_research_agent/providers/router.py",),
         removable_in_ci=True,
-        removal_hook=lambda stages: {**stages, "cheap_model_summarization": _stage_cheap_summarization_removed},
+        removal_hook=lambda stages: {
+            **stages,
+            "cheap_model_summarization": _stage_cheap_summarization_removed,
+        },
     ),
     StructureDefinition(
         structure_id="distributed_job_queue",
@@ -180,9 +199,7 @@ RATIONALE_TEMPLATES: dict[str, str] = {
         "移除后有界并发退回串行预算，引用可解析率下降；该结构同时是成本结构（并发上限），"
         "2026-11 复核重点应是并发上限调参而非整体拆除"
     ),
-    "agentic_coverage_assessment": (
-        "移除后问题覆盖率下降；覆盖率自评是低成本高收益结构，保留"
-    ),
+    "agentic_coverage_assessment": ("移除后问题覆盖率下降；覆盖率自评是低成本高收益结构，保留"),
     "executive_summary_dual_track": (
         "移除后摘要保真显著下降；双轨是模型原文保留的兜底，拆除会退回三期前确定性重建的缺陷"
     ),
@@ -211,7 +228,7 @@ def check_protected(defn: StructureDefinition) -> tuple[str, ...]:
     if defn.structure_id in PROTECTED_IDS:
         reasons.append(f"id '{defn.structure_id}' 命中 PROTECTED_IDS")
     normalized_paths = [str(path).replace("\\", "/") for path in defn.module_paths]
-    for path, normalized in zip(defn.module_paths, normalized_paths):
+    for path, normalized in zip(defn.module_paths, normalized_paths, strict=True):
         for substring in PROTECTED_MODULE_SUBSTRINGS:
             if substring in normalized:
                 reasons.append(f"模块路径 '{path}' 位于 protected 目录 '{substring}'")
@@ -229,7 +246,9 @@ def register_structure(defn: StructureDefinition) -> None:
     """注册一条移除定义；触碰证据契约时拒绝（ProtectedStructureError）。"""
     reasons = check_protected(defn)
     if reasons:
-        raise ProtectedStructureError(f"拒绝注册 protected 结构 '{defn.structure_id}': {'; '.join(reasons)}")
+        raise ProtectedStructureError(
+            f"拒绝注册 protected 结构 '{defn.structure_id}': {'; '.join(reasons)}"
+        )
     if defn.structure_id in STRUCTURE_REGISTRY:
         raise ValueError(f"结构 '{defn.structure_id}' 已注册")
     STRUCTURE_REGISTRY[defn.structure_id] = defn
@@ -317,7 +336,9 @@ def _rank_window_size(source_count: int) -> int:
 def _stage_semantic_rerank(task: dict[str, Any], ctx: dict[str, Any]) -> dict[str, Any]:
     keywords = _keyword_tokens(str(task.get("topic") or ""), *task.get("required_questions", []))
     sources = list(task.get("sources", []))
-    ranked = sorted(sources, key=lambda s: (-_relevance(s, keywords), int(s.get("citation_id") or 0)))
+    ranked = sorted(
+        sources, key=lambda s: (-_relevance(s, keywords), int(s.get("citation_id") or 0))
+    )
     ctx["selected_source_ids"] = _top_k_source_ids(ranked, _rank_window_size(len(sources)))
     return ctx
 
@@ -335,7 +356,9 @@ def _stage_parallel_fetch(task: dict[str, Any], ctx: dict[str, Any]) -> dict[str
 
 def _stage_parallel_fetch_removed(task: dict[str, Any], ctx: dict[str, Any]) -> dict[str, Any]:
     budget = max(1, len(task.get("sources", [])) - 1)
-    ordered = ctx.get("selected_source_ids") or [str(source["source_id"]) for source in task.get("sources", [])]
+    ordered = ctx.get("selected_source_ids") or [
+        str(source["source_id"]) for source in task.get("sources", [])
+    ]
     ctx["fetched_source_ids"] = ordered[:budget]
     return ctx
 
@@ -357,7 +380,9 @@ def _stage_executive_dual_track(task: dict[str, Any], ctx: dict[str, Any]) -> di
     return ctx
 
 
-def _stage_executive_dual_track_removed(task: dict[str, Any], ctx: dict[str, Any]) -> dict[str, Any]:
+def _stage_executive_dual_track_removed(
+    task: dict[str, Any], ctx: dict[str, Any]
+) -> dict[str, Any]:
     ctx["executive_summary_source"] = "deterministic_rebuild"
     return ctx
 
@@ -390,7 +415,9 @@ def _score_task(task: dict[str, Any], ctx: dict[str, Any]) -> dict[str, float]:
     answered = set(ctx.get("answered_question_ids", []))
     summaries = list(task.get("task_summaries", []))
 
-    citation_resolvable_rate = round(len(cited_set & fetched) / len(cited_set), 3) if cited_set else 1.0
+    citation_resolvable_rate = (
+        round(len(cited_set & fetched) / len(cited_set), 3) if cited_set else 1.0
+    )
     question_coverage = round(len(answered & set(required)) / len(required), 3) if required else 1.0
     base_fidelity = 1.0 if ctx.get("executive_summary_source") == "model_text" else 0.0
     route_multiplier = 1.0 if ctx.get("summarization_route") == "cheap" else 0.5
@@ -408,7 +435,7 @@ def _score_task(task: dict[str, Any], ctx: dict[str, Any]) -> dict[str, float]:
 
 def _aggregate(per_task_scores: list[dict[str, float]]) -> dict[str, float]:
     if not per_task_scores:
-        return {**{key: 1.0 for key in COMPOSITE_METRICS}, "composite": 1.0}
+        return {**dict.fromkeys(COMPOSITE_METRICS, 1.0), "composite": 1.0}
     return {
         key: round(statistics.mean(score[key] for score in per_task_scores), 3)
         for key in per_task_scores[0]
@@ -433,7 +460,9 @@ def build_runner(
         if action not in ("removed", "documented"):
             raise ValueError(f"未知 override 动作 '{action}'（应为 removed/documented）")
         if action == "removed" and STRUCTURE_REGISTRY[structure_id].removal_hook is None:
-            raise ValueError(f"结构 '{structure_id}' 是 documentation-only，无法执行 removed override")
+            raise ValueError(
+                f"结构 '{structure_id}' 是 documentation-only，无法执行 removed override"
+            )
 
     def run(tasks: list[dict[str, Any]]) -> dict[str, Any]:
         normalized = [_normalize_task(task) for task in tasks]
@@ -501,7 +530,9 @@ def measure_structure(
             "rationale": f"结构 '{entry.structure_id}' 无移除钩子（documentation-only），本轮跳过测量；{entry.note}",
         }
 
-    fixture_tasks = [_normalize_task(task) for task in tasks] if tasks is not None else load_fixture_tasks()
+    fixture_tasks = (
+        [_normalize_task(task) for task in tasks] if tasks is not None else load_fixture_tasks()
+    )
     with_metrics = build_runner({})(fixture_tasks)
     without_metrics = build_runner({structure_id: "removed"})(fixture_tasks)
     delta = {key: round(with_metrics[key] - without_metrics[key], 3) for key in with_metrics}
@@ -572,17 +603,20 @@ def build_scorecard_payload(
         "run_id": run_id or f"ablation-removal-{period}",
         "generated_at": generated_at or datetime.now(timezone.utc).isoformat(),
         "period": period,
-        "fixture": _fixture_info(suite_path=suite_path, task_count=len(tasks), custom_tasks=custom_tasks),
+        "fixture": _fixture_info(
+            suite_path=suite_path, task_count=len(tasks), custom_tasks=custom_tasks
+        ),
         "offline": True,
         "llm_free": True,
         "measurement": {
             "version": MEASUREMENT_VERSION,
-            "metrics": list(COMPOSITE_METRICS) + ["composite"],
+            "metrics": [*list(COMPOSITE_METRICS), "composite"],
             "composite_definition": "mean(citation_resolvable_rate, question_coverage, summary_retention, source_rank_quality)",
             "verdict_rule": VERDICT_RULE,
         },
         "protected_structures": [
-            {**dict(item), "module_paths": list(item["module_paths"])} for item in PROTECTED_STRUCTURES
+            {**dict(item), "module_paths": list(item["module_paths"])}
+            for item in PROTECTED_STRUCTURES
         ],
         "structures": structures,
         "reproducibility": {
@@ -618,9 +652,13 @@ def generate_scorecard(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="运行「移除结构」季度评审 harness（离线确定性）")
-    parser.add_argument("--output-dir", type=str, default=str(DEFAULT_REPORTS_ROOT), help="scorecard 输出目录")
+    parser.add_argument(
+        "--output-dir", type=str, default=str(DEFAULT_REPORTS_ROOT), help="scorecard 输出目录"
+    )
     parser.add_argument("--period", type=str, default=DEFAULT_PERIOD, help="评审季度，如 2026-08")
-    parser.add_argument("--fixture-suite", type=str, default=None, help="suite YAML 路径（默认 company12）")
+    parser.add_argument(
+        "--fixture-suite", type=str, default=None, help="suite YAML 路径（默认 company12）"
+    )
     args = parser.parse_args()
     output_path = generate_scorecard(
         output_root=args.output_dir,

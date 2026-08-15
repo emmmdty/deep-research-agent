@@ -8,7 +8,6 @@ from typing import Any
 
 from configs.settings import get_settings
 
-
 _ASCII_STOPWORDS = {
     "a",
     "an",
@@ -159,7 +158,10 @@ def aspect_hits_in_text(text: str, aspects: list[str]) -> list[str]:
 def infer_task_type(topic: str) -> str:
     """根据主题推断任务类型。"""
     normalized = normalize_text(topic)
-    if any(keyword in normalized for keyword in {"安装", "教程", "guide", "setup", "how to", "quick start"}):
+    if any(
+        keyword in normalized
+        for keyword in {"安装", "教程", "guide", "setup", "how to", "quick start"}
+    ):
         return "tutorial"
     if any(keyword in normalized for keyword in {"对比", "比较", "vs", "difference"}):
         return "comparison"
@@ -244,7 +246,9 @@ def build_benchmark_tasks(topic_spec) -> list[Any]:
                 task_type=task_type_for_aspect,
                 expected_aspects=[aspect],
                 preferred_sources=preferred_sources,
-                must_include_terms=_aspect_required_terms(aspect, task_type_for_aspect, topic_spec.topic),
+                must_include_terms=_aspect_required_terms(
+                    aspect, task_type_for_aspect, topic_spec.topic
+                ),
                 avoid_terms=["arxiv"] if task_type_for_aspect in {"tutorial", "product"} else [],
             )
         )
@@ -297,18 +301,26 @@ def _build_single_source_query(task, source_name: str, *, task_type: str, aspect
                 ]
             )
         else:
-            github_focus = _ascii_query_terms(focus_terms) or _ascii_query_terms(semantic_terms) or [task.title]
+            github_focus = (
+                _ascii_query_terms(focus_terms)
+                or _ascii_query_terms(semantic_terms)
+                or [task.title]
+            )
         return _compact_query(github_focus[:6])
     elif source_name == "arxiv":
         if task_type in {"tutorial", "product", "organization"}:
             return task.query
-        arxiv_focus = _ascii_query_terms(focus_terms) or _ascii_query_terms(semantic_terms) or [task.title]
+        arxiv_focus = (
+            _ascii_query_terms(focus_terms) or _ascii_query_terms(semantic_terms) or [task.title]
+        )
         return _compact_query([*arxiv_focus[:6], "paper", "survey", "benchmark"])
     else:
         base_terms.extend([*topic_aliases, "official documentation"])
 
     if task_type == "product":
-        base_terms.extend(["case study", "customer story", "deployment", "production use", "product blog"])
+        base_terms.extend(
+            ["case study", "customer story", "deployment", "production use", "product blog"]
+        )
     if task_type == "tutorial":
         base_terms.extend(["install", "setup", "quick start"])
 
@@ -361,10 +373,21 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
                 )
             )
         queries.append(
-            _compact_query([topic_text, aspect_ascii_text, family_text, "product blog", "customer story", "production"])
+            _compact_query(
+                [
+                    topic_text,
+                    aspect_ascii_text,
+                    family_text,
+                    "product blog",
+                    "customer story",
+                    "production",
+                ]
+            )
         )
     elif source_name == "github":
-        generic_terms = _dedupe_terms([aspect_ascii_text, family_text, "example", "project", "production", "deployment"])
+        generic_terms = _dedupe_terms(
+            [aspect_ascii_text, family_text, "example", "project", "production", "deployment"]
+        )
         queries.append(_compact_query(generic_terms))
         for org in official_orgs[:4]:
             queries.append(
@@ -380,7 +403,9 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
                 )
             )
     else:
-        queries.append(_build_single_source_query(task, source_name, task_type="product", aspect=aspect))
+        queries.append(
+            _build_single_source_query(task, source_name, task_type="product", aspect=aspect)
+        )
 
     deduped = [query for query in _dedupe_terms(queries) if query]
     return deduped
@@ -388,8 +413,10 @@ def _build_case_study_query_bundle(task, source_name: str) -> list[str]:
 
 def _is_framework_comparison_aspect(aspect: str) -> bool:
     normalized = normalize_text(aspect)
-    return "comparison" in normalized or "对比" in normalized or any(
-        marker in normalized for marker in ("langgraph", "crewai", "autogen")
+    return (
+        "comparison" in normalized
+        or "对比" in normalized
+        or any(marker in normalized for marker in ("langgraph", "crewai", "autogen"))
     )
 
 
@@ -411,9 +438,7 @@ def _build_framework_comparison_query_bundle(task, source_name: str) -> list[str
 
     if source_name == "web":
         queries.append(
-            _compact_query(
-                [topic_text, aspect, "official documentation", "framework comparison"]
-            )
+            _compact_query([topic_text, aspect, "official documentation", "framework comparison"])
         )
         for keyword in keywords:
             for domain in _FRAMEWORK_OFFICIAL_DOMAINS.get(keyword, []):
@@ -430,9 +455,7 @@ def _build_framework_comparison_query_bundle(task, source_name: str) -> list[str
                     )
                 )
     elif source_name == "github":
-        queries.append(
-            _compact_query([*keywords, "agent framework", "comparison"])
-        )
+        queries.append(_compact_query([*keywords, "agent framework", "comparison"]))
         for keyword in keywords:
             for org in _FRAMEWORK_OFFICIAL_ORGS.get(keyword, []):
                 queries.append(
@@ -445,7 +468,9 @@ def _build_framework_comparison_query_bundle(task, source_name: str) -> list[str
                     )
                 )
     else:
-        queries.append(_build_single_source_query(task, source_name, task_type="comparison", aspect=aspect))
+        queries.append(
+            _build_single_source_query(task, source_name, task_type="comparison", aspect=aspect)
+        )
 
     return [query for query in _dedupe_terms(queries) if query]
 
@@ -487,7 +512,16 @@ def _aspect_boost_terms(aspect: str, task_type: str) -> list[str]:
     normalized = normalize_text(aspect)
     boosts: list[str] = []
     if "接入模式" in normalized or ("接入" in normalized and "模式" in normalized):
-        boosts.extend(["integration pattern", "tool integration", "transport", "stdio", "sse", "streamable http"])
+        boosts.extend(
+            [
+                "integration pattern",
+                "tool integration",
+                "transport",
+                "stdio",
+                "sse",
+                "streamable http",
+            ]
+        )
     if "错误恢复" in normalized:
         boosts.extend(["error handling", "retry", "fallback", "reconnect", "recovery"])
     if "监管" in normalized:
@@ -510,11 +544,18 @@ def _aspect_boost_terms(aspect: str, task_type: str) -> list[str]:
         boosts.extend(["memory", "long-term memory", "episodic memory"])
     if "tool calling" in normalized or "function calling" in normalized or "工具" in normalized:
         boosts.extend(["tool calling", "function calling"])
-    if "框架" in normalized or "langgraph" in normalized or "crewai" in normalized or "autogen" in normalized:
+    if (
+        "框架" in normalized
+        or "langgraph" in normalized
+        or "crewai" in normalized
+        or "autogen" in normalized
+    ):
         boosts.extend(["LangGraph", "CrewAI", "AutoGen", "comparison"])
     if is_case_study_aspect(aspect):
         boosts.extend(["case study", "customer story", "deployment", "production use"])
-    if "评估指标" in normalized or any(token in normalized for token in {"faithfulness", "relevance", "recall"}):
+    if "评估指标" in normalized or any(
+        token in normalized for token in {"faithfulness", "relevance", "recall"}
+    ):
         boosts.extend(["evaluation", "faithfulness", "relevance", "recall"])
     if "chunking" in normalized or "embedding" in normalized:
         boosts.extend(["chunking", "embedding", "retrieval"])
@@ -548,7 +589,9 @@ def _aspect_required_terms(aspect: str, task_type: str, topic: str) -> list[str]
         if "memory" in normalized or "记忆" in normalized:
             terms.extend(["memory", "episodic memory", "long-term memory"])
         if task_type == "product" or is_case_study_aspect(aspect):
-            terms.extend(["case study", "customer story", "deployment", "production", "application"])
+            terms.extend(
+                ["case study", "customer story", "deployment", "production", "application"]
+            )
     return _dedupe_terms(terms)
 
 
@@ -558,7 +601,16 @@ def _aspect_semantic_terms(aspect: str, task_type: str) -> list[str]:
     terms = list(_aspect_anchor_terms(aspect))
 
     if "接入模式" in normalized or ("接入" in normalized and "模式" in normalized):
-        terms.extend(["integration pattern", "tool integration", "transport", "stdio", "sse", "streamable http"])
+        terms.extend(
+            [
+                "integration pattern",
+                "tool integration",
+                "transport",
+                "stdio",
+                "sse",
+                "streamable http",
+            ]
+        )
     if "错误恢复" in normalized:
         terms.extend(["error handling", "retry", "fallback", "reconnect", "recovery"])
     if "监管" in normalized:
@@ -580,7 +632,15 @@ def _aspect_semantic_terms(aspect: str, task_type: str) -> list[str]:
 
     if task_type == "tutorial":
         if "依赖" in normalized or "前置条件" in normalized:
-            terms.extend(["dependency", "dependencies", "requirements", "prerequisites", "install requirements"])
+            terms.extend(
+                [
+                    "dependency",
+                    "dependencies",
+                    "requirements",
+                    "prerequisites",
+                    "install requirements",
+                ]
+            )
         if "安装" in normalized or "步骤" in normalized or "编译" in normalized:
             terms.extend(["install", "setup", "build", "quick start"])
         if "错误" in normalized or "排查" in normalized:
@@ -598,7 +658,12 @@ def _aspect_semantic_terms(aspect: str, task_type: str) -> list[str]:
         terms.extend(["chunking", "text splitting"])
     if "embedding" in normalized or "向量化" in normalized:
         terms.extend(["embedding", "embedding model"])
-    if "faithfulness" in normalized or "relevance" in normalized or "recall" in normalized or "评估指标" in normalized:
+    if (
+        "faithfulness" in normalized
+        or "relevance" in normalized
+        or "recall" in normalized
+        or "评估指标" in normalized
+    ):
         terms.extend(["faithfulness", "relevance", "recall", "evaluation"])
     if "langgraph" in normalized or "crewai" in normalized or "autogen" in normalized:
         terms.extend(["langgraph", "crewai", "autogen", "agent framework"])
@@ -656,9 +721,13 @@ def select_sources_for_task(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, int]]:
     """按相关性、可信度和锚点一致性筛选来源。"""
     aspect = (getattr(task, "expected_aspects", None) or [getattr(task, "title", "")])[0]
-    case_study_task = is_case_study_aspect(aspect) or getattr(task, "task_type", "research") == "product"
+    case_study_task = (
+        is_case_study_aspect(aspect) or getattr(task, "task_type", "research") == "product"
+    )
     query_tokens = set(tokenize_text(task.query))
-    task_tokens = set(tokenize_text(task.title)) | set(tokenize_text(" ".join(task.expected_aspects)))
+    task_tokens = set(tokenize_text(task.title)) | set(
+        tokenize_text(" ".join(task.expected_aspects))
+    )
     stats = {"off_topic_reject_count": 0, "duplicate_reject_count": 0}
     selected: list[dict[str, Any]] = []
     rejected: list[dict[str, Any]] = []
@@ -697,7 +766,9 @@ def select_sources_for_task(
             if case_study_task:
                 case_study_preview = _classify_case_study_item(item, task)
                 case_study_override = bool(case_study_preview.get("case_study_evidence"))
-            if case_study_override or aspect_specificity >= _topic_guard_override_threshold(task, item):
+            if case_study_override or aspect_specificity >= _topic_guard_override_threshold(
+                task, item
+            ):
                 pass
             else:
                 item["rejection_reason"] = "topic_guard_miss"
@@ -722,13 +793,16 @@ def select_sources_for_task(
             if not item["case_study_evidence"]:
                 item["rejection_reason"] = (
                     "case_study_topic_miss"
-                    if item.get("case_study_type") != "not_case_study" and not item.get("matches_topic_family")
+                    if item.get("case_study_type") != "not_case_study"
+                    and not item.get("matches_topic_family")
                     else "not_case_study_evidence"
                 )
                 rejected.append(item)
                 stats["off_topic_reject_count"] += 1
                 continue
-        if required_tokens and not _matches_required_terms(text_tokens, normalized_text, required_tokens):
+        if required_tokens and not _matches_required_terms(
+            text_tokens, normalized_text, required_tokens
+        ):
             item["rejection_reason"] = "missing_required_terms"
             rejected.append(item)
             stats["off_topic_reject_count"] += 1
@@ -762,7 +836,10 @@ def select_sources_for_task(
     ranked_sorted = sorted(ranked, key=lambda pair: pair[0], reverse=True)
     source_counts: Counter[str] = Counter()
     selected_ids: set[int] = set()
-    high_trust_target = min(max(1, per_task_limit // 2), len([item for _, item in ranked_sorted if _trust_tier(item) >= 4]))
+    high_trust_target = min(
+        max(1, per_task_limit // 2),
+        len([item for _, item in ranked_sorted if _trust_tier(item) >= 4]),
+    )
 
     for _, item in ranked_sorted:
         if len(selected) >= high_trust_target:
@@ -797,7 +874,9 @@ def _derive_anchor_tokens(raw_items: list[dict[str, Any]]) -> set[str]:
         return set()
 
     trusted.sort(key=lambda item: _trust_tier(item), reverse=True)
-    anchor_text = " ".join(f"{item.get('title', '')} {item.get('snippet', '')}" for item in trusted[:2])
+    anchor_text = " ".join(
+        f"{item.get('title', '')} {item.get('snippet', '')}" for item in trusted[:2]
+    )
     counts = Counter(tokenize_text(anchor_text))
     return {token for token, _ in counts.most_common(8)}
 
@@ -828,7 +907,13 @@ def _score_source_item(
             + 0.17 * support_specificity
             + 0.20 * case_study_strength
         )
-    return 0.30 * overlap + 0.30 * trust + 0.15 * anchor_score + 0.10 * recency + 0.15 * support_specificity
+    return (
+        0.30 * overlap
+        + 0.30 * trust
+        + 0.15 * anchor_score
+        + 0.10 * recency
+        + 0.15 * support_specificity
+    )
 
 
 def _trust_tier(item: dict[str, Any] | Any) -> int:
@@ -868,10 +953,20 @@ def _trust_tier(item: dict[str, Any] | Any) -> int:
         return 4
     if any(
         marker in normalized_url
-        for marker in ("case-study", "case_study", "customer-story", "customer_story", "success-story", "deployment")
+        for marker in (
+            "case-study",
+            "case_study",
+            "customer-story",
+            "customer_story",
+            "success-story",
+            "deployment",
+        )
     ):
         return 4
-    if any(marker in normalized_url for marker in ("cnblogs.com", "csdn.net", "zhihu.com", "heartthinkdo.com", "smallyoung.cn")):
+    if any(
+        marker in normalized_url
+        for marker in ("cnblogs.com", "csdn.net", "zhihu.com", "heartthinkdo.com", "smallyoung.cn")
+    ):
         return 2
     if any(marker in normalized_url for marker in ("youtube.com", "youtu.be", "bilibili.com")):
         return 1
@@ -906,7 +1001,11 @@ def _topic_alias_terms(topic: str) -> list[str]:
         aliases.extend(["LLM", "language model"])
     if "agent" in normalized or "智能体" in normalized:
         aliases.extend(["agent", "agent architecture"])
-    if "rag" in normalized or "检索增强生成" in normalized or "retrieval augmented generation" in normalized:
+    if (
+        "rag" in normalized
+        or "检索增强生成" in normalized
+        or "retrieval augmented generation" in normalized
+    ):
         aliases.extend(["RAG", "retrieval augmented generation"])
     if "openclaw" in normalized:
         aliases.extend(["OpenClaw", "Captain Claw"])
@@ -933,7 +1032,21 @@ def _case_study_official_orgs(domains: list[str] | None = None) -> list[str]:
 
 def _case_study_topic_family_terms(topic: str) -> list[str]:
     normalized = normalize_text(topic)
-    if any(marker in normalized for marker in ("金融", "bank", "banking", "finance", "financial", "fraud", "合规", "风控", "投顾", "trading")):
+    if any(
+        marker in normalized
+        for marker in (
+            "金融",
+            "bank",
+            "banking",
+            "finance",
+            "financial",
+            "fraud",
+            "合规",
+            "风控",
+            "投顾",
+            "trading",
+        )
+    ):
         return [
             "financial services",
             "banking",
@@ -954,7 +1067,21 @@ def _case_study_domains_for_topic(topic: str) -> list[str]:
     """按主题重排 case-study 官方域名优先级。"""
     normalized = normalize_text(topic)
     domains = list(_case_study_official_domains())
-    if any(marker in normalized for marker in ("金融", "bank", "banking", "finance", "financial", "fraud", "合规", "风控", "投顾", "trading")):
+    if any(
+        marker in normalized
+        for marker in (
+            "金融",
+            "bank",
+            "banking",
+            "finance",
+            "financial",
+            "fraud",
+            "合规",
+            "风控",
+            "投顾",
+            "trading",
+        )
+    ):
         preferred = [
             "aws.amazon.com",
             "microsoft.com",
@@ -982,14 +1109,21 @@ def urlparse_url(url: str) -> str:
 
 
 def _is_official_case_study_domain(domain: str) -> bool:
-    return any(domain == official or domain.endswith(f".{official}") for official in _case_study_official_domains())
+    return any(
+        domain == official or domain.endswith(f".{official}")
+        for official in _case_study_official_domains()
+    )
 
 
 def _extract_github_owner(item: dict[str, Any] | Any) -> str:
-    owner = getattr(item, "owner", None) or (item.get("owner", "") if isinstance(item, dict) else "")
+    owner = getattr(item, "owner", None) or (
+        item.get("owner", "") if isinstance(item, dict) else ""
+    )
     if owner:
         return str(owner).strip().lower()
-    title = getattr(item, "title", None) or (item.get("title", "") if isinstance(item, dict) else "")
+    title = getattr(item, "title", None) or (
+        item.get("title", "") if isinstance(item, dict) else ""
+    )
     url = getattr(item, "url", None) or (item.get("url", "") if isinstance(item, dict) else "")
     if title and "/" in title:
         return title.split("/", 1)[0].strip().lower()
@@ -999,7 +1133,9 @@ def _extract_github_owner(item: dict[str, Any] | Any) -> str:
 
 def _matches_case_study_topic_family(normalized_text: str, topic: str) -> bool:
     family_terms = _case_study_topic_family_terms(topic)
-    return any(normalize_text(term) in normalized_text for term in family_terms if normalize_text(term))
+    return any(
+        normalize_text(term) in normalized_text for term in family_terms if normalize_text(term)
+    )
 
 
 def _classify_case_study_item(item: dict[str, Any] | Any, task) -> dict[str, Any]:
@@ -1013,11 +1149,25 @@ def _classify_case_study_item(item: dict[str, Any] | Any, task) -> dict[str, Any
     repo_owner = _extract_github_owner(item)
     official_repo = source_type == "github" and repo_owner in set(_case_study_official_orgs())
     negative_markers = ("survey", "review", "benchmark", "overview", "landscape", "trend")
-    production_markers = ("production", "in production", "deployment", "customer story", "case study", "use case")
+    production_markers = (
+        "production",
+        "in production",
+        "deployment",
+        "customer story",
+        "case study",
+        "use case",
+    )
     example_markers = ("example", "project", "sample", "reference architecture", "starter")
     has_production_marker = any(marker in normalized_text for marker in production_markers)
-    has_quantitative_outcome = bool(re.search(r"\b\d+(?:\.\d+)?\s*(%|x|倍|hours|days|minutes|小时|天|million|billion)\b", normalized_text))
-    matches_topic_family = _matches_case_study_topic_family(normalized_text, getattr(task, "query", ""))
+    has_quantitative_outcome = bool(
+        re.search(
+            r"\b\d+(?:\.\d+)?\s*(%|x|倍|hours|days|minutes|小时|天|million|billion)\b",
+            normalized_text,
+        )
+    )
+    matches_topic_family = _matches_case_study_topic_family(
+        normalized_text, getattr(task, "query", "")
+    )
 
     if any(marker in normalized_text for marker in negative_markers):
         return {
@@ -1030,13 +1180,23 @@ def _classify_case_study_item(item: dict[str, Any] | Any, task) -> dict[str, Any
         }
 
     case_type = "not_case_study"
-    if official_domain and any(marker in normalized_text for marker in ("customer story", "case study", "success story")):
+    if official_domain and any(
+        marker in normalized_text for marker in ("customer story", "case study", "success story")
+    ):
         case_type = "official_customer_story"
-    elif official_domain and any(marker in normalized_text for marker in ("deployment", "production", "use case", "product blog")):
+    elif official_domain and any(
+        marker in normalized_text
+        for marker in ("deployment", "production", "use case", "product blog")
+    ):
         case_type = "official_product_blog"
-    elif official_domain and any(marker in normalized_text for marker in ("docs", "example", "quickstart", "reference architecture")):
+    elif official_domain and any(
+        marker in normalized_text
+        for marker in ("docs", "example", "quickstart", "reference architecture")
+    ):
         case_type = "official_docs_example"
-    elif official_repo and any(marker in normalized_text for marker in (*production_markers, *example_markers)):
+    elif official_repo and any(
+        marker in normalized_text for marker in (*production_markers, *example_markers)
+    ):
         case_type = "first_party_repo"
 
     base_strength = {
@@ -1060,7 +1220,9 @@ def _classify_case_study_item(item: dict[str, Any] | Any, task) -> dict[str, Any
         "case_study_strength_score": round(min(base_strength, 1.0), 3),
         "has_quantitative_outcome": has_quantitative_outcome,
         "has_production_marker": has_production_marker,
-        "trust_tier_override": 4 if official_domain else (5 if official_repo else _trust_tier(item)),
+        "trust_tier_override": 4
+        if official_domain
+        else (5 if official_repo else _trust_tier(item)),
     }
 
 
@@ -1068,7 +1230,11 @@ def _topic_guard_terms(topic: str) -> list[str]:
     normalized = normalize_text(topic)
     if "mcp" in normalized or "model context protocol" in normalized:
         return ["mcp", "model context protocol"]
-    if "rag" in normalized or "检索增强生成" in normalized or "retrieval augmented generation" in normalized:
+    if (
+        "rag" in normalized
+        or "检索增强生成" in normalized
+        or "retrieval augmented generation" in normalized
+    ):
         return ["rag", "retrieval augmented generation", "retrieval augmented"]
     if "大语言模型" in normalized or "llm" in normalized or "language model" in normalized:
         return ["llm", "language model", "large language model"]
@@ -1089,7 +1255,9 @@ def _aspect_anchor_terms(aspect: str) -> list[str]:
     return _dedupe_terms(anchors)
 
 
-def _matches_required_terms(text_tokens: set[str], normalized_text: str, required_terms: set[str]) -> bool:
+def _matches_required_terms(
+    text_tokens: set[str], normalized_text: str, required_terms: set[str]
+) -> bool:
     for term in required_terms:
         normalized_term = normalize_text(term)
         if not normalized_term:
@@ -1106,7 +1274,9 @@ def _matches_required_terms(text_tokens: set[str], normalized_text: str, require
 
 
 def _matches_guard_terms(normalized_text: str, guard_terms: list[str]) -> bool:
-    return any(normalize_text(term) in normalized_text for term in guard_terms if normalize_text(term))
+    return any(
+        normalize_text(term) in normalized_text for term in guard_terms if normalize_text(term)
+    )
 
 
 def _is_withdrawn_source(item: dict[str, Any] | Any) -> bool:
@@ -1117,28 +1287,63 @@ def _is_withdrawn_source(item: dict[str, Any] | Any) -> bool:
 
 def _entity_conflict_reason(topic: str, normalized_text: str) -> str | None:
     normalized_topic = normalize_text(topic)
-    if "openclaw" in normalized_topic:
-        if any(marker in normalized_text for marker in ("ai agent", "assistant", "chat apps", "personal ai")):
-            if not any(marker in normalized_text for marker in ("captain claw", "game", "engine")):
-                return "entity_conflict"
+    if (
+        "openclaw" in normalized_topic
+        and any(
+            marker in normalized_text
+            for marker in ("ai agent", "assistant", "chat apps", "personal ai")
+        )
+        and not any(marker in normalized_text for marker in ("captain claw", "game", "engine"))
+    ):
+        return "entity_conflict"
     return None
 
 
-def _domain_conflict_reason(topic: str, normalized_text: str, item: dict[str, Any] | Any | None = None) -> str | None:
+def _domain_conflict_reason(
+    topic: str, normalized_text: str, item: dict[str, Any] | Any | None = None
+) -> str | None:
     normalized_topic = normalize_text(topic)
-    if "rag" in normalized_topic or "检索增强生成" in normalized_topic or "retrieval augmented generation" in normalized_topic:
-        if any(marker in normalized_text for marker in ("image generation", "text to image", "vision", "diffusion")):
-            if not any(marker in normalized_text for marker in ("llm", "language model", "question answering", "knowledge")):
-                return "domain_conflict"
-    if "大语言模型" in normalized_topic or "llm" in normalized_topic or "language model" in normalized_topic:
-        published_at = getattr(item, "published_at", None) or (item.get("published_at") if isinstance(item, dict) else None)
+    if (
+        (
+            "rag" in normalized_topic
+            or "检索增强生成" in normalized_topic
+            or "retrieval augmented generation" in normalized_topic
+        )
+        and any(
+            marker in normalized_text
+            for marker in ("image generation", "text to image", "vision", "diffusion")
+        )
+        and not any(
+            marker in normalized_text
+            for marker in ("llm", "language model", "question answering", "knowledge")
+        )
+    ):
+        return "domain_conflict"
+    if (
+        "大语言模型" in normalized_topic
+        or "llm" in normalized_topic
+        or "language model" in normalized_topic
+    ):
+        published_at = getattr(item, "published_at", None) or (
+            item.get("published_at") if isinstance(item, dict) else None
+        )
         year_match = re.match(r"(\d{4})", str(published_at or ""))
-        if year_match and int(year_match.group(1)) < 2018:
-            if not any(marker in normalized_text for marker in ("llm", "language model", "large language model")):
-                return "pre_llm_domain_conflict"
-        if any(marker in normalized_text for marker in ("reinforcement learning", "deep reinforcement learning")):
-            if not any(marker in normalized_text for marker in ("llm", "language model", "tool", "prompt")):
-                return "domain_conflict"
+        if (
+            year_match
+            and int(year_match.group(1)) < 2018
+            and not any(
+                marker in normalized_text
+                for marker in ("llm", "language model", "large language model")
+            )
+        ):
+            return "pre_llm_domain_conflict"
+        if any(
+            marker in normalized_text
+            for marker in ("reinforcement learning", "deep reinforcement learning")
+        ) and not any(
+            marker in normalized_text for marker in ("llm", "language model", "tool", "prompt")
+        ):
+            return "domain_conflict"
     return None
 
 
@@ -1167,7 +1372,10 @@ def _is_case_study_evidence(item: dict[str, Any] | Any) -> bool:
         "application example",
     )
     if source_type == "github":
-        return any(marker in normalized_text for marker in ("production", "application", "example", "project", "deployment"))
+        return any(
+            marker in normalized_text
+            for marker in ("production", "application", "example", "project", "deployment")
+        )
     return any(marker in normalized_text for marker in positive_markers)
 
 
@@ -1181,25 +1389,50 @@ def _aspect_support_specificity(item: dict[str, Any] | Any, task) -> float:
     aspect = (getattr(task, "expected_aspects", None) or [getattr(task, "title", "")])[0]
     semantic_terms = _aspect_semantic_terms(aspect, task_type)
     topic_terms = _topic_guard_terms(getattr(task, "query", ""))
-    generic_terms = set(token.lower() for token in _topic_alias_terms(getattr(task, "query", "")))
+    generic_terms = {token.lower() for token in _topic_alias_terms(getattr(task, "query", ""))}
     normalized_aspect = normalize_text(aspect)
 
-    if "mcp" in normalize_text(getattr(task, "query", "")) or "model context protocol" in normalize_text(
+    if "mcp" in normalize_text(
         getattr(task, "query", "")
-    ):
+    ) or "model context protocol" in normalize_text(getattr(task, "query", "")):
         semantic_terms = _dedupe_terms([*semantic_terms, "mcp", "model context protocol"])
         if "工具发现" in normalized_aspect:
-            semantic_terms = _dedupe_terms([*semantic_terms, "tool discovery", "capability discovery", "tool registry"])
-        if "权限" in normalized_aspect or "安全" in normalized_aspect:
-            semantic_terms = _dedupe_terms([*semantic_terms, "security", "permission", "authorization", "access control", "oauth"])
-        if "基本概念" in normalized_aspect:
-            semantic_terms = _dedupe_terms([*semantic_terms, "protocol", "client", "server", "resource", "tool"])
-        if "接入模式" in normalized_aspect or ("接入" in normalized_aspect and "模式" in normalized_aspect):
             semantic_terms = _dedupe_terms(
-                [*semantic_terms, "integration pattern", "tool integration", "transport", "stdio", "sse", "streamable http"]
+                [*semantic_terms, "tool discovery", "capability discovery", "tool registry"]
+            )
+        if "权限" in normalized_aspect or "安全" in normalized_aspect:
+            semantic_terms = _dedupe_terms(
+                [
+                    *semantic_terms,
+                    "security",
+                    "permission",
+                    "authorization",
+                    "access control",
+                    "oauth",
+                ]
+            )
+        if "基本概念" in normalized_aspect:
+            semantic_terms = _dedupe_terms(
+                [*semantic_terms, "protocol", "client", "server", "resource", "tool"]
+            )
+        if "接入模式" in normalized_aspect or (
+            "接入" in normalized_aspect and "模式" in normalized_aspect
+        ):
+            semantic_terms = _dedupe_terms(
+                [
+                    *semantic_terms,
+                    "integration pattern",
+                    "tool integration",
+                    "transport",
+                    "stdio",
+                    "sse",
+                    "streamable http",
+                ]
             )
         if "错误恢复" in normalized_aspect:
-            semantic_terms = _dedupe_terms([*semantic_terms, "error handling", "retry", "fallback", "reconnect", "recovery"])
+            semantic_terms = _dedupe_terms(
+                [*semantic_terms, "error handling", "retry", "fallback", "reconnect", "recovery"]
+            )
 
     critical_terms = [
         term
@@ -1223,8 +1456,12 @@ def _aspect_support_specificity(item: dict[str, Any] | Any, task) -> float:
         critical_terms = semantic_terms or list(getattr(task, "must_include_terms", []) or [])
 
     critical_score = _term_match_score(normalized_text, text_tokens, critical_terms)
-    semantic_score = _term_match_score(normalized_text, text_tokens, semantic_terms or critical_terms)
-    topic_score = _term_match_score(normalized_text, text_tokens, topic_terms) if topic_terms else 0.5
+    semantic_score = _term_match_score(
+        normalized_text, text_tokens, semantic_terms or critical_terms
+    )
+    topic_score = (
+        _term_match_score(normalized_text, text_tokens, topic_terms) if topic_terms else 0.5
+    )
     critical_hit = 1.0 if critical_score > 0 else 0.0
     specificity = 0.55 * critical_hit + 0.25 * semantic_score + 0.20 * topic_score
     if task_type == "tutorial" and source_type == "github" and topic_score >= 0.5:
@@ -1314,7 +1551,10 @@ def _direct_support_threshold(task, item: dict[str, Any] | Any) -> float:
     threshold = 0.52 if source_type == "arxiv" else 0.42
     aspect = (getattr(task, "expected_aspects", None) or [getattr(task, "title", "")])[0]
     normalized_aspect = normalize_text(aspect)
-    if any(marker in normalized_aspect for marker in ("faiss", "milvus", "chroma", "langgraph", "crewai", "autogen")):
+    if any(
+        marker in normalized_aspect
+        for marker in ("faiss", "milvus", "chroma", "langgraph", "crewai", "autogen")
+    ):
         threshold += 0.06
     return round(min(threshold, 0.7), 3)
 
@@ -1324,9 +1564,7 @@ def _topic_guard_override_threshold(task, item: dict[str, Any] | Any) -> float:
     trust_tier = _trust_tier(item)
     if source_type == "arxiv":
         threshold = 0.55
-    elif source_type == "github":
-        threshold = 0.45
-    elif trust_tier >= 4:
+    elif source_type == "github" or trust_tier >= 4:
         threshold = 0.45
     else:
         threshold = 0.75
@@ -1354,15 +1592,19 @@ def evaluate_quality_gate(
     """根据确定性规则评估 benchmark 质量门控。"""
     missing_aspects: list[str] = []
     fail_reasons: list[str] = []
-    for task, summary in zip(tasks, task_summaries):
+    for task, summary in zip(tasks, task_summaries, strict=True):
         for aspect in task.expected_aspects:
             if not _strict_aspect_hit(summary, aspect):
                 missing_aspects.append(aspect)
 
     selected_sources = [source for source in sources if getattr(source, "selected", True)]
-    high_trust_sources = [source for source in selected_sources if getattr(source, "trust_tier", 3) >= 4]
+    high_trust_sources = [
+        source for source in selected_sources if getattr(source, "trust_tier", 3) >= 4
+    ]
     case_study_evidence_count = sum(
-        1 for source in selected_sources if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+        1
+        for source in selected_sources
+        if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
     )
     high_trust_case_study_count = sum(
         1
@@ -1374,26 +1616,41 @@ def evaluate_quality_gate(
         for aspect in task.expected_aspects:
             if not is_case_study_aspect(aspect):
                 continue
-            task_sources = [source for source in selected_sources if getattr(source, "task_title", "") == task.title]
+            task_sources = [
+                source
+                for source in selected_sources
+                if getattr(source, "task_title", "") == task.title
+            ]
             task_case_study_sources = [
-                source for source in task_sources if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+                source
+                for source in task_sources
+                if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
             ]
             task_high_trust_case_studies = [
                 source
                 for source in task_case_study_sources
                 if getattr(source, "trust_tier", 3) >= 4
                 and bool(getattr(source, "metadata", {}).get("matches_topic_family"))
-                and float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0) >= 0.65
+                and float(
+                    getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0
+                )
+                >= 0.65
             ]
             if task_high_trust_case_studies:
                 continue
             if aspect not in missing_aspects:
                 missing_aspects.append(aspect)
             if task_case_study_sources:
-                if any(not bool(getattr(source, "metadata", {}).get("matches_topic_family")) for source in task_case_study_sources):
+                if any(
+                    not bool(getattr(source, "metadata", {}).get("matches_topic_family"))
+                    for source in task_case_study_sources
+                ):
                     fail_reasons.append("案例与主题相关性不足")
                 elif any(
-                    float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0) >= 0.45
+                    float(
+                        getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0
+                    )
+                    >= 0.45
                     for source in task_case_study_sources
                 ):
                     fail_reasons.append("缺少真实部署或客户案例信号")
@@ -1428,8 +1685,12 @@ def evaluate_quality_gate(
     follow_up_queries = []
     topic_text = research_topic or (getattr(tasks[0], "query", "") if tasks else "")
     for aspect in missing_aspects[:2]:
-        matched_task = next((task for task in tasks if aspect in getattr(task, "expected_aspects", [])), None)
-        follow_up_queries.extend(_build_follow_up_queries(topic_text, aspect, [matched_task] if matched_task else tasks))
+        matched_task = next(
+            (task for task in tasks if aspect in getattr(task, "expected_aspects", [])), None
+        )
+        follow_up_queries.extend(
+            _build_follow_up_queries(topic_text, aspect, [matched_task] if matched_task else tasks)
+        )
 
     if loop_count + 1 >= max_loops:
         return {
@@ -1498,9 +1759,7 @@ def build_benchmark_report(
     """构造稳定的 benchmark 报告。"""
     global_context = _build_global_context(sources)
     aspect_overview = "；".join(
-        aspect
-        for task in tasks
-        for aspect in getattr(task, "expected_aspects", [])[:1]
+        aspect for task in tasks for aspect in getattr(task, "expected_aspects", [])[:1]
     )
     sections = [
         f"# {topic}",
@@ -1510,7 +1769,9 @@ def build_benchmark_report(
         _append_citation_suffix(
             f"本报告围绕“{topic}”按方面展开，重点覆盖：{aspect_overview}。正文优先依据高可信来源给出结论。",
             _pick_citation_ids(
-                global_context["direct_high_trust_ids"] or global_context["high_trust_ids"] or global_context["selected_ids"],
+                global_context["direct_high_trust_ids"]
+                or global_context["high_trust_ids"]
+                or global_context["selected_ids"],
                 min_count=1,
                 max_count=2,
             ),
@@ -1518,7 +1779,7 @@ def build_benchmark_report(
         "",
     ]
 
-    for index, (task, summary) in enumerate(zip(tasks, task_summaries), start=1):
+    for index, (task, summary) in enumerate(zip(tasks, task_summaries, strict=True), start=1):
         task_context = _build_task_context(task, sources, evidence_notes or [])
         sections.append(f"## {index}. {task.title}")
         sections.append("")
@@ -1531,7 +1792,9 @@ def build_benchmark_report(
         _append_citation_suffix(
             f"综合来看，“{topic}”的核心判断优先依据高可信来源整理；证据不足的部分已明确降级为保守结论。",
             _pick_citation_ids(
-                global_context["direct_high_trust_ids"] or global_context["high_trust_ids"] or global_context["selected_ids"],
+                global_context["direct_high_trust_ids"]
+                or global_context["high_trust_ids"]
+                or global_context["selected_ids"],
                 min_count=1,
                 max_count=3,
             ),
@@ -1583,14 +1846,18 @@ def _lint_task_summary(summary: str, task_context: dict[str, Any]) -> str:
                 block = _ensure_weak_language(block)
                 block = _ensure_citations(
                     block,
-                    task_context["provenance_ids"] or task_context["supplementary_ids"] or task_context["selected_ids"],
+                    task_context["provenance_ids"]
+                    or task_context["supplementary_ids"]
+                    or task_context["selected_ids"],
                     min_count=1,
                     max_count=3,
                 )
         elif "### 补充观察" in current_heading:
             block = _ensure_citations(
                 block,
-                task_context["supplementary_ids"] or task_context["selected_ids"] or task_context["provenance_ids"],
+                task_context["supplementary_ids"]
+                or task_context["selected_ids"]
+                or task_context["provenance_ids"],
                 min_count=1,
                 max_count=3,
             )
@@ -1598,14 +1865,19 @@ def _lint_task_summary(summary: str, task_context: dict[str, Any]) -> str:
             block = _ensure_weak_language(block)
             block = _ensure_citations(
                 block,
-                task_context["provenance_ids"] or task_context["selected_ids"] or task_context["high_trust_ids"],
+                task_context["provenance_ids"]
+                or task_context["selected_ids"]
+                or task_context["high_trust_ids"],
                 min_count=1,
                 max_count=3,
             )
         else:
             block = _ensure_citations(
                 block,
-                task_context["direct_high_trust_ids"] or task_context["high_trust_ids"] or task_context["selected_ids"] or task_context["provenance_ids"],
+                task_context["direct_high_trust_ids"]
+                or task_context["high_trust_ids"]
+                or task_context["selected_ids"]
+                or task_context["provenance_ids"],
                 min_count=1,
                 max_count=2,
             )
@@ -1640,7 +1912,9 @@ def _wrap_unstructured_summary(summary: str, task_context: dict[str, Any]) -> st
     if task_context["high_trust_ids"]:
         limitation = "当前核心判断主要依赖少量高可信来源，仍需更多独立来源或官方文档交叉验证。"
     else:
-        limitation = "当前仅有中低可信公开资料，结论应视为阶段性判断，仍需官方文档或论文进一步验证。"
+        limitation = (
+            "当前仅有中低可信公开资料，结论应视为阶段性判断，仍需官方文档或论文进一步验证。"
+        )
 
     return (
         "### 核心结论\n\n"
@@ -1653,9 +1927,15 @@ def _wrap_unstructured_summary(summary: str, task_context: dict[str, Any]) -> st
 
 
 def _build_global_context(sources) -> dict[str, list[int]]:
-    selected_records = _sort_records([source for source in sources if getattr(source, "selected", True)])
-    high_trust_records = [source for source in selected_records if getattr(source, "trust_tier", 3) >= 4]
-    direct_high_trust_records = [source for source in high_trust_records if _record_support_specificity(source) >= 0.45]
+    selected_records = _sort_records(
+        [source for source in sources if getattr(source, "selected", True)]
+    )
+    high_trust_records = [
+        source for source in selected_records if getattr(source, "trust_tier", 3) >= 4
+    ]
+    direct_high_trust_records = [
+        source for source in high_trust_records if _record_support_specificity(source) >= 0.45
+    ]
     return {
         "selected_ids": [source.citation_id for source in selected_records],
         "high_trust_ids": [source.citation_id for source in high_trust_records],
@@ -1678,14 +1958,20 @@ def _build_task_context(task, sources, evidence_notes) -> dict[str, list[int]]:
         _note_field(note, "source_ids")
         or [source.citation_id for source in sources if source.task_title == task.title]
     )
-    selected_records = _sort_records([source_index[citation_id] for citation_id in selected_ids if citation_id in source_index])
-    high_trust_ids = [source.citation_id for source in selected_records if getattr(source, "trust_tier", 3) >= 4]
+    selected_records = _sort_records(
+        [source_index[citation_id] for citation_id in selected_ids if citation_id in source_index]
+    )
+    high_trust_ids = [
+        source.citation_id for source in selected_records if getattr(source, "trust_tier", 3) >= 4
+    ]
     direct_high_trust_ids = [
         source.citation_id
         for source in selected_records
         if getattr(source, "trust_tier", 3) >= 4 and _record_support_specificity(source) >= 0.45
     ]
-    supplementary_ids = [source.citation_id for source in selected_records if getattr(source, "trust_tier", 3) < 4]
+    supplementary_ids = [
+        source.citation_id for source in selected_records if getattr(source, "trust_tier", 3) < 4
+    ]
 
     return {
         "selected_ids": selected_ids,
@@ -1716,7 +2002,10 @@ def _note_field(note, field: str):
 def _sort_records(records) -> list[Any]:
     return sorted(
         records,
-        key=lambda source: (-int(getattr(source, "trust_tier", 3)), int(getattr(source, "citation_id", 0))),
+        key=lambda source: (
+            -int(getattr(source, "trust_tier", 3)),
+            int(getattr(source, "citation_id", 0)),
+        ),
     )
 
 
@@ -1739,7 +2028,9 @@ def _ensure_high_trust_citations(paragraph: str, high_trust_ids: list[int]) -> s
     )
 
 
-def _ensure_citations(paragraph: str, candidate_ids: list[int], *, min_count: int, max_count: int) -> str:
+def _ensure_citations(
+    paragraph: str, candidate_ids: list[int], *, min_count: int, max_count: int
+) -> str:
     cited_ids = _extract_citation_ids(paragraph)
     if cited_ids:
         return paragraph
@@ -1766,7 +2057,9 @@ def _pick_citation_ids(
     exclude_ids: list[int] | None = None,
 ) -> list[int]:
     exclude = set(exclude_ids or [])
-    picked = [citation_id for citation_id in _unique_ints(candidate_ids) if citation_id not in exclude]
+    picked = [
+        citation_id for citation_id in _unique_ints(candidate_ids) if citation_id not in exclude
+    ]
     if not picked:
         return []
     count = min(max_count, len(picked))

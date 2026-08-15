@@ -441,7 +441,11 @@ def _routing_settings(*, enabled: bool = True, api_key: str | None = "test-key")
         llm_model_name="",
         llm_api_key=api_key,
         model_router_enabled=enabled,
-        strong_role_models={"planning": "strong-planning", "critic": "strong-critic", "synthesis": ""},
+        strong_role_models={
+            "planning": "strong-planning",
+            "critic": "strong-critic",
+            "synthesis": "",
+        },
         cheap_role_models={"summarization": "flash-summarizer", "compression": "", "rerank": ""},
     )
 
@@ -480,10 +484,18 @@ async def test_multi_role_worker_routes_researcher_chat_by_task_effort():
         routed_selections.append(selection.profile.model)
         chat = _ScriptedToolChat(
             [
-                {"plan_queries": {"queries": [{"query": "agents tools 2026", "tool": "web_search"}]}},
+                {
+                    "plan_queries": {
+                        "queries": [{"query": "agents tools 2026", "tool": "web_search"}]
+                    }
+                },
                 {"assess_coverage": {"covered": True, "gaps": []}},
                 {"select_pages": {"urls": []}},
-                {"submit_claims": {"claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]}},
+                {
+                    "submit_claims": {
+                        "claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]
+                    }
+                },
             ]
         )
         chats.append(chat)
@@ -645,7 +657,10 @@ def test_factory_wires_router_only_when_enabled():
 def test_orchestrator_task_model_prefers_role_model_snapshot():
     from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
 
-    assert ResearchJobOrchestrator._task_model({"researcher_model": "routed-x"}, "researcher") == "routed-x"
+    assert (
+        ResearchJobOrchestrator._task_model({"researcher_model": "routed-x"}, "researcher")
+        == "routed-x"
+    )
     assert ResearchJobOrchestrator._task_model({"critic_model": "critic-x"}, "critic") == "critic-x"
     assert ResearchJobOrchestrator._task_model({"researcher_model": ""}, "researcher") != ""
 
@@ -658,14 +673,12 @@ def test_orchestrator_task_model_keeps_legacy_keys():
         == "legacy-ep"
     )
     assert (
-        ResearchJobOrchestrator._task_model({"model": "legacy-model"}, "planning")
-        == "legacy-model"
+        ResearchJobOrchestrator._task_model({"model": "legacy-model"}, "planning") == "legacy-model"
     )
 
 
 def test_orchestrator_task_model_falls_back_to_role_routing(monkeypatch):
     import configs.settings as settings_module
-
     from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
 
     routed = Settings(
@@ -700,7 +713,6 @@ def _llm_planner_route_test_brief(effort: str | None) -> ResearchBrief:
 
 def test_llm_planner_routes_planning_chat_through_router(monkeypatch):
     import deep_research_agent.agents.planner as planner_module
-
     from deep_research_agent.agents.planner import LLMResearchPlanner
 
     settings = Settings(
@@ -729,7 +741,6 @@ def test_llm_planner_routes_planning_chat_through_router(monkeypatch):
 
 def test_llm_planner_low_effort_brief_routes_to_fast_profile(monkeypatch):
     import deep_research_agent.agents.planner as planner_module
-
     from deep_research_agent.agents.planner import LLMResearchPlanner
 
     settings = Settings(
@@ -763,7 +774,6 @@ def test_llm_planner_low_effort_brief_routes_to_fast_profile(monkeypatch):
 
 def test_llm_planner_without_settings_keeps_default_chat(monkeypatch):
     import deep_research_agent.agents.planner as planner_module
-
     from deep_research_agent.agents.planner import LLMResearchPlanner
 
     captured: list[str] = []

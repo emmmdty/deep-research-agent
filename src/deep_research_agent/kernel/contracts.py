@@ -7,7 +7,6 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
-
 Sha256Digest = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
 NonBlankIdentifier = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 NonBlankText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
@@ -201,9 +200,13 @@ class CorpusManifest(StrictModel):
             missing_policy = set(self.document_version_ids) - self.critical_claims_allowed.keys()
             if missing_policy:
                 missing = ", ".join(sorted(missing_policy))
-                raise ValueError(f"critical-claim source policy required for document versions: {missing}")
+                raise ValueError(
+                    f"critical-claim source policy required for document versions: {missing}"
+                )
         object.__setattr__(self, "content_hashes", FrozenDict(self.content_hashes))
-        object.__setattr__(self, "critical_claims_allowed", FrozenDict(self.critical_claims_allowed))
+        object.__setattr__(
+            self, "critical_claims_allowed", FrozenDict(self.critical_claims_allowed)
+        )
         return self
 
 
@@ -243,10 +246,10 @@ class ReportBundleV2(StrictModel):
             for document_version_ids in self.evidence_matrix.values()
             for document_version_id in document_version_ids
         }
-        unfrozen_document_ids = (
-            claim_document_ids | matrix_document_ids
-        ) - manifest_document_ids
+        unfrozen_document_ids = (claim_document_ids | matrix_document_ids) - manifest_document_ids
         if unfrozen_document_ids:
             unfrozen = ", ".join(sorted(unfrozen_document_ids))
-            raise ValueError(f"document version references are outside the frozen corpus: {unfrozen}")
+            raise ValueError(
+                f"document version references are outside the frozen corpus: {unfrozen}"
+            )
         return self

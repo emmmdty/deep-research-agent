@@ -8,7 +8,6 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-
 StoragePolicy = Literal[
     "mirror_allowed",
     "internal_processing",

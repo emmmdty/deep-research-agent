@@ -16,9 +16,12 @@ from deep_research_agent.evals.external.contracts import (
     BenchmarkTaskResult,
     BenchmarkTaskSpec,
 )
-from deep_research_agent.evals.external.integrity import detect_canary, detect_denylist_hits, redact_query
+from deep_research_agent.evals.external.integrity import (
+    detect_canary,
+    detect_denylist_hits,
+    redact_query,
+)
 from deep_research_agent.evals.external.manifests import write_benchmark_artifacts
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[5]
 

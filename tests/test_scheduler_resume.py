@@ -8,22 +8,25 @@ recovers partial progress instead of restarting the whole DAG.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 from pathlib import Path
 
 import pytest
 
+from deep_research_agent.kernel.contracts import TaskResult
 from deep_research_agent.orchestration.events import (
     FileRunJournal,
     RunEvent,
     TaskCheckpoint,
 )
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, SchedulerJob
-from deep_research_agent.kernel.contracts import TaskResult
 
 
 def test_file_journal_round_trips_events_and_checkpoints(tmp_path: Path) -> None:
     journal = FileRunJournal(tmp_path / "run.jsonl")
-    journal.record_event(RunEvent(event_id="e1", job_id="job", sequence=1, event_type="run.started"))
+    journal.record_event(
+        RunEvent(event_id="e1", job_id="job", sequence=1, event_type="run.started")
+    )
     journal.record_checkpoint(
         TaskCheckpoint(
             checkpoint_id="c1",
@@ -33,7 +36,10 @@ def test_file_journal_round_trips_events_and_checkpoints(tmp_path: Path) -> None
             attempt=1,
             result=TaskResult(task_id="t1", job_id="job", status="completed"),
             output={"task_id": "t1"},
-            worker_payload={"result": {"task_id": "t1", "job_id": "job", "status": "completed"}, "output": {"task_id": "t1"}},
+            worker_payload={
+                "result": {"task_id": "t1", "job_id": "job", "status": "completed"},
+                "output": {"task_id": "t1"},
+            },
         )
     )
 
@@ -68,7 +74,9 @@ def test_file_journal_latest_checkpoint_wins_per_task(tmp_path: Path) -> None:
 
 def test_file_journal_skips_corrupt_lines(tmp_path: Path) -> None:
     path = tmp_path / "run.jsonl"
-    path.write_text('{"kind": "checkpoint", "record": {"broken": true}}\nnot json\n', encoding="utf-8")
+    path.write_text(
+        '{"kind": "checkpoint", "record": {"broken": true}}\nnot json\n', encoding="utf-8"
+    )
 
     events, checkpoints = FileRunJournal(path).load()
 
@@ -79,8 +87,8 @@ def test_file_journal_skips_corrupt_lines(tmp_path: Path) -> None:
 @pytest.mark.asyncio
 async def test_scheduler_resume_from_journal_does_not_redo_completed_tasks(tmp_path: Path) -> None:
     from deep_research_agent.evals.reliability.fault_injection import (
-        _CrashWorker,
         _chain_dag,
+        _CrashWorker,
     )
 
     dag = _chain_dag()
@@ -94,10 +102,8 @@ async def test_scheduler_resume_from_journal_does_not_redo_completed_tasks(tmp_p
     while len(journal) < 1:
         await asyncio.sleep(0.005)
     run_task.cancel()
-    try:
+    with contextlib.suppress(asyncio.CancelledError, Exception):
         await run_task
-    except (asyncio.CancelledError, Exception):  # noqa: BLE001 - the crash is the test
-        pass
     await asyncio.sleep(0.06)
 
     assert {cp.task_id for cp in journal.load_checkpoints()} == {"task-1"}
@@ -116,6 +122,4 @@ async def test_scheduler_resume_from_journal_does_not_redo_completed_tasks(tmp_p
     assert result.resumed_checkpoints == 1
     assert set(healthy.calls) == {"task-2", "task-3"}
     assert result.task_results["task-1"].status == "completed"
-    assert all(
-        task_result.status == "completed" for task_result in result.task_results.values()
-    )
+    assert all(task_result.status == "completed" for task_result in result.task_results.values())

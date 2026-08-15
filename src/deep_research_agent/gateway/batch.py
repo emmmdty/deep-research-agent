@@ -5,7 +5,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from deep_research_agent.gateway.contracts import BatchResearchResponse, SubmitJobRequest, public_job_response
+from deep_research_agent.gateway.contracts import (
+    BatchResearchResponse,
+    SubmitJobRequest,
+    public_job_response,
+)
 from deep_research_agent.research_jobs import ResearchJobService
 
 
@@ -28,7 +32,9 @@ def load_batch_requests(path: str | Path) -> list[SubmitJobRequest]:
     ]
 
 
-def submit_batch_jobs(service: ResearchJobService, requests: list[SubmitJobRequest]) -> BatchResearchResponse:
+def submit_batch_jobs(
+    service: ResearchJobService, requests: list[SubmitJobRequest]
+) -> BatchResearchResponse:
     """Submit a batch of jobs through the canonical research job service."""
 
     jobs = [

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import threading
 import time
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -53,10 +53,16 @@ def test_sse_delivers_ordered_monotonic_events_without_duplicates(product):
     app, client, _, run = product
     service = app.state.product_service
     service.append_run_event(
-        run["run_id"], tenant_id=run["tenant_id"], event_type="task.started", payload={"task_id": "a"}
+        run["run_id"],
+        tenant_id=run["tenant_id"],
+        event_type="task.started",
+        payload={"task_id": "a"},
     )
     service.append_run_event(
-        run["run_id"], tenant_id=run["tenant_id"], event_type="task.completed", payload={"task_id": "a"}
+        run["run_id"],
+        tenant_id=run["tenant_id"],
+        event_type="task.completed",
+        payload={"task_id": "a"},
     )
 
     response = client.get(f"/v1/runs/{run['run_id']}/events")
@@ -108,15 +114,18 @@ def test_sse_terminal_event_closes_snapshot_stream(product):
 
     assert response.status_code == 200
     assert "event: run.completed" in response.text
-    assert "\"terminal\":true" in response.text
+    assert '"terminal":true' in response.text
 
 
 def test_sse_does_not_stop_at_historical_terminal_event_after_resume(product):
     _, client, csrf, run = product
-    assert client.post(
-        f"/v1/runs/{run['run_id']}:cancel",
-        headers={"X-CSRF-Token": csrf},
-    ).status_code == 200
+    assert (
+        client.post(
+            f"/v1/runs/{run['run_id']}:cancel",
+            headers={"X-CSRF-Token": csrf},
+        ).status_code
+        == 200
+    )
     resumed = client.post(
         f"/v1/runs/{run['run_id']}:resume",
         headers={"X-CSRF-Token": csrf},

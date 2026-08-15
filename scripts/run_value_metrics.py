@@ -13,12 +13,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from deep_research_agent.evals.value_metrics import build_value_metrics_pack
 
 
-def run_value_metrics_pack(*, source_roots: list[str | Path], output_root: str | Path) -> dict[str, Any]:
+def run_value_metrics_pack(
+    *, source_roots: list[str | Path], output_root: str | Path
+) -> dict[str, Any]:
     return build_value_metrics_pack(source_roots=source_roots, output_root=output_root)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate follow-up value metrics from eval artifacts")
+    parser = argparse.ArgumentParser(
+        description="Generate follow-up value metrics from eval artifacts"
+    )
     parser.add_argument(
         "--source-root",
         action="append",

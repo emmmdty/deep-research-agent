@@ -25,7 +25,6 @@ from deep_research_agent.evals.external.contracts import (
 )
 from deep_research_agent.evals.external.manifests import write_benchmark_artifacts
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[5]
 
 LIST_MODES = ("recall", "f1")
@@ -80,7 +79,9 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
         "role": descriptor.role,
         "corpus_mode": "fixture_only_offline",
         "offline": True,
-        "category_task_counts": {category: len(values) for category, values in category_scores.items()},
+        "category_task_counts": {
+            category: len(values) for category, values in category_scores.items()
+        },
     }
     manifest = BenchmarkRunManifest(
         benchmark=descriptor.benchmark,

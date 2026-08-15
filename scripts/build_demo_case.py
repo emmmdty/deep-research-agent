@@ -467,19 +467,36 @@ def build_trace() -> list[dict]:
         {"objectives": ["产品线与商业模式", "融资历程与估值", "多 agent 研发实践与行业影响"]},
     )
     add("planned", "stage.started", "开始规划阶段：编译研究计划为任务 DAG")
-    for i, objective in enumerate(["产品线与商业模式", "融资历程与估值", "多 agent 研发实践与行业影响"], 1):
+    for i, objective in enumerate(
+        ["产品线与商业模式", "融资历程与估值", "多 agent 研发实践与行业影响"], 1
+    ):
         add(
             "planned",
             "task.spawned",
             f"生成研究任务 research-{i}：{objective}",
-            {"task_id": f"research-{i}", "role": "researcher", "objective": objective, "parallel": True},
+            {
+                "task_id": f"research-{i}",
+                "role": "researcher",
+                "objective": objective,
+                "parallel": True,
+            },
         )
-    add("planned", "task.spawned", "生成审计任务 critic-1：对全部研究产出做证据审计", {
-        "task_id": "critic-1", "role": "critic", "depends_on": ["research-1", "research-2", "research-3"]
-    })
-    add("planned", "stage.completed", "任务 DAG 就绪：3 个并行研究任务 + 1 个审计任务", {
-        "dag": {"tasks": 4, "parallel_workers": 3}
-    })
+    add(
+        "planned",
+        "task.spawned",
+        "生成审计任务 critic-1：对全部研究产出做证据审计",
+        {
+            "task_id": "critic-1",
+            "role": "critic",
+            "depends_on": ["research-1", "research-2", "research-3"],
+        },
+    )
+    add(
+        "planned",
+        "stage.completed",
+        "任务 DAG 就绪：3 个并行研究任务 + 1 个审计任务",
+        {"dag": {"tasks": 4, "parallel_workers": 3}},
+    )
 
     tool_events = {
         "research-1": ["官网页", "产品博客", "行业报道"],
@@ -494,7 +511,7 @@ def build_trace() -> list[dict]:
             f"{task_id} 开始执行：并行检索{len(areas)}类来源",
             {"task_id": task_id, "role": "researcher", "workers": 3},
         )
-    for i, (task_id, areas) in enumerate(tool_events.items(), 1):
+    for _i, (task_id, areas) in enumerate(tool_events.items(), 1):
         for area in areas:
             add(
                 "collecting",
@@ -521,7 +538,12 @@ def build_trace() -> list[dict]:
     add("normalizing", "stage.started", "开始规范化：去重与证据归并")
     add("normalizing", "stage.completed", "证据归并完成：8 个来源、9 个证据片段")
     add("extracting", "stage.started", "开始抽取阶段：从证据中提取结构化 claim")
-    for cid, cstatus in [("claim-1", "supported"), ("claim-5", "supported"), ("claim-8", "qualified"), ("claim-11", "unsupported")]:
+    for cid, cstatus in [
+        ("claim-1", "supported"),
+        ("claim-5", "supported"),
+        ("claim-8", "qualified"),
+        ("claim-11", "unsupported"),
+    ]:
         add(
             "extracting",
             "claim.extracted",
@@ -532,7 +554,12 @@ def build_trace() -> list[dict]:
 
     add("claim_auditing", "stage.started", "开始审计阶段：构建 claim graph 并执行审计门禁")
     add("claim_auditing", "audit.edge_built", "构建支持边：10 条 claim→证据 关联", {"edges": 10})
-    add("claim_auditing", "audit.conflict_detected", "检测到冲突集：融资估值口径随时间演进", {"conflict_sets": 1})
+    add(
+        "claim_auditing",
+        "audit.conflict_detected",
+        "检测到冲突集：融资估值口径随时间演进",
+        {"conflict_sets": 1},
+    )
     add(
         "claim_auditing",
         "audit.gate_decision",
@@ -544,8 +571,18 @@ def build_trace() -> list[dict]:
     add("synthesizing", "stage.started", "开始综合阶段：基于通过审计的证据撰写报告")
     add("synthesizing", "stage.completed", "报告初稿完成：5 个章节、10 个带引用段落")
     add("rendering", "stage.started", "开始渲染：编译 report_bundle.json 与 report.md/html")
-    add("rendering", "bundle.emitted", "报告 bundle 已产出", {"artifacts": ["report_bundle.json", "report.md", "report.html"]})
-    add("completed", "job.completed", "研究任务完成", {"duration_seconds": 312, "sources": 8, "claims": 11})
+    add(
+        "rendering",
+        "bundle.emitted",
+        "报告 bundle 已产出",
+        {"artifacts": ["report_bundle.json", "report.md", "report.html"]},
+    )
+    add(
+        "completed",
+        "job.completed",
+        "研究任务完成",
+        {"duration_seconds": 312, "sources": 8, "claims": 11},
+    )
     return events
 
 
@@ -624,23 +661,73 @@ def build_bundle() -> dict:
             "status": "demo",
             "current_stage": "completed",
             "source_profile": "company_trusted",
-            "budget": {"max_loops": 3, "research_profile": "default", "llm_calls": 24, "search_calls": 18},
+            "budget": {
+                "max_loops": 3,
+                "research_profile": "default",
+                "llm_calls": 24,
+                "search_calls": 18,
+            },
             "runtime_path": "scheduler-v2",
             "report_bundle_ref": "bundle/report_bundle.json",
         },
         "citations": [
-            {"citation_id": 1, "source_id": "source-1", "snapshot_id": "snapshot-0001", "title": SOURCES[0]["title"]},
-            {"citation_id": 2, "source_id": "source-2", "snapshot_id": "snapshot-0002", "title": SOURCES[1]["title"]},
-            {"citation_id": 3, "source_id": "source-3", "snapshot_id": "snapshot-0003", "title": SOURCES[2]["title"]},
-            {"citation_id": 4, "source_id": "source-4", "snapshot_id": "snapshot-0004", "title": SOURCES[3]["title"]},
-            {"citation_id": 5, "source_id": "source-5", "snapshot_id": "snapshot-0005", "title": SOURCES[4]["title"]},
-            {"citation_id": 6, "source_id": "source-6", "snapshot_id": "snapshot-0006", "title": SOURCES[5]["title"]},
-            {"citation_id": 7, "source_id": "source-7", "snapshot_id": "snapshot-0007", "title": SOURCES[6]["title"]},
-            {"citation_id": 8, "source_id": "source-8", "snapshot_id": "snapshot-0008", "title": SOURCES[7]["title"]},
+            {
+                "citation_id": 1,
+                "source_id": "source-1",
+                "snapshot_id": "snapshot-0001",
+                "title": SOURCES[0]["title"],
+            },
+            {
+                "citation_id": 2,
+                "source_id": "source-2",
+                "snapshot_id": "snapshot-0002",
+                "title": SOURCES[1]["title"],
+            },
+            {
+                "citation_id": 3,
+                "source_id": "source-3",
+                "snapshot_id": "snapshot-0003",
+                "title": SOURCES[2]["title"],
+            },
+            {
+                "citation_id": 4,
+                "source_id": "source-4",
+                "snapshot_id": "snapshot-0004",
+                "title": SOURCES[3]["title"],
+            },
+            {
+                "citation_id": 5,
+                "source_id": "source-5",
+                "snapshot_id": "snapshot-0005",
+                "title": SOURCES[4]["title"],
+            },
+            {
+                "citation_id": 6,
+                "source_id": "source-6",
+                "snapshot_id": "snapshot-0006",
+                "title": SOURCES[5]["title"],
+            },
+            {
+                "citation_id": 7,
+                "source_id": "source-7",
+                "snapshot_id": "snapshot-0007",
+                "title": SOURCES[6]["title"],
+            },
+            {
+                "citation_id": 8,
+                "source_id": "source-8",
+                "snapshot_id": "snapshot-0008",
+                "title": SOURCES[7]["title"],
+            },
         ],
         "sources": SOURCES,
         "snapshots": [
-            {"snapshot_id": f"snapshot-{i:04d}", "source_id": s["source_id"], "content_sha256": f"deadbeef{i:04d}", "size_bytes": 2048 + i * 137}
+            {
+                "snapshot_id": f"snapshot-{i:04d}",
+                "source_id": s["source_id"],
+                "content_sha256": f"deadbeef{i:04d}",
+                "size_bytes": 2048 + i * 137,
+            }
             for i, s in enumerate(SOURCES, 1)
         ],
         "evidence_fragments": EVIDENCE,
@@ -651,14 +738,37 @@ def build_bundle() -> dict:
             "tool_event_count": 18,
             "stage_event_count": 21,
             "stages": [
-                "job", "clarifying", "planned", "collecting", "normalizing",
-                "extracting", "claim_auditing", "synthesizing", "rendering", "completed",
+                "job",
+                "clarifying",
+                "planned",
+                "collecting",
+                "normalizing",
+                "extracting",
+                "claim_auditing",
+                "synthesizing",
+                "rendering",
+                "completed",
             ],
         },
         "audit_events": [
-            {"event": "gate.decision", "decision": "passed", "critical_claims": 8, "supported": 7, "qualified": 1, "unsupported": 1},
-            {"event": "review_queue.push", "claim_id": "claim-11", "reason": "无可用证据，需人工复核"},
-            {"event": "conflict_set.registered", "conflict_id": "conflict-1", "claim_ids": ["claim-2", "claim-8"]},
+            {
+                "event": "gate.decision",
+                "decision": "passed",
+                "critical_claims": 8,
+                "supported": 7,
+                "qualified": 1,
+                "unsupported": 1,
+            },
+            {
+                "event": "review_queue.push",
+                "claim_id": "claim-11",
+                "reason": "无可用证据，需人工复核",
+            },
+            {
+                "event": "conflict_set.registered",
+                "conflict_id": "conflict-1",
+                "claim_ids": ["claim-2", "claim-8"],
+            },
         ],
         "report_text": REPORT_MD,
         "claims": CLAIMS,
@@ -685,7 +795,9 @@ def main() -> None:
         "qualified": sum(1 for c in CLAIMS if c["status"] == "qualified"),
         "unsupported": sum(1 for c in CLAIMS if c["status"] == "unsupported"),
     }
-    (OUT_DIR / "claims.json").write_text(json.dumps(claims_summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (OUT_DIR / "claims.json").write_text(
+        json.dumps(claims_summary, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     print(f"demo case written to {OUT_DIR.relative_to(ROOT)}")
     print(f"claims: {claims_summary}")
 

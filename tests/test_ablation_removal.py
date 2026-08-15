@@ -17,13 +17,21 @@ def _inline_fixture_tasks() -> list[dict]:
         {
             "task_id": "t1",
             "topic": "OpenAI enterprise surface smoke",
-            "required_questions": ["What official product surfaces are visible?", "What public developer surface exists?"],
-            "answered_questions": ["What official product surfaces are visible?", "What public developer surface exists?"],
+            "required_questions": [
+                "What official product surfaces are visible?",
+                "What public developer surface exists?",
+            ],
+            "answered_questions": [
+                "What official product surfaces are visible?",
+                "What public developer surface exists?",
+            ],
             "report_markdown": (
                 "OpenAI exposes a public product surface spanning ChatGPT, API access, and "
                 "enterprise-facing materials.[1][2]"
             ),
-            "task_summaries": ["OpenAI exposes public product, API, and enterprise materials.[1][2]"],
+            "task_summaries": [
+                "OpenAI exposes public product, API, and enterprise materials.[1][2]"
+            ],
             "sources": [
                 {
                     "citation_id": 1,
@@ -234,7 +242,13 @@ def test_every_registered_structure_is_measured_or_flagged():
             assert entry.removable_in_ci is True
             with_metrics = result["metrics"]["with"]
             without_metrics = result["metrics"]["without"]
-            assert set(with_metrics) == {"citation_resolvable_rate", "question_coverage", "summary_retention", "source_rank_quality", "composite"}
+            assert set(with_metrics) == {
+                "citation_resolvable_rate",
+                "question_coverage",
+                "summary_retention",
+                "source_rank_quality",
+                "composite",
+            }
             assert set(without_metrics) == set(with_metrics)
             assert with_metrics["composite"] >= without_metrics["composite"]
 
@@ -246,7 +260,9 @@ def test_build_runner_rejects_unknown_structure():
 
 def test_build_runner_rejects_removing_documentation_only_structure():
     tasks = _inline_fixture_tasks()
-    doc_only_id = next(entry.structure_id for entry in harness.STRUCTURES if entry.removal_hook is None)
+    doc_only_id = next(
+        entry.structure_id for entry in harness.STRUCTURES if entry.removal_hook is None
+    )
     with pytest.raises(ValueError):
         harness.build_runner({doc_only_id: "removed"})(tasks)
 
@@ -271,7 +287,18 @@ def test_module_imports_no_network_or_llm_dependencies():
             imported.update(alias.name.split(".")[0] for alias in node.names)
         elif isinstance(node, ast.ImportFrom) and node.module:
             imported.add(node.module.split(".")[0])
-    forbidden = {"httpx", "openai", "requests", "aiohttp", "tavily", "socket", "urllib", "asyncio", "anthropic", "loguru"}
+    forbidden = {
+        "httpx",
+        "openai",
+        "requests",
+        "aiohttp",
+        "tavily",
+        "socket",
+        "urllib",
+        "asyncio",
+        "anthropic",
+        "loguru",
+    }
     assert not (imported & forbidden), f"harness 引入了网络/LLM 依赖: {imported & forbidden}"
 
 
@@ -292,4 +319,7 @@ def test_load_fixture_reads_only_suite_and_dataset(monkeypatch, tmp_path: Path):
     tasks = harness.load_fixture_tasks(suite_path=suite_path)
 
     assert tasks == []
-    assert [str(path) for path in read_paths] == [str(suite_path.resolve()), str(dataset_path.resolve())]
+    assert [str(path) for path in read_paths] == [
+        str(suite_path.resolve()),
+        str(dataset_path.resolve()),
+    ]

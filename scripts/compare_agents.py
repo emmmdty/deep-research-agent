@@ -21,8 +21,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from legacy.evaluation.metrics import evaluate_report
 from legacy.evaluation.llm_judge import LLMJudge
+from legacy.evaluation.metrics import evaluate_report
 
 console = Console()
 
@@ -34,10 +34,7 @@ def compare_from_files(file_a: str, file_b: str, topic: str = "") -> None:
     _run_comparison(report_a, report_b, "Our Agent", "竞品", topic)
 
 
-def _run_comparison(
-    report_a: str, report_b: str,
-    name_a: str, name_b: str, topic: str
-) -> None:
+def _run_comparison(report_a: str, report_b: str, name_a: str, name_b: str, topic: str) -> None:
     """执行对比评估并输出结果。"""
     # 基础指标
     metrics_a = evaluate_report(report_a)
@@ -57,11 +54,17 @@ def _run_comparison(
     # 基础指标对比
     _add_comparison_row(table, "报告字数", metrics_a["word_count"], metrics_b["word_count"])
     _add_comparison_row(table, "标题数", metrics_a["heading_count"], metrics_b["heading_count"])
-    _add_comparison_row(table, "引用来源数", metrics_a["source_coverage"], metrics_b["source_coverage"])
-    _add_comparison_row(table, "引用准确率",
-                        f"{metrics_a['citation_accuracy']:.0%}",
-                        f"{metrics_b['citation_accuracy']:.0%}",
-                        metrics_a["citation_accuracy"], metrics_b["citation_accuracy"])
+    _add_comparison_row(
+        table, "引用来源数", metrics_a["source_coverage"], metrics_b["source_coverage"]
+    )
+    _add_comparison_row(
+        table,
+        "引用准确率",
+        f"{metrics_a['citation_accuracy']:.0%}",
+        f"{metrics_b['citation_accuracy']:.0%}",
+        metrics_a["citation_accuracy"],
+        metrics_b["citation_accuracy"],
+    )
     _add_comparison_row(table, "深度评分", metrics_a["depth_score"], metrics_b["depth_score"])
 
     # LLM Judge 对比
@@ -69,12 +72,14 @@ def _run_comparison(
     scores_b = comparison["report_b"]
     for dim in ["depth", "accuracy", "coherence", "citation_quality", "structure", "overall"]:
         dim_label = {
-            "depth": "Judge:深度", "accuracy": "Judge:准确度",
-            "coherence": "Judge:连贯性", "citation_quality": "Judge:引用质量",
-            "structure": "Judge:结构", "overall": "Judge:综合",
+            "depth": "Judge:深度",
+            "accuracy": "Judge:准确度",
+            "coherence": "Judge:连贯性",
+            "citation_quality": "Judge:引用质量",
+            "structure": "Judge:结构",
+            "overall": "Judge:综合",
         }[dim]
-        _add_comparison_row(table, dim_label,
-                            scores_a.get(dim, 0), scores_b.get(dim, 0))
+        _add_comparison_row(table, dim_label, scores_a.get(dim, 0), scores_b.get(dim, 0))
 
     console.print()
     console.print(table)
@@ -83,15 +88,21 @@ def _run_comparison(
     winner = comparison["winner"]
     winner_name = name_a if winner == "A" else (name_b if winner == "B" else "平局")
     diff = abs(comparison["score_diff"])
-    console.print(Panel(
-        f"🏆 综合胜出: [bold]{winner_name}[/bold]  (分差: {diff})",
-        border_style="green" if winner == "A" else "yellow",
-    ))
+    console.print(
+        Panel(
+            f"🏆 综合胜出: [bold]{winner_name}[/bold]  (分差: {diff})",
+            border_style="green" if winner == "A" else "yellow",
+        )
+    )
 
 
 def _add_comparison_row(
-    table: Table, label: str, val_a, val_b,
-    num_a=None, num_b=None,
+    table: Table,
+    label: str,
+    val_a,
+    val_b,
+    num_a=None,
+    num_b=None,
 ) -> None:
     """添加对比行。"""
     if num_a is None:
@@ -142,7 +153,7 @@ def main():
     else:
         parser.print_help()
     console.print("\n[yellow]示例:[/yellow]")
-    console.print('  uv run python scripts/compare_agents.py --file-a a.md --file-b b.md')
+    console.print("  uv run python scripts/compare_agents.py --file-a a.md --file-b b.md")
 
 
 if __name__ == "__main__":

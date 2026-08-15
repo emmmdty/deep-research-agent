@@ -27,7 +27,9 @@ def run_value_ablation_pack(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate the follow-up ablation and performance pack")
+    parser = argparse.ArgumentParser(
+        description="Generate the follow-up ablation and performance pack"
+    )
     parser.add_argument(
         "--baseline-root",
         default=str(Path("evals") / "reports" / "phase5_local_smoke"),

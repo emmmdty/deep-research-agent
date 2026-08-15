@@ -11,6 +11,7 @@ import json
 import sys
 import types
 from pathlib import Path
+from typing import ClassVar
 
 import pytest
 
@@ -34,7 +35,7 @@ class FakeSpan:
     def set_attribute(self, key: str, value: object) -> None:
         self.set_attributes.append((key, value))
 
-    def __enter__(self) -> "FakeSpan":
+    def __enter__(self) -> FakeSpan:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
@@ -113,9 +114,7 @@ def test_cost_tracker_absent_contextvar_attributes_to_global() -> None:
 
 
 def test_cost_tracker_price_table_injection_and_legacy_default() -> None:
-    tracker = CostTracker(
-        price_table={"fast": {"in_per_million": 2.0, "out_per_million": 4.0}}
-    )
+    tracker = CostTracker(price_table={"fast": {"in_per_million": 2.0, "out_per_million": 4.0}})
     tracker.record_llm_call(input_tokens=1_000_000, output_tokens=1_000_000, model="fast")
     assert tracker.metrics.estimated_cost_usd == 6.0
 
@@ -154,7 +153,7 @@ class FakeUsage:
 
 class FakeMessage:
     content = "hello"
-    tool_calls = []
+    tool_calls: ClassVar[list] = []
 
 
 class FakeChoice:
@@ -163,7 +162,7 @@ class FakeChoice:
 
 class FakeCompletion:
     usage = FakeUsage()
-    choices = [FakeChoice()]
+    choices: ClassVar[list] = [FakeChoice()]
 
 
 class FakeCompletions:
@@ -256,8 +255,7 @@ def test_tool_gateway_invoke_wraps_research_span_with_allowlisted_attributes(mon
         ToolExecutionContext,
         ToolInvocation,
     )
-    from deep_research_agent.tool_gateway.registry import InMemoryToolRegistry
-    from deep_research_agent.tool_gateway.registry import ToolSpec
+    from deep_research_agent.tool_gateway.registry import InMemoryToolRegistry, ToolSpec
 
     tracer = FakeTracer()
     from deep_research_agent.tool_gateway import gateway as gateway_module
@@ -319,7 +317,7 @@ class FakeCounter:
     def inc(self, amount: float = 1.0) -> None:
         self.value += amount
 
-    def labels(self, **kwargs) -> "FakeCounter":
+    def labels(self, **kwargs) -> FakeCounter:
         return self
 
 
@@ -383,9 +381,7 @@ def test_cost_tracker_bridge_updates_prometheus_counters_and_gauges(monkeypatch)
         key: FakeCounter(key)
         for key in ("llm_calls", "search_calls", "tokens", "estimated_cost_usd")
     }
-    gauges = {
-        key: FakeGauge(key) for key in ("estimated_cost_usd", "task_runtime_seconds")
-    }
+    gauges = {key: FakeGauge(key) for key in ("estimated_cost_usd", "task_runtime_seconds")}
     monkeypatch.setattr(
         cost_tracker_module,
         "_prometheus_state",

@@ -18,7 +18,6 @@ from deep_research_agent.gateway.routes.auth import (
     StrictRequest,
 )
 
-
 router = APIRouter(tags=["runs"])
 
 
@@ -149,7 +148,9 @@ def resume_run(
 
 
 @router.get("/v1/runs/{run_id}/bundle")
-def get_bundle(run_id: str, identity: IdentityDependency, service: ProductServiceDependency) -> dict:
+def get_bundle(
+    run_id: str, identity: IdentityDependency, service: ProductServiceDependency
+) -> dict:
     try:
         bundle = service.get_bundle(run_id, tenant_id=identity.tenant_id)
     except KeyError as exc:
@@ -161,11 +162,7 @@ def get_bundle(run_id: str, identity: IdentityDependency, service: ProductServic
 
 def _sse_frame(event: dict) -> str:
     payload = json.dumps(event["payload"], separators=(",", ":"), sort_keys=True)
-    return (
-        f"id: {event['event_id']}\n"
-        f"event: {event['event_type']}\n"
-        f"data: {payload}\n\n"
-    )
+    return f"id: {event['event_id']}\nevent: {event['event_type']}\ndata: {payload}\n\n"
 
 
 @router.get("/v1/runs/{run_id}/events")
@@ -209,7 +206,11 @@ async def run_events(
                             saw_terminal = True
                     if saw_terminal:
                         current = service.get_run(run_id, tenant_id=identity.tenant_id)
-                        if current is None or current["status"] in {"completed", "failed", "cancelled"}:
+                        if current is None or current["status"] in {
+                            "completed",
+                            "failed",
+                            "cancelled",
+                        }:
                             return
                 now = time.monotonic()
                 if now >= heartbeat_at:

@@ -8,8 +8,14 @@ from pathlib import Path
 import pytest
 from jsonschema import ValidationError
 
-from legacy.workflows.states import CriticFeedback, EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
-
+from legacy.workflows.states import (
+    CriticFeedback,
+    EvidenceNote,
+    ReportArtifact,
+    RunMetrics,
+    SourceRecord,
+    TaskItem,
+)
 
 PHASE2_SCHEMA_NAMES = [
     "job-runtime-record",
@@ -167,7 +173,11 @@ def test_phase2_checkpoint_schema_rejects_missing_state_payload():
 
 def test_job_store_persists_jobs_events_and_checkpoints(tmp_path: Path):
     """job store 应持久化 runtime record、event 与 checkpoint。"""
-    from deep_research_agent.research_jobs.models import JobCheckpoint, JobProgressEvent, JobRuntimeRecord
+    from deep_research_agent.research_jobs.models import (
+        JobCheckpoint,
+        JobProgressEvent,
+        JobRuntimeRecord,
+    )
     from deep_research_agent.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
@@ -244,7 +254,9 @@ def test_orchestrator_rejects_mismatched_worker_lease(tmp_path: Path):
     from deep_research_agent.research_jobs.store import WorkerLeaseConflict
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="lease fencing", max_loops=1, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="lease fencing", max_loops=1, research_profile="default", start_worker=False
+    )
     service.store.acquire_worker_lease(job.job_id, worker_pid=111, lease_id="lease-a")
     orchestrator = ResearchJobOrchestrator(service=service, worker_lease_id="lease-b")
 
@@ -264,7 +276,9 @@ def test_orchestrator_fences_writes_after_worker_loses_lease(tmp_path: Path):
     from deep_research_agent.research_jobs.store import WorkerLeaseConflict
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="lease lost during stage", max_loops=1, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="lease lost during stage", max_loops=1, research_profile="default", start_worker=False
+    )
     service.store.update_job_status(job.job_id, status="running", current_stage="planned")
     service.store.acquire_worker_lease(job.job_id, worker_pid=111, lease_id="lease-a")
 
@@ -286,7 +300,9 @@ def test_orchestrator_fences_writes_after_worker_loses_lease(tmp_path: Path):
         orchestrator.run(job.job_id)
 
     events = service.list_events(job.job_id)
-    assert not any(event.stage == "planned" and event.event_type == "stage.completed" for event in events)
+    assert not any(
+        event.stage == "planned" and event.event_type == "stage.completed" for event in events
+    )
     loaded = service.get(job.job_id)
     assert loaded is not None
     assert loaded.worker_lease_id == "lease-b"
@@ -315,7 +331,11 @@ def test_job_events_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
 
 def test_job_checkpoints_are_append_only_when_caller_reuses_sequence(tmp_path: Path):
     """checkpoint 写入应由 store 分配单调序号，不能覆盖同一 sequence。"""
-    from deep_research_agent.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
+    from deep_research_agent.research_jobs.models import (
+        JobCheckpoint,
+        JobRuntimeRecord,
+        RuntimeStage,
+    )
     from deep_research_agent.research_jobs.store import ResearchJobStore
 
     store = ResearchJobStore(workspace_dir=str(tmp_path))
@@ -343,7 +363,9 @@ def test_orchestrator_runs_happy_path_and_emits_bundle(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 happy path", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 happy path", max_loops=2, research_profile="default", start_worker=False
+    )
 
     source = SourceRecord(
         citation_id=1,
@@ -433,7 +455,9 @@ def test_job_service_cancel_and_retry_flow(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 retry", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 retry", max_loops=2, research_profile="default", start_worker=False
+    )
 
     cancelled = service.cancel(job.job_id)
     service.store.update_job_status(job.job_id, status="failed", error="测试失败")
@@ -449,8 +473,12 @@ def test_job_service_resume_reuses_latest_checkpoint(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 resume", max_loops=2, research_profile="default", start_worker=False)
-    service.store.update_job_status(job.job_id, status="failed", current_stage="failed", error="phase2 failed")
+    job = service.submit(
+        topic="phase2 resume", max_loops=2, research_profile="default", start_worker=False
+    )
+    service.store.update_job_status(
+        job.job_id, status="failed", current_stage="failed", error="phase2 failed"
+    )
 
     resumed = service.resume(job.job_id, start_worker=False)
 
@@ -466,8 +494,12 @@ def test_job_service_refine_restarts_from_safe_boundary(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 refine", max_loops=2, research_profile="default", start_worker=False)
-    service.store.update_job_status(job.job_id, status="failed", current_stage="failed", error="phase2 failed")
+    job = service.submit(
+        topic="phase2 refine", max_loops=2, research_profile="default", start_worker=False
+    )
+    service.store.update_job_status(
+        job.job_id, status="failed", current_stage="failed", error="phase2 failed"
+    )
 
     refined = service.refine(
         job.job_id,
@@ -481,8 +513,12 @@ def test_job_service_refine_restarts_from_safe_boundary(tmp_path: Path):
     assert refined.current_stage == "planned"
     assert checkpoint is not None
     assert checkpoint.next_stage == "planned"
-    assert checkpoint.state_payload["refinement_history"][-1]["instruction"].startswith("Expand competitor")
-    assert any(event.event_type == "job.refine_requested" for event in service.list_events(job.job_id))
+    assert checkpoint.state_payload["refinement_history"][-1]["instruction"].startswith(
+        "Expand competitor"
+    )
+    assert any(
+        event.event_type == "job.refine_requested" for event in service.list_events(job.job_id)
+    )
 
 
 def test_job_service_cancel_is_idempotent(tmp_path: Path):
@@ -490,7 +526,12 @@ def test_job_service_cancel_is_idempotent(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 cancel idempotency", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 cancel idempotency",
+        max_loops=2,
+        research_profile="default",
+        start_worker=False,
+    )
 
     first = service.cancel(job.job_id)
     second = service.cancel(job.job_id)
@@ -506,7 +547,9 @@ def test_job_service_cancel_terminal_job_is_noop(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 terminal cancel", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 terminal cancel", max_loops=2, research_profile="default", start_worker=False
+    )
     service.store.update_job_status(job.job_id, status="completed", current_stage="completed")
 
     result = service.cancel(job.job_id)
@@ -523,8 +566,15 @@ def test_job_service_retry_is_idempotent_for_same_source_job(tmp_path: Path):
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 retry idempotency", max_loops=2, research_profile="default", start_worker=False)
-    service.store.update_job_status(job.job_id, status="failed", current_stage="failed", error="测试失败")
+    job = service.submit(
+        topic="phase2 retry idempotency",
+        max_loops=2,
+        research_profile="default",
+        start_worker=False,
+    )
+    service.store.update_job_status(
+        job.job_id, status="failed", current_stage="failed", error="测试失败"
+    )
 
     first = service.retry(job.job_id, start_worker=False)
     second = service.retry(job.job_id, start_worker=False)
@@ -544,7 +594,9 @@ def test_recover_stale_jobs_skips_live_worker(tmp_path: Path, monkeypatch):
         workspace_dir=str(tmp_path),
         spawn_worker_fn=spawned.append,
     )
-    job = service.submit(topic="phase2 live recovery", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 live recovery", max_loops=2, research_profile="default", start_worker=False
+    )
     service.store.acquire_worker_lease(job.job_id, worker_pid=12345, lease_id="lease-live")
     monkeypatch.setattr(service_module, "_process_exists", lambda pid: True)
 
@@ -568,7 +620,9 @@ def test_recover_stale_jobs_skips_intentionally_idle_created_job(tmp_path: Path,
         stale_timeout_seconds=1,
         spawn_worker_fn=spawned.append,
     )
-    job = service.submit(topic="phase2 idle no-worker", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 idle no-worker", max_loops=2, research_profile="default", start_worker=False
+    )
     monkeypatch.setattr(service_module, "_process_exists", lambda pid: False)
 
     recovered = service.recover_stale_jobs()
@@ -597,7 +651,9 @@ def test_recover_stale_jobs_clears_stale_lease_and_spawns_once(tmp_path: Path, m
         stale_timeout_seconds=1,
         spawn_worker_fn=spawned.append,
     )
-    job = service.submit(topic="phase2 stale recovery", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 stale recovery", max_loops=2, research_profile="default", start_worker=False
+    )
     service.store.acquire_worker_lease(job.job_id, worker_pid=12345, lease_id="lease-stale")
     stale_time = (datetime.now(timezone.utc) - timedelta(seconds=30)).isoformat()
     service.store.update_job(job.job_id, last_heartbeat_at=stale_time)
@@ -620,7 +676,9 @@ def test_completed_job_projection_keeps_active_checkpoint_explainable(tmp_path: 
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase2 projection", max_loops=1, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase2 projection", max_loops=1, research_profile="default", start_worker=False
+    )
     source = SourceRecord(
         citation_id=1,
         source_type="web",
@@ -672,7 +730,9 @@ def test_completed_job_projection_keeps_active_checkpoint_explainable(tmp_path: 
     )
 
     final_job = orchestrator.run(job.job_id)
-    checkpoint = service.store.get_checkpoint(final_job.job_id, final_job.active_checkpoint_id or "")
+    checkpoint = service.store.get_checkpoint(
+        final_job.job_id, final_job.active_checkpoint_id or ""
+    )
 
     assert final_job.status == "completed"
     assert final_job.current_stage == "completed"
@@ -767,7 +827,9 @@ def test_submit_uses_deterministic_benchmark_profile_in_offline_mode(tmp_path: P
     monkeypatch.delenv("SCHEDULER_RUNTIME_MODE", raising=False)
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="offline demo topic", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="offline demo topic", max_loops=2, research_profile="default", start_worker=False
+    )
 
     assert job.metadata["research_profile"] == "benchmark"
 
@@ -785,5 +847,7 @@ def test_submit_keeps_explicit_profile_in_offline_mode(tmp_path: Path, monkeypat
     monkeypatch.setenv("PRODUCT_OFFLINE_MODE", "true")
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="explicit profile topic", max_loops=2, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="explicit profile topic", max_loops=2, research_profile="default", start_worker=False
+    )
     assert job.metadata["research_profile"] == "benchmark"

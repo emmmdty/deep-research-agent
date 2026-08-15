@@ -6,7 +6,6 @@ from datetime import timedelta
 
 from .models import MemoryScope, Sensitivity
 
-
 DEFAULT_TTL_SECONDS: dict[MemoryScope, int] = {
     MemoryScope.RUN_STATE: 60 * 60,
     MemoryScope.CONVERSATION_FOCUS: 24 * 60 * 60,

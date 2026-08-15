@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-
 CANONICAL_SOURCE_PROFILES = (
     "company_trusted",
     "company_broad",

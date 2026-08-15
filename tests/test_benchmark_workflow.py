@@ -45,7 +45,9 @@ def test_planner_node_uses_benchmark_tasks_without_llm(monkeypatch):
         }
     )
 
-    assert [task.expected_aspects for task in result["tasks"]] == [[aspect] for aspect in topic_spec.expected_aspects]
+    assert [task.expected_aspects for task in result["tasks"]] == [
+        [aspect] for aspect in topic_spec.expected_aspects
+    ]
     assert all(task.task_type == "tutorial" for task in result["tasks"])
 
 
@@ -69,7 +71,11 @@ def test_researcher_node_selects_sources_and_tracks_rejections_for_benchmark(mon
         per_task_selected_sources=4,
     )
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: _StaticLLM("## 依赖与前置条件\n\n需要 SDL2 与资源文件。[1][2]"))
+    monkeypatch.setattr(
+        researcher,
+        "get_llm",
+        lambda: _StaticLLM("## 依赖与前置条件\n\n需要 SDL2 与资源文件。[1][2]"),
+    )
     monkeypatch.setattr(
         researcher,
         "search_web",
@@ -123,7 +129,9 @@ def test_researcher_node_selects_sources_and_tracks_rejections_for_benchmark(mon
     assert result["evidence_notes"][0].selected_source_ids == [1, 2]
 
 
-def test_researcher_node_benchmark_falls_back_to_deterministic_summary_when_llm_unavailable(monkeypatch):
+def test_researcher_node_benchmark_falls_back_to_deterministic_summary_when_llm_unavailable(
+    monkeypatch,
+):
     """benchmark profile 在 LLM 不可用时仍应生成可评测的稳定总结。"""
     from legacy.agents import researcher
 
@@ -143,7 +151,9 @@ def test_researcher_node_benchmark_falls_back_to_deterministic_summary_when_llm_
         per_task_selected_sources=4,
     )
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm"))
+    )
     monkeypatch.setattr(
         researcher,
         "search_web",
@@ -228,7 +238,11 @@ Use this skill for installation, setup, requirements, and troubleshooting tasks.
         workspace_dir=str(tmp_path / "workspace"),
     )
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: _StaticLLM("## 安装步骤与配置\n\n先安装 SDL2，再构建项目。[1][2]"))
+    monkeypatch.setattr(
+        researcher,
+        "get_llm",
+        lambda: _StaticLLM("## 安装步骤与配置\n\n先安装 SDL2，再构建项目。[1][2]"),
+    )
     monkeypatch.setattr(
         researcher,
         "search_web",
@@ -315,7 +329,10 @@ def test_critic_node_keeps_failed_quality_gate_blocking_on_last_loop():
             "research_topic": "RAG（检索增强生成）技术的原理和应用",
             "research_profile": "benchmark",
             "tasks": tasks,
-            "task_summaries": ["## 定义与原理\n\nRAG 结合检索与生成。[1]", "## 评估指标\n\n这里没有涉及 Recall。"],
+            "task_summaries": [
+                "## 定义与原理\n\nRAG 结合检索与生成。[1]",
+                "## 评估指标\n\n这里没有涉及 Recall。",
+            ],
             "sources_gathered": sources,
             "loop_count": 1,
             "max_loops": 2,
@@ -356,8 +373,24 @@ def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
 
     monkeypatch.setattr(writer, "get_llm", lambda: _FailIfCalledLLM())
     sources = [
-        SourceRecord(citation_id=1, source_type="github", query="q", title="Used source", url="https://used.example.com", selected=True, trust_tier=5),
-        SourceRecord(citation_id=2, source_type="web", query="q", title="Unused source", url="https://unused.example.com", selected=False, trust_tier=2),
+        SourceRecord(
+            citation_id=1,
+            source_type="github",
+            query="q",
+            title="Used source",
+            url="https://used.example.com",
+            selected=True,
+            trust_tier=5,
+        ),
+        SourceRecord(
+            citation_id=2,
+            source_type="web",
+            query="q",
+            title="Unused source",
+            url="https://unused.example.com",
+            selected=False,
+            trust_tier=2,
+        ),
     ]
     task = TaskItem(
         id=1,
@@ -381,7 +414,9 @@ def test_writer_node_uses_benchmark_report_builder_without_llm(monkeypatch):
             "research_topic": "RAG（检索增强生成）技术的原理和应用",
             "research_profile": "benchmark",
             "tasks": [task],
-            "task_summaries": ["### 核心结论\n\nRAG 结合检索与生成。[1]\n\n### 证据限制\n\n当前证据仍有限。"],
+            "task_summaries": [
+                "### 核心结论\n\nRAG 结合检索与生成。[1]\n\n### 证据限制\n\n当前证据仍有限。"
+            ],
             "sources_gathered": sources,
             "evidence_notes": [evidence_note],
             "run_metrics": RunMetrics(),
@@ -484,7 +519,9 @@ def test_researcher_follow_up_queries_replace_original_task_summary(monkeypatch)
         per_task_selected_sources=4,
     )
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm")))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: (_ for _ in ()).throw(RuntimeError("missing llm"))
+    )
     monkeypatch.setattr(
         researcher,
         "search_web",
@@ -517,7 +554,11 @@ def test_researcher_follow_up_queries_replace_original_task_summary(monkeypatch)
                     "selected_source_ids": [],
                 }
             ],
-            "critic_feedback": SimpleNamespace(follow_up_queries=["openclaw安装教程 编译或安装步骤 official documentation github install troubleshooting"]),
+            "critic_feedback": SimpleNamespace(
+                follow_up_queries=[
+                    "openclaw安装教程 编译或安装步骤 official documentation github install troubleshooting"
+                ]
+            ),
             "run_metrics": RunMetrics(),
         }
     )
@@ -547,7 +588,9 @@ def test_researcher_repairs_invalid_benchmark_summary_with_deterministic_fallbac
     )
 
     monkeypatch.setattr(researcher, "get_settings", lambda: settings)
-    monkeypatch.setattr(researcher, "get_llm", lambda: _StaticLLM("### 核心结论\n\n这里是泛化背景介绍，没有引用。"))
+    monkeypatch.setattr(
+        researcher, "get_llm", lambda: _StaticLLM("### 核心结论\n\n这里是泛化背景介绍，没有引用。")
+    )
     monkeypatch.setattr(
         researcher,
         "search_web",

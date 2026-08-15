@@ -19,7 +19,6 @@ from deep_research_agent.kernel.contracts import (
 )
 from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2, load_report_bundle
 
-
 DOC_HASH = "a" * 64
 
 
@@ -99,7 +98,11 @@ def test_bundle_preserves_exact_frozen_evidence_locators() -> None:
     bundle = ReportBundleCompilerV2().compile(
         report_markdown="# Findings\n",
         claims=[claim],
-        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim])],
+        evidence_packets=[
+            EvidencePacket(
+                packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim]
+            )
+        ],
         research_graph=_graph(),
         sources=[_source()],
         corpus_manifest=_manifest(),
@@ -144,7 +147,14 @@ def test_bundle_keeps_contradictions_in_audit_not_supported_claim_buckets() -> N
     bundle = ReportBundleCompilerV2().compile(
         report_markdown="## Executive Summary\n\nThe intervention group reported gains across primary metrics.\n\n## Detail\nBody.",
         claims=[contradicted],
-        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[contradicted])],
+        evidence_packets=[
+            EvidencePacket(
+                packet_id="packet-1",
+                task_id="collect-1",
+                evidence_spans=[span],
+                claims=[contradicted],
+            )
+        ],
         research_graph=_graph(),
         sources=[_source()],
         corpus_manifest=_manifest(),
@@ -253,8 +263,7 @@ def test_bundle_strips_atx_closing_hash_summary_heading() -> None:
     claim = _claim("claim-closing-hash", "accepted", spans=[span])
     bundle = ReportBundleCompilerV2().compile(
         report_markdown=(
-            "# Report\n\n## Executive Summary ##\n\nUntrusted prose.\n\n"
-            "## Detail\nBody."
+            "# Report\n\n## Executive Summary ##\n\nUntrusted prose.\n\n## Detail\nBody."
         ),
         claims=[claim],
         evidence_packets=[],
@@ -305,8 +314,7 @@ def test_bundle_rejects_mixed_atx_and_setext_summary_duplicates() -> None:
     with pytest.raises(ValueError, match="ambiguous executive summary"):
         ReportBundleCompilerV2().compile(
             report_markdown=(
-                "# Report\n\n## Executive Summary\nA\n\n"
-                "Executive\tSummary\n------------------\nB"
+                "# Report\n\n## Executive Summary\nA\n\nExecutive\tSummary\n------------------\nB"
             ),
             claims=[],
             evidence_packets=[],
@@ -361,7 +369,11 @@ def test_bundle_keeps_model_summary_with_valid_claim_markers_verbatim() -> None:
             "## Detail\nBody."
         ),
         claims=[claim],
-        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim])],
+        evidence_packets=[
+            EvidencePacket(
+                packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim]
+            )
+        ],
         research_graph=_graph(),
         sources=[_source()],
         corpus_manifest=_manifest(),
@@ -467,7 +479,11 @@ def test_bundle_executive_summary_meta_is_canonical_json_stable() -> None:
             "## Detail\nBody."
         ),
         claims=[claim],
-        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim])],
+        evidence_packets=[
+            EvidencePacket(
+                packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim]
+            )
+        ],
         research_graph=_graph(),
         sources=[_source()],
         corpus_manifest=_manifest(),
@@ -492,11 +508,18 @@ def test_bundle_rejects_graph_edges_without_exact_provenance(span_ids: list[str]
     graph = _graph()
     graph.edges[0].evidence_span_ids = span_ids
 
-    with pytest.raises(ValueError, match="edge-1.*evidence"):
+    with pytest.raises(ValueError, match=r"edge-1.*evidence"):
         ReportBundleCompilerV2().compile(
             report_markdown="# Findings",
             claims=[accepted],
-            evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[accepted])],
+            evidence_packets=[
+                EvidencePacket(
+                    packet_id="packet-1",
+                    task_id="collect-1",
+                    evidence_spans=[span],
+                    claims=[accepted],
+                )
+            ],
             research_graph=graph,
             sources=[_source()],
             corpus_manifest=_manifest(),
@@ -509,8 +532,12 @@ def test_bundle_regeneration_is_deterministic_for_frozen_manifest() -> None:
     span_b = _span("span-b")
     claim_a = _claim("claim-a", "accepted", spans=[span_a])
     claim_b = _claim("claim-b", "qualified", spans=[span_b])
-    packet_a = EvidencePacket(packet_id="packet-a", task_id="collect-a", evidence_spans=[span_a], claims=[claim_a])
-    packet_b = EvidencePacket(packet_id="packet-b", task_id="collect-b", evidence_spans=[span_b], claims=[claim_b])
+    packet_a = EvidencePacket(
+        packet_id="packet-a", task_id="collect-a", evidence_spans=[span_a], claims=[claim_a]
+    )
+    packet_b = EvidencePacket(
+        packet_id="packet-b", task_id="collect-b", evidence_spans=[span_b], claims=[claim_b]
+    )
     compiler = ReportBundleCompilerV2()
     kwargs = {
         "report_markdown": "# Frozen report",
@@ -520,8 +547,12 @@ def test_bundle_regeneration_is_deterministic_for_frozen_manifest() -> None:
         "run_manifest": {"config_version_id": "config-v1", "job_id": "job-1"},
     }
 
-    first = compiler.compile(claims=[claim_b, claim_a], evidence_packets=[packet_b, packet_a], **kwargs)
-    second = compiler.compile(claims=[claim_a, claim_b], evidence_packets=[packet_a, packet_b], **kwargs)
+    first = compiler.compile(
+        claims=[claim_b, claim_a], evidence_packets=[packet_b, packet_a], **kwargs
+    )
+    second = compiler.compile(
+        claims=[claim_a, claim_b], evidence_packets=[packet_a, packet_b], **kwargs
+    )
 
     assert compiler.to_canonical_json(first) == compiler.to_canonical_json(second)
     assert json.loads(compiler.to_canonical_json(first))["schema_version"] == "2.0"
@@ -570,7 +601,11 @@ def test_bundle_degrades_source_hash_mismatch() -> None:
     bundle = ReportBundleCompilerV2().compile(
         report_markdown="# Findings",
         claims=[accepted],
-        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[accepted])],
+        evidence_packets=[
+            EvidencePacket(
+                packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[accepted]
+            )
+        ],
         research_graph=ResearchGraph(),
         sources=[mismatched],
         corpus_manifest=_manifest(),
@@ -694,7 +729,7 @@ def test_bundle_rejects_graph_provenance_outside_frozen_manifest() -> None:
     outside_span = _span(document_version_id="doc-outside-manifest")
     unsupported = _claim("claim-outside", "unsupported", spans=[outside_span])
 
-    with pytest.raises(ValueError, match="edge-1.*frozen corpus"):
+    with pytest.raises(ValueError, match=r"edge-1.*frozen corpus"):
         ReportBundleCompilerV2().compile(
             report_markdown="# Findings",
             claims=[unsupported],
@@ -744,7 +779,10 @@ def test_bundle_degrades_claim_when_quote_not_contained_in_source_text() -> None
 
     assert bundle.accepted_claims == []
     assert bundle.audit_summary["unsupported_claim_ids"] == ["claim-quote-missing"]
-    assert bundle.audit_summary["degradations"]["claim-quote-missing"] == "quote_not_contained_in_document"
+    assert (
+        bundle.audit_summary["degradations"]["claim-quote-missing"]
+        == "quote_not_contained_in_document"
+    )
 
 
 def test_bundle_keeps_claim_when_quote_is_contained_in_source_text() -> None:
@@ -773,7 +811,10 @@ def test_bundle_keeps_claim_when_quote_is_contained_in_source_text() -> None:
 
 
 def test_legacy_bundle_loader_preserves_old_artifact_reads(tmp_path) -> None:
-    legacy = {"job": {"job_id": "legacy-1", "runtime_path": "legacy-cli"}, "report": {"markdown": "# Old"}}
+    legacy = {
+        "job": {"job_id": "legacy-1", "runtime_path": "legacy-cli"},
+        "report": {"markdown": "# Old"},
+    }
     path = tmp_path / "report_bundle.json"
     path.write_text(json.dumps(legacy), encoding="utf-8")
 
@@ -815,14 +856,10 @@ def test_bundle_merges_semantic_duplicates_across_parallel_tasks() -> None:
         run_manifest={"job_id": "job-1"},
     )
 
-    claim_ids = {
-        claim.claim_id for claim in [*bundle.accepted_claims, *bundle.qualified_claims]
-    }
+    claim_ids = {claim.claim_id for claim in [*bundle.accepted_claims, *bundle.qualified_claims]}
     assert "claim-a" in claim_ids
     assert "claim-b" not in claim_ids, "merged sibling must not re-enter the bundle"
-    canonical = next(
-        claim for claim in bundle.accepted_claims if claim.claim_id == "claim-a"
-    )
+    canonical = next(claim for claim in bundle.accepted_claims if claim.claim_id == "claim-a")
     assert {span.span_id for span in canonical.evidence_spans} == {"span-a", "span-b"}
 
 

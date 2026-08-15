@@ -28,8 +28,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from dotenv import load_dotenv  # noqa: E402
-from loguru import logger  # noqa: E402
+from dotenv import load_dotenv
+from loguru import logger
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 
@@ -66,7 +66,14 @@ async def _judge(report: str, topic: str, judge_model: str) -> dict:
         }
     except Exception as exc:  # noqa: BLE001
         logger.warning("judge failed for {}: {}", topic, exc)
-        result = {"depth": 0.0, "accuracy": 0.0, "citations": 0.0, "overall": 0.0, "comments": f"judge error: {exc}", "judge_model": judge_model}
+        result = {
+            "depth": 0.0,
+            "accuracy": 0.0,
+            "citations": 0.0,
+            "overall": 0.0,
+            "comments": f"judge error: {exc}",
+            "judge_model": judge_model,
+        }
     return result
 
 
@@ -142,7 +149,10 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
         finished = [r for r in model_runs if r.get("report")]
         total_cost = sum(r["meta"].get("cost", {}).get("estimated_cost_usd", 0.0) for r in finished)
         total_tokens = sum(r["meta"].get("cost", {}).get("total_tokens", 0) for r in finished)
-        total_wall = sum(r.get("meta", {}).get("wall_seconds", 0.0) or r.get("wall_seconds", 0.0) for r in model_runs)
+        total_wall = sum(
+            r.get("meta", {}).get("wall_seconds", 0.0) or r.get("wall_seconds", 0.0)
+            for r in model_runs
+        )
         unsupported = bool(model_runs) and all(
             "is not supported" in (r.get("error") or "") for r in model_runs
         )
@@ -162,10 +172,14 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
                 )
                 if finished
                 else 0.0,
-                "avg_claims": round(sum(r["meta"].get("claims", 0) for r in finished) / len(finished), 1)
+                "avg_claims": round(
+                    sum(r["meta"].get("claims", 0) for r in finished) / len(finished), 1
+                )
                 if finished
                 else 0,
-                "avg_sources": round(sum(r["meta"].get("sources", 0) for r in finished) / len(finished), 1)
+                "avg_sources": round(
+                    sum(r["meta"].get("sources", 0) for r in finished) / len(finished), 1
+                )
                 if finished
                 else 0,
                 "total_tokens": total_tokens,
@@ -192,7 +206,9 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
             for r in runs
         ],
     }
-    (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out_dir / "summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
     lines = [
         "# Multi-Model Comparison — Canonical Scheduler-V2 Agent",
@@ -249,7 +265,9 @@ def _write_summary(runs: list[dict], out_dir: Path, judge_model: str) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Multi-model comparison")
-    parser.add_argument("--models", default=os.environ.get("MODELS", "deepseek-v4-flash,deepseek-v4,gpt-4o-mini"))
+    parser.add_argument(
+        "--models", default=os.environ.get("MODELS", "deepseek-v4-flash,deepseek-v4,gpt-4o-mini")
+    )
     parser.add_argument("--max-topics", type=int, default=3)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--judge-model", default=os.environ.get("JUDGE_MODEL", "deepseek-v4-flash"))

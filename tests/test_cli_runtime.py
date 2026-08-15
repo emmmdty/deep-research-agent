@@ -60,7 +60,9 @@ def test_eval_run_cli_can_request_runtime_metric_capture(monkeypatch):
 
     monkeypatch.setattr(main, "get_settings", lambda: settings)
 
-    def fake_run_eval_suite(*, suite_name, variant="smoke_local", output_root=None, capture_runtime_metrics=False):
+    def fake_run_eval_suite(
+        *, suite_name, variant="smoke_local", output_root=None, capture_runtime_metrics=False
+    ):
         captured["suite_name"] = suite_name
         captured["variant"] = variant
         captured["output_root"] = output_root
@@ -156,7 +158,11 @@ def test_submit_cli_dispatches_to_scheduler_v2_by_default(monkeypatch):
                 "objective_count": len(dag.tasks),
             }
             return SimpleNamespace(
-                job_id="job-001", status="created", current_stage="created", source_profile="company_trusted", runtime_path="scheduler-v2"
+                job_id="job-001",
+                status="created",
+                current_stage="created",
+                source_profile="company_trusted",
+                runtime_path="scheduler-v2",
             )
 
     settings = SimpleNamespace(
@@ -362,7 +368,11 @@ def test_submit_cli_strips_whitespace_around_topic(monkeypatch, capsys):
         def submit_scheduler_v2(self, **kwargs):
             captured["topic"] = kwargs["brief"].question
             return SimpleNamespace(
-                job_id="job-001", status="created", current_stage="created", source_profile="company_broad", runtime_path="scheduler-v2"
+                job_id="job-001",
+                status="created",
+                current_stage="created",
+                source_profile="company_broad",
+                runtime_path="scheduler-v2",
             )
 
     settings = SimpleNamespace(
@@ -448,12 +458,15 @@ def test_refine_cli_dispatches_to_job_service(monkeypatch):
 def test_bundle_cli_reads_report_bundle_json(tmp_path, monkeypatch, capsys):
     """bundle 子命令应输出 job 的 report bundle。"""
     import json
+
     import main
 
     bundle_dir = tmp_path / "workspace" / "research_jobs" / "job-123" / "bundle"
     bundle_dir.mkdir(parents=True, exist_ok=True)
     bundle_path = bundle_dir / "report_bundle.json"
-    bundle_path.write_text(json.dumps({"job": {"job_id": "job-123"}, "report_text": "ok"}), encoding="utf-8")
+    bundle_path.write_text(
+        json.dumps({"job": {"job_id": "job-123"}, "report_text": "ok"}), encoding="utf-8"
+    )
 
     class FakeService:
         def recover_stale_jobs(self):
@@ -480,14 +493,29 @@ def test_bundle_cli_reads_report_bundle_json(tmp_path, monkeypatch, capsys):
 def test_batch_run_cli_dispatches_submit_requests_from_jsonl(tmp_path, monkeypatch, capsys):
     """batch run 应从 JSONL 读取多个 submit 请求并逐个创建 job。"""
     import json
+
     import main
 
     batch_path = tmp_path / "batch.jsonl"
     batch_path.write_text(
         "\n".join(
             [
-                json.dumps({"topic": "job-a", "max_loops": 1, "research_profile": "default", "start_worker": False}),
-                json.dumps({"topic": "job-b", "max_loops": 2, "research_profile": "benchmark", "start_worker": False}),
+                json.dumps(
+                    {
+                        "topic": "job-a",
+                        "max_loops": 1,
+                        "research_profile": "default",
+                        "start_worker": False,
+                    }
+                ),
+                json.dumps(
+                    {
+                        "topic": "job-b",
+                        "max_loops": 2,
+                        "research_profile": "benchmark",
+                        "start_worker": False,
+                    }
+                ),
             ]
         )
         + "\n",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import concurrent.futures
+import contextlib
 import hashlib
 import re
 from typing import Any
@@ -67,7 +68,9 @@ class LLMResearchPlanner:
         if not objectives:
             logger.info("LLM planner unavailable; falling back to deterministic planning")
             return self._ensure_tool_budget(self._fallback.plan(brief, domain_pack))
-        required = [objective for objective in (require_objectives or brief.objectives) if objective]
+        required = [
+            objective for objective in (require_objectives or brief.objectives) if objective
+        ]
         missing = [
             objective
             for objective in required
@@ -321,10 +324,8 @@ def _call_planner_in_thread(
 
 async def _aclose_planner_chat(chat: LLMChat) -> None:
     """Close an owned planner client from its own loop, ignoring close failures."""
-    try:
+    with contextlib.suppress(Exception):
         await chat.aclose()
-    except Exception:  # noqa: BLE001 - closing is best-effort cleanup
-        pass
 
 
 async def _call_planner_model(chat: LLMChat, question: str) -> dict[str, Any]:

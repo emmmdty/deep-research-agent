@@ -26,13 +26,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
-from configs.settings import get_settings
 from loguru import logger
 
+from configs.settings import get_settings
+from deep_research_agent.agents.critic import LLMCriticWorker
 from deep_research_agent.agents.factory import MultiRoleWorker, build_gateway
 from deep_research_agent.agents.planner import LLMResearchPlanner
 from deep_research_agent.agents.researcher import LLMResearcherWorker
-from deep_research_agent.agents.critic import LLMCriticWorker
 from deep_research_agent.domain_packs.registry import DomainPackRegistry
 from deep_research_agent.kernel.contracts import CorpusManifest, ResearchBrief, ResearchGraph
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, SchedulerJob
@@ -66,9 +66,7 @@ async def _run(
 ) -> None:
     settings = get_settings()
     if not settings.llm_api_key:
-        raise SystemExit(
-            "LLM credentials are required: set LLM_API_KEY / LLM_BASE_URL in .env"
-        )
+        raise SystemExit("LLM credentials are required: set LLM_API_KEY / LLM_BASE_URL in .env")
     if not settings.tavily_api_key:
         raise SystemExit("TAVILY_API_KEY is required for web search in this demo")
 
@@ -128,7 +126,13 @@ async def _run(
     corpus_manifest = CorpusManifest(
         manifest_id=f"corpus:{job_id}",
         document_version_ids=tuple(
-            sorted({artifact.metadata.get("document_version_id") for artifact in sources if artifact.metadata.get("document_version_id")})
+            sorted(
+                {
+                    artifact.metadata.get("document_version_id")
+                    for artifact in sources
+                    if artifact.metadata.get("document_version_id")
+                }
+            )
         ),
         content_hashes={
             artifact.metadata.get("document_version_id"): artifact.content_sha256
@@ -153,12 +157,12 @@ async def _run(
         run_manifest={"job_id": job_id, "status": result.status},
     )
 
-    (job_dir / "report_bundle.json").write_text(
-        bundle.model_dump_json(indent=2), encoding="utf-8"
-    )
+    (job_dir / "report_bundle.json").write_text(bundle.model_dump_json(indent=2), encoding="utf-8")
     (job_dir / "report.md").write_text(report_markdown, encoding="utf-8")
     (job_dir / "scheduler_checkpoints.json").write_text(
-        json.dumps([c.model_dump(mode="json") for c in result.checkpoints], ensure_ascii=False, indent=2),
+        json.dumps(
+            [c.model_dump(mode="json") for c in result.checkpoints], ensure_ascii=False, indent=2
+        ),
         encoding="utf-8",
     )
     (job_dir / "run_summary.json").write_text(
@@ -197,7 +201,9 @@ def _run_summary(result, sources) -> dict:
         "coverage_assessments": coverage,
         "extraction_fallbacks": fallbacks,
         "source_count": len(sources),
-        "source_kinds": dict(Counter(str(s.metadata.get("source_kind", "snippet")) for s in sources)),
+        "source_kinds": dict(
+            Counter(str(s.metadata.get("source_kind", "snippet")) for s in sources)
+        ),
     }
 
 

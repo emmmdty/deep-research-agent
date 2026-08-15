@@ -6,10 +6,11 @@ import json
 
 from loguru import logger
 
+from legacy.workflows.states import CriticFeedback, RunMetrics, SourceRecord, TaskItem
+
 from ..llm.provider import get_llm
 from ..prompts.templates import CRITIC_SYSTEM_PROMPT, CRITIC_USER_PROMPT
 from ..research_policy import evaluate_quality_gate
-from legacy.workflows.states import CriticFeedback, RunMetrics, SourceRecord, TaskItem
 
 
 def critic_node(state: dict) -> dict:
@@ -71,7 +72,9 @@ def critic_node(state: dict) -> dict:
             gate["passed"] = False
             gate["quality_gate_status"] = "failed"
             gate["missing_aspects"].append("实体一致性不足")
-            gate["follow_up_queries"].append(f"{research_topic} official documentation canonical definition")
+            gate["follow_up_queries"].append(
+                f"{research_topic} official documentation canonical definition"
+            )
             fail_reason = gate.get("quality_gate_fail_reason", "")
             gate["quality_gate_fail_reason"] = "；".join(
                 item for item in [fail_reason, "实体一致性不足"] if item
@@ -143,6 +146,7 @@ def critic_node(state: dict) -> dict:
 
     # 清理模型思维链泄露
     from ..llm.clean import extract_json_from_output
+
     raw_text = extract_json_from_output(raw_text)
 
     # 解析反馈

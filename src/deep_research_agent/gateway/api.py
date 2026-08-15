@@ -2,15 +2,19 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 import hmac
 import os
+from collections.abc import Callable
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, Response
 
-from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
+from deep_research_agent.gateway.artifacts import (
+    ARTIFACT_NAME_CHOICES,
+    artifact_path_for_job,
+    load_json_artifact,
+)
 from deep_research_agent.gateway.batch import submit_batch_jobs
 from deep_research_agent.gateway.contracts import (
     BatchResearchRequest,
@@ -33,7 +37,6 @@ from deep_research_agent.product.db import create_database
 from deep_research_agent.product.ratelimit import RateLimiter, TokenBucketRateLimiter
 from deep_research_agent.product.service import ProductService
 from deep_research_agent.research_jobs import ResearchJobService
-
 
 ServiceFactory = Callable[[], ResearchJobService]
 
@@ -92,11 +95,20 @@ def create_app(
     )
     configured_offline_mode = os.environ.get("PRODUCT_OFFLINE_MODE")
     if product_offline_mode is None and configured_offline_mode is not None:
-        resolved_offline_mode = configured_offline_mode.strip().casefold() in {"1", "true", "yes", "on"}
+        resolved_offline_mode = configured_offline_mode.strip().casefold() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
     else:
-        resolved_offline_mode = offline_mode if product_offline_mode is None else product_offline_mode
+        resolved_offline_mode = (
+            offline_mode if product_offline_mode is None else product_offline_mode
+        )
     resolved_public_registration = (
-        resolved_offline_mode if allow_public_registration is None else bool(allow_public_registration)
+        resolved_offline_mode
+        if allow_public_registration is None
+        else bool(allow_public_registration)
     )
     resolved_bootstrap_email = bootstrap_admin_email or os.environ.get(
         "DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL"
@@ -107,21 +119,29 @@ def create_app(
     if bool(resolved_bootstrap_email) != bool(resolved_bootstrap_password):
         raise ValueError("bootstrap admin email and password must both be configured")
     resolved_event_poll = (
-        0.05 if resolved_offline_mode else 0.25
-    ) if event_poll_interval_seconds is None else event_poll_interval_seconds
+        (0.05 if resolved_offline_mode else 0.25)
+        if event_poll_interval_seconds is None
+        else event_poll_interval_seconds
+    )
     resolved_event_heartbeat = (
-        0.1 if resolved_offline_mode else 15.0
-    ) if event_heartbeat_interval_seconds is None else event_heartbeat_interval_seconds
+        (0.1 if resolved_offline_mode else 15.0)
+        if event_heartbeat_interval_seconds is None
+        else event_heartbeat_interval_seconds
+    )
     resolved_event_timeout = (
-        0.5 if resolved_offline_mode else 300.0
-    ) if event_stream_timeout_seconds is None else event_stream_timeout_seconds
+        (0.5 if resolved_offline_mode else 300.0)
+        if event_stream_timeout_seconds is None
+        else event_stream_timeout_seconds
+    )
     if min(resolved_event_poll, resolved_event_heartbeat, resolved_event_timeout) <= 0:
         raise ValueError("event stream timing values must be positive")
     product_service: ProductService | None = None
     if resolved_database_url is None and resolved_offline_mode:
         resolved_database_url = "sqlite+pysqlite:///:memory:"
     if resolved_database_url is not None:
-        product_database = create_database(resolved_database_url, offline_mode=resolved_offline_mode)
+        product_database = create_database(
+            resolved_database_url, offline_mode=resolved_offline_mode
+        )
         product_database.create_schema()
         product_service = ProductService(
             product_database,
@@ -230,7 +250,10 @@ def create_app(
         _auth: None = Depends(require_legacy_api_key),
     ) -> JobEventsResponse:
         require_legacy_job(service, job_id)
-        events = [public_job_event(item) for item in service.list_events(job_id, after_sequence=after_sequence)]
+        events = [
+            public_job_event(item)
+            for item in service.list_events(job_id, after_sequence=after_sequence)
+        ]
         return JobEventsResponse(job_id=job_id, events=events)
 
     @app.post("/v1/research/jobs/{job_id}:cancel", response_model=PublicJobResponse)

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import concurrent.futures
+import contextlib
 import hashlib
 import json
 from dataclasses import dataclass
@@ -152,7 +153,9 @@ class ToolGateway:
                 task.task_id,
                 max_tool_calls,
             ):
-                result = self._denied(call, "budget_exhausted", "task tool-call budget is exhausted")
+                result = self._denied(
+                    call, "budget_exhausted", "task tool-call budget is exhausted"
+                )
                 self._complete_idempotency(
                     idempotency_scope,
                     call,
@@ -378,10 +381,8 @@ class ToolGateway:
         result: ToolResultEnvelope,
         ttl_seconds: float,
     ) -> None:
-        try:
+        with contextlib.suppress(Exception):
             self._cache.put(key, result, ttl_seconds)
-        except Exception:
-            pass
 
     @staticmethod
     def _validate_context(task: TaskSpec, context: ToolExecutionContext) -> None:

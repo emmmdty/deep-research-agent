@@ -20,16 +20,27 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import yaml
-from configs.settings import get_settings
-from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
-from deep_research_agent.evals import BENCHMARK_NAMES, EVAL_SUITE_NAMES, EVAL_VARIANT_NAMES, run_eval_suite, run_external_benchmark
-from deep_research_agent.gateway.artifacts import ARTIFACT_NAME_CHOICES, artifact_path_for_job, load_json_artifact
-from deep_research_agent.gateway.batch import load_batch_requests
 from dotenv import load_dotenv
 from loguru import logger
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
+
+from configs.settings import get_settings
+from deep_research_agent.common import CANONICAL_SOURCE_PROFILES
+from deep_research_agent.evals import (
+    BENCHMARK_NAMES,
+    EVAL_SUITE_NAMES,
+    EVAL_VARIANT_NAMES,
+    run_eval_suite,
+    run_external_benchmark,
+)
+from deep_research_agent.gateway.artifacts import (
+    ARTIFACT_NAME_CHOICES,
+    artifact_path_for_job,
+    load_json_artifact,
+)
+from deep_research_agent.gateway.batch import load_batch_requests
 
 if TYPE_CHECKING:
     from deep_research_agent.kernel.contracts import ResearchBrief
@@ -97,8 +108,7 @@ def _plan_cli_dag(topic: str, settings) -> tuple[ResearchDAG, ResearchBrief]:
         constraints={"source": "cli"},
     )
     planner_enabled = bool(
-        getattr(settings, "agent_planner_enabled", True)
-        and getattr(settings, "llm_api_key", None)
+        getattr(settings, "agent_planner_enabled", True) and getattr(settings, "llm_api_key", None)
     )
     if planner_enabled:
         from deep_research_agent.agents import LLMResearchPlanner
@@ -165,9 +175,7 @@ def _validate_topic(topic: str) -> str:
     if not normalized:
         raise ValueError("研究主题不能为空")
     if len(normalized) > _MAX_TOPIC_CHARS:
-        raise ValueError(
-            f"研究主题过长（{len(normalized)} 字符，上限 {_MAX_TOPIC_CHARS}）"
-        )
+        raise ValueError(f"研究主题过长（{len(normalized)} 字符，上限 {_MAX_TOPIC_CHARS}）")
     return normalized
 
 
@@ -208,8 +216,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="使用 legacy orchestrator-v1 管线（默认 scheduler-v2）",
     )
-    submit_parser.add_argument("--allow-domain", action="append", default=[], help="额外允许的域名，可重复")
-    submit_parser.add_argument("--deny-domain", action="append", default=[], help="额外禁止的域名，可重复")
+    submit_parser.add_argument(
+        "--allow-domain", action="append", default=[], help="额外允许的域名，可重复"
+    )
+    submit_parser.add_argument(
+        "--deny-domain", action="append", default=[], help="额外禁止的域名，可重复"
+    )
     submit_parser.add_argument(
         "--max-candidates-per-connector",
         type=int,
@@ -250,18 +262,24 @@ def build_parser() -> argparse.ArgumentParser:
 
     retry_parser = subparsers.add_parser("retry", help="基于旧 job 创建 retry")
     retry_parser.add_argument("--job-id", required=True, type=str, help="原 job ID")
-    retry_parser.add_argument("--no-worker", action="store_true", help="只创建 retry job，不启动后台 worker")
+    retry_parser.add_argument(
+        "--no-worker", action="store_true", help="只创建 retry job，不启动后台 worker"
+    )
     retry_parser.add_argument("--json", action="store_true", help="输出 JSON")
 
     resume_parser = subparsers.add_parser("resume", help="从最新 checkpoint 恢复同一个 job")
     resume_parser.add_argument("--job-id", required=True, type=str, help="job ID")
-    resume_parser.add_argument("--no-worker", action="store_true", help="只恢复状态，不启动后台 worker")
+    resume_parser.add_argument(
+        "--no-worker", action="store_true", help="只恢复状态，不启动后台 worker"
+    )
     resume_parser.add_argument("--json", action="store_true", help="输出 JSON")
 
     refine_parser = subparsers.add_parser("refine", help="记录 refinement 指令并从安全边界恢复")
     refine_parser.add_argument("--job-id", required=True, type=str, help="job ID")
     refine_parser.add_argument("--instruction", required=True, type=str, help="refinement 指令")
-    refine_parser.add_argument("--no-worker", action="store_true", help="只更新状态，不启动后台 worker")
+    refine_parser.add_argument(
+        "--no-worker", action="store_true", help="只更新状态，不启动后台 worker"
+    )
     refine_parser.add_argument("--json", action="store_true", help="输出 JSON")
 
     bundle_parser = subparsers.add_parser("bundle", help="读取 job bundle 或 sidecar artifacts")
@@ -273,18 +291,24 @@ def build_parser() -> argparse.ArgumentParser:
         choices=ARTIFACT_NAME_CHOICES,
         help="要读取的 artifact 名称（默认 report_bundle.json）",
     )
-    bundle_parser.add_argument("--json", action="store_true", help="将 JSON artifact 以结构化 JSON 输出")
+    bundle_parser.add_argument(
+        "--json", action="store_true", help="将 JSON artifact 以结构化 JSON 输出"
+    )
 
     batch_parser = subparsers.add_parser("batch", help="批量 research job 操作")
     batch_subparsers = batch_parser.add_subparsers(dest="batch_command")
     batch_run_parser = batch_subparsers.add_parser("run", help="从 JSON/JSONL 文件批量创建 job")
-    batch_run_parser.add_argument("--file", required=True, type=str, help="JSON 或 JSONL batch 文件路径")
+    batch_run_parser.add_argument(
+        "--file", required=True, type=str, help="JSON 或 JSONL batch 文件路径"
+    )
     batch_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
 
     eval_parser = subparsers.add_parser("eval", help="运行本地 deterministic eval suites")
     eval_subparsers = eval_parser.add_subparsers(dest="eval_command")
     eval_run_parser = eval_subparsers.add_parser("run", help="执行一个 local eval suite")
-    eval_run_parser.add_argument("--suite", required=True, choices=EVAL_SUITE_NAMES, help="suite 名称")
+    eval_run_parser.add_argument(
+        "--suite", required=True, choices=EVAL_SUITE_NAMES, help="suite 名称"
+    )
     eval_run_parser.add_argument(
         "--variant",
         default="smoke_local",
@@ -308,9 +332,7 @@ def build_parser() -> argparse.ArgumentParser:
     eval_human_parser.add_argument(
         "--sample-size", type=int, default=3, help="每个 bundle 抽检声明数（默认 3）"
     )
-    eval_human_parser.add_argument(
-        "--seed", type=int, default=0, help="采样随机种子（默认 0）"
-    )
+    eval_human_parser.add_argument("--seed", type=int, default=0, help="采样随机种子（默认 0）")
     eval_human_parser.add_argument(
         "--import",
         dest="import_file",
@@ -321,13 +343,27 @@ def build_parser() -> argparse.ArgumentParser:
 
     benchmark_parser = subparsers.add_parser("benchmark", help="运行 external benchmark portfolio")
     benchmark_subparsers = benchmark_parser.add_subparsers(dest="benchmark_command")
-    benchmark_run_parser = benchmark_subparsers.add_parser("run", help="执行一个 external benchmark run")
-    benchmark_run_parser.add_argument("--benchmark", required=True, choices=BENCHMARK_NAMES, help="benchmark 名称")
-    benchmark_run_parser.add_argument("--split", type=str, default=None, help="benchmark split，例如 open")
-    benchmark_run_parser.add_argument("--subset", type=str, default="smoke", help="subset 名称，例如 smoke")
-    benchmark_run_parser.add_argument("--bucket", type=str, default=None, help="可选 context bucket")
-    benchmark_run_parser.add_argument("--config", type=str, default=None, help="可选 benchmark 配置路径")
-    benchmark_run_parser.add_argument("--output-root", type=str, default=None, help="benchmark 输出目录")
+    benchmark_run_parser = benchmark_subparsers.add_parser(
+        "run", help="执行一个 external benchmark run"
+    )
+    benchmark_run_parser.add_argument(
+        "--benchmark", required=True, choices=BENCHMARK_NAMES, help="benchmark 名称"
+    )
+    benchmark_run_parser.add_argument(
+        "--split", type=str, default=None, help="benchmark split，例如 open"
+    )
+    benchmark_run_parser.add_argument(
+        "--subset", type=str, default="smoke", help="subset 名称，例如 smoke"
+    )
+    benchmark_run_parser.add_argument(
+        "--bucket", type=str, default=None, help="可选 context bucket"
+    )
+    benchmark_run_parser.add_argument(
+        "--config", type=str, default=None, help="可选 benchmark 配置路径"
+    )
+    benchmark_run_parser.add_argument(
+        "--output-root", type=str, default=None, help="benchmark 输出目录"
+    )
     benchmark_run_parser.add_argument("--json", action="store_true", help="输出结构化 JSON")
 
     return parser
@@ -688,7 +724,9 @@ def _render_human_review_md(
     lines.append(f"- gate_status: `{audit_summary.get('gate_status', '?')}`")
     verification = (audit_summary.get("citation_verification") or {}).get("summary")
     if isinstance(verification, dict):
-        lines.append(f"- citation_verification.summary: {json.dumps(verification, ensure_ascii=False, sort_keys=True)}")
+        lines.append(
+            f"- citation_verification.summary: {json.dumps(verification, ensure_ascii=False, sort_keys=True)}"
+        )
     else:
         lines.append("- citation_verification.summary: （缺失）")
     lines += [
@@ -769,10 +807,7 @@ def _import_human_review_scores(
     rubric = _load_human_review_rubric()
     rubric_dimensions = [dimension["name"] for dimension in rubric["dimensions"]]
     job = payload.get("job")
-    if isinstance(job, str) and job.strip():
-        job = job.strip()
-    else:
-        job = score_path.stem
+    job = job.strip() if isinstance(job, str) and job.strip() else score_path.stem
     dimensions = payload.get("dimensions")
     if not isinstance(dimensions, dict):
         raise ValueError("评分文件缺少 dimensions 映射")
@@ -983,7 +1018,9 @@ def run_command(argv: list[str] | None = None) -> int:
             _print_json(payload)
         else:
             console.print(f"✅ 已提交 job: [cyan]{job.job_id}[/cyan]")
-            console.print(f"当前状态: [bold]{job.status}[/bold] -> next: [bold]{job.current_stage}[/bold]")
+            console.print(
+                f"当前状态: [bold]{job.status}[/bold] -> next: [bold]{job.current_stage}[/bold]"
+            )
             console.print(f"source_profile: [bold]{job.source_profile}[/bold]")
             console.print(f"runtime_path: [bold]{job.runtime_path}[/bold]")
         return 0
@@ -1002,7 +1039,9 @@ def run_command(argv: list[str] | None = None) -> int:
             console.print(f"current_stage: [bold]{job.current_stage}[/bold]")
             console.print(f"audit_gate_status: [bold]{job.audit_gate_status}[/bold]")
             if job.blocked_critical_claim_count:
-                console.print(f"blocked_critical_claim_count: [yellow]{job.blocked_critical_claim_count}[/yellow]")
+                console.print(
+                    f"blocked_critical_claim_count: [yellow]{job.blocked_critical_claim_count}[/yellow]"
+                )
             if job.error:
                 console.print(f"error: [red]{job.error}[/red]")
         return 0
@@ -1022,7 +1061,9 @@ def run_command(argv: list[str] | None = None) -> int:
         if args.json:
             _print_json(payload)
         else:
-            console.print(f"🔁 已创建 retry job: [cyan]{job.job_id}[/cyan] (retry_of={job.retry_of})")
+            console.print(
+                f"🔁 已创建 retry job: [cyan]{job.job_id}[/cyan] (retry_of={job.retry_of})"
+            )
         return 0
 
     if args.command == "resume":

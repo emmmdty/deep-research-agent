@@ -10,7 +10,9 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from deep_research_agent.evals.native_optimization import build_native_optimization_summary as _build_native_optimization_summary
+from deep_research_agent.evals.native_optimization import (
+    build_native_optimization_summary as _build_native_optimization_summary,
+)
 
 
 def run_native_optimization_summary(
@@ -27,8 +29,14 @@ def run_native_optimization_summary(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build native optimization before/after artifacts from regression reports")
-    parser.add_argument("--baseline-tag", required=True, help="Annotated local baseline tag for the optimization cycle")
+    parser = argparse.ArgumentParser(
+        description="Build native optimization before/after artifacts from regression reports"
+    )
+    parser.add_argument(
+        "--baseline-tag",
+        required=True,
+        help="Annotated local baseline tag for the optimization cycle",
+    )
     parser.add_argument(
         "--reports-root",
         default=str(Path("evals") / "reports" / "native_regression"),
@@ -50,7 +58,9 @@ def main() -> None:
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
-        print(f"native optimization summary -> {Path(args.output_root).resolve() / 'optimization_summary.json'}")
+        print(
+            f"native optimization summary -> {Path(args.output_root).resolve() / 'optimization_summary.json'}"
+        )
 
 
 if __name__ == "__main__":

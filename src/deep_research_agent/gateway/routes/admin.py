@@ -14,7 +14,6 @@ from deep_research_agent.gateway.routes.auth import (
     StrictRequest,
 )
 
-
 router = APIRouter(prefix="/v1/admin", tags=["admin"])
 
 
@@ -28,13 +27,13 @@ class ModelRequest(StrictRequest):
 
 class ToolRequest(StrictRequest):
     tool_id: str = Field(min_length=1)
-    config: dict[str, Any] = {}
+    config: dict[str, Any] = Field(default_factory=dict)
     enabled: bool = True
 
 
 class RuntimeConfigRequest(StrictRequest):
     version_id: str = Field(min_length=1)
-    config: dict[str, Any] = {}
+    config: dict[str, Any] = Field(default_factory=dict)
 
 
 @router.post("/models", status_code=status.HTTP_201_CREATED)
@@ -63,7 +62,9 @@ def create_tool(
     service: ProductServiceDependency,
 ) -> dict:
     del identity
-    return service.create_tool(tool_id=payload.tool_id, config=payload.config, enabled=payload.enabled)
+    return service.create_tool(
+        tool_id=payload.tool_id, config=payload.config, enabled=payload.enabled
+    )
 
 
 @router.get("/tools")

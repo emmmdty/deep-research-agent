@@ -24,11 +24,17 @@ from deep_research_agent.evals.contracts import (
     EvalSuiteDefinition,
     EvalTaskSpec,
 )
+from deep_research_agent.policy import load_source_policy
 from deep_research_agent.research_jobs import ResearchJobOrchestrator, ResearchJobService
 from deep_research_agent.research_jobs.models import JobCheckpoint, JobRuntimeRecord, RuntimeStage
-from legacy.workflows.states import CriticFeedback, ReportArtifact, ResearchState, RunMetrics, SourceRecord, TaskItem
-from deep_research_agent.policy import load_source_policy
-
+from legacy.workflows.states import (
+    CriticFeedback,
+    ReportArtifact,
+    ResearchState,
+    RunMetrics,
+    SourceRecord,
+    TaskItem,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 SUITES_ROOT = PROJECT_ROOT / "evals" / "suites"
@@ -222,7 +228,9 @@ def _run_research_task(
     all_sources = public_sources + ingested_sources
     evidence_fragments = _resolve_evidence_fragments(task, all_sources, ingested_evidence)
     claims = _resolve_claims(task, evidence_fragments, all_sources)
-    claim_support_edges = _resolve_claim_support_edges(task, claims, evidence_fragments, all_sources)
+    claim_support_edges = _resolve_claim_support_edges(
+        task, claims, evidence_fragments, all_sources
+    )
     conflict_sets = _resolve_conflict_sets(task)
 
     service = ResearchJobService(workspace_dir=str(workspace_dir))
@@ -264,13 +272,22 @@ def _run_research_task(
                         "task_id": index,
                         "task_title": question,
                         "query": question,
-                        "summary": task.task_summaries[index - 1] if index - 1 < len(task.task_summaries) else question,
-                        "source_ids": [source.citation_id for source in all_sources if source.selected],
-                        "selected_source_ids": [source.citation_id for source in all_sources if source.selected],
+                        "summary": task.task_summaries[index - 1]
+                        if index - 1 < len(task.task_summaries)
+                        else question,
+                        "source_ids": [
+                            source.citation_id for source in all_sources if source.selected
+                        ],
+                        "selected_source_ids": [
+                            source.citation_id for source in all_sources if source.selected
+                        ],
                     }
-                    for index, question in enumerate(task.answered_questions or task.required_questions or [task.topic], start=1)
+                    for index, question in enumerate(
+                        task.answered_questions or task.required_questions or [task.topic], start=1
+                    )
                 ],
-                "task_summaries": task.task_summaries or [task.report_markdown.splitlines()[2].strip()],
+                "task_summaries": task.task_summaries
+                or [task.report_markdown.splitlines()[2].strip()],
                 "status": "researched",
             },
             False,
@@ -295,7 +312,9 @@ def _run_research_task(
             "claim_support_edges": claim_support_edges,
             "conflict_sets": conflict_sets,
             "audit_gate_status": "passed",
-            "critical_claim_count": len([claim for claim in claims if claim["criticality"] == "high"]),
+            "critical_claim_count": len(
+                [claim for claim in claims if claim["criticality"] == "high"]
+            ),
             "blocked_critical_claim_count": 0,
             "audit_graph_path": str(audit_paths["claim_graph_path"]),
             "review_queue_path": str(audit_paths["review_queue_path"]),
@@ -357,7 +376,9 @@ def _run_research_task(
 
     runtime_metrics_payload = None
     if capture_runtime_metrics:
-        runtime_metrics_payload = _build_runtime_metrics_payload(final_job, stable_job_id=task.task_id)
+        runtime_metrics_payload = _build_runtime_metrics_payload(
+            final_job, stable_job_id=task.task_id
+        )
 
     stable_paths = _copy_task_artifacts(final_job, task_output_root)
     if runtime_metrics_payload is not None:
@@ -369,14 +390,18 @@ def _run_research_task(
     _normalize_task_artifacts(task, stable_paths)
     shutil.rmtree(task_output_root / "workspace", ignore_errors=True)
     bundle = json.loads(stable_paths["bundle_path"].read_text(encoding="utf-8"))
-    task_metrics = _compute_research_task_metrics(task, bundle, all_sources, file_input_count=len(task.file_inputs))
+    task_metrics = _compute_research_task_metrics(
+        task, bundle, all_sources, file_input_count=len(task.file_inputs)
+    )
     return {
         "task_id": task.task_id,
         "job_id": task.task_id,
         "topic": task.topic,
         "description": task.topic,
         "status": final_job.status,
-        "audit_gate_status": getattr(final_job.audit_gate_status, "value", str(final_job.audit_gate_status)),
+        "audit_gate_status": getattr(
+            final_job.audit_gate_status, "value", str(final_job.audit_gate_status)
+        ),
         "report_path": _display_path(stable_paths["report_path"]),
         "bundle_path": _display_path(stable_paths["bundle_path"]),
         "manifest_path": _display_path(stable_paths["manifest_path"]),
@@ -396,12 +421,16 @@ def _run_reliability_suite(
         spawn_worker_fn=lambda job_id: spawned_jobs.append(job_id),
     )
     scenarios = {
-        "cancel_created_job": _exercise_cancel_created_job(service=service, spawned_jobs=spawned_jobs),
+        "cancel_created_job": _exercise_cancel_created_job(
+            service=service, spawned_jobs=spawned_jobs
+        ),
         "retry_failed_job": _exercise_retry_failed_job(service=service),
         "resume_failed_job": _exercise_resume_failed_job(service=service),
         "refine_failed_job": _exercise_refine_failed_job(service=service),
         "stale_recovery": _exercise_stale_recovery(service=service, spawned_jobs=spawned_jobs),
-        "idle_created_noop": _exercise_idle_created_noop(service=service, spawned_jobs=spawned_jobs),
+        "idle_created_noop": _exercise_idle_created_noop(
+            service=service, spawned_jobs=spawned_jobs
+        ),
     }
 
     scenario_specs = _resolve_reliability_scenarios(dataset)
@@ -415,7 +444,9 @@ def _run_reliability_suite(
                 "description": spec.description,
                 "check_ids": list(spec.check_ids),
                 "passed": bool(payload.get("passed", False)),
-                "details": _normalize_reliability_details(spec.scenario_id, dict(payload.get("details") or {})),
+                "details": _normalize_reliability_details(
+                    spec.scenario_id, dict(payload.get("details") or {})
+                ),
             }
         )
     metrics = {
@@ -449,14 +480,22 @@ def _resolve_reliability_scenarios(dataset: EvalDataset) -> list[EvalScenarioSpe
     scenario_specs: list[EvalScenarioSpec] = []
     for item in dataset.scenarios:
         if isinstance(item, str):
-            scenario_specs.append(DEFAULT_RELIABILITY_SCENARIOS.get(item, EvalScenarioSpec(scenario_id=item, title=item)))
+            scenario_specs.append(
+                DEFAULT_RELIABILITY_SCENARIOS.get(
+                    item, EvalScenarioSpec(scenario_id=item, title=item)
+                )
+            )
         else:
             scenario_specs.append(item)
     return scenario_specs
 
 
-def _exercise_cancel_created_job(*, service: ResearchJobService, spawned_jobs: list[str]) -> dict[str, Any]:
-    created = service.submit(topic="cancel scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+def _exercise_cancel_created_job(
+    *, service: ResearchJobService, spawned_jobs: list[str]
+) -> dict[str, Any]:
+    created = service.submit(
+        topic="cancel scenario", max_loops=1, research_profile="eval_smoke", start_worker=False
+    )
     cancelled = service.cancel(created.job_id)
     details = {
         "base_job_id": created.job_id,
@@ -475,9 +514,15 @@ def _exercise_cancel_created_job(*, service: ResearchJobService, spawned_jobs: l
 
 
 def _exercise_retry_failed_job(*, service: ResearchJobService) -> dict[str, Any]:
-    retried_base = service.submit(topic="retry scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    checkpoint = _seed_checkpoint(service, retried_base.job_id, next_stage=RuntimeStage.COLLECTING, state_status="collecting")
-    service.store.update_job_status(retried_base.job_id, status="failed", current_stage="failed", error="boom")
+    retried_base = service.submit(
+        topic="retry scenario", max_loops=1, research_profile="eval_smoke", start_worker=False
+    )
+    checkpoint = _seed_checkpoint(
+        service, retried_base.job_id, next_stage=RuntimeStage.COLLECTING, state_status="collecting"
+    )
+    service.store.update_job_status(
+        retried_base.job_id, status="failed", current_stage="failed", error="boom"
+    )
     retried = service.retry(retried_base.job_id, start_worker=False)
     details = {
         "base_job_id": retried_base.job_id,
@@ -497,9 +542,15 @@ def _exercise_retry_failed_job(*, service: ResearchJobService) -> dict[str, Any]
 
 
 def _exercise_resume_failed_job(*, service: ResearchJobService) -> dict[str, Any]:
-    resumed_base = service.submit(topic="resume scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    checkpoint = _seed_checkpoint(service, resumed_base.job_id, next_stage=RuntimeStage.EXTRACTING, state_status="extracting")
-    service.store.update_job_status(resumed_base.job_id, status="failed", current_stage="failed", error="boom")
+    resumed_base = service.submit(
+        topic="resume scenario", max_loops=1, research_profile="eval_smoke", start_worker=False
+    )
+    checkpoint = _seed_checkpoint(
+        service, resumed_base.job_id, next_stage=RuntimeStage.EXTRACTING, state_status="extracting"
+    )
+    service.store.update_job_status(
+        resumed_base.job_id, status="failed", current_stage="failed", error="boom"
+    )
     resumed = service.resume(resumed_base.job_id, start_worker=False)
     details = {
         "base_job_id": resumed_base.job_id,
@@ -519,9 +570,15 @@ def _exercise_resume_failed_job(*, service: ResearchJobService) -> dict[str, Any
 
 
 def _exercise_refine_failed_job(*, service: ResearchJobService) -> dict[str, Any]:
-    refined_base = service.submit(topic="refine scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    _seed_checkpoint(service, refined_base.job_id, next_stage=RuntimeStage.COLLECTING, state_status="collecting")
-    service.store.update_job_status(refined_base.job_id, status="failed", current_stage="failed", error="boom")
+    refined_base = service.submit(
+        topic="refine scenario", max_loops=1, research_profile="eval_smoke", start_worker=False
+    )
+    _seed_checkpoint(
+        service, refined_base.job_id, next_stage=RuntimeStage.COLLECTING, state_status="collecting"
+    )
+    service.store.update_job_status(
+        refined_base.job_id, status="failed", current_stage="failed", error="boom"
+    )
     refined = service.refine(refined_base.job_id, "Expand the evidence map.", start_worker=False)
     latest_checkpoint = service.store.get_latest_checkpoint(refined_base.job_id)
     state_payload = latest_checkpoint.state_payload if latest_checkpoint is not None else {}
@@ -540,9 +597,18 @@ def _exercise_refine_failed_job(*, service: ResearchJobService) -> dict[str, Any
     return {"passed": passed, "details": details}
 
 
-def _exercise_stale_recovery(*, service: ResearchJobService, spawned_jobs: list[str]) -> dict[str, Any]:
-    stale_job = service.submit(topic="stale recovery scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
-    checkpoint = _seed_checkpoint(service, stale_job.job_id, next_stage=RuntimeStage.EXTRACTING, state_status="extracting")
+def _exercise_stale_recovery(
+    *, service: ResearchJobService, spawned_jobs: list[str]
+) -> dict[str, Any]:
+    stale_job = service.submit(
+        topic="stale recovery scenario",
+        max_loops=1,
+        research_profile="eval_smoke",
+        start_worker=False,
+    )
+    checkpoint = _seed_checkpoint(
+        service, stale_job.job_id, next_stage=RuntimeStage.EXTRACTING, state_status="extracting"
+    )
     service.store.update_job_status(stale_job.job_id, status="running", current_stage="collecting")
     service.store.acquire_worker_lease(stale_job.job_id, worker_pid=43210, lease_id="lease-stale")
     stale_heartbeat = (datetime.now(timezone.utc) - timedelta(seconds=3600)).isoformat()
@@ -554,7 +620,8 @@ def _exercise_stale_recovery(*, service: ResearchJobService, spawned_jobs: list[
     details = {
         "base_job_id": stale_job.job_id,
         "recovered_job_ids": recovered_job_ids,
-        "spawned_worker": len(spawned_jobs) == spawn_count_before + 1 and stale_job.job_id in spawned_jobs,
+        "spawned_worker": len(spawned_jobs) == spawn_count_before + 1
+        and stale_job.job_id in spawned_jobs,
         "worker_lease_cleared": refreshed is not None and refreshed.worker_lease_id is None,
         "active_checkpoint_id": refreshed.active_checkpoint_id if refreshed is not None else "",
         "current_stage": _enum_value(refreshed.current_stage) if refreshed is not None else "",
@@ -570,8 +637,12 @@ def _exercise_stale_recovery(*, service: ResearchJobService, spawned_jobs: list[
     return {"passed": passed, "details": details}
 
 
-def _exercise_idle_created_noop(*, service: ResearchJobService, spawned_jobs: list[str]) -> dict[str, Any]:
-    idle_job = service.submit(topic="idle noop scenario", max_loops=1, research_profile="eval_smoke", start_worker=False)
+def _exercise_idle_created_noop(
+    *, service: ResearchJobService, spawned_jobs: list[str]
+) -> dict[str, Any]:
+    idle_job = service.submit(
+        topic="idle noop scenario", max_loops=1, research_profile="eval_smoke", start_worker=False
+    )
     idle_recovered = service.recover_stale_jobs()
     recovered_job_ids = [item.job_id for item in idle_recovered if item.job_id == idle_job.job_id]
     details = {
@@ -639,7 +710,9 @@ def _normalize_reliability_details(scenario_id: str, details: dict[str, Any]) ->
 
 
 def _scenario_rate(results: list[dict[str, Any]], scenario_id: str | None = None) -> float:
-    filtered = [item for item in results if scenario_id is None or item["scenario_id"] == scenario_id]
+    filtered = [
+        item for item in results if scenario_id is None or item["scenario_id"] == scenario_id
+    ]
     if not filtered:
         return 1.0
     return round(sum(1 for item in filtered if item["passed"]) / len(filtered), 3)
@@ -661,9 +734,7 @@ def _aggregate_research_metrics(task_results: list[dict[str, Any]]) -> dict[str,
         }
     aggregate: dict[str, float] = {}
     metric_names = {
-        metric_name
-        for task_result in task_results
-        for metric_name in task_result["task_metrics"]
+        metric_name for task_result in task_results for metric_name in task_result["task_metrics"]
     }
     ordered_metric_names = [
         metric_name for metric_name in RESEARCH_METRIC_ORDER if metric_name in metric_names
@@ -671,7 +742,9 @@ def _aggregate_research_metrics(task_results: list[dict[str, Any]]) -> dict[str,
     for task_result in task_results:
         metric_names.update(task_result["task_metrics"])
     for metric_name in ordered_metric_names:
-        values = [float(task_result["task_metrics"].get(metric_name, 1.0)) for task_result in task_results]
+        values = [
+            float(task_result["task_metrics"].get(metric_name, 1.0)) for task_result in task_results
+        ]
         aggregate[metric_name] = round(sum(values) / len(values), 3)
     aggregate.setdefault("completion_rate", 0.0)
     aggregate.setdefault("bundle_emission_rate", 0.0)
@@ -682,7 +755,9 @@ def _aggregate_research_metrics(task_results: list[dict[str, Any]]) -> dict[str,
     return aggregate
 
 
-def _evaluate_thresholds(metrics: dict[str, Any], thresholds: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def _evaluate_thresholds(
+    metrics: dict[str, Any], thresholds: dict[str, Any]
+) -> dict[str, dict[str, Any]]:
     results: dict[str, dict[str, Any]] = {}
     for metric_name, threshold in thresholds.items():
         value = float(metrics.get(metric_name, 0.0))
@@ -724,7 +799,9 @@ def _render_suite_markdown(result: dict[str, Any]) -> str:
         )
     lines.extend(["", "## Tasks", ""])
     for task in result.get("tasks", []):
-        lines.append(f"- {task.get('task_id') or task.get('scenario_id')}: `{task.get('status', task.get('passed'))}`")
+        lines.append(
+            f"- {task.get('task_id') or task.get('scenario_id')}: `{task.get('status', task.get('passed'))}`"
+        )
     lines.append("")
     return "\n".join(lines)
 
@@ -746,7 +823,9 @@ def _repo_scoped_uri(path: str | Path) -> str:
     return f"repo:///{relative}"
 
 
-def _normalize_file_fetch_result(fetch_result: ConnectorFetchResult, *, file_path: Path) -> ConnectorFetchResult:
+def _normalize_file_fetch_result(
+    fetch_result: ConnectorFetchResult, *, file_path: Path
+) -> ConnectorFetchResult:
     relative_path = _repo_relative_path(file_path)
     stable_uri = _repo_scoped_uri(file_path)
     freshness_metadata = dict(fetch_result.freshness_metadata)
@@ -778,7 +857,11 @@ def _ingest_task_files(task: EvalTaskSpec) -> tuple[list[SourceRecord], list[dic
         citation_id = starting_citation + offset
         source_id = f"{task.task_id}-file-{offset}"
         snapshot_id = f"{task.task_id}-file-snapshot-{offset}"
-        sources.append(_source_record_from_fetch(fetch_result, citation_id=citation_id, source_id=source_id, snapshot_id=snapshot_id))
+        sources.append(
+            _source_record_from_fetch(
+                fetch_result, citation_id=citation_id, source_id=source_id, snapshot_id=snapshot_id
+            )
+        )
         evidence.append(
             {
                 "evidence_id": f"{task.task_id}-file-evidence-{offset}",
@@ -831,10 +914,7 @@ def _resolve_evidence_fragments(
     if task.evidence_fragments:
         return [item.model_dump(mode="json") for item in task.evidence_fragments]
     evidence = list(ingested_evidence)
-    if evidence:
-        next_index = len(evidence) + 1
-    else:
-        next_index = 1
+    next_index = len(evidence) + 1 if evidence else 1
     for source in sources:
         if any(item["source_id"] == source.source_id for item in evidence):
             continue
@@ -1012,7 +1092,9 @@ def _normalize_task_artifacts(task: EvalTaskSpec, stable_paths: dict[str, Path])
             "sources": bundle.get("sources") or [],
             "snapshots": bundle.get("snapshots") or [],
         }
-        sources_path.write_text(json.dumps(sources_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        sources_path.write_text(
+            json.dumps(sources_payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     manifest["generated_at"] = FROZEN_ARTIFACT_TIMESTAMP
@@ -1028,12 +1110,16 @@ def _normalize_task_artifacts(task: EvalTaskSpec, stable_paths: dict[str, Path])
     if claim_graph_path.exists():
         claim_graph = json.loads(claim_graph_path.read_text(encoding="utf-8"))
         claim_graph["job_id"] = task.task_id
-        claim_graph_path.write_text(json.dumps(claim_graph, ensure_ascii=False, indent=2), encoding="utf-8")
+        claim_graph_path.write_text(
+            json.dumps(claim_graph, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
     if review_queue_path.exists():
         review_queue = json.loads(review_queue_path.read_text(encoding="utf-8"))
         review_queue["job_id"] = task.task_id
         review_queue["created_at"] = FROZEN_ARTIFACT_TIMESTAMP
-        review_queue_path.write_text(json.dumps(review_queue, ensure_ascii=False, indent=2), encoding="utf-8")
+        review_queue_path.write_text(
+            json.dumps(review_queue, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
 
 def _compute_research_task_metrics(
@@ -1072,11 +1158,13 @@ def _compute_research_task_metrics(
             provenance_points += 1
     for citation in citations:
         provenance_total += 1
-        if str(citation.get("snapshot_id") or "") in snapshots and str(citation.get("source_id") or "") in {
-            str(source.get("source_id") or "") for source in bundle_sources
-        }:
+        if str(citation.get("snapshot_id") or "") in snapshots and str(
+            citation.get("source_id") or ""
+        ) in {str(source.get("source_id") or "") for source in bundle_sources}:
             provenance_points += 1
-    provenance_completeness = round(provenance_points / provenance_total, 3) if provenance_total else 1.0
+    provenance_completeness = (
+        round(provenance_points / provenance_total, 3) if provenance_total else 1.0
+    )
 
     policy = load_source_policy(task.source_profile)
     policy_passes = 0
@@ -1092,17 +1180,31 @@ def _compute_research_task_metrics(
 
     answered_questions = set(task.answered_questions)
     required_questions = list(task.required_questions)
-    rubric_coverage = round(len(answered_questions.intersection(required_questions)) / len(required_questions), 3) if required_questions else 1.0
+    rubric_coverage = (
+        round(len(answered_questions.intersection(required_questions)) / len(required_questions), 3)
+        if required_questions
+        else 1.0
+    )
     conflict_expected = bool(task.conflict_sets)
-    conflict_detection_recall = 1.0 if not conflict_expected else (1.0 if bundle.get("conflict_sets") else 0.0)
+    conflict_detection_recall = (
+        1.0 if not conflict_expected else (1.0 if bundle.get("conflict_sets") else 0.0)
+    )
     file_sources = [source for source in sources if source.source_type == "files"]
-    file_input_success_rate = round(len(file_sources) / file_input_count, 3) if file_input_count else 1.0
+    file_input_success_rate = (
+        round(len(file_sources) / file_input_count, 3) if file_input_count else 1.0
+    )
     return {
         "completion_rate": 1.0 if bundle.get("job", {}).get("status") == "completed" else 0.0,
         "bundle_emission_rate": 1.0,
-        "audit_pass_rate": 1.0 if bundle.get("audit_summary", {}).get("gate_status") == "passed" else 0.0,
-        "critical_claim_support_precision": round(len(supported_high) / len(high_claims), 3) if high_claims else 1.0,
-        "citation_error_rate": round(len(blocking_high) / len(high_claims), 3) if high_claims else 0.0,
+        "audit_pass_rate": 1.0
+        if bundle.get("audit_summary", {}).get("gate_status") == "passed"
+        else 0.0,
+        "critical_claim_support_precision": round(len(supported_high) / len(high_claims), 3)
+        if high_claims
+        else 1.0,
+        "citation_error_rate": round(len(blocking_high) / len(high_claims), 3)
+        if high_claims
+        else 0.0,
         "provenance_completeness": provenance_completeness,
         "rubric_coverage": rubric_coverage,
         "policy_compliance_rate": policy_compliance_rate,
@@ -1120,7 +1222,9 @@ def _first_claim_text(report_markdown: str, topic: str) -> str:
     return topic
 
 
-def _build_runtime_metrics_payload(final_job: JobRuntimeRecord, *, stable_job_id: str) -> dict[str, Any]:
+def _build_runtime_metrics_payload(
+    final_job: JobRuntimeRecord, *, stable_job_id: str
+) -> dict[str, Any]:
     bundle_path = Path(final_job.report_bundle_path)
     trace_path = Path(final_job.trace_path)
     bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
@@ -1153,7 +1257,10 @@ def _build_runtime_metrics_payload(final_job: JobRuntimeRecord, *, stable_job_id
     if first_progress_at is None:
         first_progress_at = created_at
     if bundle_emitted_at is None:
-        bundle_emitted_at = max((_parse_iso(str(event.get("timestamp") or final_job.created_at)) for event in events), default=created_at)
+        bundle_emitted_at = max(
+            (_parse_iso(str(event.get("timestamp") or final_job.created_at)) for event in events),
+            default=created_at,
+        )
 
     budget = dict(bundle.get("job", {}).get("budget") or {})
     prompt_tokens = int(budget.get("prompt_tokens") or 0)

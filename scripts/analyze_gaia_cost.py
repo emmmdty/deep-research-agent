@@ -66,11 +66,15 @@ def main() -> None:
         return {
             "n": len(selected),
             "median_tokens": round(_median([row["tokens"] for row in selected])),
-            "mean_tokens": round(sum(row["tokens"] for row in selected) / len(selected)) if selected else 0,
+            "mean_tokens": round(sum(row["tokens"] for row in selected) / len(selected))
+            if selected
+            else 0,
             "median_llm_calls": _median([row["llm_calls"] for row in selected]),
             "median_search_calls": _median([row["search_calls"] for row in selected]),
             "median_wall_seconds": round(_median([row["wall_seconds"] for row in selected]), 1),
-            "mean_cost_usd": round(sum(row["cost_usd"] for row in selected) / len(selected), 4) if selected else 0.0,
+            "mean_cost_usd": round(sum(row["cost_usd"] for row in selected) / len(selected), 4)
+            if selected
+            else 0.0,
         }
 
     tokens_by_correctness = {

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import itertools
+
 import pytest
 
 from deep_research_agent.agents.llm import LLMChatError, ToolCallRecord, ToolLoopResult
@@ -154,7 +156,11 @@ async def test_agentic_researcher_uses_native_function_calling_loop() -> None:
             {"plan_queries": {"queries": [{"query": "agents tools 2026", "tool": "web_search"}]}},
             {"assess_coverage": {"covered": True, "gaps": []}},
             {"select_pages": {"urls": []}},
-            {"submit_claims": {"claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]}},
+            {
+                "submit_claims": {
+                    "claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]
+                }
+            },
         ]
     )
     worker = LLMResearcherWorker(chat=chat)
@@ -182,9 +188,17 @@ async def test_agentic_researcher_reflects_and_executes_followup_round() -> None
         [
             {"plan_queries": {"queries": [{"query": "first query", "tool": "web_search"}]}},
             {"assess_coverage": {"covered": False, "gaps": ["memory architecture details"]}},
-            {"plan_queries": {"queries": [{"query": "memory architecture details", "tool": "arxiv_search"}]}},
+            {
+                "plan_queries": {
+                    "queries": [{"query": "memory architecture details", "tool": "arxiv_search"}]
+                }
+            },
             {"select_pages": {"urls": []}},
-            {"submit_claims": {"claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]}},
+            {
+                "submit_claims": {
+                    "claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]
+                }
+            },
         ]
     )
     worker = LLMResearcherWorker(chat=chat)
@@ -221,7 +235,11 @@ async def test_agentic_researcher_reads_full_pages_and_grounds_claims_in_chunks(
             {"plan_queries": {"queries": [{"query": "agents tools", "tool": "web_search"}]}},
             {"assess_coverage": {"covered": True, "gaps": []}},
             {"select_pages": {"urls": ["https://example.com/full"]}},
-            {"submit_claims": {"claims": [_submit_claims_entry("Deep claim from full text.", 2, quote)]}},
+            {
+                "submit_claims": {
+                    "claims": [_submit_claims_entry("Deep claim from full text.", 2, quote)]
+                }
+            },
         ]
     )
     worker = LLMResearcherWorker(chat=chat)
@@ -241,7 +259,9 @@ async def test_agentic_researcher_reads_full_pages_and_grounds_claims_in_chunks(
 
 
 @pytest.mark.asyncio
-async def test_agentic_researcher_marks_snippets_discovery_only_and_pages_critical_eligible() -> None:
+async def test_agentic_researcher_marks_snippets_discovery_only_and_pages_critical_eligible() -> (
+    None
+):
     page = _page_chunk_source()
     page_text = page["content"]
     snippet = _snippet(1)
@@ -260,7 +280,11 @@ async def test_agentic_researcher_marks_snippets_discovery_only_and_pages_critic
             {"plan_queries": {"queries": [{"query": "agents tools", "tool": "web_search"}]}},
             {"assess_coverage": {"covered": True, "gaps": []}},
             {"select_pages": {"urls": ["https://example.com/full"]}},
-            {"submit_claims": {"claims": [_submit_claims_entry("Deep claim from full text.", 2, quote)]}},
+            {
+                "submit_claims": {
+                    "claims": [_submit_claims_entry("Deep claim from full text.", 2, quote)]
+                }
+            },
         ]
     )
     worker = LLMResearcherWorker(chat=chat)
@@ -301,7 +325,11 @@ async def test_agentic_researcher_skips_pages_when_fetch_tool_unavailable() -> N
             {"plan_queries": {"queries": [{"query": "agents tools", "tool": "web_search"}]}},
             {"assess_coverage": {"covered": True, "gaps": []}},
             {"select_pages": {"urls": ["https://example.com/1"]}},
-            {"submit_claims": {"claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]}},
+            {
+                "submit_claims": {
+                    "claims": [_submit_claims_entry("Agents use tools.", 1, "agents use tools")]
+                }
+            },
         ]
     )
     worker = LLMResearcherWorker(chat=chat)
@@ -436,6 +464,7 @@ async def test_agentic_researcher_falls_back_when_function_call_fails() -> None:
 
 # ---------------------------------------------------------------- fetch_page
 
+
 def test_fetch_page_rejects_private_networks() -> None:
     for url in [
         "http://127.0.0.1/admin",
@@ -444,7 +473,7 @@ def test_fetch_page_rejects_private_networks() -> None:
         "http://169.254.169.254/latest/meta-data/",
         "http://localhost/",
     ]:
-        with pytest.raises(ValueError, match="refuses non-public host|supports http"):
+        with pytest.raises(ValueError, match=r"refuses non-public host|supports http"):
             fetch_page(url)
 
 
@@ -490,14 +519,12 @@ def test_chunk_text_is_contiguous_and_overlapping() -> None:
     assert chunks, "non-empty text must produce chunks"
     assert chunks[0]["start"] == 0
     assert chunks[-1]["end"] == len(text)
-    for previous, current in zip(chunks, chunks[1:]):
+    for previous, current in itertools.pairwise(chunks):
         assert current["start"] == previous["end"] - 30
     joined = "".join(chunk["text"] for chunk in chunks)
     assert text[: len(text) // 2] in joined
 
 
 def test_chunk_text_short_text_single_chunk() -> None:
-    assert chunk_text("short") == [
-        {"chunk_index": 0, "start": 0, "end": 5, "text": "short"}
-    ]
+    assert chunk_text("short") == [{"chunk_index": 0, "start": 0, "end": 5, "text": "short"}]
     assert chunk_text("") == []

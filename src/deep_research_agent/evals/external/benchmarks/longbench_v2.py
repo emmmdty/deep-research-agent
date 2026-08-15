@@ -19,7 +19,6 @@ from deep_research_agent.evals.external.contracts import (
 )
 from deep_research_agent.evals.external.manifests import write_benchmark_artifacts
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[5]
 
 

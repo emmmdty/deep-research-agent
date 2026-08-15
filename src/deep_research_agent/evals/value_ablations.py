@@ -10,9 +10,9 @@ from typing import Any
 
 from configs.settings import get_settings
 from deep_research_agent.evals.value_metrics import PROJECT_ROOT
+from deep_research_agent.policy import load_source_policy
 from deep_research_agent.providers.models import ProviderRouteRequest, RoutingMode
 from deep_research_agent.providers.router import ProviderRouter
-from deep_research_agent.policy import load_source_policy
 
 
 def build_value_ablation_pack(
@@ -78,7 +78,11 @@ def _audit_on_vs_off(bundle: dict[str, Any]) -> dict[str, Any]:
         baseline_mode="audit_on",
         comparison_mode="audit_off",
         task_or_suite="company12/company-openai-surface",
-        compared_metrics=["critical_claim_support_precision", "unsupported_claim_leakage_rate", "completion_rate"],
+        compared_metrics=[
+            "critical_claim_support_precision",
+            "unsupported_claim_leakage_rate",
+            "completion_rate",
+        ],
         baseline_metrics={
             "critical_claim_support_precision": baseline_support,
             "unsupported_claim_leakage_rate": baseline_leakage,
@@ -335,7 +339,9 @@ def _route_summary(route: Any) -> dict[str, Any]:
     }
 
 
-def _latency_cost_summary(headline_metrics: dict[str, Any], stage_timing: dict[str, Any]) -> dict[str, Any]:
+def _latency_cost_summary(
+    headline_metrics: dict[str, Any], stage_timing: dict[str, Any]
+) -> dict[str, Any]:
     metrics = headline_metrics["metrics"]
     return {
         "generated_at": "2026-04-21T00:00:00+00:00",
@@ -345,8 +351,12 @@ def _latency_cost_summary(headline_metrics: dict[str, Any], stage_timing: dict[s
         "ttfr_seconds_p50": metrics["ttfr_seconds_p50"]["value"],
         "ttfr_seconds_p95": metrics["ttfr_seconds_p95"]["value"],
         "prompt_tokens_per_completed_job": metrics["prompt_tokens_per_completed_job"]["value"],
-        "completion_tokens_per_completed_job": metrics["completion_tokens_per_completed_job"]["value"],
-        "estimated_api_cost_per_completed_job": metrics["estimated_api_cost_per_completed_job"]["value"],
+        "completion_tokens_per_completed_job": metrics["completion_tokens_per_completed_job"][
+            "value"
+        ],
+        "estimated_api_cost_per_completed_job": metrics["estimated_api_cost_per_completed_job"][
+            "value"
+        ],
         "cost_reason": metrics["estimated_api_cost_per_completed_job"]["reason"],
         "timing_status": stage_timing["timing_status"],
         "stage_runtime_seconds": stage_timing["stage_summary"],
@@ -379,7 +389,10 @@ def _critical_claim_support_precision(bundle: dict[str, Any]) -> float:
             and str(edge.get("relation") or "") in {"supports", "partially_supports"}
             and str(edge.get("grounding_status") or "") == "grounded"
         ]
-        if grounded_edges and str(claim.get("status") or "") in {"supported", "partially_supported"}:
+        if grounded_edges and str(claim.get("status") or "") in {
+            "supported",
+            "partially_supported",
+        }:
             supported += 1
     return round(supported / len(high_claims), 3)
 
@@ -401,7 +414,10 @@ def _provenance_completeness(bundle: dict[str, Any]) -> float:
     source_ids = {str(source.get("source_id") or "") for source in sources}
     for citation in citations:
         total += 1
-        if str(citation.get("snapshot_id") or "") in snapshots and str(citation.get("source_id") or "") in source_ids:
+        if (
+            str(citation.get("snapshot_id") or "") in snapshots
+            and str(citation.get("source_id") or "") in source_ids
+        ):
             points += 1
     return round(points / total, 3) if total else 1.0
 
@@ -485,11 +501,17 @@ def _write_ablation_csv(path: Path, rows: list[dict[str, Any]]) -> None:
                     "comparison_mode": row["comparison_mode"],
                     "task_or_suite": row["task_or_suite"],
                     "status": row["status"],
-                    "compared_metrics_json": json.dumps(row["compared_metrics"], ensure_ascii=False),
-                    "absolute_values_json": json.dumps(row["absolute_values"], ensure_ascii=False, sort_keys=True),
+                    "compared_metrics_json": json.dumps(
+                        row["compared_metrics"], ensure_ascii=False
+                    ),
+                    "absolute_values_json": json.dumps(
+                        row["absolute_values"], ensure_ascii=False, sort_keys=True
+                    ),
                     "deltas_json": json.dumps(row["deltas"], ensure_ascii=False, sort_keys=True),
                     "interpretation": row["interpretation"],
-                    "artifact_paths_json": json.dumps(row["artifact_paths"], ensure_ascii=False, sort_keys=True),
+                    "artifact_paths_json": json.dumps(
+                        row["artifact_paths"], ensure_ascii=False, sort_keys=True
+                    ),
                     "reason": row["reason"],
                 }
             )

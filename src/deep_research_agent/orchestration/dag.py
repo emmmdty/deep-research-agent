@@ -54,7 +54,7 @@ class ResearchDAG(StrictModel):
                 names = ", ".join(sorted(unknown))
                 raise ValueError(f"task {task.task_id!r} has unknown dependencies: {names}")
 
-        indegree = {task_id: 0 for task_id in task_by_id}
+        indegree = dict.fromkeys(task_by_id, 0)
         dependents: dict[str, list[str]] = {task_id: [] for task_id in task_by_id}
         for task in self.tasks:
             indegree[task.task_id] = len(task.depends_on)
@@ -86,7 +86,9 @@ class ResearchDAG(StrictModel):
             existing = current.get(task.task_id)
             if existing is not None:
                 if existing != task:
-                    raise ValueError(f"dynamic task {task.task_id!r} conflicts with its prior definition")
+                    raise ValueError(
+                        f"dynamic task {task.task_id!r} conflicts with its prior definition"
+                    )
                 continue
             current[task.task_id] = task
             additions.append(task)

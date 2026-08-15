@@ -10,7 +10,6 @@ from jsonschema import ValidationError
 
 from legacy.workflows.states import EvidenceNote, ReportArtifact, RunMetrics, SourceRecord, TaskItem
 
-
 PHASE4_SCHEMA_NAMES = [
     "critical-claim-review-item",
     "claim-review-queue",
@@ -229,7 +228,9 @@ def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_pat
     from deep_research_agent.research_jobs.service import ResearchJobService
 
     service = ResearchJobService(workspace_dir=str(tmp_path))
-    job = service.submit(topic="phase4 blocked path", max_loops=1, research_profile="default", start_worker=False)
+    job = service.submit(
+        topic="phase4 blocked path", max_loops=1, research_profile="default", start_worker=False
+    )
 
     source = SourceRecord(
         citation_id=1,
@@ -249,7 +250,15 @@ def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_pat
     orchestrator = ResearchJobOrchestrator(
         service=service,
         planner_fn=lambda state: {
-            "tasks": [TaskItem(id=1, title="定义", intent="解释概念", query="phase4 blocked path", status="pending")],
+            "tasks": [
+                TaskItem(
+                    id=1,
+                    title="定义",
+                    intent="解释概念",
+                    query="phase4 blocked path",
+                    status="pending",
+                )
+            ],
             "status": "planned",
         },
         collect_step_fn=lambda state: (
@@ -365,12 +374,21 @@ def test_orchestrator_runs_claim_auditing_stage_and_emits_blocked_bundle(tmp_pat
     final_job = orchestrator.run(job.job_id)
     events = service.list_events(job.job_id)
     bundle = json.loads(Path(final_job.report_bundle_path).read_text(encoding="utf-8"))
-    manifest = json.loads((Path(final_job.report_bundle_path).parent / "manifest.json").read_text(encoding="utf-8"))
-    audit_decision = json.loads((Path(final_job.report_bundle_path).parent / "audit_decision.json").read_text(encoding="utf-8"))
+    manifest = json.loads(
+        (Path(final_job.report_bundle_path).parent / "manifest.json").read_text(encoding="utf-8")
+    )
+    audit_decision = json.loads(
+        (Path(final_job.report_bundle_path).parent / "audit_decision.json").read_text(
+            encoding="utf-8"
+        )
+    )
 
     assert final_job.status == "completed"
     assert final_job.audit_gate_status == "blocked"
-    assert any(event.stage == "claim_auditing" and event.event_type == "stage.completed" for event in events)
+    assert any(
+        event.stage == "claim_auditing" and event.event_type == "stage.completed"
+        for event in events
+    )
     validate_instance("report-bundle", bundle)
     validate_instance("artifact-manifest", manifest)
     assert bundle["audit_summary"]["gate_status"] == "blocked"

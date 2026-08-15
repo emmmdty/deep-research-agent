@@ -23,11 +23,12 @@ from __future__ import annotations
 import time
 from typing import Any
 
+from deep_research_agent.domain_packs.models import DomainPack
 from deep_research_agent.evals.reliability.fault_injection import (
+    ScriptedChat,
     _claim_entry,
     _snippet,
     _snippet_text,
-    ScriptedChat,
     build_scripted_gateway,
 )
 from deep_research_agent.kernel.contracts import ResearchBrief, TaskSpec
@@ -36,7 +37,6 @@ from deep_research_agent.memory_v2.service import MemoryService
 from deep_research_agent.orchestration.dag import ResearchDAG
 from deep_research_agent.orchestration.scheduler import ResearchScheduler, SchedulerJob
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
-from deep_research_agent.domain_packs.models import DomainPack
 
 _JOB_ID = "agent-metrics"
 _OBJECTIVE = "What are the travel rules and prices for high-speed rail student tickets in 2026?"
@@ -105,8 +105,14 @@ def _multi_hop_script() -> list[dict[str, Any]]:
             "submit_claims": {
                 "claims": [
                     _claim_entry("学生票享受公布票价五折优惠。", 1, "学生票享受公布票价五折优惠"),
-                    _claim_entry("每学年可购买四次家庭与学校间单程票。", 1, "每学年可购买四次家庭与学校间单程票"),
-                    _claim_entry("预售期与学生票验证与普通票一致。", 2, "预售期与学生票验证与普通票一致"),
+                    _claim_entry(
+                        "每学年可购买四次家庭与学校间单程票。",
+                        1,
+                        "每学年可购买四次家庭与学校间单程票",
+                    ),
+                    _claim_entry(
+                        "预售期与学生票验证与普通票一致。", 2, "预售期与学生票验证与普通票一致"
+                    ),
                     # deliberately attributed to the wrong source: the verbatim
                     # gate must reject it (grounding acceptance probe)
                     _claim_entry("退票需在发车前 48 小时办理。", 1, "退票需在发车前 48 小时办理"),
@@ -119,7 +125,9 @@ def _multi_hop_script() -> list[dict[str, Any]]:
 
 def _metric_sources() -> list[dict[str, Any]]:
     return [
-        _snippet(1, "铁路12306 规定学生票享受公布票价五折优惠，每学年可购买四次家庭与学校间单程票。"),
+        _snippet(
+            1, "铁路12306 规定学生票享受公布票价五折优惠，每学年可购买四次家庭与学校间单程票。"
+        ),
         _snippet(2, "12306 公告：学生票预售期与学生票验证与普通票一致。"),
         _snippet(3, "票务平台提示：学生票不可用于任意区间，退票需在发车前 48 小时办理。"),
     ]
@@ -175,9 +183,11 @@ async def _run_metrics_job(chat: ScriptedChat, gateway) -> dict[str, Any]:
         async def execute(self, task: TaskSpec, context: TaskExecutionContext) -> WorkerOutput:
             if task.role == "researcher":
                 from deep_research_agent.agents.researcher import LLMResearcherWorker
+
                 return await LLMResearcherWorker(chat=chat).execute(task, context)
             if task.role == "critic":
                 from deep_research_agent.agents.critic import LLMCriticWorker
+
                 return await LLMCriticWorker(chat=chat).execute(task, context)
             raise RuntimeError(f"no worker for role {task.role!r}")
 
@@ -187,9 +197,7 @@ async def _run_metrics_job(chat: ScriptedChat, gateway) -> dict[str, Any]:
         dag,
         {"version_id": "agent-metrics-v1"},
     )
-    researcher_out = next(
-        (out for out in result.task_outputs.values() if "agentic" in out), {}
-    )
+    researcher_out = next((out for out in result.task_outputs.values() if "agentic" in out), {})
     critic_out = next(
         (out for out in result.task_outputs.values() if "deterministic_review" in out), {}
     )
@@ -221,9 +229,7 @@ def _estimate_tokens(prompt_sizes: list[dict[str, int]]) -> dict[str, Any]:
         if stage not in stages:
             continue
         bucket = stages[stage]
-        input_tokens = round(
-            (bucket["system_chars"] + bucket["user_chars"]) * _TOKENS_PER_CHAR
-        )
+        input_tokens = round((bucket["system_chars"] + bucket["user_chars"]) * _TOKENS_PER_CHAR)
         total_input_tokens += input_tokens
         rows.append(
             {

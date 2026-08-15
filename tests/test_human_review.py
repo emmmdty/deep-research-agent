@@ -20,7 +20,9 @@ SCORE_DIMENSIONS = {
 }
 
 
-def _write_v2_bundle(root: Path, job_id: str, n_claims: int = 4, with_verification: bool = True) -> Path:
+def _write_v2_bundle(
+    root: Path, job_id: str, n_claims: int = 4, with_verification: bool = True
+) -> Path:
     bundle_dir = root / job_id
     bundle_dir.mkdir(parents=True, exist_ok=True)
     claims = []
@@ -90,7 +92,11 @@ def _write_v1_bundle(root: Path) -> Path:
     bundle_dir.mkdir(parents=True, exist_ok=True)
     bundle = {
         "bundle_version": "1.0.0",
-        "job": {"job_id": "legacy-job-001", "status": "completed", "runtime_path": "orchestrator-v1"},
+        "job": {
+            "job_id": "legacy-job-001",
+            "status": "completed",
+            "runtime_path": "orchestrator-v1",
+        },
         "report_text": "# 旧版报告",
         "sources": [
             {
@@ -125,10 +131,14 @@ def _write_v1_bundle(root: Path) -> Path:
     return path
 
 
-def _write_score_file(root: Path, job_id: str, dimensions: dict | None = None, reviewer: str = "reviewer-a") -> Path:
+def _write_score_file(
+    root: Path, job_id: str, dimensions: dict | None = None, reviewer: str = "reviewer-a"
+) -> Path:
     path = root / f"{job_id}.{reviewer}.scores.yaml"
     path.write_text(
-        yaml.safe_dump({"job": job_id, "dimensions": dimensions or SCORE_DIMENSIONS}, sort_keys=False),
+        yaml.safe_dump(
+            {"job": job_id, "dimensions": dimensions or SCORE_DIMENSIONS}, sort_keys=False
+        ),
         encoding="utf-8",
     )
     return path
@@ -171,7 +181,12 @@ def test_human_review_report_contains_rubric_and_claims(tmp_path: Path):
     md_path = out / "job-rpt.md"
     assert md_path.exists()
     text = md_path.read_text(encoding="utf-8")
-    for dimension in ("citation_authenticity", "verbatim_consistency", "source_quality", "coverage"):
+    for dimension in (
+        "citation_authenticity",
+        "verbatim_consistency",
+        "source_quality",
+        "coverage",
+    ):
         assert dimension in text
     assert "声明文本" in text
     assert "https://example.com/doc/" in text
@@ -204,13 +219,25 @@ def test_import_round_trip_scorecard_values(tmp_path: Path):
     _write_v2_bundle(tmp_path, "job-scores", n_claims=4)
     score_path = _write_score_file(tmp_path, "job-scores")
     out = tmp_path / "out"
-    result = _import_human_review_scores(bundle_dir=tmp_path, score_file=str(score_path), output_dir=out)
+    result = _import_human_review_scores(
+        bundle_dir=tmp_path, score_file=str(score_path), output_dir=out
+    )
 
     assert result["status"] == "completed"
     card = json.loads((out / "job-scores.scorecard.json").read_text(encoding="utf-8"))
     assert card["job"] == "job-scores"
-    assert card["dimensions"]["citation_authenticity"] == {"mean": 4.0, "min": 4, "max": 4, "count": 1}
-    assert card["dimensions"]["verbatim_consistency"] == {"mean": 5.0, "min": 5, "max": 5, "count": 1}
+    assert card["dimensions"]["citation_authenticity"] == {
+        "mean": 4.0,
+        "min": 4,
+        "max": 4,
+        "count": 1,
+    }
+    assert card["dimensions"]["verbatim_consistency"] == {
+        "mean": 5.0,
+        "min": 5,
+        "max": 5,
+        "count": 1,
+    }
     assert card["dimensions"]["source_quality"] == {"mean": 3.0, "min": 3, "max": 3, "count": 1}
     assert card["dimensions"]["coverage"] == {"mean": 4.0, "min": 4, "max": 4, "count": 1}
     assert card["overall"] == {"mean": 4.0, "min": 3, "max": 5, "count": 4}
@@ -227,7 +254,7 @@ def test_import_aggregates_multiple_reviewers_and_is_idempotent(tmp_path: Path):
     score_b = _write_score_file(
         tmp_path,
         "job-multi",
-        dimensions={name: 5 for name in SCORE_DIMENSIONS},
+        dimensions=dict.fromkeys(SCORE_DIMENSIONS, 5),
         reviewer="reviewer-b",
     )
     out = tmp_path / "out"
@@ -238,9 +265,17 @@ def test_import_aggregates_multiple_reviewers_and_is_idempotent(tmp_path: Path):
     card = json.loads((out / "job-multi.scorecard.json").read_text(encoding="utf-8"))
 
     assert (out / "job-multi.scorecard.json").read_bytes() != first_bytes
-    assert card["dimensions"]["citation_authenticity"] == {"mean": 4.5, "min": 4, "max": 5, "count": 2}
+    assert card["dimensions"]["citation_authenticity"] == {
+        "mean": 4.5,
+        "min": 4,
+        "max": 5,
+        "count": 2,
+    }
     assert card["dimensions"]["source_quality"] == {"mean": 4.0, "min": 3, "max": 5, "count": 2}
-    assert card["score_files"] == ["job-multi.reviewer-a.scores.yaml", "job-multi.reviewer-b.scores.yaml"]
+    assert card["score_files"] == [
+        "job-multi.reviewer-a.scores.yaml",
+        "job-multi.reviewer-b.scores.yaml",
+    ]
 
     _import_human_review_scores(bundle_dir=tmp_path, score_file=str(score_b), output_dir=out)
     card_again = json.loads((out / "job-multi.scorecard.json").read_text(encoding="utf-8"))
@@ -257,7 +292,9 @@ def test_scorecard_determinism_same_input_identical_bytes(tmp_path: Path):
     _import_human_review_scores(bundle_dir=tmp_path, score_file=str(score_path), output_dir=out1)
     _import_human_review_scores(bundle_dir=tmp_path, score_file=str(score_path), output_dir=out2)
 
-    assert (out1 / "job-det.scorecard.json").read_bytes() == (out2 / "job-det.scorecard.json").read_bytes()
+    assert (out1 / "job-det.scorecard.json").read_bytes() == (
+        out2 / "job-det.scorecard.json"
+    ).read_bytes()
 
 
 def test_import_verified_rate_null_with_note_when_missing(tmp_path: Path):
@@ -279,9 +316,24 @@ def test_import_verified_rate_null_with_note_when_missing(tmp_path: Path):
     [
         {"citation_authenticity": 0, "verbatim_consistency": 5, "source_quality": 3, "coverage": 4},
         {"citation_authenticity": 6, "verbatim_consistency": 5, "source_quality": 3, "coverage": 4},
-        {"citation_authenticity": "4", "verbatim_consistency": 5, "source_quality": 3, "coverage": 4},
-        {"citation_authenticity": 4.5, "verbatim_consistency": 5, "source_quality": 3, "coverage": 4},
-        {"citation_authenticity": True, "verbatim_consistency": 5, "source_quality": 3, "coverage": 4},
+        {
+            "citation_authenticity": "4",
+            "verbatim_consistency": 5,
+            "source_quality": 3,
+            "coverage": 4,
+        },
+        {
+            "citation_authenticity": 4.5,
+            "verbatim_consistency": 5,
+            "source_quality": 3,
+            "coverage": 4,
+        },
+        {
+            "citation_authenticity": True,
+            "verbatim_consistency": 5,
+            "source_quality": 3,
+            "coverage": 4,
+        },
         {"citation_authenticity": 4, "verbatim_consistency": 5, "source_quality": 3},
     ],
 )
@@ -291,7 +343,9 @@ def test_import_rejects_invalid_scores(tmp_path: Path, dimensions: dict):
     _write_v2_bundle(tmp_path, "job-bad", n_claims=4)
     score_path = _write_score_file(tmp_path, "job-bad", dimensions=dimensions)
     with pytest.raises(ValueError):
-        _import_human_review_scores(bundle_dir=tmp_path, score_file=str(score_path), output_dir=tmp_path / "out")
+        _import_human_review_scores(
+            bundle_dir=tmp_path, score_file=str(score_path), output_dir=tmp_path / "out"
+        )
 
 
 def test_import_rejects_unknown_dimension(tmp_path: Path):
@@ -301,7 +355,9 @@ def test_import_rejects_unknown_dimension(tmp_path: Path):
     bad = {**SCORE_DIMENSIONS, "made_up_dimension": 4}
     score_path = _write_score_file(tmp_path, "job-unknown", dimensions=bad)
     with pytest.raises(ValueError, match="未知维度"):
-        _import_human_review_scores(bundle_dir=tmp_path, score_file=str(score_path), output_dir=tmp_path / "out")
+        _import_human_review_scores(
+            bundle_dir=tmp_path, score_file=str(score_path), output_dir=tmp_path / "out"
+        )
 
 
 def test_path_confinement_escape_rejected(tmp_path: Path):
@@ -315,7 +371,9 @@ def test_path_confinement_escape_rejected(tmp_path: Path):
     os.symlink(str(outside / "report_bundle.json"), str(bundle_dir / "report_bundle.json"))
 
     with pytest.raises(ValueError, match="逃逸"):
-        _sample_human_review(bundle_dir=bundle_dir, sample_size=1, seed=0, output_dir=tmp_path / "out")
+        _sample_human_review(
+            bundle_dir=bundle_dir, sample_size=1, seed=0, output_dir=tmp_path / "out"
+        )
 
 
 def test_job_name_cannot_escape_output_dir_on_write(tmp_path: Path):
@@ -360,7 +418,7 @@ def test_job_name_cannot_escape_output_dir_on_write(tmp_path: Path):
         yaml.safe_dump(
             {
                 "job": "../PWNED",
-                "dimensions": {name: 4 for name in SCORE_DIMENSIONS},
+                "dimensions": dict.fromkeys(SCORE_DIMENSIONS, 4),
             }
         ),
         encoding="utf-8",
@@ -394,7 +452,9 @@ def _write_head_to_head_tasks(root: Path) -> Path:
         },
     ]
     task_path = root / "tasks.json"
-    task_path.write_text(json.dumps({"benchmark": "head_to_head", "tasks": tasks}), encoding="utf-8")
+    task_path.write_text(
+        json.dumps({"benchmark": "head_to_head", "tasks": tasks}), encoding="utf-8"
+    )
     return task_path
 
 
@@ -490,7 +550,9 @@ def test_head_to_head_registry_registration():
 def test_head_to_head_without_config_blocks_cleanly(tmp_path: Path):
     from deep_research_agent.evals.external.runner import run_external_benchmark
 
-    result = run_external_benchmark(benchmark_name="head_to_head", output_root=tmp_path / "h2h-blocked")
+    result = run_external_benchmark(
+        benchmark_name="head_to_head", output_root=tmp_path / "h2h-blocked"
+    )
     assert result["status"] == "blocked"
     assert any("runner" in note for note in result["notes"])
     manifest = json.loads(
@@ -505,8 +567,9 @@ def test_head_to_head_without_config_blocks_cleanly(tmp_path: Path):
 
 
 def test_main_parser_exposes_eval_human_sample_subcommand(monkeypatch):
-    import main
     from types import SimpleNamespace
+
+    import main
 
     settings = SimpleNamespace(
         max_research_loops=7,
@@ -528,13 +591,16 @@ def test_main_parser_exposes_eval_human_sample_subcommand(monkeypatch):
     assert args.seed == 5
     assert args.import_file is None
 
-    args = parser.parse_args(["eval", "human-sample", "--bundle-dir", "tmp/bundles", "--import", "tmp/scores.yaml"])
+    args = parser.parse_args(
+        ["eval", "human-sample", "--bundle-dir", "tmp/bundles", "--import", "tmp/scores.yaml"]
+    )
     assert args.import_file == "tmp/scores.yaml"
 
 
 def test_eval_human_sample_cli_run_round_trip(tmp_path: Path, monkeypatch):
-    import main
     from types import SimpleNamespace
+
+    import main
 
     settings = SimpleNamespace(
         max_research_loops=7,
@@ -557,9 +623,21 @@ def test_eval_human_sample_cli_run_round_trip(tmp_path: Path, monkeypatch):
             "reports": {"job-cli": str(sample_out / "job-cli.md")},
         },
     )
-    assert main.run_command(
-        ["eval", "human-sample", "--bundle-dir", str(tmp_path), "--sample-size", "2", "--seed", "3"]
-    ) == 0
+    assert (
+        main.run_command(
+            [
+                "eval",
+                "human-sample",
+                "--bundle-dir",
+                str(tmp_path),
+                "--sample-size",
+                "2",
+                "--seed",
+                "3",
+            ]
+        )
+        == 0
+    )
 
     captured = {}
 
@@ -568,5 +646,10 @@ def test_eval_human_sample_cli_run_round_trip(tmp_path: Path, monkeypatch):
         return {"status": "completed", "scorecard_path": "tmp/scorecard.json"}
 
     monkeypatch.setattr(main._cli, "_import_human_review_scores", fake_import)
-    assert main.run_command(["eval", "human-sample", "--bundle-dir", str(tmp_path), "--import", str(score_path)]) == 0
+    assert (
+        main.run_command(
+            ["eval", "human-sample", "--bundle-dir", str(tmp_path), "--import", str(score_path)]
+        )
+        == 0
+    )
     assert captured["score_file"] == str(score_path)

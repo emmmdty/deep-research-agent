@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 
 
-def test_eval_runner_emits_bundle_artifacts_for_company_industry_trusted_and_file_suites(tmp_path: Path):
+def test_eval_runner_emits_bundle_artifacts_for_company_industry_trusted_and_file_suites(
+    tmp_path: Path,
+):
     """研究与文件套件应写出 summary、bundle 与 manifest。"""
     from deep_research_agent.evals.runner import run_eval_suite
 
@@ -179,7 +181,9 @@ def test_eval_runner_saved_artifacts_are_stable_across_reruns(tmp_path: Path):
     assert summary_path.read_text(encoding="utf-8") == baseline["summary"]
 
     bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
-    assert all(snapshot["fetched_at"] == FROZEN_ARTIFACT_TIMESTAMP for snapshot in bundle["snapshots"])
+    assert all(
+        snapshot["fetched_at"] == FROZEN_ARTIFACT_TIMESTAMP for snapshot in bundle["snapshots"]
+    )
     checkpoint_ids = [
         event["payload"]["checkpoint_id"]
         for event in bundle["audit_events"]
@@ -189,8 +193,12 @@ def test_eval_runner_saved_artifacts_are_stable_across_reruns(tmp_path: Path):
         f"company-openai-surface-checkpoint-{index:04d}"
         for index in range(1, len(checkpoint_ids) + 1)
     ]
-    emitted_event = next(event for event in bundle["audit_events"] if event["event_type"] == "bundle.emitted")
-    assert emitted_event["payload"]["report_path"] == str((output_root / "company-openai-surface" / "report.md").resolve())
+    emitted_event = next(
+        event for event in bundle["audit_events"] if event["event_type"] == "bundle.emitted"
+    )
+    assert emitted_event["payload"]["report_path"] == str(
+        (output_root / "company-openai-surface" / "report.md").resolve()
+    )
     assert emitted_event["payload"]["report_bundle_path"] == str(bundle_path.resolve())
     assert emitted_event["payload"]["trace_path"] == str(
         (output_root / "company-openai-surface" / "bundle" / "trace.jsonl").resolve()

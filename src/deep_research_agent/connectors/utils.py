@@ -6,7 +6,6 @@ from ipaddress import ip_address
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
-
 TRACKING_QUERY_PREFIXES = ("utm_",)
 TRACKING_QUERY_KEYS = {"gclid", "fbclid"}
 LOCAL_HOSTNAMES = {"localhost", "localhost.localdomain"}
@@ -33,7 +32,8 @@ def canonicalize_uri(uri: str) -> str:
     filtered_query = [
         (key, value)
         for key, value in parse_qsl(parsed.query, keep_blank_values=True)
-        if key not in TRACKING_QUERY_KEYS and not any(key.startswith(prefix) for prefix in TRACKING_QUERY_PREFIXES)
+        if key not in TRACKING_QUERY_KEYS
+        and not any(key.startswith(prefix) for prefix in TRACKING_QUERY_PREFIXES)
     ]
     normalized_path = parsed.path or "/"
     normalized = parsed._replace(

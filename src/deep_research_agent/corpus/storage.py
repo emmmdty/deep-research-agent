@@ -93,7 +93,9 @@ class InMemoryCorpusRepository:
     def save_document(self, document: DocumentVersion) -> None:
         existing = self.documents.get(document.document_version_id)
         if existing is not None and existing != document:
-            if existing.model_dump(exclude={"retrieved_at"}) != document.model_dump(exclude={"retrieved_at"}):
+            if existing.model_dump(exclude={"retrieved_at"}) != document.model_dump(
+                exclude={"retrieved_at"}
+            ):
                 raise ValueError(f"document version {document.document_version_id!r} is immutable")
             return
         self.documents[document.document_version_id] = deepcopy(document)
@@ -103,9 +105,11 @@ class InMemoryCorpusRepository:
         return deepcopy(document) if document is not None else None
 
     def list_documents(self, *, tenant_id: str | None = None) -> list[DocumentVersion]:
-        documents = list(self.documents.values()) if tenant_id is None else [
-            doc for doc in self.documents.values() if doc.tenant_id == tenant_id
-        ]
+        documents = (
+            list(self.documents.values())
+            if tenant_id is None
+            else [doc for doc in self.documents.values() if doc.tenant_id == tenant_id]
+        )
         return deepcopy(documents)
 
     def find_cached(self, cache_key: str) -> DocumentVersion | None:
@@ -138,7 +142,9 @@ class InMemoryCorpusRepository:
             return tenant_id is not None or tenant_id is None
         if tenant_id == document.tenant_id:
             return True
-        return tenant_id is not None and tenant_id in self.grants.get(document.document_version_id, set())
+        return tenant_id is not None and tenant_id in self.grants.get(
+            document.document_version_id, set()
+        )
 
     def save_snapshot(self, snapshot: CorpusSnapshot) -> None:
         existing = self.snapshots.get(snapshot.snapshot_id)

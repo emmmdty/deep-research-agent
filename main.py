@@ -44,6 +44,7 @@ def run_command(argv=None):
 def main():
     raise SystemExit(run_command(sys.argv[1:]))
 
+
 __all__ = ["_build_job_service", "build_parser", "get_settings", "main", "run_cli", "run_command"]
 
 

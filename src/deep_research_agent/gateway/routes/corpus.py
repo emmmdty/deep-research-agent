@@ -11,7 +11,6 @@ from deep_research_agent.gateway.routes.auth import (
     tenant_rate_limited,
 )
 
-
 router = APIRouter(prefix="/v1/corpus", tags=["corpus"])
 
 

@@ -9,15 +9,15 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from loguru import logger
 from pydantic import BaseModel, Field
 
 from configs.settings import PROJECT_ROOT, Settings, get_settings
-from ..evaluation.metrics import evaluate_report
 from legacy.workflows.states import MemoryStats, ReportArtifact, RunMetrics, SourceRecord, TopicSpec
 
+from ..evaluation.metrics import evaluate_report
 
 COMPARATOR_ALIASES = {
     "our": "ours",
@@ -51,9 +51,9 @@ class ComparatorResult(BaseModel):
     status: str = Field(default="completed", description="completed/failed/skipped")
     success: bool = Field(default=False, description="是否运行成功")
     report_text: str = Field(default="", description="最终报告文本")
-    report_path: Optional[str] = Field(default=None, description="报告文件路径")
+    report_path: str | None = Field(default=None, description="报告文件路径")
     sources: list[SourceRecord] = Field(default_factory=list, description="结构化来源")
-    report_artifact: Optional[ReportArtifact] = Field(default=None, description="结构化报告产物")
+    report_artifact: ReportArtifact | None = Field(default=None, description="结构化报告产物")
     metrics: dict[str, Any] = Field(default_factory=dict, description="运行与评测指标")
     error: str = Field(default="", description="错误信息")
 
@@ -88,11 +88,7 @@ def load_topics(
             ),
         ]
     elif topic_set == "portfolio12":
-        base_topics = [
-            topic
-            for topic in topics
-            if topic.id != "T06"
-        ]
+        base_topics = [topic for topic in topics if topic.id != "T06"]
         topics = [
             *base_topics[:5],
             BenchmarkTopic(
@@ -348,8 +344,8 @@ def run_gptr_comparator(
 
     candidate = settings.gpt_researcher_python
     if not candidate:
-        fallback = PROJECT_ROOT / "venv_gptr" / (
-            "Scripts/python.exe" if os.name == "nt" else "bin/python"
+        fallback = (
+            PROJECT_ROOT / "venv_gptr" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
         )
         candidate = str(fallback)
 
@@ -688,7 +684,9 @@ def _build_scorecard_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     )
     search_calls = float(metrics.get("search_calls", 0) or 0)
     fallback_search_calls = float(metrics.get("fallback_search_calls", 0) or 0)
-    fallback_resilience = 1.0 - min(fallback_search_calls / search_calls, 1.0) if search_calls > 0 else 1.0
+    fallback_resilience = (
+        1.0 - min(fallback_search_calls / search_calls, 1.0) if search_calls > 0 else 1.0
+    )
     tool_use_success = float(metrics.get("tool_use_success_rate", 0.0) or 0.0)
     system_controllability = round(
         100

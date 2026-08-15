@@ -57,7 +57,9 @@ def test_public_content_reuses_parsed_cache_but_private_document_stays_isolated(
         tenant_id=None,
     )
     private = service.ingest(
-        source=_source(source_id="upload", source_role="user_corpus", storage_policy="user_supplied"),
+        source=_source(
+            source_id="upload", source_role="user_corpus", storage_policy="user_supplied"
+        ),
         content=content,
         title="Private agents",
         source_native_id="upload:1",
@@ -146,7 +148,9 @@ def test_shared_parser_cache_does_not_leak_titles_or_derived_only_redaction():
     parser = DoclingParser(parse_fn=lambda content, **_: ParsedDocument(text="full parsed text"))
     fallback_parsers = [BrokenGrobid(), parser]
     derived = CorpusService(repository=repository, parsers=fallback_parsers).ingest(
-        source=_source(source_id="web-derived", storage_policy="derived_only", license="All rights reserved"),
+        source=_source(
+            source_id="web-derived", storage_policy="derived_only", license="All rights reserved"
+        ),
         content=b"same bytes",
         title="Derived title",
         source_native_id="web-derived:1",
@@ -178,13 +182,17 @@ def test_shared_parser_cache_reuses_primary_parse_across_public_sources():
         return ParsedDocument(text="shared primary parse")
 
     repository = InMemoryCorpusRepository()
-    first = CorpusService(repository=repository, parsers=[GrobidParser(parse_fn=parse_primary)]).ingest(
+    first = CorpusService(
+        repository=repository, parsers=[GrobidParser(parse_fn=parse_primary)]
+    ).ingest(
         source=_source(source_id="source-a"),
         content=b"shared bytes",
         title="Source A",
         source_native_id="a:1",
     )
-    second = CorpusService(repository=repository, parsers=[GrobidParser(parse_fn=parse_primary)]).ingest(
+    second = CorpusService(
+        repository=repository, parsers=[GrobidParser(parse_fn=parse_primary)]
+    ).ingest(
         source=_source(source_id="source-b"),
         content=b"shared bytes",
         title="Source B",
@@ -275,7 +283,9 @@ def test_private_tenant_and_critical_claim_boundaries_fail_closed():
     service = CorpusService(repository=InMemoryCorpusRepository())
     with pytest.raises(ValueError, match="tenant_id"):
         service.ingest(
-            source=_source(source_id="upload", source_role="user_corpus", storage_policy="user_supplied"),
+            source=_source(
+                source_id="upload", source_role="user_corpus", storage_policy="user_supplied"
+            ),
             content=b"private",
             title="Private",
             source_native_id="upload:blank",
@@ -357,14 +367,18 @@ def test_private_grant_requires_owner_or_admin_actor():
 
     service = CorpusService(repository=InMemoryCorpusRepository())
     private = service.ingest(
-        source=_source(source_id="upload", source_role="user_corpus", storage_policy="user_supplied"),
+        source=_source(
+            source_id="upload", source_role="user_corpus", storage_policy="user_supplied"
+        ),
         content=b"private",
         title="Private",
         source_native_id="upload:1",
         tenant_id="owner",
     )
     with pytest.raises(PermissionError):
-        service.grant_access(private.document_version_id, tenant_id="reader", actor_tenant_id="reader")
+        service.grant_access(
+            private.document_version_id, tenant_id="reader", actor_tenant_id="reader"
+        )
     with pytest.raises(ValueError, match="tenant_id"):
         service.grant_access(private.document_version_id, tenant_id="   ", actor_tenant_id="owner")
     with pytest.raises(PermissionError):
@@ -384,21 +398,28 @@ def test_private_work_identity_is_tenant_scoped():
 
     service = CorpusService(repository=InMemoryCorpusRepository())
     first = service.ingest(
-        source=_source(source_id="upload", source_role="user_corpus", storage_policy="user_supplied"),
+        source=_source(
+            source_id="upload", source_role="user_corpus", storage_policy="user_supplied"
+        ),
         content=b"tenant one",
         title="Tenant One",
         source_native_id="upload:same",
         tenant_id="tenant-one",
     )
     second = service.ingest(
-        source=_source(source_id="upload", source_role="user_corpus", storage_policy="user_supplied"),
+        source=_source(
+            source_id="upload", source_role="user_corpus", storage_policy="user_supplied"
+        ),
         content=b"tenant two",
         title="Tenant Two",
         source_native_id="upload:same",
         tenant_id="tenant-two",
     )
     assert first.work_id != second.work_id
-    assert service.get_document(second.document_version_id, tenant_id="tenant-two").title == "Tenant Two"
+    assert (
+        service.get_document(second.document_version_id, tenant_id="tenant-two").title
+        == "Tenant Two"
+    )
 
 
 def test_discovery_documents_are_rejected_by_critical_evidence_audit():
@@ -535,12 +556,14 @@ def test_open_web_fetch_result_carries_non_advisory_critical_claim_marker():
         supports_critical_claims=False,
         source_role="discovery",
     )
-    result = adapter.fetch(ConnectorCandidate(
-        connector_name="open_web",
-        source_type="web",
-        title="Discovery",
-        canonical_uri="https://example.com/paper",
-        query="paper",
-    ))
+    result = adapter.fetch(
+        ConnectorCandidate(
+            connector_name="open_web",
+            source_type="web",
+            title="Discovery",
+            canonical_uri="https://example.com/paper",
+            query="paper",
+        )
+    )
     assert result.supports_critical_claims is False
     assert result.source_role == "discovery"

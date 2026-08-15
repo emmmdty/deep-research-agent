@@ -21,11 +21,11 @@ from dataclasses import dataclass, field
 from typing import Any, Protocol, runtime_checkable
 
 from loguru import logger
-
 from openai import AsyncOpenAI
 
 from deep_research_agent.observability.cost_tracker import current_job_id, get_tracker
 from deep_research_agent.observability.tracing import research_span
+
 
 class LLMChatError(RuntimeError):
     """Raised when a model call cannot produce a usable response."""
@@ -203,13 +203,16 @@ def _canonical_tool_definitions(tools: list[dict[str, Any]]) -> list[dict[str, A
 
     canonical: list[dict[str, Any]] = []
     for tool in tools:
-        if isinstance(tool, dict) and tool.get("type") == "function":
-            canonical.append(tool)
-        elif isinstance(tool, dict) and "function" in tool:
+        if (isinstance(tool, dict) and tool.get("type") == "function") or (
+            isinstance(tool, dict) and "function" in tool
+        ):
             canonical.append(tool)
         elif isinstance(tool, dict):
             canonical.append(
-                {"type": "function", "function": {"name": tool["name"], "parameters": tool.get("parameters", {})}}
+                {
+                    "type": "function",
+                    "function": {"name": tool["name"], "parameters": tool.get("parameters", {})},
+                }
             )
     return canonical
 
@@ -239,9 +242,7 @@ class LLMChat:
         # Thinking models (e.g. DeepSeek reasoning variants) can burn the whole
         # output budget on reasoning and return empty content; the endpoint lets
         # us disable thinking explicitly for deterministic agent steps.
-        self._thinking_disabled = bool(
-            getattr(resolved_settings, "llm_disable_thinking", False)
-        )
+        self._thinking_disabled = bool(getattr(resolved_settings, "llm_disable_thinking", False))
 
     @property
     def model_name(self) -> str:
@@ -327,7 +328,9 @@ class LLMChat:
                                 continue
                             # The model's reasoning can grow to fill any budget. Reset
                             # the budget and ask for a direct answer without reasoning.
-                            kwargs["max_tokens"] = max_tokens or int(self._model.get("max_tokens") or 4096)
+                            kwargs["max_tokens"] = max_tokens or int(
+                                self._model.get("max_tokens") or 4096
+                            )
                             kwargs["messages"] = [
                                 {"role": "system", "content": system},
                                 {
@@ -358,7 +361,9 @@ class LLMChat:
                         last_error = exc
                         continue
                     if attempt >= _MAX_ATTEMPTS:
-                        raise LLMChatError(f"LLM call failed after {_MAX_ATTEMPTS} attempts: {exc}") from exc
+                        raise LLMChatError(
+                            f"LLM call failed after {_MAX_ATTEMPTS} attempts: {exc}"
+                        ) from exc
                     last_error = exc
                     await _backoff_delay(attempt, rate_limited=_is_rate_limit(exc))
                     logger.warning("LLM call attempt {} failed: {}", attempt, exc)
@@ -565,7 +570,9 @@ class LLMChat:
                     for index, call in enumerate(message.tool_calls or [])
                 ]
                 if not proposed:
-                    return ToolLoopResult(content=message.content or None, tool_calls=recorded, rounds=round_index)
+                    return ToolLoopResult(
+                        content=message.content or None, tool_calls=recorded, rounds=round_index
+                    )
                 recorded.extend(proposed)
                 messages.append(
                     {
@@ -575,7 +582,10 @@ class LLMChat:
                             {
                                 "id": call.call_id,
                                 "type": "function",
-                                "function": {"name": call.name, "arguments": json.dumps(call.arguments, ensure_ascii=False)},
+                                "function": {
+                                    "name": call.name,
+                                    "arguments": json.dumps(call.arguments, ensure_ascii=False),
+                                },
                             }
                             for call in proposed
                         ],
@@ -583,15 +593,17 @@ class LLMChat:
                 )
                 semaphore = asyncio.Semaphore(_MAX_PARALLEL_TOOL_CALLS)
 
-                async def _execute_call(call: ToolCallRecord) -> dict[str, Any]:
-                    async with semaphore:
+                async def _execute_call(
+                    call: ToolCallRecord, _semaphore=semaphore
+                ) -> dict[str, Any]:
+                    async with _semaphore:
                         try:
                             return await execute_tool(call.name, call.arguments)
                         except Exception as exc:
                             return {"error": str(exc) or type(exc).__name__}
 
                 results = await asyncio.gather(*(_execute_call(call) for call in proposed))
-                for call, result in zip(proposed, results):
+                for call, result in zip(proposed, results, strict=True):
                     messages.append(
                         {
                             "role": "tool",

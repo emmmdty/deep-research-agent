@@ -18,7 +18,6 @@ from deep_research_agent.evals.external.contracts import (
 )
 from deep_research_agent.evals.external.manifests import write_benchmark_artifacts
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[5]
 
 
@@ -123,9 +122,21 @@ def _score_task(task: BenchmarkTaskSpec) -> BenchmarkTaskResult:
     expected_facts = set(task.metadata.get("expected_facts") or [])
     predicted_facts = set(task.metadata.get("predicted_facts") or [])
     overlap = len(expected_facts & predicted_facts)
-    precision = 1.0 if predicted_facts and overlap == len(predicted_facts) else overlap / max(len(predicted_facts), 1)
-    recall = 1.0 if expected_facts and overlap == len(expected_facts) else overlap / max(len(expected_facts), 1)
-    f1_at_k = 0.0 if not (precision + recall) else round((2 * precision * recall) / (precision + recall), 6)
+    precision = (
+        1.0
+        if predicted_facts and overlap == len(predicted_facts)
+        else overlap / max(len(predicted_facts), 1)
+    )
+    recall = (
+        1.0
+        if expected_facts and overlap == len(expected_facts)
+        else overlap / max(len(expected_facts), 1)
+    )
+    f1_at_k = (
+        0.0
+        if not (precision + recall)
+        else round((2 * precision * recall) / (precision + recall), 6)
+    )
     return BenchmarkTaskResult(
         benchmark="longfact_safe",
         task_id=task.task_id,

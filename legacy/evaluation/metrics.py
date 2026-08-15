@@ -8,8 +8,16 @@ from urllib.parse import urlparse
 
 from loguru import logger
 
+from legacy.workflows.states import (
+    EvidenceNote,
+    MemoryStats,
+    ReportArtifact,
+    RunMetrics,
+    SourceRecord,
+    VerificationRecord,
+)
+
 from ..research_policy import aspect_hits_in_text, normalize_text
-from legacy.workflows.states import EvidenceNote, MemoryStats, ReportArtifact, RunMetrics, SourceRecord, VerificationRecord
 
 
 def critical_claim_support_precision(report_artifact: ReportArtifact | None) -> float | None:
@@ -159,7 +167,9 @@ def uncited_paragraph_ratio(report: str) -> float:
     return round(uncited_count / len(paragraphs), 3)
 
 
-def high_trust_citation_ratio(report: str, source_records: list[SourceRecord] | None = None) -> float:
+def high_trust_citation_ratio(
+    report: str, source_records: list[SourceRecord] | None = None
+) -> float:
     """统计正文实际引用中的高可信来源占比。"""
     if not report or not source_records:
         return 0.0
@@ -169,7 +179,9 @@ def high_trust_citation_ratio(report: str, source_records: list[SourceRecord] | 
         return 0.0
 
     source_index = {source.citation_id: source for source in source_records}
-    cited_sources = [source_index[citation_id] for citation_id in cited_ids if citation_id in source_index]
+    cited_sources = [
+        source_index[citation_id] for citation_id in cited_ids if citation_id in source_index
+    ]
     if not cited_sources:
         return 0.0
 
@@ -177,7 +189,9 @@ def high_trust_citation_ratio(report: str, source_records: list[SourceRecord] | 
     return round(high_trust_count / len(cited_sources), 3)
 
 
-def unsupported_core_claim_count(report: str, source_records: list[SourceRecord] | None = None) -> int:
+def unsupported_core_claim_count(
+    report: str, source_records: list[SourceRecord] | None = None
+) -> int:
     """统计缺少高可信引用支撑的核心结论段数量。"""
     if not report or not source_records:
         return 0
@@ -217,7 +231,9 @@ def weak_evidence_paragraph_count(report: str) -> int:
     )
 
 
-def case_study_strength_score(source_records: list[SourceRecord], expected_aspects: list[str]) -> float | None:
+def case_study_strength_score(
+    source_records: list[SourceRecord], expected_aspects: list[str]
+) -> float | None:
     """衡量 case-study 证据的平均强度。"""
     if not any("案例" in aspect or "case" in normalize_text(aspect) for aspect in expected_aspects):
         return None
@@ -238,7 +254,11 @@ def first_party_case_coverage_score(
     evidence_notes: list[EvidenceNote],
 ) -> float | None:
     """统计 case-study 方面中被官方/一手仓库覆盖的比例。"""
-    case_aspects = [aspect for aspect in expected_aspects if "案例" in aspect or "case" in normalize_text(aspect)]
+    case_aspects = [
+        aspect
+        for aspect in expected_aspects
+        if "案例" in aspect or "case" in normalize_text(aspect)
+    ]
     if not case_aspects:
         return None
 
@@ -247,11 +267,23 @@ def first_party_case_coverage_score(
     for aspect in case_aspects:
         related_ids: set[int] = set()
         for note in evidence_notes:
-            if normalize_text(aspect) in [normalize_text(hit) for hit in note.aspect_hits] or normalize_text(aspect) in normalize_text(note.task_title):
+            if normalize_text(aspect) in [
+                normalize_text(hit) for hit in note.aspect_hits
+            ] or normalize_text(aspect) in normalize_text(note.task_title):
                 related_ids.update(note.selected_source_ids or note.source_ids)
-        related_sources = [source for source in source_records if source.citation_id in related_ids and source.selected]
+        related_sources = [
+            source
+            for source in source_records
+            if source.citation_id in related_ids and source.selected
+        ]
         if any(
-            getattr(source, "metadata", {}).get("case_study_type") in {"official_customer_story", "official_product_blog", "official_docs_example", "first_party_repo"}
+            getattr(source, "metadata", {}).get("case_study_type")
+            in {
+                "official_customer_story",
+                "official_product_blog",
+                "official_docs_example",
+                "first_party_repo",
+            }
             for source in related_sources
         ):
             covered += 1
@@ -284,7 +316,11 @@ def case_study_quantified_ratio_score(source_records: list[SourceRecord]) -> flo
     ]
     if not case_sources:
         return None
-    quantified = sum(1 for source in case_sources if bool(getattr(source, "metadata", {}).get("has_quantitative_outcome")))
+    quantified = sum(
+        1
+        for source in case_sources
+        if bool(getattr(source, "metadata", {}).get("has_quantitative_outcome"))
+    )
     return _round_score((quantified / len(case_sources)) * 100)
 
 
@@ -307,14 +343,19 @@ def case_study_gate_margin_score(
         for source in case_sources
         if getattr(source, "trust_tier", 3) >= 4
         and bool(getattr(source, "metadata", {}).get("matches_topic_family"))
-        and float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0) >= 0.65
+        and float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0)
+        >= 0.65
     ]
     density = min(len(strong_sources) / 2, 1.0)
     avg_strength = statistics.mean(
         float(getattr(source, "metadata", {}).get("case_study_strength_score", 0.0) or 0.0)
         for source in case_sources
     )
-    status_bonus = 1.0 if quality_gate_status == "passed" else (0.5 if quality_gate_status == "needs_more_research" else 0.0)
+    status_bonus = (
+        1.0
+        if quality_gate_status == "passed"
+        else (0.5 if quality_gate_status == "needs_more_research" else 0.0)
+    )
     return _round_score((0.45 * density + 0.45 * avg_strength + 0.10 * status_bonus) * 100)
 
 
@@ -333,8 +374,14 @@ def evaluate_report(
     source_records = _coerce_sources(raw_sources)
     expected_aspects = expected_aspects or []
     notes = _coerce_notes(report_artifact.evidence_notes if report_artifact else [])
-    verification_records = _coerce_verification_records(report_artifact.verification_records if report_artifact else [])
-    memory_stats = report_artifact.memory_stats if report_artifact is not None else (memory_stats or MemoryStats())
+    verification_records = _coerce_verification_records(
+        report_artifact.verification_records if report_artifact else []
+    )
+    memory_stats = (
+        report_artifact.memory_stats
+        if report_artifact is not None
+        else (memory_stats or MemoryStats())
+    )
     runtime_metrics = (
         report_artifact.metrics
         if report_artifact is not None and runtime_metrics is None
@@ -352,20 +399,23 @@ def evaluate_report(
 
     selected_sources = [source for source in source_records if getattr(source, "selected", True)]
     selected_source_coverage = len(selected_sources) if source_records else source_coverage(report)
-    high_trust_sources = [source for source in selected_sources if getattr(source, "trust_tier", 3) >= 4]
+    high_trust_sources = [
+        source for source in selected_sources if getattr(source, "trust_tier", 3) >= 4
+    ]
     high_trust_source_ratio = (
-        round(len(high_trust_sources) / len(selected_sources), 3)
-        if selected_sources
-        else 0.0
+        round(len(high_trust_sources) / len(selected_sources), 3) if selected_sources else 0.0
     )
     off_topic_reject_count = sum(
         1
         for source in source_records
         if getattr(source, "selected", True) is False
-        and getattr(source, "rejection_reason", "") in {"off_topic", "missing_required_terms", "contains_avoid_terms"}
+        and getattr(source, "rejection_reason", "")
+        in {"off_topic", "missing_required_terms", "contains_avoid_terms"}
     )
     case_study_evidence_count = sum(
-        1 for source in selected_sources if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
+        1
+        for source in selected_sources
+        if bool(getattr(source, "metadata", {}).get("case_study_evidence"))
     )
     high_trust_case_study_count = sum(
         1
@@ -374,10 +424,14 @@ def evaluate_report(
         and getattr(source, "trust_tier", 3) >= 4
     )
     case_study_strength = case_study_strength_score(selected_sources, expected_aspects)
-    first_party_case_coverage = first_party_case_coverage_score(selected_sources, expected_aspects, notes)
+    first_party_case_coverage = first_party_case_coverage_score(
+        selected_sources, expected_aspects, notes
+    )
     official_case_ratio = official_case_ratio_score(selected_sources)
     case_study_quantified_ratio = case_study_quantified_ratio_score(selected_sources)
-    case_study_gate_margin = case_study_gate_margin_score(selected_sources, quality_gate_status=quality_gate_status)
+    case_study_gate_margin = case_study_gate_margin_score(
+        selected_sources, quality_gate_status=quality_gate_status
+    )
 
     high_trust_aspect = high_trust_aspect_score(expected_aspects, source_records, notes)
     corroboration = cross_source_corroboration_score(expected_aspects, source_records, notes)
@@ -389,7 +443,9 @@ def evaluate_report(
     structure_completeness = structure_completeness_score(report)
     novelty_score = evidence_novelty_score(memory_stats)
     support_specificity = support_specificity_score(expected_aspects, notes, source_records)
-    recovery_resilience = recovery_resilience_score(runtime_metrics, quality_gate_status=quality_gate_status)
+    recovery_resilience = recovery_resilience_score(
+        runtime_metrics, quality_gate_status=quality_gate_status
+    )
     claim_support_precision = critical_claim_support_precision(report_artifact)
     critical_claim_leakage = unsupported_critical_claim_leakage(report_artifact)
     claim_provenance = provenance_completeness(report_artifact)
@@ -527,12 +583,16 @@ def verification_strength_score(verification_records: list[VerificationRecord]) 
     return _round_score(statistics.mean(values) * 100)
 
 
-def entity_resolution_score(memory_stats: MemoryStats | None, source_records: list[SourceRecord]) -> float | None:
+def entity_resolution_score(
+    memory_stats: MemoryStats | None, source_records: list[SourceRecord]
+) -> float | None:
     """根据实体一致性和证据充分度估算实体解析强度。"""
     if memory_stats is None:
         return None
 
-    specific_count = sum(1 for source in source_records if _classify_entity_label(source) != "general")
+    specific_count = sum(
+        1 for source in source_records if _classify_entity_label(source) != "general"
+    )
     sufficiency = specific_count / (specific_count + 2) if specific_count else 0.35
     return _round_score(memory_stats.entity_consistency_score * sufficiency * 100)
 
@@ -582,13 +642,24 @@ def conflict_disclosure_score(
     if conflict_count <= 0:
         return None
 
-    disclosed_records = sum(1 for record in verification_records if record.status in {"weakly_supported", "conflicting"})
-    textual_disclosure = 1 if any(marker in report for marker in ("证据限制", "争议", "不同说法", *list(_WEAK_EVIDENCE_MARKERS))) else 0
+    disclosed_records = sum(
+        1 for record in verification_records if record.status in {"weakly_supported", "conflicting"}
+    )
+    textual_disclosure = (
+        1
+        if any(
+            marker in report
+            for marker in ("证据限制", "争议", "不同说法", *list(_WEAK_EVIDENCE_MARKERS))
+        )
+        else 0
+    )
     disclosed = max(disclosed_records, textual_disclosure)
     return _round_score(min(disclosed / conflict_count, 1.0) * 100)
 
 
-def coverage_balance_score(expected_aspects: list[str], evidence_notes: list[EvidenceNote]) -> float:
+def coverage_balance_score(
+    expected_aspects: list[str], evidence_notes: list[EvidenceNote]
+) -> float:
     """衡量不同方面的证据分布是否均衡。"""
     if not expected_aspects:
         return 0.0
@@ -650,7 +721,9 @@ def support_specificity_score(
         return None
 
     if not expected_aspects:
-        expected_aspects = sorted({hit for note in evidence_notes for hit in note.aspect_hits}) or ["overall"]
+        expected_aspects = sorted({hit for note in evidence_notes for hit in note.aspect_hits}) or [
+            "overall"
+        ]
 
     per_aspect_scores: list[float] = []
     for aspect in expected_aspects:
@@ -667,7 +740,9 @@ def support_specificity_score(
         source_density = min(avg_selected_sources / 3, 1.0)
         claim_density = min(avg_claim_count / 3, 1.0)
         aspect_alignment = aspect_bound_notes / len(matched_notes)
-        per_aspect_scores.append((0.55 * aspect_alignment + 0.25 * source_density + 0.20 * claim_density) * 100)
+        per_aspect_scores.append(
+            (0.55 * aspect_alignment + 0.25 * source_density + 0.20 * claim_density) * 100
+        )
 
     return _round_score(statistics.mean(per_aspect_scores))
 
@@ -696,7 +771,9 @@ def recovery_resilience_score(
         None: 0.5,
     }
     gate_component = gate_component_map.get(quality_gate_status, 0.5)
-    return _round_score((0.55 * tool_use_success + 0.30 * fallback_resilience + 0.15 * gate_component) * 100)
+    return _round_score(
+        (0.55 * tool_use_success + 0.30 * fallback_resilience + 0.15 * gate_component) * 100
+    )
 
 
 def _body_paragraphs(report: str) -> list[str]:

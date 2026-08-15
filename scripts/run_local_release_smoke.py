@@ -13,9 +13,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from deep_research_agent.evals import EVAL_SUITE_NAMES, run_eval_suite
 from deep_research_agent.gateway.api import create_app
 from deep_research_agent.gateway.cli import build_parser
-from scripts.release_gate import build_release_gate_evidence, evaluate_release_gate, load_release_gate_config
-from scripts.run_benchmark import build_benchmark_summary
 from legacy.evaluation.comparators import load_topics
+from scripts.release_gate import (
+    build_release_gate_evidence,
+    evaluate_release_gate,
+    load_release_gate_config,
+)
+from scripts.run_benchmark import build_benchmark_summary
 
 FROZEN_RELEASE_TIMESTAMP = "2026-04-21T00:00:00+00:00"
 
@@ -25,7 +29,9 @@ def run_release_smoke(*, output_root: str | Path) -> dict[str, Any]:
     resolved_output_root.mkdir(parents=True, exist_ok=True)
 
     suite_summaries = {
-        suite_name: run_eval_suite(suite_name=suite_name, output_root=resolved_output_root / suite_name)
+        suite_name: run_eval_suite(
+            suite_name=suite_name, output_root=resolved_output_root / suite_name
+        )
         for suite_name in EVAL_SUITE_NAMES
     }
     diagnostics = {
@@ -142,7 +148,9 @@ def main() -> None:
     if args.json:
         print(json.dumps(manifest, ensure_ascii=False, indent=2))
     else:
-        print(f"release smoke: {manifest['release_gate']['status']} -> {Path(args.output_root).resolve() / 'release_manifest.json'}")
+        print(
+            f"release smoke: {manifest['release_gate']['status']} -> {Path(args.output_root).resolve() / 'release_manifest.json'}"
+        )
 
 
 if __name__ == "__main__":

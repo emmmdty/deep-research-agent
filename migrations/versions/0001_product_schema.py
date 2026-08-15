@@ -8,7 +8,6 @@ from alembic import op
 
 from deep_research_agent.product.tables import Base
 
-
 revision = "0001_product_schema"
 down_revision = None
 branch_labels = None

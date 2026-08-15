@@ -21,8 +21,9 @@ research reports.
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 from deep_research_agent.kernel.contracts import (
     ArtifactRef,
@@ -32,7 +33,9 @@ from deep_research_agent.kernel.contracts import (
 
 _MARKER_RE = re.compile(r"\[\[claim:([^\]]+)\]\]")
 _REFERENCES_HEADING_RE = re.compile(r"^#{1,6}[ \t]+references[ \t]*$", re.IGNORECASE | re.MULTILINE)
-_REGISTER_HEADING_RE = re.compile(r"^#{1,6}[ \t]+claim[ \t]+register[ \t]*$", re.IGNORECASE | re.MULTILINE)
+_REGISTER_HEADING_RE = re.compile(
+    r"^#{1,6}[ \t]+claim[ \t]+register[ \t]*$", re.IGNORECASE | re.MULTILINE
+)
 # Minimum normalized claim length before the verbatim matcher will trust a
 # substring hit; short phrases match too broadly to be reliable.
 _MIN_VERBATIM_CLAIM_CHARS = 24
@@ -115,9 +118,7 @@ class CitationInjector:
             cited.update(verbatim_cited)
 
         report_markdown = self._append_references(report_markdown, source_by_document)
-        report_markdown = self._append_claim_register(
-            report_markdown, supported, claim_numbers
-        )
+        report_markdown = self._append_claim_register(report_markdown, supported, claim_numbers)
         return self._result(
             report_markdown, cited, marker_cited, verbatim_cited, dropped_markers, supported
         )
@@ -213,12 +214,7 @@ class CitationInjector:
             if insertion is None:
                 continue
             numbers = claim_numbers[claim_id]
-            working = (
-                working[:insertion]
-                + " "
-                + _render_marker(numbers)
-                + working[insertion:]
-            )
+            working = working[:insertion] + " " + _render_marker(numbers) + working[insertion:]
             cited.add(claim_id)
             cited_sentence_spans.append((match.start(), insertion))
         return working, cited

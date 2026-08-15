@@ -9,9 +9,10 @@ from typing import Any
 from deep_research_agent.evals.contracts import EVAL_SUITE_NAMES
 from deep_research_agent.evals.runner import run_eval_suite
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-SMOKE_MANIFEST_PATH = PROJECT_ROOT / "evals" / "reports" / "phase5_local_smoke" / "release_manifest.json"
+SMOKE_MANIFEST_PATH = (
+    PROJECT_ROOT / "evals" / "reports" / "phase5_local_smoke" / "release_manifest.json"
+)
 NATIVE_REPORTS_RELATIVE_ROOT = Path("evals") / "reports" / "native_regression"
 NATIVE_DOCS_RELATIVE_ROOT = Path("docs") / "benchmarks" / "native"
 FROZEN_NATIVE_REGRESSION_TIMESTAMP = "2026-04-22T00:00:00+00:00"
@@ -85,8 +86,10 @@ def run_native_regression(*, output_root: str | Path) -> dict[str, Any]:
             )
         suite_summaries[suite_name] = summary
 
-    suite_variants = {suite_name: REGRESSION_VARIANT for suite_name in EVAL_SUITE_NAMES}
-    suite_statuses = {suite_name: summary["status"] for suite_name, summary in suite_summaries.items()}
+    suite_variants = dict.fromkeys(EVAL_SUITE_NAMES, REGRESSION_VARIANT)
+    suite_statuses = {
+        suite_name: summary["status"] for suite_name, summary in suite_summaries.items()
+    }
     status = "passed" if all(value == "passed" for value in suite_statuses.values()) else "failed"
     manifest = {
         "generated_at": FROZEN_NATIVE_REGRESSION_TIMESTAMP,
@@ -95,7 +98,8 @@ def run_native_regression(*, output_root: str | Path) -> dict[str, Any]:
         "suite_order": list(EVAL_SUITE_NAMES),
         "suite_variants": suite_variants,
         "smoke_baseline_task_counts": {
-            suite_name: int(smoke_manifest["suites"][suite_name]["task_count"]) for suite_name in EVAL_SUITE_NAMES
+            suite_name: int(smoke_manifest["suites"][suite_name]["task_count"])
+            for suite_name in EVAL_SUITE_NAMES
         },
         "regression_target_task_counts": dict(TARGET_TASK_COUNTS),
         "authoritative_merge_gate": {
@@ -126,7 +130,9 @@ def run_native_regression(*, output_root: str | Path) -> dict[str, Any]:
     return manifest
 
 
-def build_native_benchmark_summary(*, reports_root: str | Path, docs_root: str | Path) -> dict[str, Any]:
+def build_native_benchmark_summary(
+    *, reports_root: str | Path, docs_root: str | Path
+) -> dict[str, Any]:
     """Build reviewer-facing native benchmark docs and machine-readable summary."""
 
     resolved_reports_root = Path(reports_root).resolve()
@@ -144,7 +150,9 @@ def build_native_benchmark_summary(*, reports_root: str | Path, docs_root: str |
             "target_task_count": TARGET_TASK_COUNTS[suite_name],
             "status": manifest["suites"][suite_name]["status"],
             "purpose": SUITE_PURPOSES[suite_name],
-            "key_metrics": _select_suite_metrics(suite_name, manifest["suites"][suite_name]["metrics"]),
+            "key_metrics": _select_suite_metrics(
+                suite_name, manifest["suites"][suite_name]["metrics"]
+            ),
         }
         for suite_name in EVAL_SUITE_NAMES
     }
@@ -184,7 +192,9 @@ def build_native_benchmark_summary(*, reports_root: str | Path, docs_root: str |
     scorecard_path = resolved_docs_root / "NATIVE_SCORECARD.md"
     casebook_path = resolved_docs_root / "CASEBOOK.md"
 
-    native_summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    native_summary_path.write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     readme_path.write_text(_render_native_readme(summary), encoding="utf-8")
     scorecard_path.write_text(_render_native_scorecard(summary), encoding="utf-8")
     casebook_path.write_text(_render_casebook(summary), encoding="utf-8")
@@ -220,14 +230,19 @@ def _select_casebook_cases(manifest: dict[str, Any]) -> list[dict[str, Any]]:
             case = {
                 "suite_name": suite_name,
                 "task_id": selected_id,
-                "description": task.get("description") or task.get("topic") or task.get("title") or selected_id,
+                "description": task.get("description")
+                or task.get("topic")
+                or task.get("title")
+                or selected_id,
                 "key_metrics": _case_metrics_for_suite(suite_name, suite, task),
                 "conclusion": _case_conclusion_for_suite(suite_name, task),
             }
             if suite_name == "recovery6":
                 case["report_path"] = "not applicable for reliability case"
                 case["bundle_path"] = "not applicable for reliability case"
-                case["summary_path"] = suite.get("summary_path", "evals/reports/native_regression/recovery6/summary.json")
+                case["summary_path"] = suite.get(
+                    "summary_path", "evals/reports/native_regression/recovery6/summary.json"
+                )
             else:
                 case["report_path"] = task["report_path"]
                 case["bundle_path"] = task["bundle_path"]
@@ -235,7 +250,9 @@ def _select_casebook_cases(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     return cases
 
 
-def _case_metrics_for_suite(suite_name: str, suite: dict[str, Any], task: dict[str, Any]) -> dict[str, Any]:
+def _case_metrics_for_suite(
+    suite_name: str, suite: dict[str, Any], task: dict[str, Any]
+) -> dict[str, Any]:
     if suite_name == "recovery6":
         return {
             "passed": bool(task.get("passed", False)),
@@ -247,7 +264,12 @@ def _case_metrics_for_suite(suite_name: str, suite: dict[str, Any], task: dict[s
         "company12": ("completion_rate", "bundle_emission_rate", "policy_compliance_rate"),
         "industry12": ("completion_rate", "bundle_emission_rate", "policy_compliance_rate"),
         "trusted8": ("completion_rate", "bundle_emission_rate", "policy_compliance_rate"),
-        "file8": ("completion_rate", "bundle_emission_rate", "file_input_success_rate", "policy_compliance_rate"),
+        "file8": (
+            "completion_rate",
+            "bundle_emission_rate",
+            "file_input_success_rate",
+            "policy_compliance_rate",
+        ),
     }
     return {
         key: task_metrics[key]
@@ -257,7 +279,13 @@ def _case_metrics_for_suite(suite_name: str, suite: dict[str, Any], task: dict[s
 
 
 def _case_conclusion_for_suite(suite_name: str, task: dict[str, Any]) -> str:
-    description = task.get("description") or task.get("topic") or task.get("title") or task.get("task_id") or task.get("scenario_id")
+    description = (
+        task.get("description")
+        or task.get("topic")
+        or task.get("title")
+        or task.get("task_id")
+        or task.get("scenario_id")
+    )
     if suite_name == "recovery6":
         return "This reliability case shows the control plane can clear stale worker state and resume deterministically without a report artifact."
     return f"{description} emits a grounded report bundle from deterministic native fixtures."
@@ -335,7 +363,15 @@ def _render_native_scorecard(summary: dict[str, Any]) -> str:
     lines.extend(["", "## What regression_local proves", ""])
     for item in summary["regression_layer"]["what_regression_local_proves"]:
         lines.append(f"- {item}")
-    lines.extend(["", "## Suite Matrix", "", "| Suite | smoke_local | regression_local | status | What it adds |", "| --- | ---: | ---: | --- | --- |"])
+    lines.extend(
+        [
+            "",
+            "## Suite Matrix",
+            "",
+            "| Suite | smoke_local | regression_local | status | What it adds |",
+            "| --- | ---: | ---: | --- | --- |",
+        ]
+    )
     for suite_name in EVAL_SUITE_NAMES:
         row = summary["suite_matrix"][suite_name]
         lines.append(
@@ -345,7 +381,9 @@ def _render_native_scorecard(summary: dict[str, Any]) -> str:
     lines.extend(["", "## What is still not covered", ""])
     for item in summary["coverage"]["still_not_covered"]:
         lines.append(f"- {item}")
-    lines.extend(["", "## Why this benchmark is authoritative for this repo's product boundary", ""])
+    lines.extend(
+        ["", "## Why this benchmark is authoritative for this repo's product boundary", ""]
+    )
     for item in summary["authoritative_for_repo_boundary"]:
         lines.append(f"- {item}")
     lines.extend(

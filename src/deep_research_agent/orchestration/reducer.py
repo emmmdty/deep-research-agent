@@ -94,17 +94,23 @@ class EvidenceReducer:
                     left.claim.casefold() == right.claim.casefold()
                     and left.claim_type == right.claim_type
                 )
-                if related and (
-                    left.support_status != right.support_status
-                    or left.claim.casefold() != right.claim.casefold()
-                ) and (left.claim_id, right.claim_id) not in resolved_pairs:
+                if (
+                    related
+                    and (
+                        left.support_status != right.support_status
+                        or left.claim.casefold() != right.claim.casefold()
+                    )
+                    and (left.claim_id, right.claim_id) not in resolved_pairs
+                ):
                     disagreements.add((left.claim_id, right.claim_id))
 
         return ReducedEvidence(
             packet_ids=tuple(sorted(packet_by_id)),
             evidence_spans=tuple(span_by_id[key] for key in sorted(span_by_id)),
             claims=tuple(claim_by_id[key] for key in sorted(claim_by_id)),
-            artifacts=tuple(sorted(artifact_by_content.values(), key=lambda item: item.artifact_id)),
+            artifacts=tuple(
+                sorted(artifact_by_content.values(), key=lambda item: item.artifact_id)
+            ),
             semantic_disagreements=sorted(disagreements),
             critic_decisions=tuple(decision_by_id[key] for key in sorted(decision_by_id)),
         )

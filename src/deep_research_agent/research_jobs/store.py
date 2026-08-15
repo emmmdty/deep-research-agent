@@ -26,7 +26,9 @@ class WorkerLeaseConflict(RuntimeError):
 class ResearchJobStore:
     """负责 research job runtime record、event 与 checkpoint 的持久化。"""
 
-    def __init__(self, workspace_dir: str = "workspace", runtime_dirname: str = "research_jobs") -> None:
+    def __init__(
+        self, workspace_dir: str = "workspace", runtime_dirname: str = "research_jobs"
+    ) -> None:
         self.workspace_root = Path(workspace_dir)
         self.root = self.workspace_root / runtime_dirname
         self.root.mkdir(parents=True, exist_ok=True)
@@ -90,10 +92,7 @@ class ResearchJobStore:
                 )
                 """
             )
-            columns = {
-                row["name"]
-                for row in conn.execute("PRAGMA table_info(jobs)").fetchall()
-            }
+            columns = {row["name"] for row in conn.execute("PRAGMA table_info(jobs)").fetchall()}
             if "source_profile" not in columns:
                 conn.execute(
                     f"ALTER TABLE jobs ADD COLUMN source_profile TEXT NOT NULL DEFAULT '{DEFAULT_SOURCE_PROFILE}'"
@@ -101,19 +100,33 @@ class ResearchJobStore:
             if "budget_json" not in columns:
                 conn.execute("ALTER TABLE jobs ADD COLUMN budget_json TEXT NOT NULL DEFAULT '{}'")
             if "policy_overrides_json" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN policy_overrides_json TEXT NOT NULL DEFAULT '{}'")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN policy_overrides_json TEXT NOT NULL DEFAULT '{}'"
+                )
             if "connector_health_json" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN connector_health_json TEXT NOT NULL DEFAULT '{}'")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN connector_health_json TEXT NOT NULL DEFAULT '{}'"
+                )
             if "audit_gate_status" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN audit_gate_status TEXT NOT NULL DEFAULT 'unchecked'")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN audit_gate_status TEXT NOT NULL DEFAULT 'unchecked'"
+                )
             if "critical_claim_count" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN critical_claim_count INTEGER NOT NULL DEFAULT 0")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN critical_claim_count INTEGER NOT NULL DEFAULT 0"
+                )
             if "blocked_critical_claim_count" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN blocked_critical_claim_count INTEGER NOT NULL DEFAULT 0")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN blocked_critical_claim_count INTEGER NOT NULL DEFAULT 0"
+                )
             if "audit_graph_path" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN audit_graph_path TEXT NOT NULL DEFAULT ''")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN audit_graph_path TEXT NOT NULL DEFAULT ''"
+                )
             if "review_queue_path" not in columns:
-                conn.execute("ALTER TABLE jobs ADD COLUMN review_queue_path TEXT NOT NULL DEFAULT ''")
+                conn.execute(
+                    "ALTER TABLE jobs ADD COLUMN review_queue_path TEXT NOT NULL DEFAULT ''"
+                )
             conn.execute(
                 """
                 CREATE TABLE IF NOT EXISTS job_checkpoints (
@@ -256,18 +269,35 @@ class ResearchJobStore:
                 WHERE job_id=? AND worker_lease_id=?
                 """,
                 (
-                    dumped["topic"], dumped["status"], dumped["current_stage"], dumped["created_at"],
-                    dumped["updated_at"], dumped["attempt_index"], dumped.get("retry_of"),
-                    int(dumped["cancel_requested"]), dumped.get("worker_pid"), dumped.get("worker_lease_id"),
-                    dumped.get("last_heartbeat_at"), dumped.get("active_checkpoint_id"), dumped["report_path"],
-                    dumped["report_bundle_path"], dumped["trace_path"], dumped["runtime_path"],
-                    dumped["source_profile"], json.dumps(dumped.get("budget") or {}, ensure_ascii=False),
+                    dumped["topic"],
+                    dumped["status"],
+                    dumped["current_stage"],
+                    dumped["created_at"],
+                    dumped["updated_at"],
+                    dumped["attempt_index"],
+                    dumped.get("retry_of"),
+                    int(dumped["cancel_requested"]),
+                    dumped.get("worker_pid"),
+                    dumped.get("worker_lease_id"),
+                    dumped.get("last_heartbeat_at"),
+                    dumped.get("active_checkpoint_id"),
+                    dumped["report_path"],
+                    dumped["report_bundle_path"],
+                    dumped["trace_path"],
+                    dumped["runtime_path"],
+                    dumped["source_profile"],
+                    json.dumps(dumped.get("budget") or {}, ensure_ascii=False),
                     json.dumps(dumped.get("policy_overrides") or {}, ensure_ascii=False),
                     json.dumps(dumped.get("connector_health") or {}, ensure_ascii=False),
-                    dumped.get("audit_gate_status", "unchecked"), int(dumped.get("critical_claim_count", 0)),
-                    int(dumped.get("blocked_critical_claim_count", 0)), dumped.get("audit_graph_path", ""),
-                    dumped.get("review_queue_path", ""), dumped.get("error"),
-                    json.dumps(dumped.get("metadata") or {}, ensure_ascii=False), job_id, lease_id,
+                    dumped.get("audit_gate_status", "unchecked"),
+                    int(dumped.get("critical_claim_count", 0)),
+                    int(dumped.get("blocked_critical_claim_count", 0)),
+                    dumped.get("audit_graph_path", ""),
+                    dumped.get("review_queue_path", ""),
+                    dumped.get("error"),
+                    json.dumps(dumped.get("metadata") or {}, ensure_ascii=False),
+                    job_id,
+                    lease_id,
                 ),
             )
             if cursor.rowcount != 1:
@@ -320,7 +350,9 @@ class ResearchJobStore:
             current = self._row_to_job(row)
             if current.status not in ACTIVE_JOB_STATUSES:
                 raise WorkerLeaseConflict(f"job {job_id} 已不处于 active 状态: {current.status}")
-            has_other_lease = current.worker_lease_id is not None and current.worker_lease_id != lease_id
+            has_other_lease = (
+                current.worker_lease_id is not None and current.worker_lease_id != lease_id
+            )
             stale = self._is_stale_lease(current.last_heartbeat_at, stale_before)
             if has_other_lease and not stale:
                 raise WorkerLeaseConflict(f"job {job_id} 已被 lease {current.worker_lease_id} 持有")
@@ -396,7 +428,9 @@ class ResearchJobStore:
         with self._connect() as conn:
             return self._next_event_sequence(conn, job_id)
 
-    def append_event(self, event: JobProgressEvent, *, lease_id: str | None = None) -> JobProgressEvent:
+    def append_event(
+        self, event: JobProgressEvent, *, lease_id: str | None = None
+    ) -> JobProgressEvent:
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
             if lease_id is not None:
@@ -465,7 +499,9 @@ class ResearchJobStore:
         with self._connect() as conn:
             return self._next_checkpoint_sequence(conn, job_id)
 
-    def save_checkpoint(self, checkpoint: JobCheckpoint, *, lease_id: str | None = None) -> JobCheckpoint:
+    def save_checkpoint(
+        self, checkpoint: JobCheckpoint, *, lease_id: str | None = None
+    ) -> JobCheckpoint:
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
             if lease_id is not None:
@@ -485,8 +521,12 @@ class ResearchJobStore:
             )
             payload = stored.model_dump(mode="json")
             validate_instance("job-checkpoint", payload)
-            checkpoint_path = self.checkpoint_dir(stored.job_id) / f"{stored.sequence:04d}-{stored.stage}.json"
-            checkpoint_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+            checkpoint_path = (
+                self.checkpoint_dir(stored.job_id) / f"{stored.sequence:04d}-{stored.stage}.json"
+            )
+            checkpoint_path.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
             conn.execute(
                 """
                 INSERT INTO job_checkpoints (
@@ -506,7 +546,9 @@ class ResearchJobStore:
             )
         return stored
 
-    def save_scheduler_checkpoints(self, job_id: str, payload: list[dict], *, lease_id: str | None = None) -> Path:
+    def save_scheduler_checkpoints(
+        self, job_id: str, payload: list[dict], *, lease_id: str | None = None
+    ) -> Path:
         """Write the scheduler sidecar while holding the lease-fenced DB lock."""
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
@@ -528,7 +570,9 @@ class ResearchJobStore:
                     "SELECT worker_lease_id FROM jobs WHERE job_id = ?", (job_id,)
                 ).fetchone()
                 if row["worker_lease_id"] != lease_id:
-                    raise WorkerLeaseConflict(f"job {job_id} lease changed during checkpoint mutation")
+                    raise WorkerLeaseConflict(
+                        f"job {job_id} lease changed during checkpoint mutation"
+                    )
         return checkpoint_path
 
     def _next_checkpoint_sequence(self, conn: sqlite3.Connection, job_id: str) -> int:

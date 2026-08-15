@@ -10,7 +10,6 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, Field
 
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG_PATH = PROJECT_ROOT / "configs" / "release_gate.yaml"
 BENCHMARK_CATEGORY = "benchmark_diagnostics"
@@ -155,7 +154,9 @@ def build_release_gate_evidence(
                 "status": "passed" if _suite_passed(summary) else "failed",
                 "resume_success_rate": summary.get("metrics", {}).get("resume_success_rate"),
                 "retry_success_rate": summary.get("metrics", {}).get("retry_success_rate"),
-                "stale_recovery_success_rate": summary.get("metrics", {}).get("stale_recovery_success_rate"),
+                "stale_recovery_success_rate": summary.get("metrics", {}).get(
+                    "stale_recovery_success_rate"
+                ),
             },
         )
 
@@ -227,7 +228,9 @@ def _audit_suite_status(suite_summaries: dict[str, dict[str, Any]]) -> dict[str,
     metrics = []
     for summary in (company, industry):
         metrics.append(summary.get("metrics", {}))
-    support_precision = min(float(metric.get("critical_claim_support_precision", 0.0)) for metric in metrics)
+    support_precision = min(
+        float(metric.get("critical_claim_support_precision", 0.0)) for metric in metrics
+    )
     citation_error_rate = max(float(metric.get("citation_error_rate", 1.0)) for metric in metrics)
     passed = (
         _suite_passed(company)

@@ -20,7 +20,14 @@ __all__ = [
 
 
 def __getattr__(name: str):
-    if name in {"ProviderCapabilities", "ProviderProfile", "ProviderRouteRequest", "ProviderSelection", "ProviderType", "RoutingMode"}:
+    if name in {
+        "ProviderCapabilities",
+        "ProviderProfile",
+        "ProviderRouteRequest",
+        "ProviderSelection",
+        "ProviderType",
+        "RoutingMode",
+    }:
         module = import_module("deep_research_agent.providers.models")
         return getattr(module, name)
     if name == "ProviderRouter":

@@ -46,20 +46,14 @@ def _task(task_id: str = "research-01-concurrency") -> TaskSpec:
 def _tool_call(call_id: str, name: str, arguments: dict) -> SimpleNamespace:
     return SimpleNamespace(
         id=call_id,
-        function=SimpleNamespace(
-            name=name, arguments=json.dumps(arguments, ensure_ascii=False)
-        ),
+        function=SimpleNamespace(name=name, arguments=json.dumps(arguments, ensure_ascii=False)),
     )
 
 
 def _completion(tool_calls=None, content=None) -> SimpleNamespace:
     return SimpleNamespace(
         usage=SimpleNamespace(prompt_tokens=7, completion_tokens=3),
-        choices=[
-            SimpleNamespace(
-                message=SimpleNamespace(content=content, tool_calls=tool_calls)
-            )
-        ],
+        choices=[SimpleNamespace(message=SimpleNamespace(content=content, tool_calls=tool_calls))],
     )
 
 
@@ -220,7 +214,9 @@ async def test_tool_loop_serial_and_parallel_transcripts_are_byte_identical(monk
     async def run(limit: int) -> str:
         monkeypatch.setattr(llm_module, "_MAX_PARALLEL_TOOL_CALLS", limit)
         probe = _ToolProbe()
-        chat = _tool_loop_chat([_completion(tool_calls=_proposed_calls()), _completion(content="done")])
+        chat = _tool_loop_chat(
+            [_completion(tool_calls=_proposed_calls()), _completion(content="done")]
+        )
         await chat.tool_loop(
             system="sys",
             user="user",
@@ -335,7 +331,9 @@ def _gather_fixture() -> tuple[dict[str, object], list[dict[str, str]]]:
 
 
 @pytest.mark.asyncio
-async def test_gather_queries_bounded_concurrency_with_serial_identical_sources(monkeypatch) -> None:
+async def test_gather_queries_bounded_concurrency_with_serial_identical_sources(
+    monkeypatch,
+) -> None:
     async def run(limit: int) -> tuple[list[dict], dict, _AsyncGateway]:
         monkeypatch.setattr(researcher_module, "_MAX_PARALLEL_TOOL_CALLS", limit)
         responses, queries = _gather_fixture()
@@ -359,9 +357,7 @@ async def test_gather_queries_bounded_concurrency_with_serial_identical_sources(
     assert json.dumps(concurrent_sources, sort_keys=True) == json.dumps(
         serial_sources, sort_keys=True
     )
-    assert json.dumps(concurrent_stats, sort_keys=True) == json.dumps(
-        serial_stats, sort_keys=True
-    )
+    assert json.dumps(concurrent_stats, sort_keys=True) == json.dumps(serial_stats, sort_keys=True)
     urls = [source["url"] for source in concurrent_sources]
     assert urls == [
         "https://example.com/a/1",
@@ -445,9 +441,7 @@ async def test_fetch_pages_bounded_concurrency_with_serial_identical_pages(monke
         monkeypatch.setattr(researcher_module, "_MAX_PARALLEL_TOOL_CALLS", limit)
         gateway = _AsyncGateway(responses)
         worker = LLMResearcherWorker()
-        pages, available = await worker._fetch_pages(
-            _task(), _ProbeContext(gateway), urls, {}
-        )
+        pages, available = await worker._fetch_pages(_task(), _ProbeContext(gateway), urls, {})
         assert available is True
         return pages, gateway
 
@@ -455,15 +449,13 @@ async def test_fetch_pages_bounded_concurrency_with_serial_identical_pages(monke
     concurrent_pages, gateway = await run(2)
 
     assert gateway.max_active == 2
-    assert json.dumps(concurrent_pages, sort_keys=True) == json.dumps(
-        serial_pages, sort_keys=True
-    )
+    assert json.dumps(concurrent_pages, sort_keys=True) == json.dumps(serial_pages, sort_keys=True)
     chunks_per_page = len(serial_pages) // len(urls)
     assert chunks_per_page == 2
     assert [page["url"] for page in concurrent_pages] == [
         url for url in urls for _ in range(chunks_per_page)
     ]
-    for page, expected_index in zip(concurrent_pages, (0, 1) * len(urls)):
+    for page, expected_index in zip(concurrent_pages, (0, 1) * len(urls), strict=True):
         assert page["chunk_index"] == expected_index
 
 
@@ -560,7 +552,11 @@ async def test_agentic_worker_concurrent_run_matches_serial_byte_for_byte(monkey
         gateway = ScriptedGateway({"web_search": [snippet]})
         chat = FakeToolChat(
             [
-                {"plan_queries": {"queries": [{"query": "agents tools 2026", "tool": "web_search"}]}},
+                {
+                    "plan_queries": {
+                        "queries": [{"query": "agents tools 2026", "tool": "web_search"}]
+                    }
+                },
                 {"assess_coverage": {"covered": True, "gaps": []}},
                 {"select_pages": {"urls": []}},
                 {
@@ -589,7 +585,8 @@ async def test_agentic_worker_concurrent_run_matches_serial_byte_for_byte(monkey
                     claim.model_dump() for claim in output.result.evidence_packets[0].claims
                 ],
                 "artifacts": [
-                    artifact.model_dump() for artifact in output.result.evidence_packets[0].artifacts
+                    artifact.model_dump()
+                    for artifact in output.result.evidence_packets[0].artifacts
                 ],
             },
             sort_keys=True,
@@ -658,7 +655,9 @@ def test_match_quotes_agrees_with_substring_path_without_matcher() -> None:
     quotes = ["alpha beta", "gamma", "", "alpha", "partly present phrase", "absent"]
     text = "the alpha beta and gamma strings contain alpha; the partly present phrase ends here."
     expected = {index: (quote in text) for index, quote in enumerate(quotes)}
-    assert match_quotes(None, [(index, quote) for index, quote in enumerate(quotes)], text) == expected
+    assert (
+        match_quotes(None, [(index, quote) for index, quote in enumerate(quotes)], text) == expected
+    )
 
 
 def test_match_quotes_agrees_with_substring_path_with_ac_index(monkeypatch) -> None:
@@ -668,7 +667,10 @@ def test_match_quotes_agrees_with_substring_path_with_ac_index(monkeypatch) -> N
     matcher = build_verbatim_matcher(quotes)
     assert matcher is not None
     expected = {index: (quote in text) for index, quote in enumerate(quotes)}
-    assert match_quotes(matcher, [(index, quote) for index, quote in enumerate(quotes)], text) == expected
+    assert (
+        match_quotes(matcher, [(index, quote) for index, quote in enumerate(quotes)], text)
+        == expected
+    )
 
 
 def test_real_ahocorasick_matcher_agrees_with_substring_path() -> None:
@@ -680,7 +682,10 @@ def test_real_ahocorasick_matcher_agrees_with_substring_path() -> None:
     if matcher is None:
         pytest.skip("build_verbatim_matcher did not detect the installed package")
     expected = {index: (quote in text) for index, quote in enumerate(quotes)}
-    assert match_quotes(matcher, [(index, quote) for index, quote in enumerate(quotes)], text) == expected
+    assert (
+        match_quotes(matcher, [(index, quote) for index, quote in enumerate(quotes)], text)
+        == expected
+    )
 
 
 def _reference_best_verbatim_span(
@@ -706,7 +711,10 @@ def _reference_best_verbatim_span(
     [
         ("agents use tools", "The report says agents use tools everywhere."),
         ("agents use tools", "The report says agents use tools everywhere. " * 5),
-        ("a quite long quote that drifts at the end!", "prefix a quite long quote that drifts at the end."),
+        (
+            "a quite long quote that drifts at the end!",
+            "prefix a quite long quote that drifts at the end.",
+        ),
         ("partially matching tail", "the partially matching tail is here but the rest drifts"),
         ("no overlap whatsoever", "completely unrelated source text"),
         ("x", "short quote below min length"),
@@ -714,7 +722,9 @@ def _reference_best_verbatim_span(
         ("capital Case", "capital case mismatch is not a verbatim match"),
     ],
 )
-def test_best_verbatim_span_identical_with_and_without_ac_index(monkeypatch, quote, source_text) -> None:
+def test_best_verbatim_span_identical_with_and_without_ac_index(
+    monkeypatch, quote, source_text
+) -> None:
     _install_missing_ahocorasick(monkeypatch)
     spans_without = LLMResearcherWorker._best_verbatim_span(quote, source_text)
     _install_fake_ahocorasick(monkeypatch)
@@ -724,7 +734,12 @@ def test_best_verbatim_span_identical_with_and_without_ac_index(monkeypatch, quo
 
 def test_auditor_quote_containment_identical_with_ac_index(monkeypatch) -> None:
     from deep_research_agent.auditor.semantic import EvidenceAuditor
-    from deep_research_agent.kernel.contracts import ArtifactRef, ClaimRecord, CorpusManifest, EvidenceSpan
+    from deep_research_agent.kernel.contracts import (
+        ArtifactRef,
+        ClaimRecord,
+        CorpusManifest,
+        EvidenceSpan,
+    )
 
     document_text = "The 2026 report states agents use tools and memory with high confidence."
     manifest = CorpusManifest(
@@ -786,17 +801,26 @@ def test_auditor_quote_containment_identical_with_ac_index(monkeypatch) -> None:
     _install_fake_ahocorasick(monkeypatch)
     indexed = audit()
 
-    assert indexed == plain == {
-        "accepted": [],
-        "qualified": ["claim-concurrency"],
-        "unsupported": [],
-        "degradations": {"claim-concurrency": "quote_not_contained_in_document"},
-    }
+    assert (
+        indexed
+        == plain
+        == {
+            "accepted": [],
+            "qualified": ["claim-concurrency"],
+            "unsupported": [],
+            "degradations": {"claim-concurrency": "quote_not_contained_in_document"},
+        }
+    )
 
 
 def test_auditor_quote_containment_keeps_contained_quotes_with_ac_index(monkeypatch) -> None:
     from deep_research_agent.auditor.semantic import EvidenceAuditor
-    from deep_research_agent.kernel.contracts import ArtifactRef, ClaimRecord, CorpusManifest, EvidenceSpan
+    from deep_research_agent.kernel.contracts import (
+        ArtifactRef,
+        ClaimRecord,
+        CorpusManifest,
+        EvidenceSpan,
+    )
 
     document_text = "The 2026 report states agents use tools and memory with high confidence."
     manifest = CorpusManifest(
@@ -856,7 +880,11 @@ def test_auditor_quote_containment_keeps_contained_quotes_with_ac_index(monkeypa
     _install_fake_ahocorasick(monkeypatch)
     indexed = audit()
 
-    assert indexed == plain == {
-        "accepted": ["claim-concurrency"],
-        "degradations": {},
-    }
+    assert (
+        indexed
+        == plain
+        == {
+            "accepted": ["claim-concurrency"],
+            "degradations": {},
+        }
+    )

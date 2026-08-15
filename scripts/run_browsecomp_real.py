@@ -29,7 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from scripts.live_benchmark_runner import (  # noqa: E402
+from scripts.live_benchmark_runner import (
     BROWSECOMP_JUDGE_SYSTEM,
     run_live_benchmark,
 )
@@ -38,9 +38,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = (
     PROJECT_ROOT / "evals" / "external" / "dataset_manifests" / "browsecomp_sample15.json"
 )
-DEFAULT_OUT_DIR = (
-    PROJECT_ROOT / "evals" / "reports" / "live_benchmarks" / "browsecomp_real"
-)
+DEFAULT_OUT_DIR = PROJECT_ROOT / "evals" / "reports" / "live_benchmarks" / "browsecomp_real"
 
 
 def _build_parser() -> argparse.ArgumentParser:

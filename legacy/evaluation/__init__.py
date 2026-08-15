@@ -14,7 +14,13 @@ __all__ = [
 
 
 def __getattr__(name: str):
-    if name in {"BenchmarkTopic", "ComparatorResult", "load_topics", "resolve_comparators", "run_comparator"}:
+    if name in {
+        "BenchmarkTopic",
+        "ComparatorResult",
+        "load_topics",
+        "resolve_comparators",
+        "run_comparator",
+    }:
         from ..evaluation.comparators import (
             BenchmarkTopic,
             ComparatorResult,

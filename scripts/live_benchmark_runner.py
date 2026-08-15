@@ -28,27 +28,27 @@ from uuid import uuid4
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from configs.settings import get_settings  # noqa: E402
-from loguru import logger  # noqa: E402
+from loguru import logger
 
-from deep_research_agent.agents.factory import MultiRoleWorker, build_gateway  # noqa: E402
-from deep_research_agent.agents.critic import LLMCriticWorker  # noqa: E402
-from deep_research_agent.agents.llm import LLMChat  # noqa: E402
-from deep_research_agent.agents.planner import LLMResearchPlanner  # noqa: E402
-from deep_research_agent.agents.researcher import LLMResearcherWorker  # noqa: E402
-from deep_research_agent.domain_packs.registry import DomainPackRegistry  # noqa: E402
-from deep_research_agent.kernel.contracts import (  # noqa: E402
+from configs.settings import get_settings
+from deep_research_agent.agents.critic import LLMCriticWorker
+from deep_research_agent.agents.factory import MultiRoleWorker, build_gateway
+from deep_research_agent.agents.llm import LLMChat
+from deep_research_agent.agents.planner import LLMResearchPlanner
+from deep_research_agent.agents.researcher import LLMResearcherWorker
+from deep_research_agent.domain_packs.registry import DomainPackRegistry
+from deep_research_agent.kernel.contracts import (
     CorpusManifest,
     ResearchBrief,
     ResearchGraph,
 )
-from deep_research_agent.observability.cost_tracker import get_tracker  # noqa: E402
-from deep_research_agent.orchestration.dag import ResearchPlanner  # noqa: E402
-from deep_research_agent.orchestration.scheduler import (  # noqa: E402
+from deep_research_agent.observability.cost_tracker import get_tracker
+from deep_research_agent.orchestration.dag import ResearchPlanner
+from deep_research_agent.orchestration.scheduler import (
     ResearchScheduler,
     SchedulerJob,
 )
-from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2  # noqa: E402
+from deep_research_agent.reporting.bundle_v2 import ReportBundleCompilerV2
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -117,7 +117,9 @@ async def _run_one_question(question: dict, out_dir: Path, judge_system: str) ->
 
     gateway = build_gateway()
     worker = MultiRoleWorker(researcher=LLMResearcherWorker(), critic=LLMCriticWorker())
-    scheduler = ResearchScheduler(worker=worker, tool_gateway=gateway, max_workers=1, max_attempts=2)
+    scheduler = ResearchScheduler(
+        worker=worker, tool_gateway=gateway, max_workers=1, max_attempts=2
+    )
 
     started = time.monotonic()
     logger.info("[{}] running agent on question: {}...", task_id, question["question"][:90])
@@ -205,11 +207,15 @@ async def _run_one_question(question: dict, out_dir: Path, judge_system: str) ->
 
     qdir = out_dir / task_id
     qdir.mkdir(parents=True, exist_ok=True)
-    (qdir / "record.json").write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
+    (qdir / "record.json").write_text(
+        json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     (qdir / "report.md").write_text(report_markdown, encoding="utf-8")
     (qdir / "report_bundle.json").write_text(bundle.model_dump_json(indent=2), encoding="utf-8")
     (qdir / "scheduler_checkpoints.json").write_text(
-        json.dumps([c.model_dump(mode="json") for c in result.checkpoints], ensure_ascii=False, indent=2),
+        json.dumps(
+            [c.model_dump(mode="json") for c in result.checkpoints], ensure_ascii=False, indent=2
+        ),
         encoding="utf-8",
     )
     logger.info(
@@ -224,11 +230,9 @@ async def _run_one_question(question: dict, out_dir: Path, judge_system: str) ->
     return record
 
 
-async def _extract_answer(report_markdown: str, question: str, claims: list = None) -> str:
+async def _extract_answer(report_markdown: str, question: str, claims: list | None = None) -> str:
     claims = claims or []
-    claim_digest = "\n".join(
-        f"- {claim.claim}" for claim in claims[:30]
-    )
+    claim_digest = "\n".join(f"- {claim.claim}" for claim in claims[:30])
     try:
         chat = LLMChat()
         payload = await chat.chat_json(
@@ -309,7 +313,9 @@ def _write_summary(records: list[dict], out_dir: Path, benchmark_label: str) -> 
             for r in records
         ],
     }
-    (out_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out_dir / "summary.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     return summary
 
 

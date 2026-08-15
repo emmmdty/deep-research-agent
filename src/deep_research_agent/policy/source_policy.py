@@ -10,10 +10,13 @@ from pydantic import BaseModel, Field
 
 from deep_research_agent.common import resolve_source_profile_name
 from deep_research_agent.connectors.models import ConnectorCandidate
-from deep_research_agent.connectors.utils import canonicalize_uri, domain_from_uri, fetch_uri_block_reason
+from deep_research_agent.connectors.utils import (
+    canonicalize_uri,
+    domain_from_uri,
+    fetch_uri_block_reason,
+)
 from deep_research_agent.policy.models import ConnectorBudget, SourcePolicyOverrides
 from deep_research_agent.reporting.schemas import validate_instance
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 POLICY_ROOT = PROJECT_ROOT / "configs" / "source_profiles"
@@ -50,14 +53,22 @@ class SourcePolicy(BaseModel):
     connector_order: list[str] = Field(default_factory=list, description="Connector order")
     allow_domains: list[str] = Field(default_factory=list, description="Allowed domains")
     deny_domains: list[str] = Field(default_factory=list, description="Denied domains")
-    auth_scopes: list[str] = Field(default_factory=lambda: ["public"], description="Allowed auth scopes")
+    auth_scopes: list[str] = Field(
+        default_factory=lambda: ["public"], description="Allowed auth scopes"
+    )
     budget: ConnectorBudget = Field(default_factory=ConnectorBudget, description="Budget")
 
-    def with_overrides(self, overrides: SourcePolicyOverrides | dict[str, Any] | None) -> "SourcePolicy":
+    def with_overrides(
+        self, overrides: SourcePolicyOverrides | dict[str, Any] | None
+    ) -> SourcePolicy:
         """Apply job-level overrides."""
         if overrides is None:
             return self
-        resolved = overrides if isinstance(overrides, SourcePolicyOverrides) else SourcePolicyOverrides.model_validate(overrides)
+        resolved = (
+            overrides
+            if isinstance(overrides, SourcePolicyOverrides)
+            else SourcePolicyOverrides.model_validate(overrides)
+        )
         payload = self.model_dump(mode="json")
         if resolved.allow_domains:
             payload["allow_domains"] = resolved.allow_domains
@@ -80,19 +91,27 @@ class SourcePolicy(BaseModel):
                 blocked.append(BlockedCandidate(candidate=candidate, reason="domain_not_allowed"))
                 continue
             allowed.append(candidate)
-        return CandidateFilterResult(allowed=allowed[: self.budget.max_candidates_per_connector], blocked=blocked)
+        return CandidateFilterResult(
+            allowed=allowed[: self.budget.max_candidates_per_connector], blocked=blocked
+        )
 
     def validate_fetch_uri(self, uri: str) -> FetchPolicyDecision:
         """Run URL safety and domain checks before fetch."""
         canonical_uri = canonicalize_uri(uri)
         block_reason = fetch_uri_block_reason(canonical_uri)
         if block_reason:
-            return FetchPolicyDecision(allowed=False, reason=block_reason, canonical_uri=canonical_uri)
+            return FetchPolicyDecision(
+                allowed=False, reason=block_reason, canonical_uri=canonical_uri
+            )
         domain = domain_from_uri(canonical_uri)
         if self.deny_domains and domain in self.deny_domains:
-            return FetchPolicyDecision(allowed=False, reason="domain_denied", canonical_uri=canonical_uri)
+            return FetchPolicyDecision(
+                allowed=False, reason="domain_denied", canonical_uri=canonical_uri
+            )
         if self.allow_domains and domain not in self.allow_domains:
-            return FetchPolicyDecision(allowed=False, reason="domain_not_allowed", canonical_uri=canonical_uri)
+            return FetchPolicyDecision(
+                allowed=False, reason="domain_not_allowed", canonical_uri=canonical_uri
+            )
         return FetchPolicyDecision(allowed=True, canonical_uri=canonical_uri)
 
 

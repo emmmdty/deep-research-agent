@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import copy
+import csv
 import json
 import statistics
 import sys
@@ -99,7 +99,12 @@ def run_ablation(
                         "judge_structure": existing_judge.get("structure"),
                     }
                 )
-            if judge is not None and payload.get("success") and payload.get("report_text") and metrics.get("judge_overall") is None:
+            if (
+                judge is not None
+                and payload.get("success")
+                and payload.get("report_text")
+                and metrics.get("judge_overall") is None
+            ):
                 scores = judge.score_report(str(payload["report_text"]), topic.topic)
                 metrics.update(
                     {
@@ -118,11 +123,15 @@ def run_ablation(
 
     summary = _build_ablation_summary(topic_payloads)
     comparison_rows = _build_variant_comparison_rows(topic_payloads)
-    judge_status = "scored" if any(
-        topic["comparators"][variant].get("metrics", {}).get("judge_overall") is not None
-        for topic in topic_payloads
-        for variant in ABLATION_VARIANTS
-    ) else "skipped"
+    judge_status = (
+        "scored"
+        if any(
+            topic["comparators"][variant].get("metrics", {}).get("judge_overall") is not None
+            for topic in topic_payloads
+            for variant in ABLATION_VARIANTS
+        )
+        else "skipped"
+    )
 
     (output_root / "ablation_results.json").write_text(
         json.dumps(
@@ -162,9 +171,13 @@ def _build_ablation_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
                     "topic_id": topic["topic_id"],
                     "status": payload.get("status"),
                     "research_reliability_score_100": metrics.get("research_reliability_score_100"),
-                    "system_controllability_score_100": metrics.get("system_controllability_score_100"),
+                    "system_controllability_score_100": metrics.get(
+                        "system_controllability_score_100"
+                    ),
                     "report_quality_score_100": metrics.get("report_quality_score_100"),
-                    "verification_strength_score_100": metrics.get("verification_strength_score_100"),
+                    "verification_strength_score_100": metrics.get(
+                        "verification_strength_score_100"
+                    ),
                     "judge_overall": metrics.get("judge_overall"),
                     "quality_gate_passed": bool(metrics.get("quality_gate_passed")),
                     "time_seconds": metrics.get("time_seconds"),
@@ -190,7 +203,9 @@ def _build_ablation_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
                     len(rows),
                 ),
                 "research_reliability_score_100": _stats(rows, "research_reliability_score_100"),
-                "system_controllability_score_100": _stats(rows, "system_controllability_score_100"),
+                "system_controllability_score_100": _stats(
+                    rows, "system_controllability_score_100"
+                ),
                 "report_quality_score_100": _stats(rows, "report_quality_score_100"),
                 "verification_strength_score_100": _stats(rows, "verification_strength_score_100"),
                 "judge_overall": _stats(rows, "judge_overall"),
@@ -237,7 +252,9 @@ def _build_variant_comparison_rows(results: list[dict[str, Any]]) -> list[dict[s
                     "variant": variant,
                     "status": payload.get("status"),
                     "research_reliability_score_100": metrics.get("research_reliability_score_100"),
-                    "system_controllability_score_100": metrics.get("system_controllability_score_100"),
+                    "system_controllability_score_100": metrics.get(
+                        "system_controllability_score_100"
+                    ),
                     "report_quality_score_100": metrics.get("report_quality_score_100"),
                     "quality_gate_passed": metrics.get("quality_gate_passed"),
                     "time_seconds": metrics.get("time_seconds"),
@@ -333,7 +350,9 @@ def _format_metric(value: Any) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description="运行内部 ablation 变体对照实验")
     parser.add_argument("--output-dir", type=str, help="输出目录")
-    parser.add_argument("--topic-set", type=str, default="portfolio12", help="主题集：portfolio12 或 local3")
+    parser.add_argument(
+        "--topic-set", type=str, default="portfolio12", help="主题集：portfolio12 或 local3"
+    )
     parser.add_argument("--max-topics", type=int, default=0, help="最多运行多少个主题")
     parser.add_argument("--topic-ids", type=str, help="逗号分隔的主题 ID 列表")
     parser.add_argument("--max-loops", type=int, default=2, help="最大研究循环次数")
@@ -348,7 +367,11 @@ def main() -> None:
         if args.output_dir
         else PROJECT_ROOT / "workspace" / "ablations" / run_id
     )
-    topic_ids = [item.strip() for item in args.topic_ids.split(",") if item.strip()] if args.topic_ids else None
+    topic_ids = (
+        [item.strip() for item in args.topic_ids.split(",") if item.strip()]
+        if args.topic_ids
+        else None
+    )
     outcome = run_ablation(
         output_root=output_root,
         topic_set=args.topic_set,

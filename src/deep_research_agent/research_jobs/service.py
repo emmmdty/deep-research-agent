@@ -12,10 +12,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from uuid import uuid4
 
-from configs.settings import get_settings
-from deep_research_agent.common import DEFAULT_SOURCE_PROFILE, resolve_source_profile_name
 from loguru import logger
 
+from configs.settings import get_settings
+from deep_research_agent.common import DEFAULT_SOURCE_PROFILE, resolve_source_profile_name
 from deep_research_agent.kernel.contracts import ResearchBrief
 from deep_research_agent.orchestration.dag import ResearchDAG
 from deep_research_agent.policy.models import SourcePolicyOverrides
@@ -65,7 +65,9 @@ class ResearchJobService:
     ) -> None:
         self.settings = settings or get_settings()
         self.workspace_dir = workspace_dir or getattr(self.settings, "workspace_dir", "workspace")
-        self.runtime_dirname = runtime_dirname or getattr(self.settings, "job_runtime_dirname", "research_jobs")
+        self.runtime_dirname = runtime_dirname or getattr(
+            self.settings, "job_runtime_dirname", "research_jobs"
+        )
         self.heartbeat_interval_seconds = heartbeat_interval_seconds or int(
             getattr(self.settings, "job_heartbeat_interval_seconds", 2)
         )
@@ -156,9 +158,7 @@ class ResearchJobService:
         # with rule-based planner/researcher/writer stages instead of provider calls.
         if research_profile == "default" and self._scheduler_offline():
             research_profile = "benchmark"
-            logger.info(
-                "offline scheduler mode: using deterministic benchmark research profile"
-            )
+            logger.info("offline scheduler mode: using deterministic benchmark research profile")
         job_id = _job_id or _run_id()
         job_dir = self.store.job_dir(job_id)
         bundle_dir = self.store.bundle_dir(job_id)
@@ -202,7 +202,13 @@ class ResearchJobService:
             runtime_path=runtime_path,
         )
         self.store.upsert_job(job)
-        self._append_event(job, "job", "job.created", "job 已创建", {"topic": topic, "research_profile": research_profile})
+        self._append_event(
+            job,
+            "job",
+            "job.created",
+            "job 已创建",
+            {"topic": topic, "research_profile": research_profile},
+        )
 
         state_payload = dict(initial_state or {})
         if not state_payload:
@@ -301,7 +307,11 @@ class ResearchJobService:
         """Freeze private uploads into a job-owned directory before worker start."""
 
         if not corpus_inputs:
-            return [], {"document_version_ids": [], "content_hashes": {}, "critical_claims_allowed": {}}
+            return [], {
+                "document_version_ids": [],
+                "content_hashes": {},
+                "critical_claims_allowed": {},
+            }
         corpus_dir = self.store.job_dir(job_id) / "corpus"
         corpus_dir.mkdir(parents=True, exist_ok=True)
         corpus_dir.chmod(0o700)
@@ -345,7 +355,11 @@ class ResearchJobService:
             return job
         updated = self.store.update_job(job_id, cancel_requested=True)
         self._append_event(updated, updated.current_stage, "job.cancel_requested", "收到取消请求")
-        if updated.status == JobStatus.CREATED and not updated.worker_lease_id and updated.worker_pid is None:
+        if (
+            updated.status == JobStatus.CREATED
+            and not updated.worker_lease_id
+            and updated.worker_pid is None
+        ):
             updated = self.store.update_job_status(
                 job_id,
                 status=JobStatus.CANCELLED,
@@ -380,7 +394,9 @@ class ResearchJobService:
             initial_state=initial_state,
             current_stage=current_stage.value,
         )
-        self._append_event(retry_job, "job", "job.retry_created", "由失败 job 派生 retry", {"retry_of": job.job_id})
+        self._append_event(
+            retry_job, "job", "job.retry_created", "由失败 job 派生 retry", {"retry_of": job.job_id}
+        )
         return retry_job
 
     def resume(self, job_id: str, *, start_worker: bool = True) -> JobRuntimeRecord:
@@ -409,7 +425,9 @@ class ResearchJobService:
             self._spawn_worker_fn(job_id)
         return self._require_job(job_id)
 
-    def refine(self, job_id: str, instruction: str, *, start_worker: bool = True) -> JobRuntimeRecord:
+    def refine(
+        self, job_id: str, instruction: str, *, start_worker: bool = True
+    ) -> JobRuntimeRecord:
         """Record a refinement instruction and resume from a safe stage boundary."""
 
         checkpoint = self._latest_checkpoint_or_raise(job_id)
@@ -539,7 +557,9 @@ class ResearchJobService:
                     error="缺少可恢复 checkpoint",
                     audit_gate_status=AuditGateStatus.PENDING_MANUAL_REVIEW,
                 )
-                self._append_event(updated, RuntimeStage.FAILED.value, "job.failed", "缺少可恢复 checkpoint")
+                self._append_event(
+                    updated, RuntimeStage.FAILED.value, "job.failed", "缺少可恢复 checkpoint"
+                )
                 recovered.append(updated)
                 continue
             if job.worker_lease_id:
@@ -571,6 +591,7 @@ class ResearchJobService:
         if job.runtime_path == "scheduler-v2":
             if self._scheduler_factory is None:
                 raise RuntimeError("scheduler-v2 job requires an injected scheduler_factory")
+
             def cancellation_check() -> bool:
                 return bool(self._require_job(job_id).cancel_requested)
 

@@ -13,7 +13,6 @@ from pydantic_ai.providers.openai import OpenAIProvider
 from deep_research_agent.model_runtime.models import ResolvedModelEndpoint
 from deep_research_agent.model_runtime.registry import ModelRegistry
 
-
 ModelBuilder = Callable[..., object]
 
 

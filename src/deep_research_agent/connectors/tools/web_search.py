@@ -16,9 +16,7 @@ def search_web(query: str, max_results: int = 5) -> list[dict[str, Any]]:
     settings = get_settings()
     effective_max_results = max_results or settings.max_search_results
 
-    prefer_tavily = (
-        settings.search_backend == SearchBackend.TAVILY and settings.tavily_api_key
-    )
+    prefer_tavily = settings.search_backend == SearchBackend.TAVILY and settings.tavily_api_key
     if prefer_tavily:
         results = _search_tavily(query, effective_max_results, settings.tavily_api_key)
         if results:
@@ -35,9 +33,7 @@ def format_search_results(results: list[dict[str, Any]]) -> str:
     formatted = []
     for item in results:
         formatted.append(
-            f"[{item['index']}] {item['title']}\n"
-            f"URL: {item['url']}\n"
-            f"摘要: {item['snippet']}\n"
+            f"[{item['index']}] {item['title']}\nURL: {item['url']}\n摘要: {item['snippet']}\n"
         )
     return "\n".join(formatted)
 

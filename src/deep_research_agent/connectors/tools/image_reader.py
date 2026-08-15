@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 from typing import Any
 
 import httpx
@@ -22,9 +23,7 @@ from deep_research_agent.connectors.tools.page_fetch import (
     _validate_public_url,
 )
 
-_DEFAULT_IMAGE_PROMPT = (
-    "Describe this image factually and transcribe any visible text verbatim."
-)
+_DEFAULT_IMAGE_PROMPT = "Describe this image factually and transcribe any visible text verbatim."
 _HTTP_TIMEOUT_SECONDS = 45.0
 _MAX_BYTES = 5_000_000
 
@@ -86,10 +85,8 @@ def read_image(
         logger.warning("read_image failed for {}: {}", image_url, exc)
         raise ValueError(f"read_image could not retrieve {image_url}: {exc}") from exc
     finally:
-        try:
+        with contextlib.suppress(Exception):
             asyncio.run(chat.aclose())
-        except Exception:  # noqa: BLE001 - closing is best-effort cleanup
-            pass
     return {
         "url": image_url,
         "final_url": final_url,

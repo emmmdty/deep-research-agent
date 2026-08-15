@@ -22,7 +22,6 @@ from deep_research_agent.model_runtime.models import (
     RuntimeConfigVersion,
 )
 
-
 MASTER_KEY_ENV = "DEEP_RESEARCH_AGENT_MASTER_KEY"
 
 
@@ -258,9 +257,7 @@ class ModelRegistry:
             )
             normalized = ProbeCapabilities.model_validate(capabilities)
             if not normalized.model_available:
-                raise LookupError(
-                    f"configured model {endpoint.model!r} is unavailable at endpoint"
-                )
+                raise LookupError(f"configured model {endpoint.model!r} is unavailable at endpoint")
             report = ModelCapabilityReport(
                 endpoint_id=endpoint.endpoint_id,
                 model=endpoint.model,

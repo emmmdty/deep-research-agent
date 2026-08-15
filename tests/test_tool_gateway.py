@@ -624,11 +624,14 @@ def test_large_tool_output_is_stored_as_an_artifact_reference() -> None:
     assert result.artifact.created_by_task_id == "task-1"
     assert result.artifact.metadata["tenant_id"] == "tenant-a"
     assert result.artifact.metadata["job_id"] == "job-1"
-    assert artifact_store.read(
-        result.artifact.artifact_id,
-        tenant_id="tenant-a",
-        job_id="job-1",
-    ) == b'{"content":"' + b"x" * 200 + b'"}'
+    assert (
+        artifact_store.read(
+            result.artifact.artifact_id,
+            tenant_id="tenant-a",
+            job_id="job-1",
+        )
+        == b'{"content":"' + b"x" * 200 + b'"}'
+    )
     with pytest.raises(PermissionError):
         artifact_store.read(
             result.artifact.artifact_id,

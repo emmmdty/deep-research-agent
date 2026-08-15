@@ -7,7 +7,6 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 
-
 LEGACY_MASTER_KEY = "phase4-master-key"
 LEGACY_HEADERS = {"X-API-Key": LEGACY_MASTER_KEY}
 
@@ -22,7 +21,11 @@ def _write_job_artifacts(job) -> None:
     Path(job.report_bundle_path).write_text(
         json.dumps(
             {
-                "job": {"job_id": job.job_id, "status": job.status, "runtime_path": "orchestrator-v1"},
+                "job": {
+                    "job_id": job.job_id,
+                    "status": job.status,
+                    "runtime_path": "orchestrator-v1",
+                },
                 "report_text": "Surface smoke.",
                 "audit_summary": {"gate_status": job.audit_gate_status},
             },
@@ -47,23 +50,33 @@ def _write_job_artifacts(job) -> None:
         ),
         encoding="utf-8",
     )
-    (bundle_dir / "report.html").write_text("<html><body>Surface smoke.</body></html>", encoding="utf-8")
-    (bundle_dir / "claims.json").write_text(json.dumps({"claims": []}, ensure_ascii=False), encoding="utf-8")
+    (bundle_dir / "report.html").write_text(
+        "<html><body>Surface smoke.</body></html>", encoding="utf-8"
+    )
+    (bundle_dir / "claims.json").write_text(
+        json.dumps({"claims": []}, ensure_ascii=False), encoding="utf-8"
+    )
     (bundle_dir / "sources.json").write_text(
         json.dumps({"citations": [], "sources": [], "snapshots": []}, ensure_ascii=False),
         encoding="utf-8",
     )
     (bundle_dir / "audit_decision.json").write_text(
-        json.dumps({"gate_status": job.audit_gate_status, "blocking_claim_ids": []}, ensure_ascii=False),
+        json.dumps(
+            {"gate_status": job.audit_gate_status, "blocking_claim_ids": []}, ensure_ascii=False
+        ),
         encoding="utf-8",
     )
     Path(job.trace_path).write_text(
         json.dumps({"sequence": 1, "event_type": "job.created"}, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    Path(job.review_queue_path).write_text(json.dumps({"items": []}, ensure_ascii=False), encoding="utf-8")
+    Path(job.review_queue_path).write_text(
+        json.dumps({"items": []}, ensure_ascii=False), encoding="utf-8"
+    )
     Path(job.audit_graph_path).write_text(
-        json.dumps({"claims": [], "claim_support_edges": [], "conflict_sets": []}, ensure_ascii=False),
+        json.dumps(
+            {"claims": [], "claim_support_edges": [], "conflict_sets": []}, ensure_ascii=False
+        ),
         encoding="utf-8",
     )
 
@@ -98,7 +111,9 @@ def test_http_api_submit_status_events_bundle_and_artifacts(tmp_path: Path):
     status_response = client.get(f"/v1/research/jobs/{job_id}", headers=LEGACY_HEADERS)
     assert status_response.status_code == 200
     assert status_response.json()["job_id"] == job_id
-    assert status_response.json()["artifact_urls"]["bundle"].endswith(f"/v1/research/jobs/{job_id}/bundle")
+    assert status_response.json()["artifact_urls"]["bundle"].endswith(
+        f"/v1/research/jobs/{job_id}/bundle"
+    )
 
     events_response = client.get(f"/v1/research/jobs/{job_id}/events", headers=LEGACY_HEADERS)
     assert events_response.status_code == 200
@@ -151,7 +166,9 @@ def test_http_api_lifecycle_and_review_routes(tmp_path: Path):
     ).json()
     job_id = created["job_id"]
 
-    cancel_response = client.post(f"/v1/research/jobs/{job_id}:cancel", json={}, headers=LEGACY_HEADERS)
+    cancel_response = client.post(
+        f"/v1/research/jobs/{job_id}:cancel", json={}, headers=LEGACY_HEADERS
+    )
     assert cancel_response.status_code == 200
     assert cancel_response.json()["cancel_requested"] is True
 
@@ -193,7 +210,11 @@ def test_http_api_lifecycle_and_review_routes(tmp_path: Path):
         headers=LEGACY_HEADERS,
     )
     assert review_response.status_code == 200
-    assert review_response.json()["audit_gate_status"] in {"passed", "pending_manual_review", "blocked"}
+    assert review_response.json()["audit_gate_status"] in {
+        "passed",
+        "pending_manual_review",
+        "blocked",
+    }
 
 
 def test_http_api_batch_route_and_public_contract_schemas(tmp_path: Path):

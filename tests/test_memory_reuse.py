@@ -333,13 +333,17 @@ async def test_recall_tenant_isolation_and_permission_error_no_hit() -> None:
     )
 
     recall = MemoryRecall(service)
-    own = recall.recall(OBJECTIVE, [{"query": COVERED_QUERY, "tool": "web_search"}], tenant_id=TENANT_A)
+    own = recall.recall(
+        OBJECTIVE, [{"query": COVERED_QUERY, "tool": "web_search"}], tenant_id=TENANT_A
+    )
     assert len(own[0]) == 1
     assert own[1] == {0}
 
     with pytest.raises(PermissionError):
         service.search("agents tools memory 2026", tenant_id=TENANT_B)
-    foreign = recall.recall(OBJECTIVE, [{"query": COVERED_QUERY, "tool": "web_search"}], tenant_id=TENANT_B)
+    foreign = recall.recall(
+        OBJECTIVE, [{"query": COVERED_QUERY, "tool": "web_search"}], tenant_id=TENANT_B
+    )
     assert foreign == ([], set())
 
     task = _task()
@@ -401,7 +405,12 @@ def _claim(claim_id: str, doc_id: str, quote: str, *, critical: bool = True) -> 
 
 
 def _verification(*items: dict) -> dict:
-    return {"job_id": "job-verify", "created_at": "2026-01-01T00:00:00Z", "items": list(items), "summary": {}}
+    return {
+        "job_id": "job-verify",
+        "created_at": "2026-01-01T00:00:00Z",
+        "items": list(items),
+        "summary": {},
+    }
 
 
 def _verified_item(claim_id: str, verdict: str = "verified") -> dict:
@@ -423,7 +432,9 @@ def _verified_item(claim_id: str, verdict: str = "verified") -> dict:
 def test_harvest_only_settles_verified_and_grounded_sources() -> None:
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    grounded_claim = _claim("job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    grounded_claim = _claim(
+        "job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     service = _memory_service()
     harvester = MemoryHarvester(service)
 
@@ -433,7 +444,9 @@ def test_harvest_only_settles_verified_and_grounded_sources() -> None:
         claims=[grounded_claim],
         artifacts=[artifact],
         citation_verification=_verification(_verified_item(grounded_claim.claim_id)),
-        query_results=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
+        query_results=[
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}
+        ],
         job_id="job-verify",
     )
     assert len(harvested) == 1
@@ -461,7 +474,9 @@ def test_harvest_only_settles_verified_and_grounded_sources() -> None:
 def test_harvest_requires_contained_quote_even_when_claim_verified() -> None:
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    ungrounded = _claim("job-verify:claim:research-01:01", "web_search-abc123", "quote absent from source text")
+    ungrounded = _claim(
+        "job-verify:claim:research-01:01", "web_search-abc123", "quote absent from source text"
+    )
     service = _memory_service()
 
     harvested = MemoryHarvester(service).harvest(
@@ -479,7 +494,9 @@ def test_harvest_requires_contained_quote_even_when_claim_verified() -> None:
 def test_harvest_requires_verified_verdict_even_when_quote_contained() -> None:
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    claim = _claim("job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    claim = _claim(
+        "job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     service = _memory_service()
 
     harvested = MemoryHarvester(service).harvest(
@@ -497,36 +514,45 @@ def test_harvest_requires_verified_verdict_even_when_quote_contained() -> None:
 def test_harvest_without_citation_verification_settles_nothing() -> None:
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    claim = _claim("job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    claim = _claim(
+        "job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     service = _memory_service()
 
-    assert MemoryHarvester(service).harvest(
-        tenant_id=TENANT_A,
-        topic=OBJECTIVE,
-        claims=[claim],
-        artifacts=[artifact],
-        citation_verification={},
-        job_id="job-verify",
-    ) == []
+    assert (
+        MemoryHarvester(service).harvest(
+            tenant_id=TENANT_A,
+            topic=OBJECTIVE,
+            claims=[claim],
+            artifacts=[artifact],
+            citation_verification={},
+            job_id="job-verify",
+        )
+        == []
+    )
     assert service.search("agents tools memory", tenant_id=TENANT_A) == []
 
 
 def test_harvest_is_idempotent() -> None:
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    claim = _claim("job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    claim = _claim(
+        "job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     frozen_now = datetime.now(timezone.utc)
     service = _memory_service(clock=lambda: frozen_now)
     harvester = MemoryHarvester(service)
-    kwargs = dict(
-        tenant_id=TENANT_A,
-        topic=OBJECTIVE,
-        claims=[claim],
-        artifacts=[artifact],
-        citation_verification=_verification(_verified_item(claim.claim_id)),
-        query_results=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
-        job_id="job-verify",
-    )
+    kwargs = {
+        "tenant_id": TENANT_A,
+        "topic": OBJECTIVE,
+        "claims": [claim],
+        "artifacts": [artifact],
+        "citation_verification": _verification(_verified_item(claim.claim_id)),
+        "query_results": [
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}
+        ],
+        "job_id": "job-verify",
+    }
 
     first = harvester.harvest(**kwargs)
     second = harvester.harvest(**kwargs)
@@ -535,7 +561,9 @@ def test_harvest_is_idempotent() -> None:
     active_first = {record.memory_id for record in first}
     active_second = {record.memory_id for record in second}
     assert active_first == active_second
-    assert {record.status for record in service.repository.list(tenant_id=TENANT_A)} == {MemoryStatus.ACTIVE}
+    assert {record.status for record in service.repository.list(tenant_id=TENANT_A)} == {
+        MemoryStatus.ACTIVE
+    }
     assert len(service.repository.list(tenant_id=TENANT_A)) == 1
 
 
@@ -543,19 +571,23 @@ def test_harvest_idempotent_under_advancing_clock() -> None:
     """真实时钟下重复 harvest 不产生重复 ACTIVE 记忆：旧记录被 supersede，recall 只见最新。"""
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    claim = _claim("job-clock:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    claim = _claim(
+        "job-clock:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     current = datetime.now(timezone.utc)
     service = _memory_service(clock=lambda: current)
     harvester = MemoryHarvester(service)
-    kwargs = dict(
-        tenant_id=TENANT_A,
-        topic=OBJECTIVE,
-        claims=[claim],
-        artifacts=[artifact],
-        citation_verification=_verification(_verified_item(claim.claim_id)),
-        query_results=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
-        job_id="job-clock",
-    )
+    kwargs = {
+        "tenant_id": TENANT_A,
+        "topic": OBJECTIVE,
+        "claims": [claim],
+        "artifacts": [artifact],
+        "citation_verification": _verification(_verified_item(claim.claim_id)),
+        "query_results": [
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}
+        ],
+        "job_id": "job-clock",
+    }
 
     harvester.harvest(**kwargs)
     current = current + timedelta(minutes=5)
@@ -569,7 +601,9 @@ def test_harvest_idempotent_under_advancing_clock() -> None:
     assert len(superseded) == 1
     assert active[0].supersedes == superseded[0].memory_id
 
-    hits = service.search("agents tools memory 2026", tenant_id=TENANT_A, scope=MemoryScope.TOPIC_MEMORY)
+    hits = service.search(
+        "agents tools memory 2026", tenant_id=TENANT_A, scope=MemoryScope.TOPIC_MEMORY
+    )
     assert [record.memory_id for record in hits] == [active[0].memory_id]
 
     recalled, covered = MemoryRecall(service).recall(
@@ -585,21 +619,27 @@ def test_reharvest_after_source_change_supersedes_old_record() -> None:
     service = _memory_service()
     harvester = MemoryHarvester(service)
     first_text = "The 2026 report states agents use tools and memory with high confidence."
-    first_claim = _claim("job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
-    first_artifact = _artifact("https://example.com/1", "web_search-abc123", first_text)
-    kwargs = dict(
-        tenant_id=TENANT_A,
-        topic=OBJECTIVE,
-        claims=[first_claim],
-        artifacts=[first_artifact],
-        citation_verification=_verification(_verified_item(first_claim.claim_id)),
-        query_results=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
-        job_id="job-verify",
+    first_claim = _claim(
+        "job-verify:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
     )
+    first_artifact = _artifact("https://example.com/1", "web_search-abc123", first_text)
+    kwargs = {
+        "tenant_id": TENANT_A,
+        "topic": OBJECTIVE,
+        "claims": [first_claim],
+        "artifacts": [first_artifact],
+        "citation_verification": _verification(_verified_item(first_claim.claim_id)),
+        "query_results": [
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}
+        ],
+        "job_id": "job-verify",
+    }
     first = harvester.harvest(**kwargs)[0]
 
     second_text = "A revised 2026 report states agents use tools and memory with full confidence."
-    second_claim = _claim("job-verify:claim:research-01:02", "web_search-def456", "agents use tools and memory")
+    second_claim = _claim(
+        "job-verify:claim:research-01:02", "web_search-def456", "agents use tools and memory"
+    )
     second_artifact = _artifact("https://example.com/1", "web_search-def456", second_text)
     second = harvester.harvest(
         tenant_id=TENANT_A,
@@ -607,7 +647,9 @@ def test_reharvest_after_source_change_supersedes_old_record() -> None:
         claims=[second_claim],
         artifacts=[second_artifact],
         citation_verification=_verification(_verified_item(second_claim.claim_id)),
-        query_results=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
+        query_results=[
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}
+        ],
         job_id="job-verify",
     )[0]
 
@@ -638,14 +680,18 @@ def test_recall_coverage_rule_uses_recorded_query_url_sets() -> None:
         tenant_id=TENANT_A,
         topic=OBJECTIVE,
         source=source_a,
-        query_urls=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/a"]}],
+        query_urls=[
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/a"]}
+        ],
     )
     _seed_source(
         service,
         tenant_id=TENANT_A,
         topic=OBJECTIVE,
         source=source_b,
-        query_urls=[{"query": "other query", "tool": "arxiv_search", "urls": ["https://example.com/b"]}],
+        query_urls=[
+            {"query": "other query", "tool": "arxiv_search", "urls": ["https://example.com/b"]}
+        ],
     )
 
     planned = [
@@ -836,7 +882,6 @@ def test_scheduler_without_memory_passes_none_and_context_defaults_to_none() -> 
 
 def test_build_scheduler_factory_attaches_shared_in_process_memory() -> None:
     from configs.settings import Settings
-
     from deep_research_agent.agents.factory import build_scheduler_factory
 
     first = build_scheduler_factory(settings=Settings(model_router_enabled=False))
@@ -914,7 +959,9 @@ async def test_agentic_query_count_counts_only_executed_queries() -> None:
         tenant_id="default",
         topic=task.objective,
         source=covered_snippet,
-        query_urls=[{"query": COVERED_QUERY, "tool": "web_search", "urls": [covered_snippet["url"]]}],
+        query_urls=[
+            {"query": COVERED_QUERY, "tool": "web_search", "urls": [covered_snippet["url"]]}
+        ],
     )
 
     script = [
@@ -967,7 +1014,9 @@ def test_orchestrator_harvest_exception_does_not_fail_bundle_emission(tmp_path) 
     task = task.model_copy(update={"job_id": job_id, "idempotency_key": f"{job_id}:{task.task_id}"})
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    claim = _claim(f"{job_id}:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    claim = _claim(
+        f"{job_id}:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     packet = EvidencePacket(
         packet_id=f"{job_id}:packet:{task.task_id}",
         task_id=task.task_id,
@@ -989,7 +1038,11 @@ def test_orchestrator_harvest_exception_does_not_fail_bundle_emission(tmp_path) 
             task.task_id: {
                 "report_markdown": "# report",
                 "query_urls": [
-                    {"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}
+                    {
+                        "query": COVERED_QUERY,
+                        "tool": "web_search",
+                        "urls": ["https://example.com/1"],
+                    }
                 ],
             }
         },
@@ -1018,7 +1071,9 @@ def test_orchestrator_harvests_verified_sources_after_completed_bundle(tmp_path)
 
     source_text = "The 2026 report states agents use tools and memory with high confidence."
     artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
-    claim = _claim("job-orchestrated:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    claim = _claim(
+        "job-orchestrated:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     task = _task()
     task = task.model_copy(update={"job_id": job_id, "idempotency_key": f"{job_id}:{task.task_id}"})
     packet = EvidencePacket(
@@ -1041,7 +1096,13 @@ def test_orchestrator_harvests_verified_sources_after_completed_bundle(tmp_path)
         task_outputs={
             task.task_id: {
                 "report_markdown": "# report",
-                "query_urls": [{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
+                "query_urls": [
+                    {
+                        "query": COVERED_QUERY,
+                        "tool": "web_search",
+                        "urls": ["https://example.com/1"],
+                    }
+                ],
             }
         },
         attempts={task.task_id: 1},
@@ -1084,8 +1145,14 @@ def test_orchestrator_harvest_failure_never_fails_bundle_emission(tmp_path) -> N
     task = _task()
     job_id = "job-exploding-harvest"
     task = task.model_copy(update={"job_id": job_id, "idempotency_key": f"{job_id}:{task.task_id}"})
-    artifact = _artifact("https://example.com/1", "web_search-abc123", "The 2026 report states agents use tools and memory with high confidence.")
-    claim = _claim(f"{job_id}:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    artifact = _artifact(
+        "https://example.com/1",
+        "web_search-abc123",
+        "The 2026 report states agents use tools and memory with high confidence.",
+    )
+    claim = _claim(
+        f"{job_id}:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
     packet = EvidencePacket(
         packet_id=f"{job_id}:packet:{task.task_id}",
         task_id=task.task_id,

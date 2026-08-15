@@ -16,6 +16,7 @@ from loguru import logger
 
 from configs.settings import PROJECT_ROOT, SearchBackend, get_settings
 from legacy.evaluation.llm_judge import LLMJudge
+from scripts.release_gate import build_release_gate_evidence, evaluate_release_gate
 from scripts.run_ablation import run_ablation
 from scripts.run_benchmark import (
     build_benchmark_summary,
@@ -23,7 +24,6 @@ from scripts.run_benchmark import (
     save_results,
     save_summary,
 )
-from scripts.release_gate import build_release_gate_evidence, evaluate_release_gate
 from scripts.runtime_env import load_runtime_env
 
 
@@ -48,7 +48,9 @@ def run_release(
     live_benchmark = _run_benchmark_release(
         output_root=live_root / "benchmark",
         env_file=env_file,
-        topics_limit=calibration_topics if release_mode == "full-live" and not live_topic_ids else None,
+        topics_limit=calibration_topics
+        if release_mode == "full-live" and not live_topic_ids
+        else None,
         topic_ids=live_topic_ids if release_mode == "hybrid" else None,
         use_judge=True,
         max_loops=max_loops,
@@ -155,9 +157,14 @@ def _run_preflight(*, env_file: str | None, judge_topic: str) -> dict[str, Any]:
     return {
         "judge_status": "scored",
         "judge_model": settings.judge_model or settings.llm_model_name,
-        "search_backend": str(settings.search_backend.value if isinstance(settings.search_backend, SearchBackend) else settings.search_backend),
+        "search_backend": str(
+            settings.search_backend.value
+            if isinstance(settings.search_backend, SearchBackend)
+            else settings.search_backend
+        ),
         "benchmark_health": {
-            "duckduckgo_fallback": settings.search_backend == SearchBackend.DUCKDUCKGO or not bool(settings.tavily_api_key),
+            "duckduckgo_fallback": settings.search_backend == SearchBackend.DUCKDUCKGO
+            or not bool(settings.tavily_api_key),
         },
         "judge_scores": scores,
     }
@@ -230,7 +237,9 @@ def _build_precomputed_results(results: list[dict[str, Any]]) -> dict[str, dict[
     return precomputed
 
 
-def _validate_calibration(*, benchmark_summary: dict[str, Any], ablation_summary: dict[str, Any]) -> None:
+def _validate_calibration(
+    *, benchmark_summary: dict[str, Any], ablation_summary: dict[str, Any]
+) -> None:
     """校验 2 题 calibration 是否满足进入全量运行的最低条件。"""
     if benchmark_summary.get("judge_status") != "scored":
         raise RuntimeError("calibration benchmark 未获得 judge 分数，停止正式 release")
@@ -239,9 +248,13 @@ def _validate_calibration(*, benchmark_summary: dict[str, Any], ablation_summary
 
     deltas = ablation_summary.get("deltas_vs_base", {}).get("ours_full", {})
     if (deltas.get("judge_overall") or 0.0) <= 0:
-        raise RuntimeError("calibration 未显示 ours_full 在 judge_overall 上优于 ours_base，停止正式 release")
+        raise RuntimeError(
+            "calibration 未显示 ours_full 在 judge_overall 上优于 ours_base，停止正式 release"
+        )
     if (deltas.get("verification_strength_score_100") or 0.0) <= 0:
-        raise RuntimeError("calibration 未显示 ours_full 在 verification_strength 上优于 ours_base，停止正式 release")
+        raise RuntimeError(
+            "calibration 未显示 ours_full 在 verification_strength 上优于 ours_base，停止正式 release"
+        )
 
 
 def _build_release_manifest(
@@ -279,7 +292,9 @@ def _build_release_manifest(
         "topic_set": topic_set,
         "release_mode": release_mode,
         "live_topic_ids": live_topic_ids,
-        "judge_status": "hybrid" if release_mode == "hybrid" else full_benchmark["summary"].get("judge_status", "unknown"),
+        "judge_status": "hybrid"
+        if release_mode == "hybrid"
+        else full_benchmark["summary"].get("judge_status", "unknown"),
         "release_gate": release_gate,
         "preflight": preflight,
         "live_calibration": {
@@ -421,13 +436,23 @@ def _fmt(value: Any) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="运行 portfolio12 正式 benchmark + ablation release")
+    parser = argparse.ArgumentParser(
+        description="运行 portfolio12 正式 benchmark + ablation release"
+    )
     parser.add_argument("--output-dir", type=str, help="输出目录")
     parser.add_argument("--env-file", type=str, required=True, help="显式指定运行时 env 文件")
     parser.add_argument("--topic-set", type=str, default="portfolio12", help="正式主题集")
     parser.add_argument("--calibration-topics", type=int, default=2, help="正式运行前的校准题数")
-    parser.add_argument("--release-mode", type=str, default="hybrid", choices=["hybrid", "full-live"], help="发布模式：代表题 live + 全量可复现，或全量 live")
-    parser.add_argument("--live-topic-ids", type=str, default="T01,T04,T11", help="hybrid 模式下 live judge 主题 ID")
+    parser.add_argument(
+        "--release-mode",
+        type=str,
+        default="hybrid",
+        choices=["hybrid", "full-live"],
+        help="发布模式：代表题 live + 全量可复现，或全量 live",
+    )
+    parser.add_argument(
+        "--live-topic-ids", type=str, default="T01,T04,T11", help="hybrid 模式下 live judge 主题 ID"
+    )
     parser.add_argument("--max-loops", type=int, default=2, help="最大研究循环次数")
     args = parser.parse_args()
 

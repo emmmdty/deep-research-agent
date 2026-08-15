@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from logging.config import fileConfig
 import os
+from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from deep_research_agent.product.tables import Base
-
 
 config = context.config
 if config.config_file_name is not None:

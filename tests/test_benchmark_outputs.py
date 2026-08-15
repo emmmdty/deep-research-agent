@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+
 def test_load_topics_local3_replaces_default_t06():
     """local3 主题集应包含 T06C，并保留 T01/T02。"""
     from legacy.evaluation.comparators import load_topics

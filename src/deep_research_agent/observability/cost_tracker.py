@@ -10,12 +10,12 @@ from __future__ import annotations
 
 import threading
 import time
+from collections.abc import Mapping
 from contextvars import ContextVar, Token
 from dataclasses import dataclass, field
-from typing import Any, Mapping, Optional
+from typing import Any
 
 from loguru import logger
-
 
 JOB_ID_CONTEXT: ContextVar[str] = ContextVar("research.job_id", default="global")
 
@@ -202,7 +202,7 @@ class CostTracker:
         self._price_table = dict(price_table) if price_table else {}
         self._metrics = CostMetrics(price_table=self._price_table)
         self._per_job: dict[str, CostMetrics] = {}
-        self._start_time: Optional[float] = None
+        self._start_time: float | None = None
         self._lock = threading.Lock()
 
     @property

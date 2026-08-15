@@ -18,6 +18,7 @@ production-fallback principle (fallbacks exist for anomalies only):
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import json
 import time
 from dataclasses import dataclass, field
@@ -179,7 +180,9 @@ class ScriptedChat:
         **kwargs: Any,
     ) -> ToolLoopResult:
         self.tool_loop_calls += 1
-        self.prompt_sizes.append({"stage": "tool_loop", "system_chars": len(system), "user_chars": len(user)})
+        self.prompt_sizes.append(
+            {"stage": "tool_loop", "system_chars": len(system), "user_chars": len(user)}
+        )
         decision = self._pop_script(self._tool_loop_script)
         self._fail_or_raise("tool_loop", self.tool_loop_calls)
         if decision is None:
@@ -197,7 +200,9 @@ class ScriptedChat:
 
     async def chat_json(self, system: str, user: str, **kwargs: Any) -> dict[str, Any]:
         self.json_calls += 1
-        self.prompt_sizes.append({"stage": "chat_json", "system_chars": len(system), "user_chars": len(user)})
+        self.prompt_sizes.append(
+            {"stage": "chat_json", "system_chars": len(system), "user_chars": len(user)}
+        )
         value = self._pop_script(self._json_script)
         self._fail_or_raise("json", self.json_calls)
         if value is None:
@@ -210,7 +215,9 @@ class ScriptedChat:
 
     async def chat(self, system: str, user: str, **kwargs: Any) -> str:
         self.text_calls += 1
-        self.prompt_sizes.append({"stage": "chat", "system_chars": len(system), "user_chars": len(user)})
+        self.prompt_sizes.append(
+            {"stage": "chat", "system_chars": len(system), "user_chars": len(user)}
+        )
         value = self._pop_script(self._text_script)
         self._fail_or_raise("text", self.text_calls)
         if value is None:
@@ -221,6 +228,7 @@ class ScriptedChat:
 def _gateway_handler_for(tool_name: str, responses: dict[str, Any]):
     def handler(arguments: dict[str, Any], context: ToolHandlerContext) -> Any:
         return responses.get(tool_name, [])
+
     return handler
 
 
@@ -241,7 +249,7 @@ def build_scripted_gateway(
     """
 
     registry = InMemoryToolRegistry()
-    for name, output in responses.items():
+    for name, _output in responses.items():
         if name in (deny_tools or set()):
             continue
 
@@ -259,8 +267,12 @@ def build_scripted_gateway(
             )
 
         if name in (fail_tools or set()):
-            def failing_handler(arguments: dict[str, Any], context: ToolHandlerContext) -> Any:
-                raise RuntimeError(f"scripted handler failure for {name}")
+
+            def failing_handler(
+                arguments: dict[str, Any], context: ToolHandlerContext, _name=name
+            ) -> Any:
+                raise RuntimeError(f"scripted handler failure for {_name}")
+
             registry.register(spec_builder(name), failing_handler)
             continue
         registry.register(spec_builder(name), _gateway_handler_for(name, responses))
@@ -375,17 +387,19 @@ async def _run_scenario(scenario: Scenario) -> ScenarioResult:
         return ScenarioResult(
             name=scenario.name,
             status="crashed",
-            fallback_layers=[], fallback_count=0,
-            claims_published=0, ungrounded_claims=0,
-            report_emitted=False, report_deterministic=False,
-            rounds=0, queries=0,
+            fallback_layers=[],
+            fallback_count=0,
+            claims_published=0,
+            ungrounded_claims=0,
+            report_emitted=False,
+            report_deterministic=False,
+            rounds=0,
+            queries=0,
             wall_ms=int((time.perf_counter() - started) * 1000),
             error=str(exc),
         )
 
-    researcher_outputs = [
-        out for out in result.task_outputs.values() if "agentic" in out
-    ]
+    researcher_outputs = [out for out in result.task_outputs.values() if "agentic" in out]
     critic_outputs = [out for out in result.task_outputs.values() if "deterministic_review" in out]
     packets = [
         packet
@@ -396,8 +410,7 @@ async def _run_scenario(scenario: Scenario) -> ScenarioResult:
     ungrounded = sum(
         1
         for claim in claims
-        if not claim.evidence_spans
-        or not any(span.quote for span in claim.evidence_spans)
+        if not claim.evidence_spans or not any(span.quote for span in claim.evidence_spans)
     )
 
     fallback_layers: list[str] = []
@@ -416,9 +429,7 @@ async def _run_scenario(scenario: Scenario) -> ScenarioResult:
         if out.get("deterministic_report"):
             fallback_layers.append("critic_deterministic_report")
 
-    report_emitted = any(
-        out.get("report_markdown", "").strip() for out in critic_outputs
-    )
+    report_emitted = any(out.get("report_markdown", "").strip() for out in critic_outputs)
     report_deterministic = any(out.get("deterministic_report") for out in critic_outputs)
     return ScenarioResult(
         name=scenario.name,
@@ -447,7 +458,11 @@ def _snippet_text() -> str:
 
 def _standard_script(*, covered: bool = True) -> list[dict[str, Any]]:
     return [
-        {"plan_queries": {"queries": [{"query": "agents governed tools 2026", "tool": "web_search"}]}},
+        {
+            "plan_queries": {
+                "queries": [{"query": "agents governed tools 2026", "tool": "web_search"}]
+            }
+        },
         {"assess_coverage": {"covered": covered, "gaps": []}},
         {"select_pages": {"urls": []}},
         {
@@ -707,7 +722,9 @@ SEARCH_TOOL_FAILURE = Scenario(
     text_script=[_model_report()],
     gateway_responses={
         "web_search": [_snippet(1, _snippet_text())],
-        "arxiv_search": [_snippet(2, "The arxiv paper confirms governed tool use in 2026, verbatim.")],
+        "arxiv_search": [
+            _snippet(2, "The arxiv paper confirms governed tool use in 2026, verbatim.")
+        ],
     },
     fail_tools={"web_search"},
     expect_fallback_layers=[],
@@ -843,10 +860,8 @@ async def run_crash_resume(journal_path: Path) -> dict[str, Any]:
     while len(journal) < 1 and time.monotonic() < deadline:
         await asyncio.sleep(0.005)
     run_task.cancel()
-    try:
+    with contextlib.suppress(asyncio.CancelledError, Exception):
         await run_task
-    except (asyncio.CancelledError, Exception):  # noqa: BLE001 - the crash is the scenario
-        pass
     await asyncio.sleep(0.06)  # let the abandoned in-flight task drain
 
     seeded = journal.load_checkpoints()
@@ -941,7 +956,11 @@ def format_report(payload: dict[str, Any]) -> str:
     ]
     for result in payload["scenarios"]:
         layers = ", ".join(result["fallback_layers"]) or "—"
-        report = "deterministic" if result["report_deterministic"] else ("emitted" if result["report_emitted"] else "—")
+        report = (
+            "deterministic"
+            if result["report_deterministic"]
+            else ("emitted" if result["report_emitted"] else "—")
+        )
         lines.append(
             f"| {result['name']} | {_scenario_description(result['name'])} | {result['status']} "
             f"| {layers} | {result['rounds']} | {result['claims_published']} "

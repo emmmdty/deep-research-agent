@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from importlib.abc import Traversable
 from importlib import resources
+from importlib.abc import Traversable
 from pathlib import Path
 
 import yaml
 
 from deep_research_agent.domain_packs.models import DomainPack, DomainPackSummary
-
 
 DOMAIN_PACK_PACKAGE = "deep_research_agent.domain_packs"
 

@@ -13,14 +13,17 @@ from deep_research_agent.evals.external.contracts import BENCHMARK_NAMES, Benchm
 from deep_research_agent.evals.external.registry import get_benchmark_descriptor
 from deep_research_agent.reporting.schemas import validate_instance
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_REPORTS_ROOT = PROJECT_ROOT / "evals" / "external" / "reports"
 PORTFOLIO_GROUPS = {
     "authoritative_release_gate": ["native_phase5_local_smoke"],
     "secondary_regression": ["facts_grounding_open_smoke"],
     "external_regression": ["longfact_safe_smoke", "longbench_v2_short_smoke"],
-    "challenge_track": ["browsecomp_guarded_smoke", "gaia_supported_subset", "longbench_v2_medium_long"],
+    "challenge_track": [
+        "browsecomp_guarded_smoke",
+        "gaia_supported_subset",
+        "longbench_v2_medium_long",
+    ],
     "deferred": [
         "browsecomp_full_1266",
         "facts_private_submission",
@@ -67,7 +70,9 @@ def build_benchmark_portfolio_summary(
     """Build the reviewer-facing benchmark portfolio summary artifacts."""
 
     output_root_path = Path(output_root).resolve()
-    reports_root_path = Path(reports_root).resolve() if reports_root is not None else DEFAULT_REPORTS_ROOT.resolve()
+    reports_root_path = (
+        Path(reports_root).resolve() if reports_root is not None else DEFAULT_REPORTS_ROOT.resolve()
+    )
 
     output_root_path.mkdir(parents=True, exist_ok=True)
     summary_path = output_root_path / "portfolio_summary.json"
@@ -76,7 +81,9 @@ def build_benchmark_portfolio_summary(
     run_rows = _build_static_run_rows()
     run_index = {_run_key(row): row for row in run_rows}
 
-    discovered_paths = _discover_manifest_paths(reports_root=reports_root_path, output_root=output_root_path)
+    discovered_paths = _discover_manifest_paths(
+        reports_root=reports_root_path, output_root=output_root_path
+    )
     for manifest_path in discovered_paths:
         manifest = _load_json(manifest_path)
         discovered_row = _row_from_run_manifest(manifest=manifest, manifest_path=manifest_path)
@@ -124,7 +131,9 @@ def build_benchmark_portfolio_summary(
 
     payload = summary.model_dump(mode="json")
     previous_payload = _load_existing_summary(summary_path)
-    if previous_payload is not None and _normalized_summary(previous_payload) == _normalized_summary(payload):
+    if previous_payload is not None and _normalized_summary(
+        previous_payload
+    ) == _normalized_summary(payload):
         payload["generated_at"] = previous_payload["generated_at"]
     validate_instance("benchmark-portfolio-summary", payload)
 
@@ -232,7 +241,9 @@ def _row_from_run_manifest(*, manifest: dict[str, Any], manifest_path: Path) -> 
     if manifest.get("config_path"):
         row["config_path"] = _repo_relative_or_absolute(Path(str(manifest["config_path"])))
     if manifest.get("dataset_manifest_path"):
-        row["dataset_manifest_path"] = _repo_relative_or_absolute(Path(str(manifest["dataset_manifest_path"])))
+        row["dataset_manifest_path"] = _repo_relative_or_absolute(
+            Path(str(manifest["dataset_manifest_path"]))
+        )
     return row
 
 

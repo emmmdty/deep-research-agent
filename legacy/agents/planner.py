@@ -6,10 +6,11 @@ import json
 
 from loguru import logger
 
+from legacy.workflows.states import TaskItem, TopicSpec
+
 from ..llm.provider import get_llm
 from ..prompts.templates import PLANNER_SYSTEM_PROMPT, PLANNER_USER_PROMPT, get_current_date
 from ..research_policy import build_benchmark_tasks
-from legacy.workflows.states import TaskItem, TopicSpec
 
 
 def planner_node(state: dict) -> dict:
@@ -57,6 +58,7 @@ def planner_node(state: dict) -> dict:
 
     # 清理模型思维链泄露
     from ..llm.clean import extract_json_from_output
+
     raw_text = extract_json_from_output(raw_text)
 
     # 解析 JSON

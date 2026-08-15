@@ -82,6 +82,25 @@ dev = [
     "ruff>=0.14.0",
 ]
 
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "RUF"]
+# 兼容既有约定：BLE001 是独立审察期引入的外部规则代号（noqa 标注），
+# E501 行长交给 ruff format 统一处理；RUF001-003 与中文内容冲突（全角标点是项目惯例）。
+external = ["BLE001"]
+ignore = [
+    "E501",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Body"]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 

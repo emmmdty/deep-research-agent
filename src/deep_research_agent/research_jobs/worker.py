@@ -38,9 +38,11 @@ def build_parser() -> argparse.ArgumentParser:
 
 class _OfflineTaskWorker:
     async def execute(self, task: TaskSpec, context: TaskExecutionContext) -> WorkerOutput:
-        output = {
-            "task_id": task.task_id
-        } if "task_id" in task.output_schema.get("properties", {}) else {}
+        output = (
+            {"task_id": task.task_id}
+            if "task_id" in task.output_schema.get("properties", {})
+            else {}
+        )
         return WorkerOutput(
             result=TaskResult(task_id=task.task_id, job_id=task.job_id, status="completed"),
             output=output,
@@ -51,6 +53,7 @@ def build_scheduler_factory(settings, *, offline: bool = False):
     """Build the scheduler composition root; never silently fall back in production."""
     mode = "offline" if offline else getattr(settings, "scheduler_runtime_mode", "production")
     if mode == "offline":
+
         def offline_factory(**kwargs):
             kwargs.pop("source_profile", None)
             kwargs.pop("policy_overrides", None)
@@ -82,7 +85,9 @@ def main() -> None:
     args = build_parser().parse_args()
     settings = get_settings()
     if args.scheduler_factory_path is not None:
-        settings = settings.model_copy(update={"scheduler_factory_path": args.scheduler_factory_path})
+        settings = settings.model_copy(
+            update={"scheduler_factory_path": args.scheduler_factory_path}
+        )
     service = ResearchJobService(
         workspace_dir=args.workspace_dir,
         runtime_dirname=args.runtime_dirname,

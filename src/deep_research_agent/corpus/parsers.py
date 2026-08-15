@@ -17,8 +17,9 @@ class ScholarlyParser(Protocol):
     name: str
     version: str
 
-    def parse(self, content: bytes | str, *, media_type: str = "application/pdf") -> ParsedDocument:
-        ...
+    def parse(
+        self, content: bytes | str, *, media_type: str = "application/pdf"
+    ) -> ParsedDocument: ...
 
 
 def _as_text(content: bytes | str) -> str:

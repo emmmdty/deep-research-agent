@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import datetime, timezone
 from types import MappingProxyType
-from typing import Annotated, Literal, Mapping
+from typing import Annotated, Literal
 
 from pydantic import (
     AnyHttpUrl,
@@ -16,7 +17,6 @@ from pydantic import (
     field_serializer,
     model_validator,
 )
-
 
 Identifier = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 

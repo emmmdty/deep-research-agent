@@ -7,7 +7,6 @@ from typing import Literal, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field
 
-
 WorkerCount = Literal[1, 2, 4, 8]
 WORKER_COUNTS: tuple[WorkerCount, ...] = (1, 2, 4, 8)
 
@@ -122,10 +121,10 @@ if __name__ == "__main__":
 
 
 __all__ = [
+    "WORKER_COUNTS",
     "AgentScalingReport",
     "AgentScalingResult",
     "FrozenScalingInput",
     "ScalingExecutor",
-    "WORKER_COUNTS",
     "run_agent_scaling",
 ]

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -12,7 +12,6 @@ from fastapi.testclient import TestClient
 
 from deep_research_agent.gateway.api import create_app
 from deep_research_agent.research_jobs import ResearchJobService
-
 
 ADMIN_EMAIL = "admin@example.test"
 ADMIN_PASSWORD = "correct horse battery staple"
@@ -124,10 +123,13 @@ def test_offline_registration_persists_in_local_database_and_production_stays_in
     )
     invite_only_client = TestClient(invite_only_app)
     assert invite_only_client.get("/v1/auth/registration-status").json() == {"enabled": False}
-    assert invite_only_client.post(
-        "/v1/auth/register",
-        json={"email": "blocked@example.test", "password": "local demo password 123"},
-    ).status_code == 404
+    assert (
+        invite_only_client.post(
+            "/v1/auth/register",
+            json={"email": "blocked@example.test", "password": "local demo password 123"},
+        ).status_code
+        == 404
+    )
 
 
 def test_fresh_alembic_upgrade_handles_dynamic_legacy_schema(tmp_path, monkeypatch):
@@ -437,9 +439,10 @@ def test_private_corpus_memory_crud_and_export_are_tenant_scoped(admin):
     exported = owner.get("/v1/memory/export")
     assert exported.status_code == 200
     assert exported.json()["memories"][0]["memory_id"] == memory_id
-    assert owner.delete(
-        f"/v1/memory/{memory_id}", headers={"X-CSRF-Token": owner_csrf}
-    ).status_code == 204
+    assert (
+        owner.delete(f"/v1/memory/{memory_id}", headers={"X-CSRF-Token": owner_csrf}).status_code
+        == 204
+    )
 
 
 def test_private_corpus_is_frozen_into_scheduler_job_and_bundle(admin):
@@ -485,7 +488,12 @@ def test_memory_requires_sensitive_confirmation_and_expires_or_supersedes(admin,
     rejected = client.post(
         "/v1/memory",
         headers={"X-CSRF-Token": csrf},
-        json={"scope": "user_memory", "key": "profile", "content": "private", "sensitivity": "sensitive"},
+        json={
+            "scope": "user_memory",
+            "key": "profile",
+            "content": "private",
+            "sensitivity": "sensitive",
+        },
     )
     assert rejected.status_code == 422
     first = client.post(
@@ -539,7 +547,9 @@ def test_memory_requires_sensitive_confirmation_and_expires_or_supersedes(admin,
         user_id=identity.user_id,
         values={"expires_at": datetime.now(timezone.utc) - timedelta(seconds=1)},
     )
-    assert not any(item["memory_id"] == memory_id for item in client.get("/v1/memory").json()["memories"])
+    assert not any(
+        item["memory_id"] == memory_id for item in client.get("/v1/memory").json()["memories"]
+    )
 
 
 def test_admin_model_secrets_are_redacted_and_running_config_is_frozen(admin):
@@ -676,9 +686,7 @@ def test_run_event_dedupe_is_safe_under_concurrent_sync(admin, app):
         results = list(executor.map(append_once, range(16)))
 
     assert len({result["sequence"] for result in results}) == 1
-    events = app.state.product_service.list_run_events(
-        run["run_id"], tenant_id=run["tenant_id"]
-    )
+    events = app.state.product_service.list_run_events(run["run_id"], tenant_id=run["tenant_id"])
     assert [event["event_type"] for event in events].count("runtime.task.started") == 1
 
 
@@ -717,15 +725,11 @@ def test_product_cancel_and_resume_delegate_to_canonical_runtime(admin, app):
         json={"question": "Delegated lifecycle", "start_worker": False},
     ).json()
 
-    cancelled = client.post(
-        f"/v1/runs/{run['run_id']}:cancel", headers={"X-CSRF-Token": csrf}
-    )
+    cancelled = client.post(f"/v1/runs/{run['run_id']}:cancel", headers={"X-CSRF-Token": csrf})
     assert cancelled.status_code == 200
     assert cancelled.json()["status"] == "cancelled"
     assert app.state.runtime_service.get(run["research_job_id"]).status.value == "cancelled"
-    events = app.state.product_service.list_run_events(
-        run["run_id"], tenant_id=run["tenant_id"]
-    )
+    events = app.state.product_service.list_run_events(run["run_id"], tenant_id=run["tenant_id"])
     assert [event["event_type"] for event in events].count("run.cancelled") == 1
 
     resumed = client.post(
@@ -749,20 +753,25 @@ def test_product_runtime_jobs_are_not_exposed_through_legacy_gateway(admin):
     ).json()
     runtime_job_id = run["research_job_id"]
 
-    assert client.get(
-        f"/v1/research/jobs/{runtime_job_id}", headers=legacy_headers
-    ).status_code == 404
-    assert client.get(
-        f"/v1/research/jobs/{runtime_job_id}/events", headers=legacy_headers
-    ).status_code == 404
-    assert client.get(
-        f"/v1/research/jobs/{runtime_job_id}/bundle", headers=legacy_headers
-    ).status_code == 404
-    assert client.post(
-        f"/v1/research/jobs/{runtime_job_id}:cancel",
-        json={},
-        headers=legacy_headers,
-    ).status_code == 404
+    assert (
+        client.get(f"/v1/research/jobs/{runtime_job_id}", headers=legacy_headers).status_code == 404
+    )
+    assert (
+        client.get(f"/v1/research/jobs/{runtime_job_id}/events", headers=legacy_headers).status_code
+        == 404
+    )
+    assert (
+        client.get(f"/v1/research/jobs/{runtime_job_id}/bundle", headers=legacy_headers).status_code
+        == 404
+    )
+    assert (
+        client.post(
+            f"/v1/research/jobs/{runtime_job_id}:cancel",
+            json={},
+            headers=legacy_headers,
+        ).status_code
+        == 404
+    )
 
 
 def test_run_rejects_conversation_from_another_topic(admin):
@@ -786,23 +795,27 @@ def test_run_rejects_conversation_from_another_topic(admin):
 
 def test_whitespace_only_product_inputs_are_validation_errors(app):
     client = TestClient(app, raise_server_exceptions=False)
-    login = client.post(
-        "/v1/auth/login", json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD}
-    )
+    login = client.post("/v1/auth/login", json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD})
     headers = {"X-CSRF-Token": login.json()["csrf_token"]}
 
     assert client.post("/v1/topics", headers=headers, json={"title": "   "}).status_code == 422
     topic = client.post("/v1/topics", headers=headers, json={"title": "Valid"}).json()
-    assert client.post(
-        f"/v1/topics/{topic['topic_id']}/runs",
-        headers=headers,
-        json={"question": "  ", "start_worker": False},
-    ).status_code == 422
-    assert client.post(
-        f"/v1/conversations/{topic['conversation_id']}/messages",
-        headers=headers,
-        json={"content": "  "},
-    ).status_code == 422
+    assert (
+        client.post(
+            f"/v1/topics/{topic['topic_id']}/runs",
+            headers=headers,
+            json={"question": "  ", "start_worker": False},
+        ).status_code
+        == 422
+    )
+    assert (
+        client.post(
+            f"/v1/conversations/{topic['conversation_id']}/messages",
+            headers=headers,
+            json={"content": "  "},
+        ).status_code
+        == 422
+    )
 
 
 def test_bootstrap_admin_can_be_configured_by_environment(tmp_path, monkeypatch):
@@ -830,5 +843,7 @@ def test_bootstrap_admin_environment_requires_both_values(tmp_path, monkeypatch)
         create_app(
             database_url=f"sqlite+pysqlite:///{tmp_path / 'invalid-env-product.db'}",
             offline_mode=True,
-            service_factory=lambda: ResearchJobService(workspace_dir=str(tmp_path / "invalid-runtime")),
+            service_factory=lambda: ResearchJobService(
+                workspace_dir=str(tmp_path / "invalid-runtime")
+            ),
         )

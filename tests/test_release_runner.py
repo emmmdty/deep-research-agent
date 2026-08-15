@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 
 
-def test_release_runner_orchestrates_hybrid_preflight_benchmark_and_ablation(monkeypatch, tmp_path: Path):
+def test_release_runner_orchestrates_hybrid_preflight_benchmark_and_ablation(
+    monkeypatch, tmp_path: Path
+):
     """hybrid release runner 应执行 live calibration 与 full portfolio12 两段流程，并写出清单。"""
     from scripts import run_portfolio12_release
 
@@ -147,11 +149,15 @@ def test_release_runner_orchestrates_hybrid_preflight_benchmark_and_ablation(mon
             encoding="utf-8",
         )
         (output_root / "ablation_summary.md").write_text("# Ablation Summary", encoding="utf-8")
-        (output_root / "variant_comparison.csv").write_text("variant\\nours_full\\n", encoding="utf-8")
+        (output_root / "variant_comparison.csv").write_text(
+            "variant\\nours_full\\n", encoding="utf-8"
+        )
         return {"summary": summary}
 
     monkeypatch.setattr(run_portfolio12_release, "_run_preflight", fake_preflight)
-    monkeypatch.setattr(run_portfolio12_release, "_run_benchmark_release", fake_run_benchmark_release)
+    monkeypatch.setattr(
+        run_portfolio12_release, "_run_benchmark_release", fake_run_benchmark_release
+    )
     monkeypatch.setattr(run_portfolio12_release, "_run_ablation_release", fake_run_ablation_release)
     monkeypatch.setattr(run_portfolio12_release, "_current_git_commit", lambda: "deadbeef")
 

@@ -6,7 +6,7 @@ import json
 import os
 from enum import Enum
 from pathlib import Path
-from typing import Any, Literal, Optional
+from typing import Any, Literal
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
@@ -47,11 +47,11 @@ class Settings(BaseSettings):
         default="MiniMax-M2.5",
         description="当前默认 provider profile 的模型名称覆盖",
     )
-    llm_api_key: Optional[str] = Field(
+    llm_api_key: str | None = Field(
         default=None,
         description="当前默认 provider profile 的 API key 覆盖",
     )
-    llm_base_url: Optional[str] = Field(
+    llm_base_url: str | None = Field(
         default=None,
         description="当前默认 provider profile 的 base URL 覆盖",
     )
@@ -68,18 +68,18 @@ class Settings(BaseSettings):
         description="向支持 thinking 模式的端点发送 extra_body 关闭推理（deepseek 等模型"
         "推理会吃掉整个 token 预算导致空输出，关闭后更可靠、更快、更便宜）",
     )
-    openai_api_key: Optional[str] = Field(default=None, description="OpenAI API 密钥")
+    openai_api_key: str | None = Field(default=None, description="OpenAI API 密钥")
     openai_model_name: str = Field(default="gpt-4o-mini", description="OpenAI 默认模型")
-    anthropic_api_key: Optional[str] = Field(default=None, description="Anthropic API 密钥")
+    anthropic_api_key: str | None = Field(default=None, description="Anthropic API 密钥")
     anthropic_model_name: str = Field(
         default="claude-3-5-haiku-latest",
         description="Anthropic 默认模型",
     )
-    openai_compatible_api_key: Optional[str] = Field(
+    openai_compatible_api_key: str | None = Field(
         default=None,
         description="OpenAI-compatible API 密钥",
     )
-    openai_compatible_base_url: Optional[str] = Field(
+    openai_compatible_base_url: str | None = Field(
         default=None,
         description="OpenAI-compatible base URL",
     )
@@ -87,11 +87,11 @@ class Settings(BaseSettings):
         default="MiniMax-M2.5",
         description="OpenAI-compatible 默认模型",
     )
-    anthropic_compatible_api_key: Optional[str] = Field(
+    anthropic_compatible_api_key: str | None = Field(
         default=None,
         description="Anthropic-compatible API 密钥",
     )
-    anthropic_compatible_base_url: Optional[str] = Field(
+    anthropic_compatible_base_url: str | None = Field(
         default=None,
         description="Anthropic-compatible base URL",
     )
@@ -99,15 +99,15 @@ class Settings(BaseSettings):
         default="claude-compatible-model",
         description="Anthropic-compatible 默认模型",
     )
-    vision_model_name: Optional[str] = Field(
+    vision_model_name: str | None = Field(
         default=None,
         description="多模态视觉模型名称（env: VISION_MODEL_NAME）",
     )
-    vision_api_key: Optional[str] = Field(
+    vision_api_key: str | None = Field(
         default=None,
         description="多模态视觉模型 API key（env: VISION_API_KEY）",
     )
-    vision_base_url: Optional[str] = Field(
+    vision_base_url: str | None = Field(
         default=None,
         description="多模态视觉模型 base URL（env: VISION_BASE_URL）",
     )
@@ -117,7 +117,7 @@ class Settings(BaseSettings):
         default=SearchBackend.TAVILY,
         description="默认搜索后端",
     )
-    tavily_api_key: Optional[str] = Field(
+    tavily_api_key: str | None = Field(
         default=None,
         description="Tavily API 密钥",
     )
@@ -178,7 +178,7 @@ class Settings(BaseSettings):
         default_factory=list,
         description="skill 根目录列表",
     )
-    mcp_config_path: Optional[str] = Field(
+    mcp_config_path: str | None = Field(
         default=None,
         description="MCP server YAML 配置路径",
     )
@@ -194,15 +194,15 @@ class Settings(BaseSettings):
         default_factory=lambda: ["ours", "gptr", "odr", "alibaba"],
         description="启用的对比器",
     )
-    judge_model: Optional[str] = Field(
+    judge_model: str | None = Field(
         default=None,
         description="LLM Judge 模型名（默认跟随主模型）",
     )
-    open_deep_research_command: Optional[str] = Field(
+    open_deep_research_command: str | None = Field(
         default=None,
         description="Open Deep Research 运行命令模板",
     )
-    open_deep_research_report_dir: Optional[str] = Field(
+    open_deep_research_report_dir: str | None = Field(
         default=None,
         description="Open Deep Research 报告导入目录",
     )
@@ -210,11 +210,11 @@ class Settings(BaseSettings):
         default="command",
         description="Alibaba 对比器运行模式",
     )
-    alibaba_command: Optional[str] = Field(
+    alibaba_command: str | None = Field(
         default=None,
         description="Alibaba DeepResearch 运行命令模板",
     )
-    alibaba_report_dir: Optional[str] = Field(
+    alibaba_report_dir: str | None = Field(
         default=None,
         description="Alibaba 报告导入目录",
     )
@@ -226,15 +226,15 @@ class Settings(BaseSettings):
         default=True,
         description="Gemini Deep Research 是否要求 allowlist",
     )
-    gemini_command: Optional[str] = Field(
+    gemini_command: str | None = Field(
         default=None,
         description="Gemini Deep Research 运行命令模板",
     )
-    gemini_report_dir: Optional[str] = Field(
+    gemini_report_dir: str | None = Field(
         default=None,
         description="Gemini 报告导入目录",
     )
-    gpt_researcher_python: Optional[str] = Field(
+    gpt_researcher_python: str | None = Field(
         default=None,
         description="GPT Researcher 隔离 Python 路径",
     )
@@ -268,7 +268,7 @@ class Settings(BaseSettings):
         default="production",
         description="scheduler-v2 composition mode; offline is deterministic and explicit",
     )
-    scheduler_factory_path: Optional[str] = Field(
+    scheduler_factory_path: str | None = Field(
         default="deep_research_agent.agents.factory:build_scheduler_factory",
         description=(
             "dotted import path for the provider-neutral scheduler factory; "
@@ -388,7 +388,9 @@ class Settings(BaseSettings):
 
         selected_profile = self.get_default_provider_profile_name()
 
-        def _pick(explicit: str | None, generic: str | None, fallback: str | None, *, profile_name: str) -> str | None:
+        def _pick(
+            explicit: str | None, generic: str | None, fallback: str | None, *, profile_name: str
+        ) -> str | None:
             if explicit:
                 return explicit
             if profile_name == selected_profile and generic:
@@ -401,7 +403,9 @@ class Settings(BaseSettings):
             "openai": ProviderProfile(
                 name="openai",
                 provider_type=ProviderType.OPENAI,
-                model=_pick(None, selected_generic_model, self.openai_model_name, profile_name="openai")
+                model=_pick(
+                    None, selected_generic_model, self.openai_model_name, profile_name="openai"
+                )
                 or self.openai_model_name,
                 api_key=_pick(
                     self.openai_api_key,
@@ -409,7 +413,9 @@ class Settings(BaseSettings):
                     os.getenv("OPENAI_API_KEY"),
                     profile_name="openai",
                 ),
-                base_url=_pick(None, self.llm_base_url, "https://api.openai.com/v1", profile_name="openai"),
+                base_url=_pick(
+                    None, self.llm_base_url, "https://api.openai.com/v1", profile_name="openai"
+                ),
                 temperature=self.llm_temperature,
                 max_tokens=self.llm_max_tokens,
                 priority=10,
@@ -436,7 +442,9 @@ class Settings(BaseSettings):
                     os.getenv("ANTHROPIC_API_KEY"),
                     profile_name="anthropic",
                 ),
-                base_url=_pick(None, self.llm_base_url, "https://api.anthropic.com", profile_name="anthropic"),
+                base_url=_pick(
+                    None, self.llm_base_url, "https://api.anthropic.com", profile_name="anthropic"
+                ),
                 temperature=self.llm_temperature,
                 max_tokens=self.llm_max_tokens,
                 priority=10,

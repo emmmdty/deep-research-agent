@@ -46,15 +46,53 @@ _INJECTION_PATTERNS: tuple[tuple[re.Pattern[str], str, str], ...] = (
         "high",
         "disregard_instructions",
     ),
-    (re.compile(r"do\s+not\s+follow\s+(?:your\s+)?(?:previous|prior|the)\s+(?:instructions?|prompts?|system\s+prompt)", re.IGNORECASE), "high", "do_not_follow"),
-    (re.compile(r"override\s+(your|all\s+(previous|prior))\s+(instructions?|prompts?|system)", re.IGNORECASE), "high", "override_instructions"),
-    (re.compile(r"forget\s+(all\s+)?(your|previous)\s+(instructions?|prompts?|rules)", re.IGNORECASE), "high", "forget_instructions"),
-    (re.compile(r"you\s+are\s+now\s+(?:the\s+)?(?:an?\s+|a\s+)?[\w-]+(?:\s+[\w-]+){0,2}\s+(?:assistant|agent|system)", re.IGNORECASE), "high", "role_override"),
+    (
+        re.compile(
+            r"do\s+not\s+follow\s+(?:your\s+)?(?:previous|prior|the)\s+(?:instructions?|prompts?|system\s+prompt)",
+            re.IGNORECASE,
+        ),
+        "high",
+        "do_not_follow",
+    ),
+    (
+        re.compile(
+            r"override\s+(your|all\s+(previous|prior))\s+(instructions?|prompts?|system)",
+            re.IGNORECASE,
+        ),
+        "high",
+        "override_instructions",
+    ),
+    (
+        re.compile(
+            r"forget\s+(all\s+)?(your|previous)\s+(instructions?|prompts?|rules)", re.IGNORECASE
+        ),
+        "high",
+        "forget_instructions",
+    ),
+    (
+        re.compile(
+            r"you\s+are\s+now\s+(?:the\s+)?(?:an?\s+|a\s+)?[\w-]+(?:\s+[\w-]+){0,2}\s+(?:assistant|agent|system)",
+            re.IGNORECASE,
+        ),
+        "high",
+        "role_override",
+    ),
     (re.compile(r"from\s+now\s+on,\s+you\s+(are|will)", re.IGNORECASE), "high", "role_override"),
     (re.compile(r"your\s+system\s+prompt", re.IGNORECASE), "high", "system_prompt_reference"),
-    (re.compile(r"(reveal|print|show|output)\s+(your\s+)?(system\s+)?prompt", re.IGNORECASE), "high", "prompt_leak_attempt"),
+    (
+        re.compile(r"(reveal|print|show|output)\s+(your\s+)?(system\s+)?prompt", re.IGNORECASE),
+        "high",
+        "prompt_leak_attempt",
+    ),
     (re.compile(r"jailbreak", re.IGNORECASE), "high", "jailbreak"),
-    (re.compile(r"secretly\s+(?:change|set|switch)\s+(?:your\s+)?(?:mode|behavior|instructions)", re.IGNORECASE), "high", "stealth_override"),
+    (
+        re.compile(
+            r"secretly\s+(?:change|set|switch)\s+(?:your\s+)?(?:mode|behavior|instructions)",
+            re.IGNORECASE,
+        ),
+        "high",
+        "stealth_override",
+    ),
     # chat-format delimiter tokens (medium: neutralize)
     (
         re.compile(r"<\|(?:im_start|im_end|system|user|assistant|tool)\|>"),
@@ -62,11 +100,27 @@ _INJECTION_PATTERNS: tuple[tuple[re.Pattern[str], str, str], ...] = (
         "chat_delimiter_token",
     ),
     (re.compile(r"\[/?(?:INST|SYS)\]"), "medium", "llama_chat_token"),
-    (re.compile(r"^#{0,3}\s*(human|assistant|system)\s*:", re.IGNORECASE | re.MULTILINE), "medium", "chat_header_line"),
-    (re.compile(r"<system[_\- ]?(message|instructions?)>", re.IGNORECASE), "medium", "html_system_tag"),
-    (re.compile(r"&lt;\|im_start\|&gt;|&#124;im_start&#124;", re.IGNORECASE), "medium", "html_encoded_delimiter"),
+    (
+        re.compile(r"^#{0,3}\s*(human|assistant|system)\s*:", re.IGNORECASE | re.MULTILINE),
+        "medium",
+        "chat_header_line",
+    ),
+    (
+        re.compile(r"<system[_\- ]?(message|instructions?)>", re.IGNORECASE),
+        "medium",
+        "html_system_tag",
+    ),
+    (
+        re.compile(r"&lt;\|im_start\|&gt;|&#124;im_start&#124;", re.IGNORECASE),
+        "medium",
+        "html_encoded_delimiter",
+    ),
     (re.compile(r"---\s*instructions?\s*---", re.IGNORECASE), "medium", "instruction_fence"),
-    (re.compile(r"<\s*(?:instructions?|prompt|system)[^>]*>", re.IGNORECASE), "medium", "instruction_tag"),
+    (
+        re.compile(r"<\s*(?:instructions?|prompt|system)[^>]*>", re.IGNORECASE),
+        "medium",
+        "instruction_tag",
+    ),
 )
 
 _MEDIUM_TOKEN_NEUTRALIZE: tuple[tuple[str, str], ...] = (

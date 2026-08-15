@@ -14,7 +14,9 @@ def test_resolve_comparators_supports_internal_ablation_variants():
     from legacy.evaluation.comparators import resolve_comparators
 
     settings = get_settings()
-    resolved = resolve_comparators(settings, requested=["ours_base", "ours_verifier", "ours_gate", "ours_full"])
+    resolved = resolve_comparators(
+        settings, requested=["ours_base", "ours_verifier", "ours_gate", "ours_full"]
+    )
 
     assert resolved == ["ours_base", "ours_verifier", "ours_gate", "ours_full"]
 
@@ -34,7 +36,15 @@ def test_run_ablation_writes_json_markdown_and_csv(monkeypatch, tmp_path: Path):
     def fake_load_topics(topic_set="portfolio12", max_topics=0, topics_path=None):
         return [topic]
 
-    def fake_run_comparator(name, topic, output_root, max_loops=2, research_profile="benchmark", settings=None, ablation_variant=None):
+    def fake_run_comparator(
+        name,
+        topic,
+        output_root,
+        max_loops=2,
+        research_profile="benchmark",
+        settings=None,
+        ablation_variant=None,
+    ):
         reliability = {
             "ours_base": 58.0,
             "ours_verifier": 69.0,
@@ -75,11 +85,16 @@ def test_run_ablation_writes_json_markdown_and_csv(monkeypatch, tmp_path: Path):
     assert (tmp_path / "variant_comparison.csv").exists()
 
     saved = json.loads((tmp_path / "ablation_results.json").read_text(encoding="utf-8"))
-    assert saved["topics"][0]["comparators"]["ours_full"]["metrics"]["research_reliability_score_100"] == 82.0
+    assert (
+        saved["topics"][0]["comparators"]["ours_full"]["metrics"]["research_reliability_score_100"]
+        == 82.0
+    )
     assert "ours_full" in (tmp_path / "ablation_summary.md").read_text(encoding="utf-8")
 
 
-def test_run_ablation_scores_with_judge_and_reuses_precomputed_ours_full(monkeypatch, tmp_path: Path):
+def test_run_ablation_scores_with_judge_and_reuses_precomputed_ours_full(
+    monkeypatch, tmp_path: Path
+):
     """ablation 应支持 judge 评分，并复用 benchmark 已产出的 ours_full 结果。"""
     from scripts import run_ablation
 
@@ -96,7 +111,15 @@ def test_run_ablation_scores_with_judge_and_reuses_precomputed_ours_full(monkeyp
     def fake_load_topics(topic_set="portfolio12", max_topics=0, topics_path=None):
         return [topic]
 
-    def fake_run_comparator(name, topic, output_root, max_loops=2, research_profile="benchmark", settings=None, ablation_variant=None):
+    def fake_run_comparator(
+        name,
+        topic,
+        output_root,
+        max_loops=2,
+        research_profile="benchmark",
+        settings=None,
+        ablation_variant=None,
+    ):
         call_names.append(name)
         return ComparatorResult(
             name=name,
@@ -178,15 +201,29 @@ def test_run_ablation_filters_topic_ids(monkeypatch, tmp_path: Path):
     from scripts import run_ablation
 
     topics = [
-        BenchmarkTopic(id="T01", topic="主题1", expected_aspects=["方面A"], min_sources=1, min_words=10),
-        BenchmarkTopic(id="T02", topic="主题2", expected_aspects=["方面B"], min_sources=1, min_words=10),
-        BenchmarkTopic(id="T03", topic="主题3", expected_aspects=["方面C"], min_sources=1, min_words=10),
+        BenchmarkTopic(
+            id="T01", topic="主题1", expected_aspects=["方面A"], min_sources=1, min_words=10
+        ),
+        BenchmarkTopic(
+            id="T02", topic="主题2", expected_aspects=["方面B"], min_sources=1, min_words=10
+        ),
+        BenchmarkTopic(
+            id="T03", topic="主题3", expected_aspects=["方面C"], min_sources=1, min_words=10
+        ),
     ]
 
     def fake_load_topics(topic_set="portfolio12", max_topics=0, topics_path=None):
         return topics
 
-    def fake_run_comparator(name, topic, output_root, max_loops=2, research_profile="benchmark", settings=None, ablation_variant=None):
+    def fake_run_comparator(
+        name,
+        topic,
+        output_root,
+        max_loops=2,
+        research_profile="benchmark",
+        settings=None,
+        ablation_variant=None,
+    ):
         return ComparatorResult(
             name=name,
             status="completed",

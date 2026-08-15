@@ -20,11 +20,12 @@ class TestConfigSettings:
     def test_settings_import(self):
         """验证 Settings 类可以正常导入。"""
         from configs.settings import Settings
+
         assert Settings is not None
 
     def test_settings_defaults(self):
         """验证默认配置值正确。"""
-        from configs.settings import Settings, LLMProvider, SearchBackend
+        from configs.settings import LLMProvider, SearchBackend, Settings
 
         s = Settings()
         assert s.llm_provider == LLMProvider.OPENAI_COMPATIBLE

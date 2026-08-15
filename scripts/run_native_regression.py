@@ -10,9 +10,8 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from deep_research_agent.evals.native_benchmark import run_eval_suite as _canonical_run_eval_suite
 from deep_research_agent.evals import native_benchmark
-
+from deep_research_agent.evals.native_benchmark import run_eval_suite as _canonical_run_eval_suite
 
 run_eval_suite = _canonical_run_eval_suite
 
@@ -23,7 +22,9 @@ def run_native_regression(*, output_root: str | Path) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run the deterministic native regression benchmark")
+    parser = argparse.ArgumentParser(
+        description="Run the deterministic native regression benchmark"
+    )
     parser.add_argument(
         "--output-root",
         default=str(Path("evals") / "reports" / "native_regression"),
@@ -36,7 +37,9 @@ def main() -> None:
     if args.json:
         print(json.dumps(manifest, ensure_ascii=False, indent=2))
     else:
-        print(f"native regression: {manifest['status']} -> {Path(args.output_root).resolve() / 'release_manifest.json'}")
+        print(
+            f"native regression: {manifest['status']} -> {Path(args.output_root).resolve() / 'release_manifest.json'}"
+        )
 
 
 if __name__ == "__main__":

@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 import argparse
-from hashlib import sha256
 import json
+from hashlib import sha256
 from typing import Literal, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
-
 
 FrameworkName = Literal["pydanticai_dbos", "langgraph", "google_adk"]
 HardGateName = Literal[
@@ -66,7 +65,9 @@ class FrameworkBakeoffReport(StrictModel):
     frozen_input_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     observations: tuple[FrameworkObservation, ...]
     selected_framework: FrameworkName
-    selection_policy: str = "hard-gates_then_quality_latency_with_pydantic_dbos_ten_percent_preference"
+    selection_policy: str = (
+        "hard-gates_then_quality_latency_with_pydantic_dbos_ten_percent_preference"
+    )
 
 
 class FrameworkAdapter(Protocol):
@@ -90,7 +91,7 @@ class _OfflineContractAdapter:
             )
         return FrameworkObservation(
             framework=self.name,
-            hard_gates={gate: True for gate in HARD_GATES},
+            hard_gates=dict.fromkeys(HARD_GATES, True),
             elapsed_ms=self.elapsed_ms,
             quality_score=self.quality_score,
             token_count=self.token_count,
@@ -170,10 +171,7 @@ def run_framework_bakeoff(
         LangGraphAdapter(),
         GoogleADKAdapter(),
     )
-    observations = tuple(
-        adapter.evaluate(workload, live=live)
-        for adapter in selected_adapters
-    )
+    observations = tuple(adapter.evaluate(workload, live=live) for adapter in selected_adapters)
     return FrameworkBakeoffReport(
         mode="live" if live else "offline",
         frozen_input_hash=workload_hash,

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 from typing import Any
 
 from loguru import logger
@@ -48,10 +49,8 @@ class LLMCriticWorker:
             return await self._execute_with_chat(task, context, chat)
         finally:
             if owned_chat:
-                try:
+                with contextlib.suppress(Exception):
                     await chat.aclose()
-                except Exception:  # noqa: BLE001 - closing is best-effort cleanup
-                    pass
 
     async def _execute_with_chat(self, task, context: TaskExecutionContext, chat) -> WorkerOutput:
         packets = self._collect_packets(task, context)
@@ -77,11 +76,7 @@ class LLMCriticWorker:
             for index, decision in enumerate(review.get("decisions", []), start=1)
             if isinstance(decision, dict)
             for claim_ids in [
-                tuple(
-                    str(item)
-                    for item in decision.get("claim_ids", [])
-                    if str(item)
-                )
+                tuple(str(item) for item in decision.get("claim_ids", []) if str(item))
             ]
             if claim_ids
             for decision_text in [str(decision.get("decision") or "qualified")]
@@ -143,9 +138,7 @@ class LLMCriticWorker:
         claims: list[ClaimRecord],
         spans: list[EvidenceSpan],
     ) -> dict[str, Any]:
-        span_index = {
-            span.span_id: span.quote[:160] for span in spans
-        }
+        span_index = {span.span_id: span.quote[:160] for span in spans}
         claim_digest = "\n".join(
             f"[{claim.claim_id}] critical={claim.critical} "
             f"status={claim.support_status} confidence={claim.confidence}\n"
@@ -154,8 +147,7 @@ class LLMCriticWorker:
             for claim in sorted(claims, key=lambda item: item.claim_id)
         )
         span_digest = "\n".join(
-            f"{span_id}: {quote}"
-            for span_id, quote in sorted(span_index.items())
+            f"{span_id}: {quote}" for span_id, quote in sorted(span_index.items())
         )
         try:
             payload = await chat.chat_json(
@@ -201,11 +193,12 @@ class LLMCriticWorker:
             decision_text = str(decision.get("decision") or "")
             if decision_text not in {"accepted", "qualified", "contradicted", "unresolved"}:
                 decision["decision"] = "unresolved"
-            if decision_text in {"contradicted", "qualified"} and not decision["rationale_evidence_ids"]:
+            if (
+                decision_text in {"contradicted", "qualified"}
+                and not decision["rationale_evidence_ids"]
+            ):
                 decision["decision"] = "unresolved"
-                decision["rationale"] = (
-                    "critic could not cite grounded evidence for its downgrade"
-                )
+                decision["rationale"] = "critic could not cite grounded evidence for its downgrade"
         return payload
 
     @staticmethod
@@ -260,8 +253,7 @@ class LLMCriticWorker:
         review: dict[str, Any],
     ) -> str:
         claim_digest = "\n".join(
-            f"[{claim.claim_id}] ({claim.support_status}, critical={claim.critical}) "
-            f"{claim.claim}"
+            f"[{claim.claim_id}] ({claim.support_status}, critical={claim.critical}) {claim.claim}"
             for claim in sorted(claims, key=lambda item: item.claim_id)
         )
         decision_digest = "\n".join(
@@ -284,7 +276,7 @@ class LLMCriticWorker:
                 "exact id from the Claims list, e.g. [[claim:job:claim:t1:01]]). "
                 "The marker is machine-processed into a numbered reference, so "
                 "place it at the end of the sentence, separated by a single "
-                "space, e.g. \"...as measured. [[claim:job:claim:t1:01]]\"."
+                'space, e.g. "...as measured. [[claim:job:claim:t1:01]]".'
             ),
             user=f"Topic: {task.objective}\n\nClaims:\n{claim_digest}\n"
             f"\nCritic decisions:\n{decision_digest or '(none)'}",
@@ -311,12 +303,9 @@ class LLMCriticWorker:
         for claim in (critical or claims)[:_MAX_SUMMARY_CLAIMS]:
             lines.append(f"- {claim.claim}")
         lines.extend(["", "## Findings", ""])
-        for index, claim in enumerate(
-            sorted(claims, key=lambda item: item.claim_id), start=1
-        ):
+        for index, claim in enumerate(sorted(claims, key=lambda item: item.claim_id), start=1):
             lines.append(
-                f"{index}. ({claim.support_status}) {claim.claim} "
-                f"[[claim:{claim.claim_id}]]"
+                f"{index}. ({claim.support_status}) {claim.claim} [[claim:{claim.claim_id}]]"
             )
         lines.extend(["", "## Evidence Status", ""])
         lines.append(
@@ -349,7 +338,8 @@ class LLMCriticWorker:
                     ResearchGraphNode(
                         node_id=source_node_id,
                         kind="source",
-                        label=span_by_id.get(span.span_id, span).section or span.document_version_id,
+                        label=span_by_id.get(span.span_id, span).section
+                        or span.document_version_id,
                         properties={"document_version_id": span.document_version_id},
                     )
                 )

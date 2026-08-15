@@ -3,17 +3,17 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import ClassVar
 
 from deep_research_agent.connectors.models import ConnectorFetchResult
-from deep_research_agent.connectors.utils import canonicalize_uri
-
 from deep_research_agent.connectors.tools.pdf_reader import pdf_reader_tool
+from deep_research_agent.connectors.utils import canonicalize_uri
 
 
 class LocalFileIngestor:
     """解析本地文件为统一 fetch 结果。"""
 
-    SUPPORTED_SUFFIXES = {".pdf", ".md", ".txt"}
+    SUPPORTED_SUFFIXES: ClassVar[set[str]] = {".pdf", ".md", ".txt"}
 
     connector_name = "files"
 

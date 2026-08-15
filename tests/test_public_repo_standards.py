@@ -9,11 +9,9 @@ from pathlib import Path
 
 import pytest
 
-
 PROJECT_ROOT = Path(__file__).parent.parent
 REMOVED_SHOWCASE_MATERIALS = [
-    f"docs/{name}.md"
-    for name in ("showcase", "resume_bullets", "interview_qa")
+    f"docs/{name}.md" for name in ("showcase", "resume_bullets", "interview_qa")
 ]
 
 

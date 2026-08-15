@@ -19,9 +19,10 @@ from __future__ import annotations
 import importlib
 import json
 import time
+from collections.abc import Callable
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import yaml
 
@@ -84,7 +85,9 @@ def run_benchmark(
         task_count=len(rows),
         per_task=rows,
         aggregate=aggregate,
-        notes=["Offline deterministic scoring against task expected_answer; runner errors score as 0."],
+        notes=[
+            "Offline deterministic scoring against task expected_answer; runner errors score as 0."
+        ],
     )
 
     official_scores = {
@@ -126,8 +129,10 @@ def run_benchmark(
         completed_count=len(task_specs),
         official_metrics=official_scores,
         internal_metrics=internal_diagnostics,
-        notes=list(config.get("notes") or [])
-        + ["Scored deterministically offline; no judge LLM and no network access."],
+        notes=[
+            *list(config.get("notes") or []),
+            "Scored deterministically offline; no judge LLM and no network access.",
+        ],
         integrity_guards=list(descriptor.integrity_guards),
         environment={"runner": "offline_deterministic_scoring", "scoring": "drb_score_modes"},
     )
@@ -173,7 +178,6 @@ def scheduler_v2_runner(task: BenchmarkTaskSpec) -> str:
     """真实 scheduler-v2 管线：离线时产出 honest empty bundle 报告文本。"""
 
     from configs.settings import get_settings
-
     from deep_research_agent.gateway.cli import _build_job_service, _submit_cli_v2
 
     settings = get_settings()

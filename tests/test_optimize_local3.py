@@ -102,4 +102,3 @@ def test_build_failure_analysis_extracts_quality_and_aspect_failures(tmp_path: P
     assert analysis["failing_topics"][0]["entity_consistency_score"] == 0.7
     saved = json.loads((tmp_path / "failure_analysis.json").read_text(encoding="utf-8"))
     assert saved["failing_topics"][0]["off_topic_reject_count"] == 2
-

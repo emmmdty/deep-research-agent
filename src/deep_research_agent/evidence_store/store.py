@@ -63,5 +63,10 @@ class EvidenceStore:
                     INSERT OR REPLACE INTO evidence_clusters (id, topic, claim, payload)
                     VALUES (?, ?, ?, ?)
                     """,
-                    (cluster.id, topic, cluster.claim, json.dumps(cluster.model_dump(), ensure_ascii=False)),
+                    (
+                        cluster.id,
+                        topic,
+                        cluster.claim,
+                        json.dumps(cluster.model_dump(), ensure_ascii=False),
+                    ),
                 )

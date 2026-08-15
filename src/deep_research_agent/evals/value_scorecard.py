@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -170,11 +169,15 @@ def _build_scorecard_payload(
             "measure": spec["measure"],
             "why_it_matters": spec["why"],
             "failure_mode": spec["failure"],
-            "current_result": _describe_current_result(spec["metric_id"], metrics_payload[spec["metric_id"]]),
+            "current_result": _describe_current_result(
+                spec["metric_id"], metrics_payload[spec["metric_id"]]
+            ),
         }
         for spec in HEADLINE_METRIC_SPECS
     }
-    judge_route = next(item for item in provider_routing["task_roles"] if item["task_role"] == "judge")
+    judge_route = next(
+        item for item in provider_routing["task_roles"] if item["task_role"] == "judge"
+    )
     reliability = {
         key: metrics_payload[key]
         for key in (
@@ -214,7 +217,9 @@ def _build_scorecard_payload(
         "ttfr_seconds_p95": latency_cost["ttfr_seconds_p95"],
         "prompt_tokens_per_completed_job": latency_cost["prompt_tokens_per_completed_job"],
         "completion_tokens_per_completed_job": latency_cost["completion_tokens_per_completed_job"],
-        "estimated_api_cost_per_completed_job": latency_cost["estimated_api_cost_per_completed_job"],
+        "estimated_api_cost_per_completed_job": latency_cost[
+            "estimated_api_cost_per_completed_job"
+        ],
         "cost_reason": latency_cost["cost_reason"],
         "timing_status": latency_cost["timing_status"],
         "stage_runtime_seconds": latency_cost["stage_runtime_seconds"],
@@ -277,7 +282,9 @@ def _build_scorecard_payload(
         "baseline": {
             "release_gate_status": release_manifest["release_gate"]["status"],
             "required_check_count": release_manifest["release_gate"]["required_check_count"],
-            "passed_required_check_count": release_manifest["release_gate"]["passed_required_check_count"],
+            "passed_required_check_count": release_manifest["release_gate"][
+                "passed_required_check_count"
+            ],
             "suite_count": len(release_manifest["suite_order"]),
             "suite_order": release_manifest["suite_order"],
             "release_manifest_path": repo_artifacts["release_manifest"],
@@ -409,7 +416,10 @@ def _render_markdown(scorecard: dict[str, Any]) -> str:
             "",
             "## Reliability Summary",
             "",
-            *[f"- `{key}` = `{_format_metric_value(payload['value'])}`" for key, payload in scorecard["reliability_summary"].items()],
+            *[
+                f"- `{key}` = `{_format_metric_value(payload['value'])}`"
+                for key, payload in scorecard["reliability_summary"].items()
+            ],
             "",
             "This agent is not a single-shot script; it survives cancel/retry/resume/stale-recovery flows.",
             "",
@@ -487,15 +497,18 @@ def _render_metrics_readme(scorecard: dict[str, Any]) -> str:
             "",
             "Key artifacts:",
             "",
-            *[f"- `{path}`" for path in (
-                scorecard["artifact_paths"]["headline_metrics"],
-                scorecard["artifact_paths"]["value_dashboard"],
-                scorecard["artifact_paths"]["stage_timing_breakdown"],
-                scorecard["artifact_paths"]["ablation_summary_csv"],
-                scorecard["artifact_paths"]["ablation_summary_markdown"],
-                scorecard["artifact_paths"]["latency_cost_summary"],
-                scorecard["artifact_paths"]["provider_routing_comparison"],
-            )],
+            *[
+                f"- `{path}`"
+                for path in (
+                    scorecard["artifact_paths"]["headline_metrics"],
+                    scorecard["artifact_paths"]["value_dashboard"],
+                    scorecard["artifact_paths"]["stage_timing_breakdown"],
+                    scorecard["artifact_paths"]["ablation_summary_csv"],
+                    scorecard["artifact_paths"]["ablation_summary_markdown"],
+                    scorecard["artifact_paths"]["latency_cost_summary"],
+                    scorecard["artifact_paths"]["provider_routing_comparison"],
+                )
+            ],
             "",
             "Reproduction commands:",
             "",

@@ -7,6 +7,8 @@ import json
 from collections.abc import Callable, Iterable
 from datetime import datetime
 
+from deep_research_agent.kernel.contracts import CorpusManifest
+
 from .models import (
     CorpusSnapshot,
     DocumentVersion,
@@ -17,7 +19,6 @@ from .models import (
 )
 from .parsers import DoclingParser, GrobidParser, ScholarlyParser
 from .storage import CorpusRepository, InMemoryCorpusRepository
-from deep_research_agent.kernel.contracts import CorpusManifest
 
 
 def _digest(value: bytes | str) -> str:
@@ -71,15 +72,22 @@ class CorpusService:
 
         effective_license = license or source.license or source.fulltext_license
         if not source.supports_critical_claims and critical_claim is None:
-            raise PermissionError("discovery-only sources require an explicit non-critical ingestion")
+            raise PermissionError(
+                "discovery-only sources require an explicit non-critical ingestion"
+            )
         if critical_claim and not source.supports_critical_claims:
             raise PermissionError("discovery-only sources cannot support critical claims")
         if tenant_id is not None and not tenant_id.strip():
             raise ValueError("tenant_id cannot be blank")
-        self._validate_storage_policy(source, tenant_id=tenant_id, content=content, license=effective_license)
+        self._validate_storage_policy(
+            source, tenant_id=tenant_id, content=content, license=effective_license
+        )
         self.repository.save_source(source)
         content_hash = _digest(content)
-        private = tenant_id is not None or source.storage_policy in {"user_supplied", "internal_processing"}
+        private = tenant_id is not None or source.storage_policy in {
+            "user_supplied",
+            "internal_processing",
+        }
         # A public cache entry is deliberately never used for private documents.
         cache_key = self.cache_key(content_hash, source.parser_name, source.parser_version)
         cached = None if private else self.repository.find_cached(cache_key)
@@ -169,10 +177,14 @@ class CorpusService:
                 actor_tenant_id=tenant_id,
             )
         elif source.storage_policy == "mirror_allowed":
-            self.repository.save_cache(self.cache_key(content_hash, parser.name, parser.version), document)
+            self.repository.save_cache(
+                self.cache_key(content_hash, parser.name, parser.version), document
+            )
         return self.repository.get_document(document.document_version_id) or document
 
-    def require_critical_claim_support(self, document_version_id: str, *, tenant_id: str | None) -> DocumentVersion:
+    def require_critical_claim_support(
+        self, document_version_id: str, *, tenant_id: str | None
+    ) -> DocumentVersion:
         """Return a document only when its persisted source policy permits critical claims."""
 
         document = self.get_document(document_version_id, tenant_id=tenant_id)
@@ -205,7 +217,9 @@ class CorpusService:
             if self.grant_authorizer is None or not self.grant_authorizer(
                 actor_tenant_id, document.tenant_id, is_admin
             ):
-                raise PermissionError("only the owning tenant or an authorized admin may grant access")
+                raise PermissionError(
+                    "only the owning tenant or an authorized admin may grant access"
+                )
             actor_tenant_id = document.tenant_id
         self.repository.grant(
             document_version_id,
@@ -246,14 +260,23 @@ class CorpusService:
                 if self.repository.can_read(document, tenant_id)
             ]
         else:
-            candidates = [self.get_document(document_id, tenant_id=tenant_id) for document_id in document_version_ids]
-        candidates = sorted({document.document_version_id: document for document in candidates}.values(), key=lambda d: d.document_version_id)
+            candidates = [
+                self.get_document(document_id, tenant_id=tenant_id)
+                for document_id in document_version_ids
+            ]
+        candidates = sorted(
+            {document.document_version_id: document for document in candidates}.values(),
+            key=lambda d: d.document_version_id,
+        )
         ids = tuple(document.document_version_id for document in candidates)
         hashes = {document.document_version_id: document.content_sha256 for document in candidates}
         critical_claims_allowed = {
-            document.document_version_id: document.supports_critical_claims for document in candidates
+            document.document_version_id: document.supports_critical_claims
+            for document in candidates
         }
-        identity = json.dumps({"tenant_id": tenant_id, "ids": ids, "hashes": hashes}, sort_keys=True, default=str)
+        identity = json.dumps(
+            {"tenant_id": tenant_id, "ids": ids, "hashes": hashes}, sort_keys=True, default=str
+        )
         manifest_id = f"manifest:{hashlib.sha256(identity.encode()).hexdigest()[:24]}"
         manifest = CorpusManifest(
             manifest_id=manifest_id,
@@ -308,7 +331,9 @@ class CorpusService:
         content_hash = _digest(content)
         errors: list[str] = []
         for parser in self.parsers:
-            cached = self.repository.find_cached(self.cache_key(content_hash, parser.name, parser.version))
+            cached = self.repository.find_cached(
+                self.cache_key(content_hash, parser.name, parser.version)
+            )
             if cached is not None:
                 return (
                     ParsedDocument(
@@ -339,8 +364,12 @@ class CorpusService:
             raise PermissionError("link_only sources cannot store full text")
         if source.storage_policy != "user_supplied" and not license:
             raise PermissionError("a license is required before storing scholarly content")
-        if source.storage_policy == "mirror_allowed" and not CorpusService._redistributable_license(license):
-            raise PermissionError("mirror_allowed requires a known redistributable full-text license")
+        if source.storage_policy == "mirror_allowed" and not CorpusService._redistributable_license(
+            license
+        ):
+            raise PermissionError(
+                "mirror_allowed requires a known redistributable full-text license"
+            )
         if source.storage_policy in {"user_supplied", "internal_processing"} and (
             tenant_id is None or not tenant_id.strip()
         ):

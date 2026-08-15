@@ -7,9 +7,7 @@ import re
 
 from loguru import logger
 
-from ..auditor.models import EvidenceFragmentRecord
 from configs.settings import get_settings
-from ..memory.evidence_store import EvidenceStore
 from legacy.workflows.states import (
     EvidenceCluster,
     EvidenceNote,
@@ -19,6 +17,9 @@ from legacy.workflows.states import (
     SourceRecord,
     VerificationRecord,
 )
+
+from ..auditor.models import EvidenceFragmentRecord
+from ..memory.evidence_store import EvidenceStore
 
 
 def verifier_node(state: dict) -> dict:
@@ -98,7 +99,7 @@ def _build_evidence_units(sources: list[SourceRecord]) -> list[EvidenceUnit]:
         if not source.selected:
             continue
         claim = (source.snippet or source.title or f"source-{source.citation_id}").strip()
-        unit_id = hashlib.sha1(f"{source.citation_id}:{claim}".encode("utf-8")).hexdigest()[:12]
+        unit_id = hashlib.sha1(f"{source.citation_id}:{claim}".encode()).hexdigest()[:12]
         units.append(
             EvidenceUnit(
                 id=unit_id,
@@ -200,7 +201,11 @@ def _build_verification_records(
     source_index = {source.citation_id: source for source in sources}
     records: list[VerificationRecord] = []
     for note in notes:
-        selected_sources = [source_index[source_id] for source_id in note.selected_source_ids if source_id in source_index]
+        selected_sources = [
+            source_index[source_id]
+            for source_id in note.selected_source_ids
+            if source_id in source_index
+        ]
         has_low_trust = any(source.trust_tier < 4 for source in selected_sources)
         status = "weakly_supported" if conflict_count > 0 or has_low_trust else "supported"
         records.append(
@@ -208,7 +213,9 @@ def _build_verification_records(
                 task_title=note.task_title,
                 citation_ids=note.selected_source_ids or note.source_ids,
                 status=status,
-                notes="存在实体冲突或低可信来源" if status == "weakly_supported" else "高可信证据支持",
+                notes="存在实体冲突或低可信来源"
+                if status == "weakly_supported"
+                else "高可信证据支持",
             )
         )
     return records

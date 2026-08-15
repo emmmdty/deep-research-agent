@@ -1,2 +1,1 @@
 """Benchmark-specific adapter implementations."""
-

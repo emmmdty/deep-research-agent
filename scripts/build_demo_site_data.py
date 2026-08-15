@@ -172,7 +172,11 @@ def _canonical_bundle_to_demo(canonical: dict, *, prompt: str) -> dict:
             },
         },
         "citations": [
-            {"citation_id": record["citation_id"], "source_id": record["source_id"], "title": record["title"]}
+            {
+                "citation_id": record["citation_id"],
+                "source_id": record["source_id"],
+                "title": record["title"],
+            }
             for record in ordered_sources
         ],
         "sources": ordered_sources,
@@ -233,9 +237,12 @@ def _checkpoints_to_trace(checkpoints: list, *, job_id: str, run_summary: dict) 
                 "budget": payload.get("budget_used") or {},
             },
         )
-    emit("research", "queries", f"共 {len(run_summary.get('queries', []))} 次受治理搜索", {
-        "count": len(run_summary.get("queries", []))
-    })
+    emit(
+        "research",
+        "queries",
+        f"共 {len(run_summary.get('queries', []))} 次受治理搜索",
+        {"count": len(run_summary.get("queries", []))},
+    )
     emit(
         "research",
         "full_page_reads",
@@ -277,7 +284,9 @@ def build_live_agent_replay() -> None:
     target = DEMO_DATA / "runs" / "live-route-real"
     target.mkdir(parents=True, exist_ok=True)
     target.joinpath("report_bundle.json").write_text(
-        json.dumps(_canonical_bundle_to_demo(canonical, prompt=prompt), ensure_ascii=False, indent=2),
+        json.dumps(
+            _canonical_bundle_to_demo(canonical, prompt=prompt), ensure_ascii=False, indent=2
+        ),
         encoding="utf-8",
     )
     target.joinpath("report.md").write_text(canonical.get("report_markdown", ""), encoding="utf-8")
@@ -321,14 +330,20 @@ def main() -> None:
         "runs/company-openai-surface/report_bundle.json",
     )
 
-    copy_json(reports / "followup_metrics" / "headline_metrics.json", "benchmarks/headline_metrics.json")
-    copy_json(reports / "phase5_local_smoke" / "release_manifest.json", "benchmarks/release_manifest.json")
+    copy_json(
+        reports / "followup_metrics" / "headline_metrics.json", "benchmarks/headline_metrics.json"
+    )
+    copy_json(
+        reports / "phase5_local_smoke" / "release_manifest.json", "benchmarks/release_manifest.json"
+    )
     copy_json(
         reports / "followup_metrics" / "latency_cost_summary.json",
         "benchmarks/latency_cost_summary.json",
     )
 
-    portfolio = reports.parent / "external" / "reports" / "portfolio_summary" / "portfolio_summary.json"
+    portfolio = (
+        reports.parent / "external" / "reports" / "portfolio_summary" / "portfolio_summary.json"
+    )
     copy_json(portfolio, "benchmarks/portfolio_summary.json")
 
     if not ABLATION_SOURCE.exists():
@@ -342,7 +357,9 @@ def main() -> None:
         ),
         encoding="utf-8",
     )
-    print(f"generated {ablation_out.relative_to(ROOT)} (source: {ABLATION_SOURCE.relative_to(ROOT)})")
+    print(
+        f"generated {ablation_out.relative_to(ROOT)} (source: {ABLATION_SOURCE.relative_to(ROOT)})"
+    )
 
     assets = DEMO_DATA.parent / "assets"
     assets.mkdir(parents=True, exist_ok=True)

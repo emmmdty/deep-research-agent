@@ -4,12 +4,12 @@
 """
 
 __all__ = [
+    "critic_node",
     "planner_node",
     "researcher_node",
-    "verifier_node",
-    "critic_node",
-    "writer_node",
     "supervisor_node",
+    "verifier_node",
+    "writer_node",
 ]
 
 

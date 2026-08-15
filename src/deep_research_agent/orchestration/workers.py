@@ -13,7 +13,11 @@ from pydantic import ConfigDict, Field, model_validator
 
 from deep_research_agent.kernel.contracts import StrictModel, TaskResult, TaskSpec
 from deep_research_agent.orchestration.reducer import CriticDecision
-from deep_research_agent.tool_gateway.models import ToolExecutionContext, ToolInvocation, ToolResultEnvelope
+from deep_research_agent.tool_gateway.models import (
+    ToolExecutionContext,
+    ToolInvocation,
+    ToolResultEnvelope,
+)
 
 
 class WorkerOutput(StrictModel):
@@ -35,13 +39,17 @@ class WorkerOutput(StrictModel):
 
 @runtime_checkable
 class TaskWorker(Protocol):
-    async def execute(self, task: TaskSpec, context: TaskExecutionContext) -> WorkerOutput | TaskResult | Mapping[str, Any]: ...
+    async def execute(
+        self, task: TaskSpec, context: TaskExecutionContext
+    ) -> WorkerOutput | TaskResult | Mapping[str, Any]: ...
 
 
 class ModelTaskGateway(Protocol):
     """Provider-neutral model execution boundary implemented outside orchestration."""
 
-    async def execute_task(self, task: TaskSpec, context: TaskExecutionContext) -> WorkerOutput | Mapping[str, Any]: ...
+    async def execute_task(
+        self, task: TaskSpec, context: TaskExecutionContext
+    ) -> WorkerOutput | Mapping[str, Any]: ...
 
 
 @dataclass(frozen=True)
@@ -98,11 +106,15 @@ class GatewayWorker:
     def __init__(self, gateway: ModelTaskGateway) -> None:
         self._gateway = gateway
 
-    async def execute(self, task: TaskSpec, context: TaskExecutionContext) -> WorkerOutput | Mapping[str, Any]:
+    async def execute(
+        self, task: TaskSpec, context: TaskExecutionContext
+    ) -> WorkerOutput | Mapping[str, Any]:
         return await self._gateway.execute_task(task, context)
 
 
-def normalize_worker_output(task: TaskSpec, value: WorkerOutput | TaskResult | Mapping[str, Any]) -> WorkerOutput:
+def normalize_worker_output(
+    task: TaskSpec, value: WorkerOutput | TaskResult | Mapping[str, Any]
+) -> WorkerOutput:
     if isinstance(value, WorkerOutput):
         output = value
     elif isinstance(value, TaskResult):

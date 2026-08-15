@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from deep_research_agent.connectors.models import ConnectorCandidate, ConnectorFetchResult
 from deep_research_agent.connectors.utils import canonicalize_uri
@@ -56,7 +57,16 @@ class LegacyConnectorAdapter:
                         key: value
                         for key, value in item.items()
                         if key
-                        not in {"index", "source_type", "title", "url", "query", "snippet", "published_at", "auth_scope"}
+                        not in {
+                            "index",
+                            "source_type",
+                            "title",
+                            "url",
+                            "query",
+                            "snippet",
+                            "published_at",
+                            "auth_scope",
+                        }
                     },
                 )
             )
@@ -72,7 +82,10 @@ class LegacyConnectorAdapter:
             if isinstance(response, dict):
                 text = str(response.get("text") or text)
                 mime_type = str(response.get("mime_type") or mime_type)
-                metadata = {**metadata, **{k: v for k, v in response.items() if k not in {"text", "mime_type"}}}
+                metadata = {
+                    **metadata,
+                    **{k: v for k, v in response.items() if k not in {"text", "mime_type"}},
+                }
             else:
                 text = str(response)
 

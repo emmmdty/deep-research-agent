@@ -6,7 +6,6 @@ from loguru import logger
 
 from legacy.workflows.graph import run_research
 
-
 LITERATURE_REVIEW_TOPIC_TEMPLATE = """\
 请对以下主题进行学术文献综述：
 {topic}

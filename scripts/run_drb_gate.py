@@ -25,8 +25,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from deep_research_agent.evals.external.runner import run_external_benchmark  # noqa: E402
-
+from deep_research_agent.evals.external.runner import run_external_benchmark
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG_PATH = PROJECT_ROOT / "evals" / "external" / "configs" / "drb_gate.yaml"
@@ -157,13 +156,20 @@ def run_drb_gate(
     """全链路：跑 DRB smoke subset（离线）+ 聚合引用真实性指标 + 写 scorecard。"""
 
     config = load_gate_config(config_path)
-    resolved_config_path = str(Path(config_path).resolve()) if config_path else str(DEFAULT_CONFIG_PATH)
+    resolved_config_path = (
+        str(Path(config_path).resolve()) if config_path else str(DEFAULT_CONFIG_PATH)
+    )
     resolved_fixture_paths = [
         _resolve(path) for path in (fixture_paths or list(config.get("fixture_bundles") or []))
     ]
-    threshold = float(min_verified_rate if min_verified_rate is not None else config["min_verified_rate"])
+    threshold = float(
+        min_verified_rate if min_verified_rate is not None else config["min_verified_rate"]
+    )
     mapping = config.get("semantic_mapping") or SEMANTIC_MAPPING
-    metric_definition = str(config.get("metric_definition") or "verified / (verified + unsupported + fetch_failed + unverifiable)")
+    metric_definition = str(
+        config.get("metric_definition")
+        or "verified / (verified + unsupported + fetch_failed + unverifiable)"
+    )
     empty_denominator_policy = str(
         config.get("empty_denominator_policy")
         or "verified_rate=None -> blocked with reason no_citation_evidence"
@@ -220,8 +226,12 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the DRB citation-truthfulness gate")
     parser.add_argument("--config", type=str, default=None, help="门禁配置文件路径")
     parser.add_argument("--output-root", type=str, default=None, help="scorecard 输出目录")
-    parser.add_argument("--fixture", action="append", type=str, default=None, help="追加 fixture bundle（可重复）")
-    parser.add_argument("--min-verified-rate", type=float, default=None, help="覆盖阈值（默认读取配置）")
+    parser.add_argument(
+        "--fixture", action="append", type=str, default=None, help="追加 fixture bundle（可重复）"
+    )
+    parser.add_argument(
+        "--min-verified-rate", type=float, default=None, help="覆盖阈值（默认读取配置）"
+    )
     args = parser.parse_args(argv)
 
     scorecard = run_drb_gate(

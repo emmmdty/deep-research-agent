@@ -19,7 +19,6 @@ from deep_research_agent.evals.external.contracts import (
 from deep_research_agent.evals.external.integrity import sanitize_attachment_paths
 from deep_research_agent.evals.external.manifests import write_benchmark_artifacts
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[5]
 
 
@@ -33,7 +32,9 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
     supported_tasks = [
         task
         for task in task_specs
-        if set(task.metadata.get("required_capabilities") or []).issubset(set(supported_capabilities))
+        if set(task.metadata.get("required_capabilities") or []).issubset(
+            set(supported_capabilities)
+        )
     ]
     task_results = [_score_task(task) for task in supported_tasks]
     success_rate = 1.0 if task_results else 0.0
@@ -42,9 +43,7 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
         "status": "completed",
         "success_rate": success_rate,
         "success_rate_by_level": {"1": success_rate},
-        "success_rate_by_supported_capability": {
-            capability: 1.0 for capability in supported_capabilities
-        },
+        "success_rate_by_supported_capability": dict.fromkeys(supported_capabilities, 1.0),
     }
     internal_diagnostics = {
         "benchmark": descriptor.benchmark,

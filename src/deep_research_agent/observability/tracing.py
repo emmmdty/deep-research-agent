@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
+import os
 from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
-import os
 from typing import Any
-
 
 ATTRIBUTE_NAMES = {
     "job_id": "research.job_id",
@@ -58,7 +57,9 @@ def configure_tracing(*, service_name: str = "deep-research-agent"):
         from opentelemetry.sdk.trace import TracerProvider
         from opentelemetry.sdk.trace.export import BatchSpanProcessor
     except ImportError as exc:  # pragma: no cover - dependency packaging guard
-        raise RuntimeError("OTLP endpoint configured but OpenTelemetry SDK/exporter is unavailable") from exc
+        raise RuntimeError(
+            "OTLP endpoint configured but OpenTelemetry SDK/exporter is unavailable"
+        ) from exc
 
     provider = TracerProvider(resource=Resource.create({"service.name": service_name}))
     provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(endpoint=endpoint)))

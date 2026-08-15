@@ -9,14 +9,13 @@ import pytest
 
 from configs.settings import Settings
 from deep_research_agent.agents.llm import LLMChatError, ToolCallRecord, ToolLoopResult
-from deep_research_agent.agents.researcher import LLMResearcherWorker, _PLAN_QUERIES_TOOL
+from deep_research_agent.agents.researcher import _PLAN_QUERIES_TOOL, LLMResearcherWorker
 from deep_research_agent.agents.vision import VisionChat
 from deep_research_agent.connectors.tools import image_reader
 from deep_research_agent.connectors.tools.image_reader import read_image
 from deep_research_agent.kernel.contracts import TaskSpec
 from deep_research_agent.orchestration.workers import TaskExecutionContext
 from deep_research_agent.tool_gateway.models import ToolResultEnvelope
-
 
 IMAGE_URL = "https://example.com/chart.png"
 
@@ -35,6 +34,7 @@ def _bare_settings(monkeypatch: pytest.MonkeyPatch) -> Settings:
 
 
 # ------------------------------------------------------------------ settings
+
 
 def test_settings_parse_vision_env_vars(monkeypatch) -> None:
     settings = _vision_settings(monkeypatch)
@@ -55,6 +55,7 @@ def test_settings_vision_unavailable_without_env(monkeypatch) -> None:
 
 
 # -------------------------------------------------------------- VisionChat
+
 
 def test_vision_chat_build_messages_data_url() -> None:
     messages = VisionChat._build_messages("Describe this image", "image/png", "aGVsbG8=")
@@ -89,10 +90,9 @@ def test_vision_chat_model_name_resolved(monkeypatch) -> None:
 
 # ---------------------------------------------------------------- read_image
 
+
 def test_read_image_without_credentials_raises_value_error(monkeypatch) -> None:
-    monkeypatch.setattr(
-        "configs.settings.get_settings", lambda: _bare_settings(monkeypatch)
-    )
+    monkeypatch.setattr("configs.settings.get_settings", lambda: _bare_settings(monkeypatch))
 
     with pytest.raises(ValueError, match=r"VISION_MODEL_NAME.*VISION_API_KEY.*VISION_BASE_URL"):
         read_image(IMAGE_URL)
@@ -246,6 +246,7 @@ async def test_researcher_keeps_full_ocr_text_in_corpus() -> None:
 
 # ----------------------------------------------------- researcher integration
 
+
 def _task(task_id: str = "research-01-vision") -> TaskSpec:
     return TaskSpec(
         task_id=task_id,
@@ -333,25 +334,19 @@ async def _context(task: TaskSpec, gateway: ScriptedGateway) -> TaskExecutionCon
 
 
 def test_plan_queries_tool_enum_exposes_read_image() -> None:
-    enum = _PLAN_QUERIES_TOOL["function"]["parameters"]["properties"]["queries"][
-        "items"
-    ]["properties"]["tool"]["enum"]
+    enum = _PLAN_QUERIES_TOOL["function"]["parameters"]["properties"]["queries"]["items"][
+        "properties"
+    ]["tool"]["enum"]
     assert "read_image" in enum
 
 
 @pytest.mark.asyncio
 async def test_researcher_grounds_claim_on_image_ocr_source() -> None:
     task = _task()
-    gateway = ScriptedGateway(
-        {"read_image": {"content": "The chart shows 42% adoption in 2026."}}
-    )
+    gateway = ScriptedGateway({"read_image": {"content": "The chart shows 42% adoption in 2026."}})
     chat = FakeToolChat(
         [
-            {
-                "plan_queries": {
-                    "queries": [{"query": IMAGE_URL, "tool": "read_image"}]
-                }
-            },
+            {"plan_queries": {"queries": [{"query": IMAGE_URL, "tool": "read_image"}]}},
             {"assess_coverage": {"covered": True, "gaps": []}},
             {"select_pages": {"urls": []}},
             {
@@ -417,4 +412,7 @@ async def test_build_packet_marks_image_ocr_critical_eligible() -> None:
     assert packet.claims[0].evidence_spans[0].quote == "The chart shows 42% adoption in 2026."
     assert artifacts[0].metadata["source_kind"] == "image_ocr"
     assert artifacts[0].metadata["critical_claims_allowed"] is True
-    assert artifacts[0].metadata["document_version_id"] == packet.claims[0].evidence_spans[0].document_version_id
+    assert (
+        artifacts[0].metadata["document_version_id"]
+        == packet.claims[0].evidence_spans[0].document_version_id
+    )

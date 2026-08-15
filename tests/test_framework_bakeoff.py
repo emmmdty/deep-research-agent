@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import base64
+from pathlib import Path
 
 import pytest
 import yaml
 
+from configs.settings import Settings
+from deep_research_agent.deployment.worker import validate_runtime_configuration
 from deep_research_agent.evals.agent_scaling import (
     AgentScalingResult,
     FrozenScalingInput,
@@ -20,9 +22,6 @@ from deep_research_agent.evals.framework_bakeoff import (
     select_framework,
 )
 from deep_research_agent.observability.tracing import sanitize_trace_attributes
-from deep_research_agent.deployment.worker import validate_runtime_configuration
-from configs.settings import Settings
-
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -64,7 +63,9 @@ def test_production_scheduler_configuration_validates_builtin_factory_and_fails_
     import deep_research_agent.agents.factory as agents_factory
 
     assert callable(agents_factory.build_scheduler_factory)
-    monkeypatch.setenv("DEEP_RESEARCH_AGENT_MASTER_KEY", base64.urlsafe_b64encode(b"k" * 32).decode())
+    monkeypatch.setenv(
+        "DEEP_RESEARCH_AGENT_MASTER_KEY", base64.urlsafe_b64encode(b"k" * 32).decode()
+    )
     validate_runtime_configuration(
         Settings(scheduler_runtime_mode="production", scheduler_factory_path=None)
     )
@@ -122,7 +123,7 @@ def _observation(
     quality_score: float = 0.9,
     failed_gate: str | None = None,
 ) -> FrameworkObservation:
-    gates = {gate: True for gate in HARD_GATES}
+    gates = dict.fromkeys(HARD_GATES, True)
     if failed_gate is not None:
         gates[failed_gate] = False
     return FrameworkObservation(

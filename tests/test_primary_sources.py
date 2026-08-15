@@ -59,8 +59,7 @@ def build_minimal_pdf(text: str = "Hello PDF 2026") -> bytes:
     for offset in offsets[1:]:
         body += f"{offset:010d} 00000 n \n".encode("ascii")
     body += (
-        f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\n"
-        f"startxref\n{xref_pos}\n%%EOF\n"
+        f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{xref_pos}\n%%EOF\n"
     ).encode("ascii")
     return bytes(body)
 

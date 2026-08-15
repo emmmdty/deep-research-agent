@@ -15,7 +15,6 @@ from argon2.low_level import Type
 from deep_research_agent.product.repositories import ProductRepository
 from deep_research_agent.product.tables import InvitationTable, SessionTable, UserTable
 
-
 SESSION_COOKIE_NAME = "dra_session"
 SESSION_TTL = timedelta(hours=12)
 INVITATION_TTL = timedelta(days=7)
@@ -146,7 +145,11 @@ class AuthService:
 
     def accept_invitation(self, token: str, *, password: str) -> UserTable:
         invitation = self.repository.get_invitation_by_token_hash(_digest(token))
-        if invitation is None or invitation.accepted_at is not None or _expired(invitation.expires_at):
+        if (
+            invitation is None
+            or invitation.accepted_at is not None
+            or _expired(invitation.expires_at)
+        ):
             raise PermissionError("the invitation is invalid or expired")
         if self.repository.get_user_by_email(invitation.email) is not None:
             raise ValueError("a user with this email already exists")
@@ -164,7 +167,11 @@ class AuthService:
 
     def login(self, *, email: str, password: str) -> LoginSession:
         user = self.repository.get_user_by_email(_normalize_email(email))
-        if user is None or not user.active or not self.verify_password(user.password_hash, password):
+        if (
+            user is None
+            or not user.active
+            or not self.verify_password(user.password_hash, password)
+        ):
             raise PermissionError("invalid email or password")
         session_token = secrets.token_urlsafe(32)
         csrf_token = secrets.token_urlsafe(32)
@@ -212,7 +219,9 @@ class AuthService:
 
     @staticmethod
     def verify_csrf(identity: SessionIdentity, csrf_token: str | None) -> bool:
-        return bool(csrf_token) and hmac.compare_digest(identity.csrf_hash, _digest(csrf_token or ""))
+        return bool(csrf_token) and hmac.compare_digest(
+            identity.csrf_hash, _digest(csrf_token or "")
+        )
 
     def logout(self, session_token: str | None) -> None:
         if session_token:
@@ -220,9 +229,9 @@ class AuthService:
 
 
 __all__ = [
-    "AuthService",
-    "LoginSession",
     "SESSION_COOKIE_NAME",
     "SESSION_TTL",
+    "AuthService",
+    "LoginSession",
     "SessionIdentity",
 ]

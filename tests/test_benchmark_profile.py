@@ -26,7 +26,9 @@ def test_build_benchmark_tasks_covers_all_expected_aspects():
     tasks = build_benchmark_tasks(topic)
 
     assert len(tasks) == 5
-    assert [task.expected_aspects for task in tasks] == [[aspect] for aspect in topic.expected_aspects]
+    assert [task.expected_aspects for task in tasks] == [
+        [aspect] for aspect in topic.expected_aspects
+    ]
     assert all(task.task_type == "research" for task in tasks)
 
 
@@ -50,7 +52,11 @@ def test_tutorial_tasks_include_bilingual_required_terms():
 
 def test_infer_task_type_and_source_policy_for_tutorial_topics():
     """教程类主题应优先使用 web + github，禁用 arxiv。"""
-    from legacy.research_policy import infer_task_type, preferred_sources_for_task, should_use_source
+    from legacy.research_policy import (
+        infer_task_type,
+        preferred_sources_for_task,
+        should_use_source,
+    )
 
     task_type = infer_task_type("openclaw安装教程")
 
@@ -165,7 +171,11 @@ def test_evaluate_quality_gate_requires_aspect_coverage_and_sources():
     assert gate["passed"] is False
     assert gate["quality_gate_status"] == "needs_more_research"
     assert gate["missing_aspects"] == ["评估指标（Faithfulness / Relevance / Recall）"]
-    assert gate["follow_up_queries"] == ["RAG（检索增强生成）技术的原理和应用 评估指标 Faithfulness Relevance Recall"] or gate["follow_up_queries"]
+    assert (
+        gate["follow_up_queries"]
+        == ["RAG（检索增强生成）技术的原理和应用 评估指标 Faithfulness Relevance Recall"]
+        or gate["follow_up_queries"]
+    )
 
 
 def test_evaluate_quality_gate_generates_official_first_follow_up_queries():
@@ -204,7 +214,10 @@ def test_evaluate_quality_gate_generates_official_first_follow_up_queries():
 
     assert gate["passed"] is False
     assert gate["follow_up_queries"]
-    assert any("official" in query.lower() or "github" in query.lower() for query in gate["follow_up_queries"])
+    assert any(
+        "official" in query.lower() or "github" in query.lower()
+        for query in gate["follow_up_queries"]
+    )
 
 
 def test_case_study_tasks_prefer_web_and_github_with_official_queries():
@@ -230,7 +243,9 @@ def test_case_study_tasks_prefer_web_and_github_with_official_queries():
     assert "official" in web_query
     assert "case study" in web_query
     assert any(marker in web_query for marker in ("customer story", "deployment", "production use"))
-    assert any(marker in github_query for marker in ("application", "production", "example", "project"))
+    assert any(
+        marker in github_query for marker in ("application", "production", "example", "project")
+    )
     assert "paper" not in arxiv_query
     assert "survey" not in arxiv_query
 
@@ -254,9 +269,14 @@ def test_case_study_query_bundle_prefers_official_domains_and_repo_search():
     assert len(web_queries) >= 3
     assert any("site:openai.com" in query for query in web_queries)
     assert any("site:anthropic.com" in query for query in web_queries)
-    assert any("customer story" in query.lower() or "case study" in query.lower() for query in web_queries)
+    assert any(
+        "customer story" in query.lower() or "case study" in query.lower() for query in web_queries
+    )
     assert len(github_queries) >= 2
-    assert any("org:openai" in query.lower() or "org:langchain-ai" in query.lower() for query in github_queries)
+    assert any(
+        "org:openai" in query.lower() or "org:langchain-ai" in query.lower()
+        for query in github_queries
+    )
     assert any("example" in query.lower() or "project" in query.lower() for query in github_queries)
 
 
@@ -276,9 +296,17 @@ def test_finance_case_study_query_bundle_is_topic_aware():
     web_queries = build_source_queries(task, "web")
 
     assert any("site:aws.amazon.com" in query for query in web_queries)
-    assert any("site:microsoft.com" in query or "site:learn.microsoft.com" in query for query in web_queries)
-    assert any("financial services" in query.lower() or "banking" in query.lower() for query in web_queries)
-    assert any("robo advisor" in query.lower() or "quantitative trading" in query.lower() for query in web_queries)
+    assert any(
+        "site:microsoft.com" in query or "site:learn.microsoft.com" in query
+        for query in web_queries
+    )
+    assert any(
+        "financial services" in query.lower() or "banking" in query.lower() for query in web_queries
+    )
+    assert any(
+        "robo advisor" in query.lower() or "quantitative trading" in query.lower()
+        for query in web_queries
+    )
 
 
 def test_select_sources_for_case_study_rejects_survey_like_evidence():
@@ -498,7 +526,7 @@ def test_select_sources_for_task_keeps_high_trust_mix_for_research_topics():
         },
     ]
 
-    selected, rejected, _ = select_sources_for_task(raw_items, task, per_task_limit=3)
+    selected, _, _ = select_sources_for_task(raw_items, task, per_task_limit=3)
 
     assert len(selected) == 2
     assert any(item["source_type"] == "github" for item in selected)
@@ -651,7 +679,9 @@ def test_select_sources_for_task_rejects_generic_rag_papers_for_vector_db_aspect
         "facebookresearch/faiss",
         "Milvus Documentation",
     ]
-    assert any(item["rejection_reason"] in {"weak_aspect_support", "domain_conflict"} for item in rejected)
+    assert any(
+        item["rejection_reason"] in {"weak_aspect_support", "domain_conflict"} for item in rejected
+    )
     assert stats["off_topic_reject_count"] == 1
 
 
@@ -734,10 +764,29 @@ def test_framework_official_docs_have_high_trust_and_video_is_low_trust():
     """官方框架文档应提升为高可信，视频类结果应显著降权。"""
     from legacy.agents.researcher import _infer_trust_tier
 
-    assert _infer_trust_tier({"source_type": "web", "url": "https://docs.langchain.com/oss/python/langgraph/overview"}) == 4
-    assert _infer_trust_tier({"source_type": "web", "url": "https://docs.crewai.com/en/introduction"}) == 4
-    assert _infer_trust_tier({"source_type": "web", "url": "https://microsoft.github.io/autogen/stable/index.html"}) == 4
-    assert _infer_trust_tier({"source_type": "web", "url": "https://www.youtube.com/watch?v=demo"}) == 1
+    assert (
+        _infer_trust_tier(
+            {
+                "source_type": "web",
+                "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+            }
+        )
+        == 4
+    )
+    assert (
+        _infer_trust_tier({"source_type": "web", "url": "https://docs.crewai.com/en/introduction"})
+        == 4
+    )
+    assert (
+        _infer_trust_tier(
+            {"source_type": "web", "url": "https://microsoft.github.io/autogen/stable/index.html"}
+        )
+        == 4
+    )
+    assert (
+        _infer_trust_tier({"source_type": "web", "url": "https://www.youtube.com/watch?v=demo"})
+        == 1
+    )
 
 
 def test_case_study_follow_up_queries_keep_aspect_phrase_for_site_searches():
@@ -767,8 +816,8 @@ def test_case_study_follow_up_queries_keep_aspect_phrase_for_site_searches():
 
 def test_build_benchmark_report_keeps_only_used_references():
     """benchmark writer 应只保留正文实际引用过的来源。"""
-    from legacy.research_policy import build_benchmark_report
     from legacy.evaluation.metrics import citation_accuracy
+    from legacy.research_policy import build_benchmark_report
 
     tasks = [
         TaskItem(
@@ -780,10 +829,27 @@ def test_build_benchmark_report_keeps_only_used_references():
             task_type="research",
         )
     ]
-    summaries = ["### 核心结论\n\nRAG 结合检索与生成。[1]\n\n### 证据限制\n\n当前结论仍需更多论文验证。"]
+    summaries = [
+        "### 核心结论\n\nRAG 结合检索与生成。[1]\n\n### 证据限制\n\n当前结论仍需更多论文验证。"
+    ]
     sources = [
-        SourceRecord(citation_id=1, source_type="github", query="q", title="Used source", url="https://used.example.com", selected=True, trust_tier=5),
-        SourceRecord(citation_id=2, source_type="web", query="q", title="Unused source", url="https://unused.example.com", selected=True),
+        SourceRecord(
+            citation_id=1,
+            source_type="github",
+            query="q",
+            title="Used source",
+            url="https://used.example.com",
+            selected=True,
+            trust_tier=5,
+        ),
+        SourceRecord(
+            citation_id=2,
+            source_type="web",
+            query="q",
+            title="Unused source",
+            url="https://unused.example.com",
+            selected=True,
+        ),
     ]
     evidence_notes = [
         EvidenceNote(
@@ -878,4 +944,7 @@ def test_build_benchmark_report_core_claim_prefers_direct_high_trust_sources():
 
     section = report.split("## 1. 向量数据库选型", maxsplit=1)[1].split("## 总结", maxsplit=1)[0]
     assert "[2]" in section
-    assert "[1]" not in section.split("### 核心结论", maxsplit=1)[1].split("### 证据限制", maxsplit=1)[0]
+    assert (
+        "[1]"
+        not in section.split("### 核心结论", maxsplit=1)[1].split("### 证据限制", maxsplit=1)[0]
+    )

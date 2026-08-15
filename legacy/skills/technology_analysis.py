@@ -6,7 +6,6 @@ from loguru import logger
 
 from legacy.workflows.graph import run_research
 
-
 TECH_ANALYSIS_TOPIC_TEMPLATE = """\
 请对以下技术进行深度分析：
 {topic}

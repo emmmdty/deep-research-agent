@@ -6,7 +6,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-
 EVAL_SUITE_NAMES = ("company12", "industry12", "trusted8", "file8", "recovery6")
 EVAL_VARIANT_NAMES = ("smoke_local", "regression_local")
 
