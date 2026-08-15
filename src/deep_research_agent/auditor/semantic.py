@@ -7,6 +7,7 @@ from typing import Literal
 
 from pydantic import ConfigDict, Field
 
+from deep_research_agent.auditor.span_matcher import build_verbatim_matcher, match_quotes
 from deep_research_agent.kernel.contracts import (
     ArtifactRef,
     ClaimRecord,
@@ -152,14 +153,27 @@ class EvidenceAuditor:
             # Programmatic quote containment: when the frozen document text is
             # available, every evidence span must be an exact substring of it.
             # A quote the source never contained cannot ground the claim, so the
-            # claim is degraded regardless of what the model self-reported.
+            # claim is degraded regardless of what the model self-reported. The
+            # optional Aho-Corasick index batches the containment check per
+            # document; without it, plain substring checks give the same result.
             if status in {"accepted", "qualified"}:
-                uncontained = [
-                    span.span_id
-                    for span in claim.evidence_spans
-                    if (text := document_texts.get(span.document_version_id)) is not None
-                    and span.quote not in text
-                ]
+                uncontained: list[str] = []
+                spans_by_document: dict[str, list[EvidenceSpan]] = {}
+                for span in claim.evidence_spans:
+                    spans_by_document.setdefault(span.document_version_id, []).append(span)
+                for document_id, spans in spans_by_document.items():
+                    text = document_texts.get(document_id)
+                    if text is None:
+                        continue
+                    matcher = build_verbatim_matcher(span.quote for span in spans)
+                    contained = match_quotes(
+                        matcher,
+                        [(span.span_id, span.quote) for span in spans],
+                        text,
+                    )
+                    uncontained.extend(
+                        span_id for span_id, is_contained in contained.items() if not is_contained
+                    )
                 if uncontained:
                     status = "unsupported" if claim.critical else "qualified"
                     degradations[claim.claim_id] = "quote_not_contained_in_document"

@@ -21,6 +21,7 @@ prompt-based JSON path (``_classic_*``), so the worker runs on any provider.
 
 from __future__ import annotations
 
+import asyncio
 import functools
 import hashlib
 import json
@@ -30,6 +31,7 @@ from uuid import uuid4
 from loguru import logger
 
 from deep_research_agent.agents.llm import LLMChat, LLMChatError, ToolLoopChat, ToolLoopResult
+from deep_research_agent.auditor.span_matcher import build_verbatim_matcher, match_quotes
 from deep_research_agent.kernel.contracts import (
     ArtifactRef,
     ClaimRecord,
@@ -46,7 +48,7 @@ from deep_research_agent.policy.injection import (
     sanitize_content,
     should_quarantine_source,
 )
-from deep_research_agent.tool_gateway.models import ToolInvocation
+from deep_research_agent.tool_gateway.models import ToolInvocation, ToolResultEnvelope
 
 _MAX_ROUNDS = 2
 _MAX_QUERIES_PER_ROUND = 4
@@ -57,6 +59,9 @@ _MAX_PAGE_CHARS = 12_000
 _MAX_SNIPPET_CHARS = 500
 _MAX_GAPS = 2
 _CLAIM_CHUNK_SIZE = 4
+# Bounded parallelism for tool invocations: results are reassembled in the
+# original query/url order, so this only bounds in-flight work, never output.
+_MAX_PARALLEL_TOOL_CALLS = 2
 
 _ALLOWED_TOOLS = ("web_search", "github_search", "arxiv_search", "read_image")
 _FETCH_TOOL = "fetch_page"
@@ -518,21 +523,48 @@ class LLMResearcherWorker:
         seen = {
             (str(source["url"]), str(source["snippet"])[:_MAX_SNIPPET_CHARS]) for source in existing
         }
-        for query in queries:
-            tool_name = query["tool"]
-            if tool_name == "read_image":
-                envelope = await context.invoke_tool(
+        semaphore = asyncio.Semaphore(_MAX_PARALLEL_TOOL_CALLS)
+
+        async def _invoke_query(query: dict[str, str]) -> ToolResultEnvelope:
+            async with semaphore:
+                tool_name = query["tool"]
+                if tool_name == "read_image":
+                    return await context.invoke_tool(
+                        ToolInvocation(
+                            invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
+                            tool_name=tool_name,
+                            tenant_id=context.tenant_id,
+                            idempotency_key="pending",
+                            arguments={
+                                "image_url": query["query"],
+                                "prompt": task.objective,
+                            },
+                        )
+                    )
+                return await context.invoke_tool(
                     ToolInvocation(
                         invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
                         tool_name=tool_name,
                         tenant_id=context.tenant_id,
                         idempotency_key="pending",
                         arguments={
-                            "image_url": query["query"],
-                            "prompt": task.objective,
+                            "query": query["query"],
+                            "max_results": _MAX_RESULTS_PER_QUERY,
                         },
                     )
                 )
+
+        # Invoke all queries concurrently (bounded), then reassemble sources in
+        # the original query order so dedup, injection guards, and the
+        # _MAX_SOURCES cap behave exactly like the serial path.
+        envelopes = await asyncio.gather(
+            *(_invoke_query(query) for query in queries), return_exceptions=True
+        )
+        for query, envelope in zip(queries, envelopes):
+            if isinstance(envelope, Exception):
+                raise envelope
+            tool_name = query["tool"]
+            if tool_name == "read_image":
                 if envelope.status != "succeeded" or envelope.output is None:
                     continue
                 item = envelope.output
@@ -576,18 +608,6 @@ class LLMResearcherWorker:
                 if len(sources) >= _MAX_SOURCES:
                     return sources
                 continue
-            envelope = await context.invoke_tool(
-                ToolInvocation(
-                    invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
-                    tool_name=tool_name,
-                    tenant_id=context.tenant_id,
-                    idempotency_key="pending",
-                    arguments={
-                        "query": query["query"],
-                        "max_results": _MAX_RESULTS_PER_QUERY,
-                    },
-                )
-            )
             if envelope.status != "succeeded" or envelope.output is None:
                 continue
             for item in envelope.output:
@@ -732,16 +752,29 @@ class LLMResearcherWorker:
         pages: list[dict[str, Any]] = []
         seen: set[tuple[str, int]] = set()
         fetch_available = True
-        for url in urls:
-            envelope = await context.invoke_tool(
-                ToolInvocation(
-                    invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
-                    tool_name=_FETCH_TOOL,
-                    tenant_id=context.tenant_id,
-                    idempotency_key="pending",
-                    arguments={"url": url, "max_chars": _MAX_PAGE_CHARS},
+        semaphore = asyncio.Semaphore(_MAX_PARALLEL_TOOL_CALLS)
+
+        async def _invoke_fetch(url: str) -> ToolResultEnvelope:
+            async with semaphore:
+                return await context.invoke_tool(
+                    ToolInvocation(
+                        invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
+                        tool_name=_FETCH_TOOL,
+                        tenant_id=context.tenant_id,
+                        idempotency_key="pending",
+                        arguments={"url": url, "max_chars": _MAX_PAGE_CHARS},
+                    )
                 )
-            )
+
+        # Fetch all candidate pages concurrently (bounded), then reassemble
+        # chunks in the original url order so dedup and injection guards behave
+        # exactly like the serial path.
+        envelopes = await asyncio.gather(
+            *(_invoke_fetch(url) for url in urls), return_exceptions=True
+        )
+        for url, envelope in zip(urls, envelopes):
+            if isinstance(envelope, Exception):
+                raise envelope
             if envelope.status != "succeeded" or envelope.output is None:
                 if envelope.error_code == "tool_not_allowed":
                     fetch_available = False
@@ -898,7 +931,11 @@ class LLMResearcherWorker:
         source_text = source_text.strip()
         if not quote or not source_text or len(quote) < min_chars:
             return ""
-        if quote in source_text:
+        # Aho-Corasick existence check when the optional index is available;
+        # otherwise the plain substring check, then the longest-common-substring
+        # fallback, are byte-identical either way.
+        matcher = build_verbatim_matcher([quote])
+        if match_quotes(matcher, [(0, quote)], source_text)[0]:
             return quote[:max_chars]
         window_size = min(len(quote), len(source_text), max_chars)
         for size in range(window_size, min_chars - 1, -1):

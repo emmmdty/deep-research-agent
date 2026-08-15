@@ -37,6 +37,9 @@ _MAX_ATTEMPTS = 3
 _BACKOFF_BASE_SECONDS = 1.0
 _BACKOFF_CAP_SECONDS = 8.0
 _RATE_LIMIT_BACKOFF_SECONDS = 2.0
+# Bounded parallelism for the tool calls of one assistant turn: results are
+# appended in call order, so this only bounds in-flight work, never output.
+_MAX_PARALLEL_TOOL_CALLS = 2
 
 
 def _is_rate_limit(exc: Exception) -> bool:
@@ -538,11 +541,17 @@ class LLMChat:
                     ],
                 }
             )
-            for call in proposed:
-                try:
-                    result = await execute_tool(call.name, call.arguments)
-                except Exception as exc:
-                    result = {"error": str(exc) or type(exc).__name__}
+            semaphore = asyncio.Semaphore(_MAX_PARALLEL_TOOL_CALLS)
+
+            async def _execute_call(call: ToolCallRecord) -> dict[str, Any]:
+                async with semaphore:
+                    try:
+                        return await execute_tool(call.name, call.arguments)
+                    except Exception as exc:
+                        return {"error": str(exc) or type(exc).__name__}
+
+            results = await asyncio.gather(*(_execute_call(call) for call in proposed))
+            for call, result in zip(proposed, results):
                 messages.append(
                     {
                         "role": "tool",
