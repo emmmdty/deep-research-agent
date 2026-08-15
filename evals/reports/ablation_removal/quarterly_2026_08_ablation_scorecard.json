@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "harness": "evals/ablation_removal.py",
+  "run_id": "ablation-removal-2026-08",
+  "generated_at": "2026-08-15T07:56:00.882701+00:00",
+  "period": "2026-08",
+  "fixture": {
+    "suite_path": "evals/suites/company12.yaml",
+    "dataset_path": "evals/datasets/company12.smoke.yaml",
+    "task_count": 1
+  },
+  "offline": true,
+  "llm_free": true,
+  "measurement": {
+    "version": 1,
+    "metrics": [
+      "citation_resolvable_rate",
+      "question_coverage",
+      "summary_retention",
+      "source_rank_quality",
+      "composite"
+    ],
+    "composite_definition": "mean(citation_resolvable_rate, question_coverage, summary_retention, source_rank_quality)",
+    "verdict_rule": {
+      "removable_now": "Δ≤0：移除无可测量损失",
+      "needs_review": "0<Δ≤0.1：有损失但小，复核后决定",
+      "keep": "Δ>0.1：移除有明显可测量损失"
+    }
+  },
+  "protected_structures": [
+    {
+      "id": "claim_graph",
+      "description": "证据契约：claim 图（claims/claim_support_edges/conflict_sets 落盘与一致性，auditor 模型与 store）",
+      "module_paths": [
+        "src/deep_research_agent/auditor/"
+      ],
+      "protected": true,
+      "removable_in_ci": false
+    },
+    {
+      "id": "audit_gate",
+      "description": "证据契约：审计门禁（claim_auditor_node 与 AuditGateStatus，阻止未支撑的 critical claim 出报告）",
+      "module_paths": [
+        "src/deep_research_agent/auditor/pipeline.py",
+        "src/deep_research_agent/auditor/models.py"
+      ],
+      "protected": true,
+      "removable_in_ci": false
+    },
+    {
+      "id": "review_queue",
+      "description": "证据契约：人工复核队列（review_queue.json 落盘、record_review、job 存储的 review_queue_path 字段）",
+      "module_paths": [
+        "src/deep_research_agent/auditor/store.py",
+        "src/deep_research_agent/research_jobs/store.py",
+        "src/deep_research_agent/research_jobs/service.py"
+      ],
+      "protected": true,
+      "removable_in_ci": false
+    }
+  ],
+  "structures": [
+    {
+      "id": "semantic_rerank",
+      "description": "语义 rerank：检索后按向量相似度重排来源（embedding 可选，缺失时跳过）",
+      "module_paths": [
+        "src/deep_research_agent/retrieval/rerank.py"
+      ],
+      "protected": false,
+      "removable_in_ci": true,
+      "measured": true,
+      "metrics": {
+        "with": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 1.0
+        },
+        "without": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 1.0
+        }
+      },
+      "delta": {
+        "citation_resolvable_rate": 0.0,
+        "question_coverage": 0.0,
+        "summary_retention": 0.0,
+        "source_rank_quality": 0.0,
+        "composite": 0.0
+      },
+      "verdict": "removable_now",
+      "rationale": "在 smoke fixture 上移除后无可测量差异（引用顺序与相关性排序一致，无法区分）；标注 removable_now 但需 2026-11 多任务 fixture 复核（bitter lesson：小 fixture 无差异≠真实无差异）。指标：citation_resolvable_rate 1.0→1.0；question_coverage 1.0→1.0；summary_retention 1.0→1.0；source_rank_quality 1.0→1.0。综合分 1.0→1.0（Δ0.0）→ removable_now"
+    },
+    {
+      "id": "parallel_fetch_concurrency",
+      "description": "有界并发抓取：researcher 搜索/抓取 asyncio.gather + Semaphore(2)，结果按原始顺序归位",
+      "module_paths": [
+        "src/deep_research_agent/agents/researcher.py"
+      ],
+      "protected": false,
+      "removable_in_ci": true,
+      "measured": true,
+      "metrics": {
+        "with": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 1.0
+        },
+        "without": {
+          "citation_resolvable_rate": 0.5,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 0.875
+        }
+      },
+      "delta": {
+        "citation_resolvable_rate": 0.5,
+        "question_coverage": 0.0,
+        "summary_retention": 0.0,
+        "source_rank_quality": 0.0,
+        "composite": 0.125
+      },
+      "verdict": "keep",
+      "rationale": "移除后有界并发退回串行预算，引用可解析率下降；该结构同时是成本结构（并发上限），2026-11 复核重点应是并发上限调参而非整体拆除。指标：citation_resolvable_rate 1.0→0.5；question_coverage 1.0→1.0；summary_retention 1.0→1.0；source_rank_quality 1.0→1.0。综合分 1.0→0.875（Δ0.125）→ keep"
+    },
+    {
+      "id": "agentic_coverage_assessment",
+      "description": "agent 反思覆盖率自评：researcher/planner 对任务覆盖做自评，扩展检索面",
+      "module_paths": [
+        "src/deep_research_agent/agents/researcher.py",
+        "src/deep_research_agent/agents/planner.py"
+      ],
+      "protected": false,
+      "removable_in_ci": true,
+      "measured": true,
+      "metrics": {
+        "with": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 1.0
+        },
+        "without": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 0.5,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 0.875
+        }
+      },
+      "delta": {
+        "citation_resolvable_rate": 0.0,
+        "question_coverage": 0.5,
+        "summary_retention": 0.0,
+        "source_rank_quality": 0.0,
+        "composite": 0.125
+      },
+      "verdict": "keep",
+      "rationale": "移除后问题覆盖率下降；覆盖率自评是低成本高收益结构，保留。指标：citation_resolvable_rate 1.0→1.0；question_coverage 1.0→0.5；summary_retention 1.0→1.0；source_rank_quality 1.0→1.0。综合分 1.0→0.875（Δ0.125）→ keep"
+    },
+    {
+      "id": "executive_summary_dual_track",
+      "description": "executive summary 双轨：模型原文保留 + 确定性重建兜底（引用越界才降级）",
+      "module_paths": [
+        "src/deep_research_agent/reporting/bundle_v2.py"
+      ],
+      "protected": false,
+      "removable_in_ci": true,
+      "measured": true,
+      "metrics": {
+        "with": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 1.0
+        },
+        "without": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 0.0,
+          "source_rank_quality": 1.0,
+          "composite": 0.75
+        }
+      },
+      "delta": {
+        "citation_resolvable_rate": 0.0,
+        "question_coverage": 0.0,
+        "summary_retention": 1.0,
+        "source_rank_quality": 0.0,
+        "composite": 0.25
+      },
+      "verdict": "keep",
+      "rationale": "移除后摘要保真显著下降；双轨是模型原文保留的兜底，拆除会退回三期前确定性重建的缺陷。指标：citation_resolvable_rate 1.0→1.0；question_coverage 1.0→1.0；summary_retention 1.0→0.0；source_rank_quality 1.0→1.0。综合分 1.0→0.75（Δ0.25）→ keep"
+    },
+    {
+      "id": "cheap_model_summarization",
+      "description": "便宜模型路由：摘要/压缩走 cheap_role_models（模型路由的成本结构）",
+      "module_paths": [
+        "src/deep_research_agent/providers/router.py"
+      ],
+      "protected": false,
+      "removable_in_ci": true,
+      "measured": true,
+      "metrics": {
+        "with": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 1.0,
+          "source_rank_quality": 1.0,
+          "composite": 1.0
+        },
+        "without": {
+          "citation_resolvable_rate": 1.0,
+          "question_coverage": 1.0,
+          "summary_retention": 0.5,
+          "source_rank_quality": 1.0,
+          "composite": 0.875
+        }
+      },
+      "delta": {
+        "citation_resolvable_rate": 0.0,
+        "question_coverage": 0.0,
+        "summary_retention": 0.5,
+        "source_rank_quality": 0.0,
+        "composite": 0.125
+      },
+      "verdict": "keep",
+      "rationale": "移除后摘要保真下降；路由是成本结构，2026-11 复核应结合真实 token 成本测量再判定。指标：citation_resolvable_rate 1.0→1.0；question_coverage 1.0→1.0；summary_retention 1.0→0.5；source_rank_quality 1.0→1.0。综合分 1.0→0.875（Δ0.125）→ keep"
+    },
+    {
+      "id": "distributed_job_queue",
+      "description": "队列化 job 存储（三期条目 12）：Redis/DB-backed 队列，尚未落地、延后单独发布",
+      "module_paths": [
+        "src/deep_research_agent/research_jobs/store.py"
+      ],
+      "protected": false,
+      "removable_in_ci": false,
+      "measured": false,
+      "note": "documentation_only: 队列化尚未落地（三期条目 12 延后单独发布），无运行时实现可移除；且其替换会触碰 job 存储中与 review_queue_path 同文件的列，需单独评审，本轮仅记录",
+      "metrics": null,
+      "delta": null,
+      "verdict": "needs_review",
+      "rationale": "结构 'distributed_job_queue' 无移除钩子（documentation-only），本轮跳过测量；documentation_only: 队列化尚未落地（三期条目 12 延后单独发布），无运行时实现可移除；且其替换会触碰 job 存储中与 review_queue_path 同文件的列，需单独评审，本轮仅记录"
+    }
+  ],
+  "reproducibility": {
+    "command": "UV_CACHE_DIR=/tmp/uv-cache uv run python evals/ablation_removal.py",
+    "note": "相同提交 fixture → 除 run_id/generated_at 外字节一致"
+  }
+}
