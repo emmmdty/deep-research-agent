@@ -240,13 +240,40 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
    满表只淘汰已回满桶、新 key fail closed，429+Retry-After，test mode 可注入零限流。
    **队列替换未做**：改 docker-compose 拓扑，按 §7 单独发布。）
 
-### 四期：长期竞争壁垒
+### 四期：长期竞争壁垒 ✅
 
-13. **DRB（Deep Research Bench）官方评测** + 引用真实性自动化指标进 CI 门禁。
-14. **跨任务记忆复用**：job 间的 memory（记忆沉淀 → 下次研究免重复搜索）。
-15. **评估对齐人类专家**：DRB-II 式 rubric + 人工抽检通道；head-to-head 常态化。
+> 状态：四期已于 2026-08 落地（`9d456d3` DRB 评测与引用真实性门禁、`e566590` 跨任务记忆复用、
+> `131204d` 人工抽检与 head-to-head、`1187ded` 移除结构评审 harness、`c79fbe6` 独立审察修复）。
+
+13. **DRB（Deep Research Bench）官方评测** + 引用真实性自动化指标进 CI 门禁。✅
+    （`evals/external/benchmarks/drb.py` 适配器照 facts_grounding/gaia 模式注册
+    `authoritative_release_gate`；全离线 smoke 子集 + 仓库内 fixture；`scripts/run_drb_gate.py`
+    聚合 `audit_summary.citation_verification` → `verified_rate = passed/(passed+failed+unresolved)`，
+    分母为空确定性判 blocked；阈值/semantic_mapping 从 `drb_gate.yaml` 真实读取；
+    CI `drb-gate` job 非零退出即失败（低于阈值或 smoke 未完成均失败）；
+    基线 `evals/reports/drb_gate/scorecard.json` 可字节级复现；真实数据集来源/许可/获取写进
+    `evals/README.md`。）
+14. **跨任务记忆复用**：job 间的 memory（记忆沉淀 → 下次研究免重复搜索）。✅
+    （`memory_v2/reuse.py`：MemoryRecall 前置 recall（tenant 隔离、TTL/supersede 沿用
+    MemoryService 语义）+ MemoryHarvester 完成后沉淀"已验证来源"（quote 在冻结语料中逐字命中且
+    citation verdict=verified 才沉淀，永不 re-verify、幂等）；researcher `_gather_queries` 命中时
+    注入逐字节相同的来源并跳过覆盖查询；空 memory 输出与现状逐字节一致；编排接线在
+    `agents/factory.py` + `research_jobs/orchestrator.py`，harvest 失败不阻塞 job 完成；
+    记忆来源照常进冻结 corpus、照常过 quote containment 与 verify_citations——证据契约
+    （契约 T14/T16）有专项测试断言。）
+15. **评估对齐人类专家**：DRB-II 式 rubric + 人工抽检通道；head-to-head 常态化。✅
+    （`evals/rubrics/citation_authenticity.yaml`：引用真伪/verbatim 一致性/来源质量/覆盖面，
+    每维 1–5 级带锚点示例；`main.py eval human-sample`（--bundle-dir/--sample-size/--seed
+    确定性抽样 → `evals/reports/human_review/<job>.md`，--import 读回评分聚合 scorecard）；
+    `evals/external/head_to_head.py` 注册进 benchmark 组合，A/B 双管线标准化 scorecard，
+    无凭据环境 blocked 并支持注入 fake runner；命令与节奏见 `evals/README.md`。）
 16. **评估"移除结构"每季度一次**：按 bitter lesson，随模型能力重新审视哪些结构该拆
-    （当前证据契约是核心竞争力，不动；动的是外围编排）。
+    （当前证据契约是核心竞争力，不动；动的是外围编排）。✅（季度机制已建立 + 首份评审产出）
+    （`evals/ablation_removal.py` 可重复"移除→度量"harness，输出对比 scorecard
+    `evals/reports/ablation_removal/quarterly_2026_08_ablation_scorecard.json`；claim graph /
+    audit gate / review queue 显式标记 PROTECTED 不可消融（按 id/模块路径/语义三重守卫）；
+    首份 `docs/EVALUATION_REVIEW.md`（2026-08）给出可拆/不可拆清单与理由、本轮消融结果、
+    季度时间表，产物可审计可复现。）
 
 ## 7. 风险与注意事项
 
