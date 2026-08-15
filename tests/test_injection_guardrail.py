@@ -168,7 +168,7 @@ def test_gather_queries_drops_override_sources():
     )
     worker = LLMResearcherWorker()
     stats = {"injection_findings": 0, "injection_dropped_sources": 0, "injection_dropped_pages": 0}
-    sources = asyncio.run(
+    sources, _query_urls = asyncio.run(
         worker._gather_queries(
             task, context, [{"query": "agent paper", "tool": "web_search"}], [], stats
         )

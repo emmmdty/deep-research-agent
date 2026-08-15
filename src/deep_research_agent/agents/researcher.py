@@ -299,6 +299,7 @@ class LLMResearcherWorker:
     ) -> WorkerOutput:
         sources: list[dict[str, Any]] = []
         queries_used: list[dict[str, str]] = []
+        query_urls: list[dict[str, Any]] = []
         coverage_assessments: list[dict[str, Any]] = []
         rounds_used = 0
         gaps: list[str] = []
@@ -321,8 +322,9 @@ class LLMResearcherWorker:
                     task.task_id,
                 )
                 break
-            new_sources = await self._gather_queries(task, context, queries, sources, stats)
+            new_sources, new_query_urls = await self._gather_queries(task, context, queries, sources, stats)
             sources = new_sources
+            query_urls.extend(new_query_urls)
             queries_used.extend(queries)
             if not sources:
                 break
@@ -380,6 +382,7 @@ class LLMResearcherWorker:
                 "rounds": rounds_used,
                 "query_count": len(queries_used),
                 "queries": [dict(query) for query in queries_used],
+                "query_urls": query_urls,
                 "page_count": len(pages),
                 "page_urls": [str(page["url"]) for page in pages],
                 "coverage_assessments": coverage_assessments,
@@ -518,7 +521,7 @@ class LLMResearcherWorker:
         queries: list[dict[str, str]],
         existing: list[dict[str, Any]],
         stats: dict[str, Any],
-    ) -> list[dict[str, Any]]:
+    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
         sources = list(existing)
         seen = {
             (str(source["url"]), str(source["snippet"])[:_MAX_SNIPPET_CHARS]) for source in existing
@@ -554,17 +557,66 @@ class LLMResearcherWorker:
                     )
                 )
 
-        # Invoke all queries concurrently (bounded), then reassemble sources in
-        # the original query order so dedup, injection guards, and the
-        # _MAX_SOURCES cap behave exactly like the serial path. Deliberate
-        # deviation from the serial path: all in-flight invocations complete
-        # before the first failure is re-raised, so a failing query may still
-        # cost extra provider calls — the returned source sequence is
-        # byte-identical either way.
+        # Cross-job memory recall runs BEFORE any tool invocation: recalled
+        # sources are injected first (deduped against ``seen``, counted toward
+        # the _MAX_SOURCES cap) and queries already covered by a prior job are
+        # skipped entirely. Without a configured memory or a recall hit the
+        # flow below is byte-identical to live gathering.
+        recalled: list[dict[str, Any]] = []
+        covered_query_indices: set[int] = set()
+        memory = getattr(context, "memory", None)
+        if memory is not None:
+            try:
+                recalled, covered_query_indices = memory.recall(
+                    task.objective, queries, tenant_id=context.tenant_id
+                )
+            except Exception as exc:  # noqa: BLE001 - recall must never break gathering
+                logger.warning(
+                    "researcher {}: memory recall unavailable ({}); using live search",
+                    task.task_id,
+                    exc,
+                )
+                recalled, covered_query_indices = [], set()
+        injected_sources = 0
+        for source in recalled:
+            url = str(source.get("url") or "")
+            snippet = str(source.get("snippet") or "")
+            if not url or not snippet:
+                continue
+            dedupe_key = (url, snippet[:_MAX_SNIPPET_CHARS])
+            if dedupe_key in seen:
+                continue
+            seen.add(dedupe_key)
+            entry = dict(source)
+            entry["index"] = len(sources) + 1
+            sources.append(entry)
+            injected_sources += 1
+            if len(sources) >= _MAX_SOURCES:
+                break
+        if recalled or covered_query_indices:
+            stats["memory_recall_sources"] = stats.get("memory_recall_sources", 0) + injected_sources
+            stats["memory_recall_skipped_queries"] = stats.get(
+                "memory_recall_skipped_queries", 0
+            ) + len(covered_query_indices)
+
+        # Invoke only the uncovered queries concurrently (bounded), then
+        # reassemble sources in the original query order so dedup, injection
+        # guards, and the _MAX_SOURCES cap behave exactly like the serial
+        # path. Deliberate deviation from the serial path: all in-flight
+        # invocations complete before the first failure is re-raised, so a
+        # failing query may still cost extra provider calls — the returned
+        # source sequence is byte-identical either way.
+        active = [
+            (index, query)
+            for index, query in enumerate(queries)
+            if index not in covered_query_indices
+        ]
         envelopes = await asyncio.gather(
-            *(_invoke_query(query) for query in queries), return_exceptions=True
+            *(_invoke_query(query) for _, query in active), return_exceptions=True
         )
-        for query, envelope in zip(queries, envelopes):
+        query_urls: list[dict[str, Any]] = []
+        for (_, query), envelope in zip(active, envelopes):
+            produced_urls: list[str] = []
             if isinstance(envelope, Exception):
                 raise envelope
             tool_name = query["tool"]
@@ -609,8 +661,10 @@ class LLMResearcherWorker:
                         "snippet": snippet,
                     }
                 )
+                produced_urls.append(url)
                 if len(sources) >= _MAX_SOURCES:
-                    return sources
+                    query_urls.append({"query": query["query"], "tool": tool_name, "urls": produced_urls})
+                    return sources, query_urls
                 continue
             if envelope.status != "succeeded" or envelope.output is None:
                 continue
@@ -648,9 +702,12 @@ class LLMResearcherWorker:
                         "snippet": snippet,
                     }
                 )
+                produced_urls.append(url)
                 if len(sources) >= _MAX_SOURCES:
-                    return sources
-        return sources
+                    query_urls.append({"query": query["query"], "tool": tool_name, "urls": produced_urls})
+                    return sources, query_urls
+            query_urls.append({"query": query["query"], "tool": tool_name, "urls": produced_urls})
+        return sources, query_urls
 
     async def _agentic_read_pages(
         self,
@@ -1081,7 +1138,7 @@ class LLMResearcherWorker:
             "injection_dropped_sources": 0,
             "injection_dropped_pages": 0,
         }
-        sources = await self._gather_queries(
+        sources, query_urls = await self._gather_queries(
             task,
             context,
             [{"query": query, "tool": "web_search"} for query in queries],
@@ -1108,6 +1165,7 @@ class LLMResearcherWorker:
                 "objective": task.objective,
                 "agentic": False,
                 "query_count": len(queries),
+                "query_urls": query_urls,
                 "source_count": len(sources),
                 "claim_count": len(claims),
                 "injection_stats": stats,

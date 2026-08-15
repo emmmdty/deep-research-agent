@@ -21,6 +21,7 @@ from deep_research_agent.connectors.tools.github_search import search_github_rep
 from deep_research_agent.connectors.tools.image_reader import read_image
 from deep_research_agent.connectors.tools.page_fetch import fetch_page
 from deep_research_agent.connectors.tools.web_search import search_web
+from deep_research_agent.memory_v2.reuse import process_memory_recall
 from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
 from deep_research_agent.policy.budget_guardrails import BudgetGuard
@@ -274,6 +275,9 @@ def build_scheduler_factory(settings: Any = None, **kwargs: Any) -> ResearchSche
 
     source_profile = kwargs.pop("source_profile", None)
     policy_overrides = kwargs.pop("policy_overrides", None)
+    memory = kwargs.pop("memory", None)
+    if memory is None:
+        memory = process_memory_recall()
     gateway = build_gateway(source_profile=source_profile, policy_overrides=policy_overrides)
 
     from configs.settings import get_settings
@@ -291,4 +295,4 @@ def build_scheduler_factory(settings: Any = None, **kwargs: Any) -> ResearchSche
         chat_factory=chat_factory,
     )
     logger.info("built model-driven scheduler composition (web/github/arxiv gateway)")
-    return ResearchScheduler(worker=worker, tool_gateway=gateway, **kwargs)
+    return ResearchScheduler(worker=worker, tool_gateway=gateway, memory=memory, **kwargs)

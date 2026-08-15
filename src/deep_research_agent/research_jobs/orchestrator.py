@@ -274,6 +274,7 @@ class ResearchJobOrchestrator:
                     exc,
                 )
                 citation_verification = {}
+        self._harvest_scheduler_memory(job, result, claims, all_artifacts, citation_verification)
         graph = self._scheduler_graph(result, claims)
         report_markdown = self._scheduler_report_markdown(job, result)
         task_by_id = dag.task_by_id
@@ -323,6 +324,62 @@ class ResearchJobOrchestrator:
         report_path = Path(job.report_path)
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(bundle.report_markdown, encoding="utf-8")
+
+    def _harvest_scheduler_memory(
+        self,
+        job: JobRuntimeRecord,
+        result: RunResult,
+        claims: list,
+        artifacts: list,
+        citation_verification: dict[str, Any],
+    ) -> None:
+        """Settle verified sources into topic memory after a completed run.
+
+        The memory service is the one the scheduler threads into researcher
+        contexts (``scheduler.memory.memory_service``); harvest uses only the
+        frozen corpus and the citation-verification report, so it never
+        re-verifies. Any failure degrades to a warning — harvest must never
+        fail the job.
+        """
+
+        scheduler = self.scheduler
+        if scheduler is None:
+            return
+        memory = getattr(scheduler, "memory", None)
+        memory_service = getattr(memory, "memory_service", None)
+        if memory_service is None:
+            return
+        try:
+            from deep_research_agent.memory_v2.reuse import MemoryHarvester
+
+            query_results: list[dict[str, Any]] = []
+            for task_output in result.task_outputs.values():
+                recorded = task_output.get("query_urls")
+                if isinstance(recorded, list):
+                    query_results.extend(recorded)
+            tenant_id = str(job.metadata.get("tenant_id", "default"))
+            records = MemoryHarvester(memory_service).harvest(
+                tenant_id=tenant_id,
+                topic=job.topic,
+                claims=claims,
+                artifacts=artifacts,
+                citation_verification=citation_verification,
+                query_results=query_results,
+                job_id=job.job_id,
+            )
+            if records:
+                logger.info(
+                    "job {}: settled {} verified source(s) into topic memory (tenant {})",
+                    job.job_id,
+                    len(records),
+                    tenant_id,
+                )
+        except Exception as exc:  # noqa: BLE001 - harvest must not fail the job
+            logger.warning(
+                "topic-memory harvest failed for job {}: {}",
+                job.job_id,
+                exc,
+            )
 
     @staticmethod
     def _scheduler_report_markdown(job: JobRuntimeRecord, result: RunResult) -> str:

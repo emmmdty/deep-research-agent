@@ -53,6 +53,7 @@ class TaskExecutionContext:
     config_snapshot: Any
     dependency_results: Mapping[str, WorkerOutput]
     tool_gateway: Any | None = None
+    memory: Any | None = None
 
     async def invoke_tool(self, invocation: ToolInvocation) -> ToolResultEnvelope:
         """Invoke Task 2's governed gateway without importing a provider SDK."""

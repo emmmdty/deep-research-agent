@@ -346,7 +346,7 @@ async def test_gather_queries_bounded_concurrency_with_serial_identical_sources(
             "injection_dropped_pages": 0,
         }
         worker = LLMResearcherWorker()
-        sources = await worker._gather_queries(
+        sources, _query_urls = await worker._gather_queries(
             _task(), _ProbeContext(gateway), queries, [], stats
         )
         return sources, stats, gateway
@@ -398,7 +398,7 @@ async def test_gather_queries_max_sources_early_exit_matches_serial(monkeypatch)
         monkeypatch.setattr(researcher_module, "_MAX_PARALLEL_TOOL_CALLS", limit)
         gateway = _AsyncGateway(responses)
         worker = LLMResearcherWorker()
-        sources = await worker._gather_queries(
+        sources, _query_urls = await worker._gather_queries(
             _task(), _ProbeContext(gateway), queries, [], {}
         )
         return sources, gateway

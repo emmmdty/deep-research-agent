@@ -69,6 +69,7 @@ class ResearchScheduler:
         cancellation_poll_seconds: float = 0.05,
         journal: RunJournal | None = None,
         tool_gateway: Any | None = None,
+        memory: Any | None = None,
     ) -> None:
         if not 1 <= max_workers <= 8:
             raise ValueError("max_workers must be between 1 and at most 8")
@@ -84,6 +85,7 @@ class ResearchScheduler:
         self._cancellation_poll_seconds = cancellation_poll_seconds
         self._journal = journal if journal is not None else InMemoryRunJournal()
         self._tool_gateway = tool_gateway
+        self.memory = memory
 
     async def run(
         self,
@@ -177,6 +179,7 @@ class ResearchScheduler:
                     config_snapshot=config_snapshot,
                     dependency_results={dependency: outputs[dependency] for dependency in task.depends_on},
                     tool_gateway=self._tool_gateway,
+                    memory=self.memory,
                 )
                 future = asyncio.create_task(self._execute(task, context))
                 running[future] = task_id
