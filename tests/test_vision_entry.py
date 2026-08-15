@@ -171,6 +171,79 @@ def test_read_image_wraps_model_failure_as_value_error(httpx_mock, monkeypatch) 
         read_image(IMAGE_URL)
 
 
+def test_read_image_refuses_private_redirect_hop(httpx_mock) -> None:
+    """重定向到内网地址的每一跳都必须在请求发出前被拒绝（TOCTOU SSRF 防护）。"""
+    httpx_mock.add_response(
+        url=IMAGE_URL,
+        status_code=302,
+        headers={"location": "http://169.254.169.254/latest/meta-data/"},
+    )
+
+    with pytest.raises(ValueError, match="refuses non-public host"):
+        read_image(IMAGE_URL)
+
+    requests = httpx_mock.get_requests()
+    assert len(requests) == 1, "private redirect hop must never be contacted"
+
+
+def test_read_image_policy_wrapper_denies_blocked_domain() -> None:
+    """read_image 必须走与 fetch_page 相同的 source policy / budget 门禁。"""
+    from types import SimpleNamespace
+
+    from deep_research_agent.agents.factory import _policy_aware_fetch, _resolve_source_policy
+    from deep_research_agent.policy.models import SourcePolicyOverrides
+
+    policy = _resolve_source_policy(
+        "company_trusted",
+        SourcePolicyOverrides(deny_domains=["example.com"]).model_dump(),
+    )
+    wrapped = _policy_aware_fetch(policy, read_image)
+    context = SimpleNamespace(job_id="job-1", task_id="task-1")
+
+    with pytest.raises(PermissionError, match="source policy"):
+        wrapped({"image_url": IMAGE_URL, "prompt": "describe"}, context)
+
+
+@pytest.mark.asyncio
+async def test_researcher_keeps_full_ocr_text_in_corpus() -> None:
+    """OCR 文本必须完整进入 artifact source_text（500 字符截断会破坏长转写的审计门禁）。"""
+    long_ocr = ("The chart shows the adoption curve rising to 42 percent by 2026. ") * 40
+    assert len(long_ocr) > 500
+    quote = long_ocr[1500:1560]
+    task = _task()
+    gateway = ScriptedGateway({"read_image": {"content": long_ocr}})
+    chat = FakeToolChat(
+        [
+            {"plan_queries": {"queries": [{"query": IMAGE_URL, "tool": "read_image"}]}},
+            {"assess_coverage": {"covered": True, "gaps": []}},
+            {"select_pages": {"urls": []}},
+            {
+                "submit_claims": {
+                    "claims": [
+                        {
+                            "claim": "Adoption reached 42 percent by 2026.",
+                            "claim_type": "factual_claim",
+                            "critical": True,
+                            "support_status": "accepted",
+                            "confidence": 0.8,
+                            "source_index": 1,
+                            "quote": quote,
+                        }
+                    ]
+                }
+            },
+        ]
+    )
+    worker = LLMResearcherWorker(chat=chat)
+
+    output = await worker.execute(task, await _context(task, gateway))
+
+    artifact = output.result.evidence_packets[0].artifacts[0]
+    assert artifact.metadata["source_kind"] == "image_ocr"
+    assert artifact.metadata["source_text"] == long_ocr.strip()
+    assert artifact.metadata["critical_claims_allowed"] is True
+
+
 # ----------------------------------------------------- researcher integration
 
 def _task(task_id: str = "research-01-vision") -> TaskSpec:

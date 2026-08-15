@@ -112,7 +112,7 @@ def build_gateway(
     )
     registry.register(
         _read_only_tool_spec("read_image", ("researcher",), cache_ttl_seconds=1800.0),
-        _read_image_handler,
+        _policy_aware_fetch(policy, _read_image_handler),
     )
     return ToolGateway(registry=registry)
 

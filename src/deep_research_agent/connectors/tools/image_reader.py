@@ -16,7 +16,11 @@ from loguru import logger
 
 from deep_research_agent.agents.llm import LLMChatError
 from deep_research_agent.agents.vision import VisionChat
-from deep_research_agent.connectors.tools.page_fetch import _USER_AGENT, _validate_public_url
+from deep_research_agent.connectors.tools.page_fetch import (
+    _USER_AGENT,
+    _checked_fetch,
+    _validate_public_url,
+)
 
 _DEFAULT_IMAGE_PROMPT = (
     "Describe this image factually and transcribe any visible text verbatim."
@@ -47,12 +51,14 @@ def read_image(
     try:
         with httpx.Client(
             timeout=_HTTP_TIMEOUT_SECONDS,
-            follow_redirects=True,
+            follow_redirects=False,
             headers={"User-Agent": _USER_AGENT},
         ) as client:
-            response = client.get(image_url)
+            response = _checked_fetch(client, image_url)
         response.raise_for_status()
         final_url = str(response.url)
+        # Every redirect hop was validated before its request inside
+        # ``_checked_fetch``; this final check is defense-in-depth.
         _validate_public_url(final_url)
         media_type = (response.headers.get("content-type") or "").split(";")[0].strip().lower()
         if not media_type.startswith("image/"):

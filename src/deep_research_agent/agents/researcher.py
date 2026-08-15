@@ -546,7 +546,11 @@ class LLMResearcherWorker:
                     stats["injection_dropped_sources"] += 1
                     continue
                 sanitized = sanitize_content(content)
-                snippet = sanitized.text[:_MAX_SNIPPET_CHARS]
+                # Keep the full OCR text as the frozen corpus for this source:
+                # the artifact's source_text is what the audit gate and
+                # citation verification re-check, so truncating to snippet
+                # width would silently break quotes transcribed past char 500.
+                snippet = sanitized.text[:_MAX_PAGE_CHARS]
                 if sanitized.flagged:
                     stats["injection_findings"] += len(sanitized.findings)
                     logger.warning(
