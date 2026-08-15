@@ -162,7 +162,8 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
 ## 6. 升级路线图（分四期）
 
 > 状态：一期（§6.1）已于 2026-08 落地（CLI 默认 scheduler-v2 + `--legacy`、planner 默认开启、
-> 引用 quote containment 审计、policy 层接线生产 gateway）；二期起进入路线图。
+> 引用 quote containment 审计、policy 层接线生产 gateway）；二期（§6.2）亦已落地（引用真实性
+> 程序化核验、一手来源抓取、报告保留模型原文、多模态入口）；三期起进入路线图。
 
 ### 一期：让"最强实现"成为唯一默认（对齐能力基线）✅
 
@@ -175,16 +176,30 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
 4. **接线 policy 层**：`build_gateway` 加载 source profile + BudgetGuard；researcher 的
    `critical_claims_allowed` 改由 connector/来源策略决定（web snippet 默认 False）。✅
 
-### 二期：对标竞品能力（引用可验证 + 一手来源）
+### 二期：对标竞品能力（引用可验证 + 一手来源）✅
+
+> 状态：二期已于 2026-08 落地（`9ef4be0`、`5e11dd7`、`d1a9584`、`a80662b`、`5924060`）。
 
 5. **引用真实性核验（对标 DRB FACT / Anthropic CitationAgent）**：新增 `verify_citations` 阶段
    —— 对 critical claims 重取源页，用确定性/LLM-judge 检查"源文档是否真的支持该声明"，
-   结果进入 `audit_summary` 并落盘；这是把"模型自述"变成"程序化验证"的关键一步。
+   结果进入 `audit_summary` 并落盘；这是把"模型自述"变成"程序化验证"的关键一步。✅
+   （`auditor/citation_verifier.py`：critical 全验 + 冻结语料免重取 + 可选 LLM judge +
+   `audit_summary["citation_verification"]` + `citation_verification.json` 落盘；仅 critical 全验，
+   满足 §7 分级成本要求。）
 6. **一手来源抓取策略**：openai.com 等 403/反爬回退 Wayback Machine；PDF 正文解析（Grobid
-   client 默认注入或 docling 真解析，修掉 mojibake）；arXiv 全文优先。
+   client 默认注入或 docling 真解析，修掉 mojibake）；arXiv 全文优先。✅
+   （`page_fetch` 增加 `wayback_url` + 单次回退 + `via_wayback` 标记；`pdf_reader` 改为
+   pypdf→PyPDF2→docling 多后端真解析 + `repair_mojibake` 确定性修复 + 移除 10k 截断；
+   `fetch_page` 支持 application/pdf 直解；`arxiv_search` 输出 `fulltext_url` 指向 HTML 全文。）
 7. **报告合成保留模型原文**：executive summary 不再被确定性 top-5 bullet 整体替换；改为
-   "模型合成 + claim 校验"双轨，只在越界时降级。
-8. **多模态入口**（图像类问题，GAIA 失败案例之一）：vision model 已配但未接线。
+   "模型合成 + claim 校验"双轨，只在越界时降级。✅
+   （`bundle_v2._apply_executive_summary_policy`：标记引用全部合法 → 保留模型原文；
+   引用 unsupported/contradicted/未知 claim 或摘要为空 → 确定性重建；
+   `audit_summary` 新增 `executive_summary_source` / `executive_summary_validation` 审计字段。）
+8. **多模态入口**（图像类问题，GAIA 失败案例之一）：vision model 已配但未接线。✅
+   （`agents/vision.py` VisionChat + `connectors/tools/image_reader.py` 受治理 `read_image` 工具：
+   逐跳 SSRF 校验、source policy/预算门禁、OCR 全文入库；研究者规划枚举可主动选 `read_image`；
+   独立审察发现的三处缺口已修复并补回归测试，见 `5924060`。）
 
 ### 三期：成本与性能（工程化）
 
