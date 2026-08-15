@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import re
 from collections import deque
+from typing import Any
 
 from jsonschema import Draft202012Validator
 from pydantic import ConfigDict, Field, model_validator
@@ -16,6 +17,13 @@ from deep_research_agent.kernel.contracts import ResearchBrief, StrictModel, Tas
 # tool gateway denies any call when ``max_tool_calls`` is missing, so the
 # deterministic planner must never emit budget-less research tasks.
 _DEFAULT_MAX_TOOL_CALLS_PER_TASK = 16
+# Deterministic effort tiers used when settings cannot be resolved; the medium
+# tier mirrors the pre-scaling default budget.
+_FALLBACK_EFFORT_TIERS = {
+    "low": {"max_tool_calls": 8},
+    "medium": {"max_tool_calls": 16},
+    "high": {"max_tool_calls": 32},
+}
 
 
 class ResearchDAG(StrictModel):
@@ -88,12 +96,17 @@ class ResearchDAG(StrictModel):
 class ResearchPlanner:
     """Deterministically compile a brief and domain pack into typed tasks."""
 
+    def __init__(self, settings: Any | None = None) -> None:
+        self._settings = settings
+
     def plan(self, brief: ResearchBrief, domain_pack: DomainPack) -> ResearchDAG:
         if brief.domain_pack_id != domain_pack.pack_id:
             raise ValueError("brief domain_pack_id does not match the supplied domain pack")
         objectives = brief.objectives or domain_pack.research_questions or [brief.question]
+        effort = str(brief.constraints.get("effort") or "medium")
+        budget = self._budget_for_effort(effort)
         tasks = [
-            self._research_task(brief, objective, index=index)
+            self._research_task(brief, objective, index=index, budget=budget)
             for index, objective in enumerate(objectives, start=1)
         ]
         critic = TaskSpec(
@@ -115,8 +128,32 @@ class ResearchPlanner:
         )
         return ResearchDAG(job_id=brief.job_id, tasks=(*tasks, critic))
 
+    def _budget_for_effort(self, effort: str) -> dict[str, int | str]:
+        """Resolve the effective effort tier into a task budget.
+
+        Unknown effort values and any settings resolution failure degrade to
+        the deterministic medium tier so the planner never emits budget-less
+        tasks. The budget carries both ``max_tool_calls`` and the effective
+        ``effort`` name, which the model router consumes when it selects a
+        per-task chat.
+        """
+        tiers = _FALLBACK_EFFORT_TIERS
+        if self._settings is not None:
+            tiers = getattr(self._settings, "effort_tiers", None) or tiers
+        tier = tiers.get(effort)
+        effective = effort if tier is not None else "medium"
+        tier = tier or tiers.get("medium") or {"max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK}
+        max_tool_calls = int(tier.get("max_tool_calls") or _DEFAULT_MAX_TOOL_CALLS_PER_TASK)
+        return {"max_tool_calls": max_tool_calls, "effort": effective}
+
     @staticmethod
-    def _research_task(brief: ResearchBrief, objective: str, *, index: int) -> TaskSpec:
+    def _research_task(
+        brief: ResearchBrief,
+        objective: str,
+        *,
+        index: int,
+        budget: dict[str, int | str],
+    ) -> TaskSpec:
         slug = re.sub(r"[^a-z0-9]+", "-", objective.casefold()).strip("-")[:36]
         if not slug:
             slug = hashlib.sha256(objective.encode("utf-8")).hexdigest()[:12]
@@ -135,6 +172,6 @@ class ResearchPlanner:
                 "required": ["task_id"],
                 "additionalProperties": True,
             },
-            budget={"max_tool_calls": _DEFAULT_MAX_TOOL_CALLS_PER_TASK},
+            budget=budget,
             idempotency_key=f"{brief.job_id}:{task_id}",
         )

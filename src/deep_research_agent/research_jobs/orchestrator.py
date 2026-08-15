@@ -39,6 +39,22 @@ def _default_synthesizer(_: dict[str, Any]) -> dict[str, Any]:
     return {}
 
 
+def _route_model_for_role(role: str) -> str:
+    """Resolve the model the model router would pick for an agent role.
+
+    Used only for bundle attribution when the config snapshot carries no
+    explicit role model; never raises so bundle emission cannot fail because
+    settings are unavailable.
+    """
+    try:
+        from configs.settings import get_settings
+        from deep_research_agent.providers.router import ProviderRouter
+
+        return str(ProviderRouter(get_settings()).route_for_role(role).profile.model)
+    except Exception:  # noqa: BLE001 - attribution must never fail bundle emission
+        return ""
+
+
 class ResearchJobOrchestrator:
     """阶段性调度 research job。"""
 
@@ -327,12 +343,17 @@ class ResearchJobOrchestrator:
     def _task_model(config_snapshot: Any, role: str) -> str:
         if not isinstance(config_snapshot, dict):
             return "configured"
-        return str(
+        explicit = config_snapshot.get(f"{role}_model")
+        if isinstance(explicit, str) and explicit.strip():
+            return explicit.strip()
+        legacy = (
             config_snapshot.get(f"{role}_endpoint_id")
             or config_snapshot.get("planner_endpoint_id")
             or config_snapshot.get("model")
-            or "configured"
         )
+        if legacy:
+            return str(legacy)
+        return _route_model_for_role(role) or "configured"
 
     def run(self, job_id: str) -> JobRuntimeRecord:
         """执行或恢复指定 job。"""

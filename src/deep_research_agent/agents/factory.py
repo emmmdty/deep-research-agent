@@ -8,11 +8,13 @@ composition. Offline mode keeps the deterministic benchmark pipeline untouched.
 
 from __future__ import annotations
 
-from typing import Any
+from functools import partial
+from typing import Any, Callable
 
 from loguru import logger
 
 from deep_research_agent.agents.critic import LLMCriticWorker
+from deep_research_agent.agents.llm import LLMChat
 from deep_research_agent.agents.researcher import LLMResearcherWorker
 from deep_research_agent.connectors.tools.arxiv_search import search_arxiv_papers
 from deep_research_agent.connectors.tools.github_search import search_github_repositories
@@ -23,6 +25,8 @@ from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
 from deep_research_agent.policy.budget_guardrails import BudgetGuard
 from deep_research_agent.policy.source_policy import SourcePolicy, load_source_policy
+from deep_research_agent.providers.models import ProviderProfile, ProviderSelection
+from deep_research_agent.providers.router import ProviderRouter
 from deep_research_agent.tool_gateway.gateway import ToolGateway
 from deep_research_agent.tool_gateway.models import ToolSpec
 from deep_research_agent.tool_gateway.registry import InMemoryToolRegistry
@@ -186,20 +190,100 @@ def _policy_aware_fetch(policy: SourcePolicy, handler) -> Any:
     return wrapped
 
 
+class _RoutedSettings:
+    """Settings view pinned to a routed provider profile.
+
+    ``LLMChat`` resolves credentials through ``get_llm_config()``; this adapter
+    swaps in the routed profile while delegating every other attribute to the
+    original settings object.
+    """
+
+    def __init__(self, settings: Any, profile: ProviderProfile) -> None:
+        self._settings = settings
+        self._profile = profile
+
+    def get_llm_config(self) -> dict[str, Any]:
+        return {
+            "api_key": self._profile.api_key or "",
+            "base_url": self._profile.base_url or "",
+            "model": self._profile.model,
+            "temperature": self._profile.temperature,
+            "max_tokens": self._profile.max_tokens,
+        }
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._settings, name)
+
+
+def _chat_from_selection(settings: Any, selection: ProviderSelection) -> LLMChat:
+    return LLMChat(settings=_RoutedSettings(settings, selection.profile))
+
+
 class MultiRoleWorker:
     """Dispatch scheduler tasks to the model-driven worker for their role."""
 
-    def __init__(self, researcher: LLMResearcherWorker, critic: LLMCriticWorker) -> None:
+    def __init__(
+        self,
+        researcher: LLMResearcherWorker,
+        critic: LLMCriticWorker,
+        *,
+        router: ProviderRouter | None = None,
+        chat_factory: Callable[[ProviderSelection], Any] | None = None,
+    ) -> None:
         self._researcher = researcher
         self._critic = critic
+        self._router = router
+        self._chat_factory = chat_factory
+
+    def _routed_chat(self, role: str, effort: str) -> Any | None:
+        if self._router is None or self._chat_factory is None:
+            return None
+        if not getattr(getattr(self._router, "settings", None), "model_router_enabled", True):
+            return None
+        try:
+            selection = self._router.route_for_role(role, effort=effort)
+            if not selection.profile.api_key:
+                return None
+            return self._chat_factory(selection)
+        except Exception as exc:  # noqa: BLE001 - routing must never break research
+            logger.warning(
+                "role routing for {} unavailable ({}); using default worker", role, exc
+            )
+            return None
+
+    @staticmethod
+    async def _close_chat(chat: Any) -> None:
+        close = getattr(chat, "aclose", None)
+        if close is None:
+            return
+        try:
+            await close()
+        except Exception:  # noqa: BLE001 - closing is best-effort cleanup
+            pass
+
+    async def _execute_routed(self, task, context: TaskExecutionContext, worker) -> WorkerOutput:
+        if task.role == "researcher":
+            chat = self._routed_chat("researcher", str(task.budget.get("effort") or "medium"))
+        else:
+            chat = self._routed_chat("critic", "medium")
+        if chat is None:
+            return await worker.execute(task, context)
+        try:
+            if task.role == "researcher":
+                routed = LLMResearcherWorker(chat=chat)
+            else:
+                routed = LLMCriticWorker(chat=chat)
+            return await routed.execute(task, context)
+        finally:
+            await self._close_chat(chat)
 
     async def execute(
         self, task, context: TaskExecutionContext
     ) -> WorkerOutput:
         if task.role == "researcher":
-            return await self._researcher.execute(task, context)
+            return await self._execute_routed(task, context, self._researcher)
         if task.role == "critic":
-            return await self._critic.execute(task, context)
+            return await self._execute_routed(task, context, self._critic)
         raise RuntimeError(f"no model-driven worker registered for role {task.role!r}")
 
 
@@ -216,9 +300,20 @@ def build_scheduler_factory(settings: Any = None, **kwargs: Any) -> ResearchSche
     source_profile = kwargs.pop("source_profile", None)
     policy_overrides = kwargs.pop("policy_overrides", None)
     gateway = build_gateway(source_profile=source_profile, policy_overrides=policy_overrides)
+
+    from configs.settings import get_settings
+
+    resolved_settings = settings or get_settings()
+    router = None
+    chat_factory = None
+    if getattr(resolved_settings, "model_router_enabled", False) is True:
+        router = ProviderRouter(resolved_settings)
+        chat_factory = partial(_chat_from_selection, resolved_settings)
     worker = MultiRoleWorker(
         researcher=LLMResearcherWorker(),
         critic=LLMCriticWorker(),
+        router=router,
+        chat_factory=chat_factory,
     )
     logger.info("built model-driven scheduler composition (web/github/arxiv gateway)")
     return ResearchScheduler(worker=worker, tool_gateway=gateway, **kwargs)

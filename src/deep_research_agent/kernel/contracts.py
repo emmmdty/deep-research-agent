@@ -76,7 +76,7 @@ class TaskSpec(StrictModel):
     depends_on: list[TaskId] = Field(default_factory=list)
     input_artifacts: list[ArtifactRef] = Field(default_factory=list)
     output_schema: dict[str, Any]
-    budget: dict[str, int | float] = Field(default_factory=dict)
+    budget: dict[str, int | float | str] = Field(default_factory=dict)
     idempotency_key: str = Field(min_length=1)
 
     @model_validator(mode="after")

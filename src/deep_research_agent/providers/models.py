@@ -51,6 +51,7 @@ class ProviderRouteRequest(BaseModel):
     source_profile: str | None = Field(default=None)
     budget: dict[str, Any] = Field(default_factory=dict)
     latency_target: str = Field(default="balanced")
+    effort: str = Field(default="medium")
     current_provider: str | None = Field(default=None)
     provider_health: dict[str, float] = Field(default_factory=dict)
 

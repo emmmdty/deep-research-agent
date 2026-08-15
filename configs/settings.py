@@ -300,6 +300,28 @@ class Settings(BaseSettings):
         description="记忆后端，当前固定为 sqlite",
     )
 
+    # ---------- 模型路由配置 ----------
+    model_router_enabled: bool = Field(
+        default=True,
+        description="是否启用按角色模型路由（env: MODEL_ROUTER_ENABLED）",
+    )
+    strong_role_models: dict[str, str] = Field(
+        default_factory=lambda: {"planning": "", "critic": "", "synthesis": ""},
+        description="强模型角色覆盖；空值表示跟随默认 profile 模型",
+    )
+    cheap_role_models: dict[str, str] = Field(
+        default_factory=lambda: {"summarization": "", "compression": "", "rerank": ""},
+        description="便宜模型角色覆盖；空值表示跟随默认 profile 模型",
+    )
+    effort_tiers: dict[str, dict] = Field(
+        default_factory=lambda: {
+            "low": {"max_tool_calls": 8},
+            "medium": {"max_tool_calls": 16},
+            "high": {"max_tool_calls": 32},
+        },
+        description="effort 分级预算：每个 tier 的 max_tool_calls 等预算字段",
+    )
+
     log_level: str = Field(default="INFO", description="日志级别")
 
     @property

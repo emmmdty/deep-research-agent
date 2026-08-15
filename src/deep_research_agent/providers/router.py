@@ -43,6 +43,36 @@ class ProviderRouter:
             return self._route_manual(request)
         return self._route_auto(request)
 
+    def route_for_role(self, role: str, *, effort: str = "medium") -> ProviderSelection:
+        """Resolve the model for an agent role, deterministically.
+
+        Explicit ``strong_role_models`` / ``cheap_role_models`` overrides win
+        first; anything else falls back to the default provider profile. When
+        the model router is disabled the call degrades to a plain manual
+        default-profile route.
+        """
+        if not getattr(self.settings, "model_router_enabled", True):
+            return self._route_manual(ProviderRouteRequest(task_role=role))
+        default_profile = self._profiles[self.settings.get_default_provider_profile_name()]
+        override = self._role_model_override(role)
+        if override:
+            profile = default_profile.model_copy(update={"model": override})
+            model_name = override
+        else:
+            profile = default_profile
+            model_name = profile.model
+        return ProviderSelection(
+            profile=profile,
+            routing_mode=RoutingMode.MANUAL,
+            reason=f"role_routing:{role}:{model_name}",
+        )
+
+    def _role_model_override(self, role: str) -> str | None:
+        strong = getattr(self.settings, "strong_role_models", None) or {}
+        cheap = getattr(self.settings, "cheap_role_models", None) or {}
+        override = str(strong.get(role) or cheap.get(role) or "")
+        return override.strip() or None
+
     def _route_manual(self, request: ProviderRouteRequest) -> ProviderSelection:
         profile_name = request.provider_profile or self.settings.get_default_provider_profile_name()
         profile = self._profiles[profile_name]
@@ -97,6 +127,8 @@ class ProviderRouter:
             score += 20
         if request.latency_target == "quality" and caps.reasoning:
             score += 10
+        if request.effort == "low" and caps.fast:
+            score += 15
 
         current_family = _provider_family(request.current_provider)
         profile_family = _provider_family(profile.provider_type.value)
