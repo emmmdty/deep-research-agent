@@ -214,6 +214,33 @@ class ResearchJobOrchestrator:
             critical_claims_allowed=critical_claims_allowed,
         )
         claims = [claim for packet in packets for claim in packet.claims]
+        citation_verification: dict[str, Any] = {}
+        if any(claim.critical for claim in claims):
+            try:
+                from deep_research_agent.auditor.citation_verifier import CitationVerifier
+
+                document_contents = {
+                    artifact.metadata["document_version_id"]: artifact.metadata["source_text"]
+                    for artifact in all_artifacts
+                    if isinstance(artifact.metadata.get("document_version_id"), str)
+                    and isinstance(artifact.metadata.get("source_text"), str)
+                }
+                verifier = CitationVerifier()
+                verification = verifier.verify(
+                    claims,
+                    all_artifacts,
+                    document_contents=document_contents,
+                    job_id=job.job_id,
+                )
+                citation_verification = verification.model_dump(mode="json")
+                verifier.to_disk(verification, Path(job.report_bundle_path).parent)
+            except Exception as exc:  # noqa: BLE001 - verification must not fail the job
+                logger.warning(
+                    "citation verification failed for job {}: {}",
+                    job.job_id,
+                    exc,
+                )
+                citation_verification = {}
         graph = self._scheduler_graph(result, claims)
         report_markdown = self._scheduler_report_markdown(job, result)
         task_by_id = dag.task_by_id
@@ -251,6 +278,7 @@ class ResearchJobOrchestrator:
                 "config_version_id": job.metadata.get("product_config_version_id"),
                 "tasks": tasks,
             },
+            citation_verification=citation_verification,
         )
         bundle_path = Path(job.report_bundle_path)
         bundle_path.parent.mkdir(parents=True, exist_ok=True)

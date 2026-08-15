@@ -48,6 +48,7 @@ class ReportBundleCompilerV2:
         sources: Iterable[ArtifactRef],
         corpus_manifest: CorpusManifest,
         run_manifest: Mapping[str, Any],
+        citation_verification: Mapping[str, Any] | None = None,
     ) -> ReportBundleV2:
         packets = list(evidence_packets)
         critic_decisions = list(critic_decisions)
@@ -149,6 +150,7 @@ class ReportBundleCompilerV2:
             "semantic_disagreements": reduced.semantic_disagreements,
             "unresolved_claim_ids": audit.unresolved_claim_ids,
             "report_citation_coverage": citation_result.coverage,
+            "citation_verification": citation_verification or {},
         }
         return ReportBundleV2(
             report_markdown=citation_result.markdown,
