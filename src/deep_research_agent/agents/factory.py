@@ -16,6 +16,7 @@ from deep_research_agent.agents.critic import LLMCriticWorker
 from deep_research_agent.agents.researcher import LLMResearcherWorker
 from deep_research_agent.connectors.tools.arxiv_search import search_arxiv_papers
 from deep_research_agent.connectors.tools.github_search import search_github_repositories
+from deep_research_agent.connectors.tools.image_reader import read_image
 from deep_research_agent.connectors.tools.page_fetch import fetch_page
 from deep_research_agent.connectors.tools.web_search import search_web
 from deep_research_agent.orchestration.scheduler import ResearchScheduler
@@ -54,6 +55,13 @@ def _fetch_page_handler(arguments: dict[str, Any], context) -> dict[str, object]
     return fetch_page(
         str(arguments.get("url", "")),
         max_chars=int(arguments.get("max_chars", 12_000)),
+    )
+
+
+def _read_image_handler(arguments: dict[str, Any], context) -> dict[str, Any]:
+    return read_image(
+        str(arguments.get("image_url", "")),
+        prompt=arguments.get("prompt"),
     )
 
 
@@ -101,6 +109,10 @@ def build_gateway(
     registry.register(
         _read_only_tool_spec("fetch_page", ("researcher",), cache_ttl_seconds=1800.0),
         _policy_aware_fetch(policy, _fetch_page_handler),
+    )
+    registry.register(
+        _read_only_tool_spec("read_image", ("researcher",), cache_ttl_seconds=1800.0),
+        _read_image_handler,
     )
     return ToolGateway(registry=registry)
 

@@ -99,6 +99,18 @@ class Settings(BaseSettings):
         default="claude-compatible-model",
         description="Anthropic-compatible 默认模型",
     )
+    vision_model_name: Optional[str] = Field(
+        default=None,
+        description="多模态视觉模型名称（env: VISION_MODEL_NAME）",
+    )
+    vision_api_key: Optional[str] = Field(
+        default=None,
+        description="多模态视觉模型 API key（env: VISION_API_KEY）",
+    )
+    vision_base_url: Optional[str] = Field(
+        default=None,
+        description="多模态视觉模型 base URL（env: VISION_BASE_URL）",
+    )
 
     # ---------- 搜索配置 ----------
     search_backend: SearchBackend = Field(
@@ -289,6 +301,11 @@ class Settings(BaseSettings):
     )
 
     log_level: str = Field(default="INFO", description="日志级别")
+
+    @property
+    def vision_available(self) -> bool:
+        """Whether a vision model is fully configured (GAIA image questions)."""
+        return all((self.vision_model_name, self.vision_api_key, self.vision_base_url))
 
     model_config = {
         "env_file": str(PROJECT_ROOT / ".env"),

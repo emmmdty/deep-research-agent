@@ -58,7 +58,7 @@ _MAX_SNIPPET_CHARS = 500
 _MAX_GAPS = 2
 _CLAIM_CHUNK_SIZE = 4
 
-_ALLOWED_TOOLS = ("web_search", "github_search", "arxiv_search")
+_ALLOWED_TOOLS = ("web_search", "github_search", "arxiv_search", "read_image")
 _FETCH_TOOL = "fetch_page"
 
 _PLAN_QUERIES_TOOL = {
@@ -69,7 +69,9 @@ _PLAN_QUERIES_TOOL = {
             "Propose 1 to 4 focused search queries for the research objective, "
             "each with the search tool most likely to find authoritative evidence "
             "(web_search for general web, github_search for open-source code and "
-            "repos, arxiv_search for academic papers)."
+            "repos, arxiv_search for academic papers). For image-based questions "
+            "pass the image URL as query; for text questions prefer the search "
+            "tools."
         ),
         "parameters": {
             "type": "object",
@@ -82,7 +84,7 @@ _PLAN_QUERIES_TOOL = {
                             "query": {"type": "string"},
                             "tool": {
                                 "type": "string",
-                                "enum": ["web_search", "github_search", "arxiv_search"],
+                                "enum": ["web_search", "github_search", "arxiv_search", "read_image"],
                             },
                         },
                         "required": ["query", "tool"],
@@ -518,6 +520,58 @@ class LLMResearcherWorker:
         }
         for query in queries:
             tool_name = query["tool"]
+            if tool_name == "read_image":
+                envelope = await context.invoke_tool(
+                    ToolInvocation(
+                        invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
+                        tool_name=tool_name,
+                        tenant_id=context.tenant_id,
+                        idempotency_key="pending",
+                        arguments={
+                            "image_url": query["query"],
+                            "prompt": task.objective,
+                        },
+                    )
+                )
+                if envelope.status != "succeeded" or envelope.output is None:
+                    continue
+                item = envelope.output
+                if not isinstance(item, dict):
+                    continue
+                url = str(item.get("url") or query["query"])
+                content = str(item.get("content") or "").strip()
+                if not url or not content:
+                    continue
+                if should_quarantine_source(content):
+                    stats["injection_dropped_sources"] += 1
+                    continue
+                sanitized = sanitize_content(content)
+                snippet = sanitized.text[:_MAX_SNIPPET_CHARS]
+                if sanitized.flagged:
+                    stats["injection_findings"] += len(sanitized.findings)
+                    logger.warning(
+                        "researcher {}: sanitized {} injection finding(s) in image OCR from {}",
+                        task.task_id,
+                        len(sanitized.findings),
+                        url,
+                    )
+                dedupe_key = (url, snippet)
+                if dedupe_key in seen:
+                    continue
+                seen.add(dedupe_key)
+                sources.append(
+                    {
+                        "index": len(sources) + 1,
+                        "kind": "image_ocr",
+                        "tool": "read_image",
+                        "title": url[:200],
+                        "url": url,
+                        "snippet": snippet,
+                    }
+                )
+                if len(sources) >= _MAX_SOURCES:
+                    return sources
+                continue
             envelope = await context.invoke_tool(
                 ToolInvocation(
                     invocation_id=f"{context.job_id}:{task.task_id}:{uuid4().hex[:8]}",
@@ -903,9 +957,10 @@ class LLMResearcherWorker:
             document_version_id = f"{source['tool']}-{hashlib.sha256(content).hexdigest()[:16]}"
             # A search snippet is discovery-only: it cannot support a critical
             # claim on its own. Only full page content the researcher actually
-            # read (page_chunk) is eligible for critical-claim grounding; the
-            # auditor enforces this via the corpus manifest.
-            critical_claims_allowed = source.get("kind") == "page_chunk"
+            # read (page_chunk) or a vision-model description of an image the
+            # agent requested (image_ocr) is eligible for critical-claim
+            # grounding; the auditor enforces this via the corpus manifest.
+            critical_claims_allowed = source.get("kind") in {"page_chunk", "image_ocr"}
             metadata: dict[str, Any] = {
                 "document_version_id": document_version_id,
                 "critical_claims_allowed": critical_claims_allowed,
