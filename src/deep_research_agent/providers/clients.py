@@ -57,6 +57,27 @@ def _response_text(response) -> str:
     return str(getattr(response, "content", ""))
 
 
+def _to_langchain_messages(messages: list[dict]) -> list:
+    """把 role/content 消息列表转成 LangChain 消息，保留 assistant 回合。
+
+    历史上所有非 system 消息都被转成 HumanMessage，把多轮对话压平成了
+    单轮（助手之前的回答丢失），导致后续回合失去上下文。
+    """
+    from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+
+    lc_messages = []
+    for message in messages:
+        role = message.get("role", "user")
+        content = message.get("content", "")
+        if role == "system":
+            lc_messages.append(SystemMessage(content=content))
+        elif role == "assistant":
+            lc_messages.append(AIMessage(content=content))
+        else:
+            lc_messages.append(HumanMessage(content=content))
+    return lc_messages
+
+
 class TrackedChatOpenAI(ChatOpenAI):
     """ChatOpenAI with usage tracking."""
 
@@ -146,31 +167,11 @@ class LLMProvider:
         return self._llm
 
     def chat(self, messages: list[dict]) -> str:
-        from langchain_core.messages import HumanMessage, SystemMessage
-
-        lc_messages = []
-        for message in messages:
-            role = message.get("role", "user")
-            content = message.get("content", "")
-            if role == "system":
-                lc_messages.append(SystemMessage(content=content))
-            else:
-                lc_messages.append(HumanMessage(content=content))
-        response = self.llm.invoke(lc_messages)
+        response = self.llm.invoke(_to_langchain_messages(messages))
         return _response_text(response)
 
     async def achat(self, messages: list[dict]) -> str:
-        from langchain_core.messages import HumanMessage, SystemMessage
-
-        lc_messages = []
-        for message in messages:
-            role = message.get("role", "user")
-            content = message.get("content", "")
-            if role == "system":
-                lc_messages.append(SystemMessage(content=content))
-            else:
-                lc_messages.append(HumanMessage(content=content))
-        response = await self.llm.ainvoke(lc_messages)
+        response = await self.llm.ainvoke(_to_langchain_messages(messages))
         return _response_text(response)
 
 

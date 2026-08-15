@@ -741,7 +741,7 @@ def _sample_human_review(
         )
         report_path = output_root / f"{_safe_review_filename(job)}.md"
         report_path.write_text(markdown, encoding="utf-8")
-        reports[job] = str(report_path)
+        reports[_safe_review_filename(job)] = str(report_path)
     return {
         "command": "human-sample",
         "status": "completed",

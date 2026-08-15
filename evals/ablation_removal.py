@@ -447,10 +447,7 @@ def _run_stages(task: dict[str, Any], overrides: dict[str, str]) -> dict[str, An
     stages = _build_stages()
     for structure_id, action in overrides.items():
         if action == "removed":
-            entry = STRUCTURE_REGISTRY[structure_id]
-            if entry.removal_hook is None:
-                raise ValueError(f"结构 '{structure_id}' 是 documentation-only，无法执行 removed override")
-            stages = entry.removal_hook(stages)
+            stages = STRUCTURE_REGISTRY[structure_id].removal_hook(stages)
     for stage_id in STAGE_ORDER:
         ctx = stages[stage_id](task, ctx)
     return ctx

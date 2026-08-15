@@ -592,11 +592,24 @@ class LLMResearcherWorker:
             if should_quarantine_source(snippet):
                 stats["injection_dropped_sources"] = stats.get("injection_dropped_sources", 0) + 1
                 continue
+            sanitized = sanitize_content(snippet)
+            if sanitized.flagged:
+                stats["injection_findings"] = stats.get("injection_findings", 0) + len(
+                    sanitized.findings
+                )
+                logger.warning(
+                    "researcher {}: sanitized {} injection finding(s) in recalled source from {}",
+                    task.task_id,
+                    len(sanitized.findings),
+                    url,
+                )
+            snippet = sanitized.text
             dedupe_key = (url, snippet[:_MAX_SNIPPET_CHARS])
             if dedupe_key in seen:
                 continue
             seen.add(dedupe_key)
             entry = dict(source)
+            entry["snippet"] = snippet
             entry["index"] = len(sources) + 1
             sources.append(entry)
             injected_sources += 1

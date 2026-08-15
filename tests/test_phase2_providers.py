@@ -70,3 +70,27 @@ def test_provider_router_auto_routing_prefers_cross_vendor_judge():
     )
 
     assert route.profile.name == "anthropic"
+
+
+def test_llm_provider_message_conversion_preserves_multi_turn_roles():
+    """chat/achat 的消息转换必须保留 assistant 回合，不得压平成单轮。"""
+    from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+
+    from deep_research_agent.providers.clients import _to_langchain_messages
+
+    converted = _to_langchain_messages(
+        [
+            {"role": "system", "content": "你是研究员"},
+            {"role": "user", "content": "问题一"},
+            {"role": "assistant", "content": "回答一"},
+            {"role": "user", "content": "问题二"},
+        ]
+    )
+
+    assert [type(message) for message in converted] == [
+        SystemMessage,
+        HumanMessage,
+        AIMessage,
+        HumanMessage,
+    ]
+    assert converted[2].content == "回答一"

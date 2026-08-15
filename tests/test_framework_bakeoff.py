@@ -31,15 +31,16 @@ def test_compose_defines_the_bounded_release_stack() -> None:
     compose = yaml.safe_load((ROOT / "docker-compose.yml").read_text(encoding="utf-8"))
     services = compose["services"]
 
-    assert set(services) == {"api", "web", "worker", "postgres", "minio", "grobid", "phoenix"}
+    assert set(services) == {"api", "web", "worker", "postgres", "grobid", "phoenix"}
     assert "redis" not in services
+    assert "minio" not in services
     assert services["postgres"]["image"].startswith("pgvector/pgvector:")
     assert "alembic upgrade head" in services["api"]["command"]
     assert services["grobid"]["environment"]["JAVA_OPTS"].startswith("-Xms")
     assert all("healthcheck" in definition for definition in services.values())
 
     declared_volumes = set(compose["volumes"])
-    assert {"postgres_data", "minio_data", "phoenix_data", "workspace_data"} <= declared_volumes
+    assert {"postgres_data", "phoenix_data", "workspace_data"} <= declared_volumes
 
 
 def test_compose_and_dockerfile_fail_closed_and_run_as_non_root() -> None:
@@ -48,7 +49,6 @@ def test_compose_and_dockerfile_fail_closed_and_run_as_non_root() -> None:
 
     for variable in (
         "POSTGRES_PASSWORD",
-        "MINIO_ROOT_PASSWORD",
         "DEEP_RESEARCH_AGENT_MASTER_KEY",
         "DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_EMAIL",
         "DEEP_RESEARCH_AGENT_BOOTSTRAP_ADMIN_PASSWORD",

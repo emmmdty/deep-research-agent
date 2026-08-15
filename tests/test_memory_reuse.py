@@ -539,6 +539,48 @@ def test_harvest_is_idempotent() -> None:
     assert len(service.repository.list(tenant_id=TENANT_A)) == 1
 
 
+def test_harvest_idempotent_under_advancing_clock() -> None:
+    """真实时钟下重复 harvest 不产生重复 ACTIVE 记忆：旧记录被 supersede，recall 只见最新。"""
+    source_text = "The 2026 report states agents use tools and memory with high confidence."
+    artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
+    claim = _claim("job-clock:claim:research-01:01", "web_search-abc123", "agents use tools and memory")
+    current = datetime.now(timezone.utc)
+    service = _memory_service(clock=lambda: current)
+    harvester = MemoryHarvester(service)
+    kwargs = dict(
+        tenant_id=TENANT_A,
+        topic=OBJECTIVE,
+        claims=[claim],
+        artifacts=[artifact],
+        citation_verification=_verification(_verified_item(claim.claim_id)),
+        query_results=[{"query": COVERED_QUERY, "tool": "web_search", "urls": ["https://example.com/1"]}],
+        job_id="job-clock",
+    )
+
+    harvester.harvest(**kwargs)
+    current = current + timedelta(minutes=5)
+    harvester.harvest(**kwargs)
+
+    records = service.repository.list(tenant_id=TENANT_A)
+    assert len(records) == 2
+    active = [record for record in records if record.status == MemoryStatus.ACTIVE]
+    superseded = [record for record in records if record.status == MemoryStatus.SUPERSEDED]
+    assert len(active) == 1
+    assert len(superseded) == 1
+    assert active[0].supersedes == superseded[0].memory_id
+
+    hits = service.search("agents tools memory 2026", tenant_id=TENANT_A, scope=MemoryScope.TOPIC_MEMORY)
+    assert [record.memory_id for record in hits] == [active[0].memory_id]
+
+    recalled, covered = MemoryRecall(service).recall(
+        OBJECTIVE,
+        [{"query": COVERED_QUERY, "tool": "web_search"}],
+        tenant_id=TENANT_A,
+    )
+    assert len(recalled) == 1
+    assert covered == {0}
+
+
 def test_reharvest_after_source_change_supersedes_old_record() -> None:
     service = _memory_service()
     harvester = MemoryHarvester(service)

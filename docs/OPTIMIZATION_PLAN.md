@@ -126,20 +126,37 @@ guardrail、checkpoint/断点恢复、RAG（embedding rerank）、tool use with 
 
 ### 4.2 已确认但本轮未修（进入路线图）
 
+> 状态更新（2026-08 后续轮次）：`model_runtime/` 已接线（`deployment/worker.py`
+> `CredentialCipher.from_environment()` 启动 fail-closed 校验 + `test_model_runtime.py` 覆盖）；
+> `providers/clients.py` 多轮角色映射 bug 已修复（assistant 回合保留为 AIMessage，
+> `_to_langchain_messages` + 测试）；MinIO 装饰容器已从 docker-compose 移除（Phoenix/OTEL
+> 已由三期 11 接线，保留）；`evidence_store/` 为 legacy 运行时（v1 verifier）依赖保留，
+> 其"只写不读"性质由 v2 冻结 corpus/bundle 取代，属 legacy 附属、随 legacy 一并退出。
+
 - **[H] 证据"审计"是结构 + 模型自述，不是验证**：`support_status` 是 researcher 模型自报；
    quote 是否真的出现在源文档从未被程序化核验（auditor 只查 hash/结构）；语义 judge 从未接线。
+   → 已修（二期 5：`auditor/citation_verifier.py` 程序化核验 + `audit_summary["citation_verification"]`）。
 - **[H] 生产路径不加载 SourcePolicy/BudgetGuard**：`policy/` 只被 evals 使用；生产 researcher
    硬编码 `critical_claims_allowed: True`（连 web snippet 都能支撑 critical claim）。
+   → 已修（一期 4：`build_gateway` 接线 source profile + BudgetGuard，snippet 默认不可支撑 critical claim）。
 - **[H] 无鉴权面**：`/v1/research/jobs*` legacy API 与 `:review` 人工复核门禁完全未认证。
+   → 已修（三期 12：X-API-Key fail-closed 认证 + 进程内令牌桶限流）。
 - **[H] 无模型路由/effort scaling**：所有角色同一模型；无便宜模型做摘要/压缩。
+   → 已修（三期 9：`providers/router.py` 角色/effort 路由）。
 - **[M] 串行网络 IO**：researcher 的 4 次搜索、3 次抓取串行执行；tool_loop 并行调用实际串行。
+   → 已修（三期 10：Semaphore+gather 有界并行，结果按序归位）。
 - **[M] 无速率限制**：登录、建 run、上传、batch 全无限流；无 per-tenant 配额。
+   → 已修（三期 12：令牌桶按 `(tenant_id, route)` 限流）。
 - **[M] 观测缺失**：OTEL 全部配置好（Phoenix 容器 + 环境变量）但从未调用；CostTracker 全局单例
    非线程安全、成本按 $1/M 拍脑袋、永不落盘。
+   → 已修（三期 11：`configure_tracing()` + per-job CostTracker 落盘 + `/metrics`）。
 - **[M] SQLite 多进程共享无 WAL**；supervisor 无异常隔离（一个坏 checkpoint 文件 crash-loop）；
   lease fencing 在 v1 热路径缺失；resume/refine 可对 RUNNING job 调用。
+   → 已修（三期 12：WAL/FK、损坏 checkpoint 回退、worker 隔离）。
 - **[M] 多个死代码面**：`model_runtime/`（AES-GCM 凭证注册表）未接线；`providers/clients.py`
-  角色映射会损坏多轮对话；`evidence_store/` 只写不读；MinIO/Phoenix 容器是装饰。
+   角色映射会损坏多轮对话；`evidence_store/` 只写不读；MinIO/Phoenix 容器是装饰。
+   → 已修（2026-08 清理：model_runtime 已接线；clients.py 多轮 bug 修复；MinIO 移除；
+   evidence_store 为 legacy 依赖保留；详情见上）。
 
 ## 5. 本轮代码变更清单
 
