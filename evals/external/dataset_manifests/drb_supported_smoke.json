@@ -1,0 +1,66 @@
+{
+  "benchmark": "drb",
+  "subset": "smoke_supported",
+  "tasks": [
+    {
+      "task_id": "drb-smoke-001",
+      "prompt": "Find a reliable, known number on the internet: the total number of FDA Class II Product Recalls of medical devices.",
+      "expected_answer": "15284",
+      "prediction": "15284",
+      "metadata": {
+        "task_type": "find_number",
+        "category": "Find Number",
+        "score_mode": "binary",
+        "offline_corpus": true
+      }
+    },
+    {
+      "task_id": "drb-smoke-002",
+      "prompt": "Find the original source of the claim that AI-generated propaganda is as effective as original propaganda.",
+      "expected_answer": "https://www.fda.example.invalid/medical-device-recalls",
+      "prediction": "https://www.fda.example.invalid/medical-device-recalls",
+      "metadata": {
+        "task_type": "find_original_source",
+        "category": "Find Original Source",
+        "score_mode": "binary",
+        "offline_corpus": true
+      }
+    },
+    {
+      "task_id": "drb-smoke-003",
+      "prompt": "Find datasets relevant to the query: \"How many IPOs with an offer price of at least $5.00 were there each year between 1980 and 2024?\"",
+      "expected_answer": "https://ipo.example.invalid/filings|https://sec.example.invalid/edgar-data",
+      "prediction": "https://ipo.example.invalid/filings|https://sec.example.invalid/edgar-data",
+      "metadata": {
+        "task_type": "find_dataset",
+        "category": "Find Dataset",
+        "score_mode": "recall",
+        "offline_corpus": true
+      }
+    },
+    {
+      "task_id": "drb-smoke-004",
+      "prompt": "Compile a dataset of US software developer jobs 2019-2023 with columns year, number_of_software_developers, source, url, percent_change.",
+      "expected_answer": "2020,652000|2021,683000|2022,710000",
+      "prediction": "2020,652000|2021,683000|2022,710000",
+      "metadata": {
+        "task_type": "compile_dataset",
+        "category": "Compile Dataset",
+        "score_mode": "f1",
+        "offline_corpus": true
+      }
+    },
+    {
+      "task_id": "drb-smoke-005",
+      "prompt": "Validate the claim probability: the likelihood that the cited source backs the stated number of FDA recalls.",
+      "expected_answer": "0.72",
+      "prediction": "0.72",
+      "metadata": {
+        "task_type": "validate_claim",
+        "category": "Validate Claim",
+        "score_mode": "difference",
+        "offline_corpus": true
+      }
+    }
+  ]
+}

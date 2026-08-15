@@ -5,6 +5,7 @@ Committed deterministic outputs and release evidence land here.
 Reviewer-facing roots:
 
 - `evals/reports/phase5_local_smoke/`: merge-safe deterministic smoke gate.
+- `evals/reports/drb_gate/`: DRB 引用真实性门禁 scorecard（基线产物，`scripts/run_drb_gate.py` 生成）。
 - `evals/reports/native_regression/`: deterministic native regression evidence.
 - `evals/reports/followup_metrics/`: derived value-pack artifacts retained at this path because tests and final docs assert repo-relative artifact paths.
 - `evals/reports/native_optimization/`: derived before/after optimization artifacts retained at this path because tests and native benchmark docs assert repo-relative artifact paths.

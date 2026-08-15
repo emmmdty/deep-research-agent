@@ -1,0 +1,33 @@
+benchmark: drb
+subset: smoke_supported
+source:
+  name: Deep Research Bench (DRB)
+  paper: "https://arxiv.org/abs/2506.06287"
+  authors: FutureSearch (Bosse et al.)
+  license: CC BY-NC-SA 4.0
+  leaderboard: "https://drb.futuresearch.ai/"
+format: |-
+  RetroSearch 冻结语料（每实例 10k-100k 网页）+ 人工精修的参考答案；官方不公开全量实例
+  （防数据污染），评测需联系 evals@futuresearch.ai。官方评分按任务类型：binary / recall / F1 /
+  absolute difference（论文 Table 3）。
+offline: true
+fixture_bundle: evals/fixtures/drb/citation_fixture.json
+dataset_manifest: evals/external/dataset_manifests/drb_supported_smoke.json
+tasks:
+  - task_id: drb-smoke-001
+    task_type: find_number
+    category: Find Number
+  - task_id: drb-smoke-002
+    task_type: find_original_source
+    category: Find Original Source
+  - task_id: drb-smoke-003
+    task_type: find_dataset
+    category: Find Dataset
+  - task_id: drb-smoke-004
+    task_type: compile_dataset
+    category: Compile Dataset
+  - task_id: drb-smoke-005
+    task_type: validate_claim
+    category: Validate Claim
+notes:
+  - "仓库内 fixture 覆盖全部四种评分模式，任何网络路径均不参与；DRB 门禁 CI 在无凭据环境确定性通过。"

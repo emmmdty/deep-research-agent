@@ -70,6 +70,19 @@ _DESCRIPTORS = {
         config_path="evals/external/configs/gaia_supported_smoke.yaml",
         integrity_guards=("capability_filter", "attachment_path_sanitization"),
     ),
+    "drb": BenchmarkDescriptor(
+        benchmark="drb",
+        title="Deep Research Bench",
+        adapter_mode="drb_agentic_eval",
+        role="authoritative_release_gate",
+        module_path="deep_research_agent.evals.external.benchmarks.drb",
+        config_path="evals/external/configs/drb_supported_smoke.yaml",
+        integrity_guards=(
+            "fixture_only_offline",
+            "frozen_corpus_policy",
+            "no_live_fetch",
+        ),
+    ),
 }
 
 

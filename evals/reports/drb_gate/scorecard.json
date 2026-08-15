@@ -1,0 +1,56 @@
+{
+  "benchmark": "drb",
+  "gate": "citation_truthfulness",
+  "status": "passed",
+  "reasons": [],
+  "generated_at": "2026-08-15T07:28:20.055741+00:00",
+  "threshold": {
+    "min_verified_rate": 0.9
+  },
+  "metric": {
+    "verified_rate": 0.9,
+    "definition": "verified / (verified + unsupported + fetch_failed + unverifiable)",
+    "semantic_mapping": {
+      "passed": [
+        "verified"
+      ],
+      "failed": [
+        "unsupported",
+        "fetch_failed"
+      ],
+      "unresolved": [
+        "unverifiable"
+      ]
+    },
+    "empty_denominator_policy": "verified_rate=None -> blocked with reason no_citation_evidence",
+    "counts": {
+      "total": 10,
+      "passed": 9,
+      "failed": 1,
+      "unresolved": 0
+    }
+  },
+  "fixture_bundles": [
+    "evals/fixtures/drb/citation_fixture.json"
+  ],
+  "smoke_run": {
+    "benchmark": "drb",
+    "status": "completed",
+    "output_root": "/tmp/drb-gate-smoke-jgsczkvr",
+    "official_scores": {
+      "benchmark": "drb",
+      "status": "completed",
+      "score_version": "drb_local_smoke_v1",
+      "task_score": 1.0,
+      "success_rate": 1.0,
+      "task_score_by_category": {
+        "Compile Dataset": 1.0,
+        "Find Dataset": 1.0,
+        "Find Number": 1.0,
+        "Find Original Source": 1.0,
+        "Validate Claim": 1.0
+      }
+    }
+  },
+  "config_path": "evals/external/configs/drb_gate.yaml"
+}

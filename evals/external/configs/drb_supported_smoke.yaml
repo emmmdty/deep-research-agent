@@ -1,0 +1,9 @@
+benchmark: drb
+title: DRB Supported Smoke
+subset: smoke_supported
+score_version: drb_local_smoke_v1
+dataset_manifest: evals/external/dataset_manifests/drb_supported_smoke.json
+notes:
+  - "DRB 官方数据集（arXiv:2506.06287，FutureSearch）因防污染不公开全量实例；本 smoke 子集为仓库内离线 fixture。"
+  - "评分模式对齐论文 Table 3：binary（Find/Derive Number、Find Original Source）、recall（Find Dataset、Gather Evidence）、F1（Populate Reference Class、Compile Dataset）、difference（Validate Claim）。"
+  - "真实评测需接入 RetroSearch 冻结语料（联系 evals@futuresearch.ai）；本适配器不访问任何网络。"

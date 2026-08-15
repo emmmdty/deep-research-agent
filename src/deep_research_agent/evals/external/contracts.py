@@ -7,7 +7,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
-BENCHMARK_NAMES = ("facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia")
+BENCHMARK_NAMES = ("facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb")
 BENCHMARK_ROLES = (
     "authoritative_release_gate",
     "secondary_regression",
@@ -21,6 +21,7 @@ ADAPTER_MODES = (
     "longbench_mcq_longcontext",
     "browsecomp_short_answer",
     "gaia_capability_gated",
+    "drb_agentic_eval",
 )
 BENCHMARK_STATUSES = ("completed", "blocked", "failed")
 
@@ -28,7 +29,7 @@ BENCHMARK_STATUSES = ("completed", "blocked", "failed")
 class BenchmarkRunRequest(BaseModel):
     """Runtime request for one external benchmark invocation."""
 
-    benchmark_name: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia"]
+    benchmark_name: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
     output_root: str
     split: str | None = None
     subset: str | None = None
@@ -51,7 +52,7 @@ class BenchmarkTaskSpec(BaseModel):
 class BenchmarkTaskResult(BaseModel):
     """Normalized per-task benchmark result row."""
 
-    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia"]
+    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
     task_id: str
     status: Literal["completed", "blocked", "failed"]
     prompt: str
@@ -67,7 +68,7 @@ class BenchmarkTaskResult(BaseModel):
 class BenchmarkIntegrityReport(BaseModel):
     """Benchmark-specific integrity report sidecar."""
 
-    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia"]
+    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
     status: Literal["not_applicable", "passed", "blocked", "failed"] = "not_applicable"
     guards: list[str] = Field(default_factory=list)
     findings: list[dict[str, object]] = Field(default_factory=list)
@@ -77,7 +78,7 @@ class BenchmarkIntegrityReport(BaseModel):
 class BenchmarkRunManifest(BaseModel):
     """Top-level artifact index for one benchmark run."""
 
-    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia"]
+    benchmark: Literal["facts_grounding", "longfact_safe", "longbench_v2", "browsecomp", "gaia", "drb"]
     title: str
     adapter_mode: Literal[
         "domain_report_bundle",
@@ -86,6 +87,7 @@ class BenchmarkRunManifest(BaseModel):
         "longbench_mcq_longcontext",
         "browsecomp_short_answer",
         "gaia_capability_gated",
+        "drb_agentic_eval",
     ]
     role: Literal[
         "authoritative_release_gate",

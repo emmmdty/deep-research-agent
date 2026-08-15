@@ -1,0 +1,158 @@
+{
+  "bundle_version": "1.0.0",
+  "job": {
+    "job_id": "drb-citation-fixture-001",
+    "created_at": "2026-08-15T00:00:00+00:00",
+    "status": "completed",
+    "runtime_path": "orchestrator-v1"
+  },
+  "report_text": "DRB citation-truthfulness gate baseline fixture bundle (offline).",
+  "audit_summary": {
+    "status": "completed",
+    "gate_status": "passed",
+    "critical_claim_count": 10,
+    "blocked_critical_claim_count": 0,
+    "citation_verification": {
+      "job_id": "drb-citation-fixture-001",
+      "items": [
+        {
+          "verification_id": "verify-001",
+          "claim_id": "claim-001",
+          "claim_text": "The total number of FDA Class II Product Recalls of medical devices is 15284.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-001",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.96,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-002",
+          "claim_id": "claim-002",
+          "claim_text": "FDA Class II recalls cover moderate-risk medical devices.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-002",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.93,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-003",
+          "claim_id": "claim-003",
+          "claim_text": "15284 recalls were reported in the covered fiscal window.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-003",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.94,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-004",
+          "claim_id": "claim-004",
+          "claim_text": "The retrieval corpus stores 15284 recall records.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-004",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.95,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-005",
+          "claim_id": "claim-005",
+          "claim_text": "Class II devices require premarket notification.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-005",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.91,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-006",
+          "claim_id": "claim-006",
+          "claim_text": "The number is backed by an excerpt from the FDA recall database.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-006",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.92,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-007",
+          "claim_id": "claim-007",
+          "claim_text": "The source is at least as reliable as the ground-truth source.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-007",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.9,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-008",
+          "claim_id": "claim-008",
+          "claim_text": "Recalls are categorized by risk class in the public register.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-008",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.89,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-009",
+          "claim_id": "claim-009",
+          "claim_text": "15284 is consistent across the recalled fiscal window and the register export.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-009",
+          "method": "deterministic",
+          "verdict": "verified",
+          "quote_contained": true,
+          "support_score": 0.88,
+          "rationale": "Quote found verbatim in the frozen source snapshot.",
+          "fetch_status": "frozen"
+        },
+        {
+          "verification_id": "verify-010",
+          "claim_id": "claim-010",
+          "claim_text": "The register page lists the recall total on its summary panel.",
+          "source_url": "https://www.fda.example.invalid/medical-device-recalls",
+          "document_version_id": "doc-010",
+          "method": "fetch_failed",
+          "verdict": "fetch_failed",
+          "quote_contained": false,
+          "support_score": 0.0,
+          "rationale": "Source snapshot unavailable offline; the claim could not be re-fetched.",
+          "fetch_status": "failed"
+        }
+      ],
+      "summary": {
+        "total": 10,
+        "verified": 9,
+        "unsupported": 0,
+        "unverifiable": 0,
+        "fetch_failed": 1
+      }
+    }
+  }
+}

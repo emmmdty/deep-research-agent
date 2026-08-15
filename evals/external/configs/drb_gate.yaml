@@ -1,0 +1,18 @@
+benchmark: drb
+gate: citation_truthfulness
+min_verified_rate: 0.9
+metric_definition: "verified_rate = passed / (passed + failed + unresolved)"
+semantic_mapping:
+  passed:
+    - verified
+  failed:
+    - unsupported
+    - fetch_failed
+  unresolved:
+    - unverifiable
+empty_denominator_policy: "verified_rate=None -> gate blocked with reason no_citation_evidence"
+fixture_bundles:
+  - evals/fixtures/drb/citation_fixture.json
+notes:
+  - "阈值由 scripts/run_drb_gate.py 实际读取本配置，脚本内不硬编码。"
+  - "基线：提交的 citation fixture bundle 必须达到 min_verified_rate，否则 CI job drb-gate 失败。"
