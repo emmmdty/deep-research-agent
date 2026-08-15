@@ -57,6 +57,18 @@ def verified_rate_from_summary(
     passed_verdicts = list(mapping.get("passed") or VERDICT_TO_PASSED)
     failed_verdicts = list(mapping.get("failed") or VERDICT_TO_FAILED)
     unresolved_verdicts = list(mapping.get("unresolved") or VERDICT_TO_UNRESOLVED)
+    mapped = set(passed_verdicts) | set(failed_verdicts) | set(unresolved_verdicts)
+    unmapped = [
+        verdict
+        for verdict in summary
+        if verdict not in {"total", "critical_claims_skipped"}
+        and int(summary[verdict]) > 0
+        and verdict not in mapped
+    ]
+    if unmapped:
+        # 配置里的 semantic_mapping 没覆盖到的 verdict 若被静默丢弃，
+        # 分母变小、比率被抬高——门禁宁缺毋滥，直接判不通过。
+        raise ValueError(f"semantic_mapping does not cover summary verdicts: {sorted(unmapped)}")
     passed = sum(int(summary.get(verdict, 0)) for verdict in passed_verdicts)
     failed = sum(int(summary.get(verdict, 0)) for verdict in failed_verdicts)
     unresolved = sum(int(summary.get(verdict, 0)) for verdict in unresolved_verdicts)
@@ -79,6 +91,11 @@ def merge_citation_summaries(summaries: list[dict[str, Any]]) -> dict[str, int]:
     for summary in summaries:
         for key in merged:
             merged[key] += int(summary.get(key, 0))
+        # 诚实披露：被 max_verifications 跳过的 critical claim 也要合并，
+        # 但它是计数说明而非 verdict，不参与 verified_rate。
+        merged["critical_claims_skipped"] = merged.get("critical_claims_skipped", 0) + int(
+            summary.get("critical_claims_skipped", 0)
+        )
     return merged
 
 

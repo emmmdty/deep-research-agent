@@ -8,6 +8,7 @@ import json
 import os
 import subprocess
 import sys
+from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -379,6 +380,37 @@ class ResearchJobService:
         checkpoint = self.store.get_latest_checkpoint(job_id)
         current_stage = checkpoint.next_stage if checkpoint is not None else RuntimeStage.CLARIFYING
         initial_state = checkpoint.state_payload if checkpoint is not None else None
+        retry_runtime_path = job.runtime_path
+        retry_metadata: dict | None = None
+        if job.runtime_path == "scheduler-v2":
+            # 冻结的 DAG/brief 属于原 job：retry 必须整体搬到新 job_id 下，
+            # 否则 run_job 会因 dag.job_id != job_id 直接失败，或带上旧 job 的身份。
+            retry_job_id = _run_id()
+            frozen_dag = ResearchDAG.model_validate(job.metadata.get("research_dag") or {})
+            retry_metadata = {
+                "research_brief": ResearchBrief.model_validate(
+                    job.metadata.get("research_brief") or {}
+                )
+                .model_copy(update={"job_id": retry_job_id})
+                .model_dump(mode="json"),
+                "research_dag": ResearchDAG(
+                    job_id=retry_job_id,
+                    tasks=[
+                        task.model_copy(
+                            update={
+                                "job_id": retry_job_id,
+                                "idempotency_key": f"{retry_job_id}:{task.task_id}",
+                            }
+                        )
+                        for task in frozen_dag.tasks
+                    ],
+                ).model_dump(mode="json"),
+                "config_snapshot": deepcopy(job.metadata.get("config_snapshot") or {}),
+                "runtime_mode": "scheduler-v2",
+                "corpus_manifest": job.metadata.get("corpus_manifest") or {},
+            }
+        else:
+            retry_job_id = None
         retry_job = self.submit(
             topic=job.topic,
             max_loops=int(job.metadata.get("max_loops", 3)),
@@ -393,6 +425,9 @@ class ResearchJobService:
             attempt_index=job.attempt_index + 1,
             initial_state=initial_state,
             current_stage=current_stage.value,
+            runtime_path=retry_runtime_path,
+            runtime_metadata=retry_metadata,
+            _job_id=retry_job_id,
         )
         self._append_event(
             retry_job, "job", "job.retry_created", "由失败 job 派生 retry", {"retry_of": job.job_id}

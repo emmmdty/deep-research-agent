@@ -90,7 +90,9 @@ def _query_terms(objective: str) -> list[str]:
 
     terms: list[str] = []
     seen: set[str] = set()
-    for match in re.findall(r"[a-zA-Z0-9]+", objective):
+    # 保留中文字符：目标是多语言仓库，纯英文 token 提取会让中文主题永远
+    # 无法命中记忆（recall 静默失效）。
+    for match in re.findall(r"[\w\u4e00-\u9fff]+", objective):
         word = match.casefold()
         if len(word) < _RECALL_MIN_TERM_LENGTH or word in _RECALL_STOPWORDS:
             continue
@@ -170,9 +172,18 @@ def _query_covered(
             urls = entry.get("urls")
             if not isinstance(urls, list):
                 continue
-            if any(str(url) in recalled_urls for url in urls):
+            if any(_normalize_url(str(url)) in recalled_urls for url in urls):
                 return True
     return False
+
+
+def _normalize_url(url: str) -> str:
+    """URL 归一化后再比对：www 前缀、查询串、尾斜杠差异不应让记忆失效。"""
+    normalized = url.strip().rstrip("/")
+    normalized = re.sub(r"^(https?://)www\.", r"\1", normalized)
+    if "?" in normalized:
+        normalized = normalized.split("?", 1)[0]
+    return normalized
 
 
 def _normalize_query_results(query_results: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -239,7 +250,7 @@ class MemoryRecall:
             source = _source_from_record(record)
             if source is not None:
                 recalled.append((source, record))
-        recalled_urls = {str(source["url"]) for source, _ in recalled}
+        recalled_urls = {_normalize_url(str(source["url"])) for source, _ in recalled}
         covered = {
             index
             for index, query in enumerate(planned_queries)
@@ -322,7 +333,7 @@ class MemoryHarvester:
                 subject_id=subject_id_for_tenant(tenant_id),
                 scope=MemoryScope.TOPIC_MEMORY,
                 key=memory_key_for_source(topic, artifact.uri),
-                content=json.dumps(source, ensure_ascii=True, sort_keys=True),
+                content=json.dumps(source, ensure_ascii=False, sort_keys=True),
                 provenance={
                     "job_id": job_id,
                     "claim_ids": sorted({claim.claim_id for claim in grounded}),

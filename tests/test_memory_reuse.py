@@ -1197,3 +1197,222 @@ def _runtime_job(tmp_path, *, job_id: str, tenant_id: str = "default"):
         trace_path=str(bundle_dir / "trace.jsonl"),
         metadata={"tenant_id": tenant_id},
     )
+
+
+def test_scheduler_v2_emits_review_queue_for_blocked_critical_claims(tmp_path) -> None:
+    """证据契约：scheduler-v2 路径未通过审计的关键 claim 必须落 review queue 并回填 gate。"""
+    import json as _json
+
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+
+    job_id = "job-blocked-review"
+    store = SimpleNamespace(job_dir=lambda jid: tmp_path / "jobs" / jid)
+    orchestrator = ResearchJobOrchestrator(
+        service=SimpleNamespace(store=store),
+        scheduler=SimpleNamespace(memory=MemoryRecall(_memory_service())),
+    )
+
+    source_text = "The 2026 report states agents use tools and memory with high confidence."
+    artifact = _artifact("https://example.com/1", "web_search-abc123", source_text)
+    # quote 不在冻结语料中 -> 审计判 unsupported -> 必须入人工复核队列
+    claim = _claim(
+        f"{job_id}:claim:research-01:01", "web_search-abc123", "a totally different quote"
+    )
+    task = _task()
+    task = task.model_copy(update={"job_id": job_id, "idempotency_key": f"{job_id}:{task.task_id}"})
+    packet = EvidencePacket(
+        packet_id=f"{job_id}:packet:{task.task_id}",
+        task_id=task.task_id,
+        evidence_spans=list(claim.evidence_spans),
+        claims=[claim],
+        artifacts=[artifact],
+    )
+    task_result = TaskResult(
+        task_id=task.task_id,
+        job_id=job_id,
+        status="completed",
+        evidence_packets=[packet],
+    )
+    result = RunResult(
+        job_id=job_id,
+        status="completed",
+        task_results={task.task_id: task_result},
+        task_outputs={task.task_id: {"report_markdown": "# report"}},
+        attempts={task.task_id: 1},
+        events=[],
+        checkpoints=[],
+        config_snapshot={},
+    )
+    dag = ResearchDAG(job_id=job_id, tasks=[task])
+
+    gate = orchestrator._emit_scheduler_bundle(_runtime_job(tmp_path, job_id=job_id), dag, result)
+
+    assert gate["audit_gate_status"] == "blocked"
+    assert gate["critical_claim_count"] == 1
+    assert gate["blocked_critical_claim_count"] == 1
+
+    queue_path = tmp_path / "jobs" / job_id / "audit" / "review_queue.json"
+    assert queue_path.exists()
+    payload = _json.loads(queue_path.read_text(encoding="utf-8"))
+    assert payload["job_id"] == job_id
+    assert [item["claim_id"] for item in payload["items"]] == [claim.claim_id]
+    assert payload["items"][0]["status"] == "blocked"
+    assert payload["items"][0]["blocking"] is True
+
+
+def test_scheduler_v2_gate_passes_without_blocked_critical_claims(tmp_path) -> None:
+    """全部关键 claim 通过审计时，scheduler-v2 不写 review queue、gate 为 passed。"""
+    from deep_research_agent.research_jobs.orchestrator import ResearchJobOrchestrator
+
+    job_id = "job-clean-gate"
+    store = SimpleNamespace(job_dir=lambda jid: tmp_path / "jobs" / jid)
+    orchestrator = ResearchJobOrchestrator(
+        service=SimpleNamespace(store=store),
+        scheduler=SimpleNamespace(memory=MemoryRecall(_memory_service())),
+    )
+
+    source_text = "The 2026 report states agents use tools and memory with high confidence."
+    artifact = _artifact("https://example.com/1", "web_search-abc123", source_text).model_copy(
+        update={
+            "metadata": {
+                **_artifact("https://example.com/1", "web_search-abc123", source_text).metadata,
+                "source_kind": "page_chunk",
+                "critical_claims_allowed": True,
+                "chunk_index": 0,
+                "char_start": 0,
+                "char_end": len(source_text),
+            }
+        }
+    )
+    claim = _claim(
+        f"{job_id}:claim:research-01:01", "web_search-abc123", "agents use tools and memory"
+    )
+    task = _task()
+    task = task.model_copy(update={"job_id": job_id, "idempotency_key": f"{job_id}:{task.task_id}"})
+    packet = EvidencePacket(
+        packet_id=f"{job_id}:packet:{task.task_id}",
+        task_id=task.task_id,
+        evidence_spans=list(claim.evidence_spans),
+        claims=[claim],
+        artifacts=[artifact],
+    )
+    task_result = TaskResult(
+        task_id=task.task_id,
+        job_id=job_id,
+        status="completed",
+        evidence_packets=[packet],
+    )
+    result = RunResult(
+        job_id=job_id,
+        status="completed",
+        task_results={task.task_id: task_result},
+        task_outputs={task.task_id: {"report_markdown": "# report"}},
+        attempts={task.task_id: 1},
+        events=[],
+        checkpoints=[],
+        config_snapshot={},
+    )
+    dag = ResearchDAG(job_id=job_id, tasks=[task])
+
+    gate = orchestrator._emit_scheduler_bundle(_runtime_job(tmp_path, job_id=job_id), dag, result)
+
+    assert gate["audit_gate_status"] == "passed"
+    assert gate["blocked_critical_claim_count"] == 0
+    assert not (tmp_path / "jobs" / job_id / "audit" / "review_queue.json").exists()
+
+
+@pytest.mark.asyncio
+async def test_recall_works_for_chinese_objective() -> None:
+    """中文主题必须能命中记忆（纯英文 token 提取会让多语言仓库的 recall 静默失效）。"""
+    from deep_research_agent.memory_v2.reuse import _query_terms
+
+    task = _task()
+    task = task.model_copy(update={"objective": "中国大模型产业竞争格局与政策监管"})
+    service = _memory_service()
+    snippet = {
+        "index": 1,
+        "tool": "web_search",
+        "title": "来源",
+        "url": "https://example.com/zh",
+        "snippet": "中国大模型产业竞争格局分析，政策监管持续演进。",
+    }
+    _seed_source(
+        service,
+        tenant_id="default",
+        topic=task.objective,
+        source=snippet,
+        query_urls=[{"query": "中国大模型 竞争", "tool": "web_search", "urls": [snippet["url"]]}],
+    )
+
+    terms = _query_terms(task.objective)
+    assert terms, "中文主题必须提取出可检索的词项"
+    recalled, covered = MemoryRecall(service).recall(
+        task.objective, [{"query": "中国大模型 竞争", "tool": "web_search"}], tenant_id="default"
+    )
+    assert len(recalled) == 1
+    assert covered == {0}
+
+
+def test_harvest_and_recall_normalize_url_variants() -> None:
+    """www 前缀/查询串差异不应让记忆覆盖规则失效。"""
+    service = _memory_service()
+    snippet = {
+        "index": 1,
+        "tool": "web_search",
+        "title": "source",
+        "url": "https://example.com/doc",
+        "snippet": "The 2026 report states agents use tools and memory with high confidence.",
+    }
+    _seed_source(
+        service,
+        tenant_id="default",
+        topic=OBJECTIVE,
+        source=snippet,
+        query_urls=[
+            {
+                "query": COVERED_QUERY,
+                "tool": "web_search",
+                "urls": ["https://www.example.com/doc?utm_source=news"],
+            }
+        ],
+    )
+
+    recalled, covered = MemoryRecall(service).recall(
+        OBJECTIVE,
+        [{"query": COVERED_QUERY, "tool": "web_search"}],
+        tenant_id="default",
+    )
+    assert len(recalled) == 1
+    assert covered == {0}
+
+
+def test_memory_key_case_and_unicode_variants_supersede() -> None:
+    """key 大小写/Unicode 变体必须按同一归一化键 supersede，不得出现双 ACTIVE。"""
+    from deep_research_agent.memory_v2.service import normalize_memory_key
+
+    assert normalize_memory_key("Acme Corp") == normalize_memory_key("acme corp")
+    assert normalize_memory_key("café") == normalize_memory_key("caf\u00e9")
+
+    service = _memory_service()
+    first = service.write(
+        tenant_id=TENANT_A,
+        subject_id=f"tenant:{TENANT_A}",
+        scope=MemoryScope.TOPIC_MEMORY,
+        key="Acme Corp",
+        content="first",
+    )
+    second = service.write(
+        tenant_id=TENANT_A,
+        subject_id=f"tenant:{TENANT_A}",
+        scope=MemoryScope.TOPIC_MEMORY,
+        key="acme corp",
+        content="second",
+    )
+
+    records = service.repository.list(tenant_id=TENANT_A)
+    active = [record for record in records if record.status == MemoryStatus.ACTIVE]
+    superseded = [record for record in records if record.status == MemoryStatus.SUPERSEDED]
+    assert len(active) == 1
+    assert active[0].memory_id == second.memory_id
+    assert len(superseded) == 1
+    assert superseded[0].memory_id == first.memory_id

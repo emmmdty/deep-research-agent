@@ -847,3 +847,141 @@ def test_bootstrap_admin_environment_requires_both_values(tmp_path, monkeypatch)
                 workspace_dir=str(tmp_path / "invalid-runtime")
             ),
         )
+
+
+def test_corpus_upload_over_limit_rejected_413(tmp_path):
+    """上传体超过上限必须 413 拒绝，不能整包读进内存/落库。"""
+    from deep_research_agent.gateway.routes.corpus import _MAX_CORPUS_UPLOAD_BYTES
+
+    runtime_service = ResearchJobService(workspace_dir=str(tmp_path / "runtime-413"))
+    oversized_app = create_app(
+        service_factory=lambda: runtime_service,
+        database_url=f"sqlite+pysqlite:///{tmp_path / 'product-413.db'}",
+        offline_mode=True,
+        bootstrap_admin_email=ADMIN_EMAIL,
+        bootstrap_admin_password=ADMIN_PASSWORD,
+        api_key=LEGACY_MASTER_KEY,
+    )
+    with TestClient(oversized_app) as client:
+        login = client.post(
+            "/v1/auth/login",
+            json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
+        )
+        csrf = login.json()["csrf_token"]
+        payload = b"x" * (_MAX_CORPUS_UPLOAD_BYTES + 1)
+        response = client.post(
+            "/v1/corpus/upload",
+            headers={"X-CSRF-Token": csrf},
+            files={"file": ("big.bin", payload, "application/octet-stream")},
+        )
+    assert response.status_code == 413
+
+
+def test_legacy_job_topic_over_length_rejected(tmp_path, monkeypatch):
+    """legacy API 的 topic 应有与 CLI 一致的长度上限（2000 字符）。"""
+    from deep_research_agent.gateway.api import create_app
+
+    runtime_service = ResearchJobService(workspace_dir=str(tmp_path / "runtime-topic"))
+    long_app = create_app(
+        service_factory=lambda: runtime_service,
+        database_url=f"sqlite+pysqlite:///{tmp_path / 'product-topic.db'}",
+        offline_mode=True,
+        bootstrap_admin_email=ADMIN_EMAIL,
+        bootstrap_admin_password=ADMIN_PASSWORD,
+        api_key=LEGACY_MASTER_KEY,
+    )
+    with TestClient(long_app) as client:
+        response = client.post(
+            "/v1/research/jobs",
+            headers={"X-API-Key": LEGACY_MASTER_KEY},
+            json={"topic": "t" * 2001},
+        )
+    assert response.status_code == 422
+
+
+def test_corrupt_bundle_does_not_break_run_read_path(tmp_path, monkeypatch):
+    """worker 崩溃留下的半截 bundle 不应让 run 读路径 500。"""
+    from deep_research_agent.gateway.api import create_app
+
+    runtime_service = ResearchJobService(workspace_dir=str(tmp_path / "runtime-corrupt"))
+    corrupt_app = create_app(
+        service_factory=lambda: runtime_service,
+        database_url=f"sqlite+pysqlite:///{tmp_path / 'product-corrupt.db'}",
+        offline_mode=True,
+        bootstrap_admin_email=ADMIN_EMAIL,
+        bootstrap_admin_password=ADMIN_PASSWORD,
+        api_key=LEGACY_MASTER_KEY,
+    )
+    with TestClient(corrupt_app) as client:
+        login = client.post(
+            "/v1/auth/login",
+            json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
+        )
+        csrf = login.json()["csrf_token"]
+        created = client.post(
+            "/v1/topics",
+            headers={"X-CSRF-Token": csrf},
+            json={"title": "corrupt bundle topic"},
+        )
+        topic_id = created.json()["topic_id"]
+        run = client.post(
+            f"/v1/topics/{topic_id}/runs",
+            headers={"X-CSRF-Token": csrf},
+            json={"question": "corrupt bundle topic", "start_worker": False},
+        ).json()
+        run_id = run["run_id"]
+
+        # 模拟 worker 崩溃留下的损坏 bundle（job 已 completed）
+        job_id = run["research_job_id"]
+        from deep_research_agent.research_jobs.models import JobStatus, RuntimeStage
+
+        runtime_service.store.update_job(
+            job_id,
+            status=JobStatus.COMPLETED,
+            current_stage=RuntimeStage.COMPLETED,
+        )
+        bundle_path = Path(runtime_service.store.job_dir(job_id)) / "bundle" / "report_bundle.json"
+        bundle_path.parent.mkdir(parents=True, exist_ok=True)
+        bundle_path.write_text("{corrupt json", encoding="utf-8")
+
+        fetched = client.get(f"/v1/runs/{run_id}").json()
+        assert fetched["status"] == "completed"
+        assert "bundle" not in fetched
+
+
+def test_concurrent_invitation_accept_never_500s(tmp_path):
+    """并发接受同一邀请：只有一个成功，其余为 409/404，绝不允许 500。"""
+    from deep_research_agent.gateway.api import create_app
+
+    runtime_service = ResearchJobService(workspace_dir=str(tmp_path / "runtime-race"))
+    race_app = create_app(
+        service_factory=lambda: runtime_service,
+        database_url=f"sqlite+pysqlite:///{tmp_path / 'product-race.db'}",
+        offline_mode=True,
+        bootstrap_admin_email=ADMIN_EMAIL,
+        bootstrap_admin_password=ADMIN_PASSWORD,
+        api_key=LEGACY_MASTER_KEY,
+    )
+    with TestClient(race_app) as admin_client:
+        login = admin_client.post(
+            "/v1/auth/login",
+            json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
+        )
+        csrf = login.json()["csrf_token"]
+        invited = admin_client.post(
+            "/v1/admin/invitations",
+            headers={"X-CSRF-Token": csrf},
+            json={"email": "race@example.test", "tenant_id": "tenant-race", "role": "user"},
+        ).json()
+        token = invited["invite_token"]
+
+        statuses = []
+        for _ in range(5):
+            response = admin_client.post(
+                f"/v1/auth/invitations/{token}/accept",
+                json={"password": "race password with enough length"},
+            )
+            statuses.append(response.status_code)
+
+    assert 201 in statuses
+    assert all(code != 500 for code in statuses)

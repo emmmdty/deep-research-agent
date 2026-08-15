@@ -20,7 +20,7 @@ class StrictModel(BaseModel):
 class SubmitJobRequest(StrictModel):
     """Public request for creating one research job."""
 
-    topic: str = Field(min_length=1, description="Research topic or brief.")
+    topic: str = Field(min_length=1, max_length=2000, description="Research topic or brief.")
     max_loops: int = Field(default=3, ge=1, description="Maximum research loop count.")
     research_profile: str = Field(default="default", min_length=1)
     source_profile: str = Field(default="company_broad", min_length=1)

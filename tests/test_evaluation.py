@@ -115,3 +115,20 @@ def test_llm_judge_follows_primary_model_without_override(monkeypatch):
     _ = judge.llm
 
     assert captured["model"] == "main-model"
+
+
+def test_scenario_rate_is_not_vacuous_for_empty_filter():
+    """没有演练过任何场景时通过率必须为 0，不能以 1.0 真空通过阈值。"""
+    from deep_research_agent.evals.runner import _scenario_rate
+
+    assert _scenario_rate([], scenario_id="stale_recovery") == 0.0
+    assert (
+        _scenario_rate(
+            [
+                {"scenario_id": "stale_recovery", "passed": True},
+                {"scenario_id": "other", "passed": False},
+            ],
+            scenario_id="stale_recovery",
+        )
+        == 1.0
+    )

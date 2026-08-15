@@ -11,6 +11,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from loguru import logger
+
 from deep_research_agent.domain_packs.registry import DomainPackRegistry
 from deep_research_agent.kernel.contracts import ResearchBrief
 from deep_research_agent.orchestration.dag import ResearchPlanner
@@ -574,8 +576,13 @@ class ProductService:
         }
         bundle_path = Path(runtime_job.report_bundle_path)
         if runtime_status == "completed" and bundle_path.is_file():
-            updates["bundle"] = json.loads(bundle_path.read_text(encoding="utf-8"))
-            updates["snapshot_cutoff"] = runtime_job.updated_at
+            # worker 崩溃可能留下半截 bundle：一个坏文件不应让整个 run 的
+            # 读路径（get/list/events/bundle）全部 500。
+            try:
+                updates["bundle"] = json.loads(bundle_path.read_text(encoding="utf-8"))
+                updates["snapshot_cutoff"] = runtime_job.updated_at
+            except (json.JSONDecodeError, OSError) as exc:
+                logger.warning("run {} bundle unreadable ({}); keeping status", run.run_id, exc)
         status_changed = run.status != runtime_status
         updated = self.repository.update_run(
             run.run_id,

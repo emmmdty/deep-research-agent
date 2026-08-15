@@ -299,3 +299,22 @@ def test_drb_smoke_run_has_no_http_and_is_deterministic(tmp_path: Path, monkeypa
     assert first == second
     assert json.loads(first["official_scores"])["success_rate"] == 1.0
     assert CITATION_FIXTURE.exists()
+
+
+def test_drb_difference_score_is_clamped_to_unit_interval():
+    """difference 模式远离 expected 时得分必须夹在 [0,1]，不得产出负分。"""
+    from deep_research_agent.evals.external.benchmarks.drb import _score_for_mode
+
+    assert _score_for_mode("difference", "10", "10") == pytest.approx(1.0)
+    assert _score_for_mode("difference", "10", "11") == pytest.approx(0.0)
+    assert _score_for_mode("difference", "10", "100") == 0.0
+    assert _score_for_mode("difference", "10", "0") == 0.0
+
+
+def test_gate_rejects_unmapped_verdicts_in_fixture_summary():
+    """semantic_mapping 未覆盖 fixture 中出现的 verdict 时，门禁必须拒绝而非抬高比率。"""
+    from scripts.run_drb_gate import verified_rate_from_summary
+
+    summary = {"total": 3, "verified": 2, "unknown_future_verdict": 1}
+    with pytest.raises(ValueError, match="does not cover"):
+        verified_rate_from_summary(summary)

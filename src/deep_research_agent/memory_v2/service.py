@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import unicodedata
 from collections.abc import Callable
 from copy import deepcopy
 from datetime import datetime
@@ -11,6 +12,15 @@ from typing import Protocol
 
 from .models import MemoryRecord, MemoryScope, MemoryStatus, Sensitivity, utc_now
 from .policy import MemoryPolicy
+
+
+def normalize_memory_key(key: str) -> str:
+    """记忆 key 的统一归一化：NFC + casefold。
+
+    大小写与 Unicode 变体（café NFC vs NFD）如果各自写出一条 ACTIVE 记录，
+    supersede 链会分叉成钻石状；写入/查找/supersede 权限校验都走同一规则。
+    """
+    return unicodedata.normalize("NFC", key).casefold()
 
 
 class MemoryRepository(Protocol):
@@ -123,7 +133,7 @@ class MemoryService:
                 explicit_target.tenant_id != tenant_id
                 or explicit_target.subject_id != subject
                 or explicit_target.scope != normalized_scope
-                or explicit_target.key != key
+                or normalize_memory_key(explicit_target.key) != normalize_memory_key(key)
             ):
                 raise PermissionError(
                     "a memory may only supersede the same key in the same tenant scope"
@@ -292,8 +302,9 @@ class MemoryService:
     def _active_for_key(
         self, tenant_id: str, subject_id: str, scope: MemoryScope, key: str, now: datetime
     ) -> MemoryRecord | None:
+        normalized_key = normalize_memory_key(key)
         for record in self.repository.list(tenant_id=tenant_id, subject_id=subject_id):
-            if record.scope == scope and record.key == key:
+            if record.scope == scope and normalize_memory_key(record.key) == normalized_key:
                 current = self._fresh(record)
                 if current.status == MemoryStatus.ACTIVE and not current.is_expired(now):
                     return current

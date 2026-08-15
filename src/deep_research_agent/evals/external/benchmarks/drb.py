@@ -184,7 +184,9 @@ def _score_for_mode(mode: str, expected: str, prediction: str) -> float:
         return round((2 * precision * recall) / (precision + recall), 6)
     if mode == "difference":
         try:
-            return round(1.0 - abs(float(prediction) - float(expected)), 6)
+            # 偏差越大得分越低，但必须夹在 [0,1]：prediction 远离 expected 时
+            # 原始公式会产出负分，污染 task_score/分类均分/head-to-head delta。
+            return round(max(0.0, 1.0 - abs(float(prediction) - float(expected))), 6)
         except (TypeError, ValueError):
             return 0.0
     return 1.0 if _normalize(expected) == _normalize(prediction) else 0.0

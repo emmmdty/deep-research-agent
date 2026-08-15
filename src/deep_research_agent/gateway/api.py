@@ -354,7 +354,11 @@ def create_app(
         bundle_path = artifact_path_for_job(job, "report_bundle.json")
         if not bundle_path.exists():
             raise HTTPException(status_code=404, detail=f"missing artifact: {bundle_path.name}")
-        return JSONResponse(load_json_artifact(bundle_path))
+        try:
+            return JSONResponse(load_json_artifact(bundle_path))
+        except ValueError as exc:
+            # 半截/损坏的 bundle 不应 500：如实报 422，job 状态照常可查。
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     @app.get("/v1/research/jobs/{job_id}/artifacts/{artifact_name:path}")
     def get_research_job_artifact(
@@ -370,7 +374,10 @@ def create_app(
         if not path.exists():
             raise HTTPException(status_code=404, detail=f"missing artifact: {artifact_name}")
         if path.suffix == ".json":
-            return JSONResponse(load_json_artifact(path))
+            try:
+                return JSONResponse(load_json_artifact(path))
+            except ValueError as exc:
+                raise HTTPException(status_code=422, detail=str(exc)) from exc
         content = path.read_text(encoding="utf-8")
         if path.suffix == ".html":
             return HTMLResponse(content=content)

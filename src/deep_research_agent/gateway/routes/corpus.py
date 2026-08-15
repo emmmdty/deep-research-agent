@@ -13,6 +13,10 @@ from deep_research_agent.gateway.routes.auth import (
 
 router = APIRouter(prefix="/v1/corpus", tags=["corpus"])
 
+# 上传体上限：星形/FastAPI 默认不限制 multipart 体积，一个无限大的文件会
+# 直接把整个请求读进内存并整块落库（无界内存 + 无界 DB 增长）。
+_MAX_CORPUS_UPLOAD_BYTES = 10 * 1024 * 1024
+
 
 @router.post("/upload", status_code=status.HTTP_201_CREATED)
 async def upload_corpus(
@@ -22,7 +26,7 @@ async def upload_corpus(
     _limited: None = Depends(tenant_rate_limited("v1.corpus.upload")),
 ) -> dict:
     try:
-        content = await file.read()
+        content = await _read_limited(file, _MAX_CORPUS_UPLOAD_BYTES)
         return service.upload_corpus(
             tenant_id=identity.tenant_id,
             user_id=identity.user_id,
@@ -32,6 +36,21 @@ async def upload_corpus(
         )
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+async def _read_limited(file: UploadFile, max_bytes: int) -> bytes:
+    """流式读取上传体并强制上限：超限立即 413，不等整包读完。"""
+    chunks: list[bytes] = []
+    total = 0
+    while chunk := await file.read(64 * 1024):
+        total += len(chunk)
+        if total > max_bytes:
+            raise HTTPException(
+                status_code=status.HTTP_413_CONTENT_TOO_LARGE,
+                detail=f"corpus upload exceeds the {max_bytes}-byte limit",
+            )
+        chunks.append(chunk)
+    return b"".join(chunks)
 
 
 @router.get("")

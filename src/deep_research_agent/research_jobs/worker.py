@@ -6,6 +6,7 @@ import argparse
 import importlib
 import os
 import threading
+from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
 from loguru import logger
@@ -17,6 +18,7 @@ from deep_research_agent.orchestration.scheduler import ResearchScheduler
 from deep_research_agent.orchestration.workers import TaskExecutionContext, WorkerOutput
 from deep_research_agent.research_jobs.models import JobStatus, RuntimeStage
 from deep_research_agent.research_jobs.service import ResearchJobService
+from deep_research_agent.research_jobs.store import WorkerLeaseConflict
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -99,7 +101,14 @@ def main() -> None:
     if job is not None and job.runtime_path == "scheduler-v2":
         service.configure_scheduler_factory(build_scheduler_factory(settings, offline=args.offline))
     lease_id = f"lease-{uuid4().hex[:8]}"
-    service.store.acquire_worker_lease(args.job_id, worker_pid=os.getpid(), lease_id=lease_id)
+    # 带 stale_before 抢占：被 SIGKILL 的 worker 留下的陈旧 lease 必须可被
+    # 新 worker 越过，否则 resume/refine 后新 worker 在 102 行直接死掉。
+    service.store.acquire_worker_lease(
+        args.job_id,
+        worker_pid=os.getpid(),
+        lease_id=lease_id,
+        stale_before=datetime.now(timezone.utc) - timedelta(seconds=args.stale_timeout_seconds),
+    )
 
     stop_event = threading.Event()
 
@@ -117,12 +126,17 @@ def main() -> None:
     except Exception as exc:  # noqa: BLE001 - supervisor 隔离：worker 不得 crash-loop
         logger.error("phase2 worker 主循环异常，将 job 标记为失败: {}", exc)
         try:
+            # 带 lease 标记失败：被 fencing 的旧 worker 绝不能把别的 worker
+            # 已经推进的 job 写回 FAILED（WorkerLeaseConflict 本身就是期望）。
             service.store.update_job_status(
                 args.job_id,
+                lease_id=lease_id,
                 status=JobStatus.FAILED,
                 current_stage=RuntimeStage.FAILED,
                 error=f"worker crash: {exc}",
             )
+        except WorkerLeaseConflict:
+            logger.warning("phase2 worker 已失去 lease，不再把 job {} 标记为失败", args.job_id)
         except Exception as mark_exc:  # noqa: BLE001 - 标记失败本身不能再崩溃
             logger.error("phase2 worker 标记 job 失败时发生异常: {}", mark_exc)
     finally:

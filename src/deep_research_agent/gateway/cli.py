@@ -443,7 +443,12 @@ def run_cli(
 
     output_dir = Path(getattr(settings, "workspace_dir", "workspace"))
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_file = output_dir / f"report_{topic[:20].replace(' ', '_')}.md"
+    # 白名单净化：路径分隔符/控制字符一律替换，中文保留（仓库双语），
+    # 再校验净化结果不能是相对路径段（防 ../ 逃逸 workspace_dir）。
+    safe_topic = re.sub(r"[^A-Za-z0-9_.\-\u4e00-\u9fff]", "_", topic[:20])
+    if not safe_topic or safe_topic in {".", ".."} or Path(safe_topic).name != safe_topic:
+        safe_topic = "research"
+    output_file = output_dir / f"report_{safe_topic}.md"
     output_file.write_text(report, encoding="utf-8")
     console.print(f"\n📄 报告已保存到: [cyan]{output_file}[/cyan]")
 

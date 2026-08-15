@@ -177,8 +177,9 @@ class ResearchJobOrchestrator:
         metadata = dict(job.metadata)
         metadata["scheduler_checkpoint_path"] = str(checkpoint_path)
         metadata["scheduler_config_snapshot"] = result.config_snapshot
+        gate_updates: dict[str, Any] = {}
         if result.status == "completed":
-            self._emit_scheduler_bundle(job, dag, result)
+            gate_updates = self._emit_scheduler_bundle(job, dag, result)
         errors = [
             task_result.error
             for task_result in result.task_results.values()
@@ -192,6 +193,7 @@ class ResearchJobOrchestrator:
             cancel_requested=result.status == "cancelled",
             metadata=metadata,
             error=errors[0] if errors else None,
+            **gate_updates,
         )
         self._append_event(
             updated,
@@ -207,7 +209,14 @@ class ResearchJobOrchestrator:
         job: JobRuntimeRecord,
         dag: ResearchDAG,
         result: RunResult,
-    ) -> None:
+    ) -> dict[str, Any]:
+        """Compile and persist the scheduler-v2 report bundle; return gate fields.
+
+        Returns the audit-gate projection (``audit_gate_status`` /
+        ``critical_claim_count`` / ``blocked_critical_claim_count``) so the
+        caller can persist it on the job record — the scheduler-v2 path must
+        surface blocked critical claims on the job, not just inside the bundle.
+        """
         packets = [
             packet
             for task_result in result.task_results.values()
@@ -316,6 +325,7 @@ class ResearchJobOrchestrator:
             },
             citation_verification=citation_verification,
         )
+        self._emit_review_queue(job, claims, bundle)
         bundle_path = Path(job.report_bundle_path)
         bundle_path.parent.mkdir(parents=True, exist_ok=True)
         bundle_path.write_text(
@@ -325,6 +335,69 @@ class ResearchJobOrchestrator:
         report_path = Path(job.report_path)
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(bundle.report_markdown, encoding="utf-8")
+        audit_summary = bundle.audit_summary
+        blocked_ids = {
+            *audit_summary.get("unsupported_claim_ids", []),
+            *audit_summary.get("contradicted_claim_ids", []),
+        }
+        critical_count = sum(1 for claim in claims if claim.critical)
+        blocked_critical = sum(
+            1 for claim in claims if claim.critical and claim.claim_id in blocked_ids
+        )
+        return {
+            "audit_gate_status": "blocked" if blocked_critical else "passed",
+            "critical_claim_count": critical_count,
+            "blocked_critical_claim_count": blocked_critical,
+        }
+
+    def _emit_review_queue(self, job: JobRuntimeRecord, claims: list, bundle) -> None:
+        """证据契约：未通过审计的关键 claim 必须落 review queue（scheduler-v2 路径）。
+
+        orchestrator-v1 在 claim_auditor_node 内写 review queue；scheduler-v2
+        此前从未落盘——"无法证明的内容进入人工复核队列"的承诺在产品路径上缺失。
+        这里在 bundle 编译后补齐：unsupported/contradicted 的关键 claim 全部入队，
+        失败只告警、不阻断交付（与 citation verification 同一降级策略）。
+        """
+        try:
+            audit_summary = bundle.audit_summary
+            unsupported_ids = {
+                *audit_summary.get("unsupported_claim_ids", []),
+                *audit_summary.get("contradicted_claim_ids", []),
+            }
+            items = []
+            for claim in claims:
+                if not claim.critical or claim.claim_id not in unsupported_ids:
+                    continue
+                items.append(
+                    {
+                        "review_id": f"{job.job_id}:review:{claim.claim_id}",
+                        "claim_id": claim.claim_id,
+                        "text": claim.claim,
+                        "status": "blocked",
+                        "reason": (
+                            "critical claim blocked by audit gate (unsupported/contradicted)"
+                        ),
+                        "blocking": True,
+                        "evidence_ids": [span.span_id for span in claim.evidence_spans],
+                        "edge_ids": [],
+                        "notes": "scheduler-v2 audit gate; manual review required",
+                    }
+                )
+            if not items:
+                return
+            from deep_research_agent.auditor.store import write_review_queue
+
+            write_review_queue(
+                self.store.job_dir(job.job_id),
+                {"job_id": job.job_id, "items": items},
+            )
+            logger.info(
+                "job {}: {} blocked critical claim(s) written to review queue",
+                job.job_id,
+                len(items),
+            )
+        except Exception as exc:  # noqa: BLE001 - review queue must never fail the job
+            logger.warning("review queue emission failed for job {}: {}", job.job_id, exc)
 
     def _harvest_scheduler_memory(
         self,

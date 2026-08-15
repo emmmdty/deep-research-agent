@@ -26,6 +26,8 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
     """Run LongBench v2 short smoke or return a medium-bucket blocked report."""
 
     bucket = request.bucket or "short"
+    if bucket not in {"short", "medium"}:
+        raise ValueError(f"unsupported longbench bucket {bucket!r} (expected short|medium)")
     if bucket == "medium" and os.getenv("LONG_BENCH_ENABLE_MEDIUM") != "1":
         return _blocked_medium_bucket(request=request, descriptor=descriptor)
 
@@ -33,9 +35,17 @@ def run_benchmark(*, request: BenchmarkRunRequest, descriptor) -> dict[str, Any]
     dataset = _load_dataset(config["dataset_manifest"])
     task_specs = [BenchmarkTaskSpec.model_validate(task) for task in dataset["tasks"]]
     task_results = [_score_task(task) for task in task_specs]
+    if not task_results:
+        return _blocked_medium_bucket(request=request, descriptor=descriptor)
     accuracy_overall = _average([float(row.official_metrics["accuracy"]) for row in task_results])
+    accuracy_by_category: dict[str, float] = {}
+    for row in task_results:
+        category = str(row.metadata.get("category") or "uncategorized")
+        accuracy_by_category.setdefault(category, []).append(
+            float(row.official_metrics["accuracy"])
+        )
     accuracy_by_category = {
-        task_results[0].metadata["category"]: accuracy_overall,
+        category: _average(scores) for category, scores in accuracy_by_category.items()
     }
     official_scores = {
         "benchmark": descriptor.benchmark,

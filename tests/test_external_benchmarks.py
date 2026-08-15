@@ -233,3 +233,19 @@ def test_portfolio_summary_builder_writes_schema_valid_summary_and_discovers_run
     assert facts_run["latest_run_status"] == "completed"
     assert medium_run["latest_run_status"] == "blocked"
     assert "authoritative release gate" in readme_path.read_text(encoding="utf-8")
+
+
+def test_longbench_rejects_unknown_bucket():
+    """longbench 的 bucket 必须是 short|medium，未知值不得静默跑错子集。"""
+    import pytest
+
+    from deep_research_agent.evals.external.benchmarks.longbench_v2 import run_benchmark
+    from deep_research_agent.evals.external.contracts import BenchmarkRunRequest
+
+    request = BenchmarkRunRequest(
+        benchmark_name="longbench_v2",
+        output_root="/tmp/opencode/longbench-invalid-bucket",
+        bucket="long",
+    )
+    with pytest.raises(ValueError, match="unsupported longbench bucket"):
+        run_benchmark(request=request, descriptor=None)

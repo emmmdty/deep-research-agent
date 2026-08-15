@@ -53,6 +53,9 @@ def artifact_path_for_job(job: JobRuntimeRecord, artifact_name: str) -> Path:
 
 
 def load_json_artifact(path: Path) -> Any:
-    """Load one JSON artifact from disk."""
+    """Load one JSON artifact from disk (raises ValueError when corrupt)."""
 
-    return json.loads(path.read_text(encoding="utf-8"))
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        raise ValueError(f"artifact is not valid JSON: {path}: {exc}") from exc

@@ -277,12 +277,14 @@ class TestJudgePaths:
             job_id="job-1",
         )
 
-    def test_judge_verified_yields_llm_judge_method(self) -> None:
+    def test_judge_verified_never_upgrades_absent_quote(self) -> None:
+        """quote 缺失时 LLM judge 只能 downgrade：判 verified 也不得放行。"""
         report = self._report_with_judge(lambda claim_text, source_text: "verified")
         item = report.items[0]
-        assert item.verdict == "verified"
-        assert item.method == "llm_judge"
+        assert item.verdict == "unverifiable"
+        assert item.method == "deterministic"
         assert item.quote_contained is False
+        assert "only downgrade" in item.rationale
 
     def test_judge_none_yields_unverifiable(self) -> None:
         report = self._report_with_judge(lambda claim_text, source_text: None)
@@ -336,6 +338,7 @@ class TestMaxVerifications:
             "unsupported": 0,
             "unverifiable": 0,
             "fetch_failed": 0,
+            "critical_claims_skipped": 1,
         }
 
 
@@ -494,3 +497,107 @@ class TestToDisk:
 
         assert path.parent == target
         assert path.exists()
+
+
+class TestMultiSpanClaims:
+    """合并后的 claim 带多个文档 span：每个 quote 必须在其自身文档中被核验。"""
+
+    def test_multi_span_claim_requires_quote_in_each_own_document(self) -> None:
+        second_quote = "A second finding with its own grounding text."
+        claim = _claim(
+            "claim-multi-span",
+            spans=[
+                _span("span-a", quote=QUOTE, document_version_id="doc-a"),
+                _span("span-b", quote=second_quote, document_version_id="doc-b"),
+            ],
+        )
+        sources = [
+            _source(source_text=f"Doc A: {QUOTE}", document_version_id="doc-a", uri="https://a/"),
+            _source(
+                source_text=f"Doc B: {second_quote}", document_version_id="doc-b", uri="https://b/"
+            ),
+        ]
+        verifier = CitationVerifier()
+
+        report = verifier.verify(
+            [claim],
+            sources,
+            document_contents={
+                "doc-a": f"Doc A: {QUOTE}",
+                "doc-b": f"Doc B: {second_quote}",
+            },
+            job_id="job-1",
+        )
+        item = report.items[0]
+
+        assert item.verdict == "verified"
+        assert item.quote_contained is True
+
+    def test_multi_span_claim_fails_when_one_quote_missing_in_its_document(self) -> None:
+        """span-b 的 quote 不在 doc-b 里，即使 doc-a 命中也不得判 verified。"""
+        second_quote = "A second finding with its own grounding text."
+        claim = _claim(
+            "claim-multi-span-missing",
+            spans=[
+                _span("span-a", quote=QUOTE, document_version_id="doc-a"),
+                _span("span-b", quote=second_quote, document_version_id="doc-b"),
+            ],
+        )
+        sources = [
+            _source(source_text=f"Doc A: {QUOTE}", document_version_id="doc-a", uri="https://a/"),
+            # doc-b 的正文里没有 span-b 的 quote（被合并时混入了别的文档引用）
+            _source(
+                source_text="Doc B unrelated text.", document_version_id="doc-b", uri="https://b/"
+            ),
+        ]
+        verifier = CitationVerifier()
+
+        report = verifier.verify(
+            [claim],
+            sources,
+            document_contents={"doc-a": f"Doc A: {QUOTE}", "doc-b": "Doc B unrelated text."},
+            job_id="job-1",
+        )
+        item = report.items[0]
+
+        assert item.verdict == "unverifiable"
+        assert item.quote_contained is False
+
+    def test_multi_span_refetch_per_document_is_called_once(self) -> None:
+        second_quote = "A second finding with its own grounding text."
+        claim = _claim(
+            "claim-multi-span-refetch",
+            spans=[
+                _span("span-a", quote=QUOTE, document_version_id="doc-a"),
+                _span("span-b", quote=second_quote, document_version_id="doc-b"),
+            ],
+        )
+        called: list[str] = []
+
+        def refetch(url: str) -> dict:
+            called.append(url)
+            if url == "https://a/":
+                return {
+                    "url": url,
+                    "final_url": url,
+                    "content": f"Doc A: {QUOTE}",
+                    "fetch_status": "ok",
+                }
+            return {
+                "url": url,
+                "final_url": url,
+                "content": f"Doc B: {second_quote}",
+                "fetch_status": "ok",
+            }
+
+        sources = [
+            _source(source_text="ignored", document_version_id="doc-a", uri="https://a/"),
+            _source(source_text="ignored", document_version_id="doc-b", uri="https://b/"),
+        ]
+        verifier = CitationVerifier(refetch=refetch)
+
+        report = verifier.verify([claim], sources, document_contents={}, job_id="job-1")
+
+        assert report.items[0].verdict == "verified"
+        assert sorted(called) == ["https://a/", "https://b/"]
+        assert len(called) == 2

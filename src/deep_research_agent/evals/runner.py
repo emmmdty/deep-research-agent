@@ -714,7 +714,9 @@ def _scenario_rate(results: list[dict[str, Any]], scenario_id: str | None = None
         item for item in results if scenario_id is None or item["scenario_id"] == scenario_id
     ]
     if not filtered:
-        return 1.0
+        # 没有演练过任何场景不能算通过：缺失的消融场景必须如实暴露为 0，
+        # 否则部分填充的 scenarios 列表会以 1.0 真空通过全部阈值。
+        return 0.0
     return round(sum(1 for item in filtered if item["passed"]) / len(filtered), 3)
 
 

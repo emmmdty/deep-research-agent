@@ -52,6 +52,13 @@ class ProductRepository:
     def create_user(self, user: UserTable) -> UserTable:
         with self._session() as session:
             session.add(user)
+            try:
+                session.commit()
+            except IntegrityError as exc:
+                # 并发注册/邀请接受时 check-then-create 不是原子的，第二个写入
+                # 会撞唯一约束；转成确定性错误而不是 500。
+                session.rollback()
+                raise ValueError("email already registered") from exc
         return user
 
     def get_user_by_email(self, email: str) -> UserTable | None:
