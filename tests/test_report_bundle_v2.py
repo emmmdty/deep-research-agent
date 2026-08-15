@@ -142,7 +142,7 @@ def test_bundle_keeps_contradictions_in_audit_not_supported_claim_buckets() -> N
     contradicted = _claim("claim-conflict", "contradicted", critical=True, spans=[span])
 
     bundle = ReportBundleCompilerV2().compile(
-        report_markdown="## Executive Summary\n\nThe intervention improved recall by 4.2 points.\n\n## Detail\nBody.",
+        report_markdown="## Executive Summary\n\nThe intervention group reported gains across primary metrics.\n\n## Detail\nBody.",
         claims=[contradicted],
         evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[contradicted])],
         research_graph=_graph(),
@@ -156,9 +156,16 @@ def test_bundle_keeps_contradictions_in_audit_not_supported_claim_buckets() -> N
     assert bundle.audit_summary["contradicted_claim_ids"] == ["claim-conflict"]
     executive_summary = bundle.report_markdown.split("## Detail", maxsplit=1)[0]
     assert contradicted.claim not in executive_summary
+    assert "gains across primary metrics" in executive_summary
+    assert bundle.audit_summary["executive_summary_source"] == "model"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "kept_unverified"
+    assert validation["reason"] == "no_claim_markers"
+    assert validation["referenced_claim_ids"] == []
+    assert validation["unsupported_claim_ids"] == []
 
 
-def test_bundle_rebuilds_executive_summary_only_from_audited_claims() -> None:
+def test_bundle_rebuilds_summary_when_marker_references_unsupported_claim() -> None:
     unsupported = _claim(
         "claim-blocked",
         "unsupported",
@@ -167,7 +174,7 @@ def test_bundle_rebuilds_executive_summary_only_from_audited_claims() -> None:
     )
     report = (
         "# Report\n\n## Executive Summary\n\n"
-        "The main endpoint increased by one hundred percent.\n\n"
+        "The main endpoint increased by one hundred percent. [[claim:claim-blocked]]\n\n"
         "## Detail\n\nThis section may discuss limitations."
     )
 
@@ -183,7 +190,38 @@ def test_bundle_rebuilds_executive_summary_only_from_audited_claims() -> None:
 
     executive_summary = bundle.report_markdown.split("## Detail", maxsplit=1)[0]
     assert "one hundred percent" not in executive_summary
+    assert "The primary outcome doubled." not in executive_summary
     assert bundle.audit_summary["executive_summary_claim_ids"] == []
+    assert bundle.audit_summary["executive_summary_source"] == "deterministic"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "rebuilt"
+    assert validation["reason"] == "references_unsupported_claims"
+    assert validation["referenced_claim_ids"] == ["claim-blocked"]
+    assert validation["unsupported_claim_ids"] == ["claim-blocked"]
+
+
+def test_bundle_keeps_unverified_summary_when_no_claim_markers() -> None:
+    span = _span()
+    claim = _claim("claim-kept-prose", "accepted", critical=True, spans=[span])
+    prose = "The synthesis team observed meaningful gains across all conditions."
+
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=f"# Report\n\n## Executive Summary\n\n{prose}\n\n## Detail\nBody.",
+        claims=[claim],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert prose in bundle.report_markdown
+    assert bundle.audit_summary["executive_summary_source"] == "model"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "kept_unverified"
+    assert validation["reason"] == "no_claim_markers"
+    assert validation["referenced_claim_ids"] == []
+    assert validation["unsupported_claim_ids"] == []
 
 
 @pytest.mark.parametrize("heading", ["## Executive Summary:", "### EXECUTIVE SUMMARY"])
@@ -202,7 +240,12 @@ def test_bundle_canonicalizes_summary_heading_variants(heading: str) -> None:
 
     assert "## Executive Summary\n" in bundle.report_markdown
     assert "Executive Summary:" not in bundle.report_markdown
-    assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
+    assert "old text" in bundle.report_markdown
+    assert "- The intervention improved recall by 4.2 points." not in bundle.report_markdown
+    assert bundle.audit_summary["executive_summary_source"] == "model"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "kept_unverified"
+    assert validation["reason"] == "no_claim_markers"
 
 
 def test_bundle_strips_atx_closing_hash_summary_heading() -> None:
@@ -222,8 +265,12 @@ def test_bundle_strips_atx_closing_hash_summary_heading() -> None:
     )
 
     assert "## Executive Summary ##" not in bundle.report_markdown
-    assert "Untrusted prose." not in bundle.report_markdown
-    assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
+    assert "Untrusted prose." in bundle.report_markdown
+    assert "- The intervention improved recall by 4.2 points." not in bundle.report_markdown
+    assert bundle.audit_summary["executive_summary_source"] == "model"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "kept_unverified"
+    assert validation["reason"] == "no_claim_markers"
 
 
 @pytest.mark.parametrize(
@@ -246,8 +293,12 @@ def test_bundle_strips_whitespace_and_setext_summary_variants(heading: str) -> N
         run_manifest={"job_id": "job-1"},
     )
 
-    assert "Untrusted prose." not in bundle.report_markdown
-    assert "- The intervention improved recall by 4.2 points." in bundle.report_markdown
+    assert "Untrusted prose." in bundle.report_markdown
+    assert "- The intervention improved recall by 4.2 points." not in bundle.report_markdown
+    assert bundle.audit_summary["executive_summary_source"] == "model"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "kept_unverified"
+    assert validation["reason"] == "no_claim_markers"
 
 
 def test_bundle_rejects_mixed_atx_and_setext_summary_duplicates() -> None:
@@ -291,6 +342,147 @@ def test_bundle_owns_summary_when_source_report_has_no_summary_heading() -> None
     )
 
     assert bundle.report_markdown.startswith("## Executive Summary\n")
+    assert bundle.audit_summary["executive_summary_source"] == "deterministic"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "rebuilt"
+    assert validation["reason"] == "empty_summary"
+    assert validation["referenced_claim_ids"] == []
+    assert validation["unsupported_claim_ids"] == []
+
+
+def test_bundle_keeps_model_summary_with_valid_claim_markers_verbatim() -> None:
+    span = _span()
+    claim = _claim("claim-kept", "accepted", critical=True, spans=[span])
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=(
+            "# Report\n\n## Executive Summary\n\n"
+            "The intervention improved recall by 4.2 points. [[claim:claim-kept]]\n\n"
+            "Nuanced hedging that preserves the model's original wording.\n\n"
+            "## Detail\nBody."
+        ),
+        claims=[claim],
+        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim])],
+        research_graph=_graph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    report = bundle.report_markdown
+    assert "Nuanced hedging that preserves the model's original wording." in report
+    assert "The intervention improved recall by 4.2 points. [1]" in report
+    assert "[[claim:claim-kept]]" not in report
+    assert bundle.audit_summary["executive_summary_source"] == "model"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "kept"
+    assert validation["reason"] == "claims_verified"
+    assert validation["referenced_claim_ids"] == ["claim-kept"]
+    assert validation["unsupported_claim_ids"] == []
+
+
+def test_bundle_rebuilds_summary_when_marker_references_unknown_claim() -> None:
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=(
+            "# Report\n\n## Executive Summary\n\n"
+            "Unverified prose. [[claim:claim-ghost]]\n\n## Detail\nBody."
+        ),
+        claims=[],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert "Unverified prose." not in bundle.report_markdown
+    assert bundle.audit_summary["executive_summary_source"] == "deterministic"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "rebuilt"
+    assert validation["reason"] == "references_unsupported_claims"
+    assert validation["referenced_claim_ids"] == []
+    assert validation["unsupported_claim_ids"] == ["claim-ghost"]
+
+
+def test_bundle_rebuilds_empty_summary_section() -> None:
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown="# Report\n\n## Executive Summary\n\n\n\n## Detail\nBody.",
+        claims=[],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    assert "## Executive Summary\n\n## Detail" in bundle.report_markdown
+    assert bundle.audit_summary["executive_summary_source"] == "deterministic"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["status"] == "rebuilt"
+    assert validation["reason"] == "empty_summary"
+    assert validation["referenced_claim_ids"] == []
+    assert validation["unsupported_claim_ids"] == []
+
+
+def test_bundle_rebuilds_summary_when_mixed_valid_and_unsupported_markers() -> None:
+    span = _span()
+    accepted = _claim("claim-good", "accepted", critical=True, spans=[span])
+    unsupported = _claim(
+        "claim-bad",
+        "unsupported",
+        critical=True,
+        text="An unsupported headline claim.",
+    )
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=(
+            "# Report\n\n## Executive Summary\n\n"
+            "Nuanced prose that cannot stay. [[claim:claim-good]] [[claim:claim-bad]]\n\n"
+            "## Detail\nBody."
+        ),
+        claims=[accepted, unsupported],
+        evidence_packets=[],
+        research_graph=ResearchGraph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    executive_summary = bundle.report_markdown.split("## Detail", maxsplit=1)[0]
+    assert "Nuanced prose that cannot stay." not in executive_summary
+    assert "An unsupported headline claim." not in executive_summary
+    assert "- The intervention improved recall by 4.2 points." in executive_summary
+    assert bundle.audit_summary["executive_summary_source"] == "deterministic"
+    validation = bundle.audit_summary["executive_summary_validation"]
+    assert validation["reason"] == "references_unsupported_claims"
+    assert validation["referenced_claim_ids"] == ["claim-bad", "claim-good"]
+    assert validation["unsupported_claim_ids"] == ["claim-bad"]
+
+
+def test_bundle_executive_summary_meta_is_canonical_json_stable() -> None:
+    span = _span()
+    claim = _claim("claim-json", "accepted", critical=True, spans=[span])
+    bundle = ReportBundleCompilerV2().compile(
+        report_markdown=(
+            "# Report\n\n## Executive Summary\n\n"
+            "The intervention improved recall by 4.2 points. [[claim:claim-json]]\n\n"
+            "## Detail\nBody."
+        ),
+        claims=[claim],
+        evidence_packets=[EvidencePacket(packet_id="packet-1", task_id="collect-1", evidence_spans=[span], claims=[claim])],
+        research_graph=_graph(),
+        sources=[_source()],
+        corpus_manifest=_manifest(),
+        run_manifest={"job_id": "job-1"},
+    )
+
+    payload = json.loads(ReportBundleCompilerV2.to_canonical_json(bundle))
+    summary = payload["audit_summary"]
+    assert summary["executive_summary_source"] == "model"
+    assert summary["executive_summary_validation"] == {
+        "status": "kept",
+        "reason": "claims_verified",
+        "referenced_claim_ids": ["claim-json"],
+        "unsupported_claim_ids": [],
+    }
 
 
 @pytest.mark.parametrize("span_ids", [[], ["missing-span"]])

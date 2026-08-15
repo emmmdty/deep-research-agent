@@ -22,6 +22,8 @@ from deep_research_agent.orchestration.reducer import EvidenceReducer
 from deep_research_agent.orchestration.reducer import CriticDecision
 from deep_research_agent.reporting.citations import CitationInjector
 
+_SUMMARY_MARKER_RE = re.compile(r"\[\[claim:([^\]]+)\]\]")
+
 
 class ReportBundleCompilerV2:
     """Compile only frozen, structurally auditable evidence into a V2 bundle."""
@@ -124,13 +126,16 @@ class ReportBundleCompilerV2:
         )
 
         supported = [*audit.accepted, *audit.qualified]
+        unsupported = [*audit.contradicted, *audit.unsupported]
         evidence_matrix = {
             claim.claim_id: sorted({span.document_version_id for span in claim.evidence_spans})
             for claim in sorted(supported, key=lambda item: item.claim_id)
         }
-        sanitized_report = self._rebuild_executive_summary(
+        sanitized_report, summary_meta = self._apply_executive_summary_policy(
             report_markdown,
             self._top_executive_summary_claims(audit.executive_summary_claims),
+            unsupported,
+            claim_by_id,
         )
         citation_result = self._citations.inject(
             sanitized_report,
@@ -146,6 +151,13 @@ class ReportBundleCompilerV2:
             "executive_summary_claim_ids": [
                 claim.claim_id for claim in audit.executive_summary_claims
             ],
+            "executive_summary_source": summary_meta["source"],
+            "executive_summary_validation": {
+                "status": summary_meta["status"],
+                "reason": summary_meta["reason"],
+                "referenced_claim_ids": summary_meta["referenced_claim_ids"],
+                "unsupported_claim_ids": summary_meta["unsupported_claim_ids"],
+            },
             "degradations": audit.degradations,
             "semantic_disagreements": reduced.semantic_disagreements,
             "unresolved_claim_ids": audit.unresolved_claim_ids,
@@ -342,6 +354,105 @@ class ReportBundleCompilerV2:
         """
         selected = sorted(claims, key=lambda claim: (not claim.critical, claim.claim_id))
         return selected[:cap]
+
+    @classmethod
+    def _apply_executive_summary_policy(
+        cls,
+        report_markdown: str,
+        allowed_claims: Iterable[ClaimRecord],
+        unsupported_claims: Iterable[ClaimRecord],
+        claim_by_id: Mapping[str, ClaimRecord],
+    ) -> tuple[str, dict[str, Any]]:
+        """Dual-track executive summary: preserve model text unless out-of-bounds.
+
+        The critic's synthesized summary is kept verbatim (heading canonicalized)
+        when it is in-bounds: the section exists and every ``[[claim:<id>]]``
+        marker resolves to a supported claim. It degrades to the deterministic
+        top-5 bullet rebuild only when the section is missing/empty or a
+        referenced claim is unsupported, contradicted, or unknown. The returned
+        meta records which track ran and why, for the audit trail.
+        """
+        allowed = list(allowed_claims)
+        unsupported_ids = {claim.claim_id for claim in unsupported_claims}
+        lines = report_markdown.splitlines()
+        summary_matches = [
+            (line_index, heading)
+            for line_index in range(len(lines))
+            if (heading := cls._summary_heading_at(lines, line_index)) is not None
+        ]
+        if len(summary_matches) > 1:
+            raise ValueError("ambiguous executive summary headings")
+
+        if not summary_matches:
+            return cls._rebuild_executive_summary(report_markdown, allowed), {
+                "status": "rebuilt",
+                "reason": "empty_summary",
+                "source": "deterministic",
+                "referenced_claim_ids": [],
+                "unsupported_claim_ids": [],
+            }
+
+        heading_index, (summary_level, consumed_lines) = summary_matches[0]
+        section_end = heading_index + consumed_lines
+        while section_end < len(lines):
+            next_heading_level = cls._markdown_heading_level(lines, section_end)
+            if next_heading_level is not None and next_heading_level <= summary_level:
+                break
+            section_end += 1
+        body_text = "\n".join(lines[heading_index + consumed_lines : section_end])
+        if not body_text.strip():
+            return cls._rebuild_executive_summary(report_markdown, allowed), {
+                "status": "rebuilt",
+                "reason": "empty_summary",
+                "source": "deterministic",
+                "referenced_claim_ids": [],
+                "unsupported_claim_ids": [],
+            }
+
+        marker_ids = sorted(
+            {match.group(1).strip() for match in _SUMMARY_MARKER_RE.finditer(body_text)}
+        )
+        referenced_claim_ids = sorted(
+            claim_id for claim_id in marker_ids if claim_id in claim_by_id
+        )
+        unsupported_claim_ids = sorted(
+            claim_id
+            for claim_id in marker_ids
+            if claim_id not in claim_by_id
+            or claim_id in unsupported_ids
+            or claim_by_id[claim_id].support_status in {"unsupported", "contradicted"}
+        )
+        if unsupported_claim_ids:
+            return cls._rebuild_executive_summary(report_markdown, allowed), {
+                "status": "rebuilt",
+                "reason": "references_unsupported_claims",
+                "source": "deterministic",
+                "referenced_claim_ids": referenced_claim_ids,
+                "unsupported_claim_ids": unsupported_claim_ids,
+            }
+
+        kept = cls._canonicalize_summary_heading(
+            report_markdown, lines, heading_index, consumed_lines
+        )
+        return kept, {
+            "status": "kept" if marker_ids else "kept_unverified",
+            "reason": "claims_verified" if marker_ids else "no_claim_markers",
+            "source": "model",
+            "referenced_claim_ids": referenced_claim_ids,
+            "unsupported_claim_ids": [],
+        }
+
+    @staticmethod
+    def _canonicalize_summary_heading(
+        report_markdown: str,
+        lines: list[str],
+        heading_index: int,
+        consumed_lines: int,
+    ) -> str:
+        rebuilt = lines.copy()
+        rebuilt[heading_index : heading_index + consumed_lines] = ["## Executive Summary"]
+        suffix = "\n" if report_markdown.endswith("\n") else ""
+        return "\n".join(rebuilt) + suffix
 
     @staticmethod
     def _rebuild_executive_summary(
